@@ -172,9 +172,11 @@ share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDi
 - **Vendors:** each stack of a replaced vanilla ammo is split whenever the vendor builds its stock
   (`Vendor.InitializeStock`, `RegenerateStock`). Gun shops (`Gunsmith`) sell up to Uncommon, other
   vendors Common only. A restock rebuilds the stock from the vendor's pool and drops our split
-  stacks first (they're regenerating items), so nothing is split twice. Stock saved before the mod
-  was installed is split on load (`OnRestored`): a stock holding none of our rounds is unsplit,
-  since 9mm Ball is vanilla handgun ammo.
+  stacks first (they're regenerating items), so nothing is split twice. Vendors whose stock has
+  been split are kept on `AmmoFeedSystem` (saved); stock saved before the mod was installed is
+  split the first time the vendor fills its inventory (`FillVendorInventory`). Contents can't
+  tell: 9mm Ball is vanilla handgun ammo, and a stock bought down to Ball would otherwise be split
+  again on every load.
 - **Loot containers:** a container fills with loot the first time the player looks at it
   (`gameLootContainerBase.OnInventoryFilledEvent`). Then each stack of replaced vanilla ammo
   becomes one Pick (up to Uncommon), same quantity. Converted containers are kept by entity ID on

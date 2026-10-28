@@ -22,6 +22,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
   // Loot containers whose vanilla ammo has been converted (LootConvert). Saved with the game.
   private persistent let m_convertedContainers: array<EntityID>;
 
+  // Vendors whose ammo stock has been split (Vendors.reds). Saved with the game.
+  private persistent let m_splitVendors: array<TweakDBID>;
+
   // Offset of the ammo field in weapon objects, once located this session (see NativeAmmo).
   private let m_ammoOffset: Int32;
   private let m_wantedAmmoOffset: Int32;
@@ -204,6 +207,16 @@ public class AmmoFeedSystem extends ScriptableSystem {
     GameInstance.GetDelaySystem(player.GetGame()).DelayCallback(retry, 0.1, false);
   }
 
+  public final func MarkVendorSplit(vendor: TweakDBID) -> Void {
+    if !ArrayContains(this.m_splitVendors, vendor) {
+      ArrayPush(this.m_splitVendors, vendor);
+    }
+  }
+
+  public final func IsVendorSplit(vendor: TweakDBID) -> Bool {
+    return ArrayContains(this.m_splitVendors, vendor);
+  }
+
   // Notes a container as converted; false if it already was.
   public final func MarkConverted(container: EntityID) -> Bool {
     if ArrayContains(this.m_convertedContainers, container) {
@@ -293,6 +306,31 @@ public class AmmoFeedSystem extends ScriptableSystem {
       }
     }
     return text;
+  }
+
+  // What a known vendor's ammo is once its screen opens (an unsplit stock gets split then).
+  public final func DebugOpenVendor(vendorID: String) -> String {
+    for vendor in MarketSystem.GetInstance(this.GetGameInstance()).AODebugVendors() {
+      if vendor.GetVendorTweakID() == TDBID.Create(vendorID) {
+        vendor.AOBeforeFill();
+        return vendor.AODebugAmmo();
+      }
+    }
+    return "no vendor " + vendorID;
+  }
+
+  // Buys out a known vendor's rounds (9mm Ball stays), then goes through a save load and the
+  // vendor screen opening: "<ammo after>".
+  public final func DebugReloadVendor(vendorID: String) -> String {
+    for vendor in MarketSystem.GetInstance(this.GetGameInstance()).AODebugVendors() {
+      if vendor.GetVendorTweakID() == TDBID.Create(vendorID) {
+        vendor.AODebugBuyOutRounds();
+        vendor.OnRestored(this.GetGameInstance(), false);
+        vendor.AOBeforeFill();
+        return vendor.AODebugAmmo();
+      }
+    }
+    return "no vendor " + vendorID;
   }
 
   // Restocks a known vendor now; "<ammo before> -> <ammo after>".

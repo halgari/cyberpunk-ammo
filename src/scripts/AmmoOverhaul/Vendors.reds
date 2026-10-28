@@ -18,17 +18,14 @@ private final func RegenerateStock() -> Void {
   this.AOSplitAmmo();
 }
 
-// Stock saved before the mod was installed is split on load. 9mm Ball is vanilla handgun ammo,
-// so a stock already split is told apart by holding any of our rounds.
+// Stock built before the mod was installed is split the first time the vendor fills its
+// inventory (opening its screen). Vendors whose stock has been split are kept on AmmoFeedSystem
+// (saved): 9mm Ball is vanilla handgun ammo, so a stock bought down to Ball can't be told apart
+// from an unsplit one by its contents.
 @wrapMethod(Vendor)
-public final func OnRestored(gameInstance: GameInstance, forceReinit: Bool) -> Void {
-  wrappedMethod(gameInstance, forceReinit);
-  for stack in this.m_stock {
-    if TweakDBInterface.GetItemRecord(ItemID.GetTDBID(stack.itemID)).TagsContains(n"AO_Ammo") {
-      return;
-    }
-  }
-  this.AOSplitAmmo();
+private final func FillVendorInventory(allowRegeneration: Bool) -> Void {
+  this.AOBeforeFill();
+  wrappedMethod(allowRegeneration);
 }
 
 @addMethod(Vendor)
@@ -51,6 +48,7 @@ private final func AOSplitAmmo() -> Void {
       split += 1;
     }
   }
+  AmmoFeedSystem.Get(this.m_gameInstance).MarkVendorSplit(this.GetVendorTweakID());
   if split > 0 {
     this.m_stock = stock;
     AmmoFeedSystem.Log("vendor " + TDBID.ToStringDEBUG(this.GetVendorTweakID()) + ": split " + IntToString(split) + " ammo stacks (max tier " + IntToString(maxTier) + ")");
@@ -80,4 +78,33 @@ public final func AODebugRestock() -> Void {
 @addMethod(MarketSystem)
 public final func AODebugVendors() -> array<ref<Vendor>> {
   return this.m_vendors;
+}
+
+// Takes our rounds out of the stock, as if the player had bought them all (9mm Ball stays).
+@addMethod(Vendor)
+public final func AODebugBuyOutRounds() -> Void {
+  let stock: array<SItemStack>;
+  for stack in this.m_stock {
+    if !TweakDBInterface.GetItemRecord(ItemID.GetTDBID(stack.itemID)).TagsContains(n"AO_Ammo") {
+      ArrayPush(stock, stack);
+    }
+  }
+  this.m_stock = stock;
+}
+
+// Splits a stock that was never split (built before the mod was installed). One that already
+// holds our rounds (saved before vendors were tracked) is only marked.
+@addMethod(Vendor)
+public final func AOBeforeFill() -> Void {
+  let system: ref<AmmoFeedSystem> = AmmoFeedSystem.Get(this.m_gameInstance);
+  if ArraySize(this.m_stock) == 0 || system.IsVendorSplit(this.GetVendorTweakID()) {
+    return;
+  }
+  for stack in this.m_stock {
+    if TweakDBInterface.GetItemRecord(ItemID.GetTDBID(stack.itemID)).TagsContains(n"AO_Ammo") {
+      system.MarkVendorSplit(this.GetVendorTweakID());
+      return;
+    }
+  }
+  this.AOSplitAmmo();
 }

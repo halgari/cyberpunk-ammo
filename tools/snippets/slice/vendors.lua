@@ -44,6 +44,16 @@ if VENDOR then
     for line in resv:gmatch("[^\n]+") do
       local id, vtype, stock = line:match("^(%S+) (%S+) | (.*)$")
       if id then
+        -- Stock saved before the mod was installed is split when the vendor's screen opens.
+        -- A stock already split but not yet tracked keeps its Ball count.
+        local before = parse(stock)
+        local opened = parse(sys:DebugOpenVendor(id))
+        if handgunTotal(opened) > 0 then
+          check(id .. " stock is split once its screen opens", (opened["Ammo.AO_TLight_Slug"] or 0) > 0, sys:DebugOpenVendor(id))
+          if (before["Ammo.AO_TLight_Slug"] or 0) > 0 then
+            check(id .. " a split stock isn't split again", opened["Ammo.HandgunAmmo"] == before["Ammo.HandgunAmmo"], stock .. " -> " .. sys:DebugOpenVendor(id))
+          end
+        end
         -- Restock twice: each rebuild splits the fresh pool once, so the handgun total stays put.
         local r1 = sys:DebugRestock(id)
         local after1 = parse(r1:match("-> (.*)$"))
@@ -60,6 +70,11 @@ if VENDOR then
             end
           end
           check(id .. " second restock doesn't split twice", handgunTotal(after2) == handgunTotal(after1), handgunTotal(after1) .. " then " .. handgunTotal(after2))
+          -- Bought out down to 9mm Ball, then saved and loaded: no new rounds appear.
+          local reloaded = parse(sys:DebugReloadVendor(id))
+          local extra = {}
+          for k, v in pairs(reloaded) do if k:find("^Ammo%.AO_") then table.insert(extra, k .. "=" .. v) end end
+          check(id .. " Ball-only stock isn't split again on load", #extra == 0, table.concat(extra, ","))
         end
       end
     end
