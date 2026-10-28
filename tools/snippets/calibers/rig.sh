@@ -9,11 +9,16 @@ LO=${LO:-0.90}; HI=${HI:-1.10}; NPC_ROLLS=${NPC_ROLLS:-false}
 lua() { $C -t 30 "$(cat $S/calibers/rig.lua); $1" 2>&1 | sed -n 's/^=> //p' | tail -1; }
 $C "GUN='Items.Preset_Lexington_Default'; $(cat $S/feed-kit.lua)" >/dev/null; sleep 2
 $C "GUN='Items.Preset_Lexington_Default'; $(cat $S/feed-kit.lua)" >/dev/null; sleep 3
-for _ in $(seq 20); do r=$(lua "return RIG.setup('Items.Preset_Lexington_Default')"); [[ $r == ready ]] && break; sleep 3; done
+# Spawning the NPC can make V holster, so the gun is drawn again whenever setup asks for it.
+for _ in $(seq 20); do
+  r=$(lua "return RIG.setup('Items.Preset_Lexington_Default')"); [[ $r == ready ]] && break
+  [[ $r == draw* ]] && $C "GUN='Items.Preset_Lexington_Default'; $(cat $S/feed-kit.lua)" >/dev/null
+  sleep 3
+done
 echo "setup: $r"
 lua "RIG.clear(); return 'ok'" >/dev/null
 for _ in $(seq 30); do lua "RIG.fireV(); return 1" >/dev/null; sleep 0.3; done
-for _ in $(seq 10); do lua "RIG.fireNpc(); return 1" >/dev/null; sleep 0.3; done
+lua "RIG.letNpcShoot(); return 1" >/dev/null; sleep 8; lua "RIG.freeze(); return 1" >/dev/null
 sleep 1
 out=$(lua "local v, n = RIG.ratios('V'), RIG.ratios('NPC')
 local ok = #v >= 25 and v[1] >= $LO - 0.002 and v[#v] <= $HI + 0.002

@@ -2,7 +2,7 @@
 -- damage before and after DamageSystem.CalculateDamageVariants (the damage roll). Spawned NPCs
 -- strafe, so they're frozen with time dilation; teleporting a frozen NPC doesn't stick, so V moves.
 -- Defines the global RIG; driven one call per shot by rig.sh / roll.sh:
---   RIG.setup(gun, dist=5)  -> "ready" or "wait" (first call spawns); RIG.fireV()  RIG.fireNpc()
+--   RIG.setup(gun, dist=5)  -> "ready" or "wait" (first call spawns); RIG.fireV()  RIG.letNpcShoot() then RIG.freeze()
 --   RIG.ratios(who) -> sorted post/pre ratios of hits by "V" (on the NPC) or "NPC" (on V)
 --   RIG.clear()  RIG.teardown()
 RIG = RIG or { hits = {} }
@@ -30,6 +30,7 @@ function RIG.npc() return Game.GetDynamicEntitySystem():GetTagged("AO_Test")[1] 
 function RIG.setup(gun, dist)
   dist = dist or 5
   local p = Game.GetPlayer()
+  if StatusEffectSystem.ObjectHasStatusEffectWithTag(p, CName.new("NoCombat")) then return "V is in a no-combat zone" end
   if gun then
     local w = p:GetActiveWeapon()
     if not w or TDBID.ToStringDEBUG(w:GetItemID().id) ~= gun then return "draw " .. gun .. " first" end
@@ -40,10 +41,10 @@ function RIG.setup(gun, dist)
     return "wait"
   end
   gm():AddGodMode(n:GetEntityID(), gameGodModeType.Invulnerable, tag)
-  gm():AddGodMode(p:GetEntityID(), gameGodModeType.Invulnerable, tag)
-  -- Freeze only once its gun is drawn, or RIG.fireNpc has nothing to fire.
+  gm():AddGodMode(p:GetEntityID(), gameGodModeType.Immortal, tag)
+  -- Freeze only once its gun is drawn, or it has nothing to shoot V with.
   if not Game.GetTransactionSystem():GetItemInSlot(n, TweakDBID.new("AttachmentSlots.WeaponRight")) then return "wait" end
-  n:SetIndividualTimeDilation(tag, 0.0001, 9999.0, CName.new(""), CName.new(""))
+  RIG.freeze()
   local a, b = p:GetWorldPosition(), n:GetWorldPosition()
   local dx, dy = a.x - b.x, a.y - b.y
   local l = math.sqrt(dx * dx + dy * dy)
@@ -62,10 +63,11 @@ function RIG.fireV()
   AIWeapon.Fire(p, p:GetActiveWeapon(), EngineTime.ToFloat(Game.GetSimTime()), 1.0, gamedataTriggerMode.SemiAuto, chest(n), n)
 end
 
-function RIG.fireNpc()
-  local p, n = Game.GetPlayer(), RIG.npc()
-  local w = Game.GetTransactionSystem():GetItemInSlot(n, TweakDBID.new("AttachmentSlots.WeaponRight"))
-  AIWeapon.Fire(n, w, EngineTime.ToFloat(Game.GetSimTime()), 1.0, gamedataTriggerMode.SemiAuto, chest(p), p)
+-- AIWeapon.Fire with the NPC as shooter lands nothing, so the NPC's own AI shoots V: unfreeze
+-- it, let the caller wait a few seconds, then RIG.freeze(). V is Immortal (takes the hits).
+function RIG.letNpcShoot() RIG.npc():UnsetIndividualTimeDilation() end
+function RIG.freeze()
+  RIG.npc():SetIndividualTimeDilation(tag, 0.0001, 9999.0, CName.new(""), CName.new(""))
 end
 
 function RIG.ratios(who)
@@ -82,6 +84,6 @@ function RIG.clear() RIG.hits = {} end
 
 function RIG.teardown()
   local n = RIG.npc()
-  gm():RemoveGodMode(Game.GetPlayer():GetEntityID(), gameGodModeType.Invulnerable, tag)
+  gm():RemoveGodMode(Game.GetPlayer():GetEntityID(), gameGodModeType.Immortal, tag)
   if n then GetMod("AOTestKit").despawnAll() end
 end
