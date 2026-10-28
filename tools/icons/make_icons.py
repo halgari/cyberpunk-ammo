@@ -17,7 +17,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = ROOT / "art" / "icons"
 OUT = ROOT / "art" / "build"
 CELL = (248, 156)
-# Empty margin kept around the art inside its cell (fraction of the cell's height).
+# Empty margin kept around the art inside its square (fraction of the cell's height).
 PAD = 0.08
 ATLAS = (512, 512)
 # part name -> source file
@@ -39,8 +39,10 @@ def cut_out(path):
 
 
 def fit(im):
-    pad = round(CELL[1] * PAD)
-    scale = min((CELL[0] - 2 * pad) / im.width, (CELL[1] - 2 * pad) / im.height)
+    # The backpack tile shows a cell at its full height with room for only a square of it, so
+    # the art is kept inside the centred CELL[1] x CELL[1] square (wider art stuck out of the tile).
+    room = CELL[1] - 2 * round(CELL[1] * PAD)
+    scale = min(room / im.width, room / im.height)
     im = im.resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), Image.LANCZOS)
     cell = Image.new("RGBA", CELL, (0, 0, 0, 0))
     cell.alpha_composite(im, ((CELL[0] - im.width) // 2, (CELL[1] - im.height) // 2))

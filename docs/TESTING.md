@@ -53,8 +53,10 @@ an "Ammo Overhaul test kit" window:
 Proton with the .NET 10 runtime in the tools prefix)). `icons.lua` checks the records and that the
 game finds the atlas.
 
-New art comes from the OpenAI image API (`chatgpt-image-latest`, medium quality, 1536x1024,
-transparent background), in two steps per round:
+New art comes from the OpenAI image API (`chatgpt-image-latest`, medium quality, 1024x1024,
+transparent background), in two steps per round. Square, not landscape: the backpack tile shows
+only the centred square of an icon's cell, so `make_icons.py` fits the art into that square and
+wide art comes out small.
 1. One round alone, side view, no text (`art/icons/<round>-ref.png`), checked by eye.
 2. The box shot, made with that round as the only reference image: an open box of the rounds
    standing upright, two loose ones in front, and the round's name as the only text on the box.
