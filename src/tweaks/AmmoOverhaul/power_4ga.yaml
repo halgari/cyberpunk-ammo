@@ -8,9 +8,9 @@ AmmoOverhaul.Power_4ga.feedElement: "Items.AO_AmmoFeed_Power_4ga_Element"
 AmmoOverhaul.Power_4ga.defaultAmmo: "Ammo.AO_4ga_Buckshot"
 AmmoOverhaul.Power_4ga.vanillaAmmo: "Ammo.ShotgunAmmo"
 AmmoOverhaul.Power_4ga.lootWeight: 0.1
-AmmoOverhaul.Power_4ga.selectors: ["Items.AO_Feed_4ga_Buckshot", "Items.AO_Feed_4ga_Slugs"]
-AmmoOverhaul.Power_4ga.selectorAmmo: ["Ammo.AO_4ga_Buckshot", "Ammo.AO_4ga_Slug"]
-AmmoOverhaul.Power_4ga.selectorTiers: [0, 1]
+AmmoOverhaul.Power_4ga.selectors: ["Items.AO_Feed_4ga_Buckshot", "Items.AO_Feed_4ga_Slugs", "Items.AO_Feed_4ga_Birdshot"]
+AmmoOverhaul.Power_4ga.selectorAmmo: ["Ammo.AO_4ga_Buckshot", "Ammo.AO_4ga_Slug", "Ammo.AO_4ga_Birdshot"]
+AmmoOverhaul.Power_4ga.selectorTiers: [0, 1, 1]
 
 # --- Feed slot -------------------------------------------------------------------------------
 
@@ -185,3 +185,87 @@ AmmoOverhaul.ammoEffects: ["Slug4ga"]
 AmmoOverhaul.Slug4ga.ammo: "Ammo.AO_4ga_Slug"
 AmmoOverhaul.Slug4ga.effect: "BaseStatusEffect.Knockdown"
 AmmoOverhaul.Slug4ga.chance: 1.0
+
+# --- Second Uncommon: Birdshot ---------------------------------------------------------------
+
+Ammo.AO_4ga_Birdshot:
+  $base: Ammo.AO_4ga_Buckshot
+  quality: Quality.Uncommon
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+  displayName: LocKey#AO-Ammo-4ga-Birdshot
+  localizedDescription: LocKey#AO-Ammo-4ga-Birdshot-Desc
+  iconPath: AO_4ga_Birdshot
+
+UIIcon.AO_4ga_Birdshot:
+  $type: UIIcon
+  atlasPartName: ao_4ga_birdshot
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_4ga_Birdshot:
+  $base: Items.AO_Feed_4ga_Buckshot
+  displayName: LocKey#AO-Ammo-4ga-Birdshot
+  localizedDescription: LocKey#AO-Ammo-4ga-Birdshot-Desc
+  iconPath: AO_4ga_Birdshot
+  quality: Quality.Uncommon
+  statModifiers:
+    # Flinch: HitReactionFactor is 0 on shotguns; vanilla iconics add to it (Buck +1, Tiny Mike +0.4).
+    # More pellets (the gun's own count, ProjectilesPerShotBase, times 2.5); the engine splits the
+    # shot's damage across them, so each one is weaker.
+    - !append
+      $type: CombinedStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      refStat: BaseStats.ProjectilesPerShotBase
+      refObject: Root
+      opSymbol: '*'
+      value: 1.5
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultX
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultY
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxX
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxY
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultX
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultY
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxX
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.5
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.HitReactionFactor
+      modifierType: Additive
+      value: 0.5

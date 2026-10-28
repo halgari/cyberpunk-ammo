@@ -8,9 +8,9 @@ AmmoOverhaul.Smart_20.feedElement: "Items.AO_AmmoFeed_Smart_20_Element"
 AmmoOverhaul.Smart_20.defaultAmmo: "Ammo.AO_S20_Standard"
 AmmoOverhaul.Smart_20.vanillaAmmo: "Ammo.ShotgunAmmo"
 AmmoOverhaul.Smart_20.lootWeight: 0.2
-AmmoOverhaul.Smart_20.selectors: ["Items.AO_Feed_20mm_Seekers", "Items.AO_Feed_20mm_Dumbfires"]
-AmmoOverhaul.Smart_20.selectorAmmo: ["Ammo.AO_S20_Standard", "Ammo.AO_S20_Dumbfire"]
-AmmoOverhaul.Smart_20.selectorTiers: [0, 1]
+AmmoOverhaul.Smart_20.selectors: ["Items.AO_Feed_20mm_Seekers", "Items.AO_Feed_20mm_Dumbfires", "Items.AO_Feed_20mm_ShortFuse"]
+AmmoOverhaul.Smart_20.selectorAmmo: ["Ammo.AO_S20_Standard", "Ammo.AO_S20_Dumbfire", "Ammo.AO_S20_ShortFuse"]
+AmmoOverhaul.Smart_20.selectorTiers: [0, 1, 1]
 
 # --- Feed slot -------------------------------------------------------------------------------
 
@@ -106,3 +106,37 @@ Items.AO_Feed_20mm_Dumbfires:
       statType: BaseStats.SmartGunHitProbability
       modifierType: Multiplier
       value: 0
+
+# --- Second Uncommon: ShortFuse ---------------------------------------------------------------
+
+Ammo.AO_S20_ShortFuse:
+  $base: Ammo.AO_S20_Standard
+  quality: Quality.Uncommon
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
+  displayName: LocKey#AO-Ammo-20mm-ShortFuse
+  localizedDescription: LocKey#AO-Ammo-ShortFuse-Desc
+  iconPath: AO_20mm_ShortFuse
+
+UIIcon.AO_20mm_ShortFuse:
+  $type: UIIcon
+  atlasPartName: ao_20mm_shortfuse
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_20mm_ShortFuse:
+  $base: Items.AO_Feed_20mm_Seekers
+  displayName: LocKey#AO-Ammo-20mm-ShortFuse
+  localizedDescription: LocKey#AO-Ammo-ShortFuse-Desc
+  iconPath: AO_20mm_ShortFuse
+  quality: Quality.Uncommon
+  statModifiers:
+    # Bigger warhead, less fuel: more damage, and the rocket flies 40% as far (MaximumRange).
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.MaximumRange
+      modifierType: Multiplier
+      value: 0.4

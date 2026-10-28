@@ -9,9 +9,9 @@ AmmoOverhaul.Power_9mm.defaultAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_9mm.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_9mm.lootWeight: 0.40
 # Parallel lists: selector part -> ammo stack it feeds -> tier (0 Common, 1 Uncommon).
-AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms"]
-AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint"]
-AmmoOverhaul.Power_9mm.selectorTiers: [0, 1]
+AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "Items.AO_Feed_9mm_PlusP"]
+AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_9mm_PlusP"]
+AmmoOverhaul.Power_9mm.selectorTiers: [0, 1, 1]
 
 # --- Feed slot -------------------------------------------------------------------------------
 
@@ -90,3 +90,60 @@ Items.AO_Feed_9mm_Mushrooms:
       statType: BaseStats.CanWeaponIgnoreArmor
       modifierType: Additive
       value: -0.5
+
+# --- Second Uncommon: PlusP ---------------------------------------------------------------
+
+Ammo.AO_9mm_PlusP:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the weight isn't added twice.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.06
+  quality: Quality.Uncommon
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+  displayName: LocKey#AO-Ammo-9mm-PlusP
+  localizedDescription: LocKey#AO-Ammo-PlusP-Desc
+  iconPath: AO_9mm_PlusP
+
+UIIcon.AO_9mm_PlusP:
+  $type: UIIcon
+  atlasPartName: ao_9mm_plusp
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_PlusP:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-PlusP
+  localizedDescription: LocKey#AO-Ammo-PlusP-Desc
+  iconPath: AO_9mm_PlusP
+  quality: Quality.Uncommon
+  statModifiers:
+    # Over-pressure: more damage and reach, more kick, and each shot costs more stamina.
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.EffectiveRange
+      modifierType: Multiplier
+      value: 1.15
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.25
+    # A factor of the shot's stamina cost (Attacks.Bullet_GameEffect staminaCost).
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.WeaponEvolutionToStaminaCost
+      modifierType: Multiplier
+      value: 1.3

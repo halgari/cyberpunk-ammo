@@ -10,9 +10,9 @@ AmmoOverhaul.Tech_Heavy.feedElement: "Items.AO_AmmoFeed_Tech_Heavy_Element"
 AmmoOverhaul.Tech_Heavy.defaultAmmo: "Ammo.AO_THeavy_Slug"
 AmmoOverhaul.Tech_Heavy.vanillaAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Tech_Heavy.lootWeight: 0.3
-AmmoOverhaul.Tech_Heavy.selectors: ["Items.AO_Feed_Heavy_RailSlugs", "Items.AO_Feed_Heavy_Sleevers"]
-AmmoOverhaul.Tech_Heavy.selectorAmmo: ["Ammo.AO_THeavy_Slug", "Ammo.AO_THeavy_Sabot"]
-AmmoOverhaul.Tech_Heavy.selectorTiers: [0, 1]
+AmmoOverhaul.Tech_Heavy.selectors: ["Items.AO_Feed_Heavy_RailSlugs", "Items.AO_Feed_Heavy_Sleevers", "Items.AO_Feed_Heavy_Bricks"]
+AmmoOverhaul.Tech_Heavy.selectorAmmo: ["Ammo.AO_THeavy_Slug", "Ammo.AO_THeavy_Sabot", "Ammo.AO_THeavy_Bricks"]
+AmmoOverhaul.Tech_Heavy.selectorTiers: [0, 1, 1]
 
 # --- Feed slot -------------------------------------------------------------------------------
 
@@ -108,3 +108,37 @@ Items.AO_Feed_Heavy_Sleevers:
       statType: BaseStats.DamagePerHit
       modifierType: Multiplier
       value: 0.95
+
+# --- Second Uncommon: Bricks ---------------------------------------------------------------
+
+Ammo.AO_THeavy_Bricks:
+  $base: Ammo.AO_THeavy_Slug
+  quality: Quality.Uncommon
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Tech]
+  displayName: LocKey#AO-Ammo-Heavy-Bricks
+  localizedDescription: LocKey#AO-Ammo-Bricks-Desc
+  iconPath: AO_Heavy_Bricks
+
+UIIcon.AO_Heavy_Bricks:
+  $type: UIIcon
+  atlasPartName: ao_heavy_bricks
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_Heavy_Bricks:
+  $base: Items.AO_Feed_Heavy_RailSlugs
+  displayName: LocKey#AO-Ammo-Heavy-Bricks
+  localizedDescription: LocKey#AO-Ammo-Bricks-Desc
+  iconPath: AO_Heavy_Bricks
+  quality: Quality.Uncommon
+  statModifiers:
+    # Dense slugs: more damage, slower to charge.
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.15
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.ChargeTime
+      modifierType: Multiplier
+      value: 1.3

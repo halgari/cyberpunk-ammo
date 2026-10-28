@@ -10,9 +10,9 @@ AmmoOverhaul.Power_127.feedElement: "Items.AO_AmmoFeed_Power_127_Element"
 AmmoOverhaul.Power_127.defaultAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Power_127.vanillaAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Power_127.lootWeight: 0.6
-AmmoOverhaul.Power_127.selectors: ["Items.AO_Feed_127_Ball", "Items.AO_Feed_127_Mushrooms"]
-AmmoOverhaul.Power_127.selectorAmmo: ["Ammo.SniperRifleAmmo", "Ammo.AO_127_HollowPoint"]
-AmmoOverhaul.Power_127.selectorTiers: [0, 1]
+AmmoOverhaul.Power_127.selectors: ["Items.AO_Feed_127_Ball", "Items.AO_Feed_127_Mushrooms", "Items.AO_Feed_127_PlusP"]
+AmmoOverhaul.Power_127.selectorAmmo: ["Ammo.SniperRifleAmmo", "Ammo.AO_127_HollowPoint", "Ammo.AO_127_PlusP"]
+AmmoOverhaul.Power_127.selectorTiers: [0, 1, 1]
 
 # --- Feed slot -------------------------------------------------------------------------------
 
@@ -89,3 +89,60 @@ Items.AO_Feed_127_Mushrooms:
       statType: BaseStats.CanWeaponIgnoreArmor
       modifierType: Additive
       value: -0.5
+
+# --- Second Uncommon: PlusP ---------------------------------------------------------------
+
+Ammo.AO_127_PlusP:
+  $base: Ammo.SniperRifleAmmo
+  # Listed in full rather than inherited, so the weight isn't added twice.
+  statModifiers:
+    - Ammo.SniperRifleAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.15
+  quality: Quality.Uncommon
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+  displayName: LocKey#AO-Ammo-127-PlusP
+  localizedDescription: LocKey#AO-Ammo-PlusP-Desc
+  iconPath: AO_127_PlusP
+
+UIIcon.AO_127_PlusP:
+  $type: UIIcon
+  atlasPartName: ao_127_plusp
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_127_PlusP:
+  $base: Items.AO_Feed_127_Ball
+  displayName: LocKey#AO-Ammo-127-PlusP
+  localizedDescription: LocKey#AO-Ammo-PlusP-Desc
+  iconPath: AO_127_PlusP
+  quality: Quality.Uncommon
+  statModifiers:
+    # Over-pressure: more damage and reach, more kick, and each shot costs more stamina.
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.EffectiveRange
+      modifierType: Multiplier
+      value: 1.15
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.25
+    # A factor of the shot's stamina cost (Attacks.Bullet_GameEffect staminaCost).
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.WeaponEvolutionToStaminaCost
+      modifierType: Multiplier
+      value: 1.3

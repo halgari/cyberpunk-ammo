@@ -11,9 +11,9 @@ AmmoOverhaul.Smart_10.feedElement: "Items.AO_AmmoFeed_Smart_10_Element"
 AmmoOverhaul.Smart_10.defaultAmmo: "Ammo.AO_S10_Standard"
 AmmoOverhaul.Smart_10.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Smart_10.lootWeight: 0.15
-AmmoOverhaul.Smart_10.selectors: ["Items.AO_Feed_10mm_Seekers", "Items.AO_Feed_10mm_Dumbfires"]
-AmmoOverhaul.Smart_10.selectorAmmo: ["Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire"]
-AmmoOverhaul.Smart_10.selectorTiers: [0, 1]
+AmmoOverhaul.Smart_10.selectors: ["Items.AO_Feed_10mm_Seekers", "Items.AO_Feed_10mm_Dumbfires", "Items.AO_Feed_10mm_ShortFuse"]
+AmmoOverhaul.Smart_10.selectorAmmo: ["Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire", "Ammo.AO_S10_ShortFuse"]
+AmmoOverhaul.Smart_10.selectorTiers: [0, 1, 1]
 
 # --- Feed slot -------------------------------------------------------------------------------
 
@@ -104,3 +104,43 @@ Items.AO_Feed_10mm_Dumbfires:
       statType: BaseStats.SmartGunHitProbability
       modifierType: Multiplier
       value: 0
+
+# --- Second Uncommon: ShortFuse ---------------------------------------------------------------
+
+Ammo.AO_S10_ShortFuse:
+  $base: Ammo.AO_S10_Standard
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.08
+  quality: Quality.Uncommon
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
+  displayName: LocKey#AO-Ammo-10mm-ShortFuse
+  localizedDescription: LocKey#AO-Ammo-ShortFuse-Desc
+  iconPath: AO_10mm_ShortFuse
+
+UIIcon.AO_10mm_ShortFuse:
+  $type: UIIcon
+  atlasPartName: ao_10mm_shortfuse
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_10mm_ShortFuse:
+  $base: Items.AO_Feed_10mm_Seekers
+  displayName: LocKey#AO-Ammo-10mm-ShortFuse
+  localizedDescription: LocKey#AO-Ammo-ShortFuse-Desc
+  iconPath: AO_10mm_ShortFuse
+  quality: Quality.Uncommon
+  statModifiers:
+    # Bigger warhead, less fuel: more damage, and the rocket flies 40% as far (MaximumRange).
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.MaximumRange
+      modifierType: Multiplier
+      value: 0.4

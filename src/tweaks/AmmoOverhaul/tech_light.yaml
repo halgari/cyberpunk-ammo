@@ -8,9 +8,9 @@ AmmoOverhaul.Tech_Light.feedElement: "Items.AO_AmmoFeed_Tech_Light_Element"
 AmmoOverhaul.Tech_Light.defaultAmmo: "Ammo.AO_TLight_Slug"
 AmmoOverhaul.Tech_Light.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Tech_Light.lootWeight: 0.15
-AmmoOverhaul.Tech_Light.selectors: ["Items.AO_Feed_5mm_RailSlugs", "Items.AO_Feed_5mm_Sleevers"]
-AmmoOverhaul.Tech_Light.selectorAmmo: ["Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot"]
-AmmoOverhaul.Tech_Light.selectorTiers: [0, 1]
+AmmoOverhaul.Tech_Light.selectors: ["Items.AO_Feed_5mm_RailSlugs", "Items.AO_Feed_5mm_Sleevers", "Items.AO_Feed_5mm_Bricks"]
+AmmoOverhaul.Tech_Light.selectorAmmo: ["Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot", "Ammo.AO_TLight_Bricks"]
+AmmoOverhaul.Tech_Light.selectorTiers: [0, 1, 1]
 
 # --- Feed slot -------------------------------------------------------------------------------
 
@@ -101,3 +101,43 @@ Items.AO_Feed_5mm_Sleevers:
       statType: BaseStats.DamagePerHit
       modifierType: Multiplier
       value: 0.95
+
+# --- Second Uncommon: Bricks ---------------------------------------------------------------
+
+Ammo.AO_TLight_Bricks:
+  $base: Ammo.AO_TLight_Slug
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.04
+  quality: Quality.Uncommon
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Tech]
+  displayName: LocKey#AO-Ammo-5mm-Bricks
+  localizedDescription: LocKey#AO-Ammo-Bricks-Desc
+  iconPath: AO_5mm_Bricks
+
+UIIcon.AO_5mm_Bricks:
+  $type: UIIcon
+  atlasPartName: ao_5mm_bricks
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_5mm_Bricks:
+  $base: Items.AO_Feed_5mm_RailSlugs
+  displayName: LocKey#AO-Ammo-5mm-Bricks
+  localizedDescription: LocKey#AO-Ammo-Bricks-Desc
+  iconPath: AO_5mm_Bricks
+  quality: Quality.Uncommon
+  statModifiers:
+    # Dense slugs: more damage, slower to charge.
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.15
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.ChargeTime
+      modifierType: Multiplier
+      value: 1.3

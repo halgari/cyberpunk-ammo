@@ -125,6 +125,42 @@ for _, r in ipairs(ROUNDS) do
   check(sel .. " name " .. name, locName(sel) == name, tostring(locName(sel)))
 end
 
+-- Second Uncommon rounds: name, weight, price and quality as their caliber's first Uncommon,
+-- listed at tier 1 in the caliber's selectors.
+local SECOND = {
+  -- caliber, round, name, selector, the caliber's first Uncommon round
+  { "Power_9mm", "Ammo.AO_9mm_PlusP", "9mm +P", "Items.AO_Feed_9mm_PlusP", "Ammo.AO_9mm_HollowPoint" },
+  { "Power_45", "Ammo.AO_45_PlusP", ".45 +P", "Items.AO_Feed_45_PlusP", "Ammo.AO_45_HollowPoint" },
+  { "Power_12mm", "Ammo.AO_12mm_PlusP", "12mm +P", "Items.AO_Feed_12mm_PlusP", "Ammo.AO_12mm_HollowPoint" },
+  { "Power_556", "Ammo.AO_556_PlusP", "5.56 +P", "Items.AO_Feed_556_PlusP", "Ammo.AO_556_HollowPoint" },
+  { "Power_762", "Ammo.AO_762_PlusP", "7.62 +P", "Items.AO_Feed_762_PlusP", "Ammo.AO_762_HollowPoint" },
+  { "Power_127", "Ammo.AO_127_PlusP", "12.7 +P", "Items.AO_Feed_127_PlusP", "Ammo.AO_127_HollowPoint" },
+  { "Power_12ga", "Ammo.AO_12ga_Birdshot", "Birdshot", "Items.AO_Feed_12ga_Birdshot", "Ammo.AO_12ga_Slug" },
+  { "Power_4ga", "Ammo.AO_4ga_Birdshot", "4ga Birdshot", "Items.AO_Feed_4ga_Birdshot", "Ammo.AO_4ga_Slug" },
+  { "Tech_Light", "Ammo.AO_TLight_Bricks", "5mm Bricks", "Items.AO_Feed_5mm_Bricks", "Ammo.AO_TLight_Sabot" },
+  { "Tech_Heavy", "Ammo.AO_THeavy_Bricks", "Heavy Bricks", "Items.AO_Feed_Heavy_Bricks", "Ammo.AO_THeavy_Sabot" },
+  { "Smart_10", "Ammo.AO_S10_ShortFuse", "10mm Short-Fuse", "Items.AO_Feed_10mm_ShortFuse", "Ammo.AO_S10_Dumbfire" },
+  { "Smart_20", "Ammo.AO_S20_ShortFuse", "20mm Short-Fuse", "Items.AO_Feed_20mm_ShortFuse", "Ammo.AO_S20_Dumbfire" },
+  { "Smart_25", "Ammo.AO_S25_ShortFuse", "25mm Short-Fuse", "Items.AO_Feed_25mm_ShortFuse", "Ammo.AO_S25_Dumbfire" },
+}
+for _, r in ipairs(SECOND) do
+  local cal, ammo, name, sel, first = r[1], r[2], r[3], r[4], r[5]
+  check(ammo .. " exists", rec(ammo) ~= nil)
+  check(ammo .. " name " .. name, locName(ammo) == name, tostring(locName(ammo)))
+  local desc = rec(ammo) and Game.GetLocalizedTextByKey(rec(ammo):LocalizedDescription()) or ""
+  check(ammo .. " has a description", desc ~= "" and not desc:find("^AO%-"), desc)
+  check(ammo .. " weight as " .. first, near(statSum(ammo, "Weight"), statSum(first, "Weight")), tostring(statSum(ammo, "Weight")))
+  check(ammo .. " price as " .. first, near(priceMult(ammo, "buyPrice"), priceMult(first, "buyPrice")), tostring(priceMult(ammo, "buyPrice")))
+  check(ammo .. " Uncommon", str(flat(ammo, "quality")) == "Quality.Uncommon", str(flat(ammo, "quality")))
+  check(sel .. " name " .. name, rec(sel) ~= nil and locName(sel) == name, tostring(rec(sel) and locName(sel)))
+  check(sel .. " Uncommon", str(flat(sel, "quality")) == "Quality.Uncommon", str(flat(sel, "quality")))
+  local sels, ammos, tiers = flat("AmmoOverhaul." .. cal, "selectors") or {}, flat("AmmoOverhaul." .. cal, "selectorAmmo") or {}, flat("AmmoOverhaul." .. cal, "selectorTiers") or {}
+  local at = nil
+  for i, x in ipairs(sels) do if str(x) == sel then at = i end end
+  check(cal .. " lists " .. sel .. " at tier 1 for " .. ammo, at ~= nil and tiers[at] == 1 and str(ammos[at]) == ammo,
+    at and (tostring(tiers[at]) .. " " .. str(ammos[at])) or "not listed")
+end
+
 for _, g in ipairs(GUNS) do
   check(g[1] .. " ammo " .. g[2], str(flat(g[1], "ammo")) == g[2], str(flat(g[1], "ammo")))
   local root = flat(flat(g[1], "blueprint"), "rootElement")

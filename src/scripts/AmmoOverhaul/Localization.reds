@@ -72,5 +72,24 @@ public class AmmoOverhaulEnglish extends ModLocalizationPackage {
     this.Text("AO-Ammo-10mm-Seekers-Desc", "Standard smart rockets. Get a lock and they chase the target for you.\n\nStandard smart ammo. Tracks locked targets.");
     this.Text("AO-Ammo-10mm-Dumbfires", "10mm Dumbfires");
     this.Text("AO-Ammo-10mm-Dumbfires-Desc", "Smart rockets with the chip pulled and extra propellant packed in. Hits harder, but it only goes where you point it.\n\n+25% damage. Doesn't track targets.");
+    // Second Uncommon rounds. One description per load, shared across calibers.
+    this.Text("AO-Ammo-9mm-PlusP", "9mm +P");
+    this.Text("AO-Ammo-45-PlusP", ".45 +P");
+    this.Text("AO-Ammo-12mm-PlusP", "12mm +P");
+    this.Text("AO-Ammo-556-PlusP", "5.56 +P");
+    this.Text("AO-Ammo-762-PlusP", "7.62 +P");
+    this.Text("AO-Ammo-127-PlusP", "12.7 +P");
+    this.Text("AO-Ammo-12ga-Birdshot", "Birdshot");
+    this.Text("AO-Ammo-4ga-Birdshot", "4ga Birdshot");
+    this.Text("AO-Ammo-5mm-Bricks", "5mm Bricks");
+    this.Text("AO-Ammo-Heavy-Bricks", "Heavy Bricks");
+    this.Text("AO-Ammo-10mm-ShortFuse", "10mm Short-Fuse");
+    this.Text("AO-Ammo-20mm-ShortFuse", "20mm Short-Fuse");
+    this.Text("AO-Ammo-25mm-ShortFuse", "25mm Short-Fuse");
+    this.Text("AO-Ammo-PlusP-Desc", "Loaded hot, over standard pressure. More punch and more reach, but it kicks harder and wears you out faster.\n\n+10% damage. +15% range. +25% recoil. Costs more stamina per shot.");
+    this.Text("AO-Ammo-Birdshot-Desc", "A shell full of small shot. It spreads wide and makes people flinch, but armor shrugs most of it off.\n\nTwice the pellets, each one weaker. Wider spread. Armor is 50% more effective against it. Targets flinch more.");
+    this.Text("AO-Ammo-4ga-Birdshot-Desc", "Birdshot in a 4-gauge shell. More pellets and a wider spread than anything a 12-gauge throws.\n\n2.5x the pellets, each one weaker. Much wider spread. Armor is 50% more effective against it. Targets flinch more.");
+    this.Text("AO-Ammo-Bricks-Desc", "Dense slugs, heavier than standard. They hit harder, but the rails take longer to get them moving.\n\n+15% damage. Charges 30% slower.");
+    this.Text("AO-Ammo-ShortFuse-Desc", "Seekers with a bigger warhead and less fuel. They hit harder but burn out sooner, so keep your targets close.\n\n+20% damage. Shorter range.");
   }
 }

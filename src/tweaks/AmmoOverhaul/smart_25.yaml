@@ -8,9 +8,9 @@ AmmoOverhaul.Smart_25.feedElement: "Items.AO_AmmoFeed_Smart_25_Element"
 AmmoOverhaul.Smart_25.defaultAmmo: "Ammo.AO_S25_Standard"
 AmmoOverhaul.Smart_25.vanillaAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Smart_25.lootWeight: 0.1
-AmmoOverhaul.Smart_25.selectors: ["Items.AO_Feed_25mm_Seekers", "Items.AO_Feed_25mm_Dumbfires"]
-AmmoOverhaul.Smart_25.selectorAmmo: ["Ammo.AO_S25_Standard", "Ammo.AO_S25_Dumbfire"]
-AmmoOverhaul.Smart_25.selectorTiers: [0, 1]
+AmmoOverhaul.Smart_25.selectors: ["Items.AO_Feed_25mm_Seekers", "Items.AO_Feed_25mm_Dumbfires", "Items.AO_Feed_25mm_ShortFuse"]
+AmmoOverhaul.Smart_25.selectorAmmo: ["Ammo.AO_S25_Standard", "Ammo.AO_S25_Dumbfire", "Ammo.AO_S25_ShortFuse"]
+AmmoOverhaul.Smart_25.selectorTiers: [0, 1, 1]
 
 # --- Feed slot -------------------------------------------------------------------------------
 
@@ -106,3 +106,37 @@ Items.AO_Feed_25mm_Dumbfires:
       statType: BaseStats.SmartGunHitProbability
       modifierType: Multiplier
       value: 0
+
+# --- Second Uncommon: ShortFuse ---------------------------------------------------------------
+
+Ammo.AO_S25_ShortFuse:
+  $base: Ammo.AO_S25_Standard
+  quality: Quality.Uncommon
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
+  displayName: LocKey#AO-Ammo-25mm-ShortFuse
+  localizedDescription: LocKey#AO-Ammo-ShortFuse-Desc
+  iconPath: AO_25mm_ShortFuse
+
+UIIcon.AO_25mm_ShortFuse:
+  $type: UIIcon
+  atlasPartName: ao_25mm_shortfuse
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_25mm_ShortFuse:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-ShortFuse
+  localizedDescription: LocKey#AO-Ammo-ShortFuse-Desc
+  iconPath: AO_25mm_ShortFuse
+  quality: Quality.Uncommon
+  statModifiers:
+    # Bigger warhead, less fuel: more damage, and the rocket flies 40% as far (MaximumRange).
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.MaximumRange
+      modifierType: Multiplier
+      value: 0.4
