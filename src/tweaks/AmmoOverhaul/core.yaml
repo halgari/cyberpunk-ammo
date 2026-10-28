@@ -29,6 +29,38 @@ AmmoOverhaul.shares.Smart: [0.90, 0.10]
 # a caliber picked by the calibers' lootWeight.
 AmmoOverhaul.loot.ownedBias: 0.6
 
+# --- Damage roll -------------------------------------------------------------------------------
+# Every ranged gun hit, by V or an NPC, is multiplied by a roll (DamageRoll.reds): a dud
+# (dudChance, times dudMult), else a hot round (hotChance, times hotMult), else uniform in
+# min..max. Layers, first set wins: the round (<ammo>.rollMin, .rollMax, .rollDudChance ...), its
+# faction (AmmoOverhaul.roll.<aoFaction>.min ...), its family (below) and these global values.
+# Append a damage type for a per-type value (<ammo>.rollMinThermal,
+# AmmoOverhaul.roll.Power.minThermal); without one the whole-hit value is used. Below 0 is unset.
+AmmoOverhaul.roll.min: 0.90
+AmmoOverhaul.roll.max: 1.01
+AmmoOverhaul.roll.dudChance: 0.0
+AmmoOverhaul.roll.dudMult: 1.0
+AmmoOverhaul.roll.hotChance: 0.0
+AmmoOverhaul.roll.hotMult: 1.0
+AmmoOverhaul.roll.Power.min: -1.0
+AmmoOverhaul.roll.Power.max: -1.0
+AmmoOverhaul.roll.Power.dudChance: -1.0
+AmmoOverhaul.roll.Power.dudMult: -1.0
+AmmoOverhaul.roll.Power.hotChance: -1.0
+AmmoOverhaul.roll.Power.hotMult: -1.0
+AmmoOverhaul.roll.Tech.min: -1.0
+AmmoOverhaul.roll.Tech.max: -1.0
+AmmoOverhaul.roll.Tech.dudChance: -1.0
+AmmoOverhaul.roll.Tech.dudMult: -1.0
+AmmoOverhaul.roll.Tech.hotChance: -1.0
+AmmoOverhaul.roll.Tech.hotMult: -1.0
+AmmoOverhaul.roll.Smart.min: -1.0
+AmmoOverhaul.roll.Smart.max: -1.0
+AmmoOverhaul.roll.Smart.dudChance: -1.0
+AmmoOverhaul.roll.Smart.dudMult: -1.0
+AmmoOverhaul.roll.Smart.hotChance: -1.0
+AmmoOverhaul.roll.Smart.hotMult: -1.0
+
 # --- NPCs --------------------------------------------------------------------------------------
 # Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
 # loaded in the gun count toward it; the rest is the body's loot.

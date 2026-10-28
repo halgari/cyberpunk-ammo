@@ -274,3 +274,24 @@ Character.AO_Test_Plain_Zhuo:
   secondaryEquipment:
     $type: NPCEquipmentGroup
     equipmentItems: []
+
+# Damage roll test rounds (calibers/roll.lua): one with every round value and a Thermal range,
+# one taking its range from a test faction.
+Ammo.AO_Test_Roll:
+  $base: Ammo.AO_45_Ball
+
+Ammo.AO_Test_Roll.rollMin: 0.5
+Ammo.AO_Test_Roll.rollMax: 0.6
+Ammo.AO_Test_Roll.rollDudChance: 0.2
+Ammo.AO_Test_Roll.rollDudMult: 0.1
+Ammo.AO_Test_Roll.rollHotChance: 0.2
+Ammo.AO_Test_Roll.rollHotMult: 3.0
+Ammo.AO_Test_Roll.rollMinThermal: 2.0
+Ammo.AO_Test_Roll.rollMaxThermal: 2.0
+
+Ammo.AO_Test_RollFaction:
+  $base: Ammo.AO_45_Ball
+
+Ammo.AO_Test_RollFaction.aoFaction: "AOTest"
+AmmoOverhaul.roll.AOTest.min: 0.7
+AmmoOverhaul.roll.AOTest.max: 0.8

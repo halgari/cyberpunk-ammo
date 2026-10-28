@@ -39,6 +39,11 @@ public class AmmoFeedSystem extends ScriptableSystem {
 
   private let m_ammoSection: String;
 
+  // Resolved damage rolls, one map per damage type ("" first, then DamageTypes()), keyed by the
+  // ammo's TDBID number; and each weapon record's caliber ("" boxed too), keyed the same way.
+  private let m_rolls: array<ref<inkHashMap>>;
+  private let m_calibers: ref<inkHashMap>;
+
   public static func Get(game: GameInstance) -> ref<AmmoFeedSystem> {
     return GameInstance.GetScriptableSystemsContainer(game).Get(n"AmmoOverhaul.AmmoFeedSystem") as AmmoFeedSystem;
   }
@@ -226,6 +231,47 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return true;
   }
 
+  public static func DamageTypes() -> array<String> {
+    return ["", "Physical", "Thermal", "Electric", "Chemical"];
+  }
+
+  // The damage roll of `ammo` for one damage type ("" for the whole hit). The family is the
+  // ammo's own AO_Family tag, else `family` (vanilla Common rounds carry no tag).
+  public final func Roll(ammo: TweakDBID, family: String, damageType: String) -> AORoll {
+    let types: array<String> = AmmoFeedSystem.DamageTypes();
+    let index: Int32 = ArrayFindFirst(types, damageType);
+    if index < 0 {
+      index = 0;
+      damageType = "";
+    }
+    while ArraySize(this.m_rolls) <= index {
+      ArrayPush(this.m_rolls, new inkHashMap());
+    }
+    let key: Uint64 = TDBID.ToNumber(ammo);
+    let box: ref<AORollBox> = this.m_rolls[index].Get(key) as AORollBox;
+    if !IsDefined(box) {
+      let tagged: String = DamageRoll.AmmoFamily(ammo);
+      box = new AORollBox();
+      box.roll = DamageRoll.Values(ammo, StrLen(tagged) > 0 ? tagged : family, damageType);
+      this.m_rolls[index].Insert(key, box);
+    }
+    return box.roll;
+  }
+
+  public final func CachedCaliber(weapon: TweakDBID) -> String {
+    if !IsDefined(this.m_calibers) {
+      this.m_calibers = new inkHashMap();
+    }
+    let key: Uint64 = TDBID.ToNumber(weapon);
+    let box: ref<AOCaliberBox> = this.m_calibers.Get(key) as AOCaliberBox;
+    if !IsDefined(box) {
+      box = new AOCaliberBox();
+      box.caliber = AOData.FindCaliber(weapon);
+      this.m_calibers.Insert(key, box);
+    }
+    return box.caliber;
+  }
+
   public static func Log(message: String) -> Void {
     ModLog(n"AmmoOverhaul", message);
     let system: ref<AmmoFeedSystem> = AmmoFeedSystem.Get(GetGameInstance());
@@ -290,6 +336,48 @@ public class AmmoFeedSystem extends ScriptableSystem {
       i += 1;
     }
     return text;
+  }
+
+  // "min max dudChance dudMult hotChance hotMult" of an ammo's roll; `fresh` drops the cache first.
+  public final func DebugRollFor(ammo: String, damageType: String, fresh: Bool) -> String {
+    if fresh {
+      ArrayClear(this.m_rolls);
+    }
+    let r: AORoll = this.Roll(TDBID.Create(ammo), "", damageType);
+    return FloatToString(r.min) + " " + FloatToString(r.max) + " " + FloatToString(r.dudChance) + " "
+      + FloatToString(r.dudMult) + " " + FloatToString(r.hotChance) + " " + FloatToString(r.hotMult);
+  }
+
+  // "min max mean duds hots" over `n` draws of an ammo's roll (duds and hots counted by value).
+  public final func DebugRollDraws(ammo: String, damageType: String, n: Int32) -> String {
+    let r: AORoll = this.Roll(TDBID.Create(ammo), "", damageType);
+    let lo: Float = 1000000.0;
+    let hi: Float = -1000000.0;
+    let sum: Float = 0.0;
+    let duds: Int32 = 0;
+    let hots: Int32 = 0;
+    let i: Int32 = 0;
+    while i < n {
+      let v: Float = DamageRoll.Draw(r);
+      lo = MinF(lo, v);
+      hi = MaxF(hi, v);
+      sum += v;
+      if r.dudChance > 0.0 && v == r.dudMult {
+        duds += 1;
+      } else {
+        if r.hotChance > 0.0 && v == r.hotMult {
+          hots += 1;
+        }
+      }
+      i += 1;
+    }
+    return FloatToString(lo) + " " + FloatToString(hi) + " " + FloatToString(sum / Cast<Float>(n)) + " "
+      + IntToString(duds) + " " + IntToString(hots);
+  }
+
+  // A weapon record's caliber, through the cache or (`fresh`) looked up again.
+  public final func DebugCaliber(weapon: String, fresh: Bool) -> String {
+    return fresh ? AOData.FindCaliber(TDBID.Create(weapon)) : this.CachedCaliber(TDBID.Create(weapon));
   }
 
   // "item=quantity;..." of AmmoDistribution.Spread.
@@ -458,13 +546,16 @@ public class AmmoFeedSystem extends ScriptableSystem {
       return;
     }
     let chance: Float;
-    let npc: ref<NPCPuppet> = instigator as NPCPuppet;
-    let ammo: TweakDBID = IsDefined(npc) ? NpcAmmo.GunAmmo(npc, weaponID) : AOData.SelectedAmmo(instigator, weaponID, caliber);
+    let ammo: TweakDBID = AOData.LoadedAmmo(instigator, weapon);
     let effect: TweakDBID = AOData.OnHitEffect(ammo, chance);
     if TDBID.IsValid(effect) && RandF() < chance {
       attackData.AddStatusEffect(effect, 1.0);
     }
   }
+}
+
+public class AOCaliberBox extends IScriptable {
+  let caliber: String;
 }
 
 public class AmmoFeedApplyCallback extends DelayCallback {

@@ -189,8 +189,14 @@ public abstract class AOData {
     return ArrayContains(records, weapon.GetID());
   }
 
-  // The caliber of a weapon record, or "" if the mod doesn't manage it.
+  // The caliber of a weapon record, or "" if the mod doesn't manage it. Cached per record by
+  // AmmoFeedSystem once the game runs (every hit asks).
   public static func CaliberForWeapon(weapon: TweakDBID) -> String {
+    let system: ref<AmmoFeedSystem> = AmmoFeedSystem.Get(GetGameInstance());
+    return IsDefined(system) ? system.CachedCaliber(weapon) : AOData.FindCaliber(weapon);
+  }
+
+  public static func FindCaliber(weapon: TweakDBID) -> String {
     let record: ref<WeaponItem_Record> = TweakDBInterface.GetWeaponItemRecord(weapon);
     if IsDefined(record) {
       for caliber in AOData.Calibers() {
@@ -246,6 +252,22 @@ public abstract class AOData {
       }
     }
     return AOData.DefaultAmmo(caliber);
+  }
+
+  // The ammo a shot from `weapon` is loaded with: the NPC's rolled or selected round, the
+  // player's selection, or the weapon record's own ammo for guns the mod doesn't manage.
+  public static func LoadedAmmo(instigator: ref<GameObject>, weapon: ref<WeaponObject>) -> TweakDBID {
+    let weaponID: ItemID = weapon.GetItemID();
+    let npc: ref<NPCPuppet> = instigator as NPCPuppet;
+    if IsDefined(npc) {
+      return NpcAmmo.GunAmmo(npc, weaponID);
+    }
+    let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(weaponID));
+    if StrLen(caliber) > 0 {
+      return AOData.SelectedAmmo(instigator, weaponID, caliber);
+    }
+    let record: ref<WeaponItem_Record> = TweakDBInterface.GetWeaponItemRecord(ItemID.GetTDBID(weaponID));
+    return IsDefined(record) && IsDefined(record.Ammo()) ? record.Ammo().GetID() : TDBID.None();
   }
 
   // How many rounds of its selected ammo the player has for `weaponID`, or -1 if the weapon
