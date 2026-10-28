@@ -11,17 +11,6 @@ AmmoOverhaul.Tech_Light.lootWeight: 0.15
 AmmoOverhaul.Tech_Light.selectors: ["Items.AO_Feed_5mm_RailSlugs", "Items.AO_Feed_5mm_Sleevers"]
 AmmoOverhaul.Tech_Light.selectorAmmo: ["Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot"]
 AmmoOverhaul.Tech_Light.selectorTiers: [0, 1]
-AmmoOverhaul.Tech_Light.profile: "AOProfile.Tech_Light"
-
-# --- Caliber profile ---------------------------------------------------------------------------
-
-# Baseline: no changes, kept so every caliber has one. The startup tweak adds this group to every gun of the caliber.
-AOProfile.Tech_Light:
-  $type: StatModifierGroup
-  drawBasedOnStatType: false
-  saveBasedOnStatType: false
-  optimiseCombinedModifiers: false
-  statModifiers: []
 
 # --- Feed slot -------------------------------------------------------------------------------
 

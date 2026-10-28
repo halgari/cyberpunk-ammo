@@ -11,21 +11,6 @@ AmmoOverhaul.Smart_25.lootWeight: 0.1
 AmmoOverhaul.Smart_25.selectors: ["Items.AO_Feed_25mm_Seekers", "Items.AO_Feed_25mm_Dumbfires"]
 AmmoOverhaul.Smart_25.selectorAmmo: ["Ammo.AO_S25_Standard", "Ammo.AO_S25_Dumbfire"]
 AmmoOverhaul.Smart_25.selectorTiers: [0, 1]
-AmmoOverhaul.Smart_25.profile: "AOProfile.Smart_25"
-
-# --- Caliber profile ---------------------------------------------------------------------------
-
-# One big dart: a little better into armor, heavy and rare. The startup tweak adds this group to every gun of the caliber.
-AOProfile.Smart_25:
-  $type: StatModifierGroup
-  drawBasedOnStatType: false
-  saveBasedOnStatType: false
-  optimiseCombinedModifiers: false
-  statModifiers:
-    - $type: ConstantStatModifier
-      statType: BaseStats.CanWeaponIgnoreArmor
-      modifierType: Additive
-      value: 0.1
 
 # --- Feed slot -------------------------------------------------------------------------------
 

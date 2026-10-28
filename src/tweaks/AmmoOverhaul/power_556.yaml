@@ -11,21 +11,6 @@ AmmoOverhaul.Power_556.lootWeight: 0.65
 AmmoOverhaul.Power_556.selectors: ["Items.AO_Feed_556_Ball", "Items.AO_Feed_556_Mushrooms"]
 AmmoOverhaul.Power_556.selectorAmmo: ["Ammo.RifleAmmo", "Ammo.AO_556_HollowPoint"]
 AmmoOverhaul.Power_556.selectorTiers: [0, 1]
-AmmoOverhaul.Power_556.profile: "AOProfile.Power_556"
-
-# --- Caliber profile ---------------------------------------------------------------------------
-
-# Rifle baseline, decent into armor. The startup tweak adds this group to every gun of the caliber.
-AOProfile.Power_556:
-  $type: StatModifierGroup
-  drawBasedOnStatType: false
-  saveBasedOnStatType: false
-  optimiseCombinedModifiers: false
-  statModifiers:
-    - $type: ConstantStatModifier
-      statType: BaseStats.CanWeaponIgnoreArmor
-      modifierType: Additive
-      value: 0.15
 
 # --- Feed slot -------------------------------------------------------------------------------
 

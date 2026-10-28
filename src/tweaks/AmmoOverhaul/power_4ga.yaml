@@ -11,29 +11,6 @@ AmmoOverhaul.Power_4ga.lootWeight: 0.1
 AmmoOverhaul.Power_4ga.selectors: ["Items.AO_Feed_4ga_Buckshot", "Items.AO_Feed_4ga_Slugs"]
 AmmoOverhaul.Power_4ga.selectorAmmo: ["Ammo.AO_4ga_Buckshot", "Ammo.AO_4ga_Slug"]
 AmmoOverhaul.Power_4ga.selectorTiers: [0, 1]
-AmmoOverhaul.Power_4ga.profile: "AOProfile.Power_4ga"
-
-# --- Caliber profile ---------------------------------------------------------------------------
-
-# The Carnage's big shells: poor into armor, heavy kick. The startup tweak adds this group to every gun of the caliber.
-AOProfile.Power_4ga:
-  $type: StatModifierGroup
-  drawBasedOnStatType: false
-  saveBasedOnStatType: false
-  optimiseCombinedModifiers: false
-  statModifiers:
-    - $type: ConstantStatModifier
-      statType: BaseStats.CanWeaponIgnoreArmor
-      modifierType: Additive
-      value: -0.25
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMin
-      modifierType: Multiplier
-      value: 1.3
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMax
-      modifierType: Multiplier
-      value: 1.3
 
 # --- Feed slot -------------------------------------------------------------------------------
 

@@ -13,29 +13,6 @@ AmmoOverhaul.Power_127.lootWeight: 0.6
 AmmoOverhaul.Power_127.selectors: ["Items.AO_Feed_127_Ball", "Items.AO_Feed_127_Mushrooms"]
 AmmoOverhaul.Power_127.selectorAmmo: ["Ammo.SniperRifleAmmo", "Ammo.AO_127_HollowPoint"]
 AmmoOverhaul.Power_127.selectorTiers: [0, 1]
-AmmoOverhaul.Power_127.profile: "AOProfile.Power_127"
-
-# --- Caliber profile ---------------------------------------------------------------------------
-
-# Best into armor; heavy and dear. The startup tweak adds this group to every gun of the caliber.
-AOProfile.Power_127:
-  $type: StatModifierGroup
-  drawBasedOnStatType: false
-  saveBasedOnStatType: false
-  optimiseCombinedModifiers: false
-  statModifiers:
-    - $type: ConstantStatModifier
-      statType: BaseStats.CanWeaponIgnoreArmor
-      modifierType: Additive
-      value: 0.4
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMin
-      modifierType: Multiplier
-      value: 1.25
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMax
-      modifierType: Multiplier
-      value: 1.25
 
 # --- Feed slot -------------------------------------------------------------------------------
 

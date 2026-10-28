@@ -12,33 +12,6 @@ AmmoOverhaul.Power_12mm.lootWeight: 0.1
 AmmoOverhaul.Power_12mm.selectors: ["Items.AO_Feed_12mm_Ball", "Items.AO_Feed_12mm_Mushrooms"]
 AmmoOverhaul.Power_12mm.selectorAmmo: ["Ammo.AO_12mm_Ball", "Ammo.AO_12mm_HollowPoint"]
 AmmoOverhaul.Power_12mm.selectorTiers: [0, 1]
-AmmoOverhaul.Power_12mm.profile: "AOProfile.Power_12mm"
-
-# --- Caliber profile ---------------------------------------------------------------------------
-
-# Hand cannon: more damage and pen, a lot more kick. The startup tweak adds this group to every gun of the caliber.
-AOProfile.Power_12mm:
-  $type: StatModifierGroup
-  drawBasedOnStatType: false
-  saveBasedOnStatType: false
-  optimiseCombinedModifiers: false
-  statModifiers:
-    - $type: ConstantStatModifier
-      statType: BaseStats.DamagePerHit
-      modifierType: Multiplier
-      value: 1.15
-    - $type: ConstantStatModifier
-      statType: BaseStats.CanWeaponIgnoreArmor
-      modifierType: Additive
-      value: 0.1
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMin
-      modifierType: Multiplier
-      value: 1.35
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMax
-      modifierType: Multiplier
-      value: 1.35
 
 # --- Feed slot -------------------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # v1 calibers NPC run: one plain test NPC per new caliber (test.yaml: a gang record with only the
 # family's gun). Uncommon roll forced off: checks their ammo (npc.lua), kills them, checks their
-# loot (slice/npcloot.lua) and picks up the dropped Unity (keeps .45 and its profile: Review
+# loot (slice/npcloot.lua) and picks up the dropped Unity (keeps .45 and vanilla stats: Review
 # Focus 5). Then forced on: checks they carry the Uncommon round and removes them unkilled (an
 # NPC dying with a selector fitted can crash the game, DESIGN.md Known gaps). Police, MaxTac and
 # story NPCs leave no loot at all, so they aren't used. Exits 1 on FAIL.
@@ -48,7 +48,7 @@ if got then
   check("picked-up Unity is in the inventory", d ~= nil)
   if d then
     local pen = Game.GetStatsSystem():GetStatValue(d:GetStatsObjectID(), gamedataStatType.CanWeaponIgnoreArmor)
-    check("picked-up Unity carries the .45 profile (pen -0.15)", math.abs(pen + 0.15) < 0.001, tostring(pen))
+    check("picked-up Unity has vanilla pen (0)", pen == 0, tostring(pen))
     check("picked-up Unity loads .45 Ball", str(flat(got.id, "ammo")) == "Ammo.AO_45_Ball", str(flat(got.id, "ammo")))
   end
 end

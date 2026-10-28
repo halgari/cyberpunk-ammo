@@ -11,33 +11,6 @@ AmmoOverhaul.Power_45.lootWeight: 0.2
 AmmoOverhaul.Power_45.selectors: ["Items.AO_Feed_45_Ball", "Items.AO_Feed_45_Mushrooms"]
 AmmoOverhaul.Power_45.selectorAmmo: ["Ammo.AO_45_Ball", "Ammo.AO_45_HollowPoint"]
 AmmoOverhaul.Power_45.selectorTiers: [0, 1]
-AmmoOverhaul.Power_45.profile: "AOProfile.Power_45"
-
-# --- Caliber profile ---------------------------------------------------------------------------
-
-# Hits harder, worse into armor, a bit more kick. The startup tweak adds this group to every gun of the caliber.
-AOProfile.Power_45:
-  $type: StatModifierGroup
-  drawBasedOnStatType: false
-  saveBasedOnStatType: false
-  optimiseCombinedModifiers: false
-  statModifiers:
-    - $type: ConstantStatModifier
-      statType: BaseStats.DamagePerHit
-      modifierType: Multiplier
-      value: 1.1
-    - $type: ConstantStatModifier
-      statType: BaseStats.CanWeaponIgnoreArmor
-      modifierType: Additive
-      value: -0.15
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMin
-      modifierType: Multiplier
-      value: 1.1
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMax
-      modifierType: Multiplier
-      value: 1.1
 
 # --- Feed slot -------------------------------------------------------------------------------
 

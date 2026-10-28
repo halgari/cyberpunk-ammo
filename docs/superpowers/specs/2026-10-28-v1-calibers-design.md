@@ -8,9 +8,7 @@ own. Rare and Epic for all 13 calibers are a later spec.
 
 Every ranged gun in the game loads its caliber's ammo, and each caliber has two rounds (4-gauge:
 see below) that the player can swap through the Ammo slot, buy, loot and take from NPCs, exactly
-as the slice's three calibers work now. Picking a caliber is a trade-off, not a ladder: a bigger
-round gives up something (armor performance, recoil, weight, price or how often it turns up) for
-its punch.
+as the slice's three calibers work now. A bigger round costs more, weighs more or turns up less often; the gun itself is unchanged.
 
 ## Decisions (agreed in brainstorming, 2026-10-28)
 
@@ -21,10 +19,8 @@ its punch.
 - **The magnum group is `12mm`** (Cyberpunk's metric naming for very heavy pistol rounds); `.45`
   stays `.45`.
 - **4-gauge:** Buckshot is Common; the Slug is Uncommon only (there is no Common slug).
-- **Calibers differ in stats, ammo weight, price and availability.** Enemy loadouts are not
+- **Calibers differ in ammo weight, price and availability** (not in gun stats: see "Common rounds act as vanilla"). Enemy loadouts are not
   changed: NPCs keep the guns their records give them, and get only the ammo for those guns.
-- **Not linear:** going up in caliber does not simply scale damage. Each caliber's profile trades
-  one thing for another; the numbers below are starting points to tune in game.
 - Individual guns (pump vs semi-auto, iconics) are a later pass.
 
 ## Lineup
@@ -62,41 +58,25 @@ Same load, same effect in every caliber, with the slice's numbers:
   It does not pierce cover: piercing is kept for higher-tier rounds (kinetic penetrators,
   tungsten slugs, depleted-uranium rods) in the Rare/Epic spec.
 
-## Caliber profiles
+## Common rounds act as vanilla
 
-Every round of a caliber, Common included, carries the caliber's profile. An empty feed slot means
-the Common round with no selector fitted, so the profile can't live on the selector: the startup
-tweak that already gives each caliber's guns its feed slot and default ammo also adds the profile
-to those guns' stats. Uncommon effects stack on top.
+(Changed 2026-10-28, user decision after the first build: the per-caliber stat profiles on the guns
+were removed.) The guns aren't modified, so a caliber's Common round behaves exactly like the
+gun's vanilla ammo: no damage, armor, recoil or range changes. Only the Uncommon loads change
+stats, relative to that. Calibers still differ in ammo weight, price and how often they turn up:
 
-Profile values are relative to the gun's own stats (1.00 / 0 = unchanged):
+| Caliber | Ammo weight (x the 9mm round) | Price (x the game ammo it comes from) |
+|---|---|---|
+| 9mm, 5.56, 12-gauge | 1x | 1x |
+| .45 | 1.5x | 1.2x |
+| 12mm | 2x | 1.6x |
+| 7.62 | 1.5x | 1.3x |
+| 12.7, 4-gauge | 2.5x | 2x |
+| Heavy rail | 2x the 5mm round | 1.5x |
+| 20mm cluster | 1.5x the 10mm round | 1.3x |
+| 25mm dart | 3x the 10mm round | 2.5x |
 
-| Caliber | Damage | Armor pen | Recoil | Range | Ammo weight | Price | Character |
-|---|---|---|---|---|---|---|---|
-| 9mm | 1.00 | 0 | 1.00 | 1.00 | 1× | 1× | baseline: light, cheap, everywhere |
-| .45 | 1.10 | −0.15 | 1.10 | 1.00 | 1.5× | 1.2× | hits harder, worse into armor |
-| 12mm | 1.15 | +0.10 | 1.35 | 1.00 | 2× | 1.6× | hand cannon: kick, weight, cost |
-| 5.56 | 1.00 | +0.15 | 1.00 | 1.00 | 1× | 1× | rifle baseline, decent into armor |
-| 7.62 | 1.05 | +0.25 | 1.20 | 1.10 | 1.5× | 1.3× | harder and better into armor, kicks |
-| 12.7 | 1.00 | +0.40 | 1.25 | 1.00 | 2.5× | 2× | best into armor; heavy and dear |
-| 12-gauge | 1.00 | −0.25 | 1.00 | 0.75 | 1× | 1× | brutal close, poor into armor, falls off |
-| 4-gauge | 1.00 | −0.25 | 1.30 | 1.00 | 2.5× | 2× | the Carnage's big shells |
-| 5mm light rail | 1.00 | 0 | 1.00 | 1.00 | 1× | 1× | baseline (Tech guns already pierce) |
-| Heavy rail | 1.00 | +0.20 | 1.20 | 1.00 | 2× | 1.5× | dense slugs: armor, weight |
-| 10mm smart | 1.00 | −0.10 | 1.00 | 1.00 | 1× | 1× | forgiving, light |
-| 20mm cluster | 1.00 | −0.20 | 1.00 | 1.00 | 1.5× | 1.3× | swarms, poor into armor |
-| 25mm dart | 1.00 | +0.10 | 1.00 | 1.00 | 3× | 2.5× | one big dart, rare |
-
-- **Damage** is `DamagePerHit` ×. **Armor pen** is added to `CanWeaponIgnoreArmor`, which scales
-  the target's armor by `(1 − pen)` (negative counts armor for more). **Recoil** multiplies the
-  recoil kick stats. **Range** multiplies `EffectiveRange` (player shots only).
-- **Ammo weight** is per round, relative to the 9mm round's carry weight; **price** is relative to
-  the game ammo the caliber comes from (below).
-- Damage multipliers do nothing on NPC shots (a known gap from the slice); armor pen and recoil on
-  NPC guns are whatever the engine does with them.
-- Stamina per shot is set on attack records, not by a stat, so it isn't part of a profile in v1.
-- Uncommon effects stack on the profile: 12ga Slugs end at range 0.75 × 2 = 1.5× the gun's, 4ga
-  Slugs at armor pen −0.25 + 0.5 = +0.25, `.45 Mushrooms` at damage 1.10 × 1.2 and pen −0.65.
+Tech and Smart rounds are weighed against their family's slice round (5mm 0.04, 10mm 0.08).
 
 ## Where each caliber's ammo comes from
 

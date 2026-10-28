@@ -10,37 +10,6 @@ AmmoOverhaul.Power_762.lootWeight: 0.35
 AmmoOverhaul.Power_762.selectors: ["Items.AO_Feed_762_Ball", "Items.AO_Feed_762_Mushrooms"]
 AmmoOverhaul.Power_762.selectorAmmo: ["Ammo.AO_762_Ball", "Ammo.AO_762_HollowPoint"]
 AmmoOverhaul.Power_762.selectorTiers: [0, 1]
-AmmoOverhaul.Power_762.profile: "AOProfile.Power_762"
-
-# --- Caliber profile ---------------------------------------------------------------------------
-
-# Harder and better into armor, kicks more. The startup tweak adds this group to every gun of the caliber.
-AOProfile.Power_762:
-  $type: StatModifierGroup
-  drawBasedOnStatType: false
-  saveBasedOnStatType: false
-  optimiseCombinedModifiers: false
-  statModifiers:
-    - $type: ConstantStatModifier
-      statType: BaseStats.DamagePerHit
-      modifierType: Multiplier
-      value: 1.05
-    - $type: ConstantStatModifier
-      statType: BaseStats.CanWeaponIgnoreArmor
-      modifierType: Additive
-      value: 0.25
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMin
-      modifierType: Multiplier
-      value: 1.2
-    - $type: ConstantStatModifier
-      statType: BaseStats.RecoilKickMax
-      modifierType: Multiplier
-      value: 1.2
-    - $type: ConstantStatModifier
-      statType: BaseStats.EffectiveRange
-      modifierType: Multiplier
-      value: 1.1
 
 # --- Feed slot -------------------------------------------------------------------------------
 
