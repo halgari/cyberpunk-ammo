@@ -200,5 +200,10 @@ share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDi
   vanilla handgun ammo, which is 9mm Ball.
 - Guns of calibers not in the slice that use handgun ammo (Unity, Liberty, Nue, Nova and others)
   still take vanilla handgun ammo, so they share 9mm Ball.
+- **Crash:** an NPC killed with a selector fitted in its drawn gun can crash the game (the
+  watchdog ends it; about one kill in four with the test gangers of `test.yaml`, whose presets fit
+  one). Real NPCs never have one fitted: Uncommon NPCs get the selector's stats, not the part, and
+  fitting a part on an NPC's drawn gun hangs the game. A player dropping a fitted gun is fine. Only
+  a preset from another mod that fits a selector would hit this.
 - Boss fights: a boss that runs dry loses its guns. 12 magazines makes it unlikely; untested.
 - The selector icon is the generic mod icon. No crafting or loot yet; test items come from CET.

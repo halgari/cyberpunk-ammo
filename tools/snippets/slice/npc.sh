@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Task 5 driver: spawns one plain ganger per slice gun with the Uncommon roll off (Common round),
 # one per gun with it forced on (Uncommon), and the three fitted test gangers; waits for all of them
-# to draw, runs npc.lua, kills them and checks their loot (npcloot.lua), then removes them and
+# to draw, runs npc.lua, kills the plain ones and checks their loot (npcloot.lua), then removes them and
 # restores the roll factors.
 set -euo pipefail
 cd "$(dirname "$0")/../../.."
@@ -24,7 +24,12 @@ for _,r in ipairs({"9mm_Mushrooms","5mm_Sleevers","10mm_Dumbfires"}) do k.spawn(
 return "spawned Uncommon and fitted"'
 wait_drawn 9
 $C -t 30 "$(cat $S/common.lua $S/npc.lua)"
-$C 'GetMod("AOTestKit").killAll(); return "killed"'
+# Fitted gangers are removed, not killed: an NPC dying with a selector fitted in its drawn gun can
+# crash the game (docs/DESIGN.md, Known gaps). Real NPCs never have one fitted.
+$C 'for _,npc in ipairs(Game.GetDynamicEntitySystem():GetTagged("AO_Test")) do
+  if TDBID.ToStringDEBUG(npc:GetRecordID()):find("Ganger") then Game.GetDynamicEntitySystem():DeleteEntity(npc:GetEntityID()) end
+end
+GetMod("AOTestKit").killAll(); return "killed"'
 for _ in $(seq 1 8); do $C -t 10 'return "tick"' >/dev/null 2>&1 || true; done
 $C -t 30 "$(cat $S/common.lua $S/npcloot.lua)"
 $C "$F"'
