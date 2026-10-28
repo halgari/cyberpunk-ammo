@@ -1,11 +1,18 @@
--- Task 7: vanilla handgun ammo in a loot container becomes our rounds, once per container.
+-- Task 7: vanilla ammo in a loot container becomes our rounds, once per container.
 -- Uses the nearest loot container (within 60 m): gives it 100 handgun and 50 rifle rounds,
--- converts, then checks a second conversion of the same container changes nothing.
+-- converts, then checks a second conversion of the same container changes nothing. Each game
+-- ammo item converts only into the rounds of the calibers that come from it (vanillaAmmo).
 local p = Game.GetPlayer()
 local ts = Game.GetTransactionSystem()
 local sys = Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem")
-local six = {["Ammo.HandgunAmmo"]=1, ["Ammo.AO_9mm_HollowPoint"]=1, ["Ammo.AO_TLight_Slug"]=1,
-             ["Ammo.AO_TLight_Sabot"]=1, ["Ammo.AO_S10_Standard"]=1, ["Ammo.AO_S10_Dumbfire"]=1}
+-- round -> the game ammo its caliber comes from
+local source = {}
+for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
+  local v = flat("AmmoOverhaul." .. c, "vanillaAmmo")
+  v = type(v) == "string" and v or str(v)
+  for _, a in ipairs(flat("AmmoOverhaul." .. c, "selectorAmmo") or {}) do source[type(a) == "string" and a or str(a)] = v end
+end
+source["Ammo.HandgunAmmo"], source["Ammo.RifleAmmo"] = "Ammo.HandgunAmmo", "Ammo.RifleAmmo"
 local function stock(o)
   local t = {}
   local _, items = ts:GetItemList(o)
@@ -15,7 +22,7 @@ local function stock(o)
   end
   return t
 end
-local function handgun(t) local n = 0; for k, v in pairs(t) do if six[k] then n = n + v end end; return n end
+local function from(t, vanilla) local n = 0; for k, v in pairs(t) do if source[k] == vanilla then n = n + v end end; return n end
 local function show(t) local s = {}; for k, v in pairs(t) do table.insert(s, k .. "=" .. v) end; return table.concat(s, ";") end
 
 local q = TSQ_ALL(); q.maxDistance = 60; q.testedSet = TargetingSet.Complete; q.searchFilter = TSF_All(TSFMV.Obj_Other)
@@ -40,11 +47,12 @@ check("DebugConvert exists", ok, tostring(res))
 if ok then
   local after = stock(box)
   print("before " .. show(before) .. "\nafter  " .. show(after))
-  check("handgun-type rounds unchanged in total", handgun(after) == handgun(before), handgun(before) .. " -> " .. handgun(after))
-  check("rifle ammo untouched", after["Ammo.RifleAmmo"] == before["Ammo.RifleAmmo"], tostring(after["Ammo.RifleAmmo"]))
+  for _, v in ipairs({ "Ammo.HandgunAmmo", "Ammo.RifleAmmo" }) do
+    check(v .. "-sourced rounds unchanged in total", from(after, v) == from(before, v), from(before, v) .. " -> " .. from(after, v))
+  end
   local foreign = {}
-  for k in pairs(after) do if not six[k] and k ~= "Ammo.RifleAmmo" and not before[k] then table.insert(foreign, k) end end
-  check("every new stack is one of the six rounds", #foreign == 0, table.concat(foreign, ","))
+  for k in pairs(after) do if not before[k] and source[k] ~= "Ammo.HandgunAmmo" and source[k] ~= "Ammo.RifleAmmo" then table.insert(foreign, k) end end
+  check("every new stack comes from handgun or rifle ammo", #foreign == 0, table.concat(foreign, ","))
   sys:DebugConvert(box, true)  -- marks the container converted (as the fill event does)
   ts:GiveItem(box, ItemID.FromTDBID(TweakDBID.new("Ammo.HandgunAmmo")), 30)
   local marked = stock(box)
@@ -53,6 +61,6 @@ if ok then
 end
 -- Clean up what was given.
 for k, v in pairs(stock(box)) do
-  if six[k] or k == "Ammo.RifleAmmo" then ts:RemoveItem(box, ItemID.FromTDBID(TweakDBID.new(k)), v) end
+  if source[k] then ts:RemoveItem(box, ItemID.FromTDBID(TweakDBID.new(k)), v) end
 end
 report()

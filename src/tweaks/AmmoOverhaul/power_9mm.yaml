@@ -7,7 +7,7 @@ AmmoOverhaul.Power_9mm.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_9mm"
 AmmoOverhaul.Power_9mm.feedElement: "Items.AO_AmmoFeed_Power_9mm_Element"
 AmmoOverhaul.Power_9mm.defaultAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_9mm.vanillaAmmo: "Ammo.HandgunAmmo"
-AmmoOverhaul.Power_9mm.lootWeight: 0.6
+AmmoOverhaul.Power_9mm.lootWeight: 0.40
 # Parallel lists: selector part -> ammo stack it feeds -> tier (0 Common, 1 Uncommon).
 AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms"]
 AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint"]

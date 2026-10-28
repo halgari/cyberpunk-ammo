@@ -1,4 +1,5 @@
 -- Task 6: how vendor stock and loot split vanilla handgun ammo across the calibers and tiers.
+-- (Numbers are the v1-calibers shares: 9mm 0.40, 5mm 0.15, 10mm 0.15 of handgun ammo.)
 -- Part 1 (always): DebugSpread / DebugPick. Part 2 (VENDOR set, e.g. VENDOR='gunsmith'): reads
 -- the stock of the vendors MarketSystem has attached near the player.
 local sys = Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem")
@@ -14,15 +15,15 @@ check("DebugSpread exists", ok, tostring(res))
 if ok then
   local t, total = parse(res)
   check("spread totals 1000", total == 1000, res)
-  for item, want in pairs({["Ammo.HandgunAmmo"]=510, ["Ammo.AO_9mm_HollowPoint"]=90, ["Ammo.AO_TLight_Slug"]=188,
-                           ["Ammo.AO_TLight_Sabot"]=62, ["Ammo.AO_S10_Standard"]=135, ["Ammo.AO_S10_Dumbfire"]=15}) do
+  for item, want in pairs({["Ammo.HandgunAmmo"]=340, ["Ammo.AO_9mm_HollowPoint"]=60, ["Ammo.AO_TLight_Slug"]=112,
+                           ["Ammo.AO_TLight_Sabot"]=38, ["Ammo.AO_S10_Standard"]=135, ["Ammo.AO_S10_Dumbfire"]=15}) do
     check("spread " .. item .. " ~" .. want, near(t[item], want, 2), tostring(t[item]))
   end
   local t0, total0 = parse(sys:DebugSpread("Ammo.HandgunAmmo", 1000, 0))
   check("maxTier 0 totals 1000", total0 == 1000, tostring(total0))
   check("maxTier 0 has no Uncommon", not t0["Ammo.AO_9mm_HollowPoint"] and not t0["Ammo.AO_TLight_Sabot"] and not t0["Ammo.AO_S10_Dumbfire"], sys:DebugSpread("Ammo.HandgunAmmo", 1000, 0))
   local tr, totalr = parse(sys:DebugSpread("Ammo.RifleAmmo", 100, 1))
-  check("other vanilla ammo isn't split", totalr == 100 and tr["Ammo.RifleAmmo"] == 100, sys:DebugSpread("Ammo.RifleAmmo", 100, 1))
+  check("rifle ammo splits into 5.56 and 7.62", totalr == 100 and (tr["Ammo.RifleAmmo"] or 0) > 0 and (tr["Ammo.AO_762_Ball"] or 0) > 0, sys:DebugSpread("Ammo.RifleAmmo", 100, 1))
 end
 
 local okp, resp = pcall(function() return sys:DebugPick("Ammo.HandgunAmmo", 0, 2000, "Power_9mm") end)
@@ -30,7 +31,8 @@ check("DebugPick exists", okp, tostring(resp))
 if okp then
   local t, total = parse(resp)
   local ball = (t["Ammo.HandgunAmmo"] or 0) / math.max(total, 1)
-  check("only a 9mm gun owned: 9mm Ball >= 81%", ball >= 0.81, string.format("%.3f %s", ball, resp))
+  -- Owned bias 0.6, plus 9mm's 0.40 share of the rest: 0.76.
+  check("only a 9mm gun owned: 9mm Ball ~76%", math.abs(ball - 0.76) <= 0.04, string.format("%.3f %s", ball, resp))
   check("maxTier 0 picks no Uncommon", not t["Ammo.AO_9mm_HollowPoint"] and not t["Ammo.AO_TLight_Sabot"] and not t["Ammo.AO_S10_Dumbfire"], resp)
 end
 
