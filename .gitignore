@@ -1,0 +1,6 @@
+# Decompiled vanilla scripts and game binaries (CDPR content, regenerable)
+reference/
+tools/*.exe
+dist/
+tools/linux/launch-lutris.sh
+build/

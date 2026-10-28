@@ -1,0 +1,133 @@
+# Proof of concept: one caliber (Power 9mm), one gun family (Lexington), two ammo types.
+#
+# How the pieces fit (docs/DESIGN.md has the details):
+#   - The scriptable tweak (AmmoFeedTweak.reds) sets every weapon carrying one of the caliber's
+#     weaponTags to the caliber's defaultAmmo and gives it a clone of its blueprint with the
+#     caliber's feed slot added.
+#   - The player picks a gun's ammo by installing a selector part in that feed slot. Each
+#     selector maps to a real ammo type; an empty slot means defaultAmmo.
+#   - The engine copies a gun's ammo from its record into the spawned weapon object. Whenever a
+#     managed gun spawns or is drawn, AmmoFeedSystem writes the gun's selection into that copy
+#     through the native plugin; the engine then reloads from and consumes that ammo itself.
+#
+# TweakXL rejects unknown properties on existing record types, so the mod's own settings live in
+# the AmmoOverhaul.* flats below, keyed by short names, rather than on the item records.
+
+# --- Mod settings ------------------------------------------------------------------------------
+
+AmmoOverhaul.calibers: ["Power_9mm"]
+
+AmmoOverhaul.Power_9mm.weaponTags: ["Lexington"]
+AmmoOverhaul.Power_9mm.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_9mm"
+AmmoOverhaul.Power_9mm.feedElement: "Items.AO_AmmoFeed_Power_9mm_Element"
+AmmoOverhaul.Power_9mm.defaultAmmo: "Ammo.HandgunAmmo"
+# Parallel lists: selector part -> ammo stack it feeds. FMJ is vanilla handgun ammo, so loot
+# and vendors keep working.
+AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_FMJ", "Items.AO_Feed_9mm_Incendiary"]
+AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_Incendiary"]
+
+AmmoOverhaul.ammoEffects: ["Incendiary_9mm"]
+
+AmmoOverhaul.Incendiary_9mm.ammo: "Ammo.AO_9mm_Incendiary"
+AmmoOverhaul.Incendiary_9mm.effect: "BaseStatusEffect.Burning"
+AmmoOverhaul.Incendiary_9mm.chance: 1.0
+
+# Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
+# loaded in the gun count toward it; the rest is the body's loot.
+AmmoOverhaul.npcMagazines.Trash: 2
+AmmoOverhaul.npcMagazines.Weak: 2
+AmmoOverhaul.npcMagazines.Normal: 3
+AmmoOverhaul.npcMagazines.Rare: 4
+AmmoOverhaul.npcMagazines.Officer: 4
+AmmoOverhaul.npcMagazines.Elite: 6
+AmmoOverhaul.npcMagazines.Boss: 12
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Power_9mm:
+  $base: AttachmentSlots.Power_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Power_9mm
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+# No quality prereq, so the slot exists on every quality of the gun.
+Items.AO_AmmoFeed_Power_9mm_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Power_9mm
+
+# --- Ammo weight -----------------------------------------------------------------------------
+# Ammo counts against carry capacity: about one point per typical magazine. Stacks track
+# quantity changes, so every shot and pickup updates the carried weight.
+
+Ammo.HandgunAmmo:
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.06
+
+Ammo.RifleAmmo:
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.04
+
+Ammo.ShotgunAmmo:
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.12
+
+Ammo.SniperRifleAmmo:
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.2
+
+# --- Ammo variants -----------------------------------------------------------------------------
+
+Ammo.AO_9mm_Incendiary:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the weight isn't added twice.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.06
+  displayName: LocKey#AO-Ammo-9mm-Incendiary
+  localizedDescription: LocKey#AO-Ammo-9mm-Incendiary-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo]
+
+# --- Selector parts ----------------------------------------------------------------------------
+
+Items.AO_Feed_9mm_FMJ:
+  $base: Items.Part
+  displayName: LocKey#AO-Feed-9mm-FMJ
+  localizedDescription: LocKey#AO-Feed-9mm-FMJ-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  iconPath: mod_generic
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_9mm]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+Items.AO_Feed_9mm_Incendiary:
+  $base: Items.Part
+  displayName: LocKey#AO-Feed-9mm-Incendiary
+  localizedDescription: LocKey#AO-Feed-9mm-Incendiary-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  iconPath: mod_generic
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_9mm]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
