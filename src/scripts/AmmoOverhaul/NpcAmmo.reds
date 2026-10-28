@@ -23,6 +23,17 @@ public let aoStocked: array<TweakDBID>;
 @addField(NPCPuppet)
 public let aoStockedGuns: array<ItemID>;
 
+// Guns already rolled for the Uncommon round (NpcAmmo.RollUncommon), whatever the result, and the
+// ones that got it, with the round (parallel lists).
+@addField(NPCPuppet)
+public let aoRolledGuns: array<ItemID>;
+
+@addField(NPCPuppet)
+public let aoUncommonGuns: array<ItemID>;
+
+@addField(NPCPuppet)
+public let aoUncommonAmmo: array<TweakDBID>;
+
 @addField(NPCPuppet)
 public let aoSwitchCommands: Int32;
 
@@ -53,9 +64,13 @@ public abstract class NpcAmmo {
     return NpcAmmo.GunAmmo(npc, weapon.GetItemID());
   }
 
-  // The ammo a gun in `npc`'s inventory uses: for the mod's guns the one its feed slot selects,
-  // like the player's, otherwise its record's.
+  // The ammo a gun in `npc`'s inventory uses: the Uncommon round if it rolled one, else for the
+  // mod's guns the one its feed slot selects, like the player's, otherwise its record's.
   public static func GunAmmo(npc: ref<NPCPuppet>, gun: ItemID) -> TweakDBID {
+    let rolled: Int32 = ArrayFindFirst(npc.aoUncommonGuns, gun);
+    if rolled >= 0 {
+      return npc.aoUncommonAmmo[rolled];
+    }
     let ammo: TweakDBID = NpcAmmo.RecordAmmo(ItemID.GetTDBID(gun));
     let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(gun));
     if TDBID.IsValid(ammo) && StrLen(caliber) > 0 {
@@ -97,6 +112,9 @@ public abstract class NpcAmmo {
     ts.GetItemList(npc, items);
     for item in items {
       let id: ItemID = item.GetID();
+      if !ArrayContains(npc.aoStockedGuns, id) {
+        NpcAmmo.RollUncommon(npc, id);
+      }
       let ammo: TweakDBID = NpcAmmo.GunAmmo(npc, id);
       if TDBID.IsValid(ammo) && !ArrayContains(npc.aoStockedGuns, id) {
         ArrayPush(npc.aoStockedGuns, id);
@@ -112,6 +130,39 @@ public abstract class NpcAmmo {
         }
       }
     }
+  }
+
+  // Gives one of the mod's guns its caliber's Uncommon round with the chance its family's
+  // Uncommon share times the NPC's rarity factor gives: GunAmmo then returns that round, and the
+  // Uncommon selector's stat modifiers go onto the gun. No part is fitted: TransactionSystem.AddPart
+  // on an NPC's drawn gun hangs the game (2.50). Guns whose feed slot is already filled (a preset's
+  // selector) keep it. Each gun is rolled once. True if the gun got the Uncommon round.
+  public static func RollUncommon(npc: ref<NPCPuppet>, gun: ItemID) -> Bool {
+    let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(gun));
+    if StrLen(caliber) == 0 || ArrayContains(npc.aoRolledGuns, gun) {
+      return false;
+    }
+    ArrayPush(npc.aoRolledGuns, gun);
+    let gunData: wref<gameItemData> = GameInstance.GetTransactionSystem(npc.GetGame()).GetItemData(npc, gun);
+    let selector: TweakDBID = AOData.SelectorForTier(caliber, 1);
+    if !IsDefined(gunData) || gunData.HasPartInSlot(AOData.FeedSlot(caliber)) || !TDBID.IsValid(selector) {
+      return false;
+    }
+    let rarity: String = EnumValueToString("gamedataNPCRarity", Cast<Int64>(EnumInt(npc.GetNPCRarity())));
+    let chance: Float = MinF(1.0, AOData.TierShare(AOData.Family(caliber), 1) * AOData.NpcUncommonFactor(rarity));
+    if RandF() >= chance {
+      return false;
+    }
+    ArrayPush(npc.aoUncommonGuns, gun);
+    ArrayPush(npc.aoUncommonAmmo, AOData.SelectorAmmo(caliber, selector));
+    let stats: ref<StatsSystem> = GameInstance.GetStatsSystem(npc.GetGame());
+    let modifiers: array<wref<StatModifier_Record>>;
+    TweakDBInterface.GetItemRecord(selector).StatModifiers(modifiers);
+    for modifier in modifiers {
+      stats.AddModifier(gunData.GetStatsObjectID(), RPGManager.StatRecordToModifier(modifier));
+    }
+    AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " got " + TDBID.ToStringDEBUG(selector) + " for " + TDBID.ToStringDEBUG(ItemID.GetTDBID(gun)));
+    return true;
   }
 
   public static func Rounds(npc: ref<NPCPuppet>, ammo: TweakDBID) -> Int32 {

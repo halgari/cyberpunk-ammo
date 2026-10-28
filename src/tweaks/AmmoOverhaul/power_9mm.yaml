@@ -1,0 +1,76 @@
+# Power 9mm (P-9): Lexington in this slice. Common 9mm Ball is vanilla handgun ammo (renamed in
+# core.yaml); Uncommon 9mm Mushrooms are hollow points.
+
+AmmoOverhaul.Power_9mm.family: "Power"
+AmmoOverhaul.Power_9mm.weaponTags: ["Lexington"]
+AmmoOverhaul.Power_9mm.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_9mm"
+AmmoOverhaul.Power_9mm.feedElement: "Items.AO_AmmoFeed_Power_9mm_Element"
+AmmoOverhaul.Power_9mm.defaultAmmo: "Ammo.HandgunAmmo"
+AmmoOverhaul.Power_9mm.vanillaAmmo: "Ammo.HandgunAmmo"
+AmmoOverhaul.Power_9mm.lootWeight: 0.6
+# Parallel lists: selector part -> ammo stack it feeds -> tier (0 Common, 1 Uncommon).
+AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms"]
+AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint"]
+AmmoOverhaul.Power_9mm.selectorTiers: [0, 1]
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Power_9mm:
+  $base: AttachmentSlots.Power_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Power_9mm
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+# No quality prereq, so the slot exists on every quality of the gun.
+Items.AO_AmmoFeed_Power_9mm_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Power_9mm
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_9mm_HollowPoint:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the weight isn't added twice.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.06
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-9mm-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-9mm-Mushrooms-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_9mm_Ball:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-9mm-Ball
+  localizedDescription: LocKey#AO-Ammo-9mm-Ball-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  # The ammo box icon, so a fitted selector looks like rounds loaded into the gun.
+  iconPath: undefined_ammo_box_handgun_None_
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_9mm]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Hollow points: harder against flesh, the target's armor counts 1.5x (negative penetration).
+Items.AO_Feed_9mm_Mushrooms:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-9mm-Mushrooms-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.5

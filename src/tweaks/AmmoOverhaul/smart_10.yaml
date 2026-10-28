@@ -1,0 +1,87 @@
+# Smart 10mm micro-rocket (S-10): Yukimura in this slice. Common 10mm Seekers; Uncommon 10mm
+# Dumbfires have no guidance and hit harder.
+
+AmmoOverhaul.Smart_10.family: "Smart"
+AmmoOverhaul.Smart_10.weaponTags: ["Yukimura"]
+AmmoOverhaul.Smart_10.feedSlot: "AttachmentSlots.AO_AmmoFeed_Smart_10"
+AmmoOverhaul.Smart_10.feedElement: "Items.AO_AmmoFeed_Smart_10_Element"
+AmmoOverhaul.Smart_10.defaultAmmo: "Ammo.AO_S10_Standard"
+AmmoOverhaul.Smart_10.vanillaAmmo: "Ammo.HandgunAmmo"
+AmmoOverhaul.Smart_10.lootWeight: 0.15
+AmmoOverhaul.Smart_10.selectors: ["Items.AO_Feed_10mm_Seekers", "Items.AO_Feed_10mm_Dumbfires"]
+AmmoOverhaul.Smart_10.selectorAmmo: ["Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire"]
+AmmoOverhaul.Smart_10.selectorTiers: [0, 1]
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Smart_10:
+  $base: AttachmentSlots.Smart_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Smart_10
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+Items.AO_AmmoFeed_Smart_10_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Smart_10
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_S10_Standard:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the 9mm weight isn't added on top.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.08
+  quality: Quality.Common
+  displayName: LocKey#AO-Ammo-10mm-Seekers
+  localizedDescription: LocKey#AO-Ammo-10mm-Seekers-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Smart]
+
+Ammo.AO_S10_Dumbfire:
+  $base: Ammo.AO_S10_Standard
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.08
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-10mm-Dumbfires
+  localizedDescription: LocKey#AO-Ammo-10mm-Dumbfires-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_10mm_Seekers:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-10mm-Seekers
+  localizedDescription: LocKey#AO-Ammo-10mm-Seekers-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  # The ammo box icon, so a fitted selector looks like rounds loaded into the gun.
+  iconPath: undefined_ammo_box_handgun_None_
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Smart_10]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Dumbfire: no homing (a smart bullet homes only with hit probability above 0), more damage.
+Items.AO_Feed_10mm_Dumbfires:
+  $base: Items.AO_Feed_10mm_Seekers
+  displayName: LocKey#AO-Ammo-10mm-Dumbfires
+  localizedDescription: LocKey#AO-Ammo-10mm-Dumbfires-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHitProbability
+      modifierType: Multiplier
+      value: 0

@@ -20,11 +20,20 @@ public class AmmoOverhaulLocalizationProvider extends ModLocalizationProvider {
 public class AmmoOverhaulEnglish extends ModLocalizationPackage {
   protected func DefineTexts() -> Void {
     this.Text("AO-Slot-AmmoFeed", "Ammo Feed");
-    this.Text("AO-Ammo-9mm-Incendiary", "9mm Incendiary Rounds");
-    this.Text("AO-Ammo-9mm-Incendiary-Desc", "Phosphorus-cored pistol rounds. Sets targets on fire.");
-    this.Text("AO-Feed-9mm-FMJ", "Ammo Feed: 9mm FMJ");
-    this.Text("AO-Feed-9mm-FMJ-Desc", "Feeds standard full-metal-jacket handgun ammo.");
-    this.Text("AO-Feed-9mm-Incendiary", "Ammo Feed: 9mm Incendiary");
-    this.Text("AO-Feed-9mm-Incendiary-Desc", "Feeds 9mm incendiary rounds. Switching types unloads the gun; unfired rounds stay in their stack.");
+    this.Text("AO-Section-Ammo", "Ammo");
+    // Rounds and their selectors share a name and description. The last sentences are the
+    // effect line, which must match the selector's stats.
+    this.Text("AO-Ammo-9mm-Ball", "9mm Ball");
+    this.Text("AO-Ammo-9mm-Ball-Desc", "Plain FMJ. Cheapest 9 in town, and every gun shop's got a crate of it.\n\nStandard 9mm. No special effects.");
+    this.Text("AO-Ammo-9mm-Mushrooms", "9mm Mushrooms");
+    this.Text("AO-Ammo-9mm-Mushrooms-Desc", "Hollow points. They open up on impact and tear through anyone not wearing armor. Hit plating and they just flatten out.\n\n+20% damage. Armor is 50% more effective against it.");
+    this.Text("AO-Ammo-5mm-RailSlugs", "5mm Rail Slugs");
+    this.Text("AO-Ammo-5mm-RailSlugs-Desc", "Steel slugs for light railguns. Nothing to them, the rails do all the work.\n\nStandard light rail ammo. No special effects.");
+    this.Text("AO-Ammo-5mm-Sleevers", "5mm Sleevers");
+    this.Text("AO-Ammo-5mm-Sleevers-Desc", "Skinny slug in a plastic sleeve. The rails grab it quicker, so you charge faster, but it hits a bit softer.\n\nCharges 30% faster. -5% damage.");
+    this.Text("AO-Ammo-10mm-Seekers", "10mm Seekers");
+    this.Text("AO-Ammo-10mm-Seekers-Desc", "Standard smart rockets. Get a lock and they chase the target for you.\n\nStandard smart ammo. Tracks locked targets.");
+    this.Text("AO-Ammo-10mm-Dumbfires", "10mm Dumbfires");
+    this.Text("AO-Ammo-10mm-Dumbfires-Desc", "Smart rockets with the chip pulled and extra propellant packed in. Hits harder, but it only goes where you point it.\n\n+25% damage. Doesn't track targets.");
   }
 }

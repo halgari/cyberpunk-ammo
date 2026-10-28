@@ -104,6 +104,25 @@ public final static func GetSlotName(slotID: TweakDBID, itemType: gamedataItemTy
   return wrappedMethod(slotID, itemType, equipmentArea);
 }
 
+// Vanilla picks these placeholders by record ID for the four vanilla ammo items and the vanilla
+// slots, so our rounds and the feed slot would get none.
+@wrapMethod(UIItemsHelper)
+public final static func GetLootingShadowIcon(itemTDBID: TweakDBID, slotID: TweakDBID, itemType: gamedataItemType, equipmentArea: gamedataEquipmentArea) -> CName {
+  let record: ref<Item_Record> = TweakDBInterface.GetItemRecord(itemTDBID);
+  if IsDefined(record) && record.TagsContains(n"AO_Ammo") {
+    return AOData.FeedShadowIcon();
+  }
+  return wrappedMethod(itemTDBID, slotID, itemType, equipmentArea);
+}
+
+@wrapMethod(UIItemsHelper)
+public final static func GetSlotShadowIcon(slotID: TweakDBID, itemType: gamedataItemType, equipmentArea: gamedataEquipmentArea) -> CName {
+  if AOData.IsFeedSlot(slotID) {
+    return AOData.FeedShadowIcon();
+  }
+  return wrappedMethod(slotID, itemType, equipmentArea);
+}
+
 // --- Ammo in the backpack --------------------------------------------------------------------
 
 // Ammo is carried weight, so it's listed like other items (the backpack hides anything tagged Ammo).

@@ -1,0 +1,132 @@
+# Test enemies: a Tyger Claws ganger per slice gun, carrying only that gun with its Uncommon
+# selector fitted, for checking that NPCs use and drop their gun's selected ammo (the test kit
+# spawns them).
+
+Items.AO_Preset_Lexington_9mm_Mushrooms:
+  $base: Items.Preset_Lexington_Default
+  slotPartListPreset:
+    - Items.Preset_Base_Lexington_inline0
+    - Items.Preset_Base_Lexington_inline1
+    - Items.Preset_Base_Lexington_inline2
+    - Items.Preset_Base_Lexington_inline3
+    - Items.HandgunAndRevolverScopesPartList
+    - Items.Preset_Base_Lexington_inline4
+    - Items.Preset_Base_Lexington_inline5
+    - $type: SlotItemPartPreset
+      slot: AttachmentSlots.AO_AmmoFeed_Power_9mm
+      itemPartPreset: Items.AO_Feed_9mm_Mushrooms
+
+Character.AO_Test_Ganger_9mm_Mushrooms:
+  $base: Character.dtn_tyger_claws_biker1_ranged1_nue_wa
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.AO_Preset_Lexington_9mm_Mushrooms
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Items.AO_Preset_Omaha_5mm_Sleevers:
+  $base: Items.Preset_Omaha_Default
+  slotPartListPreset:
+    - Items.Preset_Omaha_Default_inline0
+    - Items.Preset_Omaha_Default_inline1
+    - Items.Preset_Omaha_Default_inline2
+    - Items.Preset_Omaha_Default_inline3
+    - Items.HandgunAndRevolverScopesPartList
+    - Items.Preset_Omaha_Default_inline4
+    - Items.Preset_Omaha_Default_inline5
+    - $type: SlotItemPartPreset
+      slot: AttachmentSlots.AO_AmmoFeed_Tech_Light
+      itemPartPreset: Items.AO_Feed_5mm_Sleevers
+
+Character.AO_Test_Ganger_5mm_Sleevers:
+  $base: Character.dtn_tyger_claws_biker1_ranged1_nue_wa
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.AO_Preset_Omaha_5mm_Sleevers
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Items.AO_Preset_Yukimura_10mm_Dumbfires:
+  $base: Items.Preset_Yukimura_Default
+  slotPartListPreset:
+    - Items.Preset_Yukimura_Default_inline0
+    - Items.Preset_Yukimura_Default_inline1
+    - Items.Preset_Yukimura_Default_inline2
+    - Items.Preset_Yukimura_Default_inline3
+    - Items.HandgunAndRevolverScopesPartList
+    - Items.Preset_Yukimura_Default_inline4
+    - Items.Preset_Yukimura_Default_inline5
+    - $type: SlotItemPartPreset
+      slot: AttachmentSlots.AO_AmmoFeed_Smart_10
+      itemPartPreset: Items.AO_Feed_10mm_Dumbfires
+
+Character.AO_Test_Ganger_10mm_Dumbfires:
+  $base: Character.dtn_tyger_claws_biker1_ranged1_nue_wa
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.AO_Preset_Yukimura_10mm_Dumbfires
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+# Plain Lexington ganger: the gun's default preset, nothing in the feed slot, for the Uncommon roll.
+Character.AO_Test_Plain_Lexington:
+  $base: Character.dtn_tyger_claws_biker1_ranged1_nue_wa
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Lexington_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+# Plain Omaha ganger: the gun's default preset, nothing in the feed slot, for the Uncommon roll.
+Character.AO_Test_Plain_Omaha:
+  $base: Character.dtn_tyger_claws_biker1_ranged1_nue_wa
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Omaha_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+# Plain Yukimura ganger: the gun's default preset, nothing in the feed slot, for the Uncommon roll.
+Character.AO_Test_Plain_Yukimura:
+  $base: Character.dtn_tyger_claws_biker1_ranged1_nue_wa
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Yukimura_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []

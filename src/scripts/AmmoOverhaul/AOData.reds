@@ -96,6 +96,71 @@ public abstract class AOData {
     return TDBID.None();
   }
 
+  // --- Tiers and distribution ----------------------------------------------------------------
+
+  // "Power", "Tech" or "Smart".
+  public static func Family(caliber: String) -> String {
+    return TweakDBInterface.GetString(AOData.Key(caliber, "family"), "");
+  }
+
+  public static func Selectors(caliber: String) -> array<TweakDBID> {
+    return AOData.GetIDs(AOData.Key(caliber, "selectors"));
+  }
+
+  // A selector's tier (0 Common, 1 Uncommon, ...), or -1 if it isn't one of this caliber's.
+  public static func SelectorTier(caliber: String, selector: TweakDBID) -> Int32 {
+    let selectors: array<TweakDBID> = AOData.Selectors(caliber);
+    let tiers: array<Int32> = TweakDBInterface.GetIntArray(AOData.Key(caliber, "selectorTiers"));
+    let i: Int32 = 0;
+    while i < ArraySize(selectors) && i < ArraySize(tiers) {
+      if selectors[i] == selector {
+        return tiers[i];
+      }
+      i += 1;
+    }
+    return -1;
+  }
+
+  // The first selector of a tier, or an invalid ID if the caliber has none.
+  public static func SelectorForTier(caliber: String, tier: Int32) -> TweakDBID {
+    for selector in AOData.Selectors(caliber) {
+      if AOData.SelectorTier(caliber, selector) == tier {
+        return selector;
+      }
+    }
+    return TDBID.None();
+  }
+
+  // The ammo item of a tier, or an invalid ID if the caliber has none.
+  public static func AmmoForTier(caliber: String, tier: Int32) -> TweakDBID {
+    let selector: TweakDBID = AOData.SelectorForTier(caliber, tier);
+    return TDBID.IsValid(selector) ? AOData.SelectorAmmo(caliber, selector) : TDBID.None();
+  }
+
+  // The vanilla ammo item this caliber's share of world loot and vendor stock is taken from.
+  public static func VanillaAmmo(caliber: String) -> TweakDBID {
+    return AOData.GetID(AOData.Key(caliber, "vanillaAmmo"));
+  }
+
+  public static func LootWeight(caliber: String) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Key(caliber, "lootWeight"), 0.0);
+  }
+
+  // A tier's share of a family's ammo, or 0 if not set.
+  public static func TierShare(family: String, tier: Int32) -> Float {
+    let shares: array<Float> = TweakDBInterface.GetFloatArray(TDBID.Create("AmmoOverhaul.shares." + family));
+    return tier >= 0 && tier < ArraySize(shares) ? shares[tier] : 0.0;
+  }
+
+  public static func OwnedBias() -> Float {
+    return TweakDBInterface.GetFloat(t"AmmoOverhaul.loot.ownedBias", 0.0);
+  }
+
+  // By gamedataNPCRarity name, e.g. "Elite".
+  public static func NpcUncommonFactor(rarity: String) -> Float {
+    return TweakDBInterface.GetFloat(TDBID.Create("AmmoOverhaul.npcUncommonFactor." + rarity), 1.0);
+  }
+
   // The caliber of a weapon record (by its tags), or "" if the mod doesn't manage it.
   public static func CaliberForWeapon(weapon: TweakDBID) -> String {
     let record: ref<WeaponItem_Record> = TweakDBInterface.GetWeaponItemRecord(weapon);
@@ -122,6 +187,11 @@ public abstract class AOData {
   public static func IsFeedSlot(slot: TweakDBID) -> Bool {
     let slots: array<TweakDBID> = AOData.FeedSlots();
     return TDBID.IsValid(slot) && ArrayContains(slots, slot);
+  }
+
+  // Placeholder icon of an empty feed slot and of our rounds in loot windows.
+  public static func FeedShadowIcon() -> CName {
+    return n"UIIcon.LootingShadow_HandgunAmmo";
   }
 
   public static func AppendFeedSlots(out slots: array<TweakDBID>) -> Void {

@@ -1,0 +1,88 @@
+# Mod-wide settings, vanilla ammo weights and the 9mm Ball rename. Each caliber has its own file
+# (power_9mm.yaml, tech_light.yaml, smart_10.yaml) with its feed slot, ammo items, selectors
+# and AmmoOverhaul.<caliber>.* flats.
+#
+# How the pieces fit (docs/DESIGN.md has the details):
+#   - The scriptable tweak (AmmoFeedTweak.reds) sets every weapon carrying one of a caliber's
+#     weaponTags to the caliber's defaultAmmo and gives it a clone of its blueprint with the
+#     caliber's feed slot added.
+#   - The player picks a gun's ammo by installing a selector part in that feed slot. Each
+#     selector maps to a real ammo type; an empty slot means defaultAmmo.
+#   - The engine copies a gun's ammo from its record into the spawned weapon object. Whenever a
+#     managed gun spawns or is drawn, AmmoFeedSystem writes the gun's selection into that copy
+#     through the native plugin; the engine then reloads from and consumes that ammo itself.
+#
+# TweakXL rejects unknown properties on existing record types, so the mod's own settings live in
+# the AmmoOverhaul.* flats, keyed by short names, rather than on the item records.
+
+AmmoOverhaul.calibers: ["Power_9mm", "Tech_Light", "Smart_10"]
+
+# --- Distribution ------------------------------------------------------------------------------
+# Share of each tier (Common, Uncommon) in a family's ammo, for vendors, world loot and NPCs.
+AmmoOverhaul.shares.Power: [0.85, 0.15]
+AmmoOverhaul.shares.Tech: [0.75, 0.25]
+AmmoOverhaul.shares.Smart: [0.90, 0.10]
+
+# Chance that converted world loot goes to the caliber of a gun the player carries, rather than
+# a caliber picked by the calibers' lootWeight.
+AmmoOverhaul.loot.ownedBias: 0.6
+
+# --- NPCs --------------------------------------------------------------------------------------
+# Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
+# loaded in the gun count toward it; the rest is the body's loot.
+AmmoOverhaul.npcMagazines.Trash: 2
+AmmoOverhaul.npcMagazines.Weak: 2
+AmmoOverhaul.npcMagazines.Normal: 3
+AmmoOverhaul.npcMagazines.Rare: 4
+AmmoOverhaul.npcMagazines.Officer: 4
+AmmoOverhaul.npcMagazines.Elite: 6
+AmmoOverhaul.npcMagazines.Boss: 12
+
+# How much likelier than the family's Uncommon share an NPC of each rarity is to carry the
+# Uncommon round.
+AmmoOverhaul.npcUncommonFactor.Trash: 0.5
+AmmoOverhaul.npcUncommonFactor.Weak: 0.5
+AmmoOverhaul.npcUncommonFactor.Normal: 1.0
+AmmoOverhaul.npcUncommonFactor.Rare: 1.5
+AmmoOverhaul.npcUncommonFactor.Officer: 1.5
+AmmoOverhaul.npcUncommonFactor.Elite: 2.0
+AmmoOverhaul.npcUncommonFactor.Boss: 2.0
+
+# --- Vanilla ammo ------------------------------------------------------------------------------
+# Ammo counts against carry capacity: about one point per typical magazine. Stacks track
+# quantity changes, so every shot and pickup updates the carried weight.
+
+# Vanilla handgun ammo is the 9mm Common round.
+Ammo.HandgunAmmo:
+  displayName: LocKey#AO-Ammo-9mm-Ball
+  localizedDescription: LocKey#AO-Ammo-9mm-Ball-Desc
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.06
+
+Ammo.RifleAmmo:
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.04
+
+Ammo.ShotgunAmmo:
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.12
+
+Ammo.SniperRifleAmmo:
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.2

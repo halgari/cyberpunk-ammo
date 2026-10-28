@@ -6,8 +6,10 @@ that carry and use up real ammo. This file records how the proof of concept work
 
 ## Layout
 
-- `src/tweaks/AmmoOverhaul/*.yaml`: all data (TweakXL): settings, feed slots, ammo variants,
-  selectors, ammo weight.
+- `src/tweaks/AmmoOverhaul/*.yaml`: all data (TweakXL). `core.yaml` has the mod settings and
+  vanilla ammo weights; one file per caliber (`power_9mm.yaml`, `tech_light.yaml`,
+  `smart_10.yaml`) has its feed slot, ammo items, selectors and settings; `test.yaml` has test
+  enemies.
 - `src/scripts/AmmoOverhaul/*.reds`: generic logic, with nothing specific to one gun or ammo type.
   - `AOData.reds`: reads the `AmmoOverhaul.*` settings.
   - `AmmoFeedTweak.reds`: load-time TweakDB patching (ScriptableTweak).
@@ -25,22 +27,33 @@ that carry and use up real ammo. This file records how the proof of concept work
 ## Data model
 
 TweakXL rejects unknown properties on existing record types, so the mod's settings live in
-standalone `AmmoOverhaul.*` flats keyed by short names (`poc_9mm.yaml`, read by `AOData.reds`):
+standalone `AmmoOverhaul.*` flats keyed by short names (read by `AOData.reds`):
 
-- `AmmoOverhaul.calibers`: caliber names, e.g. `Power_9mm` (family + caliber).
+- `AmmoOverhaul.calibers`: caliber names (`Power_9mm`, `Tech_Light`, `Smart_10`).
 - Per caliber, `AmmoOverhaul.<caliber>.*`:
   - `weaponTags`: weapons carrying any of these tags belong to the caliber.
   - `feedSlot` / `feedElement`: the slot that selects the ammo, and its blueprint element.
   - `defaultAmmo`: the ammo an empty slot takes (the caliber's cheap standard round). The
     caliber's weapon records are set to it.
-  - `selectors` / `selectorAmmo`: parallel lists, selector part -> ammo item it feeds.
+  - `selectors` / `selectorAmmo` / `selectorTiers`: parallel lists, selector part -> ammo item
+    it feeds -> tier (0 Common, 1 Uncommon).
+  - `family` (`Power`, `Tech`, `Smart`), `vanillaAmmo` (the vanilla item its loot and vendor
+    stock are taken from) and `lootWeight` (its share of that item), for distribution.
+- `AmmoOverhaul.shares.<family>`: each tier's share of a family's ammo.
+- `AmmoOverhaul.loot.ownedBias`: chance converted loot goes to a caliber of a gun the player
+  carries.
+- `AmmoOverhaul.npcUncommonFactor.<rarity>`: how much likelier than the Uncommon share an NPC
+  of that rarity is to carry the Uncommon round.
 - `AmmoOverhaul.ammoEffects`: names of on-hit entries; each has `.ammo`, `.effect` (a status
   effect) and `.chance`.
 - `AmmoOverhaul.npcMagazines.<rarity>`: magazines an NPC carries per gun, by `gamedataNPCRarity`.
 
 Records: one feed slot per family + caliber (selectors' `placementSlots` name it, so the slot
 itself enforces "same family and caliber"); selectors are parts (`Items.Part` base,
-`ItemType.Prt_Magazine`); ammo variants are normal ammo items. Each ammo item has a Weight stat.
+`ItemType.Prt_Magazine`) with the same name and description as their round; ammo variants are
+normal ammo items based on `Ammo.HandgunAmmo`, with their own quality and Weight stat. Vanilla
+handgun ammo is the 9mm Common round (renamed 9mm Ball); the 5mm and 10mm rounds are new items, so
+an Omaha or Yukimura in an old save starts empty.
 
 ## Player: per-gun ammo
 
@@ -114,6 +127,13 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
   ammo its feed slot selects, as for the player (a preset can fit a selector through
   `slotPartListPreset`); other guns use their record's. Like the player's, the stack includes the
   loaded rounds. NPCs friendly to the player and companions aren't counted.
+- **Uncommon rounds:** before stocking a managed gun with an empty feed slot, the NPC rolls once
+  for the caliber's Uncommon round: chance = the family's Uncommon share ×
+  `npcUncommonFactor.<rarity>`, capped at 1. On a hit the gun is stocked with the Uncommon round
+  and the selector's stat modifiers are added straight to the gun's stats. No part is fitted:
+  `TransactionSystem.AddPart` on an NPC's drawn gun hangs the game, and an
+  `ItemModificationSystem` install request does nothing for NPCs. The roll is kept per gun for the
+  session only.
 - **Use:** each `AIWeapon.Fire` takes the shot's rounds (`NumShotsToFire`) from the stack; with
   none left the shot and the reload are skipped.
 - **Running dry:** switch to another gun with ammo (`AISwitchToSecondary/PrimaryWeaponCommand`);
@@ -141,5 +161,11 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
 - Dual wield: only the right-hand gun is watched by the safety net.
 - Ammo of the same type shares one NPC stack; a gun first given to an NPC after its first draw
   adds no stock if the NPC already carries that ammo.
+- NPC guns have `DamagePerHit` 0 (their damage comes from elsewhere), so damage multipliers on a
+  round (Mushrooms, Dumbfires) do nothing on NPC shots. Pen, hit probability and other stats do
+  apply. NPC Omahas have `ChargeTime` 0, so Sleevers changes nothing for them.
+- The Uncommon roll isn't saved. After loading a save, an NPC stocked with an Uncommon round reads
+  its gun's ammo as the Common round again, and its stock holds the Uncommon one, so it can run
+  dry early. Untested.
 - Boss fights: a boss that runs dry loses its guns. 12 magazines makes it unlikely; untested.
 - The selector icon is the generic mod icon. No crafting or loot yet; test items come from CET.

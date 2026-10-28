@@ -1,0 +1,87 @@
+# Tech light rail (T-LIGHT, 5mm): Omaha in this slice. Common 5mm Rail Slugs; Uncommon 5mm
+# Sleevers are sabot slugs that charge faster.
+
+AmmoOverhaul.Tech_Light.family: "Tech"
+AmmoOverhaul.Tech_Light.weaponTags: ["Omaha"]
+AmmoOverhaul.Tech_Light.feedSlot: "AttachmentSlots.AO_AmmoFeed_Tech_Light"
+AmmoOverhaul.Tech_Light.feedElement: "Items.AO_AmmoFeed_Tech_Light_Element"
+AmmoOverhaul.Tech_Light.defaultAmmo: "Ammo.AO_TLight_Slug"
+AmmoOverhaul.Tech_Light.vanillaAmmo: "Ammo.HandgunAmmo"
+AmmoOverhaul.Tech_Light.lootWeight: 0.25
+AmmoOverhaul.Tech_Light.selectors: ["Items.AO_Feed_5mm_RailSlugs", "Items.AO_Feed_5mm_Sleevers"]
+AmmoOverhaul.Tech_Light.selectorAmmo: ["Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot"]
+AmmoOverhaul.Tech_Light.selectorTiers: [0, 1]
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Tech_Light:
+  $base: AttachmentSlots.Tech_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Tech_Light
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+Items.AO_AmmoFeed_Tech_Light_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Tech_Light
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_TLight_Slug:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the 9mm weight isn't added on top.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.04
+  quality: Quality.Common
+  displayName: LocKey#AO-Ammo-5mm-RailSlugs
+  localizedDescription: LocKey#AO-Ammo-5mm-RailSlugs-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Tech]
+
+Ammo.AO_TLight_Sabot:
+  $base: Ammo.AO_TLight_Slug
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.04
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-5mm-Sleevers
+  localizedDescription: LocKey#AO-Ammo-5mm-Sleevers-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Tech]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_5mm_RailSlugs:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-5mm-RailSlugs
+  localizedDescription: LocKey#AO-Ammo-5mm-RailSlugs-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  # The ammo box icon, so a fitted selector looks like rounds loaded into the gun.
+  iconPath: undefined_ammo_box_handgun_None_
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Tech_Light]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Sabot: charges faster, hits a little softer.
+Items.AO_Feed_5mm_Sleevers:
+  $base: Items.AO_Feed_5mm_RailSlugs
+  displayName: LocKey#AO-Ammo-5mm-Sleevers
+  localizedDescription: LocKey#AO-Ammo-5mm-Sleevers-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.ChargeTime
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 0.95

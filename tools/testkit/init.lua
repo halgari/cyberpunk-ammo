@@ -15,7 +15,9 @@ local ENEMIES = {
   { label = "Sniper Kurtz [Rare]", rec = "Character.combat_zone_gate_kurtz_recon_sniper2_achilles_ma_rare" },
   { label = "Dual-wield Valentino [Elite]", rec = "Character.valentinos_elite3_ranged3_dual_ma_elite" },
   { label = "HMG gunner [Elite] (unlimited)", rec = "Character.ina_03_wraiths_strong_gunner3_hmg_mb_elite" },
-  { label = "Incendiary Lexington ganger [Normal]", rec = "Character.AO_Test_IncendiaryGanger" },
+  { label = "Mushrooms Lexington ganger [Normal]", rec = "Character.AO_Test_Ganger_9mm_Mushrooms" },
+  { label = "Sleevers Omaha ganger [Normal]", rec = "Character.AO_Test_Ganger_5mm_Sleevers" },
+  { label = "Dumbfires Yukimura ganger [Normal]", rec = "Character.AO_Test_Ganger_10mm_Dumbfires" },
 }
 
 local state = {
@@ -95,13 +97,18 @@ local function despawnAll()
   state.message = "removed " .. n
 end
 
+-- The slice kit: the three guns, their six selectors and 60 of each round.
+local KIT_GUNS = { "Items.Preset_Lexington_Default", "Items.Preset_Omaha_Default", "Items.Preset_Yukimura_Default" }
+local KIT_SELECTORS = { "Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "Items.AO_Feed_5mm_RailSlugs",
+  "Items.AO_Feed_5mm_Sleevers", "Items.AO_Feed_10mm_Seekers", "Items.AO_Feed_10mm_Dumbfires" }
+local KIT_ROUNDS = { "Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot",
+  "Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire" }
+
 local function giveKit()
-  Game.AddToInventory("Items.Preset_Lexington_Default", 1)
-  Game.AddToInventory("Items.AO_Feed_9mm_FMJ", 1)
-  Game.AddToInventory("Items.AO_Feed_9mm_Incendiary", 1)
-  Game.AddToInventory("Ammo.HandgunAmmo", 50)
-  Game.AddToInventory("Ammo.AO_9mm_Incendiary", 30)
-  state.message = "gave Lexington, both selectors, 50 FMJ, 30 incendiary"
+  for _, id in ipairs(KIT_GUNS) do Game.AddToInventory(id, 1) end
+  for _, id in ipairs(KIT_SELECTORS) do Game.AddToInventory(id, 1) end
+  for _, id in ipairs(KIT_ROUNDS) do Game.AddToInventory(id, 60) end
+  state.message = "gave Lexington, Omaha, Yukimura, 6 selectors, 60 of each round"
 end
 
 local function ammoOf(owner)
@@ -177,7 +184,7 @@ registerForEvent("onDraw", function()
     ImGui.SameLine()
     if ImGui.Button("Remove test enemies") then despawnAll() end
     ImGui.SameLine()
-    if ImGui.Button("Give Lexington kit") then giveKit() end
+    if ImGui.Button("Give slice kit") then giveKit() end
     if state.message ~= "" then ImGui.Text(state.message) end
     ImGui.Separator()
     ImGui.Text("You: " .. (player() and ammoOf(player()) or "-"))

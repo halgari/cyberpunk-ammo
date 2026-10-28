@@ -31,6 +31,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
   //   Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem"):Trail()
   private let m_trail: array<String>;
 
+  private let m_ammoSection: String;
+
   public static func Get(game: GameInstance) -> ref<AmmoFeedSystem> {
     return GameInstance.GetScriptableSystemsContainer(game).Get(n"AmmoOverhaul.AmmoFeedSystem") as AmmoFeedSystem;
   }
@@ -210,6 +212,27 @@ public class AmmoFeedSystem extends ScriptableSystem {
     }
   }
 
+  // --- Debug entry points for the CET checks (tools/snippets/slice) --------------------------
+
+  // The last Ammo section the weapon screen built (AmmoSection.reds), for DebugAmmoSection.
+  public final func NoteAmmoSection(description: String) -> Void {
+    this.m_ammoSection = description;
+  }
+
+  // "attachments <i> ammo <i> mods <i> | slots <feed slot IDs> | label <text>", or "" if the
+  // weapon screen hasn't been opened since the game started.
+  public final func DebugAmmoSection() -> String {
+    return this.m_ammoSection;
+  }
+
+  // "<loot-window placeholder of item> <empty-slot placeholder of slot>".
+  public final func DebugIcons(item: String, slot: String) -> String {
+    let none: gamedataItemType;
+    let area: gamedataEquipmentArea;
+    return NameToString(UIItemsHelper.GetLootingShadowIcon(TDBID.Create(item), TDBID.None(), none, area)) + " "
+      + NameToString(UIItemsHelper.GetSlotShadowIcon(TDBID.Create(slot), none, area));
+  }
+
   public final func Trail() -> String {
     let text: String = "";
     for line in this.m_trail {
@@ -244,7 +267,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
       return;
     }
     let chance: Float;
-    let effect: TweakDBID = AOData.OnHitEffect(AOData.SelectedAmmo(instigator, weaponID, caliber), chance);
+    let npc: ref<NPCPuppet> = instigator as NPCPuppet;
+    let ammo: TweakDBID = IsDefined(npc) ? NpcAmmo.GunAmmo(npc, weaponID) : AOData.SelectedAmmo(instigator, weaponID, caliber);
+    let effect: TweakDBID = AOData.OnHitEffect(ammo, chance);
     if TDBID.IsValid(effect) && RandF() < chance {
       attackData.AddStatusEffect(effect, 1.0);
     }

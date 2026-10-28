@@ -14,14 +14,18 @@ those three folders to uninstall.
 Load a save with a free inventory slot, open the CET overlay, then in the Console tab:
 
 ```lua
-Game.AddToInventory("Items.Preset_Lexington_Default", 1)
-Game.AddToInventory("Items.AO_Feed_9mm_FMJ", 1)
-Game.AddToInventory("Items.AO_Feed_9mm_Incendiary", 1)
-Game.AddToInventory("Ammo.HandgunAmmo", 50)
-Game.AddToInventory("Ammo.AO_9mm_Incendiary", 30)
+for _, id in ipairs({ "Items.Preset_Lexington_Default", "Items.Preset_Omaha_Default", "Items.Preset_Yukimura_Default",
+    "Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "Items.AO_Feed_5mm_RailSlugs",
+    "Items.AO_Feed_5mm_Sleevers", "Items.AO_Feed_10mm_Seekers", "Items.AO_Feed_10mm_Dumbfires" }) do
+  Game.AddToInventory(id, 1)
+end
+for _, id in ipairs({ "Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_TLight_Slug",
+    "Ammo.AO_TLight_Sabot", "Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire" }) do
+  Game.AddToInventory(id, 60)
+end
 ```
 
-Use a newly spawned Lexington: a Lexington already in an old save may keep its old slot layout.
+Use newly spawned guns: one already in an old save may keep its old slot layout.
 
 ## Test kit (CET window)
 
@@ -29,13 +33,14 @@ With the dev helpers installed (`tools/linux/dev-install.sh`), opening the CET o
 an "Ammo Overhaul test kit" window:
 
 - Buttons spawn hostile enemies in front of you by gun type (handgun, SMG, rifle, shotgun,
-  sniper, dual wield, HMG), plus an "Incendiary Lexington ganger" whose only gun has the
-  incendiary selector fitted. "How many" and "Distance" set the group. They turn hostile wherever
+  sniper, dual wield, HMG), plus a Mushrooms Lexington, a Sleevers Omaha and a Dumbfires
+  Yukimura ganger, each carrying only that gun with its Uncommon selector fitted. "How many" and "Distance" set the group. They turn hostile wherever
   you are.
 - "Invulnerable" (on by default) keeps you alive for long running-dry tests; untick it for a
   real fight.
 - "Kill test enemies" kills them for loot checks; "Remove test enemies" deletes them.
-- "Give Lexington kit" gives the gun, both selectors, 50 FMJ and 30 incendiary.
+- "Give slice kit" gives the Lexington, Omaha and Yukimura, all six selectors and 60 of each
+  round.
 - Below that: your ammo, each test enemy's status, distance, gun, magazine and ammo carried
   (updated twice a second), and the mod's latest log lines.
 - Hotkeys you can bind in the overlay's Hotkeys tab: spawn handgun / rifle / shotgun enemy,
@@ -101,14 +106,18 @@ wine, and never in the game's prefix (`common.sh` has the paths).
   workspace 10 (Hyprland rule in `~/.config/hypr/cyberpunk.lua`). Script and plugin changes need
   a restart.
 - `cet.sh 'lua' | -f file.lua [-t secs]`: run Lua in the game. Snippets in `tools/snippets/`:
-  - `feed-kit.lua`: Lexington, both selectors, 30 incendiary; run twice (equip, draw).
-  - `set-feed.lua`: `FEED='Items.AO_Feed_9mm_Incendiary'` installs, `FEED=nil` removes
-    (`cet.sh "FEED='…'; $(cat tools/snippets/set-feed.lua)"`).
-  - `ammo-state.lua`: inventory counts and the drawn gun's magazine and total.
+  - `feed-kit.lua`: the slice kit, then `GUN=` (default the Lexington preset) equipped and
+    drawn; run twice.
+  - `set-feed.lua`: `FEED='Items.AO_Feed_9mm_Mushrooms'` installs, `FEED=nil` removes the one in
+    `SLOT=` (`cet.sh "FEED='…'; $(cat tools/snippets/set-feed.lua)"`).
+  - `ammo-state.lua`: inventory counts and the drawn gun's magazine and total (the total is the
+    loaded ammo's count; `recordAmmo` is only the record's).
+  - `slice/*.lua`: the slice checks, each printing PASS/FAIL lines; run with `common.lua` in
+    front: `cet.sh "$(cat tools/snippets/slice/common.lua tools/snippets/slice/<check>.lua)"`.
   - `npc-spawn.lua`: spawns a tagged NPC (`REC=` picks the record) 8 m ahead and makes the player
     invulnerable. `npc-state.lua`: each test NPC's gun, magazine and ammo; `FIGHT=true` makes
     them hostile.
-  - `mod-check.lua`, `test-kit.lua`, `vanilla-gun-kit.lua`.
+  - `mod-check.lua`, `vanilla-gun-kit.lua`.
 - Scripted shots: queue `WeaponConsumeMagazineAmmoEvent` on the weapon (takes inventory like a
   shot). Native reload: `weapon:StartReload(0.5)`, then `StopReload(gameweaponReloadStatus.Standard)`.
 - `ModLog` lines land in CET's `bin/x64/plugins/cyber_engine_tweaks/gamelog.log`, flushed late
