@@ -17,7 +17,14 @@ for _ in $(seq 20); do
 done
 echo "setup: $r"
 lua "RIG.clear(); return 'ok'" >/dev/null
-for _ in $(seq 30); do lua "RIG.fireV(); return 1" >/dev/null; sleep 0.3; done
+GUN=${GUN:-Items.Preset_Lexington_Default}
+for _ in $(seq 80); do
+  [[ $(lua "return #RIG.ratios('V')") -ge 30 ]] && break
+  if [[ $(lua "return RIG.fireV()") == holstered ]]; then
+    $C "GUN='$GUN'; $(cat $S/feed-kit.lua)" >/dev/null; sleep 3
+  fi
+  sleep 0.3
+done
 lua "RIG.letNpcShoot(); return 1" >/dev/null; sleep 8; lua "RIG.freeze(); return 1" >/dev/null
 sleep 1
 out=$(lua "local v, n = RIG.ratios('V'), RIG.ratios('NPC')

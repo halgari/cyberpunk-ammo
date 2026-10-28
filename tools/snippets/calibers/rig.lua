@@ -40,6 +40,11 @@ function RIG.setup(gun, dist)
     GetMod("AOTestKit").spawn("Character.AO_Test_Plain_Unity", 1)
     return "wait"
   end
+  -- A spawned NPC can sink into the floor, where shots can't reach it: spawn a fresh one.
+  if n:GetWorldPosition().z < p:GetWorldPosition().z - 1.0 then
+    GetMod("AOTestKit").despawnAll()
+    return "wait"
+  end
   gm():AddGodMode(n:GetEntityID(), gameGodModeType.Invulnerable, tag)
   gm():AddGodMode(p:GetEntityID(), gameGodModeType.Immortal, tag)
   -- Freeze only once its gun is drawn, or it has nothing to shoot V with.
@@ -50,7 +55,7 @@ function RIG.setup(gun, dist)
   local l = math.sqrt(dx * dx + dy * dy)
   if math.abs(l - dist) > 0.5 then
     local yaw = math.deg(math.atan2(-dx, dy)) + 180
-    Game.GetTeleportationFacility():Teleport(p, Vector4.new(b.x + dx / l * dist, b.y + dy / l * dist, b.z, 1), EulerAngles.new(0, 0, yaw))
+    Game.GetTeleportationFacility():Teleport(p, Vector4.new(b.x + dx / l * dist, b.y + dy / l * dist, a.z, 1), EulerAngles.new(0, 0, yaw))
     return "wait"
   end
   return "ready"
@@ -58,9 +63,12 @@ end
 
 local function chest(o) local v = o:GetWorldPosition(); v.z = v.z + 1.0; return v end
 
+-- "holstered" when V has put the gun away (it happens after teleports and spawns): redraw, retry.
 function RIG.fireV()
   local p, n = Game.GetPlayer(), RIG.npc()
+  if not p:GetActiveWeapon() then return "holstered" end
   AIWeapon.Fire(p, p:GetActiveWeapon(), EngineTime.ToFloat(Game.GetSimTime()), 1.0, gamedataTriggerMode.SemiAuto, chest(n), n)
+  return "fired"
 end
 
 -- AIWeapon.Fire with the NPC as shooter lands nothing, so the NPC's own AI shoots V: unfreeze
