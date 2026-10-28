@@ -334,6 +334,81 @@ Calibers differ in ammo weight, price and how often they turn up, not in how the
   (through the package's `chargeFire`).
 - **Rail feedback slug (Tech):** corrects itself slightly against the rails (bullet magnetism).
 
+## Next lineup (brainstorm, 2026-10-28)
+
+Per caliber: 1 Common, 2 Uncommon, 4 Rare, 4 Epic. Not every caliber gets every round; a family
+has a pool and each caliber takes what fits it.
+
+**Tier rules**
+
+- Uncommon: sidegrades, one perk paid for with one quirk.
+- Rare: specialists that add a mechanic (element, status, ricochet, control, pellet pattern).
+- Epic: the far end of a dimension; expensive and scarce.
+- Armor pen: none at Common/Uncommon, some at Rare (about 20-30% of armor ignored), high at Epic
+  (about 50-70%). Full armor ignore (`CanWeaponIgnoreArmor`) and no damage falloff
+  (`DamageFalloffDisabled`) are kept for Legendary or faction rounds.
+- Cover piercing: Epic penetrators only.
+- Explosives: only where there's room for a charge that matters. Below about 20mm a round carries
+  a few grams at most (a hand grenade has about 180 g), so it bursts on or in the target. Such
+  rounds are HEI: bonus against drones, mechs and vehicles, no area damage. Real area damage only
+  from about 20mm up (4ga, 20mm and 25mm Smart), with a small radius.
+- Power guns have no power source: no shock or EMP on Power rounds.
+
+**Power (9mm, .45, 12mm, 5.56, 7.62, 12.7)**
+
+| Tier | Round | Effect | Calibers |
+|---|---|---|---|
+| Uncommon | Mushrooms (built) | more damage, less armor pen | all |
+| Uncommon | Hot loads (+P) | more damage and range; more recoil, stamina cost per shot | all |
+| Rare | Steel-core AP | some armor pen, a little less damage | all |
+| Rare | Incendiary | Burning chance | all (9mm weak) |
+| Rare | Subsonic | quiet, silent kills, less range | 9mm, .45, 5.56 |
+| Rare | Bouncers | ricochet chance and count, less damage | 9mm, .45, 5.56 |
+| Rare | Rubber | non-lethal, flinch | handguns (fills 12mm's gap) |
+| Epic | Penetrator (tungsten/DU) | high armor pen, pierces cover | 12mm, 7.62, 12.7 |
+| Epic | HEI | bonus against drones, mechs, vehicles; Burning chance; no area | 12.7 |
+| Epic | Match grade | steady damage (see below), tighter spread, less sway | all |
+| Epic | Toxin core | Poisoned, Chemical share | all |
+| Epic | Shredders | heavy Bleeding, dismemberment | handguns, 5.56 |
+
+Small calibers have one Rare candidate too many (Subsonic, Bouncers, Rubber): one moves or goes.
+
+**12-gauge:** Uncommon Slugs (built) and Birdshot (more pellets, wide, low damage, strong flinch).
+Rare Flechette (tighter, about 2x effective range, some armor pen), Beanbag (non-lethal
+knockdown), light Dragon's breath, Gas. Epic Dragon's breath (full), Frag-12 (HEI slug), Tungsten
+slug (high pen, pierces cover), long-range Flechette (about 3-4x effective range, high armor pen).
+
+**4-gauge:** Uncommon Slugs (built) and Barn Door (about twice the pellets, very wide, much less
+per pellet). Rare Flare (Blind plus light burn), Riot (non-lethal knockdown), Gas canister,
+Flechette. Epic Kinetic penetrator (pierces cover and armor, huge knockback and recoil),
+Micro-grenade (radius about 1.5-2 m), EMP shell, 4ga Dragon's breath.
+
+**Tech (5mm, heavy rail):** Uncommon Sleevers (built) and Dense slugs (more damage and some pen,
+slower charge). Rare Capacitor (Shock on charged shot), Ferro (ricochet), Split slug (several
+projectiles, no pierce), Feedback (about 2 degrees bullet magnetism). Epic DU penetrator (pierces at
+lower charge, more pierce damage), Toxic scatter, Superconductor (overcharge or full auto on full
+charge), EMP capacitor.
+
+**Smart (10mm, 20mm, 25mm):** Uncommon Dumbfires (built) and Short-fuse (more damage, shorter
+reach; untested whether smart projectiles have falloff or only a flight time). Rare EMP,
+Incendiary, Chem and Flash payloads. Epic HE (20mm and 25mm only, small radius), Hunter (more
+targets, faster lock, higher hit chance, faster flight), Hack carrier (Cyberware Malfunction or
+weapon jam), Shaped charge (armor pen, against drones and mechs).
+
+**Mechanics checked for this lineup**
+
+- Pellet patterns: pellets follow the gun's `Spread*` stats, laid out by
+  `SpreadUseEvenDistribution`, `SpreadEvenDistributionRowCount`, `SpreadEvenDistributionJitterSize`
+  and `SpreadUseCircularSpread`; `ProjectilesPerShot` sets the count. Dragon's breath and Barn Door
+  are stat changes. A muzzle cone of fire is not pursued.
+- Damage roll: every player hit on an NPC is multiplied by `RandRangeF(0.90, 1.10)` in
+  `DamageSystem.CalculateDamageVariants` (script). Probed on 2.50: 30 Lexington hits, ratios
+  0.908 to 1.101, mean 0.999. The `EffectiveDamagePerHitMin/Max` stats (0.9x and 1.1x) are for the
+  tooltip only and don't drive the roll. So Match grade needs a `@wrapMethod` on
+  `CalculateDamageVariants` that narrows the roll for its guns (for example 1.00 to 1.10), plus
+  the tooltip's min stat raised to match.
+- Falloff: `EffectiveRange` (where damage starts dropping) and `DamageFalloffDisabled`.
+
 ## Open questions
 
 1. Rarity budget units: how many perk points per tier, and how quirks offset them.
