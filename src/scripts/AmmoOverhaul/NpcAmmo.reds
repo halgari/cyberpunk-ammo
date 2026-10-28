@@ -49,6 +49,10 @@ public let aoLootAmmo: array<TweakDBID>;
 @addField(NPCPuppet)
 public let aoLootQuantity: array<Int32>;
 
+// The noted ammo has been given back once; a later wipe (death after a knockout) takes a new note.
+@addField(NPCPuppet)
+public let aoLootGiven: Bool;
+
 public abstract class NpcAmmo {
 
   // Hostile NPCs in the world; not the inventory screen's preview puppet, which is an NPCPuppet.
@@ -237,9 +241,13 @@ public abstract class NpcAmmo {
     AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " out of ammo for all " + IntToString(ArraySize(guns)) + " gun(s)");
   }
 
-  // Gives back whatever of the noted ammo the body is missing. Safe to repeat: it only adds the
-  // difference.
+  // Gives back whatever of the noted ammo the body is missing, once per note: after that, rounds
+  // missing are rounds the player took.
   public static func TopUpLoot(npc: ref<NPCPuppet>) -> Void {
+    if npc.aoLootGiven {
+      return;
+    }
+    npc.aoLootGiven = true;
     let ts: ref<TransactionSystem> = GameInstance.GetTransactionSystem(npc.GetGame());
     let i: Int32 = 0;
     while i < ArraySize(npc.aoLootAmmo) {
@@ -251,13 +259,28 @@ public abstract class NpcAmmo {
     }
   }
 
-  // Notes the ammo `npc` carries before death or incapacitation wipes it.
+  // Notes the ammo `npc` carries before death or incapacitation wipes it. A note not yet given
+  // back is kept (death right after a knockout comes after the wipe and would note nothing); one
+  // already given back is replaced by what the body holds now. Each round is capped at
+  // AmmoOverhaul.npcLootWeight carry points, so a heavy's machine-gun belts don't all end up as loot.
   public static func NoteLoot(npc: ref<NPCPuppet>) -> Void {
+    if ArraySize(npc.aoLootAmmo) > 0 && npc.aoLootGiven {
+      ArrayClear(npc.aoLootAmmo);
+      ArrayClear(npc.aoLootQuantity);
+      npc.aoLootGiven = false;
+    }
     if (ArraySize(npc.aoStocked) == 0 && ArraySize(npc.aoStashedGuns) == 0) || ArraySize(npc.aoLootAmmo) > 0 {
       return;
     }
+    let ts: ref<TransactionSystem> = GameInstance.GetTransactionSystem(npc.GetGame());
+    let carry: Float = TweakDBInterface.GetFloat(t"AmmoOverhaul.npcLootWeight", 6.0);
     for ammo in npc.aoStocked {
       let rounds: Int32 = NpcAmmo.Rounds(npc, ammo);
+      let data: wref<gameItemData> = ts.GetItemData(npc, ItemID.CreateQuery(ammo));
+      let weight: Float = IsDefined(data) ? data.GetStatValueByType(gamedataStatType.Weight) : 0.0;
+      if weight > 0.0 {
+        rounds = Min(rounds, FloorF(carry / weight + 0.001));
+      }
       if rounds > 0 {
         ArrayPush(npc.aoLootAmmo, ammo);
         ArrayPush(npc.aoLootQuantity, rounds);
@@ -280,6 +303,7 @@ public abstract class NpcAmmo {
     ArrayClear(npc.aoStashedGuns);
     ArrayClear(npc.aoLootAmmo);
     ArrayClear(npc.aoLootQuantity);
+    npc.aoLootGiven = false;
     ArrayClear(npc.aoStocked);
     ArrayClear(npc.aoStockedGuns);
   }
@@ -348,8 +372,8 @@ protected func OnIncapacitated() -> Void {
 }
 
 // A body the game generates no loot for never gets EvaluateLootQuality, so its noted ammo would
-// be lost; a few seconds after death the missing rounds are given back anyway. If loot comes in
-// later, EvaluateLootQuality tops up again (only the difference) and clears the note.
+// be lost; a few seconds after death the missing rounds are given back anyway. Each note is given
+// back once, here or by EvaluateLootQuality, whichever comes first.
 public class NpcLootCallback extends DelayCallback {
   public let npc: wref<NPCPuppet>;
 

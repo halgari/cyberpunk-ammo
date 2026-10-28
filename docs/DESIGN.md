@@ -162,9 +162,14 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
   ammo stacks, so they're noted at `OnDeath` / `OnIncapacitated` and given back in
   `ScriptedPuppet.EvaluateLootQuality`, which runs once loot is in. Stashed guns come back the same
   way (as fresh items of the same record). The engine's random ammo drop is turned off for every
-  character (`dropsAmmoOnDeathChance` = 0).
-- **Not counted:** guns whose record ammo is `Ammo.Standard` (melee weapons, cyberware, heavy
-  machine guns and a few others) stay unlimited until they get a real ammo type.
+  character (`dropsAmmoOnDeathChance` = 0). A body leaves at most `npcLootWeight` (6) carry
+  points of each round, by the round's Weight stat. NPCs still carry and fire their whole stock;
+  the cap is only on the loot.
+- **Heavy machine guns:** the NPC presets (`Preset_HMG_*`) are on 12.7, so a heavy is stocked
+  with its 200-round belt × magazines (1200 rounds for an Elite) and runs dry like anyone else.
+  The loot cap leaves 40 rounds of 12.7 on the body.
+- **Not counted:** guns whose record ammo is `Ammo.Standard` (melee weapons, cyberware and a few
+  others) stay unlimited until they get a real ammo type.
 
 ## Distribution
 

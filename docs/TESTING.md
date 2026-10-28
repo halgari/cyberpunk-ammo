@@ -124,6 +124,9 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 - `slugs.sh`: every shotgun fires one projectile with Slugs, with tighter spread and twice the
   range (draws weapons: not while you play).
 - `icons.lua`: every round and selector has its own icon in the atlas.
+- `lootdupe.lua`: a body knocked out, looted and then killed gives its ammo back once, not
+  twice. `lootcap.lua`: a body leaves at most `npcLootWeight` carry points of a round (1200
+  rounds of 12.7 leave 40). Both spawn a test NPC on the first run; run them again once it loads.
 
 By hand:
 

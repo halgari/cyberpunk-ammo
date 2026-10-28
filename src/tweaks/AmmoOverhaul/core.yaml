@@ -40,6 +40,11 @@ AmmoOverhaul.npcMagazines.Officer: 4
 AmmoOverhaul.npcMagazines.Elite: 6
 AmmoOverhaul.npcMagazines.Boss: 12
 
+# Most a body leaves of each round, in carry points (the round's Weight stat times the count): 6 is
+# about an Elite's magazines of rifle ammo. NPCs still carry and fire their full stock; this only
+# caps the loot, so an HMG heavy with 1200 rounds of 12.7 leaves 40.
+AmmoOverhaul.npcLootWeight: 6.0
+
 # How much likelier than the family's Uncommon share an NPC of each rarity is to carry the
 # Uncommon round.
 AmmoOverhaul.npcUncommonFactor.Trash: 0.5

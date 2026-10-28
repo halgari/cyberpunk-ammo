@@ -351,6 +351,40 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return IntToString(once ? LootConvert.ConvertOnce(target) : LootConvert.Convert(target));
   }
 
+  // The body's loot through a knockout, the player taking `take` rounds, death, and the game's
+  // loot event, with each wipe of the inventory simulated (the engine wipes it at death and at
+  // incapacitation). Runs the real NoteLoot, NpcLootCallback.Call and RestoreLoot on `target` given
+  // `rounds` of `ammo`. "<after knockout> <after taking> <after death> <after loot event>".
+  public final func DebugLootCycle(target: ref<GameObject>, ammo: String, rounds: Int32, take: Int32) -> String {
+    let npc: ref<NPCPuppet> = target as NPCPuppet;
+    if !IsDefined(npc) {
+      return "not an NPC";
+    }
+    let ts: ref<TransactionSystem> = GameInstance.GetTransactionSystem(npc.GetGame());
+    let id: TweakDBID = TDBID.Create(ammo);
+    ArrayClear(npc.aoLootAmmo);
+    ArrayClear(npc.aoLootQuantity);
+    npc.aoLootGiven = false;
+    ArrayClear(npc.aoStocked);
+    ArrayPush(npc.aoStocked, id);
+    ts.RemoveItemByTDBID(npc, id, NpcAmmo.Rounds(npc, id));
+    ts.GiveItem(npc, ItemID.CreateQuery(id), rounds);
+    let callback: ref<NpcLootCallback> = new NpcLootCallback();
+    callback.npc = npc;
+    NpcAmmo.NoteLoot(npc);
+    ts.RemoveItemByTDBID(npc, id, NpcAmmo.Rounds(npc, id));
+    callback.Call();
+    let out: String = IntToString(NpcAmmo.Rounds(npc, id));
+    ts.RemoveItemByTDBID(npc, id, take);
+    out += " " + IntToString(NpcAmmo.Rounds(npc, id));
+    NpcAmmo.NoteLoot(npc);
+    ts.RemoveItemByTDBID(npc, id, NpcAmmo.Rounds(npc, id));
+    callback.Call();
+    out += " " + IntToString(NpcAmmo.Rounds(npc, id));
+    NpcAmmo.RestoreLoot(npc);
+    return out + " " + IntToString(NpcAmmo.Rounds(npc, id));
+  }
+
   // Whether the fill event (or DebugConvert with once) has converted this container.
   public final func DebugIsConverted(target: ref<GameObject>) -> Bool {
     return ArrayContains(this.m_convertedContainers, target.GetEntityID());
