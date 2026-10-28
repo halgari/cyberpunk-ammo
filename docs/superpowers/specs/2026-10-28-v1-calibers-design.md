@@ -59,9 +59,8 @@ Same load, same effect in every caliber, with the slice's numbers:
   each); tight spread; effective range ×2.
 - **4ga Slugs:** a hand cannon. One projectile carrying the whole shot's damage plus ×1.3; armor
   penetration +0.5; knocks the target down (`ForceKnockdown`); effective range ×2; recoil ×1.6.
-  If a Power shot can be made to pierce cover the way a charged Tech shot does
-  (`TechPierceEnabled`), the slug does that too; this is tested first and dropped if it doesn't
-  work on a Power gun.
+  It does not pierce cover: piercing is kept for higher-tier rounds (kinetic penetrators,
+  tungsten slugs, depleted-uranium rods) in the Rare/Epic spec.
 
 ## Caliber profiles
 
@@ -148,7 +147,6 @@ sheets in batches.
 - Mk.31 HMG's record is checked before it joins 12.7.
 - Whether a negative `ProjectilesPerShotBonus` brings every shotgun (including the double
   barrels) to exactly one projectile.
-- Whether `TechPierceEnabled` works on a Power gun (4ga Slugs).
 
 ## Testing
 
@@ -161,6 +159,6 @@ checklist for the user: profile feel per caliber, 12ga Buckshot against Slugs, t
 
 1. Caliber profiles on the slice's three calibers (framework, tested on guns that already work).
 2. The ten new calibers at Common and Uncommon: records, feed slots, gun lists, ammo split.
-3. 12ga Slugs and 4ga Slugs (the projectile-count and cover-pierce checks first).
+3. 12ga Slugs and 4ga Slugs (the projectile-count check first).
 4. Item text, for the user's sign-off.
 5. Icons.
