@@ -23,7 +23,7 @@ for _, g in ipairs('"$NPCS"') do k.spawn("Character.AO_Test_Plain_"..g, 1) end; 
 DRAWN='local n=0 for _,npc in ipairs(Game.GetDynamicEntitySystem():GetTagged("AO_Test")) do if ScriptedPuppet.GetActiveWeapon(npc) then n=n+1 end end return n'
 wait_drawn() { for _ in $(seq 1 30); do [[ "$($C -t 10 "$DRAWN" 2>/dev/null)" == "=> $N" ]] && break; sleep 1; done; echo "drawn: $($C -t 10 "$DRAWN")"; }
 spawn 0.0; wait_drawn
-out+="$($C -t 30 "$WANT $(cat $S/slice/common.lua $S/calibers/npc.lua)")"$'\n'
+out+="$($C -t 30 "UNCOMMON=false; $WANT $(cat $S/slice/common.lua $S/calibers/npc.lua)")"$'\n'
 $C 'GetMod("AOTestKit").killAll(); return "killed"' >/dev/null
 for _ in $(seq 1 8); do $C -t 10 'return "tick"' >/dev/null 2>&1 || true; sleep 1; done
 out+="$($C -t 30 "$(cat $S/slice/common.lua $S/slice/npcloot.lua)")"$'\n'
