@@ -7,3 +7,4 @@ build/
 tools/wolvenkit/
 tools/wolvenkit-win/
 art/build/
+__pycache__/
