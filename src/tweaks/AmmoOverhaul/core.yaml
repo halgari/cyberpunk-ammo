@@ -15,7 +15,7 @@
 # TweakXL rejects unknown properties on existing record types, so the mod's own settings live in
 # the AmmoOverhaul.* flats, keyed by short names, rather than on the item records.
 
-AmmoOverhaul.calibers: ["Power_9mm", "Tech_Light", "Smart_10"]
+AmmoOverhaul.calibers: ["Power_9mm", "Power_45", "Power_12mm", "Tech_Light", "Smart_10"]
 
 # --- Distribution ------------------------------------------------------------------------------
 # Share of each tier (Common, Uncommon) in a family's ammo, for vendors, world loot and NPCs.

@@ -8,16 +8,24 @@ local PROFILES = {
   Power_9mm = { 1.00, 0, 1.00, 1.00 },
   Tech_Light = { 1.00, 0, 1.00, 1.00 },
   Smart_10 = { 1.00, -0.10, 1.00, 1.00 },
+  Power_45 = { 1.10, -0.15, 1.10, 1.00 },
+  Power_12mm = { 1.15, 0.10, 1.35, 1.00 },
 }
 local GUNS = {
   { "Power_9mm", "Items.Preset_Lexington_Default" },
   { "Tech_Light", "Items.Preset_Omaha_Default" },
   { "Smart_10", "Items.Preset_Yukimura_Default" },
+  { "Power_45", "Items.Preset_Unity_Default" },
+  { "Power_45", "Items.Preset_Nue_Jackie" },
+  { "Power_12mm", "Items.Preset_Overture_Default" },
+  { "Power_12mm", "Items.Preset_Silverhand_3516" },
 }
 -- gun = { stat, expected value with the Common round fitted }
 local LIVE_EXPECT = {
   -- Yukimura CanWeaponIgnoreArmor was 0 before profiles (measured 2026-10-28).
   ["Items.Preset_Yukimura_Default"] = { "CanWeaponIgnoreArmor", -0.10 },
+  -- Power guns have no pen of their own: Unity's is the profile's.
+  ["Items.Preset_Unity_Default"] = { "CanWeaponIgnoreArmor", -0.15 },
 }
 
 local function near(a, b) return math.abs((a or 0) - b) < 0.001 end

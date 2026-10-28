@@ -1,0 +1,120 @@
+# Power 12mm (P-MAG): Nova, Overture, Metel, Malorian 3516 (no family tag: matched by record).
+# Common 12mm Ball; Uncommon 12mm Mushrooms are hollow points.
+
+AmmoOverhaul.Power_12mm.family: "Power"
+AmmoOverhaul.Power_12mm.weaponTags: ["Nova", "Overture", "Metel"]
+AmmoOverhaul.Power_12mm.weaponRecords: ["Items.Preset_Silverhand_3516", "Items.Silverhand_Malorian", "Items.VHard_50_CoolRef_Weapon11"]
+AmmoOverhaul.Power_12mm.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_12mm"
+AmmoOverhaul.Power_12mm.feedElement: "Items.AO_AmmoFeed_Power_12mm_Element"
+AmmoOverhaul.Power_12mm.defaultAmmo: "Ammo.AO_12mm_Ball"
+AmmoOverhaul.Power_12mm.vanillaAmmo: "Ammo.HandgunAmmo"
+AmmoOverhaul.Power_12mm.lootWeight: 0.1
+AmmoOverhaul.Power_12mm.selectors: ["Items.AO_Feed_12mm_Ball", "Items.AO_Feed_12mm_Mushrooms"]
+AmmoOverhaul.Power_12mm.selectorAmmo: ["Ammo.AO_12mm_Ball", "Ammo.AO_12mm_HollowPoint"]
+AmmoOverhaul.Power_12mm.selectorTiers: [0, 1]
+AmmoOverhaul.Power_12mm.profile: "AOProfile.Power_12mm"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# Hand cannon: more damage and pen, a lot more kick. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Power_12mm:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.15
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.1
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.35
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.35
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Power_12mm:
+  $base: AttachmentSlots.Power_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Power_12mm
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+# No quality prereq, so the slot exists on every quality of the gun.
+Items.AO_AmmoFeed_Power_12mm_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Power_12mm
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_12mm_Ball:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the source ammo's weight isn't added on top.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.12
+  quality: Quality.Common
+  displayName: LocKey#AO-Ammo-12mm-Ball
+  localizedDescription: LocKey#AO-Ammo-12mm-Ball-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Power]
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1.6
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1.6
+
+Ammo.AO_12mm_HollowPoint:
+  $base: Ammo.AO_12mm_Ball
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-12mm-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_12mm_Ball:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-12mm-Ball
+  localizedDescription: LocKey#AO-Ammo-12mm-Ball-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_12mm]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Hollow points: harder against flesh, the target's armor counts 1.5x (negative penetration).
+Items.AO_Feed_12mm_Mushrooms:
+  $base: Items.AO_Feed_12mm_Ball
+  displayName: LocKey#AO-Ammo-12mm-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.5

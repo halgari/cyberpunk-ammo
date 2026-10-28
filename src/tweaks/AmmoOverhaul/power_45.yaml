@@ -1,0 +1,119 @@
+# Power .45 (P-45): Unity, Liberty, Nue (Nue_2020: the Arasaka quest Nues). Common .45 Ball;
+# Uncommon .45 Mushrooms are hollow points. Plan B (a Liberty) fires eddies and is left alone.
+
+AmmoOverhaul.Power_45.family: "Power"
+AmmoOverhaul.Power_45.weaponTags: ["Unity", "Liberty", "Nue", "Nue_2020"]
+AmmoOverhaul.Power_45.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_45"
+AmmoOverhaul.Power_45.feedElement: "Items.AO_AmmoFeed_Power_45_Element"
+AmmoOverhaul.Power_45.defaultAmmo: "Ammo.AO_45_Ball"
+AmmoOverhaul.Power_45.vanillaAmmo: "Ammo.HandgunAmmo"
+AmmoOverhaul.Power_45.lootWeight: 0.2
+AmmoOverhaul.Power_45.selectors: ["Items.AO_Feed_45_Ball", "Items.AO_Feed_45_Mushrooms"]
+AmmoOverhaul.Power_45.selectorAmmo: ["Ammo.AO_45_Ball", "Ammo.AO_45_HollowPoint"]
+AmmoOverhaul.Power_45.selectorTiers: [0, 1]
+AmmoOverhaul.Power_45.profile: "AOProfile.Power_45"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# Hits harder, worse into armor, a bit more kick. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Power_45:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.1
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.15
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.1
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.1
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Power_45:
+  $base: AttachmentSlots.Power_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Power_45
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+# No quality prereq, so the slot exists on every quality of the gun.
+Items.AO_AmmoFeed_Power_45_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Power_45
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_45_Ball:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the source ammo's weight isn't added on top.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.09
+  quality: Quality.Common
+  displayName: LocKey#AO-Ammo-45-Ball
+  localizedDescription: LocKey#AO-Ammo-45-Ball-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Power]
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1.2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1.2
+
+Ammo.AO_45_HollowPoint:
+  $base: Ammo.AO_45_Ball
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-45-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_45_Ball:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-45-Ball
+  localizedDescription: LocKey#AO-Ammo-45-Ball-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_45]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Hollow points: harder against flesh, the target's armor counts 1.5x (negative penetration).
+Items.AO_Feed_45_Mushrooms:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.5

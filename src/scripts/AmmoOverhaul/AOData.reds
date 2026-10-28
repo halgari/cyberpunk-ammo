@@ -167,15 +167,34 @@ public abstract class AOData {
     return TweakDBInterface.GetFloat(TDBID.Create("AmmoOverhaul.npcUncommonFactor." + rarity), 1.0);
   }
 
-  // The caliber of a weapon record (by its tags), or "" if the mod doesn't manage it.
+  // Weapon records the caliber takes besides those with its tags (guns with no family tag).
+  public static func WeaponRecords(caliber: String) -> array<TweakDBID> {
+    return AOData.GetIDs(AOData.Key(caliber, "weaponRecords"));
+  }
+
+  // Whether the caliber manages this weapon: it carries one of the caliber's weaponTags or is one
+  // of its weaponRecords, and fires real ammo (Plan B fires eddies and is left alone).
+  public static func Matches(weapon: ref<WeaponItem_Record>, caliber: String) -> Bool {
+    let ammo: ref<Item_Record> = weapon.Ammo();
+    if !IsDefined(ammo) || !ammo.TagsContains(n"Ammo") {
+      return false;
+    }
+    for tag in AOData.WeaponTags(caliber) {
+      if weapon.TagsContains(tag) {
+        return true;
+      }
+    }
+    let records: array<TweakDBID> = AOData.WeaponRecords(caliber);
+    return ArrayContains(records, weapon.GetID());
+  }
+
+  // The caliber of a weapon record, or "" if the mod doesn't manage it.
   public static func CaliberForWeapon(weapon: TweakDBID) -> String {
     let record: ref<WeaponItem_Record> = TweakDBInterface.GetWeaponItemRecord(weapon);
     if IsDefined(record) {
       for caliber in AOData.Calibers() {
-        for tag in AOData.WeaponTags(caliber) {
-          if record.TagsContains(tag) {
-            return caliber;
-          }
+        if AOData.Matches(record, caliber) {
+          return caliber;
         }
       }
     }

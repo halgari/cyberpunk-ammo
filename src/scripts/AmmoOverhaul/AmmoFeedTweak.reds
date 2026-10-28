@@ -1,7 +1,7 @@
 module AmmoOverhaul
 
 // Runs once while TweakDB loads, after the YAML is applied. For every caliber, finds the weapons
-// carrying one of its weaponTags, sets their ammo to the caliber's default and gives them a clone
+// it manages (AOData.Matches: its weaponTags or weaponRecords), sets their ammo to the caliber's default and gives them a clone
 // of their blueprint with the caliber's feed slot added. Cloning each weapon's own blueprint keeps
 // the NoMuzzle/NoScope/Collectible variants intact. The caliber's profile group (AOProfile.*) is
 // added to the weapons' statModifierGroups. Also turns off the engine's random ammo drop
@@ -37,17 +37,18 @@ public class AmmoFeedTweak extends ScriptableTweak {
 
   private func ApplyCaliber(caliber: String, weapons: array<ref<TweakDBRecord>>) -> Void {
     let ammo: TweakDBID = AOData.DefaultAmmo(caliber);
-    let tags: array<CName> = AOData.WeaponTags(caliber);
     let element: TweakDBID = AOData.FeedElement(caliber);
     let profile: TweakDBID = AOData.Profile(caliber);
     let patched: Int32 = 0;
-    if !TDBID.IsValid(ammo) || ArraySize(tags) == 0 {
-      ModLog(n"AmmoOverhaul", "caliber " + caliber + ": missing defaultAmmo or weaponTags, skipped");
+    let tags: array<CName> = AOData.WeaponTags(caliber);
+    let records: array<TweakDBID> = AOData.WeaponRecords(caliber);
+    if !TDBID.IsValid(ammo) || ArraySize(tags) + ArraySize(records) == 0 {
+      ModLog(n"AmmoOverhaul", "caliber " + caliber + ": missing defaultAmmo or weapons, skipped");
       return;
     }
     for record in weapons {
       let weapon: ref<WeaponItem_Record> = record as WeaponItem_Record;
-      if IsDefined(weapon) && AmmoFeedTweak.HasAnyTag(weapon, tags) {
+      if IsDefined(weapon) && AOData.Matches(weapon, caliber) {
         let id: TweakDBID = weapon.GetID();
         TweakDBManager.SetFlat(AOData.Flat(id, "ammo"), ToVariant(ammo));
         let blueprint: TweakDBID = TweakDBInterface.GetForeignKey(AOData.Flat(id, "blueprint"), TDBID.None());
@@ -66,15 +67,6 @@ public class AmmoFeedTweak extends ScriptableTweak {
       }
     }
     ModLog(n"AmmoOverhaul", "caliber " + caliber + ": patched " + IntToString(patched) + " weapon records" + (TDBID.IsValid(element) ? "" : " (no feed element)"));
-  }
-
-  private static func HasAnyTag(weapon: ref<WeaponItem_Record>, tags: array<CName>) -> Bool {
-    for tag in tags {
-      if weapon.TagsContains(tag) {
-        return true;
-      }
-    }
-    return false;
   }
 
   // Returns a blueprint identical to `blueprint` whose root element also holds `element`.
