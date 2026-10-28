@@ -12,6 +12,7 @@ if ok then
     check("one feed slot", select(2, d:gsub("AO_AmmoFeed_", "")) == 1, d)
     check("Ammo before Mods", m and mo and m < mo, d)
     check("Attachments before Ammo (or in another parent)", a and (a == -1 or a < m), d)
+    check("Ammo section shown (it and every parent visible)", d:match("shown true") ~= nil, d)
   end
 end
 report()

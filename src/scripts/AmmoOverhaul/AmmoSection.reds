@@ -3,14 +3,19 @@ module AmmoOverhaul
 // An "Ammo" section on the weapon screen, between Attachments and Mods. The chooser builds two
 // sections itself: Attachments (scope, magazine and silencer part types, RebuildParts) and Mods
 // (every other slot, from GetSlots), so a feed slot would land under Mods. The feed slots are taken
-// out of GetSlots and shown in a label and slot row of our own, made next to the Mods label. If
-// that can't be done (the Mods label has no parent to add to), the feed slots stay under Mods.
+// out of GetSlots and shown in a panel of our own (label and slot row), placed just before the Mods
+// block as its sibling: the chooser hides the whole Mods block on guns with no mod slots, which
+// would hide anything inside it. If that can't be done (the Mods block has no parent to add to),
+// the feed slots stay under Mods.
 
 @addField(InventoryWeaponItemChooser)
 public let aoAmmoLabel: wref<inkText>;
 
 @addField(InventoryWeaponItemChooser)
 public let aoAmmoSlots: wref<inkHorizontalPanel>;
+
+@addField(InventoryWeaponItemChooser)
+public let aoAmmoSection: wref<inkVerticalPanel>;
 
 @wrapMethod(InventoryWeaponItemChooser)
 protected func GetSlots() -> array<ref<InventoryItemAttachments>> {
@@ -53,24 +58,27 @@ protected func RebuildSlots() -> Void {
   this.AORebuildAmmoSection();
 }
 
-// Makes the label and slot row once, just before the Mods label (and its spacer). False if there's
-// nowhere to put them.
+// Makes the section (label over slot row) once, just before the Mods block. False if there's
+// nowhere to put it.
 @addMethod(InventoryWeaponItemChooser)
 private func AOEnsureAmmoSection() -> Bool {
   if IsDefined(this.aoAmmoSlots) {
     return true;
   }
   let modsLabel: ref<inkText> = inkTextRef.Get(this.m_softwareModsLabel) as inkText;
-  let parent: ref<inkCompoundWidget> = IsDefined(modsLabel) ? modsLabel.GetParentWidget() as inkCompoundWidget : null;
-  if !IsDefined(parent) {
-    AmmoFeedSystem.Log("weapon screen: no parent for the Mods label, feed slots stay under Mods");
+  let modsBlock: ref<inkWidget> = inkWidgetRef.Get(this.m_softwareModsContainer);
+  let parent: ref<inkCompoundWidget> = IsDefined(modsBlock) ? modsBlock.GetParentWidget() as inkCompoundWidget : null;
+  if !IsDefined(modsLabel) || !IsDefined(parent) {
+    AmmoFeedSystem.Log("weapon screen: no parent for the Mods block, feed slots stay under Mods");
     return false;
   }
-  let index: Int32 = parent.GetChildIndex(modsLabel);
-  let push: ref<inkWidget> = inkWidgetRef.Get(this.m_softwareModsPush);
-  if IsDefined(push) && push.GetParentWidget() == parent {
-    index = Min(index, parent.GetChildIndex(push));
-  }
+
+  let section: ref<inkVerticalPanel> = new inkVerticalPanel();
+  section.SetName(n"aoAmmoSection");
+  section.SetHAlign(modsBlock.GetHAlign());
+  section.SetMargin(modsBlock.GetMargin());
+  section.SetFitToContent(true);
+  section.Reparent(parent, parent.GetChildIndex(modsBlock));
 
   let label: ref<inkText> = new inkText();
   label.SetName(n"aoAmmoLabel");
@@ -89,14 +97,15 @@ private func AOEnsureAmmoSection() -> Bool {
   label.SetSizeRule(modsLabel.GetSizeRule());
   label.SetFitToContent(true);
   label.SetText(GetLocalizedTextByKey(n"AO-Section-Ammo"));
-  label.Reparent(parent, index);
+  label.Reparent(section);
 
   let slots: ref<inkHorizontalPanel> = new inkHorizontalPanel();
   slots.SetName(n"aoAmmoSlots");
   slots.SetHAlign(modsLabel.GetHAlign());
   slots.SetFitToContent(true);
-  slots.Reparent(parent, index + 1);
+  slots.Reparent(section);
 
+  this.aoAmmoSection = section;
   this.aoAmmoLabel = label;
   this.aoAmmoSlots = slots;
   return true;
@@ -117,8 +126,7 @@ private func AORebuildAmmoSection() -> Void {
     }
   }
   let visible: Bool = ArraySize(feeds) > 0;
-  this.aoAmmoLabel.SetVisible(visible);
-  this.aoAmmoSlots.SetVisible(visible);
+  this.aoAmmoSection.SetVisible(visible);
   while this.aoAmmoSlots.GetNumChildren() > ArraySize(feeds) {
     this.aoAmmoSlots.RemoveChildByIndex(this.aoAmmoSlots.GetNumChildren() - 1);
   }
@@ -140,17 +148,41 @@ private func AORebuildAmmoSection() -> Void {
     ids += " " + TDBID.ToStringDEBUG(feeds[i].SlotID);
     i += 1;
   }
-  AmmoFeedSystem.Get(GetGameInstance()).NoteAmmoSection(this.AOSectionOrder() + " | slots" + ids + " | label " + this.aoAmmoLabel.GetText());
+  // The dual-wield chooser rebuilds too, usually with no item; keep the one that has a gun.
+  if !InventoryItemData.IsEmpty(itemData) {
+    AmmoFeedSystem.Get(GetGameInstance()).NoteAmmoSection(this.AOSectionOrder() + " | slots" + ids + " | label " + this.aoAmmoLabel.GetText());
+    AmmoFeedSystem.Log("weapon screen: " + TDBID.ToStringDEBUG(ItemID.GetTDBID(InventoryItemData.GetID(itemData))) + " feeds " + IntToString(ArraySize(feeds)) + " of " + IntToString(ArraySize(attachments)) + " | " + this.AOSectionOrder() + " | " + this.AOParentChain());
+  }
 }
 
-// Where the three section labels sit in the Ammo label's parent, e.g. "attachments 1 ammo 3 mods 5"
-// (-1 for a label in another parent).
+// The Ammo label's parents, innermost first: "name(visible)/..." (debugging where the row sits).
+@addMethod(InventoryWeaponItemChooser)
+private func AOParentChain() -> String {
+  let text: String = "";
+  let widget: ref<inkWidget> = this.aoAmmoLabel;
+  let depth: Int32 = 0;
+  while IsDefined(widget) && depth < 6 {
+    text += NameToString(widget.GetName()) + "(" + (widget.IsVisible() ? "v" : "h") + ")/";
+    widget = widget.GetParentWidget();
+    depth += 1;
+  }
+  return text;
+}
+
+// Where the three sections sit in the Ammo section's parent, e.g. "attachments 1 ammo 3 mods 4"
+// (-1 for one in another parent), and whether the Ammo label and every parent above it are visible.
 @addMethod(InventoryWeaponItemChooser)
 private func AOSectionOrder() -> String {
-  let parent: ref<inkCompoundWidget> = this.aoAmmoLabel.GetParentWidget() as inkCompoundWidget;
-  let attachments: ref<inkWidget> = inkTextRef.Get(this.m_attachmentsLabel);
-  let mods: ref<inkWidget> = inkTextRef.Get(this.m_softwareModsLabel);
+  let parent: ref<inkCompoundWidget> = this.aoAmmoSection.GetParentWidget() as inkCompoundWidget;
+  let attachments: ref<inkWidget> = inkWidgetRef.Get(this.m_attachmentsContainer);
+  let mods: ref<inkWidget> = inkWidgetRef.Get(this.m_softwareModsContainer);
   let a: Int32 = IsDefined(attachments) && attachments.GetParentWidget() == parent ? parent.GetChildIndex(attachments) : -1;
   let m: Int32 = IsDefined(mods) && mods.GetParentWidget() == parent ? parent.GetChildIndex(mods) : -1;
-  return "attachments " + IntToString(a) + " ammo " + IntToString(parent.GetChildIndex(this.aoAmmoLabel)) + " mods " + IntToString(m);
+  let shown: Bool = true;
+  let widget: ref<inkWidget> = this.aoAmmoLabel;
+  while IsDefined(widget) {
+    shown = shown && widget.IsVisible();
+    widget = widget.GetParentWidget();
+  }
+  return "attachments " + IntToString(a) + " ammo " + IntToString(parent.GetChildIndex(this.aoAmmoSection)) + " mods " + IntToString(m) + " shown " + (shown ? "true" : "false");
 }
