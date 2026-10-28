@@ -73,8 +73,10 @@ models: 10mm after the Kang Tao Dian projectile, 20mm as a Palica-style eight-ce
 after the Ashura round. All 26 render in about two minutes.
 
 Square, not landscape: the backpack tile shows only the centred square of an icon's cell, so
-`make_icons.py` fits the art into that square and wide art comes out small. The atlas is 2048×1024,
-8 × 4 cells; a round's part is `ao_` + its art name (`9mm-ball` → `ao_9mm_ball`).
+`make_icons.py` fits the art edge to edge into a square cell, as the game's own icons are (mostly
+160×160 parts cropped tight to the art). The atlas is 2048×1024, 8 × 4 cells of 256×256; a round's
+part is `ao_` + its art name (`9mm-ball` → `ao_9mm_ball`). The atlas build also lifts the midtones
+(`LIFT`) so the renders match the game's icon brightness.
 
 ## What to check
 

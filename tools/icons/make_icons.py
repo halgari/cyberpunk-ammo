@@ -1,8 +1,8 @@
 """Builds the ammo icon atlas texture from the source art in art/icons.
 
 Each source image is a cut-out on a transparent background. It's cropped to what's visible and
-fitted (keeping its shape) into a cell of
-the vanilla ammo icon's proportions (124x78 at 2048, so 248x156 here for a sharper 4K slot).
+fitted (keeping its shape) edge to edge into a square cell, as the game's own item icons are
+(mostly 160x160 parts cropped tight to the art; 256x256 here, for sharpness).
 The atlas is saved with premultiplied alpha, as the game expects.
 Writes art/build/ao_ammo_icons.png and each part's UV rect (art/build/ao_ammo_icons.uvs.json)
 for the .inkatlas.
@@ -16,10 +16,10 @@ from PIL import Image, ImageChops
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = ROOT / "art" / "icons"
 OUT = ROOT / "art" / "build"
-CELL = (248, 156)
-# Empty margin kept around the art inside its square (fraction of the cell's height).
-PAD = 0.08
-ATLAS = (2048, 1024)   # 8 x 4 cells of 256 x 160
+CELL = (256, 256)
+# Empty margin kept around the art (fraction of the cell): just enough that soft edges aren't cut.
+PAD = 0.02
+ATLAS = (2048, 1024)   # 8 x 4 cells of 256 x 256
 COLS = 8
 # Source art (art/icons/<name>.png, rendered by tools/render/render.py), one per round. The part is
 # "ao_" + the name with "-" as "_" (9mm-ball -> ao_9mm_ball), matching UIIcon.AO_* and the feed selector.
@@ -49,9 +49,9 @@ def cut_out(path):
 
 
 def fit(im):
-    # The backpack tile shows a cell at its full height with room for only a square of it, so
-    # the art is kept inside the centred CELL[1] x CELL[1] square (wider art stuck out of the tile).
-    room = CELL[1] - 2 * round(CELL[1] * PAD)
+    # Square cells: the backpack tile shows a cell at its full height with room for only a square
+    # of it (art in a wider cell stuck out of the tile), so the art fills the square instead.
+    room = CELL[0] - 2 * round(CELL[0] * PAD)
     scale = min(room / im.width, room / im.height)
     im = im.resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), Image.LANCZOS)
     cell = Image.new("RGBA", CELL, (0, 0, 0, 0))
@@ -71,7 +71,7 @@ def main():
     atlas = Image.new("RGBA", ATLAS, (0, 0, 0, 0))
     uvs = {}
     for i, (part, src) in enumerate(PARTS.items()):
-        x, y = (i % COLS) * 256, (i // COLS) * 160
+        x, y = (i % COLS) * CELL[0], (i // COLS) * CELL[1]
         atlas.alpha_composite(fit(cut_out(SRC / src)), (x, y))
         uvs[part] = {"Left": x / ATLAS[0], "Top": y / ATLAS[1],
                      "Right": (x + CELL[0]) / ATLAS[0], "Bottom": (y + CELL[1]) / ATLAS[1]}
