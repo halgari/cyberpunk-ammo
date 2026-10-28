@@ -36,9 +36,12 @@ that carry and use up real ammo. This file records how the proof of concept work
 TweakXL rejects unknown properties on existing record types, so the mod's settings live in
 standalone `AmmoOverhaul.*` flats keyed by short names (read by `AOData.reds`):
 
-- `AmmoOverhaul.calibers`: caliber names (`Power_9mm`, `Tech_Light`, `Smart_10`).
+- `AmmoOverhaul.calibers`: caliber names (`Power_9mm`, `Power_45`, … `Tech_Light`, `Smart_25`:
+  the 13 in `docs/CATALOG.md`).
 - Per caliber, `AmmoOverhaul.<caliber>.*`:
   - `weaponTags`: weapons carrying any of these tags belong to the caliber.
+  - `weaponRecords`: weapon records that belong to it although they carry none of its tags
+    (Kolac, Osprey, the Mk.31 HMG, the Malorian 3516, Hercules 3AX, Rasetsu and others).
   - `feedSlot` / `feedElement`: the slot that selects the ammo, and its blueprint element.
   - `defaultAmmo`: the ammo an empty slot takes (the caliber's cheap standard round). The
     caliber's weapon records are set to it.
@@ -58,9 +61,13 @@ standalone `AmmoOverhaul.*` flats keyed by short names (read by `AOData.reds`):
 Records: one feed slot per family + caliber (selectors' `placementSlots` name it, so the slot
 itself enforces "same family and caliber"); selectors are parts (`Items.Part` base,
 `ItemType.Prt_Magazine`) with the same name and description as their round; ammo variants are
-normal ammo items based on `Ammo.HandgunAmmo`, with their own quality and Weight stat. Vanilla
-handgun ammo is the 9mm Common round (renamed 9mm Ball); the 5mm and 10mm rounds are new items, so
-an Omaha or Yukimura in an old save starts empty.
+normal ammo items based on `Ammo.HandgunAmmo`, with their own quality, Weight stat and price. The
+four vanilla ammo items are Common rounds, renamed: handgun ammo is 9mm Ball, rifle ammo 5.56
+Ball, sniper ammo 12.7 Ball, shotgun ammo 12ga Buckshot. Every other round is a new item.
+
+Guns aren't modified beyond which stack they load from, so a Common round fires exactly like the
+gun's vanilla ammo. Only a selector for an Uncommon round changes stats (its `statModifiers`
+apply to the gun while it's fitted). Calibers differ in ammo weight, price and availability.
 
 ## Player: per-gun ammo
 
@@ -161,12 +168,22 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
 
 ## Distribution
 
-Our rounds replace a share of a vanilla ammo item (`vanillaAmmo`; all three slice calibers take
-handgun ammo). A caliber's share is its `lootWeight`; within a caliber each tier gets its family's
-share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDistribution.reds`).
+Our rounds replace a share of a vanilla ammo item (`vanillaAmmo`). A caliber's share is its
+`lootWeight`; within a caliber each tier gets its family's share (`AmmoOverhaul.shares.<family>`),
+counting only the tiers allowed (`AmmoDistribution.reds`).
+
+| Vanilla ammo | Is | Also split into (share) |
+|---|---|---|
+| Handgun ammo | 9mm Ball (0.40) | .45 (0.20), 12mm (0.10), 5mm rail (0.15), 10mm smart (0.15) |
+| Rifle ammo | 5.56 Ball (0.65) | 7.62 (0.35) |
+| Sniper ammo | 12.7 Ball (0.60) | heavy rail (0.30), 25mm dart (0.10) |
+| Shotgun ammo | 12ga Buckshot (0.70) | 4-gauge (0.10), 20mm cluster (0.20) |
+
+Heavy rail comes from sniper ammo although its guns used all four vanilla items.
 
 - **Spread** splits a quantity in those proportions (vendors). 1000 handgun rounds at a gun shop
-  become 511 9mm Ball, 90 Mushrooms, 187 Rail Slugs, 62 Sleevers, 135 Seekers, 15 Dumbfires.
+  become about 340 9mm Ball and 60 Mushrooms, 170 .45 Ball and 30 Mushrooms, 85 12mm Ball and 15
+  Mushrooms, 112 Rail Slugs and 38 Sleevers, 135 Seekers and 15 Dumbfires.
 - **Pick** chooses one round for a whole stack (loot): with chance `loot.ownedBias` a caliber of a
   gun the player carries, else one by `lootWeight`; then a tier by share.
 - **Vendors:** each stack of a replaced vanilla ammo is split whenever the vendor builds its stock
@@ -196,20 +213,24 @@ share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDi
 - Ammo of the same type shares one NPC stack; a gun first given to an NPC after its first draw
   adds no stock if the NPC already carries that ammo.
 - NPC guns have `DamagePerHit` 0 (their damage comes from elsewhere), so damage multipliers on a
-  round (Mushrooms, Dumbfires) do nothing on NPC shots. Pen, hit probability and other stats do
-  apply. NPC Omahas have `ChargeTime` 0, so Sleevers changes nothing for them.
+  round (Mushrooms, Dumbfires, 4ga Slugs) do nothing on NPC shots. Pen, hit probability, spread
+  and other stats do apply. NPC rail guns have `ChargeTime` 0, so Sleevers change nothing for them.
+- Old saves: vanilla ammo already held becomes the four Common rounds. A gun moved to a new
+  caliber (a Unity to .45, a Satara to heavy rail, a Kolac to 12.7, an Omaha to 5mm rail) starts
+  empty until its rounds are bought or looted.
+- Vendors already split in a save from the slice (which split only handgun ammo) are marked done,
+  so their rifle, sniper and shotgun ammo splits across the new calibers only at their next
+  restock.
 - The Uncommon roll isn't saved. After loading a save, an NPC stocked with an Uncommon round reads
   its gun's ammo as the Common round again, and its stock holds the Uncommon one, so it can run
   dry early. Untested.
 - Loose ammo lying in the world (`gameItemDropObject`) and loot bags aren't converted: they stay
-  vanilla handgun ammo, which is 9mm Ball.
-- Guns of calibers not in the slice that use handgun ammo (Unity, Liberty, Nue, Nova and others)
-  still take vanilla handgun ammo, so they share 9mm Ball.
+  vanilla ammo, which is the Common round of 9mm, 5.56, 12.7 or 12-gauge.
 - **Crash:** an NPC killed with a selector fitted in its drawn gun can crash the game (the
   watchdog ends it; about one kill in four with the test gangers of `test.yaml`, whose presets fit
   one). Real NPCs never have one fitted: Uncommon NPCs get the selector's stats, not the part, and
   fitting a part on an NPC's drawn gun hangs the game. A player dropping a fitted gun is fine. Only
   a preset from another mod that fits a selector would hit this.
 - Boss fights: a boss that runs dry loses its guns. 12 magazines makes it unlikely; untested.
-- 9mm Ball is vanilla handgun ammo, so every handgun ammo stack shows the 9mm Ball icon, including
-  stacks for guns outside the slice.
+- The four vanilla ammo items are Common rounds, so a vanilla stack shown anywhere (a quest reward,
+  another mod's vendor) shows that round's name and icon.

@@ -23,6 +23,16 @@ launcher="$(dirname "$0")/launch-lutris.sh"
 [[ -f "$launcher" ]] || { echo "missing $launcher: run 'lutris -b cyberpunk-2077' in tools/linux and rename it" >&2; exit 2; }
 PROTONPATH="$PROTON" GAMEID="${GAMEID:-umu-1091500}" STORE="${STORE:-gog}" setsid -f bash "$launcher" >"${TMPDIR:-/tmp}/ammo-overhaul-game.log" 2>&1
 echo "game launching"
+# Turn the game down (GAME_VOLUME, default 3%; "mute" mutes it) so test runs aren't loud. Its audio
+# streams appear some time after launch, so a detached watcher sets every "Cyberpunk 2077" stream
+# for the first three minutes.
+setsid -f bash -c '
+  for _ in $(seq 90); do
+    for id in $(pactl list sink-inputs 2>/dev/null | awk "/^Sink Input #/{id=substr(\$3,2)} /application.name = \"Cyberpunk 2077\"/{print id}"); do
+      if [[ "$0" == mute ]]; then pactl set-sink-input-mute "$id" 1; else pactl set-sink-input-volume "$id" "$0"; fi
+    done
+    sleep 2
+  done' "${GAME_VOLUME:-3%}" >/dev/null 2>&1
 [[ "${1:-}" == "--no-wait" ]] && exit 0
 
 deadline=$(( $(date +%s) + 300 ))

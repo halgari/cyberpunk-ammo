@@ -25,6 +25,10 @@ for _, id in ipairs({ "Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_TL
 end
 ```
 
+Any other caliber works the same way: its gun preset (`Items.Preset_Unity_Default`, …), its two
+selectors (`Items.AO_Feed_45_Ball`, `Items.AO_Feed_45_Mushrooms`, named as in `docs/CATALOG.md`,
+Built) and its rounds (the `selectorAmmo` list in its `src/tweaks/AmmoOverhaul/*.yaml`).
+
 Use newly spawned guns: one already in an old save may keep its old slot layout.
 
 ## Test kit (CET window)
@@ -53,16 +57,24 @@ an "Ammo Overhaul test kit" window:
 Proton with the .NET 10 runtime in the tools prefix)). `icons.lua` checks the records and that the
 game finds the atlas.
 
-New art comes from the OpenAI image API (`chatgpt-image-latest`, medium quality, 1024x1024,
-transparent background), in two steps per round. Square, not landscape: the backpack tile shows
-only the centred square of an icon's cell, so `make_icons.py` fits the art into that square and
-wide art comes out small.
-1. One round alone, side view, no text (`art/icons/<round>-ref.png`), checked by eye.
-2. The box shot, made with that round as the only reference image: an open box of the rounds
-   standing upright, two loose ones in front, and the round's name as the only text on the box.
+The art is rendered in Blender 5.2 (Cycles, on the GPU), one box shot per round:
 
-Describe how a round looks, never what it does: words such as rocket, sensor, slug, explosive or
-armor-piercing get the prompt refused as violence. About 23 cents per round type.
+```sh
+tools/render/assets.sh                         # once: CC0 scans (ambientCG) and a studio HDRI (Poly Haven)
+python3 tools/render/render.py                 # all 26 rounds to art/icons/<round>.png
+python3 tools/render/render.py --rounds --only 9mm-ball,20mm-seekers --out /tmp/x   # with close-ups
+tools/icons/build.sh                           # atlas and archive
+```
+
+Blender comes from `$BLENDER` or `~/.cache/ammo-overhaul/blender/blender-*/blender`. `render.py`
+holds the round table (name, shape, box colour and stripe, the label) and draws the box print;
+`scene.py` models the round, the open box and the lighting. Smart rounds follow the game's own
+models: 10mm after the Kang Tao Dian projectile, 20mm as a Palica-style eight-cell cassette, 25mm
+after the Ashura round. All 26 render in about two minutes.
+
+Square, not landscape: the backpack tile shows only the centred square of an icon's cell, so
+`make_icons.py` fits the art into that square and wide art comes out small. The atlas is 2048×1024,
+8 × 4 cells; a round's part is `ao_` + its art name (`9mm-ball` → `ao_9mm_ball`).
 
 ## What to check
 
@@ -93,6 +105,31 @@ each step); the rest needs a person at the game. Give yourself the kit first (te
 8. **Loot.** Open a few unlooted containers: handgun ammo in them shows the new names. With only a
    Lexington carried, most of it is 9mm. (`loot.lua`, `lootfill.lua` then `lootfill2.lua`.)
 9. **Saves.** Save and reload: fitted selectors, stacks and opened containers stay as they were.
+
+### v1 calibers
+
+The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a `.lua` one):
+
+- `records.lua`: every caliber's rounds and selectors (names, weights, prices), its guns load its
+  Common round and carry its feed slot.
+- `vanilla.lua`: no gun carries a stat change; Common rounds fire like vanilla ammo.
+- `distribution.lua`: each vanilla ammo item splits in the shares of `docs/DESIGN.md`; with
+  `PRE="VENDOR=true;"` gun shops split their rifle, sniper and shotgun ammo too.
+- `npc.sh`: one test NPC per new caliber carries and drops its gun's round, and the Uncommon one
+  when the roll is forced on.
+- `slugs.sh`: every shotgun fires one projectile with Slugs, with tighter spread and twice the
+  range (draws weapons: not while you play).
+- `icons.lua`: every round and selector has its own icon in the atlas.
+
+By hand:
+
+10. **Buckshot against Slugs.** With a Crusher or Tactician, fire both at an enemy at 5 m and at
+    25 m. Buckshot spreads and falls off; Slugs put one hole where you aim and still hit hard at
+    25 m.
+11. **4ga Slugs.** A Carnage with 4ga Slugs knocks a ganger down on a hit, kicks clearly harder
+    than 4ga Buckshot and does better against an armored enemy. It does not shoot through cover.
+12. **Icons.** The backpack, the weapon screen's Ammo section and the HUD show each round's own box
+    art, and the four vanilla stacks show 9mm Ball, 5.56 Ball, 12.7 Ball and Buckshot.
 
 For each step, note pass or fail and what you saw.
 

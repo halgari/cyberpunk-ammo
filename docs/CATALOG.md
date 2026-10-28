@@ -92,7 +92,7 @@ mostly by what they fire, which is the ammo type's job.
 | **Power** | gunpowder cartridges | |
 | P-9 | 9mm | Lexington, Slaught-O-Matic, Guillotine, Pulsar, Saratoga, Erebus |
 | P-45 | .45 | Unity, Liberty, Nue |
-| P-MAG | magnum revolver | Nova, Overture, Metel, Malorian 3516 |
+| P-MAG | 12mm magnum revolver | Nova, Overture, Metel, Malorian 3516 |
 | P-556 | 5.56mm | Umbra, Masamune, Copperhead, Defender |
 | P-762 | 7.62mm | Ajax, Kyubi, MA70 HB |
 | P-127 | 12.7mm | Kolac, SOR-22, Grad, Osprey, Mk.31 HMG |
@@ -277,16 +277,41 @@ loads whose blueprints may not exist anywhere in the game.
   upload, weapon jam at legendary), better guidance (hit probability, velocity, more targets,
   faster lock), longer flight. Smart sniper darts should almost always hit and cost a lot.
 
-### Built (v1 slice)
+### Built (v1)
+
+Every caliber has a Common and an Uncommon round. The Common round is the gun's vanilla ammo in
+all but name, weight and price: guns aren't modified. Only the Uncommon loads change stats.
 
 | Caliber | Common | Uncommon | Uncommon effect |
 |---|---|---|---|
-| P-9 | 9mm Ball (vanilla handgun ammo) | 9mm Mushrooms (hollow point) | damage ×1.2, armor pen −0.5 |
-| T-LIGHT | 5mm Rail Slugs | 5mm Sleevers (sabot) | charge time ×0.7, damage ×0.95 |
+| P-9 | 9mm Ball (vanilla handgun ammo) | 9mm Mushrooms | damage ×1.2, armor pen −0.5 |
+| P-45 | .45 Ball | .45 Mushrooms | as 9mm Mushrooms |
+| P-MAG | 12mm Ball | 12mm Mushrooms | as 9mm Mushrooms |
+| P-556 | 5.56 Ball (vanilla rifle ammo) | 5.56 Mushrooms | as 9mm Mushrooms |
+| P-762 | 7.62 Ball | 7.62 Mushrooms | as 9mm Mushrooms |
+| P-127 | 12.7 Ball (vanilla sniper ammo) | 12.7 Mushrooms | as 9mm Mushrooms |
+| P-12G | Buckshot (vanilla shotgun ammo) | Slugs | one projectile with the whole shot, spread ×0.2, range ×2 |
+| P-4G | 4ga Buckshot | 4ga Slugs | as Slugs, plus damage ×1.3, armor pen +0.5, knockdown, recoil ×1.6 |
+| T-LIGHT | 5mm Rail Slugs | 5mm Sleevers | charge time ×0.7, damage ×0.95 |
+| T-HEAVY | Heavy Rail Slugs | Heavy Sleevers | as 5mm Sleevers |
 | S-10 | 10mm Seekers | 10mm Dumbfires | damage ×1.25, no guidance |
+| S-CLUSTER | 20mm Seekers | 20mm Dumbfires | as 10mm Dumbfires |
+| S-DART | 25mm Seekers | 25mm Dumbfires | as 10mm Dumbfires |
 
-All guns of these calibers that use handgun ammo have the feed slot; Hercules 3AX and Sidewinder
-(rifle ammo) wait for the rifle calibers.
+4-gauge has no Common slug: Buckshot is its Common round and the Slug is Uncommon only. 4ga Slugs
+don't pierce cover; piercing is kept for the higher-tier penetrators.
+
+Calibers differ in ammo weight, price and how often they turn up, not in how the gun shoots:
+
+| Caliber | Ammo weight (× the 9mm round) | Price (× the game ammo it comes from) |
+|---|---|---|
+| 9mm, 5.56, 12-gauge | 1× | 1× |
+| .45, 7.62 | 1.5× | 1.2× (.45), 1.3× (7.62) |
+| 12mm | 2× | 1.6× |
+| 12.7, 4-gauge | 2.5× | 2× |
+| Heavy rail | 2× the 5mm round | 1.5× |
+| 20mm cluster | 1.5× the 10mm round | 1.3× |
+| 25mm dart | 3× the 10mm round | 2.5× |
 
 ### Ammo ideas so far
 
@@ -312,4 +337,5 @@ All guns of these calibers that use handgun ammo have the feed slot; Hercules 3A
 ## Open questions
 
 1. Rarity budget units: how many perk points per tier, and how quirks offset them.
-2. Where the nine new calibers come from: which vendors, loot tables and crafting recipes.
+2. Crafting: no caliber has recipes yet. Vendors and loot split the four game ammo items across
+   the calibers (`docs/DESIGN.md`, Distribution).
