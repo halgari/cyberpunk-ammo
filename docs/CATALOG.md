@@ -371,7 +371,27 @@ has a pool and each caliber takes what fits it.
 | Epic | Toxin core | Poisoned, Chemical share | all |
 | Epic | Shredders | heavy Bleeding, dismemberment | handguns, 5.56 |
 
-Small calibers have one Rare candidate too many (Subsonic, Bouncers, Rubber): one moves or goes.
+9mm and .45 keep all five Rares (Rubber is a niche extra).
+
+**Grid (draft).** `?` marks an open slot.
+
+| Caliber | Uncommon | Rare | Epic |
+|---|---|---|---|
+| 9mm | Mushrooms, Hot loads | Steel-core AP, Incendiary (weak), Subsonic, Bouncers, Rubber | Penetrator (no cover pierce), Match, Toxin core, Shredders |
+| .45 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Subsonic, Bouncers, Rubber | Penetrator (no cover pierce), Match, Toxin core, Shredders |
+| 12mm | Mushrooms, Hot loads | Steel-core AP, Incendiary, Rubber, ? | Penetrator, Match, Toxin core, Shredders |
+| 5.56 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Subsonic, Bouncers | Penetrator (no cover pierce), Match, Toxin core, Shredders |
+| 7.62 | Mushrooms, Hot loads | Steel-core AP, Incendiary, ?, ? | Penetrator, Match, Toxin core, ? |
+| 12.7 | Mushrooms, Hot loads | Steel-core AP, Incendiary, ?, ? | Penetrator, HEI, Match, Toxin core |
+| 12ga | Slugs, Birdshot | Flechette, Beanbag, Dragon's breath (light), Gas | Dragon's breath, Frag-12, Tungsten slug, Flechette (long) |
+| 4ga | Slugs, Barn Door | Flare, Riot, Gas canister, Flechette | Kinetic penetrator, Micro-grenade, Dragon's breath, ? |
+| 5mm rail | Sleevers, Dense slugs | Capacitor, Ferro, Split slug, Feedback | DU penetrator, Toxic scatter, Superconductor, EMP capacitor |
+| Heavy rail | Sleevers, Dense slugs | Capacitor, Ferro, Split slug, Feedback | DU penetrator, Toxic scatter, Superconductor, EMP capacitor |
+| 10mm smart | Dumbfires, Short-fuse | EMP, Incendiary, Chem, Flash payloads | Hunter, Hack carrier, Shaped charge, ? |
+| 20mm cluster | Dumbfires, Short-fuse | EMP, Incendiary, Chem, Flash payloads | HE, Hunter, Hack carrier, Shaped charge |
+| 25mm dart | Dumbfires, Short-fuse | EMP, Incendiary, Chem, Flash payloads | HE, Hunter, Hack carrier, Shaped charge |
+
+The 4ga EMP shell is dropped (Power guns have no power source).
 
 **12-gauge:** Uncommon Slugs (built) and Birdshot (more pellets, wide, low damage, strong flinch).
 Rare Flechette (tighter, about 2x effective range, some armor pen), Beanbag (non-lethal
