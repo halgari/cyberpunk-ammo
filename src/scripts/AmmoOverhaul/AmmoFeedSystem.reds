@@ -520,6 +520,34 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // Rolls a ranged gun hit's damage with its loaded round's roll; false (nothing done) for any
+  // other hit. Each damage type with its own values rolls on its own, the rest share one roll.
+  public static func RollGunHit(hitEvent: ref<gameHitEvent>) -> Bool {
+    let attackData: ref<AttackData> = hitEvent.attackData;
+    if !IsDefined(attackData) || !AttackData.IsRangedOrDirect(attackData.GetAttackType()) || AttackData.IsDoT(attackData) {
+      return false;
+    }
+    let weapon: ref<WeaponObject> = attackData.GetWeapon();
+    let instigator: ref<GameObject> = attackData.GetInstigator();
+    let system: ref<AmmoFeedSystem> = AmmoFeedSystem.Get(GetGameInstance());
+    if !IsDefined(weapon) || !IsDefined(instigator) || !IsDefined(system) || !WeaponObject.IsRanged(weapon.GetItemID()) {
+      return false;
+    }
+    let ammo: TweakDBID = AOData.LoadedAmmo(instigator, weapon);
+    let family: String = AOData.Family(AOData.CaliberForWeapon(ItemID.GetTDBID(weapon.GetItemID())));
+    let whole: AORoll = system.Roll(ammo, family, "");
+    let factor: Float = DamageRoll.Draw(whole);
+    let types: array<String> = AmmoFeedSystem.DamageTypes();
+    let i: Int32 = 1;
+    while i < ArraySize(types) {
+      let own: AORoll = system.Roll(ammo, family, types[i]);
+      let damageType: gamedataDamageType = IntEnum<gamedataDamageType>(Cast<Int32>(EnumValueFromString("gamedataDamageType", types[i])));
+      hitEvent.attackComputed.MultAttackValue(DamageRoll.Same(own, whole) ? factor : DamageRoll.Draw(own), damageType);
+      i += 1;
+    }
+    return true;
+  }
+
   // Applies the on-hit effect of the ammo the firing weapon uses, for the player's shots and NPCs'
   // alike (the gun's selection is read from its owner's inventory). Called from the damage pipeline
   // before vanilla applies the attack's status effects, so vanilla's blocked/friendly/immunity

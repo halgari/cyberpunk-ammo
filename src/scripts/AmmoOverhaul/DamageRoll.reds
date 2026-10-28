@@ -82,6 +82,11 @@ public abstract class DamageRoll {
     return RandRangeF(r.min, r.max);
   }
 
+  public static func Same(a: AORoll, b: AORoll) -> Bool {
+    return a.min == b.min && a.max == b.max && a.dudChance == b.dudChance && a.dudMult == b.dudMult
+      && a.hotChance == b.hotChance && a.hotMult == b.hotMult;
+  }
+
   // The family an ammo item is tagged with (AO_Family_<x>), or "" for vanilla and unmanaged ammo.
   public static func AmmoFamily(ammo: TweakDBID) -> String {
     let record: ref<Item_Record> = TweakDBInterface.GetItemRecord(ammo);

@@ -27,6 +27,29 @@ end
 
 function RIG.npc() return Game.GetDynamicEntitySystem():GetTagged("AO_Test")[1] end
 
+-- Where V stands before each spawn: the middle of the open road by the test save's load point,
+-- facing 30 m of clear road (checked by screenshot, tools/linux/game-shot.sh). The NPC spawns
+-- 12 m ahead of it.
+RIG.HOME = { x = -1279.61, y = -979.01, z = 11.84, yaw = 115 }
+local function goHome(p)
+  local a, h = p:GetWorldPosition(), RIG.HOME
+  if math.abs(a.x - h.x) + math.abs(a.y - h.y) > 1 then
+    Game.GetTeleportationFacility():Teleport(p, Vector4.new(h.x, h.y, h.z, 1), EulerAngles.new(0, 0, h.yaw))
+  end
+end
+
+-- Whether level geometry blocks a shot from V's eyes to the NPC's chest.
+local function blocked(p, n)
+  local a, b = p:GetWorldPosition(), n:GetWorldPosition()
+  a.z = a.z + 1.5; b.z = b.z + 1.2
+  return (Game.GetSpatialQueriesSystem():SyncRaycastByCollisionGroup(a, b, CName.new("Static"), true, false))
+end
+local function respawn(p, why)
+  GetMod("AOTestKit").despawnAll()
+  goHome(p)
+  return "wait: " .. why .. ", respawning"
+end
+
 function RIG.setup(gun, dist)
   dist = dist or 5
   local p = Game.GetPlayer()
@@ -37,18 +60,31 @@ function RIG.setup(gun, dist)
   end
   local n = RIG.npc()
   if not n then
+    goHome(p)
+    GetMod("AOTestKit").state.distance = 12
     GetMod("AOTestKit").spawn("Character.AO_Test_Plain_Unity", 1)
-    return "wait"
+    return "wait: spawning"
   end
   -- A spawned NPC can sink into the floor, where shots can't reach it: spawn a fresh one.
   if n:GetWorldPosition().z < p:GetWorldPosition().z - 1.0 then
-    GetMod("AOTestKit").despawnAll()
-    return "wait"
+    return respawn(p, "sunk")
   end
+  -- Let loose to shoot V, it can run off or go down: start over with a fresh one.
+  local a, b = p:GetWorldPosition(), n:GetWorldPosition()
+  local away = math.sqrt((a.x - b.x) ^ 2 + (a.y - b.y) ^ 2)
+  if away > dist + 5 and not Game.GetTransactionSystem():GetItemInSlot(n, TweakDBID.new("AttachmentSlots.WeaponRight"))
+      or n:IsDead() or ScriptedPuppet.IsDefeated(n) then
+    return respawn(p, string.format("npc gone (%.0f m)", away))
+  end
+  if blocked(p, n) then return respawn(p, "no line of sight") end
   gm():AddGodMode(n:GetEntityID(), gameGodModeType.Invulnerable, tag)
   gm():AddGodMode(p:GetEntityID(), gameGodModeType.Immortal, tag)
-  -- Freeze only once its gun is drawn, or it has nothing to shoot V with.
-  if not Game.GetTransactionSystem():GetItemInSlot(n, TweakDBID.new("AttachmentSlots.WeaponRight")) then return "wait" end
+  -- Freeze only once its gun is drawn, or it has nothing to shoot V with. An NPC can holster
+  -- while it's let loose and then be frozen gunless: unfreeze it so it draws again.
+  if not Game.GetTransactionSystem():GetItemInSlot(n, TweakDBID.new("AttachmentSlots.WeaponRight")) then
+    n:UnsetIndividualTimeDilation()
+    return string.format("wait: npc gun not drawn (%.0f m)", away)
+  end
   RIG.freeze()
   local a, b = p:GetWorldPosition(), n:GetWorldPosition()
   local dx, dy = a.x - b.x, a.y - b.y
@@ -56,7 +92,7 @@ function RIG.setup(gun, dist)
   if math.abs(l - dist) > 0.5 then
     local yaw = math.deg(math.atan2(-dx, dy)) + 180
     Game.GetTeleportationFacility():Teleport(p, Vector4.new(b.x + dx / l * dist, b.y + dy / l * dist, a.z, 1), EulerAngles.new(0, 0, yaw))
-    return "wait"
+    return "wait: moved V"
   end
   return "ready"
 end
@@ -67,6 +103,11 @@ local function chest(o) local v = o:GetWorldPosition(); v.z = v.z + 1.0; return 
 function RIG.fireV()
   local p, n = Game.GetPlayer(), RIG.npc()
   if not p:GetActiveWeapon() then return "holstered" end
+  -- AIWeapon.Fire doesn't reload, and V only auto-reloads some guns (not the Crusher).
+  if WeaponObject.GetMagazineAmmoCount(p:GetActiveWeapon()) == 0 then
+    p:GetActiveWeapon():StartReload()
+    return "reloading"
+  end
   AIWeapon.Fire(p, p:GetActiveWeapon(), EngineTime.ToFloat(Game.GetSimTime()), 1.0, gamedataTriggerMode.SemiAuto, chest(n), n)
   return "fired"
 end

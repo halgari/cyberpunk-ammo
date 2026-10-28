@@ -295,3 +295,7 @@ Ammo.AO_Test_RollFaction:
 Ammo.AO_Test_RollFaction.aoFaction: "AOTest"
 AmmoOverhaul.roll.AOTest.min: 0.7
 AmmoOverhaul.roll.AOTest.max: 0.8
+
+# Feeds Ammo.AO_Test_Roll on a .45 gun; roll.sh adds it to the .45 selector lists for the run.
+Items.AO_Feed_Test_Roll:
+  $base: Items.AO_Feed_45_Ball

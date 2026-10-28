@@ -51,6 +51,20 @@ private final const func RemoveItemPart(obj: ref<GameObject>, itemID: ItemID, sl
   return wrappedMethod(obj, itemID, slotID, shouldUpdateEntity);
 }
 
+// --- Damage roll -----------------------------------------------------------------------------
+// Every ranged gun hit, by V or an NPC, rolls its round's range (DamageRoll.reds) instead of
+// vanilla's 0.90..1.10 on V's hits only. Everything else (melee, explosions, DoTs) keeps vanilla.
+
+@wrapMethod(DamageSystem)
+private final func CalculateDamageVariants(hitEvent: ref<gameHitEvent>) -> Void {
+  if hitEvent.projectionPipeline {
+    return;
+  }
+  if !AmmoFeedSystem.RollGunHit(hitEvent) {
+    wrappedMethod(hitEvent);
+  }
+}
+
 // --- On-hit ammo effects ---------------------------------------------------------------------
 
 @wrapMethod(DamageSystem)
