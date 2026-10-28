@@ -39,9 +39,11 @@ function RIG.setup(gun, dist)
     GetMod("AOTestKit").spawn("Character.AO_Test_Plain_Unity", 1)
     return "wait"
   end
-  n:SetIndividualTimeDilation(tag, 0.0001, 9999.0, CName.new(""), CName.new(""))
   gm():AddGodMode(n:GetEntityID(), gameGodModeType.Invulnerable, tag)
   gm():AddGodMode(p:GetEntityID(), gameGodModeType.Invulnerable, tag)
+  -- Freeze only once its gun is drawn, or RIG.fireNpc has nothing to fire.
+  if not Game.GetTransactionSystem():GetItemInSlot(n, TweakDBID.new("AttachmentSlots.WeaponRight")) then return "wait" end
+  n:SetIndividualTimeDilation(tag, 0.0001, 9999.0, CName.new(""), CName.new(""))
   local a, b = p:GetWorldPosition(), n:GetWorldPosition()
   local dx, dy = a.x - b.x, a.y - b.y
   local l = math.sqrt(dx * dx + dy * dy)
