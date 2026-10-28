@@ -77,6 +77,12 @@ public abstract class AOData {
     return AOData.GetID(AOData.Key(caliber, "feedSlot"));
   }
 
+  // The stat group (AOProfile.<Caliber>) the startup tweak adds to the caliber's guns, or an
+  // invalid ID if the caliber has none.
+  public static func Profile(caliber: String) -> TweakDBID {
+    return AOData.GetID(AOData.Key(caliber, "profile"));
+  }
+
   // What the caliber's guns take with an empty feed slot; their records' base ammo.
   public static func DefaultAmmo(caliber: String) -> TweakDBID {
     return AOData.GetID(AOData.Key(caliber, "defaultAmmo"));

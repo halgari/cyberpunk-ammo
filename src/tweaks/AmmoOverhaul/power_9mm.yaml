@@ -12,6 +12,17 @@ AmmoOverhaul.Power_9mm.lootWeight: 0.6
 AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms"]
 AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint"]
 AmmoOverhaul.Power_9mm.selectorTiers: [0, 1]
+AmmoOverhaul.Power_9mm.profile: "AOProfile.Power_9mm"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# Baseline: no changes, kept so every caliber has one. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Power_9mm:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers: []
 
 # --- Feed slot -------------------------------------------------------------------------------
 

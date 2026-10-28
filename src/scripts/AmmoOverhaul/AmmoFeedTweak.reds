@@ -3,7 +3,8 @@ module AmmoOverhaul
 // Runs once while TweakDB loads, after the YAML is applied. For every caliber, finds the weapons
 // carrying one of its weaponTags, sets their ammo to the caliber's default and gives them a clone
 // of their blueprint with the caliber's feed slot added. Cloning each weapon's own blueprint keeps
-// the NoMuzzle/NoScope/Collectible variants intact. Also turns off the engine's random ammo drop
+// the NoMuzzle/NoScope/Collectible variants intact. The caliber's profile group (AOProfile.*) is
+// added to the weapons' statModifierGroups. Also turns off the engine's random ammo drop
 // on NPC death: NPCs leave the ammo they actually carried instead (NpcAmmo).
 public class AmmoFeedTweak extends ScriptableTweak {
 
@@ -38,6 +39,7 @@ public class AmmoFeedTweak extends ScriptableTweak {
     let ammo: TweakDBID = AOData.DefaultAmmo(caliber);
     let tags: array<CName> = AOData.WeaponTags(caliber);
     let element: TweakDBID = AOData.FeedElement(caliber);
+    let profile: TweakDBID = AOData.Profile(caliber);
     let patched: Int32 = 0;
     if !TDBID.IsValid(ammo) || ArraySize(tags) == 0 {
       ModLog(n"AmmoOverhaul", "caliber " + caliber + ": missing defaultAmmo or weaponTags, skipped");
@@ -51,6 +53,13 @@ public class AmmoFeedTweak extends ScriptableTweak {
         let blueprint: TweakDBID = TweakDBInterface.GetForeignKey(AOData.Flat(id, "blueprint"), TDBID.None());
         if TDBID.IsValid(blueprint) && TDBID.IsValid(element) {
           TweakDBManager.SetFlat(AOData.Flat(id, "blueprint"), ToVariant(this.WithElement(blueprint, element)));
+        }
+        if TDBID.IsValid(profile) {
+          let groups: array<TweakDBID> = TweakDBInterface.GetForeignKeyArray(AOData.Flat(id, "statModifierGroups"));
+          if !ArrayContains(groups, profile) {
+            ArrayPush(groups, profile);
+            TweakDBManager.SetFlat(AOData.Flat(id, "statModifierGroups"), ToVariant(groups));
+          }
         }
         TweakDBManager.UpdateRecord(id);
         patched += 1;
