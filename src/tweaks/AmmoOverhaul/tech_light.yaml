@@ -38,8 +38,7 @@ Ammo.AO_TLight_Slug:
   quality: Quality.Common
   displayName: LocKey#AO-Ammo-5mm-RailSlugs
   localizedDescription: LocKey#AO-Ammo-5mm-RailSlugs-Desc
-  # Not the 9mm Ball art inherited from handgun ammo: the vanilla ammo box.
-  iconPath: ""
+  iconPath: AO_5mm_RailSlugs
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Tech]
 
 Ammo.AO_TLight_Sabot:
@@ -58,6 +57,11 @@ Ammo.AO_TLight_Sabot:
 
 # --- Icons -------------------------------------------------------------------------------------
 
+UIIcon.AO_5mm_RailSlugs:
+  $type: UIIcon
+  atlasPartName: ao_5mm_railslugs
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
 UIIcon.AO_5mm_Sleevers:
   $type: UIIcon
   atlasPartName: ao_5mm_sleevers
@@ -71,9 +75,9 @@ Items.AO_Feed_5mm_RailSlugs:
   localizedDescription: LocKey#AO-Ammo-5mm-RailSlugs-Desc
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
-  # The vanilla ammo box icon (rounds with art of their own use their UIIcon.AO_* record), so a
-  # fitted selector looks like rounds loaded into the gun.
-  iconPath: undefined_ammo_box_handgun_None_
+  # The round's own box art (UIIcon.AO_*, from art/icons), so a fitted selector looks like those
+  # rounds loaded into the gun.
+  iconPath: AO_5mm_RailSlugs
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Tech_Light]
   tags: [itemPart, AO_AmmoSelector]
   buyPrice: []

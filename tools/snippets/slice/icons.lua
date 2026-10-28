@@ -1,6 +1,6 @@
--- Task 3 + icon art: rounds and selectors with art of their own (art/icons, packed by
--- tools/icons/build.sh) use their UIIcon.AO_* record from the mod's atlas; the rest use the
--- handgun ammo icon. The empty feed slot and the loot-window placeholder of our rounds use the
+-- Task 3 + icon art: every slice round and its selector use their UIIcon.AO_* record (art/icons, packed by
+-- tools/icons/build.sh) from the mod's atlas; vanilla handgun ammo shows the 9mm Ball art.
+-- The empty feed slot and the loot-window placeholder of our rounds use the
 -- ammo shadow icon.
 local AMMO_ICON = "undefined_ammo_box_handgun_None_"
 local ATLAS = "ammooverhaul\\icons\\ao_ammo_icons.inkatlas"
@@ -8,6 +8,9 @@ local OWN = {
   ["Ammo.HandgunAmmo"] = "AO_9mm_Ball", ["Items.AO_Feed_9mm_Ball"] = "AO_9mm_Ball",
   ["Ammo.AO_TLight_Sabot"] = "AO_5mm_Sleevers", ["Items.AO_Feed_5mm_Sleevers"] = "AO_5mm_Sleevers",
   ["Ammo.AO_S10_Dumbfire"] = "AO_10mm_Dumbfires", ["Items.AO_Feed_10mm_Dumbfires"] = "AO_10mm_Dumbfires",
+  ["Ammo.AO_9mm_HollowPoint"] = "AO_9mm_Mushrooms", ["Items.AO_Feed_9mm_Mushrooms"] = "AO_9mm_Mushrooms",
+  ["Ammo.AO_TLight_Slug"] = "AO_5mm_RailSlugs", ["Items.AO_Feed_5mm_RailSlugs"] = "AO_5mm_RailSlugs",
+  ["Ammo.AO_S10_Standard"] = "AO_10mm_Seekers", ["Items.AO_Feed_10mm_Seekers"] = "AO_10mm_Seekers",
 }
 local resolver = IconsNameResolver.GetIconsNameResolver()
 for _, id in ipairs({ "Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot",
@@ -24,7 +27,8 @@ for _, id in ipairs({ "Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "
   local want = OWN[id] or AMMO_ICON
   check(id .. " iconPath", flat(id, "iconPath") == want, tostring(flat(id, "iconPath")))
 end
-for _, icon in ipairs({ "AO_9mm_Ball", "AO_5mm_Sleevers", "AO_10mm_Dumbfires" }) do
+for _, icon in ipairs({ "AO_9mm_Ball", "AO_9mm_Mushrooms", "AO_5mm_RailSlugs", "AO_5mm_Sleevers",
+    "AO_10mm_Seekers", "AO_10mm_Dumbfires" }) do
   local r = rec("UIIcon." .. icon)
   check("UIIcon." .. icon .. " exists", r ~= nil, "no record")
   if r then

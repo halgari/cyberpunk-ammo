@@ -38,8 +38,7 @@ Ammo.AO_S10_Standard:
   quality: Quality.Common
   displayName: LocKey#AO-Ammo-10mm-Seekers
   localizedDescription: LocKey#AO-Ammo-10mm-Seekers-Desc
-  # Not the 9mm Ball art inherited from handgun ammo: the vanilla ammo box.
-  iconPath: ""
+  iconPath: AO_10mm_Seekers
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Smart]
 
 Ammo.AO_S10_Dumbfire:
@@ -58,6 +57,11 @@ Ammo.AO_S10_Dumbfire:
 
 # --- Icons -------------------------------------------------------------------------------------
 
+UIIcon.AO_10mm_Seekers:
+  $type: UIIcon
+  atlasPartName: ao_10mm_seekers
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
 UIIcon.AO_10mm_Dumbfires:
   $type: UIIcon
   atlasPartName: ao_10mm_dumbfires
@@ -71,9 +75,9 @@ Items.AO_Feed_10mm_Seekers:
   localizedDescription: LocKey#AO-Ammo-10mm-Seekers-Desc
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
-  # The vanilla ammo box icon (rounds with art of their own use their UIIcon.AO_* record), so a
-  # fitted selector looks like rounds loaded into the gun.
-  iconPath: undefined_ammo_box_handgun_None_
+  # The round's own box art (UIIcon.AO_*, from art/icons), so a fitted selector looks like those
+  # rounds loaded into the gun.
+  iconPath: AO_10mm_Seekers
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Smart_10]
   tags: [itemPart, AO_AmmoSelector]
   buyPrice: []

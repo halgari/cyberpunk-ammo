@@ -25,6 +25,9 @@ PARTS = {
     "ao_9mm_ball": "5mm-ball.png",
     "ao_5mm_sleevers": "sleevers.png",
     "ao_10mm_dumbfires": "dumbfire.png",
+    "ao_9mm_mushrooms": "mushrooms.png",
+    "ao_5mm_railslugs": "railslugs.png",
+    "ao_10mm_seekers": "seekers.png",
 }
 
 

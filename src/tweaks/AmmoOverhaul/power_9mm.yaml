@@ -40,8 +40,7 @@ Ammo.AO_9mm_HollowPoint:
   quality: Quality.Uncommon
   displayName: LocKey#AO-Ammo-9mm-Mushrooms
   localizedDescription: LocKey#AO-Ammo-9mm-Mushrooms-Desc
-  # Not the 9mm Ball art inherited from handgun ammo: the vanilla ammo box.
-  iconPath: ""
+  iconPath: AO_9mm_Mushrooms
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
 
 # --- Icons -------------------------------------------------------------------------------------
@@ -52,6 +51,11 @@ UIIcon.AO_9mm_Ball:
   atlasPartName: ao_9mm_ball
   atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
 
+UIIcon.AO_9mm_Mushrooms:
+  $type: UIIcon
+  atlasPartName: ao_9mm_mushrooms
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
 # --- Selectors ---------------------------------------------------------------------------------
 
 Items.AO_Feed_9mm_Ball:
@@ -60,8 +64,8 @@ Items.AO_Feed_9mm_Ball:
   localizedDescription: LocKey#AO-Ammo-9mm-Ball-Desc
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
-  # Rounds with art of their own (the UIIcon.AO_* records, from art/icons) use it; the rest use
-  # the vanilla ammo box. Either way a fitted selector looks like rounds loaded into the gun.
+  # The round's own box art (UIIcon.AO_*, from art/icons), so a fitted selector looks like those
+  # rounds loaded into the gun.
   iconPath: AO_9mm_Ball
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_9mm]
   tags: [itemPart, AO_AmmoSelector]
@@ -74,7 +78,7 @@ Items.AO_Feed_9mm_Mushrooms:
   displayName: LocKey#AO-Ammo-9mm-Mushrooms
   localizedDescription: LocKey#AO-Ammo-9mm-Mushrooms-Desc
   quality: Quality.Uncommon
-  iconPath: undefined_ammo_box_handgun_None_
+  iconPath: AO_9mm_Mushrooms
   statModifiers:
     - !append
       $type: ConstantStatModifier

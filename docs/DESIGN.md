@@ -211,5 +211,5 @@ share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDi
   fitting a part on an NPC's drawn gun hangs the game. A player dropping a fitted gun is fine. Only
   a preset from another mod that fits a selector would hit this.
 - Boss fights: a boss that runs dry loses its guns. 12 magazines makes it unlikely; untested.
-- Only 9mm Ball, 5mm Sleevers and 10mm Dumbfires have art of their own; the other rounds use the
-  vanilla ammo box icon. 9mm Ball is vanilla handgun ammo, so every handgun ammo stack shows it.
+- 9mm Ball is vanilla handgun ammo, so every handgun ammo stack shows the 9mm Ball icon, including
+  stacks for guns outside the slice.
