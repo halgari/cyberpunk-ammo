@@ -419,10 +419,17 @@ other explosions stay unrolled; projection hits stay skipped.
 Per round, all optional, on the ammo record (the stat list is a fixed enum, so these are record
 values and perks can't change them):
 
-- `aoRollMin`, `aoRollMax`: uniform range, default 0.90 and 1.10 (vanilla). Set apart for an
-  asymmetric swing.
+- `aoRollMin`, `aoRollMax`: uniform range. Default 0.90 and 1.01: mostly a downside, not
+  vanilla's 0.90-1.10. Average damage drops to about x0.955 for everyone (V's Common rounds
+  included, and NPCs, which never rolled before); agreed, difficulty covers it.
 - `aoRollDudChance`, `aoRollDudMult`: a chance of a much weaker hit (bad primer, short charge).
 - `aoRollHotChance`, `aoRollHotMult`: a chance of a much stronger hit (overcharged case).
+
+Values are layered, each overriding the last: global default, family (Power, Tech, Smart), faction
+(e.g. Maelstrom about -20% with duds), then the round itself. They are flats in `core.yaml`
+(`AmmoOverhaul.roll.<family|faction>.<value>`); a round inherits through its tags, so most rounds
+name none. Each layer can also set a range per damage type (`MultAttackValue(value, damageType)`
+takes a type), e.g. a wild Thermal part on a steady Physical one.
 
 Examples: Match grade 0.98-1.06, no dud or hot. A Maelstrom homemade load 0.85-1.15, 12% dud
 x0.4, 8% hot x1.6. The tooltip's `EffectiveDamagePerHitMin/Max` follow through selector stat
