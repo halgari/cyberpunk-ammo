@@ -130,3 +130,147 @@ Character.AO_Test_Plain_Yukimura:
   secondaryEquipment:
     $type: NPCEquipmentGroup
     equipmentItems: []
+
+# --- v1 calibers (tools/snippets/calibers/npc.sh) -----------------------------------------------
+# One plain NPC per new caliber: a generic gang record of the right weapon class with only its gun
+# swapped for the family's default preset (nothing in the feed slot) and no sidearm.
+
+Character.AO_Test_Plain_Unity:
+  $base: Character.street_goon_medium_range_m_medium
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Unity_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Nova:
+  $base: Character.street_goon_medium_range_m_medium
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Nova_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Copperhead:
+  $base: Character.wwd_adelcaldos_grunt2_ranged2_copperhead_ma
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Copperhead_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Ajax:
+  $base: Character.wwd_adelcaldos_grunt2_ranged2_copperhead_ma
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Ajax_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Grad:
+  $base: Character.wwd_adelcaldos_grunt2_ranged2_copperhead_ma
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Grad_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Achilles:
+  $base: Character.wwd_adelcaldos_grunt2_ranged2_copperhead_ma
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Achilles_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Ashura:
+  $base: Character.wwd_adelcaldos_grunt2_ranged2_copperhead_ma
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Ashura_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Crusher:
+  $base: Character.street_big_goon_short_range_w_medium
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Crusher_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Carnage:
+  $base: Character.street_big_goon_short_range_w_medium
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Carnage_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+
+Character.AO_Test_Plain_Zhuo:
+  $base: Character.street_big_goon_short_range_w_medium
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Zhuo_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []

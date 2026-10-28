@@ -237,6 +237,20 @@ public abstract class NpcAmmo {
     AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " out of ammo for all " + IntToString(ArraySize(guns)) + " gun(s)");
   }
 
+  // Gives back whatever of the noted ammo the body is missing. Safe to repeat: it only adds the
+  // difference.
+  public static func TopUpLoot(npc: ref<NPCPuppet>) -> Void {
+    let ts: ref<TransactionSystem> = GameInstance.GetTransactionSystem(npc.GetGame());
+    let i: Int32 = 0;
+    while i < ArraySize(npc.aoLootAmmo) {
+      let missing: Int32 = npc.aoLootQuantity[i] - NpcAmmo.Rounds(npc, npc.aoLootAmmo[i]);
+      if missing > 0 {
+        ts.GiveItem(npc, ItemID.CreateQuery(npc.aoLootAmmo[i]), missing);
+      }
+      i += 1;
+    }
+  }
+
   // Notes the ammo `npc` carries before death or incapacitation wipes it.
   public static func NoteLoot(npc: ref<NPCPuppet>) -> Void {
     if (ArraySize(npc.aoStocked) == 0 && ArraySize(npc.aoStashedGuns) == 0) || ArraySize(npc.aoLootAmmo) > 0 {
@@ -254,12 +268,9 @@ public abstract class NpcAmmo {
   // Loot has been generated: put the noted ammo back for the player to take.
   public static func RestoreLoot(npc: ref<NPCPuppet>) -> Void {
     let ts: ref<TransactionSystem> = GameInstance.GetTransactionSystem(npc.GetGame());
+    NpcAmmo.TopUpLoot(npc);
     let i: Int32 = 0;
     while i < ArraySize(npc.aoLootAmmo) {
-      let missing: Int32 = npc.aoLootQuantity[i] - NpcAmmo.Rounds(npc, npc.aoLootAmmo[i]);
-      if missing > 0 {
-        ts.GiveItem(npc, ItemID.CreateQuery(npc.aoLootAmmo[i]), missing);
-      }
       AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " leaves " + IntToString(npc.aoLootQuantity[i]) + " " + TDBID.ToStringDEBUG(npc.aoLootAmmo[i]));
       i += 1;
     }
@@ -325,13 +336,38 @@ public final static func Update(context: ScriptExecutionContext, record: wref<AI
 @wrapMethod(NPCPuppet)
 protected cb func OnDeath(evt: ref<gameDeathEvent>) -> Bool {
   NpcAmmo.NoteLoot(this);
+  NpcLootCallback.Schedule(this);
   return wrappedMethod(evt);
 }
 
 @wrapMethod(NPCPuppet)
 protected func OnIncapacitated() -> Void {
   NpcAmmo.NoteLoot(this);
+  NpcLootCallback.Schedule(this);
   wrappedMethod();
+}
+
+// A body the game generates no loot for never gets EvaluateLootQuality, so its noted ammo would
+// be lost; a few seconds after death the missing rounds are given back anyway. If loot comes in
+// later, EvaluateLootQuality tops up again (only the difference) and clears the note.
+public class NpcLootCallback extends DelayCallback {
+  public let npc: wref<NPCPuppet>;
+
+  public static func Schedule(npc: ref<NPCPuppet>) -> Void {
+    if ArraySize(npc.aoLootAmmo) == 0 {
+      return;
+    }
+    let callback: ref<NpcLootCallback> = new NpcLootCallback();
+    callback.npc = npc;
+    GameInstance.GetDelaySystem(npc.GetGame()).DelayCallback(callback, 3.0, false);
+  }
+
+  public func Call() -> Void {
+    if IsDefined(this.npc) && ArraySize(this.npc.aoLootAmmo) > 0 {
+      NpcAmmo.TopUpLoot(this.npc);
+      AmmoFeedSystem.Log(NpcAmmo.Name(this.npc) + " topped up its loot after death");
+    }
+  }
 }
 
 @wrapMethod(ScriptedPuppet)
