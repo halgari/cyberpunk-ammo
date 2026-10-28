@@ -3,6 +3,7 @@
 Each source image is a cut-out on a transparent background. It's cropped to what's visible and
 fitted (keeping its shape) into a cell of
 the vanilla ammo icon's proportions (124x78 at 2048, so 248x156 here for a sharper 4K slot).
+The atlas is saved with premultiplied alpha, as the game expects.
 Writes art/build/ao_ammo_icons.png and each part's UV rect (art/build/ao_ammo_icons.uvs.json)
 for the .inkatlas.
 
@@ -10,7 +11,7 @@ for the .inkatlas.
 """
 import json
 import pathlib
-from PIL import Image
+from PIL import Image, ImageChops
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = ROOT / "art" / "icons"
@@ -40,6 +41,13 @@ def fit(im):
     return cell
 
 
+def premultiply(im):
+    # The game draws UI textures as premultiplied alpha (vanilla atlases store colour × alpha);
+    # straight alpha leaves a bright, off-colour fringe on every soft edge.
+    r, g, b, a = im.split()
+    return Image.merge("RGBA", [ImageChops.multiply(c, a) for c in (r, g, b)] + [a])
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     atlas = Image.new("RGBA", ATLAS, (0, 0, 0, 0))
@@ -49,7 +57,7 @@ def main():
         atlas.alpha_composite(fit(cut_out(SRC / src)), (x, y))
         uvs[part] = {"Left": x / ATLAS[0], "Top": y / ATLAS[1],
                      "Right": (x + CELL[0]) / ATLAS[0], "Bottom": (y + CELL[1]) / ATLAS[1]}
-    atlas.save(OUT / "ao_ammo_icons.png")
+    premultiply(atlas).save(OUT / "ao_ammo_icons.png")
     (OUT / "ao_ammo_icons.uvs.json").write_text(json.dumps(uvs, indent=1))
 
 
