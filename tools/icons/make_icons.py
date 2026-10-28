@@ -17,6 +17,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = ROOT / "art" / "icons"
 OUT = ROOT / "art" / "build"
 CELL = (248, 156)
+# Empty margin kept around the art inside its cell (fraction of the cell's height).
+PAD = 0.08
 ATLAS = (512, 512)
 # part name -> source file
 PARTS = {
@@ -34,7 +36,8 @@ def cut_out(path):
 
 
 def fit(im):
-    scale = min(CELL[0] / im.width, CELL[1] / im.height)
+    pad = round(CELL[1] * PAD)
+    scale = min((CELL[0] - 2 * pad) / im.width, (CELL[1] - 2 * pad) / im.height)
     im = im.resize((max(1, round(im.width * scale)), max(1, round(im.height * scale))), Image.LANCZOS)
     cell = Image.new("RGBA", CELL, (0, 0, 0, 0))
     cell.alpha_composite(im, ((CELL[0] - im.width) // 2, (CELL[1] - im.height) // 2))
