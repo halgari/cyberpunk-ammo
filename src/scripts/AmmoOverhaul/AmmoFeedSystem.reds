@@ -233,6 +233,68 @@ public class AmmoFeedSystem extends ScriptableSystem {
       + NameToString(UIItemsHelper.GetSlotShadowIcon(TDBID.Create(slot), none, area));
   }
 
+  // "item=quantity;..." of AmmoDistribution.Spread.
+  public final func DebugSpread(vanilla: String, quantity: Int32, maxTier: Int32) -> String {
+    let text: String = "";
+    for stack in AmmoDistribution.Spread(TDBID.Create(vanilla), quantity, maxTier) {
+      text += TDBID.ToStringDEBUG(stack.ammo) + "=" + IntToString(stack.quantity) + ";";
+    }
+    return text;
+  }
+
+  // "item=count;..." over `n` AmmoDistribution.Pick calls. `owned` is a comma-separated caliber
+  // list standing in for the player's guns; "" uses the guns the player really carries.
+  public final func DebugPick(vanilla: String, maxTier: Int32, n: Int32, owned: String) -> String {
+    let calibers: array<String> = Equals(owned, "")
+      ? AmmoDistribution.OwnedCalibers(GetPlayer(this.GetGameInstance()))
+      : StrSplit(owned, ",");
+    let items: array<TweakDBID>;
+    let counts: array<Int32>;
+    let i: Int32 = 0;
+    while i < n {
+      let item: TweakDBID = AmmoDistribution.Pick(TDBID.Create(vanilla), maxTier, calibers);
+      let at: Int32 = ArrayFindFirst(items, item);
+      if at < 0 {
+        ArrayPush(items, item);
+        ArrayPush(counts, 1);
+      } else {
+        counts[at] += 1;
+      }
+      i += 1;
+    }
+    let text: String = "";
+    i = 0;
+    while i < ArraySize(items) {
+      text += TDBID.ToStringDEBUG(items[i]) + "=" + IntToString(counts[i]) + ";";
+      i += 1;
+    }
+    return text;
+  }
+
+  // One line per known vendor with ammo: "<vendor> <type> | item=quantity;...".
+  public final func DebugVendors() -> String {
+    let text: String = "";
+    for vendor in MarketSystem.GetInstance(this.GetGameInstance()).AODebugVendors() {
+      let ammo: String = vendor.AODebugAmmo();
+      if NotEquals(ammo, "") {
+        text += TDBID.ToStringDEBUG(vendor.GetVendorTweakID()) + " " + EnumValueToString("gamedataVendorType", Cast<Int64>(EnumInt(vendor.GetVendorType()))) + " | " + ammo + "\n";
+      }
+    }
+    return text;
+  }
+
+  // Restocks a known vendor now; "<ammo before> -> <ammo after>".
+  public final func DebugRestock(vendorID: String) -> String {
+    for vendor in MarketSystem.GetInstance(this.GetGameInstance()).AODebugVendors() {
+      if vendor.GetVendorTweakID() == TDBID.Create(vendorID) {
+        let before: String = vendor.AODebugAmmo();
+        vendor.AODebugRestock();
+        return before + " -> " + vendor.AODebugAmmo();
+      }
+    }
+    return "no vendor " + vendorID;
+  }
+
   public final func Trail() -> String {
     let text: String = "";
     for line in this.m_trail {

@@ -115,6 +115,8 @@ wine, and never in the game's prefix (`common.sh` has the paths).
   - `slice/*.lua`: the slice checks, each printing PASS/FAIL lines; run with `common.lua` in
     front: `cet.sh "$(cat tools/snippets/slice/common.lua tools/snippets/slice/<check>.lua)"`.
     `rarity.lua` then `rarity2.lua` fit an Uncommon selector into a Common Kenshin.
+    `vendors.lua` checks the distribution maths; with `VENDOR=1` set in front it also restocks
+    every vendor the save knows of (twice) and checks their ammo.
   - `npc-spawn.lua`: spawns a tagged NPC (`REC=` picks the record) 8 m ahead and makes the player
     invulnerable. `npc-state.lua`: each test NPC's gun, magazine and ammo; `FIGHT=true` makes
     them hostile.

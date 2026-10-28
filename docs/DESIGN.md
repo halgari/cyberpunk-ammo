@@ -16,6 +16,9 @@ that carry and use up real ammo. This file records how the proof of concept work
   - `AmmoFeedSystem.reds`: the player's per-gun ammo, unloading on a selector change, on-hit effects.
   - `NativeAmmo.reds` + `Native.reds`: per-gun ammo through the native plugin.
   - `NpcAmmo.reds`: NPC ammo stock, consumption, running dry, loot.
+  - `AmmoSection.reds`: the Ammo section on the weapon screen.
+  - `AmmoDistribution.reds`: how vanilla ammo is shared out among calibers and tiers.
+  - `Vendors.reds`: vendor ammo stock.
   - `Hooks.reds`: wraps of vanilla functions for the player side and the UI.
   - `Localization.reds`: text, served through Codeware.
 - `native/AmmoOverhaul/`: the RED4ext plugin (C++). `native/AOProbe/` is a research probe, not
@@ -151,6 +154,23 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
   character (`dropsAmmoOnDeathChance` = 0).
 - **Not counted:** guns whose record ammo is `Ammo.Standard` (melee weapons, cyberware, heavy
   machine guns and a few others) stay unlimited until they get a real ammo type.
+
+## Distribution
+
+Our rounds replace a share of a vanilla ammo item (`vanillaAmmo`; all three slice calibers take
+handgun ammo). A caliber's share is its `lootWeight`; within a caliber each tier gets its family's
+share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDistribution.reds`).
+
+- **Spread** splits a quantity in those proportions (vendors). 1000 handgun rounds at a gun shop
+  become 511 9mm Ball, 90 Mushrooms, 187 Rail Slugs, 62 Sleevers, 135 Seekers, 15 Dumbfires.
+- **Pick** chooses one round for a whole stack (loot): with chance `loot.ownedBias` a caliber of a
+  gun the player carries, else one by `lootWeight`; then a tier by share.
+- **Vendors:** each stack of a replaced vanilla ammo is split whenever the vendor builds its stock
+  (`Vendor.InitializeStock`, `RegenerateStock`). Gun shops (`Gunsmith`) sell up to Uncommon, other
+  vendors Common only. A restock rebuilds the stock from the vendor's pool and drops our split
+  stacks first (they're regenerating items), so nothing is split twice. Stock saved before the mod
+  was installed is split on load (`OnRestored`): a stock holding none of our rounds is unsplit,
+  since 9mm Ball is vanilla handgun ammo.
 
 ## Weight and inventory
 
