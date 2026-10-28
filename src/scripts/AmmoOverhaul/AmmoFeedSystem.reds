@@ -258,6 +258,40 @@ public class AmmoFeedSystem extends ScriptableSystem {
       + NameToString(UIItemsHelper.GetSlotShadowIcon(TDBID.Create(slot), none, area));
   }
 
+  // The ammo IDs of a caliber's tier, space-separated.
+  public final func DebugTierAmmo(caliber: String, tier: Int32) -> String {
+    let text: String = "";
+    for ammo in AOData.AmmosForTier(caliber, tier) {
+      text += TDBID.ToStringDEBUG(ammo) + " ";
+    }
+    return text;
+  }
+
+  // "ammo=count;..." over `n` NpcAmmo.PickUncommon calls, as the selector's ammo.
+  public final func DebugUncommonPick(caliber: String, n: Int32) -> String {
+    let items: array<TweakDBID>;
+    let counts: array<Int32>;
+    let i: Int32 = 0;
+    while i < n {
+      let ammo: TweakDBID = AOData.SelectorAmmo(caliber, NpcAmmo.PickUncommon(caliber));
+      let at: Int32 = ArrayFindFirst(items, ammo);
+      if at < 0 {
+        ArrayPush(items, ammo);
+        ArrayPush(counts, 1);
+      } else {
+        counts[at] += 1;
+      }
+      i += 1;
+    }
+    let text: String = "";
+    i = 0;
+    while i < ArraySize(items) {
+      text += TDBID.ToStringDEBUG(items[i]) + "=" + IntToString(counts[i]) + ";";
+      i += 1;
+    }
+    return text;
+  }
+
   // "item=quantity;..." of AmmoDistribution.Spread.
   public final func DebugSpread(vanilla: String, quantity: Int32, maxTier: Int32) -> String {
     let text: String = "";

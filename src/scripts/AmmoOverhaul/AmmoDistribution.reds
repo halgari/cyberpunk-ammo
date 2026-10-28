@@ -64,8 +64,9 @@ public abstract class AmmoDistribution {
       caliber = calibers[AmmoDistribution.Weighted(weights)];
     }
     let tiers: array<Float> = AmmoDistribution.TierWeights(caliber, maxTier);
-    let ammo: TweakDBID = AOData.AmmoForTier(caliber, AmmoDistribution.Weighted(tiers));
-    return TDBID.IsValid(ammo) ? ammo : vanilla;
+    // A tier's rounds share its weight evenly.
+    let tierAmmo: array<TweakDBID> = AOData.AmmosForTier(caliber, AmmoDistribution.Weighted(tiers));
+    return ArraySize(tierAmmo) > 0 ? tierAmmo[RandRange(0, ArraySize(tierAmmo))] : vanilla;
   }
 
   // `quantity` of `vanilla` split by lootWeight × tier share: rounded down, the remainder to the
@@ -78,11 +79,14 @@ public abstract class AmmoDistribution {
       let tiers: array<Float> = AmmoDistribution.TierWeights(caliber, maxTier);
       let t: Int32 = 0;
       while t < ArraySize(tiers) {
-        let ammo: TweakDBID = AOData.AmmoForTier(caliber, t);
+        let tierAmmo: array<TweakDBID> = AOData.AmmosForTier(caliber, t);
         let weight: Float = AOData.LootWeight(caliber) * tiers[t];
-        if TDBID.IsValid(ammo) && weight > 0.0 {
-          ArrayPush(items, ammo);
-          ArrayPush(weights, weight);
+        if ArraySize(tierAmmo) > 0 && weight > 0.0 {
+          // A tier's rounds share its weight evenly.
+          for ammo in tierAmmo {
+            ArrayPush(items, ammo);
+            ArrayPush(weights, weight / Cast<Float>(ArraySize(tierAmmo)));
+          }
           total += weight;
         }
         t += 1;
@@ -95,20 +99,33 @@ public abstract class AmmoDistribution {
       }
       return stacks;
     }
+    // Largest remainder: each stack gets its share rounded down, then the rounds left over go one
+    // each to the stacks that lost the most to rounding.
     let counts: array<Int32>;
+    let rest: array<Float>;
     let given: Int32 = 0;
-    let largest: Int32 = 0;
     let i: Int32 = 0;
     while i < ArraySize(items) {
-      let count: Int32 = FloorF(Cast<Float>(quantity) * weights[i] / total);
+      let exact: Float = Cast<Float>(quantity) * weights[i] / total;
+      let count: Int32 = FloorF(exact);
       ArrayPush(counts, count);
+      ArrayPush(rest, exact - Cast<Float>(count));
       given += count;
-      if weights[i] > weights[largest] {
-        largest = i;
-      }
       i += 1;
     }
-    counts[largest] += quantity - given;
+    while given < quantity {
+      let best: Int32 = 0;
+      i = 1;
+      while i < ArraySize(rest) {
+        if rest[i] > rest[best] {
+          best = i;
+        }
+        i += 1;
+      }
+      counts[best] += 1;
+      rest[best] = -1.0;
+      given += 1;
+    }
     i = 0;
     while i < ArraySize(items) {
       if counts[i] > 0 {
@@ -126,7 +143,8 @@ public abstract class AmmoDistribution {
     let sum: Float = 0.0;
     let t: Int32 = 0;
     while t <= maxTier {
-      let share: Float = TDBID.IsValid(AOData.AmmoForTier(caliber, t)) ? AOData.TierShare(family, t) : 0.0;
+      let tierAmmo: array<TweakDBID> = AOData.AmmosForTier(caliber, t);
+      let share: Float = ArraySize(tierAmmo) > 0 ? AOData.TierShare(family, t) : 0.0;
       ArrayPush(weights, share);
       sum += share;
       t += 1;

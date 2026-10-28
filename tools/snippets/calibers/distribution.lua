@@ -35,6 +35,37 @@ for vanilla, shares in pairs(SHARES) do
   end
 end
 
+-- Several rounds per tier: a tier's share is split evenly across its rounds, in Spread, Pick and
+-- the NPC Uncommon pick.
+local function tier1(cal)
+  local out, tiers = {}, flat("AmmoOverhaul." .. cal, "selectorTiers") or {}
+  for i, a in ipairs(rounds(cal)) do if tiers[i] == 1 then table.insert(out, a) end end
+  return out
+end
+local function count(res, id) return tonumber(tostring(res):match(id:gsub("%.", "%%.") .. "=(%d+)")) or 0 end
+for vanilla, shares in pairs(SHARES) do
+  local res = sys:DebugSpread(vanilla, 10000, 1)
+  for cal in pairs(shares) do
+    local t1 = tier1(cal)
+    if #t1 == 2 then
+      local a, b = count(res, t1[1]), count(res, t1[2])
+      check(cal .. " Spread: " .. t1[1] .. " and " .. t1[2] .. " split the Uncommon share", a > 0 and math.abs(a - b) <= 2, a .. " " .. b)
+    end
+  end
+end
+for _, cal in ipairs({ "Power_9mm", "Power_12ga", "Tech_Light", "Smart_10" }) do
+  local t1 = tier1(cal)
+  local listed = sys:DebugTierAmmo(cal, 1)
+  check(cal .. " DebugTierAmmo lists both Uncommons", listed:find(t1[1], 1, true) ~= nil and listed:find(t1[2], 1, true) ~= nil, listed)
+  local vanilla = str(flat("AmmoOverhaul." .. cal, "vanillaAmmo"))
+  local res = sys:DebugPick(vanilla, 1, 4000, cal)
+  local a, b = count(res, t1[1]), count(res, t1[2])
+  check(cal .. " Pick returns both Uncommons evenly", a > 0 and b > 0 and math.abs(a - b) <= 0.25 * math.max(a, b), a .. " " .. b .. " of " .. res)
+  local npc = sys:DebugUncommonPick(cal, 2000)
+  a, b = count(npc, t1[1]), count(npc, t1[2])
+  check(cal .. " NPC Uncommon pick returns both evenly", a > 0 and b > 0 and math.abs(a - b) <= 0.25 * math.max(a, b), npc)
+end
+
 if VENDOR then
   local resv = sys:DebugVendors()
   local shops = 0

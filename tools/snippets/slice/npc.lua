@@ -7,6 +7,9 @@ local SEL_AMMO = { ["Items.AO_Feed_9mm_Mushrooms"] = "Ammo.AO_9mm_HollowPoint", 
   ["Items.AO_Feed_10mm_Dumbfires"] = "Ammo.AO_S10_Dumbfire" }
 local DEFAULT = { Lexington = "Ammo.HandgunAmmo", Omaha = "Ammo.AO_TLight_Slug", Yukimura = "Ammo.AO_S10_Standard" }
 local UNCOMMON = { Lexington = "Ammo.AO_9mm_HollowPoint", Omaha = "Ammo.AO_TLight_Sabot", Yukimura = "Ammo.AO_S10_Dumbfire" }
+-- The second Uncommon round, which the roll picks as often as the first (its stats are checked for
+-- V by calibers/uncommon2.sh; here only that the NPC carries it).
+local UNCOMMON2 = { Lexington = "Ammo.AO_9mm_PlusP", Omaha = "Ammo.AO_TLight_Bricks", Yukimura = "Ammo.AO_S10_ShortFuse" }
 -- NPC guns have no DamagePerHit (NPC damage comes from elsewhere), so check a stat each Uncommon
 -- changes that NPC guns do carry: stat name, Uncommon value relative to Common ("+" = difference,
 -- "x" = ratio, "~" = only different: NPC Omahas have a ChargeTime of 0, so a ratio means nothing).
@@ -38,6 +41,7 @@ for _, npc in ipairs(list) do
     print(recName .. " | " .. gunName .. " | feed " .. part .. " | " .. table.concat(stacks, ", "))
     local expected = SEL_AMMO[part] or DEFAULT[gun]
     if recName:find("AO_Test_Plain_") and ammo[UNCOMMON[gun]] then expected = UNCOMMON[gun] end
+    if recName:find("AO_Test_Plain_") and ammo[UNCOMMON2[gun]] then expected = UNCOMMON2[gun] end
     local dmg = STAT[gun] and Game.GetStatsSystem():GetStatValue(d:GetStatsObjectID(), gamedataStatType[STAT[gun][1]]) or 0
     print("    " .. (STAT[gun] and STAT[gun][1] or "-") .. " " .. dmg)
     AO_EXPECT[tostring(npc:GetEntityID().hash)] = { name = recName, ammo = expected }
@@ -48,7 +52,9 @@ for _, npc in ipairs(list) do
     if recName:find("AO_Test_Plain_") then
       check(recName .. " has no part fitted", part == "none", part)
       damage[gun] = damage[gun] or {}
-      if expected == UNCOMMON[gun] then
+      if expected == UNCOMMON2[gun] then
+        plainUncommon = plainUncommon + 1
+      elseif expected == UNCOMMON[gun] then
         plainUncommon = plainUncommon + 1; damage[gun].uncommon = dmg
       else
         plainCommon = plainCommon + 1; damage[gun].common = dmg

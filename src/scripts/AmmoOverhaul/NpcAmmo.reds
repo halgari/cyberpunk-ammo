@@ -136,7 +136,7 @@ public abstract class NpcAmmo {
     }
   }
 
-  // Gives one of the mod's guns its caliber's Uncommon round with the chance its family's
+  // Gives one of the mod's guns one of its caliber's Uncommon rounds (PickUncommon) with the chance its family's
   // Uncommon share times the NPC's rarity factor gives: GunAmmo then returns that round, and the
   // Uncommon selector's stat modifiers go onto the gun. No part is fitted: TransactionSystem.AddPart
   // on an NPC's drawn gun hangs the game (2.50). Guns whose feed slot is already filled (a preset's
@@ -148,7 +148,7 @@ public abstract class NpcAmmo {
     }
     ArrayPush(npc.aoRolledGuns, gun);
     let gunData: wref<gameItemData> = GameInstance.GetTransactionSystem(npc.GetGame()).GetItemData(npc, gun);
-    let selector: TweakDBID = AOData.SelectorForTier(caliber, 1);
+    let selector: TweakDBID = NpcAmmo.PickUncommon(caliber);
     if !IsDefined(gunData) || gunData.HasPartInSlot(AOData.FeedSlot(caliber)) || !TDBID.IsValid(selector) {
       return false;
     }
@@ -167,6 +167,12 @@ public abstract class NpcAmmo {
     }
     AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " got " + TDBID.ToStringDEBUG(selector) + " for " + TDBID.ToStringDEBUG(ItemID.GetTDBID(gun)));
     return true;
+  }
+
+  // One of the caliber's Uncommon selectors, each as likely; invalid if it has none.
+  public static func PickUncommon(caliber: String) -> TweakDBID {
+    let selectors: array<TweakDBID> = AOData.SelectorsForTier(caliber, 1);
+    return ArraySize(selectors) > 0 ? selectors[RandRange(0, ArraySize(selectors))] : TDBID.None();
   }
 
   public static func Rounds(npc: ref<NPCPuppet>, ammo: TweakDBID) -> Int32 {

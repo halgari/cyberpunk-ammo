@@ -36,7 +36,12 @@ for _, npc in ipairs(Game.GetDynamicEntitySystem():GetTagged("AO_Test")) do
     check(recName .. " gun is managed", c ~= nil, str(w:GetItemID().id))
     if c then
       seen[c.name] = true
-      local expected = UNCOMMON and c.ammo[2] or c.ammo[1]
+      -- With the roll on, any of the caliber's Uncommon rounds (c.ammo[2..]) is right.
+      local expected = c.ammo[1]
+      if UNCOMMON then
+        expected = c.ammo[2]
+        for i = 2, #c.ammo do if (ammo[c.ammo[i]] or 0) > 0 then expected = c.ammo[i] end end
+      end
       AO_EXPECT[tostring(npc:GetEntityID().hash)] = { name = recName, ammo = expected }
       check(recName .. " carries " .. c.name .. " rounds", (ammo[expected] or 0) > 0, "expected " .. expected)
       local others = {}

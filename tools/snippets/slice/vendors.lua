@@ -15,9 +15,13 @@ check("DebugSpread exists", ok, tostring(res))
 if ok then
   local t, total = parse(res)
   check("spread totals 1000", total == 1000, res)
-  for item, want in pairs({["Ammo.HandgunAmmo"]=340, ["Ammo.AO_9mm_HollowPoint"]=60, ["Ammo.AO_TLight_Slug"]=112,
-                           ["Ammo.AO_TLight_Sabot"]=38, ["Ammo.AO_S10_Standard"]=135, ["Ammo.AO_S10_Dumbfire"]=15}) do
-    check("spread " .. item .. " ~" .. want, near(t[item], want, 2), tostring(t[item]))
+  -- Each Uncommon share is split between the caliber's two Uncommon rounds.
+  for items, want in pairs({["Ammo.HandgunAmmo"]=340, ["Ammo.AO_9mm_HollowPoint+Ammo.AO_9mm_PlusP"]=60, ["Ammo.AO_TLight_Slug"]=112,
+                           ["Ammo.AO_TLight_Sabot+Ammo.AO_TLight_Bricks"]=38, ["Ammo.AO_S10_Standard"]=135,
+                           ["Ammo.AO_S10_Dumbfire+Ammo.AO_S10_ShortFuse"]=15}) do
+    local n = 0
+    for item in items:gmatch("[^+]+") do n = n + (t[item] or 0) end
+    check("spread " .. items .. " ~" .. want, near(n, want, 2), tostring(n))
   end
   local t0, total0 = parse(sys:DebugSpread("Ammo.HandgunAmmo", 1000, 0))
   check("maxTier 0 totals 1000", total0 == 1000, tostring(total0))

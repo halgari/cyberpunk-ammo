@@ -121,20 +121,27 @@ public abstract class AOData {
     return -1;
   }
 
-  // The first selector of a tier, or an invalid ID if the caliber has none.
-  public static func SelectorForTier(caliber: String, tier: Int32) -> TweakDBID {
+  // The selectors of a tier, in the order the caliber lists them (empty if it has none).
+  public static func SelectorsForTier(caliber: String, tier: Int32) -> array<TweakDBID> {
+    let out: array<TweakDBID>;
     for selector in AOData.Selectors(caliber) {
       if AOData.SelectorTier(caliber, selector) == tier {
-        return selector;
+        ArrayPush(out, selector);
       }
     }
-    return TDBID.None();
+    return out;
   }
 
-  // The ammo item of a tier, or an invalid ID if the caliber has none.
-  public static func AmmoForTier(caliber: String, tier: Int32) -> TweakDBID {
-    let selector: TweakDBID = AOData.SelectorForTier(caliber, tier);
-    return TDBID.IsValid(selector) ? AOData.SelectorAmmo(caliber, selector) : TDBID.None();
+  // The ammo items of a tier, one per selector.
+  public static func AmmosForTier(caliber: String, tier: Int32) -> array<TweakDBID> {
+    let out: array<TweakDBID>;
+    for selector in AOData.SelectorsForTier(caliber, tier) {
+      let ammo: TweakDBID = AOData.SelectorAmmo(caliber, selector);
+      if TDBID.IsValid(ammo) {
+        ArrayPush(out, ammo);
+      }
+    }
+    return out;
   }
 
   // The vanilla ammo item this caliber's share of world loot and vendor stock is taken from.
