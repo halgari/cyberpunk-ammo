@@ -52,6 +52,7 @@ Ammo.AO_THeavy_Slug:
   quality: Quality.Common
   displayName: LocKey#AO-Ammo-Heavy-RailSlugs
   localizedDescription: LocKey#AO-Ammo-Heavy-RailSlugs-Desc
+  iconPath: AO_Heavy_RailSlugs
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Tech]
 
 Ammo.AO_THeavy_Sabot:
@@ -59,7 +60,21 @@ Ammo.AO_THeavy_Sabot:
   quality: Quality.Uncommon
   displayName: LocKey#AO-Ammo-Heavy-Sleevers
   localizedDescription: LocKey#AO-Ammo-Sleevers-Desc
+  iconPath: AO_Heavy_Sleevers
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Tech]
+
+# --- Icons -------------------------------------------------------------------------------------
+# Parts of the mod's icon atlas (tools/icons/build.sh packs it into AmmoOverhaul.archive).
+
+UIIcon.AO_Heavy_RailSlugs:
+  $type: UIIcon
+  atlasPartName: ao_heavy_railslugs
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+UIIcon.AO_Heavy_Sleevers:
+  $type: UIIcon
+  atlasPartName: ao_heavy_sleevers
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
 
 # --- Selectors ---------------------------------------------------------------------------------
 
@@ -67,6 +82,7 @@ Items.AO_Feed_Heavy_RailSlugs:
   $base: Items.Part
   displayName: LocKey#AO-Ammo-Heavy-RailSlugs
   localizedDescription: LocKey#AO-Ammo-Heavy-RailSlugs-Desc
+  iconPath: AO_Heavy_RailSlugs
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Tech_Heavy]
@@ -79,6 +95,7 @@ Items.AO_Feed_Heavy_Sleevers:
   $base: Items.AO_Feed_Heavy_RailSlugs
   displayName: LocKey#AO-Ammo-Heavy-Sleevers
   localizedDescription: LocKey#AO-Ammo-Sleevers-Desc
+  iconPath: AO_Heavy_Sleevers
   quality: Quality.Uncommon
   statModifiers:
     - !append

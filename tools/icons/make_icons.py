@@ -19,16 +19,17 @@ OUT = ROOT / "art" / "build"
 CELL = (248, 156)
 # Empty margin kept around the art inside its square (fraction of the cell's height).
 PAD = 0.08
-ATLAS = (512, 512)
-# part name -> source file
-PARTS = {
-    "ao_9mm_ball": "5mm-ball.png",
-    "ao_5mm_sleevers": "sleevers.png",
-    "ao_10mm_dumbfires": "dumbfire.png",
-    "ao_9mm_mushrooms": "mushrooms.png",
-    "ao_5mm_railslugs": "railslugs.png",
-    "ao_10mm_seekers": "seekers.png",
-}
+ATLAS = (2048, 1024)   # 8 x 4 cells of 256 x 160
+COLS = 8
+# Source art (art/icons/<name>.png, rendered by tools/render/render.py), one per round. The part is
+# "ao_" + the name with "-" as "_" (9mm-ball -> ao_9mm_ball), matching UIIcon.AO_* and the feed selector.
+NAMES = [
+    "9mm-ball", "9mm-mushrooms", "45-ball", "45-mushrooms", "12mm-ball", "12mm-mushrooms", "556-ball",
+    "556-mushrooms", "762-ball", "762-mushrooms", "127-ball", "127-mushrooms", "12ga-buckshot", "12ga-slugs",
+    "4ga-buckshot", "4ga-slugs", "5mm-railslugs", "5mm-sleevers", "heavy-railslugs", "heavy-sleevers",
+    "10mm-seekers", "10mm-dumbfires", "20mm-seekers", "20mm-dumbfires", "25mm-seekers", "25mm-dumbfires",
+]
+PARTS = {"ao_" + n.replace("-", "_"): n + ".png" for n in NAMES}
 
 
 def cut_out(path):
@@ -61,7 +62,7 @@ def main():
     atlas = Image.new("RGBA", ATLAS, (0, 0, 0, 0))
     uvs = {}
     for i, (part, src) in enumerate(PARTS.items()):
-        x, y = (i % 2) * 256, (i // 2) * 160
+        x, y = (i % COLS) * 256, (i // COLS) * 160
         atlas.alpha_composite(fit(cut_out(SRC / src)), (x, y))
         uvs[part] = {"Left": x / ATLAS[0], "Top": y / ATLAS[1],
                      "Right": (x + CELL[0]) / ATLAS[0], "Bottom": (y + CELL[1]) / ATLAS[1]}

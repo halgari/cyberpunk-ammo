@@ -50,6 +50,7 @@ Ammo.AO_S20_Standard:
   quality: Quality.Common
   displayName: LocKey#AO-Ammo-20mm-Seekers
   localizedDescription: LocKey#AO-Ammo-20mm-Seekers-Desc
+  iconPath: AO_20mm_Seekers
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Smart]
 
 Ammo.AO_S20_Dumbfire:
@@ -57,7 +58,21 @@ Ammo.AO_S20_Dumbfire:
   quality: Quality.Uncommon
   displayName: LocKey#AO-Ammo-20mm-Dumbfires
   localizedDescription: LocKey#AO-Ammo-Dumbfires-Desc
+  iconPath: AO_20mm_Dumbfires
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
+
+# --- Icons -------------------------------------------------------------------------------------
+# Parts of the mod's icon atlas (tools/icons/build.sh packs it into AmmoOverhaul.archive).
+
+UIIcon.AO_20mm_Seekers:
+  $type: UIIcon
+  atlasPartName: ao_20mm_seekers
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+UIIcon.AO_20mm_Dumbfires:
+  $type: UIIcon
+  atlasPartName: ao_20mm_dumbfires
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
 
 # --- Selectors ---------------------------------------------------------------------------------
 
@@ -65,6 +80,7 @@ Items.AO_Feed_20mm_Seekers:
   $base: Items.Part
   displayName: LocKey#AO-Ammo-20mm-Seekers
   localizedDescription: LocKey#AO-Ammo-20mm-Seekers-Desc
+  iconPath: AO_20mm_Seekers
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Smart_20]
@@ -77,6 +93,7 @@ Items.AO_Feed_20mm_Dumbfires:
   $base: Items.AO_Feed_20mm_Seekers
   displayName: LocKey#AO-Ammo-20mm-Dumbfires
   localizedDescription: LocKey#AO-Ammo-Dumbfires-Desc
+  iconPath: AO_20mm_Dumbfires
   quality: Quality.Uncommon
   statModifiers:
     - !append

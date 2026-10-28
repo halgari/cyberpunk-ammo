@@ -38,7 +38,21 @@ Ammo.AO_12ga_Slug:
   quality: Quality.Uncommon
   displayName: LocKey#AO-Ammo-Slugs
   localizedDescription: LocKey#AO-Ammo-Slugs-Desc
+  iconPath: AO_12ga_Slugs
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Icons -------------------------------------------------------------------------------------
+# Parts of the mod's icon atlas (tools/icons/build.sh packs it into AmmoOverhaul.archive).
+
+UIIcon.AO_12ga_Buckshot:
+  $type: UIIcon
+  atlasPartName: ao_12ga_buckshot
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+UIIcon.AO_12ga_Slugs:
+  $type: UIIcon
+  atlasPartName: ao_12ga_slugs
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
 
 # --- Selectors ---------------------------------------------------------------------------------
 
@@ -46,6 +60,7 @@ Items.AO_Feed_12ga_Buckshot:
   $base: Items.Part
   displayName: LocKey#AO-Ammo-Buckshot
   localizedDescription: LocKey#AO-Ammo-Buckshot-Desc
+  iconPath: AO_12ga_Buckshot
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_12ga]
@@ -58,6 +73,7 @@ Items.AO_Feed_12ga_Slugs:
   $base: Items.AO_Feed_12ga_Buckshot
   displayName: LocKey#AO-Ammo-Slugs
   localizedDescription: LocKey#AO-Ammo-Slugs-Desc
+  iconPath: AO_12ga_Slugs
   quality: Quality.Uncommon
   statModifiers:
     # One projectile: take away the gun's pellets (ProjectilesPerShotBase), add one back. refObject Root is

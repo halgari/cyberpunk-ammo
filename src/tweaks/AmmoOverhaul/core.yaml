@@ -70,6 +70,7 @@ Ammo.HandgunAmmo:
 Ammo.RifleAmmo:
   displayName: LocKey#AO-Ammo-556-Ball
   localizedDescription: LocKey#AO-Ammo-556-Ball-Desc
+  iconPath: AO_556_Ball
   statModifiers:
     - !append
       $type: ConstantStatModifier
@@ -81,6 +82,7 @@ Ammo.RifleAmmo:
 Ammo.ShotgunAmmo:
   displayName: LocKey#AO-Ammo-Buckshot
   localizedDescription: LocKey#AO-Ammo-Buckshot-Desc
+  iconPath: AO_12ga_Buckshot
   statModifiers:
     - !append
       $type: ConstantStatModifier
@@ -92,6 +94,7 @@ Ammo.ShotgunAmmo:
 Ammo.SniperRifleAmmo:
   displayName: LocKey#AO-Ammo-127-Ball
   localizedDescription: LocKey#AO-Ammo-127-Ball-Desc
+  iconPath: AO_127_Ball
   statModifiers:
     - !append
       $type: ConstantStatModifier

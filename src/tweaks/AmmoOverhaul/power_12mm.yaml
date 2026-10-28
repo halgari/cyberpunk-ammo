@@ -40,6 +40,7 @@ Ammo.AO_12mm_Ball:
   quality: Quality.Common
   displayName: LocKey#AO-Ammo-12mm-Ball
   localizedDescription: LocKey#AO-Ammo-12mm-Ball-Desc
+  iconPath: AO_12mm_Ball
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Power]
   buyPrice:
     - !append
@@ -59,7 +60,21 @@ Ammo.AO_12mm_HollowPoint:
   quality: Quality.Uncommon
   displayName: LocKey#AO-Ammo-12mm-Mushrooms
   localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  iconPath: AO_12mm_Mushrooms
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Icons -------------------------------------------------------------------------------------
+# Parts of the mod's icon atlas (tools/icons/build.sh packs it into AmmoOverhaul.archive).
+
+UIIcon.AO_12mm_Ball:
+  $type: UIIcon
+  atlasPartName: ao_12mm_ball
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+UIIcon.AO_12mm_Mushrooms:
+  $type: UIIcon
+  atlasPartName: ao_12mm_mushrooms
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
 
 # --- Selectors ---------------------------------------------------------------------------------
 
@@ -67,6 +82,7 @@ Items.AO_Feed_12mm_Ball:
   $base: Items.Part
   displayName: LocKey#AO-Ammo-12mm-Ball
   localizedDescription: LocKey#AO-Ammo-12mm-Ball-Desc
+  iconPath: AO_12mm_Ball
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_12mm]
@@ -79,6 +95,7 @@ Items.AO_Feed_12mm_Mushrooms:
   $base: Items.AO_Feed_12mm_Ball
   displayName: LocKey#AO-Ammo-12mm-Mushrooms
   localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  iconPath: AO_12mm_Mushrooms
   quality: Quality.Uncommon
   statModifiers:
     - !append

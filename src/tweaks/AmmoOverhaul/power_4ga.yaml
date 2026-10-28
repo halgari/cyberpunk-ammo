@@ -50,6 +50,7 @@ Ammo.AO_4ga_Buckshot:
   quality: Quality.Common
   displayName: LocKey#AO-Ammo-4ga-Buckshot
   localizedDescription: LocKey#AO-Ammo-4ga-Buckshot-Desc
+  iconPath: AO_4ga_Buckshot
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Power]
 
 Ammo.AO_4ga_Slug:
@@ -57,7 +58,21 @@ Ammo.AO_4ga_Slug:
   quality: Quality.Uncommon
   displayName: LocKey#AO-Ammo-4ga-Slugs
   localizedDescription: LocKey#AO-Ammo-4ga-Slugs-Desc
+  iconPath: AO_4ga_Slugs
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Icons -------------------------------------------------------------------------------------
+# Parts of the mod's icon atlas (tools/icons/build.sh packs it into AmmoOverhaul.archive).
+
+UIIcon.AO_4ga_Buckshot:
+  $type: UIIcon
+  atlasPartName: ao_4ga_buckshot
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+UIIcon.AO_4ga_Slugs:
+  $type: UIIcon
+  atlasPartName: ao_4ga_slugs
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
 
 # --- Selectors ---------------------------------------------------------------------------------
 
@@ -65,6 +80,7 @@ Items.AO_Feed_4ga_Buckshot:
   $base: Items.Part
   displayName: LocKey#AO-Ammo-4ga-Buckshot
   localizedDescription: LocKey#AO-Ammo-4ga-Buckshot-Desc
+  iconPath: AO_4ga_Buckshot
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_4ga]
@@ -77,6 +93,7 @@ Items.AO_Feed_4ga_Slugs:
   $base: Items.AO_Feed_4ga_Buckshot
   displayName: LocKey#AO-Ammo-4ga-Slugs
   localizedDescription: LocKey#AO-Ammo-4ga-Slugs-Desc
+  iconPath: AO_4ga_Slugs
   quality: Quality.Uncommon
   statModifiers:
     # One projectile: take away the gun's pellets (ProjectilesPerShotBase), add one back. refObject Root is
