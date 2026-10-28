@@ -131,13 +131,13 @@ sheets in batches.
 ## Testing
 
 The slice's in-game harness, extended to all 13 calibers: every gun family has its feed slot;
-rounds swap and unload; Uncommon stats apply; each caliber's profile reaches its guns; vendor and
+rounds swap and unload; Uncommon stats apply; Common rounds leave the gun at vanilla stats; vendor and
 loot splits match the shares above; NPCs of each caliber carry the right ammo. Then a hands-on
-checklist for the user: profile feel per caliber, 12ga Buckshot against Slugs, the 4ga Slug.
+checklist for the user: 12ga Buckshot against Slugs, the 4ga Slug.
 
 ## Order of work
 
-1. Caliber profiles on the slice's three calibers (framework, tested on guns that already work).
+1. Caliber profiles on the slice's three calibers (built, then removed by user decision: see "Common rounds act as vanilla").
 2. The ten new calibers at Common and Uncommon: records, feed slots, gun lists, ammo split.
 3. 12ga Slugs and 4ga Slugs (the projectile-count check first).
 4. Item text, for the user's sign-off.
