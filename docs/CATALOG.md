@@ -438,6 +438,17 @@ weapon jam), Shaped charge (armor pen, against drones and mechs).
   `CalculateDamageVariants` that narrows the roll for its guns (for example 1.00 to 1.10), plus
   the tooltip's min stat raised to match.
 - Falloff: `EffectiveRange` (where damage starts dropping) and `DamageFalloffDisabled`.
+- Tooltip damage range: `EffectiveDamagePerHitMin/Max` add up `BaseDamageMin/Max` and the
+  per-type `PhysicalDamageMin/Max` (Thermal, Chemical, Electric likewise), each a
+  `CombinedStatModifier` of its damage stat x0.9 / x1.1 on `Items.Base_Weapon` (`_inline106/107`)
+  and `Items.Base_Weapon_Damage_Type_Min_Max`; melee has its own records.
+- Stamina per shot: the bullet attack's `StaminaCost` modifiers multiply weapon stats, among them
+  `WeaponEvolutionToStaminaCost` (1.0 on a Lexington), so a round raises the cost with a
+  multiplier on it. `PowerMod2_StaminaCost` exists but nothing in 2.50 sets it.
+- Smart reach: `MaximumRange` (100 on a Yukimura) is how far a smart rocket flies; at 0.3x a
+  rocket stops reaching a target at 40 m but still hits at 20 m. Damage has no falloff out to
+  40 m (same pre-roll damage at 5, 20 and 40 m). Lock range is `SmartGunTargetAcquisitionRange`
+  (25).
 
 **Damage roll for everyone (agreed direction)**
 
