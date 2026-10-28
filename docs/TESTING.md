@@ -48,38 +48,35 @@ an "Ammo Overhaul test kit" window:
 
 ## What to check
 
-Equip the new Lexington and draw it.
+The slice checklist. The automated part is the snippets in `tools/snippets/slice/` (listed under
+each step); the rest needs a person at the game. Give yourself the kit first (test kit window →
+"Give slice kit").
 
-1. **Default ammo.** With the feed slot empty, the HUD reserve shows your handgun ammo, and
-   firing uses up `Ammo.HandgunAmmo`.
-2. **Slot shows.** In Inventory → the Lexington → mods, there's an "Ammo Feed" slot, empty at
-   first and labelled "Ammo Feed: standard rounds". Clicking it lists only the two "Ammo Feed:
-   9mm …" items; vanilla mod slots don't list the selectors.
-3. **Swap and remove.** Install FMJ, swap it for Incendiary, then remove it. Each change should
-   work, and a replaced selector should go back to the inventory.
-4. **Switching types unloads.** Fire a few FMJ rounds, then install Incendiary. After closing the
-   menu the gun is holstered and redrawn with an empty magazine and reloads from the 30
-   incendiary rounds. The unfired FMJ rounds should still be in the FMJ count. On the first swap
-   after loading a save the HUD may show a full magazine for a moment: fire once, and the gun
-   should click empty and reload instead of firing.
-5. **Consumes the selected type.** Fire incendiary rounds: `Ammo.AO_9mm_Incendiary` goes down by
-   the same amount and FMJ doesn't change. With all 30 used, the gun doesn't reload from FMJ.
-6. **On-hit effect.** Shoot an enemy with incendiary rounds: they catch fire on every hit
-   (chance 1.0 for this test). FMJ rounds don't.
-7. **Save and load.** Save with Incendiary installed and a part-used magazine, reload: the
-   counts are unchanged and the gun still fires incendiary rounds.
-8. **Ammo in the backpack.** Inventory → backpack lists your ammo stacks.
-9. **Ammo weight.** Your carried weight includes ammo (handgun 0.06, rifle 0.04, shotgun 0.12,
-   sniper 0.2 per round) and changes as you fire and pick up rounds.
-10. **NPCs use real ammo.** In a normal gang fight, enemies eventually run dry if you stay in
-    cover: they switch guns, then fight without guns (melee, or back off). Note anything odd,
-    such as an enemy standing still aiming, a quest fight that stalls, or allies running dry.
-11. **NPC loot.** Loot a body: the ammo it had left is in its loot (no extra random ammo), and its
-    gun drops as usual.
-12. **NPC special ammo.** Spawn the "Incendiary Lexington ganger" with Invulnerable off: its hits
-    set you on fire, and its body drops only incendiary rounds (no standard handgun ammo).
+1. **Weapon screen.** Inventory → a Lexington, Omaha or Yukimura: the sections read Attachments,
+   Ammo, Mods. The feed slot is only under Ammo and shows the fitted round's icon (an ammo icon
+   when empty). It works with mouse and controller. Then run `section.lua`. Any 9mm, 5mm or 10mm
+   handgun or SMG (Kenshin, Grit, Pulsar, Chao...) has the slot, and an Uncommon round fits a
+   Common gun (`rarity.lua`, `rarity2.lua`).
+2. **Switching rounds.** Each gun loads, fires and counts its default round. Fitting a selector
+   switches the stack, unloads the gun and changes the HUD count and icon. (`records.lua` checks
+   the records; the HUD is by eye.)
+3. **9mm Mushrooms.** Shoot an unarmored and an armored enemy with Ball, then Mushrooms: Mushrooms
+   should hit harder on the unarmored one and worse on the armored one. (`uncommon.sh` checks the
+   stats.)
+4. **5mm Sleevers.** The Omaha charges in about 1.05 s instead of 1.5 s (`uncommon.sh` checks the
+   stat).
+5. **10mm Dumbfires.** Shots fly straight at a moving enemy off to the side; Seekers curve.
+   (`uncommon.sh` checks hit probability 0 and damage ×1.25.)
+6. **NPCs.** `npc.sh`: each test ganger carries and drops only its gun's round; with the roll
+   forced on, plain gangers carry the Uncommon. In a normal fight, gangers with an Omaha or
+   Yukimura drop 5mm or 10mm rounds.
+7. **Vendors.** A gun shop lists all six rounds, about half of the handgun ammo as 9mm Ball. Other
+   vendors sell no Uncommon. (`vendors.lua` with `VENDOR=1`.)
+8. **Loot.** Open a few unlooted containers: handgun ammo in them shows the new names. With only a
+   Lexington carried, most of it is 9mm. (`loot.lua`, `lootfill.lua` then `lootfill2.lua`.)
+9. **Saves.** Save and reload: fitted selectors, stacks and opened containers stay as they were.
 
-For each check, note pass or fail and what you saw, especially the counts.
+For each step, note pass or fail and what you saw.
 
 ## Logs
 

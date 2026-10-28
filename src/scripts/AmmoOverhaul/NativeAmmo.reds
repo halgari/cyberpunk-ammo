@@ -68,7 +68,10 @@ public abstract class NativeAmmo {
         AO_WriteAmmoField(weapon, candidate, ammo, recordAmmo);
       }
     }
-    return false;
+    // An earlier call for this spawn may already have written it (with equal counts the offset
+    // isn't kept, so nothing holds the record's ammo any more).
+    let given: array<Int32> = AO_FindAmmoFields(weapon, ammo);
+    return ArraySize(given) > 0 && weapon.GetTotalAmmoCount() == wanted;
   }
 
   // The wanted ammo, once the loaded ammo (at `offset`) has been changed from `previous`.

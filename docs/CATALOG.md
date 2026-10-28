@@ -277,6 +277,17 @@ loads whose blueprints may not exist anywhere in the game.
   upload, weapon jam at legendary), better guidance (hit probability, velocity, more targets,
   faster lock), longer flight. Smart sniper darts should almost always hit and cost a lot.
 
+### Built (v1 slice)
+
+| Caliber | Common | Uncommon | Uncommon effect |
+|---|---|---|---|
+| P-9 | 9mm Ball (vanilla handgun ammo) | 9mm Mushrooms (hollow point) | damage ×1.2, armor pen −0.5 |
+| T-LIGHT | 5mm Rail Slugs | 5mm Sleevers (sabot) | charge time ×0.7, damage ×0.95 |
+| S-10 | 10mm Seekers | 10mm Dumbfires | damage ×1.25, no guidance |
+
+All guns of these calibers that use handgun ammo have the feed slot; Hercules 3AX and Sidewinder
+(rifle ammo) wait for the rifle calibers.
+
 ### Ammo ideas so far
 
 - **Dumbfire (Smart):** much more damage, guidance removed entirely, so the smart gun becomes a
