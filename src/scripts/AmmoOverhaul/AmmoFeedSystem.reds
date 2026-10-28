@@ -19,6 +19,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
   // Guns whose magazine still holds rounds of a previous selection. Saved with the game.
   private persistent let m_unload: array<ItemID>;
 
+  // Loot containers whose vanilla ammo has been converted (LootConvert). Saved with the game.
+  private persistent let m_convertedContainers: array<EntityID>;
+
   // Offset of the ammo field in weapon objects, once located this session (see NativeAmmo).
   private let m_ammoOffset: Int32;
   private let m_wantedAmmoOffset: Int32;
@@ -201,6 +204,15 @@ public class AmmoFeedSystem extends ScriptableSystem {
     GameInstance.GetDelaySystem(player.GetGame()).DelayCallback(retry, 0.1, false);
   }
 
+  // Notes a container as converted; false if it already was.
+  public final func MarkConverted(container: EntityID) -> Bool {
+    if ArrayContains(this.m_convertedContainers, container) {
+      return false;
+    }
+    ArrayPush(this.m_convertedContainers, container);
+    return true;
+  }
+
   public static func Log(message: String) -> Void {
     ModLog(n"AmmoOverhaul", message);
     let system: ref<AmmoFeedSystem> = AmmoFeedSystem.Get(GetGameInstance());
@@ -293,6 +305,17 @@ public class AmmoFeedSystem extends ScriptableSystem {
       }
     }
     return "no vendor " + vendorID;
+  }
+
+  // Runs LootConvert on any object: once=false converts regardless, once=true goes through the
+  // converted-containers list like the fill event. "<stacks converted>".
+  public final func DebugConvert(target: ref<GameObject>, once: Bool) -> String {
+    return IntToString(once ? LootConvert.ConvertOnce(target) : LootConvert.Convert(target));
+  }
+
+  // Whether the fill event (or DebugConvert with once) has converted this container.
+  public final func DebugIsConverted(target: ref<GameObject>) -> Bool {
+    return ArrayContains(this.m_convertedContainers, target.GetEntityID());
   }
 
   public final func Trail() -> String {

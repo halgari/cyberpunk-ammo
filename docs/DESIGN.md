@@ -19,6 +19,7 @@ that carry and use up real ammo. This file records how the proof of concept work
   - `AmmoSection.reds`: the Ammo section on the weapon screen.
   - `AmmoDistribution.reds`: how vanilla ammo is shared out among calibers and tiers.
   - `Vendors.reds`: vendor ammo stock.
+  - `LootConvert.reds`: ammo in loot containers.
   - `Hooks.reds`: wraps of vanilla functions for the player side and the UI.
   - `Localization.reds`: text, served through Codeware.
 - `native/AmmoOverhaul/`: the RED4ext plugin (C++). `native/AOProbe/` is a research probe, not
@@ -171,6 +172,11 @@ share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDi
   stacks first (they're regenerating items), so nothing is split twice. Stock saved before the mod
   was installed is split on load (`OnRestored`): a stock holding none of our rounds is unsplit,
   since 9mm Ball is vanilla handgun ammo.
+- **Loot containers:** a container fills with loot the first time the player looks at it
+  (`gameLootContainerBase.OnInventoryFilledEvent`). Then each stack of replaced vanilla ammo
+  becomes one Pick (up to Uncommon), same quantity. Converted containers are kept by entity ID on
+  `AmmoFeedSystem` (saved), so a container converts once.
+- **NPC bodies** drop the round their gun used (see NPC ammo).
 
 ## Weight and inventory
 
@@ -190,5 +196,9 @@ share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDi
 - The Uncommon roll isn't saved. After loading a save, an NPC stocked with an Uncommon round reads
   its gun's ammo as the Common round again, and its stock holds the Uncommon one, so it can run
   dry early. Untested.
+- Loose ammo lying in the world (`gameItemDropObject`) and loot bags aren't converted: they stay
+  vanilla handgun ammo, which is 9mm Ball.
+- Guns of calibers not in the slice that use handgun ammo (Unity, Liberty, Nue, Nova and others)
+  still take vanilla handgun ammo, so they share 9mm Ball.
 - Boss fights: a boss that runs dry loses its guns. 12 magazines makes it unlikely; untested.
 - The selector icon is the generic mod icon. No crafting or loot yet; test items come from CET.
