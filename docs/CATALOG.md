@@ -409,6 +409,25 @@ weapon jam), Shaped charge (armor pen, against drones and mechs).
   the tooltip's min stat raised to match.
 - Falloff: `EffectiveRange` (where damage starts dropping) and `DamageFalloffDisabled`.
 
+**Damage roll for everyone (agreed direction)**
+
+Vanilla rolls only V's hits on NPCs. The plan: wrap `CalculateDamageVariants` so every ranged gun
+hit rolls by the same rule, whoever fires it, with the roll set by the loaded round (V: the feed
+selector; NPC: the round it was stocked with). Melee keeps vanilla's player-only roll; grenades and
+other explosions stay unrolled; projection hits stay skipped.
+
+Per round, all optional, on the ammo record (the stat list is a fixed enum, so these are record
+values and perks can't change them):
+
+- `aoRollMin`, `aoRollMax`: uniform range, default 0.90 and 1.10 (vanilla). Set apart for an
+  asymmetric swing.
+- `aoRollDudChance`, `aoRollDudMult`: a chance of a much weaker hit (bad primer, short charge).
+- `aoRollHotChance`, `aoRollHotMult`: a chance of a much stronger hit (overcharged case).
+
+Examples: Match grade 0.98-1.06, no dud or hot. A Maelstrom homemade load 0.85-1.15, 12% dud
+x0.4, 8% hot x1.6. The tooltip's `EffectiveDamagePerHitMin/Max` follow through selector stat
+modifiers. The hook looks up the loaded round per hit, so `CaliberForWeapon` gets cached with it.
+
 ## Open questions
 
 1. Rarity budget units: how many perk points per tier, and how quirks offset them.
