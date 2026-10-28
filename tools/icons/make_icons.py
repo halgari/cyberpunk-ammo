@@ -30,10 +30,19 @@ NAMES = [
     "10mm-seekers", "10mm-dumbfires", "20mm-seekers", "20mm-dumbfires", "25mm-seekers", "25mm-dumbfires",
 ]
 PARTS = {"ao_" + n.replace("-", "_"): n + ".png" for n in NAMES}
+# Midtone lift (a gamma on each channel). The renders are darker than the game's own icons (mean
+# luminance 56 against about 89 for the vanilla item atlas), which reads as greyed out in the
+# backpack; 0.65 brings them to about 88 and keeps the highlights.
+LIFT = 0.65
+
+
+def lift(im):
+    lut = [min(255, round(255 * (v / 255) ** LIFT)) for v in range(256)]
+    return Image.merge("RGBA", [c.point(lut) for c in im.split()[:3]] + [im.getchannel("A")])
 
 
 def cut_out(path):
-    im = Image.open(path).convert("RGBA")
+    im = lift(Image.open(path).convert("RGBA"))
     # Crop to what's visible (ignoring faint alpha fringe).
     solid = im.getchannel("A").point(lambda v: 255 if v > 16 else 0)
     return im.crop(solid.getbbox())
