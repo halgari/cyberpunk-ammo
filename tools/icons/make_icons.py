@@ -2,7 +2,9 @@
 
 Each source image is a cut-out on a transparent background. It's cropped to what's visible and
 fitted (keeping its shape) edge to edge into a square cell, as the game's own item icons are
-(mostly 160x160 parts cropped tight to the art; 256x256 here, for sharpness).
+(mostly 160x160 parts cropped tight to the art). The game draws a part at its pixel size in the
+atlas's 4K texture, not scaled to the slot, so the cell is vanilla's 160x160: 256 overflowed the
+backpack slot, and art in a 131px square looked small.
 The atlas is saved with premultiplied alpha, as the game expects.
 Writes art/build/ao_ammo_icons.png and each part's UV rect (art/build/ao_ammo_icons.uvs.json)
 for the .inkatlas.
@@ -16,11 +18,11 @@ from PIL import Image, ImageChops
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = ROOT / "art" / "icons"
 OUT = ROOT / "art" / "build"
-CELL = (256, 256)
+CELL = (160, 160)
 # Empty margin kept around the art (fraction of the cell): just enough that soft edges aren't cut.
 PAD = 0.02
-ATLAS = (2048, 1024)   # 8 x 4 cells of 256 x 256
-COLS = 8
+ATLAS = (1024, 1024)   # 6 x 5 cells of 160 x 160
+COLS = 6
 # Source art (art/icons/<name>.png, rendered by tools/render/render.py), one per round. The part is
 # "ao_" + the name with "-" as "_" (9mm-ball -> ao_9mm_ball), matching UIIcon.AO_* and the feed selector.
 NAMES = [

@@ -74,7 +74,9 @@ after the Ashura round. All 26 render in about two minutes.
 
 Square, not landscape: the backpack tile shows only the centred square of an icon's cell, so
 `make_icons.py` fits the art edge to edge into a square cell, as the game's own icons are (mostly
-160×160 parts cropped tight to the art). The atlas is 2048×1024, 8 × 4 cells of 256×256; a round's
+160×160 parts cropped tight to the art). The game draws a part at its pixel size in the atlas's 4K
+texture rather than scaling it to the slot, so cells are vanilla's 160×160: the atlas is 1024×1024,
+6 × 5 cells; a round's
 part is `ao_` + its art name (`9mm-ball` → `ao_9mm_ball`). The atlas build also lifts the midtones
 (`LIFT`) so the renders match the game's icon brightness.
 
