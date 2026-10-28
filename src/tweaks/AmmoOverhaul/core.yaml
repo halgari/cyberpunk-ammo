@@ -1,5 +1,5 @@
 # Mod-wide settings, vanilla ammo weights and the 9mm Ball rename. Each caliber has its own file
-# (power_9mm.yaml, tech_light.yaml, smart_10.yaml) with its feed slot, ammo items, selectors
+# (power_9mm.yaml, tech_light.yaml, ...) with its feed slot, ammo items, selectors
 # and AmmoOverhaul.<caliber>.* flats.
 #
 # How the pieces fit (docs/DESIGN.md has the details):
@@ -15,7 +15,8 @@
 # TweakXL rejects unknown properties on existing record types, so the mod's own settings live in
 # the AmmoOverhaul.* flats, keyed by short names, rather than on the item records.
 
-AmmoOverhaul.calibers: ["Power_9mm", "Power_45", "Power_12mm", "Tech_Light", "Smart_10"]
+AmmoOverhaul.calibers: ["Power_9mm", "Power_45", "Power_12mm", "Power_556", "Power_762", "Power_127", "Tech_Light",
+  "Smart_10"]
 
 # --- Distribution ------------------------------------------------------------------------------
 # Share of each tier (Common, Uncommon) in a family's ammo, for vendors, world loot and NPCs.
@@ -64,13 +65,16 @@ Ammo.HandgunAmmo:
       modifierType: Additive
       value: 0.06
 
+# Vanilla rifle ammo is the 5.56 Common round.
 Ammo.RifleAmmo:
+  displayName: LocKey#AO-Ammo-556-Ball
+  localizedDescription: LocKey#AO-Ammo-556-Ball-Desc
   statModifiers:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.Weight
       modifierType: Additive
-      value: 0.04
+      value: 0.06
 
 Ammo.ShotgunAmmo:
   statModifiers:
@@ -80,10 +84,25 @@ Ammo.ShotgunAmmo:
       modifierType: Additive
       value: 0.12
 
+# Vanilla sniper ammo is the 12.7 Common round: 2.5x the 9mm's weight, twice the price.
 Ammo.SniperRifleAmmo:
+  displayName: LocKey#AO-Ammo-127-Ball
+  localizedDescription: LocKey#AO-Ammo-127-Ball-Desc
   statModifiers:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.Weight
       modifierType: Additive
-      value: 0.2
+      value: 0.15
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2

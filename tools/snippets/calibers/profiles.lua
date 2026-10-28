@@ -10,6 +10,9 @@ local PROFILES = {
   Smart_10 = { 1.00, -0.10, 1.00, 1.00 },
   Power_45 = { 1.10, -0.15, 1.10, 1.00 },
   Power_12mm = { 1.15, 0.10, 1.35, 1.00 },
+  Power_556 = { 1.00, 0.15, 1.00, 1.00 },
+  Power_762 = { 1.05, 0.25, 1.20, 1.10 },
+  Power_127 = { 1.00, 0.40, 1.25, 1.00 },
 }
 local GUNS = {
   { "Power_9mm", "Items.Preset_Lexington_Default" },
@@ -19,6 +22,10 @@ local GUNS = {
   { "Power_45", "Items.Preset_Nue_Jackie" },
   { "Power_12mm", "Items.Preset_Overture_Default" },
   { "Power_12mm", "Items.Preset_Silverhand_3516" },
+  { "Power_556", "Items.Preset_Umbra_Default" },
+  { "Power_762", "Items.Preset_Ajax_Default" },
+  { "Power_127", "Items.Preset_Grad_Default" },
+  { "Power_127", "Items.Preset_Kolac_Default" },
 }
 -- gun = { stat, expected value with the Common round fitted }
 local LIVE_EXPECT = {

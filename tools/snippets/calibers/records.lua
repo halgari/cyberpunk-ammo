@@ -7,6 +7,12 @@ local ROUNDS = {
   { "Ammo.AO_45_HollowPoint", ".45 Mushrooms", 0.09, "Items.AO_Feed_45_Mushrooms", 1.2 },
   { "Ammo.AO_12mm_Ball", "12mm Ball", 0.12, "Items.AO_Feed_12mm_Ball", 1.6 },
   { "Ammo.AO_12mm_HollowPoint", "12mm Mushrooms", 0.12, "Items.AO_Feed_12mm_Mushrooms", 1.6 },
+  { "Ammo.RifleAmmo", "5.56 Ball", 0.06, "Items.AO_Feed_556_Ball", 1 },
+  { "Ammo.AO_556_HollowPoint", "5.56 Mushrooms", 0.06, "Items.AO_Feed_556_Mushrooms", 1 },
+  { "Ammo.AO_762_Ball", "7.62 Ball", 0.09, "Items.AO_Feed_762_Ball", 1.3 },
+  { "Ammo.AO_762_HollowPoint", "7.62 Mushrooms", 0.09, "Items.AO_Feed_762_Mushrooms", 1.3 },
+  { "Ammo.SniperRifleAmmo", "12.7 Ball", 0.15, "Items.AO_Feed_127_Ball", 2 },
+  { "Ammo.AO_127_HollowPoint", "12.7 Mushrooms", 0.15, "Items.AO_Feed_127_Mushrooms", 2 },
 }
 local GUNS = {
   -- weapon record, Common round, feed element
@@ -24,11 +30,34 @@ local GUNS = {
   { "Items.Preset_Metel_Default", "Ammo.AO_12mm_Ball", "Items.AO_AmmoFeed_Power_12mm_Element" },
   { "Items.Preset_Metel_Kurt", "Ammo.AO_12mm_Ball", "Items.AO_AmmoFeed_Power_12mm_Element" },
   { "Items.Preset_Silverhand_3516", "Ammo.AO_12mm_Ball", "Items.AO_AmmoFeed_Power_12mm_Element" },
+  { "Items.Preset_Umbra_Default", "Ammo.RifleAmmo", "Items.AO_AmmoFeed_Power_556_Element" },
+  { "Items.Preset_Umbra_Bebe", "Ammo.RifleAmmo", "Items.AO_AmmoFeed_Power_556_Element" },
+  { "Items.Preset_Masamune_Default", "Ammo.RifleAmmo", "Items.AO_AmmoFeed_Power_556_Element" },
+  { "Items.Preset_Masamune_Arasaka_2077", "Ammo.RifleAmmo", "Items.AO_AmmoFeed_Power_556_Element" },
+  { "Items.Preset_Copperhead_Default", "Ammo.RifleAmmo", "Items.AO_AmmoFeed_Power_556_Element" },
+  { "Items.Preset_Copperhead_Genesis", "Ammo.RifleAmmo", "Items.AO_AmmoFeed_Power_556_Element" },
+  { "Items.Preset_Defender_Default", "Ammo.RifleAmmo", "Items.AO_AmmoFeed_Power_556_Element" },
+  { "Items.Preset_Defender_Kurt", "Ammo.RifleAmmo", "Items.AO_AmmoFeed_Power_556_Element" },
+  { "Items.Preset_Ajax_Default", "Ammo.AO_762_Ball", "Items.AO_AmmoFeed_Power_762_Element" },
+  { "Items.Preset_Ajax_Moron", "Ammo.AO_762_Ball", "Items.AO_AmmoFeed_Power_762_Element" },
+  { "Items.Preset_Kyubi_Default", "Ammo.AO_762_Ball", "Items.AO_AmmoFeed_Power_762_Element" },
+  { "Items.Preset_Kyubi_Myers", "Ammo.AO_762_Ball", "Items.AO_AmmoFeed_Power_762_Element" },
+  { "Items.Preset_MA70_Default", "Ammo.AO_762_Ball", "Items.AO_AmmoFeed_Power_762_Element" },
+  { "Items.Preset_Kolac_Default", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
+  { "Items.Preset_Kolac_Tiny_Mike", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
+  { "Items.Preset_Sor22_Default", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
+  { "Items.Preset_Grad_Default", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
+  { "Items.Preset_Grad_Panam", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
+  { "Items.Preset_Osprey_Default", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
+  { "Items.Preset_Osprey_Prototype", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
+  { "Items.Preset_HMG_Default", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
   -- Erebus stays 9mm.
   { "Items.Preset_Borg4a_HauntedGun", "Ammo.HandgunAmmo", "Items.AO_AmmoFeed_Power_9mm_Element" },
 }
 -- Guns left alone: their ammo isn't ammo (Plan B fires eddies).
-local UNTOUCHED = { { "Items.Preset_Liberty_Dex", "Items.money" } }
+-- Boss and mounted HMGs keep theirs (enemy loadouts aren't changed).
+local UNTOUCHED = { { "Items.Preset_Liberty_Dex", "Items.money" }, { "Items.Smasher_HMG", "Ammo.Standard" },
+  { "Items.Preset_HMG_turret_car_attach", "Ammo.Standard" } }
 
 local function near(a, b) return math.abs(a - b) < 0.001 end
 -- Product of the Multiplier modifiers on a price list, leaving out the game's Price.* records.

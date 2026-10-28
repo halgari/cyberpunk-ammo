@@ -1,0 +1,98 @@
+# Power 12.7 (P-127): Kolac and Osprey (no family tag: matched by record), SOR-22, Grad, Mk.31 HMG
+# (player HMGs only; boss and mounted HMGs keep theirs). Common 12.7 Ball is vanilla sniper ammo (renamed in
+# core.yaml, with its price); Uncommon 12.7 Mushrooms are hollow points.
+
+AmmoOverhaul.Power_127.family: "Power"
+AmmoOverhaul.Power_127.weaponTags: ["Sor22", "Grad"]
+AmmoOverhaul.Power_127.weaponRecords: ["Items.Base_Kolac", "Items.Preset_Kolac_Default", "Items.Preset_Kolac_Tiny_Mike", "Items.Preset_Kolac_Tiny_Mike_Legendary", "Items.Base_Osprey", "Items.Preset_Osprey_Default", "Items.Preset_Osprey_Military", "Items.Preset_Osprey_Legendary", "Items.Preset_Osprey_Pimp", "Items.Preset_Osprey_Prototype", "Items.Preset_Osprey_Neon", "Items.VHard_50_RefBody_Weapon7", "Items.VHard_50_RefTech_Weapon10", "Items.VHard_50_BodyCool_Weapon15", "Items.Base_HMG", "Items.Preset_HMG_Default", "Items.Preset_HMG_Military", "Items.Preset_HMG_Neon", "Items.Preset_HMG_Pimp"]
+AmmoOverhaul.Power_127.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_127"
+AmmoOverhaul.Power_127.feedElement: "Items.AO_AmmoFeed_Power_127_Element"
+AmmoOverhaul.Power_127.defaultAmmo: "Ammo.SniperRifleAmmo"
+AmmoOverhaul.Power_127.vanillaAmmo: "Ammo.SniperRifleAmmo"
+AmmoOverhaul.Power_127.lootWeight: 0.6
+AmmoOverhaul.Power_127.selectors: ["Items.AO_Feed_127_Ball", "Items.AO_Feed_127_Mushrooms"]
+AmmoOverhaul.Power_127.selectorAmmo: ["Ammo.SniperRifleAmmo", "Ammo.AO_127_HollowPoint"]
+AmmoOverhaul.Power_127.selectorTiers: [0, 1]
+AmmoOverhaul.Power_127.profile: "AOProfile.Power_127"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# Best into armor; heavy and dear. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Power_127:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.4
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.25
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.25
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Power_127:
+  $base: AttachmentSlots.Power_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Power_127
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+# No quality prereq, so the slot exists on every quality of the gun.
+Items.AO_AmmoFeed_Power_127_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Power_127
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_127_HollowPoint:
+  $base: Ammo.SniperRifleAmmo
+  # Listed in full rather than inherited, so the weight isn't added twice.
+  statModifiers:
+    - Ammo.SniperRifleAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.15
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-127-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_127_Ball:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-127-Ball
+  localizedDescription: LocKey#AO-Ammo-127-Ball-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_127]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Hollow points: harder against flesh, the target's armor counts 1.5x (negative penetration).
+Items.AO_Feed_127_Mushrooms:
+  $base: Items.AO_Feed_127_Ball
+  displayName: LocKey#AO-Ammo-127-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.5

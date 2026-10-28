@@ -1,0 +1,88 @@
+# Power 5.56 (P-556): Umbra, Masamune (Masamune_2020: the Arasaka quest ones), Copperhead, Defender.
+# Common 5.56 Ball is vanilla rifle ammo (renamed in core.yaml); Uncommon 5.56 Mushrooms are hollow points.
+
+AmmoOverhaul.Power_556.family: "Power"
+AmmoOverhaul.Power_556.weaponTags: ["Umbra", "Masamune", "Masamune_2020", "Copperhead", "Defender"]
+AmmoOverhaul.Power_556.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_556"
+AmmoOverhaul.Power_556.feedElement: "Items.AO_AmmoFeed_Power_556_Element"
+AmmoOverhaul.Power_556.defaultAmmo: "Ammo.RifleAmmo"
+AmmoOverhaul.Power_556.vanillaAmmo: "Ammo.RifleAmmo"
+AmmoOverhaul.Power_556.lootWeight: 0.65
+AmmoOverhaul.Power_556.selectors: ["Items.AO_Feed_556_Ball", "Items.AO_Feed_556_Mushrooms"]
+AmmoOverhaul.Power_556.selectorAmmo: ["Ammo.RifleAmmo", "Ammo.AO_556_HollowPoint"]
+AmmoOverhaul.Power_556.selectorTiers: [0, 1]
+AmmoOverhaul.Power_556.profile: "AOProfile.Power_556"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# Rifle baseline, decent into armor. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Power_556:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.15
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Power_556:
+  $base: AttachmentSlots.Power_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Power_556
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+# No quality prereq, so the slot exists on every quality of the gun.
+Items.AO_AmmoFeed_Power_556_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Power_556
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_556_HollowPoint:
+  $base: Ammo.RifleAmmo
+  # Listed in full rather than inherited, so the weight isn't added twice.
+  statModifiers:
+    - Ammo.RifleAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.06
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-556-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_556_Ball:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-556-Ball
+  localizedDescription: LocKey#AO-Ammo-556-Ball-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_556]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Hollow points: harder against flesh, the target's armor counts 1.5x (negative penetration).
+Items.AO_Feed_556_Mushrooms:
+  $base: Items.AO_Feed_556_Ball
+  displayName: LocKey#AO-Ammo-556-Mushrooms
+  localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.5

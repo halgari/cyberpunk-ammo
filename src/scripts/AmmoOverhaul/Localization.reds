@@ -37,6 +37,18 @@ public class AmmoOverhaulEnglish extends ModLocalizationPackage {
     this.Text("AO-Ammo-12mm-Ball", "12mm Ball");
     this.Text("AO-Ammo-12mm-Ball-Desc", "Magnum loads for revolvers and hand cannons. Heavy, pricey, and it kicks like a mule.\n\n+15% damage. Ignores 10% of armor. +35% recoil.");
     this.Text("AO-Ammo-12mm-Mushrooms", "12mm Mushrooms");
+    // draft, Task 8
+    this.Text("AO-Ammo-556-Ball", "5.56 Ball");
+    this.Text("AO-Ammo-556-Ball-Desc", "Standard rifle FMJ. Light, cheap, and it gets through vests better than pistol rounds.\n\nIgnores 15% of armor.");
+    this.Text("AO-Ammo-556-Mushrooms", "5.56 Mushrooms");
+    // draft, Task 8
+    this.Text("AO-Ammo-762-Ball", "7.62 Ball");
+    this.Text("AO-Ammo-762-Ball-Desc", "Full-power rifle rounds. Hits harder and reaches further than 5.56, and kicks more.\n\n+5% damage. Ignores 25% of armor. +20% recoil. +10% range.");
+    this.Text("AO-Ammo-762-Mushrooms", "7.62 Mushrooms");
+    // draft, Task 8
+    this.Text("AO-Ammo-127-Ball", "12.7 Ball");
+    this.Text("AO-Ammo-127-Ball-Desc", "Half-inch rounds for anti-materiel rifles. Heavy and pricey, and they punch through plating.\n\nIgnores 40% of armor. +25% recoil.");
+    this.Text("AO-Ammo-127-Mushrooms", "12.7 Mushrooms");
     this.Text("AO-Ammo-5mm-RailSlugs", "5mm Rail Slugs");
     this.Text("AO-Ammo-5mm-RailSlugs-Desc", "Steel slugs for light railguns. Nothing to them, the rails do all the work.\n\nStandard light rail ammo. No special effects.");
     this.Text("AO-Ammo-5mm-Sleevers", "5mm Sleevers");
