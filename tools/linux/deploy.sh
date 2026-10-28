@@ -21,3 +21,7 @@ for pair in "src/scripts/AmmoOverhaul:r6/scripts/AmmoOverhaul" "src/tweaks/AmmoO
   cp -r "$src" "$dst"
   echo "deployed ${pair##*:}"
 done
+# The icon atlas (tools/icons/build.sh).
+mkdir -p "$GAME_DIR/archive/pc/mod"
+cp "$ROOT/src/archive/AmmoOverhaul.archive" "$GAME_DIR/archive/pc/mod/AmmoOverhaul.archive"
+echo "deployed archive/pc/mod/AmmoOverhaul.archive"

@@ -15,6 +15,7 @@ Remove-Item $stage -Recurse -Force -ErrorAction SilentlyContinue
 $layout = @{
     'src\scripts' = 'r6\scripts'
     'src\tweaks'  = 'r6\tweaks'
+    'src\archive' = 'archive\pc\mod'
 }
 foreach ($from in $layout.Keys) {
     $dst = Join-Path $stage $layout[$from]

@@ -46,6 +46,13 @@ an "Ammo Overhaul test kit" window:
 - Hotkeys you can bind in the overlay's Hotkeys tab: spawn handgun / rifle / shotgun enemy,
   kill, remove.
 
+## Icons
+
+`tools/icons/build.sh` rebuilds `src/archive/AmmoOverhaul.archive` from `art/icons` (needs
+`tools/wolvenkit` (WolvenKit.ConsoleLinux) and `tools/wolvenkit-win` (WolvenKit.Console, run on
+Proton with the .NET 10 runtime in the tools prefix)). `icons.lua` checks the records and that the
+game finds the atlas.
+
 ## What to check
 
 The slice checklist. The automated part is the snippets in `tools/snippets/slice/` (listed under

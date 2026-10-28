@@ -22,6 +22,9 @@ that carry and use up real ammo. This file records how the proof of concept work
   - `LootConvert.reds`: ammo in loot containers.
   - `Hooks.reds`: wraps of vanilla functions for the player side and the UI.
   - `Localization.reds`: text, served through Codeware.
+- `art/icons/`: source art for item icons. `tools/icons/build.sh` packs it into
+  `src/archive/AmmoOverhaul.archive` (an .inkatlas and its texture, via WolvenKit on Proton:
+  `tools/linux/wolvenkit.sh`); each icon is a `UIIcon.AO_*` record that items name in `iconPath`.
 - `native/AmmoOverhaul/`: the RED4ext plugin (C++). `native/AOProbe/` is a research probe, not
   part of the mod.
 - `tools/linux/`: build, compile check, deploy and the in-game harness (see `docs/TESTING.md`).
@@ -206,4 +209,5 @@ share (`AmmoOverhaul.shares.<family>`), counting only the tiers allowed (`AmmoDi
   fitting a part on an NPC's drawn gun hangs the game. A player dropping a fitted gun is fine. Only
   a preset from another mod that fits a selector would hit this.
 - Boss fights: a boss that runs dry loses its guns. 12 magazines makes it unlikely; untested.
-- The selector icon is the generic mod icon. No crafting or loot yet; test items come from CET.
+- Only 9mm Ball, 5mm Sleevers and 10mm Dumbfires have art of their own; the other rounds use the
+  vanilla ammo box icon. 9mm Ball is vanilla handgun ammo, so every handgun ammo stack shows it.

@@ -55,6 +55,7 @@ AmmoOverhaul.npcUncommonFactor.Boss: 2.0
 # Vanilla handgun ammo is the 9mm Common round.
 Ammo.HandgunAmmo:
   displayName: LocKey#AO-Ammo-9mm-Ball
+  iconPath: AO_9mm_Ball
   localizedDescription: LocKey#AO-Ammo-9mm-Ball-Desc
   statModifiers:
     - !append

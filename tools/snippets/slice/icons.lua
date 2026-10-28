@@ -1,16 +1,39 @@
--- Task 3: rounds and selectors use the handgun ammo icon; the empty feed slot and the loot-window
--- placeholder of our rounds use the ammo shadow icon.
+-- Task 3 + icon art: rounds and selectors with art of their own (art/icons, packed by
+-- tools/icons/build.sh) use their UIIcon.AO_* record from the mod's atlas; the rest use the
+-- handgun ammo icon. The empty feed slot and the loot-window placeholder of our rounds use the
+-- ammo shadow icon.
 local AMMO_ICON = "undefined_ammo_box_handgun_None_"
+local ATLAS = "ammooverhaul\\icons\\ao_ammo_icons.inkatlas"
+local OWN = {
+  ["Ammo.HandgunAmmo"] = "AO_9mm_Ball", ["Items.AO_Feed_9mm_Ball"] = "AO_9mm_Ball",
+  ["Ammo.AO_TLight_Sabot"] = "AO_5mm_Sleevers", ["Items.AO_Feed_5mm_Sleevers"] = "AO_5mm_Sleevers",
+  ["Ammo.AO_S10_Dumbfire"] = "AO_10mm_Dumbfires", ["Items.AO_Feed_10mm_Dumbfires"] = "AO_10mm_Dumbfires",
+}
 local resolver = IconsNameResolver.GetIconsNameResolver()
-local rounds = { "Ammo.AO_9mm_HollowPoint", "Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot", "Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire" }
-for _, id in ipairs(rounds) do
-  local n = resolver:TranslateItemToIconName(TweakDBID.new(id), false).value
-  check(id .. " icon", n == AMMO_ICON, n)
+for _, id in ipairs({ "Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot",
+    "Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire" }) do
+  if OWN[id] then
+    check(id .. " iconPath", flat(id, "iconPath") == OWN[id], tostring(flat(id, "iconPath")))
+  else
+    local n = resolver:TranslateItemToIconName(TweakDBID.new(id), false).value
+    check(id .. " icon", (flat(id, "iconPath") or "") == "" and n == AMMO_ICON, n)
+  end
 end
 for _, id in ipairs({ "Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "Items.AO_Feed_5mm_RailSlugs",
     "Items.AO_Feed_5mm_Sleevers", "Items.AO_Feed_10mm_Seekers", "Items.AO_Feed_10mm_Dumbfires" }) do
-  local p = flat(id, "iconPath")
-  check(id .. " iconPath", p == AMMO_ICON, tostring(p))
+  local want = OWN[id] or AMMO_ICON
+  check(id .. " iconPath", flat(id, "iconPath") == want, tostring(flat(id, "iconPath")))
+end
+for _, icon in ipairs({ "AO_9mm_Ball", "AO_5mm_Sleevers", "AO_10mm_Dumbfires" }) do
+  local r = rec("UIIcon." .. icon)
+  check("UIIcon." .. icon .. " exists", r ~= nil, "no record")
+  if r then
+    check("UIIcon." .. icon .. " part", r:AtlasPartName().value == icon:lower(), r:AtlasPartName().value)
+  end
+end
+local depot = Game.GetResourceDepot and Game.GetResourceDepot()
+if depot then
+  check("icon atlas is in the game's resources", depot:ResourceExists(ATLAS), ATLAS)
 end
 local sys = Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem")
 local ok, res = pcall(function() return sys:DebugIcons("Ammo.AO_TLight_Slug", "AttachmentSlots.AO_AmmoFeed_Tech_Light") end)
