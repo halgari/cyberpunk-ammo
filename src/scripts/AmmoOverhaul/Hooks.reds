@@ -77,6 +77,20 @@ public final static func GetAttachmentSlots(itemType: gamedataItemType) -> array
   return slots;
 }
 
+// Any ammo fits any gun of its caliber: vanilla marks parts of a higher quality than the gun as
+// not installable, so that mark is taken off selectors.
+@wrapMethod(InventoryDataManagerV2)
+public final func GetPlayerInventoryPartsForItemRef(item: ItemID, const slotIDs: script_ref<[TweakDBID]>, opt filteredItems: [ItemModParams], outputItems: script_ref<[InventoryItemData]>) -> Void {
+  wrappedMethod(item, slotIDs, filteredItems, outputItems);
+  let i: Int32 = 0;
+  while i < ArraySize(Deref(outputItems)) {
+    if TweakDBInterface.GetItemRecord(ItemID.GetTDBID(InventoryItemData.GetID(Deref(outputItems)[i]))).TagsContains(n"AO_AmmoSelector") {
+      InventoryItemData.SetIsRequirementMet(Deref(outputItems)[i], true);
+    }
+    i += 1;
+  }
+}
+
 // Selectors are swapped freely; vanilla only lets scopes, muzzles and iconic mods come off.
 @wrapMethod(RPGManager)
 public final static func CanPartBeUnequipped(data: InventoryItemData, slotId: TweakDBID) -> Bool {

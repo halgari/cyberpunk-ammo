@@ -1,8 +1,8 @@
-# Smart 10mm micro-rocket (S-10): Yukimura in this slice. Common 10mm Seekers; Uncommon 10mm
+# Smart 10mm micro-rocket (S-10): Yukimura, Chao, Kappa, Dian, Shingen, Warden. Common 10mm Seekers; Uncommon 10mm
 # Dumbfires have no guidance and hit harder.
 
 AmmoOverhaul.Smart_10.family: "Smart"
-AmmoOverhaul.Smart_10.weaponTags: ["Yukimura"]
+AmmoOverhaul.Smart_10.weaponTags: ["Yukimura", "Chao", "Kappa", "Dian", "Shingen", "Warden"]
 AmmoOverhaul.Smart_10.feedSlot: "AttachmentSlots.AO_AmmoFeed_Smart_10"
 AmmoOverhaul.Smart_10.feedElement: "Items.AO_AmmoFeed_Smart_10_Element"
 AmmoOverhaul.Smart_10.defaultAmmo: "Ammo.AO_S10_Standard"

@@ -106,6 +106,9 @@ fighting it gave endless reloads. So both are written, and the records stay unch
 - **Selectors are `Prt_Magazine`, not a weapon-mod type:** vanilla weapon-mod types can't be
   removed, can't be swapped on non-iconic guns, and are destroyed when replaced
   (`RPGManager.CanPartBeUnequipped`, `ItemModificationSystem.InstallItemPart`).
+- **Any round fits any gun of its caliber:** vanilla marks parts of a higher quality than the gun
+  as not installable (`InventoryDataManagerV2.GetPlayerInventoryPartsForItemRef`); the mark is
+  taken off selectors. The install request itself has no quality check.
 - **The slot element has no quality prereq, and the slot is `unlockedBy: Common`:** otherwise the
   slot is hidden on low-quality guns.
 - **Mod screen wraps:** the mod screens intersect each item's real slots with hardcoded lists

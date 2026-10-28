@@ -1,8 +1,8 @@
-# Tech light rail (T-LIGHT, 5mm): Omaha in this slice. Common 5mm Rail Slugs; Uncommon 5mm
+# Tech light rail (T-LIGHT, 5mm): Omaha, Kenshin, Ticon, Grit, Senkoh LX, Quasar. Common 5mm Rail Slugs; Uncommon 5mm
 # Sleevers are sabot slugs that charge faster.
 
 AmmoOverhaul.Tech_Light.family: "Tech"
-AmmoOverhaul.Tech_Light.weaponTags: ["Omaha"]
+AmmoOverhaul.Tech_Light.weaponTags: ["Omaha", "Kenshin", "Ticon", "Grit", "Senkoh", "Quasar"]
 AmmoOverhaul.Tech_Light.feedSlot: "AttachmentSlots.AO_AmmoFeed_Tech_Light"
 AmmoOverhaul.Tech_Light.feedElement: "Items.AO_AmmoFeed_Tech_Light_Element"
 AmmoOverhaul.Tech_Light.defaultAmmo: "Ammo.AO_TLight_Slug"

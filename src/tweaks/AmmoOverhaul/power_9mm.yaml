@@ -1,8 +1,8 @@
-# Power 9mm (P-9): Lexington in this slice. Common 9mm Ball is vanilla handgun ammo (renamed in
+# Power 9mm (P-9): Lexington, Guillotine, Pulsar, Saratoga. Common 9mm Ball is vanilla handgun ammo (renamed in
 # core.yaml); Uncommon 9mm Mushrooms are hollow points.
 
 AmmoOverhaul.Power_9mm.family: "Power"
-AmmoOverhaul.Power_9mm.weaponTags: ["Lexington"]
+AmmoOverhaul.Power_9mm.weaponTags: ["Lexington", "Guillotine", "Pulsar", "Saratoga", "Saratoga_2020"]
 AmmoOverhaul.Power_9mm.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_9mm"
 AmmoOverhaul.Power_9mm.feedElement: "Items.AO_AmmoFeed_Power_9mm_Element"
 AmmoOverhaul.Power_9mm.defaultAmmo: "Ammo.HandgunAmmo"
