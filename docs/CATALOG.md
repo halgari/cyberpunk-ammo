@@ -373,25 +373,35 @@ has a pool and each caliber takes what fits it.
 
 9mm and .45 keep all five Rares (Rubber is a niche extra).
 
-**Grid (draft).** `?` marks an open slot.
+**Grid (agreed 2026-10-28).**
 
 | Caliber | Uncommon | Rare | Epic |
 |---|---|---|---|
 | 9mm | Mushrooms, Hot loads | Steel-core AP, Incendiary (weak), Subsonic, Bouncers, Rubber | Penetrator (no cover pierce), Match, Toxin core, Shredders |
 | .45 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Subsonic, Bouncers, Rubber | Penetrator (no cover pierce), Match, Toxin core, Shredders |
-| 12mm | Mushrooms, Hot loads | Steel-core AP, Incendiary, Rubber, ? | Penetrator, Match, Toxin core, Shredders |
+| 12mm | Mushrooms, Hot loads | Steel-core AP, Incendiary, Rubber, Hardcast | Penetrator, Match, Toxin core, Shredders |
 | 5.56 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Subsonic, Bouncers | Penetrator (no cover pierce), Match, Toxin core, Shredders |
-| 7.62 | Mushrooms, Hot loads | Steel-core AP, Incendiary, ?, ? | Penetrator, Match, Toxin core, ? |
-| 12.7 | Mushrooms, Hot loads | Steel-core AP, Incendiary, ?, ? | Penetrator, HEI, Match, Toxin core |
+| 7.62 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Tracer, Ballistic tip | Penetrator, Match, Toxin core, Shredders |
+| 12.7 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Tracer, Ballistic tip | Penetrator, HEI, Match, Toxin core |
 | 12ga | Slugs, Birdshot | Flechette, Beanbag, Dragon's breath (light), Gas | Dragon's breath, Frag-12, Tungsten slug, Flechette (long) |
-| 4ga | Slugs, Barn Door | Flare, Riot, Gas canister, Flechette | Kinetic penetrator, Micro-grenade, Dragon's breath, ? |
+| 4ga | Slugs, Barn Door | Flare, Riot, Gas canister, Flechette | Kinetic penetrator, Micro-grenade, Dragon's breath, Thermite slug |
 | 5mm rail | Sleevers, Dense slugs | Capacitor, Ferro, Split slug, Feedback | DU penetrator, Toxic scatter, Superconductor, EMP capacitor |
 | Heavy rail | Sleevers, Dense slugs | Capacitor, Ferro, Split slug, Feedback | DU penetrator, Toxic scatter, Superconductor, EMP capacitor |
-| 10mm smart | Dumbfires, Short-fuse | EMP, Incendiary, Chem, Flash payloads | Hunter, Hack carrier, Shaped charge, ? |
+| 10mm smart | Dumbfires, Short-fuse | EMP, Incendiary, Chem, Flash payloads | Hunter, Hack carrier, Shaped charge, Splitter |
 | 20mm cluster | Dumbfires, Short-fuse | EMP, Incendiary, Chem, Flash payloads | HE, Hunter, Hack carrier, Shaped charge |
 | 25mm dart | Dumbfires, Short-fuse | EMP, Incendiary, Chem, Flash payloads | HE, Hunter, Hack carrier, Shaped charge |
 
-The 4ga EMP shell is dropped (Power guns have no power source).
+The 4ga EMP shell is dropped (Power guns have no power source). New rounds in the grid:
+
+- Tracer (7.62, 12.7 Rare): the target hit is marked and shows through walls for a few seconds.
+- Ballistic tip (7.62, 12.7 Rare): more effective range and more damage at distance, a little
+  less armor pen.
+- Hardcast (12mm Rare): heavier hit (stagger, knockdown impulse), a little armor pen.
+- Thermite slug (4ga Epic): long heavy burn, big damage to mechs and drones.
+- Splitter (10mm smart Epic): two or three smaller rockets per shot, less damage each. Untested:
+  likely several projectiles at the muzzle (`ProjectilesPerShot` on a smart gun), not a split in
+  flight; needs a probe.
+- Penetrator on 9mm, .45 and 5.56: high armor pen, no cover piercing.
 
 **12-gauge:** Uncommon Slugs (built) and Birdshot (more pellets, wide, low damage, strong flinch).
 Rare Flechette (tighter, about 2x effective range, some armor pen), Beanbag (non-lethal
