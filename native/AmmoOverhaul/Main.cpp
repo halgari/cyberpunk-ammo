@@ -14,6 +14,9 @@
 //   AO_FindAmmoFields(weapon, ammo) -> array<Int32>   offsets holding `ammo`
 //   AO_ReadAmmoField(weapon, offset) -> TweakDBID
 //   AO_WriteAmmoField(weapon, offset, expected, ammo) -> Bool
+//   AO_ReadInt32(weapon, offset) -> Int32              (-1 if unreadable)
+//   AO_WriteInt32(weapon, offset, expected, value) -> Bool
+// The Int32 pair is for the magazine count, which follows the ammo field (+0x10 on 2.50).
 
 #include <RED4ext/RED4ext.hpp>
 
@@ -43,12 +46,18 @@ bool Accessible(const void* aPtr, size_t aSize, bool aWrite)
     return reinterpret_cast<uintptr_t>(aPtr) + aSize <= end;
 }
 
-uint64_t* Field(RED4ext::IScriptable* aWeapon, int32_t aOffset, bool aWrite)
+template<typename T>
+T* FieldOf(RED4ext::IScriptable* aWeapon, int32_t aOffset, bool aWrite)
 {
-    if (!aWeapon || aOffset < SearchStart || aOffset + 8 > SearchEnd)
+    if (!aWeapon || aOffset < SearchStart || aOffset + static_cast<int32_t>(sizeof(T)) > SearchEnd)
         return nullptr;
     auto ptr = reinterpret_cast<uint8_t*>(aWeapon) + aOffset;
-    return Accessible(ptr, 8, aWrite) ? reinterpret_cast<uint64_t*>(ptr) : nullptr;
+    return Accessible(ptr, sizeof(T), aWrite) ? reinterpret_cast<T*>(ptr) : nullptr;
+}
+
+uint64_t* Field(RED4ext::IScriptable* aWeapon, int32_t aOffset, bool aWrite)
+{
+    return FieldOf<uint64_t>(aWeapon, aOffset, aWrite);
 }
 
 bool SameId(uint64_t aValue, RED4ext::TweakDBID aId)
@@ -110,6 +119,40 @@ void WriteAmmoField(RED4ext::IScriptable*, RED4ext::CStackFrame* aFrame, bool* a
         *aOut = ok;
 }
 
+void ReadInt32(RED4ext::IScriptable*, RED4ext::CStackFrame* aFrame, int32_t* aOut, int64_t)
+{
+    RED4ext::Handle<RED4ext::IScriptable> weapon;
+    int32_t offset = 0;
+    RED4ext::GetParameter(aFrame, &weapon);
+    RED4ext::GetParameter(aFrame, &offset);
+    aFrame->code++;
+    auto field = FieldOf<int32_t>(weapon.GetPtr(), offset, false);
+    if (aOut)
+        *aOut = field ? *field : -1;
+}
+
+void WriteInt32(RED4ext::IScriptable*, RED4ext::CStackFrame* aFrame, bool* aOut, int64_t)
+{
+    RED4ext::Handle<RED4ext::IScriptable> weapon;
+    int32_t offset = 0;
+    int32_t expected = 0;
+    int32_t value = 0;
+    RED4ext::GetParameter(aFrame, &weapon);
+    RED4ext::GetParameter(aFrame, &offset);
+    RED4ext::GetParameter(aFrame, &expected);
+    RED4ext::GetParameter(aFrame, &value);
+    aFrame->code++;
+    bool ok = false;
+    auto field = FieldOf<int32_t>(weapon.GetPtr(), offset, true);
+    if (field && *field == expected)
+    {
+        *field = value;
+        ok = true;
+    }
+    if (aOut)
+        *aOut = ok;
+}
+
 void PostRegisterTypes()
 {
     auto rtti = RED4ext::CRTTISystem::Get();
@@ -137,6 +180,22 @@ void PostRegisterTypes()
     write->AddParam("TweakDBID", "expected");
     write->AddParam("TweakDBID", "ammo");
     rtti->RegisterFunction(write);
+
+    auto readInt = RED4ext::CGlobalFunction::Create("AO_ReadInt32", "AO_ReadInt32", &ReadInt32);
+    readInt->flags = flags;
+    readInt->SetReturnType("Int32");
+    readInt->AddParam("handle:gameweaponObject", "weapon");
+    readInt->AddParam("Int32", "offset");
+    rtti->RegisterFunction(readInt);
+
+    auto writeInt = RED4ext::CGlobalFunction::Create("AO_WriteInt32", "AO_WriteInt32", &WriteInt32);
+    writeInt->flags = flags;
+    writeInt->SetReturnType("Bool");
+    writeInt->AddParam("handle:gameweaponObject", "weapon");
+    writeInt->AddParam("Int32", "offset");
+    writeInt->AddParam("Int32", "expected");
+    writeInt->AddParam("Int32", "value");
+    rtti->RegisterFunction(writeInt);
 }
 
 void RegisterTypes()
@@ -160,7 +219,7 @@ RED4EXT_C_EXPORT void RED4EXT_CALL Query(RED4ext::v1::PluginInfo* aInfo)
 {
     aInfo->name = L"AmmoOverhaul";
     aInfo->author = L"AmmoOverhaul";
-    aInfo->version = RED4EXT_V1_SEMVER(0, 1, 0);
+    aInfo->version = RED4EXT_V1_SEMVER(0, 2, 0);
     aInfo->runtime = RED4EXT_V1_RUNTIME_VERSION_LATEST;
     aInfo->sdk = RED4EXT_V1_SDK_VERSION_CURRENT;
 }

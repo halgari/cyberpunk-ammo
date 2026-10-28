@@ -131,3 +131,35 @@ Items.AO_Feed_9mm_Incendiary:
   tags: [itemPart, AO_AmmoSelector]
   buyPrice: []
   sellPrice: []
+
+# --- Test enemy --------------------------------------------------------------------------------
+# A Tyger Claws ganger with one Lexington that has the incendiary selector fitted, for checking
+# that NPCs use and drop their gun's selected ammo (the test kit spawns it).
+
+Items.AO_Preset_Lexington_Incendiary:
+  $base: Items.Preset_Lexington_Default
+  slotPartListPreset:
+    - Items.Preset_Base_Lexington_inline0
+    - Items.Preset_Base_Lexington_inline1
+    - Items.Preset_Base_Lexington_inline2
+    - Items.Preset_Base_Lexington_inline3
+    - Items.HandgunAndRevolverScopesPartList
+    - Items.Preset_Base_Lexington_inline4
+    - Items.Preset_Base_Lexington_inline5
+    - $type: SlotItemPartPreset
+      slot: AttachmentSlots.AO_AmmoFeed_Power_9mm
+      itemPartPreset: Items.AO_Feed_9mm_Incendiary
+
+Character.AO_Test_IncendiaryGanger:
+  $base: Character.dtn_tyger_claws_biker1_ranged1_nue_wa
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.AO_Preset_Lexington_Incendiary
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []

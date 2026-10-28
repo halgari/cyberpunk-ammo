@@ -113,3 +113,44 @@ public final static func GetBlacklistedTags() -> array<CName> {
   ArrayRemove(tags, n"Ammo");
   return tags;
 }
+
+// --- Weapon ammo counts in menus -------------------------------------------------------------
+
+// Weapon cards, tooltips and the D-pad wheel count the ammo of the weapon's record; a managed gun
+// takes the ammo its selector picks, so count that instead.
+@wrapMethod(UIInventoryItem)
+public final func GetAmmo(opt update: Bool) -> Int32 {
+  let ammo: Int32 = wrappedMethod(update);
+  let selected: Int32 = AOData.SelectedAmmoCount(this.ID);
+  if ammo >= 0 && selected >= 0 {
+    this.m_weaponData.Ammo = selected;
+    return selected;
+  }
+  return ammo;
+}
+
+@wrapMethod(InventoryItemData)
+public final static func SetAmmo(self: script_ref<InventoryItemData>, ammo: Int32) -> Void {
+  let selected: Int32 = AOData.SelectedAmmoCount(InventoryItemData.GetID(self));
+  wrappedMethod(self, selected >= 0 ? selected : ammo);
+}
+
+@wrapMethod(InventoryDataManagerV2)
+public final func GetAmmoForWeaponType(const itemData: script_ref<InventoryItemData>) -> Int32 {
+  let selected: Int32 = AOData.SelectedAmmoCount(InventoryItemData.GetID(itemData));
+  return selected >= 0 ? selected : wrappedMethod(itemData);
+}
+
+// The HUD's reserve count (and the iron sight counter) is this minus the magazine; count the
+// managed gun's selected ammo instead of its record's.
+@wrapMethod(RPGManager)
+public final static func GetAmmoCountValue(owner: ref<GameObject>, itemID: ItemID) -> Int32 {
+  let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(itemID));
+  if IsDefined(owner) && StrLen(caliber) > 0 {
+    let ammo: TweakDBID = AOData.SelectedAmmo(owner, itemID, caliber);
+    if TDBID.IsValid(ammo) {
+      return GameInstance.GetTransactionSystem(owner.GetGame()).GetItemQuantity(owner, ItemID.CreateQuery(ammo));
+    }
+  }
+  return wrappedMethod(owner, itemID);
+}

@@ -45,41 +45,47 @@ itself enforces "same family and caliber"); selectors are parts (`Items.Part` ba
 ## Player: per-gun ammo
 
 The engine copies a gun's ammo type from its record into the spawned weapon object
-(`gameweaponObject`) and from then on reloads from, consumes and reports that ammo. It's a
-TweakDBID inside the object, not in the RTTI (+0x2e4 on 2.50: name hash, then length byte; the
-magazine count and capacity follow at +0x2f4/+0x2f8). Writing another ammo ID there switches that
-one gun's HUD total, per-shot consumption and native reload at once, with the record unchanged.
+(`gameweaponObject`), twice: the ammo it's **loaded** with (+0x2e4 on 2.50: name hash, then length
+byte; the magazine count and capacity follow at +0x2f4/+0x2f8) and the ammo it **wants**
+(+0x4a8). The loaded ammo drives the HUD total, per-shot consumption and native reload. When the
+two differ the engine has an ammo change pending (`HasAmmoChangeRequest`) and carries it out by
+reloading into the wanted ammo, about every 1.5 s while the gun is empty. Writing only the loaded
+field caused exactly that: the gun kept reverting to its record's ammo with a full magazine, and
+fighting it gave endless reloads. So both are written, and the records stay unchanged.
 
-- **The plugin finds the field at runtime** instead of hard-coding the offset. `NativeAmmo.Apply`
-  takes the offsets in the object holding the record's ammo ID (`AO_FindAmmoFields`), writes the
-  wanted ammo into each in turn and keeps the one where `GetTotalAmmoCount()` becomes the wanted
-  ammo's inventory count; failed writes are undone. Every write checks the field still holds the
-  expected ID, and memory is checked with `VirtualQuery`, so after a game patch the mod fails safe
-  instead of corrupting memory. Equal counts can't tell candidates apart; then the write is kept
-  and the field is located again next time.
+- **The plugin finds the fields at runtime** instead of hard-coding offsets (`NativeAmmo`). Of
+  the offsets holding the old ammo ID (`AO_FindAmmoFields`), the loaded field is the one where
+  writing makes `GetTotalAmmoCount()` the new ammo's inventory count; the wanted field is the one
+  where writing clears the pending change. Failed writes are undone. Every write checks the field
+  still holds the expected ID, and memory is checked with `VirtualQuery`, so after a game patch
+  the mod fails safe instead of corrupting memory. When a check can't tell candidates apart
+  (equal counts, no pending change) the write is kept and the field located again next time.
 - **When it's written:** at `WeaponObject.OnGameAttached` (spawn, including the respawn of a drawn
-  gun after a part change) and at `EquipCycleEvents` / `EquippedEvents.OnEnter` (draws; a plain
-  holster and draw keeps the field, but this covers the engine re-copying it). Records stay at the
-  caliber default.
-- **Engine restore quirk:** on the first selector change of a session, ~1.5 s after the redraw,
-  the engine natively puts back the gun's earlier ammo state (type and magazine count). Nothing
-  in script triggers it. The gun's shared blackboard `Weapon.MagazineAmmoCount` changes when it
-  happens, so the gun in hand is watched there: if its field no longer holds the selection, the
-  selection is applied again and the gun is unloaded.
+  gun after a part change) and at `EquipCycleEvents` / `EquippedEvents.OnEnter` (draws).
 - **Switching types unloads the gun:** the engine takes ammo out of the inventory per shot and
   the inventory count includes the loaded rounds (measured on a vanilla Liberty: mag 12, inventory
   486; 3 shots: mag 9, inventory 483; reload: mag 12, inventory 483). So emptying the magazine
-  loses nothing. The gun in hand is unloaded (`ForceResetAmmoEvent`), holstered and redrawn,
-  0.5 s then 0.3 s apart; any other gun is marked (saved) and unloaded the next time it spawns.
+  loses nothing. A selector change marks the gun (saved with the game); when it next spawns (a
+  part change respawns a drawn gun at once) the plugin writes its magazine count to 0, only if
+  the field next to the loaded ammo holds the count and capacity the engine reports, and the
+  blackboard is updated. If that can't be done within 3 s, the gun in hand falls back to
+  `ForceResetAmmoEvent` plus a holster and redraw.
+- **Safety net:** the gun in hand's shared blackboard `Weapon.MagazineAmmoCount` is watched; if
+  the loaded field ever holds other ammo than the selection, the selection is applied again and
+  the gun unloaded.
+- **Menus and HUD count the record's ammo** (`RPGManager.GetAmmoCountValue` for the HUD reserve
+  and iron sights, `UIInventoryItem.GetAmmo` / `InventoryItemData.SetAmmo` for weapon cards and
+  tooltips, `InventoryDataManagerV2.GetAmmoForWeaponType` for the D-pad wheel); they're wrapped to
+  count the gun's selected ammo.
 - **Magazine events (measured, 2.50):**
   - `SetAmmoCountEvent` (on the weapon) can raise the magazine but never lowers it.
   - `WeaponConsumeMagazineAmmoEvent` (on the weapon) lowers it *and* takes the rounds out of the
     inventory, like a shot. Handy for scripted tests.
   - `ForceResetAmmoEvent` (on the player, `SetIsLeftHandWeapon(false)`) sets the magazine without
-    touching the inventory. It lands on the weapon's next state change (holster, draw, a real
-    shot, which applies it before firing), not in Safe state, not from scripted consume or an
-    interrupted `StartReload`/`StopReload`. The last one queued wins; one queued with no gun in
-    hand is dropped. It doesn't change the ammo type.
+    touching the inventory. It lands on the weapon's next state change (holster, draw), not in
+    Safe state and not from a scripted consume or an interrupted reload, and in play it didn't
+    land before a real shot either. The last one queued wins; one queued with no gun in hand is
+    dropped.
   - A draw queued in the same frame as a holster cancels the holster.
 - **Weapons are patched in script, not YAML:** TweakDB stores each record's values directly, so
   `Base_Lexington` changes don't reach its presets. The tweak finds weapons by tag and clones each
@@ -94,7 +100,8 @@ one gun's HUD total, per-shot consumption and native reload at once, with the re
   `UIInventoryItemModsStaticData.GetAttachmentSlots`), so feed slots are appended there.
 - **On-hit hook is `DamageSystem.ProcessStatusEffects`:** the effect is added to the attack data
   before vanilla applies the attack's status effects, so vanilla's blocked, friendly and immunity
-  checks still apply to it.
+  checks still apply to it. NPC shots get their gun's effect too (the selection is read from the
+  shooter's inventory).
 
 ## NPC ammo
 
@@ -103,7 +110,9 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
 `AISubActionReloadWeapon_Record_Implementation` (`StartReload`/`StopReload`).
 
 - **Stock:** the first time a hostile NPC draws a gun, every gun it carries gets
-  `npcMagazines.<rarity>` × magazine capacity of its ammo. Like the player's, the stack includes the
+  `npcMagazines.<rarity>` × magazine capacity of its ammo. A gun of a managed caliber uses the
+  ammo its feed slot selects, as for the player (a preset can fit a selector through
+  `slotPartListPreset`); other guns use their record's. Like the player's, the stack includes the
   loaded rounds. NPCs friendly to the player and companions aren't counted.
 - **Use:** each `AIWeapon.Fire` takes the shot's rounds (`NumShotsToFire`) from the stack; with
   none left the shot and the reload are skipped.
@@ -129,12 +138,8 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
 
 ## Known gaps
 
-- Dual wield: only the right-hand gun is watched for the engine restore.
-- After the first swap of a session the HUD can show the restored magazine count until the
-  queued unload lands (first shot, reload or holster); no round is fired from it.
-- NPC guns use their record's ammo, not per-gun selections.
+- Dual wield: only the right-hand gun is watched by the safety net.
 - Ammo of the same type shares one NPC stack; a gun first given to an NPC after its first draw
   adds no stock if the NPC already carries that ammo.
 - Boss fights: a boss that runs dry loses its guns. 12 magazines makes it unlikely; untested.
 - The selector icon is the generic mod icon. No crafting or loot yet; test items come from CET.
-- Weapon cards show the record's ammo count, not the gun's selection.

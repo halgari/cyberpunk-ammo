@@ -9,8 +9,9 @@ module AmmoOverhaul
 //
 // Changing a gun's selector unloads it: the engine takes ammo out of the inventory per shot, so
 // unfired rounds in the magazine were never removed from their stack and nothing is lost. The gun
-// in hand is unloaded (ForceResetAmmoEvent, which doesn't touch the inventory), holstered and
-// redrawn; any other gun is marked and unloaded the next time it spawns.
+// is marked and unloaded when it next spawns (a part change respawns a drawn gun straight away),
+// by writing its magazine count through the plugin (NativeAmmo.Unload). If that can't be done,
+// the gun in hand falls back to ForceResetAmmoEvent plus a holster and redraw.
 public class AmmoFeedSystem extends ScriptableSystem {
 
   private let m_player: wref<PlayerPuppet>;
@@ -20,9 +21,11 @@ public class AmmoFeedSystem extends ScriptableSystem {
 
   // Offset of the ammo field in weapon objects, once located this session (see NativeAmmo).
   private let m_ammoOffset: Int32;
+  private let m_wantedAmmoOffset: Int32;
 
   private let m_magListener: ref<CallbackHandle>;
   private let m_magWeapon: wref<WeaponObject>;
+  private let m_lastRestoreRedraw: Float;
 
   // The last log lines, for reading live from CET (ModLog output only reaches the file late):
   //   Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem"):Trail()
@@ -58,13 +61,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if !IsDefined(player) || owner != player {
       return;
     }
-    let inHand: wref<WeaponObject> = ScriptedPuppet.GetWeaponRight(player);
-    if IsDefined(inHand) && inHand.GetItemID() == weaponID {
-      AmmoFeedSystem.Redraw(player, weaponID);
-    } else {
-      if !ArrayContains(this.m_unload, weaponID) {
-        ArrayPush(this.m_unload, weaponID);
-      }
+    if !ArrayContains(this.m_unload, weaponID) {
+      ArrayPush(this.m_unload, weaponID);
     }
   }
 
@@ -86,8 +84,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
   }
 
   // A weapon spawned: give a managed player gun its selected ammo, and unload it if it was
-  // waiting to. The ammo field may only be filled in a little after the object attaches, so a
-  // failed attempt is retried a few times.
+  // waiting to. The ammo field and magazine count may only be filled in a little after the object
+  // attaches, so a failed attempt is retried a few times.
   public final func OnWeaponSpawned(weapon: ref<WeaponObject>) -> Void {
     let player: ref<PlayerPuppet> = this.m_player;
     if !IsDefined(player) || weapon.GetOwner() != player {
@@ -98,22 +96,13 @@ public class AmmoFeedSystem extends ScriptableSystem {
       this.GiveSelectedAmmo(weapon, 0);
       this.WatchMagazine(weapon);
     }
-    if !ArrayContains(this.m_unload, id) {
-      return;
-    }
-    ArrayRemove(this.m_unload, id);
-    let unload: ref<AmmoFeedUnloadCallback> = new AmmoFeedUnloadCallback();
-    unload.player = player;
-    unload.weapon = weapon;
-    GameInstance.GetDelaySystem(player.GetGame()).DelayCallback(unload, 0.5, false);
-    AmmoFeedSystem.Log("unloading " + TDBID.ToStringDEBUG(ItemID.GetTDBID(id)) + " once in hand");
   }
 
-  // Some time after a selector change (seen on the first one of a session), the engine restores
-  // the gun's earlier ammo state, type and magazine count both. The magazine count's blackboard
-  // entry changes when that happens, so a managed gun in hand is watched there: if its ammo field
-  // no longer holds the selection, it gets the selection again and is unloaded, since the
-  // magazine count belongs to the other ammo.
+  // Safety net: if the engine ever loads the gun in hand with other ammo than its selection (it
+  // did while only the loaded-ammo field was written: the wanted-ammo field still held the old
+  // type, so the engine kept "changing ammo" back with a reload), the selection is applied again
+  // and the gun unloaded, since its magazine count belongs to the other ammo. The magazine
+  // count's blackboard entry changes whenever that happens, so the gun is watched there.
   private final func WatchMagazine(weapon: ref<WeaponObject>) -> Void {
     if IsDefined(this.m_magWeapon) && IsDefined(this.m_magListener) {
       this.m_magWeapon.GetSharedData().UnregisterListenerUint(GetAllBlackboardDefs().Weapon.MagazineAmmoCount, this.m_magListener);
@@ -135,10 +124,40 @@ public class AmmoFeedSystem extends ScriptableSystem {
       return false;
     }
     AmmoFeedSystem.Log("engine restored " + TDBID.ToStringDEBUG(current) + " in " + TDBID.ToStringDEBUG(ItemID.GetTDBID(id)) + ", unloading");
-    if NativeAmmo.Apply(player, weapon, ammo, this.m_ammoOffset) {
-      AmmoFeedSystem.QueueUnload(player, false);
+    if NativeAmmo.Apply(player, weapon, ammo, this.m_ammoOffset, this.m_wantedAmmoOffset) && !NativeAmmo.Unload(player, weapon, this.m_ammoOffset) {
+      this.FallbackUnload(weapon);
     }
     return false;
+  }
+
+  // Unloads `weapon` if it's waiting to; false if that has to be tried again later.
+  private final func UnloadIfMarked(weapon: ref<WeaponObject>) -> Bool {
+    let id: ItemID = weapon.GetItemID();
+    if !ArrayContains(this.m_unload, id) {
+      return true;
+    }
+    if !NativeAmmo.Unload(this.m_player, weapon, this.m_ammoOffset) {
+      return false;
+    }
+    ArrayRemove(this.m_unload, id);
+    AmmoFeedSystem.Log("unloaded " + TDBID.ToStringDEBUG(ItemID.GetTDBID(id)));
+    return true;
+  }
+
+  // The magazine count couldn't be written: unload the gun in hand the old way.
+  private final func FallbackUnload(weapon: ref<WeaponObject>) -> Void {
+    let player: ref<PlayerPuppet> = this.m_player;
+    let id: ItemID = weapon.GetItemID();
+    ArrayRemove(this.m_unload, id);
+    // Don't loop if the engine restores again straight after a redraw.
+    let now: Float = EngineTime.ToFloat(GameInstance.GetSimTime(player.GetGame()));
+    AmmoFeedSystem.Log("couldn't write the magazine of " + TDBID.ToStringDEBUG(ItemID.GetTDBID(id)) + ", unloading by redraw");
+    if now - this.m_lastRestoreRedraw > 10.0 {
+      this.m_lastRestoreRedraw = now;
+      AmmoFeedSystem.Redraw(player, id);
+    } else {
+      AmmoFeedSystem.QueueUnload(player, false);
+    }
   }
 
   // The player's gun in hand finished a step of drawing.
@@ -155,14 +174,22 @@ public class AmmoFeedSystem extends ScriptableSystem {
     }
     let id: ItemID = weapon.GetItemID();
     let ammo: TweakDBID = AOData.SelectedAmmo(player, id, AOData.CaliberForWeapon(ItemID.GetTDBID(id)));
-    if NativeAmmo.Apply(player, weapon, ammo, this.m_ammoOffset) {
+    let applied: Bool = NativeAmmo.Apply(player, weapon, ammo, this.m_ammoOffset, this.m_wantedAmmoOffset);
+    if applied && this.UnloadIfMarked(weapon) {
       if attempt > 0 || ammo != AOData.DefaultAmmo(AOData.CaliberForWeapon(ItemID.GetTDBID(id))) {
         AmmoFeedSystem.Log(TDBID.ToStringDEBUG(ItemID.GetTDBID(id)) + " takes " + TDBID.ToStringDEBUG(ammo));
       }
       return;
     }
-    if attempt >= 5 {
-      AmmoFeedSystem.Log("couldn't give " + TDBID.ToStringDEBUG(ItemID.GetTDBID(id)) + " " + TDBID.ToStringDEBUG(ammo) + " (ammo field not found)");
+    // The magazine count of a respawned gun can take over a second to come through.
+    if attempt >= 30 {
+      if !applied {
+        AmmoFeedSystem.Log("couldn't give " + TDBID.ToStringDEBUG(ItemID.GetTDBID(id)) + " " + TDBID.ToStringDEBUG(ammo) + " (ammo field not found)");
+      } else {
+        if weapon == ScriptedPuppet.GetWeaponRight(player) {
+          this.FallbackUnload(weapon);
+        }
+      }
       return;
     }
     let retry: ref<AmmoFeedApplyCallback> = new AmmoFeedApplyCallback();
@@ -191,7 +218,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
-  // Applies the on-hit effect of the ammo the firing weapon uses. Called from the damage pipeline
+  // Applies the on-hit effect of the ammo the firing weapon uses, for the player's shots and NPCs'
+  // alike (the gun's selection is read from its owner's inventory). Called from the damage pipeline
   // before vanilla applies the attack's status effects, so vanilla's blocked/friendly/immunity
   // checks still apply to ours.
   public static func ApplyAmmoOnHit(hitEvent: ref<gameHitEvent>) -> Void {
@@ -200,7 +228,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
       return;
     }
     let instigator: ref<GameObject> = attackData.GetInstigator();
-    if !IsDefined(instigator) || !instigator.IsPlayer() {
+    if !IsDefined(instigator) {
       return;
     }
     if !AttackData.IsRangedOrDirect(attackData.GetAttackType()) || AttackData.IsDoT(attackData) {
@@ -231,17 +259,6 @@ public class AmmoFeedApplyCallback extends DelayCallback {
   public func Call() -> Void {
     if IsDefined(this.system) && IsDefined(this.weapon) {
       this.system.GiveSelectedAmmo(this.weapon, this.attempt);
-    }
-  }
-}
-
-public class AmmoFeedUnloadCallback extends DelayCallback {
-  public let player: wref<PlayerPuppet>;
-  public let weapon: wref<WeaponObject>;
-
-  public func Call() -> Void {
-    if IsDefined(this.player) && IsDefined(this.weapon) {
-      AmmoFeedSystem.QueueUnload(this.player, this.weapon == ScriptedPuppet.GetWeaponLeft(this.player));
     }
   }
 }

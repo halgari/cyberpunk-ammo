@@ -40,15 +40,31 @@ public let aoLootQuantity: array<Int32>;
 
 public abstract class NpcAmmo {
 
+  // Hostile NPCs in the world; not the inventory screen's preview puppet, which is an NPCPuppet.
   public static func IsCounted(npc: ref<NPCPuppet>) -> Bool {
-    return IsDefined(npc) && !npc.IsCrowd() && !npc.IsPlayerCompanion() && !GameObject.IsFriendlyTowardsPlayer(npc);
+    return IsDefined(npc) && !npc.IsCrowd() && !npc.IsPlayerCompanion() && !GameObject.IsFriendlyTowardsPlayer(npc)
+      && !StrBeginsWith(TDBID.ToStringDEBUG(npc.GetRecordID()), "Character.Player_Puppet");
   }
 
-  public static func AmmoFor(weapon: ref<WeaponObject>) -> TweakDBID {
+  public static func AmmoFor(npc: ref<NPCPuppet>, weapon: ref<WeaponObject>) -> TweakDBID {
     if !IsDefined(weapon) || weapon.IsMelee() {
       return TDBID.None();
     }
-    return NpcAmmo.RecordAmmo(ItemID.GetTDBID(weapon.GetItemID()));
+    return NpcAmmo.GunAmmo(npc, weapon.GetItemID());
+  }
+
+  // The ammo a gun in `npc`'s inventory uses: for the mod's guns the one its feed slot selects,
+  // like the player's, otherwise its record's.
+  public static func GunAmmo(npc: ref<NPCPuppet>, gun: ItemID) -> TweakDBID {
+    let ammo: TweakDBID = NpcAmmo.RecordAmmo(ItemID.GetTDBID(gun));
+    let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(gun));
+    if TDBID.IsValid(ammo) && StrLen(caliber) > 0 {
+      let selected: TweakDBID = AOData.SelectedAmmo(npc, gun, caliber);
+      if TDBID.IsValid(selected) {
+        return selected;
+      }
+    }
+    return ammo;
   }
 
   // The ammo item a gun record uses, or an invalid ID if it doesn't use a real one: melee weapons,
@@ -81,7 +97,7 @@ public abstract class NpcAmmo {
     ts.GetItemList(npc, items);
     for item in items {
       let id: ItemID = item.GetID();
-      let ammo: TweakDBID = NpcAmmo.RecordAmmo(ItemID.GetTDBID(id));
+      let ammo: TweakDBID = NpcAmmo.GunAmmo(npc, id);
       if TDBID.IsValid(ammo) && !ArrayContains(npc.aoStockedGuns, id) {
         ArrayPush(npc.aoStockedGuns, id);
         if !ArrayContains(npc.aoStocked, ammo) {
@@ -104,7 +120,7 @@ public abstract class NpcAmmo {
 
   // A shot is about to be fired: takes its rounds, or false if there are none.
   public static func TakeShot(npc: ref<NPCPuppet>, weapon: ref<WeaponObject>) -> Bool {
-    let ammo: TweakDBID = NpcAmmo.AmmoFor(weapon);
+    let ammo: TweakDBID = NpcAmmo.AmmoFor(npc, weapon);
     if !TDBID.IsValid(ammo) || !NpcAmmo.IsCounted(npc) {
       return true;
     }
@@ -121,7 +137,7 @@ public abstract class NpcAmmo {
 
   // False if `npc` is out of ammo for `weapon`, so it shouldn't reload.
   public static func CanReload(npc: ref<NPCPuppet>, weapon: ref<WeaponObject>) -> Bool {
-    let ammo: TweakDBID = NpcAmmo.AmmoFor(weapon);
+    let ammo: TweakDBID = NpcAmmo.AmmoFor(npc, weapon);
     if !TDBID.IsValid(ammo) || !NpcAmmo.IsCounted(npc) || !ArrayContains(npc.aoStocked, ammo) {
       return true;
     }
@@ -145,7 +161,7 @@ public abstract class NpcAmmo {
     let loaded: Bool = false;
     ts.GetItemList(npc, items);
     for item in items {
-      let ammo: TweakDBID = NpcAmmo.RecordAmmo(ItemID.GetTDBID(item.GetID()));
+      let ammo: TweakDBID = NpcAmmo.GunAmmo(npc, item.GetID());
       if TDBID.IsValid(ammo) {
         ArrayPush(guns, item.GetID());
         if NpcAmmo.Rounds(npc, ammo) > 0 {
@@ -158,7 +174,7 @@ public abstract class NpcAmmo {
       let command: ref<AICommand> = npc.aoSwitchCommands % 2 == 0 ? new AISwitchToSecondaryWeaponCommand() : new AISwitchToPrimaryWeaponCommand();
       npc.aoSwitchCommands += 1;
       npc.GetAIControllerComponent().SendCommand(command);
-      AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " out of " + TDBID.ToStringDEBUG(NpcAmmo.AmmoFor(weapon)) + ", switching weapon");
+      AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " out of " + TDBID.ToStringDEBUG(NpcAmmo.AmmoFor(npc, weapon)) + ", switching weapon");
       return;
     }
     for gun in guns {

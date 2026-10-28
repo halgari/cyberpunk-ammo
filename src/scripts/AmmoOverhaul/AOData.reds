@@ -152,6 +152,18 @@ public abstract class AOData {
     return AOData.DefaultAmmo(caliber);
   }
 
+  // How many rounds of its selected ammo the player has for `weaponID`, or -1 if the weapon
+  // isn't one of the mod's (then the record's ammo is right).
+  public static func SelectedAmmoCount(weaponID: ItemID) -> Int32 {
+    let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(weaponID));
+    let player: ref<GameObject> = GetPlayer(GetGameInstance());
+    if StrLen(caliber) == 0 || !IsDefined(player) {
+      return -1;
+    }
+    let ammo: TweakDBID = AOData.SelectedAmmo(player, weaponID, caliber);
+    return TDBID.IsValid(ammo) ? GameInstance.GetTransactionSystem(player.GetGame()).GetItemQuantity(player, ItemID.CreateQuery(ammo)) : 0;
+  }
+
   // --- Ammo effects --------------------------------------------------------------------------
 
   // The on-hit status effect of an ammo type and its chance, or an invalid ID if it has none.

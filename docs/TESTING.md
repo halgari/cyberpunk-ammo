@@ -23,6 +23,24 @@ Game.AddToInventory("Ammo.AO_9mm_Incendiary", 30)
 
 Use a newly spawned Lexington: a Lexington already in an old save may keep its old slot layout.
 
+## Test kit (CET window)
+
+With the dev helpers installed (`tools/linux/dev-install.sh`), opening the CET overlay also opens
+an "Ammo Overhaul test kit" window:
+
+- Buttons spawn hostile enemies in front of you by gun type (handgun, SMG, rifle, shotgun,
+  sniper, dual wield, HMG), plus an "Incendiary Lexington ganger" whose only gun has the
+  incendiary selector fitted. "How many" and "Distance" set the group. They turn hostile wherever
+  you are.
+- "Invulnerable" (on by default) keeps you alive for long running-dry tests; untick it for a
+  real fight.
+- "Kill test enemies" kills them for loot checks; "Remove test enemies" deletes them.
+- "Give Lexington kit" gives the gun, both selectors, 50 FMJ and 30 incendiary.
+- Below that: your ammo, each test enemy's status, distance, gun, magazine and ammo carried
+  (updated twice a second), and the mod's latest log lines.
+- Hotkeys you can bind in the overlay's Hotkeys tab: spawn handgun / rifle / shotgun enemy,
+  kill, remove.
+
 ## What to check
 
 Equip the new Lexington and draw it.
@@ -53,6 +71,8 @@ Equip the new Lexington and draw it.
     such as an enemy standing still aiming, a quest fight that stalls, or allies running dry.
 11. **NPC loot.** Loot a body: the ammo it had left is in its loot (no extra random ammo), and its
     gun drops as usual.
+12. **NPC special ammo.** Spawn the "Incendiary Lexington ganger" with Invulnerable off: its hits
+    set you on fire, and its body drops only incendiary rounds (no standard handgun ammo).
 
 For each check, note pass or fail and what you saw, especially the counts.
 
