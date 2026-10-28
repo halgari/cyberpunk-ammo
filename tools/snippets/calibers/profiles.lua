@@ -16,6 +16,8 @@ local PROFILES = {
   Tech_Heavy = { 1.00, 0.20, 1.20, 1.00 },
   Smart_20 = { 1.00, -0.20, 1.00, 1.00 },
   Smart_25 = { 1.00, 0.10, 1.00, 1.00 },
+  Power_12ga = { 1.00, -0.25, 1.00, 0.75 },
+  Power_4ga = { 1.00, -0.25, 1.30, 1.00 },
 }
 local GUNS = {
   { "Power_9mm", "Items.Preset_Lexington_Default" },
@@ -34,6 +36,9 @@ local GUNS = {
   { "Smart_20", "Items.Preset_Palica_Default" },
   { "Smart_25", "Items.Preset_Ashura_Default" },
   { "Smart_10", "Items.Preset_Hercules_Default" },
+  { "Power_12ga", "Items.Preset_Tactician_Default" },
+  { "Power_12ga", "Items.Preset_Igla_Sovereign" },
+  { "Power_4ga", "Items.Preset_Carnage_Default" },
 }
 -- gun = { stat, expected value with the Common round fitted }
 local LIVE_EXPECT = {

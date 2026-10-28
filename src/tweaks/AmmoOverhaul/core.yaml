@@ -15,7 +15,8 @@
 # TweakXL rejects unknown properties on existing record types, so the mod's own settings live in
 # the AmmoOverhaul.* flats, keyed by short names, rather than on the item records.
 
-AmmoOverhaul.calibers: ["Power_9mm", "Power_45", "Power_12mm", "Power_556", "Power_762", "Power_127", "Tech_Light",
+AmmoOverhaul.calibers: ["Power_9mm", "Power_45", "Power_12mm", "Power_556", "Power_762", "Power_127", "Power_12ga",
+  "Power_4ga", "Tech_Light",
   "Tech_Heavy", "Smart_10", "Smart_20", "Smart_25"]
 
 # --- Distribution ------------------------------------------------------------------------------
@@ -76,13 +77,16 @@ Ammo.RifleAmmo:
       modifierType: Additive
       value: 0.06
 
+# Vanilla shotgun ammo is the 12-gauge Common round.
 Ammo.ShotgunAmmo:
+  displayName: LocKey#AO-Ammo-Buckshot
+  localizedDescription: LocKey#AO-Ammo-Buckshot-Desc
   statModifiers:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.Weight
       modifierType: Additive
-      value: 0.12
+      value: 0.06
 
 # Vanilla sniper ammo is the 12.7 Common round: 2.5x the 9mm's weight, twice the price.
 Ammo.SniperRifleAmmo:

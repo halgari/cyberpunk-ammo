@@ -64,6 +64,16 @@ public class AmmoOverhaulEnglish extends ModLocalizationPackage {
     this.Text("AO-Ammo-25mm-Seekers", "25mm Seekers");
     this.Text("AO-Ammo-25mm-Seekers-Desc", "Big smart darts for the Ashura. Heavy, pricey and hard to find.\n\nIgnores 10% of armor. Tracks locked targets.");
     this.Text("AO-Ammo-25mm-Dumbfires", "25mm Dumbfires");
+    // draft, Task 8
+    this.Text("AO-Ammo-Buckshot", "Buckshot");
+    this.Text("AO-Ammo-Buckshot-Desc", "12-gauge buck. A handful of pellets per shell: wrecks anything up close, falls off fast past a few meters.\n\nArmor is 25% more effective against it. -25% range.");
+    this.Text("AO-Ammo-Slugs", "Slugs");
+    this.Text("AO-Ammo-Slugs-Desc", "One solid lead slug instead of pellets. Same punch in a single hit, and it flies straight.\n\nFires one projectile with the whole shot's damage. Much tighter spread. Double range.");
+    // draft, Task 8
+    this.Text("AO-Ammo-4ga-Buckshot", "4ga Buckshot");
+    this.Text("AO-Ammo-4ga-Buckshot-Desc", "Shells as fat as a beer can, for the Carnage. Heavy, pricey, and they kick hard.\n\nArmor is 25% more effective against it. +30% recoil.");
+    this.Text("AO-Ammo-4ga-Slugs", "4ga Slugs");
+    this.Text("AO-Ammo-4ga-Slugs-Desc", "A slug the size of your thumb. Whoever it hits goes down.\n\nFires one projectile with the whole shot's damage, +30%. Ignores 50% of armor. Knocks the target down. Double range. +60% recoil.");
     this.Text("AO-Ammo-5mm-RailSlugs", "5mm Rail Slugs");
     this.Text("AO-Ammo-5mm-RailSlugs-Desc", "Steel slugs for light railguns. Nothing to them, the rails do all the work.\n\nStandard light rail ammo. No special effects.");
     this.Text("AO-Ammo-5mm-Sleevers", "5mm Sleevers");

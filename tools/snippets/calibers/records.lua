@@ -19,6 +19,10 @@ local ROUNDS = {
   { "Ammo.AO_S20_Dumbfire", "20mm Dumbfires", 0.12, "Items.AO_Feed_20mm_Dumbfires", 1.3 },
   { "Ammo.AO_S25_Standard", "25mm Seekers", 0.24, "Items.AO_Feed_25mm_Seekers", 2.5 },
   { "Ammo.AO_S25_Dumbfire", "25mm Dumbfires", 0.24, "Items.AO_Feed_25mm_Dumbfires", 2.5 },
+  { "Ammo.ShotgunAmmo", "Buckshot", 0.06, "Items.AO_Feed_12ga_Buckshot", 1 },
+  { "Ammo.AO_12ga_Slug", "Slugs", 0.06, "Items.AO_Feed_12ga_Slugs", 1 },
+  { "Ammo.AO_4ga_Buckshot", "4ga Buckshot", 0.15, "Items.AO_Feed_4ga_Buckshot", 2 },
+  { "Ammo.AO_4ga_Slug", "4ga Slugs", 0.15, "Items.AO_Feed_4ga_Slugs", 2 },
 }
 local GUNS = {
   -- weapon record, Common round, feed element
@@ -75,6 +79,17 @@ local GUNS = {
   { "Items.Preset_Hercules_Default", "Ammo.AO_S10_Standard", "Items.AO_AmmoFeed_Smart_10_Element" },
   { "Items.Preset_Sidewinder_Default", "Ammo.AO_S10_Standard", "Items.AO_AmmoFeed_Smart_10_Element" },
   { "Items.Preset_Sidewinder_Divided", "Ammo.AO_S10_Standard", "Items.AO_AmmoFeed_Smart_10_Element" },
+  { "Items.Preset_Crusher_Default", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Crusher_Amazon", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Pozhar_Default", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Tactician_Default", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Tactician_Headsman", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Igla_Default", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Igla_Sovereign", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Testera_Default", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Testera_Nicolas", "Ammo.ShotgunAmmo", "Items.AO_AmmoFeed_Power_12ga_Element" },
+  { "Items.Preset_Carnage_Default", "Ammo.AO_4ga_Buckshot", "Items.AO_AmmoFeed_Power_4ga_Element" },
+  { "Items.Preset_Carnage_Mox", "Ammo.AO_4ga_Buckshot", "Items.AO_AmmoFeed_Power_4ga_Element" },
   -- Erebus stays 9mm.
   { "Items.Preset_Borg4a_HauntedGun", "Ammo.HandgunAmmo", "Items.AO_AmmoFeed_Power_9mm_Element" },
 }

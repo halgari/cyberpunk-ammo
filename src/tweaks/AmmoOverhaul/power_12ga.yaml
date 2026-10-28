@@ -1,0 +1,142 @@
+# Power 12-gauge (P-12G): Crusher, Pozhar, Tactician, Igla, Testera. Common Buckshot is vanilla shotgun
+# ammo (renamed in core.yaml); Uncommon Slugs fire the whole shot as one projectile.
+
+AmmoOverhaul.Power_12ga.family: "Power"
+AmmoOverhaul.Power_12ga.weaponTags: ["Crusher", "Pozhar", "Tactician", "Igla", "Testera"]
+AmmoOverhaul.Power_12ga.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_12ga"
+AmmoOverhaul.Power_12ga.feedElement: "Items.AO_AmmoFeed_Power_12ga_Element"
+AmmoOverhaul.Power_12ga.defaultAmmo: "Ammo.ShotgunAmmo"
+AmmoOverhaul.Power_12ga.vanillaAmmo: "Ammo.ShotgunAmmo"
+AmmoOverhaul.Power_12ga.lootWeight: 0.7
+AmmoOverhaul.Power_12ga.selectors: ["Items.AO_Feed_12ga_Buckshot", "Items.AO_Feed_12ga_Slugs"]
+AmmoOverhaul.Power_12ga.selectorAmmo: ["Ammo.ShotgunAmmo", "Ammo.AO_12ga_Slug"]
+AmmoOverhaul.Power_12ga.selectorTiers: [0, 1]
+AmmoOverhaul.Power_12ga.profile: "AOProfile.Power_12ga"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# Brutal close, poor into armor, falls off with range. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Power_12ga:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.25
+    - $type: ConstantStatModifier
+      statType: BaseStats.EffectiveRange
+      modifierType: Multiplier
+      value: 0.75
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Power_12ga:
+  $base: AttachmentSlots.Power_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Power_12ga
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+Items.AO_AmmoFeed_Power_12ga_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Power_12ga
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_12ga_Slug:
+  $base: Ammo.ShotgunAmmo
+  # Listed in full rather than inherited, so the weight isn't added twice.
+  statModifiers:
+    - Ammo.ShotgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.06
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-Slugs
+  localizedDescription: LocKey#AO-Ammo-Slugs-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_12ga_Buckshot:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-Buckshot
+  localizedDescription: LocKey#AO-Ammo-Buckshot-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_12ga]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Slug: one projectile with the whole shot, tight spread, twice the range.
+Items.AO_Feed_12ga_Slugs:
+  $base: Items.AO_Feed_12ga_Buckshot
+  displayName: LocKey#AO-Ammo-Slugs
+  localizedDescription: LocKey#AO-Ammo-Slugs-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    # One projectile: take away the gun's pellets (ProjectilesPerShotBase), add one back. refObject Root is
+    # the gun; Self would be this part, which has no pellets.
+    - !append
+      $type: CombinedStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      refStat: BaseStats.ProjectilesPerShotBase
+      refObject: Root
+      opSymbol: '*'
+      value: -1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      value: 1
+    # The engine splits a shot's damage across its projectiles, so the one slug carries all of it.
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.EffectiveRange
+      modifierType: Multiplier
+      value: 2

@@ -1,0 +1,193 @@
+# Power 4-gauge (P-4G): Carnage. Common 4ga Buckshot; Uncommon 4ga Slugs are a hand cannon: the whole shot
+# in one heavy slug that knocks the target down (AmmoOverhaul.Slug4ga). They do not pierce cover.
+
+AmmoOverhaul.Power_4ga.family: "Power"
+AmmoOverhaul.Power_4ga.weaponTags: ["Carnage"]
+AmmoOverhaul.Power_4ga.feedSlot: "AttachmentSlots.AO_AmmoFeed_Power_4ga"
+AmmoOverhaul.Power_4ga.feedElement: "Items.AO_AmmoFeed_Power_4ga_Element"
+AmmoOverhaul.Power_4ga.defaultAmmo: "Ammo.AO_4ga_Buckshot"
+AmmoOverhaul.Power_4ga.vanillaAmmo: "Ammo.ShotgunAmmo"
+AmmoOverhaul.Power_4ga.lootWeight: 0.1
+AmmoOverhaul.Power_4ga.selectors: ["Items.AO_Feed_4ga_Buckshot", "Items.AO_Feed_4ga_Slugs"]
+AmmoOverhaul.Power_4ga.selectorAmmo: ["Ammo.AO_4ga_Buckshot", "Ammo.AO_4ga_Slug"]
+AmmoOverhaul.Power_4ga.selectorTiers: [0, 1]
+AmmoOverhaul.Power_4ga.profile: "AOProfile.Power_4ga"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# The Carnage's big shells: poor into armor, heavy kick. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Power_4ga:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.25
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.3
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.3
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Power_4ga:
+  $base: AttachmentSlots.Power_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Power_4ga
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+Items.AO_AmmoFeed_Power_4ga_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Power_4ga
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_4ga_Buckshot:
+  $base: Ammo.ShotgunAmmo
+  # Listed in full rather than inherited, so the source ammo's weight isn't added on top.
+  statModifiers:
+    - Ammo.ShotgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.15
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  quality: Quality.Common
+  displayName: LocKey#AO-Ammo-4ga-Buckshot
+  localizedDescription: LocKey#AO-Ammo-4ga-Buckshot-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Power]
+
+Ammo.AO_4ga_Slug:
+  $base: Ammo.AO_4ga_Buckshot
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-4ga-Slugs
+  localizedDescription: LocKey#AO-Ammo-4ga-Slugs-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_4ga_Buckshot:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-4ga-Buckshot
+  localizedDescription: LocKey#AO-Ammo-4ga-Buckshot-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_4ga]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Slug: one projectile with the whole shot plus 30%, better into armor, more kick, twice the range.
+Items.AO_Feed_4ga_Slugs:
+  $base: Items.AO_Feed_4ga_Buckshot
+  displayName: LocKey#AO-Ammo-4ga-Slugs
+  localizedDescription: LocKey#AO-Ammo-4ga-Slugs-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    # One projectile: take away the gun's pellets (ProjectilesPerShotBase), add one back. refObject Root is
+    # the gun; Self would be this part, which has no pellets.
+    - !append
+      $type: CombinedStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      refStat: BaseStats.ProjectilesPerShotBase
+      refObject: Root
+      opSymbol: '*'
+      value: -1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      value: 1
+    # The engine splits a shot's damage across its projectiles, so the one slug carries all of it.
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.EffectiveRange
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.5
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.6
+
+# --- On hit ------------------------------------------------------------------------------------
+# A 4ga Slug that connects knocks the target down (AmmoFeedSystem.ApplyAmmoOnHit; the engine's
+# immunity checks still apply).
+AmmoOverhaul.ammoEffects: ["Slug4ga"]
+AmmoOverhaul.Slug4ga.ammo: "Ammo.AO_4ga_Slug"
+AmmoOverhaul.Slug4ga.effect: "BaseStatusEffect.Knockdown"
+AmmoOverhaul.Slug4ga.chance: 1.0
