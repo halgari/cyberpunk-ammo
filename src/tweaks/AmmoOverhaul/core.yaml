@@ -16,7 +16,7 @@
 # the AmmoOverhaul.* flats, keyed by short names, rather than on the item records.
 
 AmmoOverhaul.calibers: ["Power_9mm", "Power_45", "Power_12mm", "Power_556", "Power_762", "Power_127", "Tech_Light",
-  "Smart_10"]
+  "Tech_Heavy", "Smart_10", "Smart_20", "Smart_25"]
 
 # --- Distribution ------------------------------------------------------------------------------
 # Share of each tier (Common, Uncommon) in a family's ammo, for vendors, world loot and NPCs.

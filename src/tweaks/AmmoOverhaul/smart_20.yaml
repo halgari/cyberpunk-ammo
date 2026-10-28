@@ -1,0 +1,106 @@
+# Smart 20mm cluster (S-CLUSTER): Zhuo, Palica. Common 20mm Seekers; Uncommon 20mm Dumbfires have no
+# guidance and hit harder.
+
+AmmoOverhaul.Smart_20.family: "Smart"
+AmmoOverhaul.Smart_20.weaponTags: ["Zhuo", "Palica"]
+AmmoOverhaul.Smart_20.feedSlot: "AttachmentSlots.AO_AmmoFeed_Smart_20"
+AmmoOverhaul.Smart_20.feedElement: "Items.AO_AmmoFeed_Smart_20_Element"
+AmmoOverhaul.Smart_20.defaultAmmo: "Ammo.AO_S20_Standard"
+AmmoOverhaul.Smart_20.vanillaAmmo: "Ammo.ShotgunAmmo"
+AmmoOverhaul.Smart_20.lootWeight: 0.2
+AmmoOverhaul.Smart_20.selectors: ["Items.AO_Feed_20mm_Seekers", "Items.AO_Feed_20mm_Dumbfires"]
+AmmoOverhaul.Smart_20.selectorAmmo: ["Ammo.AO_S20_Standard", "Ammo.AO_S20_Dumbfire"]
+AmmoOverhaul.Smart_20.selectorTiers: [0, 1]
+AmmoOverhaul.Smart_20.profile: "AOProfile.Smart_20"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# Swarms of small rockets: poor into armor. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Smart_20:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: -0.2
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Smart_20:
+  $base: AttachmentSlots.Smart_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Smart_20
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+Items.AO_AmmoFeed_Smart_20_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Smart_20
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_S20_Standard:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the 9mm weight isn't added on top.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.12
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1.3
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1.3
+  quality: Quality.Common
+  displayName: LocKey#AO-Ammo-20mm-Seekers
+  localizedDescription: LocKey#AO-Ammo-20mm-Seekers-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Smart]
+
+Ammo.AO_S20_Dumbfire:
+  $base: Ammo.AO_S20_Standard
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-20mm-Dumbfires
+  localizedDescription: LocKey#AO-Ammo-Dumbfires-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_20mm_Seekers:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-20mm-Seekers
+  localizedDescription: LocKey#AO-Ammo-20mm-Seekers-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Smart_20]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Dumbfire: no homing (a smart bullet homes only with hit probability above 0), more damage.
+Items.AO_Feed_20mm_Dumbfires:
+  $base: Items.AO_Feed_20mm_Seekers
+  displayName: LocKey#AO-Ammo-20mm-Dumbfires
+  localizedDescription: LocKey#AO-Ammo-Dumbfires-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHitProbability
+      modifierType: Multiplier
+      value: 0

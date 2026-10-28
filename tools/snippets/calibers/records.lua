@@ -13,6 +13,12 @@ local ROUNDS = {
   { "Ammo.AO_762_HollowPoint", "7.62 Mushrooms", 0.09, "Items.AO_Feed_762_Mushrooms", 1.3 },
   { "Ammo.SniperRifleAmmo", "12.7 Ball", 0.15, "Items.AO_Feed_127_Ball", 2 },
   { "Ammo.AO_127_HollowPoint", "12.7 Mushrooms", 0.15, "Items.AO_Feed_127_Mushrooms", 2 },
+  { "Ammo.AO_THeavy_Slug", "Heavy Rail Slugs", 0.08, "Items.AO_Feed_Heavy_RailSlugs", 1.5 },
+  { "Ammo.AO_THeavy_Sabot", "Heavy Sleevers", 0.08, "Items.AO_Feed_Heavy_Sleevers", 1.5 },
+  { "Ammo.AO_S20_Standard", "20mm Seekers", 0.12, "Items.AO_Feed_20mm_Seekers", 1.3 },
+  { "Ammo.AO_S20_Dumbfire", "20mm Dumbfires", 0.12, "Items.AO_Feed_20mm_Dumbfires", 1.3 },
+  { "Ammo.AO_S25_Standard", "25mm Seekers", 0.24, "Items.AO_Feed_25mm_Seekers", 2.5 },
+  { "Ammo.AO_S25_Dumbfire", "25mm Dumbfires", 0.24, "Items.AO_Feed_25mm_Dumbfires", 2.5 },
 }
 local GUNS = {
   -- weapon record, Common round, feed element
@@ -51,6 +57,24 @@ local GUNS = {
   { "Items.Preset_Osprey_Default", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
   { "Items.Preset_Osprey_Prototype", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
   { "Items.Preset_HMG_Default", "Ammo.SniperRifleAmmo", "Items.AO_AmmoFeed_Power_127_Element" },
+  { "Items.Preset_Burya_Default", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Burya_Comrade", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Achilles_Default", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Achilles_Nash", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Nekomata_Default", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Nekomata_Breakthrough", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Rasetsu_Prototype", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Tech_Sniper_Rifle_Default", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Satara_Default", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Satara_Brick", "Ammo.AO_THeavy_Slug", "Items.AO_AmmoFeed_Tech_Heavy_Element" },
+  { "Items.Preset_Zhuo_Default", "Ammo.AO_S20_Standard", "Items.AO_AmmoFeed_Smart_20_Element" },
+  { "Items.Preset_Zhuo_Eight_Star", "Ammo.AO_S20_Standard", "Items.AO_AmmoFeed_Smart_20_Element" },
+  { "Items.Preset_Palica_Default", "Ammo.AO_S20_Standard", "Items.AO_AmmoFeed_Smart_20_Element" },
+  { "Items.Preset_Ashura_Default", "Ammo.AO_S25_Standard", "Items.AO_AmmoFeed_Smart_25_Element" },
+  { "Items.Preset_Ashura_Twitch", "Ammo.AO_S25_Standard", "Items.AO_AmmoFeed_Smart_25_Element" },
+  { "Items.Preset_Hercules_Default", "Ammo.AO_S10_Standard", "Items.AO_AmmoFeed_Smart_10_Element" },
+  { "Items.Preset_Sidewinder_Default", "Ammo.AO_S10_Standard", "Items.AO_AmmoFeed_Smart_10_Element" },
+  { "Items.Preset_Sidewinder_Divided", "Ammo.AO_S10_Standard", "Items.AO_AmmoFeed_Smart_10_Element" },
   -- Erebus stays 9mm.
   { "Items.Preset_Borg4a_HauntedGun", "Ammo.HandgunAmmo", "Items.AO_AmmoFeed_Power_9mm_Element" },
 }
@@ -96,4 +120,26 @@ end
 for _, g in ipairs(UNTOUCHED) do
   check(g[1] .. " keeps ammo " .. g[2], str(flat(g[1], "ammo")) == g[2], str(flat(g[1], "ammo")))
 end
+
+-- No weapon record is claimed by two calibers (it would get two feed slots and two profiles).
+local cals = {}
+for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
+  local tags, recs = {}, {}
+  for _, t in ipairs(flat("AmmoOverhaul." .. c, "weaponTags") or {}) do tags[type(t) == "string" and t or t.value] = true end
+  for _, r in ipairs(flat("AmmoOverhaul." .. c, "weaponRecords") or {}) do recs[type(r) == "string" and r or str(r)] = true end
+  table.insert(cals, { c, tags, recs })
+end
+local doubles = {}
+for _, r in ipairs(TweakDB:GetRecords("gamedataWeaponItem_Record")) do
+  local id = str(r:GetID())
+  local claimed = {}
+  for _, c in ipairs(cals) do
+    local hit = c[3][id] or false
+    for _, t in ipairs(r:Tags()) do if c[2][t.value] then hit = true end end
+    if hit then table.insert(claimed, c[1]) end
+  end
+  if #claimed > 1 then table.insert(doubles, id .. "=" .. table.concat(claimed, "+")) end
+end
+check(#cals .. " calibers read for the double-claim scan", #cals >= 8, tostring(#cals))
+check("no weapon record claimed by two calibers", #doubles == 0, table.concat(doubles, " "))
 report()

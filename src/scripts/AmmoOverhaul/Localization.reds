@@ -49,6 +49,21 @@ public class AmmoOverhaulEnglish extends ModLocalizationPackage {
     this.Text("AO-Ammo-127-Ball", "12.7 Ball");
     this.Text("AO-Ammo-127-Ball-Desc", "Half-inch rounds for anti-materiel rifles. Heavy and pricey, and they punch through plating.\n\nIgnores 40% of armor. +25% recoil.");
     this.Text("AO-Ammo-127-Mushrooms", "12.7 Mushrooms");
+    // Shared by every caliber's Sleevers and Dumbfires.
+    this.Text("AO-Ammo-Sleevers-Desc", "Skinny slug in a plastic sleeve. The rails grab it quicker, so you charge faster, but it hits a bit softer.\n\nCharges 30% faster. -5% damage.");
+    this.Text("AO-Ammo-Dumbfires-Desc", "Smart rockets with the chip pulled and extra propellant packed in. Hits harder, but it only goes where you point it.\n\n+25% damage. Doesn't track targets.");
+    // draft, Task 8
+    this.Text("AO-Ammo-Heavy-RailSlugs", "Heavy Rail Slugs");
+    this.Text("AO-Ammo-Heavy-RailSlugs-Desc", "Dense steel slugs for full-size rails. Heavier than the 5mm stuff and better against plating.\n\nIgnores 20% of armor. +20% recoil.");
+    this.Text("AO-Ammo-Heavy-Sleevers", "Heavy Sleevers");
+    // draft, Task 8
+    this.Text("AO-Ammo-20mm-Seekers", "20mm Seekers");
+    this.Text("AO-Ammo-20mm-Seekers-Desc", "Cluster rockets for smart shotguns. Lock on and the whole swarm goes after the target, but armor soaks a lot of it.\n\nArmor is 20% more effective against it. Tracks locked targets.");
+    this.Text("AO-Ammo-20mm-Dumbfires", "20mm Dumbfires");
+    // draft, Task 8
+    this.Text("AO-Ammo-25mm-Seekers", "25mm Seekers");
+    this.Text("AO-Ammo-25mm-Seekers-Desc", "Big smart darts for the Ashura. Heavy, pricey and hard to find.\n\nIgnores 10% of armor. Tracks locked targets.");
+    this.Text("AO-Ammo-25mm-Dumbfires", "25mm Dumbfires");
     this.Text("AO-Ammo-5mm-RailSlugs", "5mm Rail Slugs");
     this.Text("AO-Ammo-5mm-RailSlugs-Desc", "Steel slugs for light railguns. Nothing to them, the rails do all the work.\n\nStandard light rail ammo. No special effects.");
     this.Text("AO-Ammo-5mm-Sleevers", "5mm Sleevers");

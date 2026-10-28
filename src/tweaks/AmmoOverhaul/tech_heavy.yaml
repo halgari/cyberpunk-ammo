@@ -1,0 +1,116 @@
+# Tech heavy rail (T-HEAVY): Burya, Achilles, Nekomata, Rasetsu (tag on one record; the rest matched by
+# record), Satara. Common Heavy Rail Slugs; Uncommon Heavy Sleevers are sabot slugs that charge faster.
+# Its guns took all four game ammo; heavy rail comes from sniper ammo.
+
+AmmoOverhaul.Tech_Heavy.family: "Tech"
+AmmoOverhaul.Tech_Heavy.weaponTags: ["Burya", "Achilles", "Nekomata", "Rasetsu", "Satara"]
+AmmoOverhaul.Tech_Heavy.weaponRecords: ["Items.Base_Rasetsu", "Items.Preset_Rasetsu_Prototype", "Items.Base_Tech_Sniper_Rifle", "Items.Preset_Tech_Sniper_Rifle_Default", "Items.Sniper_Nest_Version_Tech_Sniper_Rifle"]
+AmmoOverhaul.Tech_Heavy.feedSlot: "AttachmentSlots.AO_AmmoFeed_Tech_Heavy"
+AmmoOverhaul.Tech_Heavy.feedElement: "Items.AO_AmmoFeed_Tech_Heavy_Element"
+AmmoOverhaul.Tech_Heavy.defaultAmmo: "Ammo.AO_THeavy_Slug"
+AmmoOverhaul.Tech_Heavy.vanillaAmmo: "Ammo.SniperRifleAmmo"
+AmmoOverhaul.Tech_Heavy.lootWeight: 0.3
+AmmoOverhaul.Tech_Heavy.selectors: ["Items.AO_Feed_Heavy_RailSlugs", "Items.AO_Feed_Heavy_Sleevers"]
+AmmoOverhaul.Tech_Heavy.selectorAmmo: ["Ammo.AO_THeavy_Slug", "Ammo.AO_THeavy_Sabot"]
+AmmoOverhaul.Tech_Heavy.selectorTiers: [0, 1]
+AmmoOverhaul.Tech_Heavy.profile: "AOProfile.Tech_Heavy"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# Dense slugs: better into armor, more kick. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Tech_Heavy:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.2
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.2
+    - $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.2
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Tech_Heavy:
+  $base: AttachmentSlots.Tech_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Tech_Heavy
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+Items.AO_AmmoFeed_Tech_Heavy_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Tech_Heavy
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_THeavy_Slug:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the 9mm weight isn't added on top.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.08
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1.5
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1.5
+  quality: Quality.Common
+  displayName: LocKey#AO-Ammo-Heavy-RailSlugs
+  localizedDescription: LocKey#AO-Ammo-Heavy-RailSlugs-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Tech]
+
+Ammo.AO_THeavy_Sabot:
+  $base: Ammo.AO_THeavy_Slug
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-Heavy-Sleevers
+  localizedDescription: LocKey#AO-Ammo-Sleevers-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Tech]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_Heavy_RailSlugs:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-Heavy-RailSlugs
+  localizedDescription: LocKey#AO-Ammo-Heavy-RailSlugs-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Tech_Heavy]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Sabot: charges faster, hits a little softer.
+Items.AO_Feed_Heavy_Sleevers:
+  $base: Items.AO_Feed_Heavy_RailSlugs
+  displayName: LocKey#AO-Ammo-Heavy-Sleevers
+  localizedDescription: LocKey#AO-Ammo-Sleevers-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.ChargeTime
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 0.95

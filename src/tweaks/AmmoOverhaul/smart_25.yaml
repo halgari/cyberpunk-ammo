@@ -1,0 +1,106 @@
+# Smart 25mm dart (S-DART): Ashura. Common 25mm Seekers; Uncommon 25mm Dumbfires have no guidance and hit
+# harder.
+
+AmmoOverhaul.Smart_25.family: "Smart"
+AmmoOverhaul.Smart_25.weaponTags: ["Ashura"]
+AmmoOverhaul.Smart_25.feedSlot: "AttachmentSlots.AO_AmmoFeed_Smart_25"
+AmmoOverhaul.Smart_25.feedElement: "Items.AO_AmmoFeed_Smart_25_Element"
+AmmoOverhaul.Smart_25.defaultAmmo: "Ammo.AO_S25_Standard"
+AmmoOverhaul.Smart_25.vanillaAmmo: "Ammo.SniperRifleAmmo"
+AmmoOverhaul.Smart_25.lootWeight: 0.1
+AmmoOverhaul.Smart_25.selectors: ["Items.AO_Feed_25mm_Seekers", "Items.AO_Feed_25mm_Dumbfires"]
+AmmoOverhaul.Smart_25.selectorAmmo: ["Ammo.AO_S25_Standard", "Ammo.AO_S25_Dumbfire"]
+AmmoOverhaul.Smart_25.selectorTiers: [0, 1]
+AmmoOverhaul.Smart_25.profile: "AOProfile.Smart_25"
+
+# --- Caliber profile ---------------------------------------------------------------------------
+
+# One big dart: a little better into armor, heavy and rare. The startup tweak adds this group to every gun of the caliber.
+AOProfile.Smart_25:
+  $type: StatModifierGroup
+  drawBasedOnStatType: false
+  saveBasedOnStatType: false
+  optimiseCombinedModifiers: false
+  statModifiers:
+    - $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.1
+
+# --- Feed slot -------------------------------------------------------------------------------
+
+AttachmentSlots.AO_AmmoFeed_Smart_25:
+  $base: AttachmentSlots.Smart_Handgun_WeaponMod1
+  entitySlotName: AO_AmmoFeed_Smart_25
+  unlockedBy: Common
+  localizedName: LocKey#AO-Slot-AmmoFeed
+
+Items.AO_AmmoFeed_Smart_25_Element:
+  $type: ItemBlueprintElement
+  slot: AttachmentSlots.AO_AmmoFeed_Smart_25
+
+# --- Ammo --------------------------------------------------------------------------------------
+
+Ammo.AO_S25_Standard:
+  $base: Ammo.HandgunAmmo
+  # Listed in full rather than inherited, so the 9mm weight isn't added on top.
+  statModifiers:
+    - Ammo.HandgunAmmo_inline0
+    - $type: ConstantStatModifier
+      statType: BaseStats.Weight
+      modifierType: Additive
+      value: 0.24
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2.5
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2.5
+  quality: Quality.Common
+  displayName: LocKey#AO-Ammo-25mm-Seekers
+  localizedDescription: LocKey#AO-Ammo-25mm-Seekers-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_0, AO_Family_Smart]
+
+Ammo.AO_S25_Dumbfire:
+  $base: Ammo.AO_S25_Standard
+  quality: Quality.Uncommon
+  displayName: LocKey#AO-Ammo-25mm-Dumbfires
+  localizedDescription: LocKey#AO-Ammo-Dumbfires-Desc
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
+
+# --- Selectors ---------------------------------------------------------------------------------
+
+Items.AO_Feed_25mm_Seekers:
+  $base: Items.Part
+  displayName: LocKey#AO-Ammo-25mm-Seekers
+  localizedDescription: LocKey#AO-Ammo-25mm-Seekers-Desc
+  itemType: ItemType.Prt_Magazine
+  quality: Quality.Common
+  placementSlots: [AttachmentSlots.AO_AmmoFeed_Smart_25]
+  tags: [itemPart, AO_AmmoSelector]
+  buyPrice: []
+  sellPrice: []
+
+# Dumbfire: no homing (a smart bullet homes only with hit probability above 0), more damage.
+Items.AO_Feed_25mm_Dumbfires:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-Dumbfires
+  localizedDescription: LocKey#AO-Ammo-Dumbfires-Desc
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 1.25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHitProbability
+      modifierType: Multiplier
+      value: 0

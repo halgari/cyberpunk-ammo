@@ -13,6 +13,9 @@ local PROFILES = {
   Power_556 = { 1.00, 0.15, 1.00, 1.00 },
   Power_762 = { 1.05, 0.25, 1.20, 1.10 },
   Power_127 = { 1.00, 0.40, 1.25, 1.00 },
+  Tech_Heavy = { 1.00, 0.20, 1.20, 1.00 },
+  Smart_20 = { 1.00, -0.20, 1.00, 1.00 },
+  Smart_25 = { 1.00, 0.10, 1.00, 1.00 },
 }
 local GUNS = {
   { "Power_9mm", "Items.Preset_Lexington_Default" },
@@ -26,6 +29,11 @@ local GUNS = {
   { "Power_762", "Items.Preset_Ajax_Default" },
   { "Power_127", "Items.Preset_Grad_Default" },
   { "Power_127", "Items.Preset_Kolac_Default" },
+  { "Tech_Heavy", "Items.Preset_Burya_Default" },
+  { "Tech_Heavy", "Items.Preset_Tech_Sniper_Rifle_Default" },
+  { "Smart_20", "Items.Preset_Palica_Default" },
+  { "Smart_25", "Items.Preset_Ashura_Default" },
+  { "Smart_10", "Items.Preset_Hercules_Default" },
 }
 -- gun = { stat, expected value with the Common round fitted }
 local LIVE_EXPECT = {

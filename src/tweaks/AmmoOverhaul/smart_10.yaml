@@ -1,8 +1,11 @@
-# Smart 10mm micro-rocket (S-10): Yukimura, Chao, Kappa, Dian, Shingen, Warden. Common 10mm Seekers; Uncommon 10mm
+# Smart 10mm micro-rocket (S-10): Yukimura, Chao, Kappa, Dian, Shingen, Warden, Sidewinder, Hercules 3AX
+# (no family tag: matched by record). Common 10mm Seekers; Uncommon 10mm
 # Dumbfires have no guidance and hit harder.
 
 AmmoOverhaul.Smart_10.family: "Smart"
-AmmoOverhaul.Smart_10.weaponTags: ["Yukimura", "Chao", "Kappa", "Dian", "Shingen", "Warden"]
+AmmoOverhaul.Smart_10.weaponTags: ["Yukimura", "Chao", "Kappa", "Dian", "Shingen", "Warden", "Sidewinder", "Hercules_Poison"]
+AmmoOverhaul.Smart_10.weaponRecords: ["Items.Base_Hercules", "Items.Preset_Hercules_Default", "Items.Preset_Hercules_Military",
+  "Items.Preset_Hercules_Neon", "Items.Preset_Hercules_Pimp", "Items.Preset_Hercules_Prototype", "Items.Preset_Hercules_Legendary"]
 AmmoOverhaul.Smart_10.feedSlot: "AttachmentSlots.AO_AmmoFeed_Smart_10"
 AmmoOverhaul.Smart_10.feedElement: "Items.AO_AmmoFeed_Smart_10_Element"
 AmmoOverhaul.Smart_10.defaultAmmo: "Ammo.AO_S10_Standard"
