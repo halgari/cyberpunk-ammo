@@ -79,7 +79,7 @@ Items.AO_Feed_5mm_RailSlugs:
   # rounds loaded into the gun.
   iconPath: AO_5mm_RailSlugs
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Tech_Light]
-  tags: [itemPart, AO_AmmoSelector]
+  tags: [itemPart, AO_AmmoSelector, HideInBackpackUI]
   buyPrice: []
   sellPrice: []
 

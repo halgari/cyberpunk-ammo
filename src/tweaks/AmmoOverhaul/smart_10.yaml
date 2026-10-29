@@ -82,7 +82,7 @@ Items.AO_Feed_10mm_Seekers:
   # rounds loaded into the gun.
   iconPath: AO_10mm_Seekers
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Smart_10]
-  tags: [itemPart, AO_AmmoSelector]
+  tags: [itemPart, AO_AmmoSelector, HideInBackpackUI]
   buyPrice: []
   sellPrice: []
 

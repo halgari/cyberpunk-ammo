@@ -108,3 +108,11 @@ public final func AOBeforeFill() -> Void {
   }
   this.AOSplitAmmo();
 }
+
+// --- Debug: the vendor sell list ---------------------------------------------------------------
+
+// A data manager for a vendor record, without a vendor object (the sell list needs only the record).
+@addMethod(VendorDataManager)
+public final func AODebugForVendor(vendorID: String) -> Void {
+  this.m_VendorID = TDBID.Create(vendorID);
+}

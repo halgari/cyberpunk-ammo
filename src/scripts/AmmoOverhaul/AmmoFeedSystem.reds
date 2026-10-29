@@ -13,6 +13,9 @@ module AmmoOverhaul
 // by writing its magazine count through the plugin (NativeAmmo.Unload). If that can't be done,
 // the gun in hand falls back to ForceResetAmmoEvent plus a holster and redraw.
 public class AmmoFeedSystem extends ScriptableSystem {
+  // Test only: lets selectors through the vendor sell-list filter (a negative control).
+  public let debugKeepSelectors: Bool;
+
 
   private let m_player: wref<PlayerPuppet>;
 
@@ -470,6 +473,37 @@ public class AmmoFeedSystem extends ScriptableSystem {
       }
     }
     return "no vendor " + vendorID;
+  }
+
+  // "item=quantity;..." of what V could sell to `vendorID`, as the vendor screen builds it.
+  public final func DebugSellList(vendorID: String, keepSelectors: Bool) -> String {
+    this.debugKeepSelectors = keepSelectors;
+    let manager: ref<VendorDataManager> = new VendorDataManager();
+    manager.AODebugForVendor(vendorID);
+    let text: String = "";
+    for item in manager.GetItemsPlayerCanSellFast(GetPlayer(this.GetGameInstance())) {
+      text += TDBID.ToStringDEBUG(ItemID.GetTDBID(item.GetID())) + "=" + IntToString(item.GetQuantity()) + ";";
+    }
+    this.debugKeepSelectors = false;
+    return text;
+  }
+
+  // The player's item map as the backpack screen filters it (HideInBackpackUI, SoftwareShard):
+  // "item;..." of what it would show; unfiltered is the raw map (a control).
+  public final func DebugBackpackItems(filtered: Bool) -> String {
+    let tags: array<CName>;
+    ArrayPush(tags, n"HideInBackpackUI");
+    ArrayPush(tags, n"SoftwareShard");
+    let values: array<wref<IScriptable>>;
+    UIInventoryScriptableSystem.GetInstance(this.GetGameInstance()).GetPlayerItemsMap().GetValues(values);
+    let text: String = "";
+    for value in values {
+      let item: wref<UIInventoryItem> = value as UIInventoryItem;
+      if IsDefined(item) && (!filtered || !item.GetRealItemData().HasAnyOfTags(tags)) {
+        text += TDBID.ToStringDEBUG(ItemID.GetTDBID(item.GetID())) + ";";
+      }
+    }
+    return text;
   }
 
   // Restocks a known vendor now; "<ammo before> -> <ammo after>".

@@ -68,7 +68,7 @@ Items.AO_Feed_9mm_Ball:
   # rounds loaded into the gun.
   iconPath: AO_9mm_Ball
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_9mm]
-  tags: [itemPart, AO_AmmoSelector]
+  tags: [itemPart, AO_AmmoSelector, HideInBackpackUI]
   buyPrice: []
   sellPrice: []
 
