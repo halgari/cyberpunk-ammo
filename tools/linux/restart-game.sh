@@ -33,7 +33,7 @@ setsid -f bash -c '
       if [[ "$0" == mute ]]; then pactl set-sink-input-mute "$id" 1; else pactl set-sink-input-volume "$id" "$0"; fi
     done
     sleep 2
-  done' "${GAME_VOLUME:-3%}" >/dev/null 2>&1
+  done' "${GAME_VOLUME:-3%}" 9>&- >/dev/null 2>&1
 [[ "${1:-}" == "--no-wait" ]] && exit 0
 
 deadline=$(( $(date +%s) + 300 ))
