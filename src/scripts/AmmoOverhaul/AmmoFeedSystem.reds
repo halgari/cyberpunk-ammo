@@ -472,6 +472,17 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return "no vendor " + vendorID;
   }
 
+  // "item=quantity;..." of what V could sell to `vendorID`, as the vendor screen builds it.
+  public final func DebugSellList(vendorID: String) -> String {
+    let manager: ref<VendorDataManager> = new VendorDataManager();
+    manager.AODebugForVendor(vendorID);
+    let text: String = "";
+    for item in manager.GetItemsPlayerCanSellFast(GetPlayer(this.GetGameInstance())) {
+      text += TDBID.ToStringDEBUG(ItemID.GetTDBID(item.GetID())) + "=" + IntToString(item.GetQuantity()) + ";";
+    }
+    return text;
+  }
+
   // Restocks a known vendor now; "<ammo before> -> <ammo after>".
   public final func DebugRestock(vendorID: String) -> String {
     for vendor in MarketSystem.GetInstance(this.GetGameInstance()).AODebugVendors() {

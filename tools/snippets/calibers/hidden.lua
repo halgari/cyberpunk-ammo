@@ -59,16 +59,23 @@ if data then
   check("mod screen lists the selector for a Lexington", found)
 end
 
--- Vendor sell list: wrapped GetItemsPlayerCanSellFast drops selectors.
-local vendorOK, vendorWhy = false, "no vendor reachable"
-local ok, vdm = pcall(function() return VendorDataManager.new() end)
-if ok and vdm and VENDOR_ID then
-  vdm:Initialize(player, VENDOR_ID)
-  local list = vdm:GetItemsPlayerCanSellFast(player)
-  vendorOK = true
-  for _, d in ipairs(list or {}) do
-    if d:HasTag("AO_AmmoSelector") then vendorOK = false; vendorWhy = "selector listed" end
+-- Vendor sell list: the vendor screen's own list builder (wrapped GetItemsPlayerCanSellFast),
+-- against a vendor record, with a selector, an ammo stack and a junk item in V's inventory.
+local sys = Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem")
+Game.AddToInventory("Ammo.HandgunAmmo", 5)
+Game.AddToInventory("Items.AO_Feed_9mm_Mushrooms", 1)
+local tried, tested = 0, 0
+for _, v in ipairs(TweakDB:GetRecords("gamedataVendor_Record")) do
+  local vid = str(v:GetID())
+  local blocked = {}
+  for _, t in ipairs(v:CustomerFilterTags()) do blocked[t.value] = true end
+  local ok, list = pcall(function() return sys:DebugSellList(vid) end)
+  if ok and list:find("Ammo.HandgunAmmo=", 1, true) and not blocked.AO_AmmoSelector and not blocked.HideInBackpackUI and tested < 3 then
+    tested = tested + 1
+    check(vid .. " sell list still has ammo", true)
+    check(vid .. " sell list excludes the selector", not list:find("AO_Feed_", 1, true), list:match("AO_Feed_[%w_]+") or "")
   end
+  tried = tried + 1
 end
-if VENDOR_ID then check("vendor sell list excludes selectors", vendorOK, vendorWhy) end
+check("vendor sell list tested on a vendor (of " .. tried .. ")", tested > 0, tostring(tested))
 report()
