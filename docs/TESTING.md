@@ -193,6 +193,24 @@ By hand:
 17. **Old save.** Load a save from before this change that holds selectors: after loading, the
     backpack shows none, and each gun's Ammo slot lists one entry per round you hold.
 
+Rare and Epic rounds (spawn them with `Game.AddToInventory('Ammo.AO_<caliber>_<Load>', 60)`; the
+names are in `docs/CATALOG.md`):
+
+18. **Icons.** Hold a Rare and an Epic 9mm round (Steel-Core, Match). A Lexington's Ammo slot
+    lists both with their own box art, and the backpack shows it too.
+19. **Machine bonus.** Shoot a drone or a mech with 12.7 HEI, then with 12.7 Ball. HEI hits clearly
+    harder (x1.5). The automated android check spawned a human, so this is the first real one.
+20. **Burning from an NPC.** Spawn `Character.AO_Test_Ganger_9mm_HitData` with the test kit and let
+    it shoot you: you catch fire, and part of each hit is fire damage.
+21. **Non-lethal.** Finish a ganger with 9mm Rubber or 12ga Beanbags: it goes down unconscious, not
+    dead.
+22. **Superconductor.** A Tech rifle or the Omaha with Superconductor fires full auto once fully
+    charged.
+23. **Hunter.** A Yukimura or another smart gun with Hunter locks two more targets, and faster.
+24. **Through cover.** With an Omaha, DU Penetrator goes through cover at about half charge and
+    hits harder through it than Rail Slugs; Split Slugs never go through.
+25. **Gun shop.** A gunsmith's stock has some Rare rounds and no Epic ones.
+
 For each step, note pass or fail and what you saw.
 
 ## Logs
