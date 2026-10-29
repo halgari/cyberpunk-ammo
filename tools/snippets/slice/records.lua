@@ -32,7 +32,8 @@ for _, g in ipairs(guns) do
   for _, c in ipairs(flat(root, "childElements") or {}) do if str(c) == g[3] then found = true end end
   check(g[1] .. " feed element", found, str(root))
 end
-for _, id in ipairs({ "Items.AO_Feed_9mm_Incendiary", "Ammo.AO_9mm_TestDragon", "Items.AO_Feed_9mm_FMJ" }) do
+-- (9mm Incendiary came back as a real Rare round with the Rare/Epic slice.)
+for _, id in ipairs({ "Ammo.AO_9mm_TestDragon", "Items.AO_Feed_9mm_FMJ" }) do
   check(id .. " removed", rec(id) == nil)
 end
 report()
