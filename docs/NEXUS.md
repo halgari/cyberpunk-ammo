@@ -253,7 +253,7 @@ Other ammo, damage, vendor and loot overhauls are the likely conflicts.
 The next version adds:
 [list]
 [*][b]Legendary rounds.[/b] Extremely rare and hard to find.
-[*][b]Faction ammo.[/b] Rounds tied to Night City's factions. Not all of it can be crafted: some you'll have to hunt down.
+[*][b]Faction ammo.[/b] Rounds made by Night City's gangs and corps, each matching its faction's quirks. Most of it likely won't be craftable: you'll have to take it off the people who use it.
 [/list]
 
 [line]
