@@ -370,8 +370,9 @@ Records come from `tools/crafting/crafting.py` (run after `tools/rounds/rounds.p
   costs `recipePriceBatches` batches of its round.
 - **Disassembly:** vanilla gives 1 Common component per round of any ammo. Rounds now break down
   per full batch (`aoScrapRounds`: the Common batch, twice that for Tech) into `aoScrapGive`
-  components (1, Smart 2) of the round's quality; leftover rounds give nothing. Feed selectors
-  can't be broken down.
+  components (1, Smart 2) of the round's quality; only full batches are taken, so leftover
+  rounds stay in the stack, and the backpack's hover preview shows one batch's yield. Feed
+  selectors can't be broken down. Disassembly perks don't apply to rounds.
 
 ## Weight and inventory
 

@@ -7,7 +7,7 @@ module AmmoOverhaul
 //   - every caliber's Common round is known from the start (added on player attach); Uncommon and
 //     up are learned by picking up their recipe item (vanilla's CraftingSystemInventoryCallback);
 //   - rounds break down per full batch (<ammo>.aoScrapRounds) into aoScrapGive components of the
-//     round's own quality; leftover rounds give nothing;
+//     round's own quality; leftover rounds stay in the stack;
 //   - feed selectors can't be broken down (that would drop a gun's ammo choice).
 
 @wrapMethod(CraftingSystem)
@@ -52,12 +52,29 @@ public final const func GetDisassemblyResultItems(target: wref<GameObject>, item
     return wrappedMethod(target, itemID, amount, restoredAttachments, calledFromUI);
   }
   let result: array<IngredientData>;
-  let give: Int32 = (amount / rounds) * AOData.ScrapGive(ammo);
+  // The backpack's hover preview asks for one item: show what one batch gives.
+  let batches: Int32 = calledFromUI && amount == 1 ? 1 : amount / rounds;
+  let give: Int32 = batches * AOData.ScrapGive(ammo);
   if give > 0 {
     let quality: gamedataQuality = TweakDBInterface.GetItemRecord(ammo).Quality().Type();
     ArrayPush(result, this.CreateIngredientData(RPGManager.GetCraftingMaterialRecord(quality), give));
   }
   return result;
+}
+
+// Only full batches are broken down: the rounds left over stay in the stack (the quantity picker
+// lets the player pick any count).
+@wrapMethod(CraftingSystem)
+private final const func DisassembleItem(target: wref<GameObject>, itemID: ItemID, amount: Int32) -> Void {
+  let rounds: Int32 = AOData.ScrapRounds(ItemID.GetTDBID(itemID));
+  if rounds <= 0 {
+    wrappedMethod(target, itemID, amount);
+    return;
+  }
+  let whole: Int32 = (amount / rounds) * rounds;
+  if whole > 0 {
+    wrappedMethod(target, itemID, whole);
+  }
 }
 
 @wrapMethod(CraftingSystem)

@@ -219,8 +219,9 @@ names are in `docs/CATALOG.md`):
 27. **Learn a recipe.** Give yourself `Items.AO_Recipe_AO_9mm_Match` (CET:
     `Game.AddToInventory("Items.AO_Recipe_AO_9mm_Match", 1)`): 9mm Match shows up in the ammo
     list, and a batch makes 23 rounds for 2 Epic components.
-28. **Break down rounds.** In the backpack, disassemble 200 rounds of 9mm Steel-core (2 full
-    batches): you get 2 Rare components. 50 rounds of 9mm Ball give nothing.
+28. **Break down rounds.** Hovering 9mm Ball in the backpack shows 1 Common component (one
+    batch). Disassemble 200 rounds of 9mm Steel-core: you get 2 Rare components and 20 rounds stay
+    (only full 90-round batches go). Disassembling 50 rounds of 9mm Ball does nothing.
 29. **Recipes in the wild.** Over a few gun shop visits some Uncommon and Rare "load sheet"
     recipes are for sale (none Epic). They're rare in loot: about 1 in 20 drops of an Uncommon or
     better round.
