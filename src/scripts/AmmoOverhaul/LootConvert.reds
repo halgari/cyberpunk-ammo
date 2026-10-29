@@ -33,6 +33,10 @@ public abstract class LootConvert {
       if target != vanilla {
         ts.RemoveItem(container, ids[i], quantities[i]);
         ts.GiveItem(container, ItemID.FromTDBID(target), quantities[i]);
+        let recipe: TweakDBID = AmmoDistribution.RecipeRoll(target);
+        if TDBID.IsValid(recipe) {
+          ts.GiveItem(container, ItemID.FromTDBID(recipe), 1);
+        }
       }
       i += 1;
     }

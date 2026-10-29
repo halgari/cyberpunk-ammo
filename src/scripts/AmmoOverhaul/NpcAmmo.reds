@@ -294,6 +294,11 @@ public abstract class NpcAmmo {
       if missing > 0 {
         ts.GiveItem(npc, ItemID.CreateQuery(npc.aoLootAmmo[i]), missing);
       }
+      // A body carrying an Uncommon+ round may carry its recipe too.
+      let recipe: TweakDBID = AmmoDistribution.RecipeRoll(npc.aoLootAmmo[i]);
+      if TDBID.IsValid(recipe) {
+        ts.GiveItem(npc, ItemID.FromTDBID(recipe), 1);
+      }
       i += 1;
     }
   }

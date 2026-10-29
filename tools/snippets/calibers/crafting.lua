@@ -42,6 +42,10 @@ for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
       check(name .. " recipe item is a Recipe hidden in the backpack", has(tags, "Recipe") and has(tags, "HideInBackpackUI"))
       local ln = r and r ~= "" and locName(r) or ""
       check(name .. " recipe item reads '...: load sheet'", ln:sub(-12) == ": load sheet" and #ln > 12, ln)
+      -- Price: 10 crafted batches of the round. Shown prices round up, so allow 10%.
+      local function price(id) return RPGManager.CalculateBuyPrice(Game.GetPlayer(), ItemID.FromTDBID(TweakDBID.new(id)), 1.0) end
+      local got, want = r and r ~= "" and price(r) or 0, 10 * tierBatch(b, t) * price(name)
+      check(name .. " recipe item costs about 10 batches", want > 0 and math.abs(got - want) <= 0.1 * want, got .. " vs " .. want)
     end
     -- Disassembly: Power (b, 1), Smart (b, 2), Tech (2b, 1).
     local want = ({ Power = { b, 1 }, Smart = { b, 2 }, Tech = { 2 * b, 1 } })[family]
@@ -59,4 +63,25 @@ end
 check("recipeDropFactor 0.05", math.abs((flat("AmmoOverhaul", "recipeDropFactor") or -1) - 0.05) < 1e-6)
 check("recipeVendorChance 0.10", math.abs((flat("AmmoOverhaul", "recipeVendorChance") or -1) - 0.10) < 1e-6)
 check("recipePriceBatches 10", flat("AmmoOverhaul", "recipePriceBatches") == 10)
+-- Recipe drops: 2000 rolls on a Rare round land near recipeDropFactor (0.05); Common none. A gun
+-- shop's restock lists only Uncommon and Rare recipes, about recipeVendorChance of them.
+local sys = Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem")
+local rare = sys:DebugRecipeRolls("Ammo.AO_9mm_SteelCore", 2000) / 2000
+check("a Rare round's recipe drops at about 0.05", rare >= 0.03 and rare <= 0.07, tostring(rare))
+check("a Common round's recipe never drops", sys:DebugRecipeRolls("Ammo.AO_45_Ball", 500) == 0)
+local listed, bad, total = 0, 0, 0
+for _ = 1, 20 do
+  for r in string.gmatch(sys:DebugVendorRecipes(2), "([^,]+)") do
+    listed = listed + 1
+    local q = str(flat(r, "quality"))
+    if q ~= "Quality.Uncommon" and q ~= "Quality.Rare" then bad = bad + 1 end
+  end
+end
+for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
+  for _, t in ipairs(flat("AmmoOverhaul." .. c, "selectorTiers") or {}) do if t == 1 or t == 2 then total = total + 1 end end
+end
+local rate = listed / (20 * total)
+check("gun shops list only Uncommon and Rare recipes", listed > 0 and bad == 0, bad .. " of " .. listed)
+check("gun shops list about 0.10 of them", rate >= 0.07 and rate <= 0.13, tostring(rate))
+
 report()

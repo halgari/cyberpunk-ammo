@@ -520,6 +520,28 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // How many of `n` AmmoDistribution.RecipeRoll calls on `ammo` hand out its recipe.
+  public final func DebugRecipeRolls(ammo: String, n: Int32) -> Int32 {
+    let hits: Int32 = 0;
+    let i: Int32 = 0;
+    while i < n {
+      if TDBID.IsValid(AmmoDistribution.RecipeRoll(TDBID.Create(ammo))) {
+        hits += 1;
+      }
+      i += 1;
+    }
+    return hits;
+  }
+
+  // Recipe items a gun shop (maxTier 2) would list on one restock, comma-separated.
+  public final func DebugVendorRecipes(maxTier: Int32) -> String {
+    let out: String = "";
+    for recipe in AmmoDistribution.VendorRecipes(maxTier) {
+      out += TDBID.ToStringDEBUG(recipe) + ",";
+    }
+    return out;
+  }
+
   // "item=count;..." over `n` AmmoDistribution.Pick calls. `owned` is a comma-separated caliber
   // list standing in for the player's guns; "" uses the guns the player really carries.
   public final func DebugPick(vanilla: String, maxTier: Int32, n: Int32, owned: String) -> String {

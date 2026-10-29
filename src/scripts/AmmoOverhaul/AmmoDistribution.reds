@@ -136,6 +136,35 @@ public abstract class AmmoDistribution {
     return stacks;
   }
 
+  // The recipe item to hand out with a dropped `ammo`: with chance recipeDropFactor for an Uncommon+
+  // round, else an invalid ID.
+  public static func RecipeRoll(ammo: TweakDBID) -> TweakDBID {
+    let recipe: TweakDBID = AOData.RecipeItem(ammo);
+    if TDBID.IsValid(recipe) && RandF() < AOData.RecipeDropFactor() {
+      return recipe;
+    }
+    return TDBID.None();
+  }
+
+  // Recipe items a vendor selling up to `maxTier` lists this restock: each Uncommon..maxTier round's
+  // recipe with chance recipeVendorChance.
+  public static func VendorRecipes(maxTier: Int32) -> array<TweakDBID> {
+    let recipes: array<TweakDBID>;
+    for caliber in AOData.Calibers() {
+      let t: Int32 = 1;
+      while t <= maxTier {
+        for ammo in AOData.AmmosForTier(caliber, t) {
+          let recipe: TweakDBID = AOData.RecipeItem(ammo);
+          if TDBID.IsValid(recipe) && RandF() < AOData.RecipeVendorChance() {
+            ArrayPush(recipes, recipe);
+          }
+        }
+        t += 1;
+      }
+    }
+    return recipes;
+  }
+
   // The caliber's tier shares for tiers 0..maxTier that have an ammo item, scaled to sum to 1.
   private static func TierWeights(caliber: String, maxTier: Int32) -> array<Float> {
     let family: String = AOData.Family(caliber);

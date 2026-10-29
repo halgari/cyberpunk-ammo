@@ -34,12 +34,14 @@ private final func AOSplitAmmo() -> Void {
   let maxTier: Int32 = Equals(this.GetVendorType(), gamedataVendorType.Gunsmith) ? 2 : 0;
   let stock: array<SItemStack>;
   let split: Int32 = 0;
+  let template: SItemStack;
   for stack in this.m_stock {
     let vanilla: TweakDBID = ItemID.GetTDBID(stack.itemID);
     let calibers: array<String> = AmmoDistribution.Calibers(vanilla);
     if ArraySize(calibers) == 0 {
       ArrayPush(stock, stack);
     } else {
+      template = stack;
       for part in AmmoDistribution.Spread(vanilla, stack.quantity, maxTier) {
         let copy: SItemStack = stack;
         copy.itemID = ItemID.FromTDBID(part.ammo);
@@ -50,6 +52,15 @@ private final func AOSplitAmmo() -> Void {
     }
   }
   AmmoFeedSystem.Get(this.m_gameInstance).MarkVendorSplit(this.GetVendorTweakID());
+  // Gun shops also list some Uncommon and Rare recipes, as stacks like the ammo they sell.
+  if split > 0 && maxTier > 0 {
+    for recipe in AmmoDistribution.VendorRecipes(maxTier) {
+      let copy: SItemStack = template;
+      copy.itemID = ItemID.FromTDBID(recipe);
+      copy.quantity = 1;
+      ArrayPush(stock, copy);
+    }
+  }
   if split > 0 {
     this.m_stock = stock;
     AmmoFeedSystem.Log("vendor " + TDBID.ToStringDEBUG(this.GetVendorTweakID()) + ": split " + IntToString(split) + " ammo stacks (max tier " + IntToString(maxTier) + ")");
