@@ -447,8 +447,8 @@
   "9mm-subsonic": {
    "shape": "P9",
    "over": {
-    "jacket": "dark",
-    "nose_mult": 1.15
+    "case_mat": "black",
+    "nose_mult": 1.25
    },
    "look": "Subsonic",
    "label": [
@@ -459,7 +459,6 @@
   "9mm-bouncers": {
    "shape": "P9",
    "over": {
-    "case_mat": "nickel",
     "jacket": "steel"
    },
    "look": "Bouncers",
@@ -497,8 +496,9 @@
   "9mm-match": {
    "shape": "P9",
    "over": {
+    "case_mat": "nickel",
     "nose": "spitzer",
-    "nose_mult": 1.15,
+    "nose_mult": 1.2,
     "hp": true
    },
    "look": "Match",
@@ -554,8 +554,8 @@
   "45-subsonic": {
    "shape": "P45",
    "over": {
-    "jacket": "dark",
-    "nose_mult": 1.15
+    "case_mat": "black",
+    "nose_mult": 1.25
    },
    "look": "Subsonic",
    "label": [
@@ -566,7 +566,6 @@
   "45-bouncers": {
    "shape": "P45",
    "over": {
-    "case_mat": "nickel",
     "jacket": "steel"
    },
    "look": "Bouncers",
@@ -604,8 +603,9 @@
   "45-match": {
    "shape": "P45",
    "over": {
+    "case_mat": "nickel",
     "nose": "spitzer",
-    "nose_mult": 1.15,
+    "nose_mult": 1.2,
     "hp": true
    },
    "look": "Match",
@@ -685,8 +685,9 @@
   "12mm-match": {
    "shape": "P12",
    "over": {
+    "case_mat": "nickel",
     "nose": "spitzer",
-    "nose_mult": 1.15,
+    "nose_mult": 1.2,
     "hp": true
    },
    "look": "Match",
@@ -742,8 +743,8 @@
   "556-subsonic": {
    "shape": "R556",
    "over": {
-    "jacket": "dark",
-    "nose_mult": 1.15
+    "case_mat": "black",
+    "nose_mult": 1.25
    },
    "look": "Subsonic",
    "label": [
@@ -754,7 +755,6 @@
   "556-bouncers": {
    "shape": "R556",
    "over": {
-    "case_mat": "nickel",
     "jacket": "steel"
    },
    "look": "Bouncers",
@@ -780,8 +780,9 @@
   "556-match": {
    "shape": "R556",
    "over": {
+    "case_mat": "nickel",
     "nose": "spitzer",
-    "nose_mult": 1.15,
+    "nose_mult": 1.2,
     "hp": true
    },
    "look": "Match",
@@ -849,8 +850,9 @@
   "762-match": {
    "shape": "R762",
    "over": {
+    "case_mat": "nickel",
     "nose": "spitzer",
-    "nose_mult": 1.15,
+    "nose_mult": 1.2,
     "hp": true
    },
    "look": "Match",
@@ -918,8 +920,9 @@
   "127-match": {
    "shape": "R127",
    "over": {
+    "case_mat": "nickel",
     "nose": "spitzer",
-    "nose_mult": 1.15,
+    "nose_mult": 1.2,
     "hp": true
    },
    "look": "Match",
@@ -1281,7 +1284,9 @@
   "10mm-emppayload": {
    "shape": "S10",
    "over": {
-    "idband": "blue"
+    "idband": "blue",
+    "tip": "blue",
+    "front": "blue"
    },
    "look": "EMPPayload",
    "label": [
@@ -1292,7 +1297,9 @@
   "10mm-firepayload": {
    "shape": "S10",
    "over": {
-    "idband": "orange"
+    "idband": "orange",
+    "tip": "orange",
+    "front": "orange"
    },
    "look": "FirePayload",
    "label": [
@@ -1303,7 +1310,9 @@
   "10mm-chempayload": {
    "shape": "S10",
    "over": {
-    "idband": "green"
+    "idband": "green",
+    "tip": "green",
+    "front": "green"
    },
    "look": "ChemPayload",
    "label": [
@@ -1314,7 +1323,9 @@
   "10mm-flashpayload": {
    "shape": "S10",
    "over": {
-    "idband": "white"
+    "idband": "white",
+    "tip": "white",
+    "front": "white"
    },
    "look": "FlashPayload",
    "label": [
@@ -1326,7 +1337,8 @@
    "shape": "S10",
    "over": {
     "nose_mat": "gold",
-    "idband": "gold"
+    "idband": "gold",
+    "front": "gold"
    },
    "look": "Hunter",
    "label": [
@@ -1338,7 +1350,9 @@
    "shape": "S10",
    "over": {
     "sensor": "green",
-    "idband": "black"
+    "idband": "black",
+    "tip": "teal",
+    "front": "teal"
    },
    "look": "HackCarrier",
    "label": [
@@ -1351,7 +1365,8 @@
    "over": {
     "nose_mat": "copper",
     "noseeker": true,
-    "idband": "yellow"
+    "idband": "yellow",
+    "front": "yellow"
    },
    "look": "ShapedCharge",
    "label": [
@@ -1362,7 +1377,9 @@
   "20mm-emppayload": {
    "shape": "S20",
    "over": {
-    "idband": "blue"
+    "idband": "blue",
+    "tip": "blue",
+    "front": "blue"
    },
    "look": "EMPPayload",
    "label": [
@@ -1373,7 +1390,9 @@
   "20mm-firepayload": {
    "shape": "S20",
    "over": {
-    "idband": "orange"
+    "idband": "orange",
+    "tip": "orange",
+    "front": "orange"
    },
    "look": "FirePayload",
    "label": [
@@ -1384,7 +1403,9 @@
   "20mm-chempayload": {
    "shape": "S20",
    "over": {
-    "idband": "green"
+    "idband": "green",
+    "tip": "green",
+    "front": "green"
    },
    "look": "ChemPayload",
    "label": [
@@ -1395,7 +1416,9 @@
   "20mm-flashpayload": {
    "shape": "S20",
    "over": {
-    "idband": "white"
+    "idband": "white",
+    "tip": "white",
+    "front": "white"
    },
    "look": "FlashPayload",
    "label": [
@@ -1407,7 +1430,8 @@
    "shape": "S20",
    "over": {
     "nose_mat": "gold",
-    "idband": "gold"
+    "idband": "gold",
+    "front": "gold"
    },
    "look": "Hunter",
    "label": [
@@ -1419,7 +1443,9 @@
    "shape": "S20",
    "over": {
     "sensor": "green",
-    "idband": "black"
+    "idband": "black",
+    "tip": "teal",
+    "front": "teal"
    },
    "look": "HackCarrier",
    "label": [
@@ -1432,7 +1458,8 @@
    "over": {
     "nose_mat": "copper",
     "noseeker": true,
-    "idband": "yellow"
+    "idband": "yellow",
+    "front": "yellow"
    },
    "look": "ShapedCharge",
    "label": [
@@ -1443,7 +1470,9 @@
   "25mm-emppayload": {
    "shape": "S25",
    "over": {
-    "idband": "blue"
+    "idband": "blue",
+    "tip": "blue",
+    "front": "blue"
    },
    "look": "EMPPayload",
    "label": [
@@ -1454,7 +1483,9 @@
   "25mm-firepayload": {
    "shape": "S25",
    "over": {
-    "idband": "orange"
+    "idband": "orange",
+    "tip": "orange",
+    "front": "orange"
    },
    "look": "FirePayload",
    "label": [
@@ -1465,7 +1496,9 @@
   "25mm-chempayload": {
    "shape": "S25",
    "over": {
-    "idband": "green"
+    "idband": "green",
+    "tip": "green",
+    "front": "green"
    },
    "look": "ChemPayload",
    "label": [
@@ -1476,7 +1509,9 @@
   "25mm-flashpayload": {
    "shape": "S25",
    "over": {
-    "idband": "white"
+    "idband": "white",
+    "tip": "white",
+    "front": "white"
    },
    "look": "FlashPayload",
    "label": [
@@ -1488,7 +1523,8 @@
    "shape": "S25",
    "over": {
     "nose_mat": "gold",
-    "idband": "gold"
+    "idband": "gold",
+    "front": "gold"
    },
    "look": "Hunter",
    "label": [
@@ -1500,7 +1536,9 @@
    "shape": "S25",
    "over": {
     "sensor": "green",
-    "idband": "black"
+    "idband": "black",
+    "tip": "teal",
+    "front": "teal"
    },
    "look": "HackCarrier",
    "label": [
@@ -1513,7 +1551,8 @@
    "over": {
     "nose_mat": "copper",
     "noseeker": true,
-    "idband": "yellow"
+    "idband": "yellow",
+    "front": "yellow"
    },
    "look": "ShapedCharge",
    "label": [

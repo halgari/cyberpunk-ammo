@@ -463,9 +463,13 @@ JACKETS = {
 }
 
 
+BLACK_CASE = lambda: principled("BlackCase", (0.03, 0.03, 0.035), 0.7, 0.35, wear=0.1, grime=0.8,
+                                edge=(0.84, 0.55, 0.2))
+
+
 def case_mat(s, default):
     c = s.get("case_mat")
-    return GREEN_LACQUER() if c == "green" else NICKEL() if c == "nickel" else default
+    return {"green": GREEN_LACQUER, "nickel": NICKEL, "black": BLACK_CASE}.get(c, lambda: default)()
 
 
 def bullet(s, rb, z0, length, shape):
@@ -731,13 +735,15 @@ def cube(name, size, loc, mat, bevel=0.0, rot=(0, 0, 0)):
     return ob
 
 
-def tip_profile_smart(r, z0, nl, seeker, body, g=None):
-    """Ogive nose from radius r at z0, length nl. Seekers end in a small dark glass sensor tip."""
+def tip_profile_smart(r, z0, nl, seeker, body, g=None, tip=None):
+    """Ogive nose from radius r at z0, length nl. Seekers end in a small dark glass sensor tip.
+    tip: a paint colour over the front of the nose (the payload's colour)."""
     p, n = [], 20
     stop = 0.86 if seeker else 1.0
+    tm = paint(tip, gloss=True) if tip else None
     for k in range(n + 1):
         t = stop * k / n
-        p.append((r * (1 - t ** 1.8) ** 0.75 if t < 1 else 0.0, z0 + nl * t, body if not seeker else body))
+        p.append((r * (1 - t ** 1.8) ** 0.75 if t < 1 else 0.0, z0 + nl * t, tm if tm and t >= 0.45 else body))
     if seeker:
         g = g or glass("SensorGlass", (0.04, 0.06, 0.09), 0.03)
         rt, zt = p[-1][0], p[-1][1]
@@ -770,7 +776,8 @@ def dian(s):
         zb1 += 0.07 * L
     p += [(r, zb1 + 0.005 * L, body), (r * 0.985, zb1 + 0.02 * L, body)]
     nose = tip_profile_smart(r * 0.985, zb1 + 0.02 * L, L - zb1 - 0.02 * L - (0.0 if dumb else 0.0),
-                             not dumb and not s.get("noseeker"), STEEL() if dumb else nose_mat(s, body), sensor_glass(s))
+                             not dumb and not s.get("noseeker"), STEEL() if dumb else nose_mat(s, body), sensor_glass(s),
+                             s.get("tip"))
     p += nose[1:]
     first_band = next(i for i, q in enumerate(p) if q[2] is band)
 
@@ -829,12 +836,20 @@ def cassette(s):
                 hazard("Hazard", side * 0.15) if s.get("dumbfire")
                 else id_paint(s["idband"]) if s.get("idband") else WHITE_PAINT(), side * 0.02)
     band.parent = root
+    if s.get("front"):
+        # The payload's colour round the front, as four plates so the cells stay open.
+        fm = paint(s["front"])
+        for k in range(4):
+            a = k * math.pi / 2
+            plate = cube("FrontBand", (side * 1.04, side * 0.02, Lc * 0.1),
+                         (-math.sin(a) * side * 0.51, math.cos(a) * side * 0.51, Lc * 0.88), fm, side * 0.005, rot=(0, 0, a))
+            plate.parent = root
     bpy.ops.mesh.primitive_cylinder_add(radius=cr * 0.35, depth=cr * 0.4, location=(0, 0, Lc + cr * 0.1), vertices=24)
     pin = bpy.context.active_object
     pin.data.materials.append(GOLD())
     pin.parent = root
     rs = dict(kind="dian", r=cr * 0.86, L=Lc * 0.8, dumbfire=s.get("dumbfire", False), idband=s.get("idband"),
-              **{k: s[k] for k in ("nose_mat", "sensor", "noseeker") if k in s})
+              **{k: s[k] for k in ("nose_mat", "sensor", "noseeker", "tip") if k in s})
     first = None
     for i in (-1, 0, 1):
         for j in (-1, 0, 1):
@@ -878,7 +893,7 @@ def ashura(s):
         zf += 0.08 * L
     else:
         base += [(R, zf, body)]
-    base += tip_profile_smart(R, zf, L - zf, False, STEEL() if dumb else nose_mat(s, body))[1:]
+    base += tip_profile_smart(R, zf, L - zf, False, STEEL() if dumb else nose_mat(s, body), tip=s.get("tip"))[1:]
     revolve("Body", base).parent = root
     # Cage struts and the base lugs.
     for k in range(6):
