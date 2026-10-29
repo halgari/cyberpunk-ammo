@@ -8,3 +8,4 @@ tools/wolvenkit/
 tools/wolvenkit-win/
 art/build/
 __pycache__/
+art/banner/*-8k.png

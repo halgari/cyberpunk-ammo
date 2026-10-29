@@ -1,54 +1,216 @@
 # Nexus Mods page
 
 The mod page text, in Nexus's BBCode, ready to paste into the description field. Keep it in step
-with README.md. The upload settings for the first file are at the end.
+with README.md and docs/CATALOG.md. The main image is `art/banner/main-4k.png` (made by
+`tools/render/banner.py`). The upload settings for the first file are at the end.
+
+Nexus BBCode notes: `[spoiler]`, `[line]`, `[center]`, `[color=#hex]` and `[size=1-6]` all work;
+tables don't render reliably, so everything is lists. The tier colors are the game's own rarity
+colors (Common grey, Uncommon green, Rare blue, Epic purple).
 
 ```
-[size=5][b]Ammo Overhaul[/b][/size]
+[center][size=6][b][color=#d4a04c]BRASS[/color][color=#9aa3ad]MARKET[/color][/b][/size]
+[size=4]13 calibers. 130 rounds. One market.[/size][/center]
 
-The game's four ammo types become 13 calibers and about 130 rounds, from plain ball to Epic match grade. V and NPCs play by the same rules.
+[line]
 
-[size=4][b]Calibers[/b][/size]
-Every gun takes the caliber that fits it:
+The game gives you four kinds of ammo. [b]Brass Market[/b] gives you 13 calibers and 130 different rounds, from plain ball to Epic match grade, and the economy to go with them: shops that stock them, NPCs who carry and fire them, recipes to load your own, and boxes you can break down for parts.
+
+Every gun takes the caliber that fits it. Every caliber has Common, Uncommon, Rare and Epic rounds. Pick what goes in the mag from the gun's mod screen.
+
+[size=5][b][color=#2ad4ff]What you get[/color][/b][/size]
 [list]
-[*][b]Power:[/b] 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge and 4-gauge.
-[*][b]Tech:[/b] light and heavy rail slugs.
-[*][b]Smart:[/b] 10mm, 20mm and 25mm guided rounds.
+[*][b]13 calibers.[/b] 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
+[*][b]130 rounds.[/b] Hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and plenty more.
+[*][b]Pick your load.[/b] A gun's mod screen gets an [b]Ammo[/b] slot. Choose any round you carry for that caliber and the gun keeps loading it until you change it. No surprise switching.
+[*][b]Same rules for everyone.[/b] NPCs carry real rounds, better ones the tougher they are. A gang boss with steel core goes through your armor the same way your steel core goes through theirs. They can run dry, too: an NPC out of rounds switches guns or comes at you with fists. Loot what they carried.
+[*][b]A real ammo economy.[/b] Gun shops stock every caliber up to Rare. Recipes drop and turn up on shelves. Craft by the box, break boxes down for components.
+[*][b]Every round has its own box.[/b] 130 hand-rendered icons, labeled and color coded so you can tell your Mushrooms from your Penetrators at a glance.
 [/list]
 
-[size=4][b]Rounds[/b][/size]
-Each caliber has Common, Uncommon, Rare and Epic rounds: hollow points, steel core, incendiary, subsonic, flechettes, dumbfire smart rounds and more. Common rounds work like the game's ammo. Better rounds change damage, armor, range or what a hit does.
-
-Pick a gun's round in the new [b]Ammo[/b] section of its mod screen. The gun loads that round until you pick another.
-
-[size=4][b]NPCs[/b][/size]
-NPCs carry real rounds, better ones the tougher they are. They fire them under the same damage rules as you, and you can loot what they carry.
-
-[size=4][b]Getting rounds[/b][/size]
+[size=5][b][color=#2ad4ff]Tiers[/color][/b][/size]
 [list]
-[*]Vendors and loot hand out every caliber and tier. Gun shops sell up to Rare; Epic rounds only turn up as loot.
-[*]Every caliber's Common round can be crafted from the start. Better rounds need a recipe ("load sheet") from loot or a gun shop.
-[*]Tech rounds are the cheapest to craft and Smart rounds the most expensive.
-[*]Rounds break down by the box into components of their own grade.
+[*][color=#b0b0b0][b]Common[/b][/color]: the caliber's plain round. Works exactly like the game's ammo did. No bonuses, no catches.
+[*][color=#3fbf5f][b]Uncommon[/b][/color]: two per caliber. Small, honest trade-offs: more damage for less armor pen, faster charge for less punch.
+[*][color=#3fa0ff][b]Rare[/b][/color]: specialist loads. Fire, ricochets, non-lethal, quiet, armor piercing.
+[*][color=#b04fff][b]Epic[/b][/color]: the good stuff. Penetrators, toxin cores, thermite, EMP, match grade. Loot only; no shop sells it.
 [/list]
 
-[size=4][b]Requirements[/b][/size]
-Cyberpunk 2077 2.50, with RED4ext, TweakXL, ArchiveXL, Codeware and redscript.
+[line]
 
-[size=4][b]Install[/b][/size]
+[size=5][b][color=#2ad4ff]Calibers[/color][/b][/size]
+Each caliber is a size. What the round does is up to the load you pick.
+
+[size=4][b][color=#d4a04c]Power[/color][/b][/size] (gunpowder cartridges)
+[list]
+[*][b]9mm[/b]: Lexington, Slaught-O-Matic, Guillotine, Pulsar, Saratoga, Erebus
+[*][b].45[/b]: Unity, Liberty, Nue
+[*][b]12mm magnum[/b]: Nova, Overture, Metel, Malorian Arms 3516
+[*][b]5.56[/b]: Umbra, Masamune, Copperhead, Defender
+[*][b]7.62[/b]: Ajax, Kyubi, MA70 HB
+[*][b]12.7[/b]: Kolac, SOR-22, Grad, Osprey, Mk.31 HMG
+[*][b]12-gauge[/b]: Crusher, Pozhar, Tactician, Igla, Testera
+[*][b]4-gauge[/b]: Carnage
+[/list]
+
+[size=4][b][color=#2ad4ff]Tech[/color][/b][/size] (rail-fired slugs)
+[list]
+[*][b]Light rail (5mm)[/b]: Kenshin, Ticon, Omaha, Grit, Senkoh LX, Quasar
+[*][b]Heavy rail[/b]: Burya, Achilles, Nekomata, Rasetsu, Satara
+[/list]
+
+[size=4][b][color=#ff5a5a]Smart[/color][/b][/size] (guided micro-rockets)
+[list]
+[*][b]10mm[/b]: Chao, Kappa, Yukimura, Dian, Shingen, Warden, Hercules 3AX, Sidewinder
+[*][b]20mm cluster[/b]: Zhuo, Palica
+[*][b]25mm dart[/b]: Ashura
+[/list]
+
+Guns keep their own fire rate, pellet count and handling. The caliber only decides which box they load from; the round decides what happens when it hits. Heavier calibers weigh more and cost more.
+
+[line]
+
+[size=5][b][color=#2ad4ff]The rounds[/color][/b][/size]
+What each load does. Percentages are changes from the plain round.
+
+[size=4][b][color=#d4a04c]Pistol and rifle rounds[/color][/b][/size]
+[list]
+[*][color=#b0b0b0][b]Ball[/b][/color] (Common): the plain round.
+[*][color=#3fbf5f][b]Mushrooms[/b][/color] (Uncommon): hollow points. +20% damage, armor matters more.
+[*][color=#3fbf5f][b]+P[/b][/color] (Uncommon): hot loads. +10% damage, +15% range, more recoil.
+[*][color=#3fa0ff][b]Steel-Core[/b][/color] (Rare): ignores 25% of armor. -10% damage.
+[*][color=#3fa0ff][b]Incendiary[/b][/color] (Rare): a chance to set the target on fire, a quarter of the damage is fire.
+[*][color=#3fa0ff][b]Subsonic[/b][/color] (Rare): much quieter. Silent kills. A little less damage and range.
+[*][color=#3fa0ff][b]Bouncers[/b][/color] (Rare): 30% chance to ricochet once.
+[*][color=#3fa0ff][b]Rubber[/b][/color] (Rare): non-lethal. Targets go down unconscious. Big flinch.
+[*][color=#3fa0ff][b]Hardcast[/b][/color] (Rare, 12mm): 25% chance to stagger, a little armor pen, more kick.
+[*][color=#3fa0ff][b]Ballistic Tip[/b][/color] (Rare, 7.62 and 12.7): +40% range, +5% damage.
+[*][color=#b04fff][b]Penetrator[/b][/color] (Epic): ignores 60% of armor.
+[*][color=#b04fff][b]Match[/b][/color] (Epic): tight damage roll that sits high, 30% less spread and sway.
+[*][color=#b04fff][b]Toxin Core[/b][/color] (Epic): 25% chance to poison, 30% of the damage is chemical.
+[*][color=#b04fff][b]Shredders[/b][/color] (Epic): 30% chance to cause bleeding, twice the dismemberment.
+[*][color=#b04fff][b]HEI[/b][/color] (Epic, 12.7): +50% damage against drones, mechs and vehicles, and a chance to set targets on fire.
+[/list]
+
+[size=4][b][color=#d4a04c]Shotgun shells[/color][/b][/size]
+[list]
+[*][color=#b0b0b0][b]Buckshot[/b][/color] (Common): the plain shell.
+[*][color=#3fbf5f][b]Slugs[/b][/color] (Uncommon): one projectile with the whole shot, tight and long. 4-gauge slugs hit harder and knock targets down.
+[*][color=#3fbf5f][b]Birdshot[/b][/color] (Uncommon): twice the pellets, wide spread, big flinch.
+[*][color=#3fa0ff][b]Flechettes[/b][/color] (Rare): tighter spread, double range.
+[*][color=#3fa0ff][b]Beanbags[/b][/color] (Rare, 12ga): non-lethal knockdown.
+[*][color=#3fa0ff][b]Riot[/b][/color] (Rare, 4ga): non-lethal knockdown.
+[*][color=#3fa0ff][b]Dragon's Breath Lite[/b][/color] (Rare, 12ga): half fire damage, 30% chance to ignite.
+[*][color=#3fa0ff][b]Flares[/b][/color] (Rare, 4ga): blinds the target, may set it on fire.
+[*][color=#b04fff][b]Dragon's Breath[/b][/color] (Epic): all fire damage, sets targets badly on fire.
+[*][color=#b04fff][b]Frag-12[/b][/color] (Epic, 12ga): explosive slug. Ignores 50% of armor, +50% against drones, mechs and vehicles.
+[*][color=#b04fff][b]Long Flechettes[/b][/color] (Epic, 12ga): tight spread, 3.5x range.
+[*][color=#b04fff][b]Thermite Slugs[/b][/color] (Epic, 4ga): sets targets badly on fire, double damage against drones, mechs and vehicles.
+[/list]
+
+[size=4][b][color=#2ad4ff]Rail slugs[/color][/b][/size] (light and heavy rail)
+[list]
+[*][color=#b0b0b0][b]Rail Slugs[/b][/color] (Common): the plain slug.
+[*][color=#3fbf5f][b]Sleevers[/b][/color] (Uncommon): 30% faster charge, slightly less damage.
+[*][color=#3fbf5f][b]Bricks[/b][/color] (Uncommon): +15% damage, slower charge.
+[*][color=#3fa0ff][b]Ferro[/b][/color] (Rare): 40% chance to ricochet, up to twice.
+[*][color=#3fa0ff][b]Split Slugs[/b][/color] (Rare): three projectiles per shot, wider spread.
+[*][color=#3fa0ff][b]Feedback[/b][/color] (Rare): shots bend toward targets near the crosshair.
+[*][color=#b04fff][b]DU Penetrator[/b][/color] (Epic): pierces cover at a lower charge, loses half as much through it, ignores 50% of armor.
+[*][color=#b04fff][b]Toxic Scatter[/b][/color] (Epic): five projectiles per shot, 25% chance to poison.
+[*][color=#b04fff][b]Superconductor[/b][/color] (Epic): full auto at full charge.
+[*][color=#b04fff][b]EMP Capacitor[/b][/color] (Epic): 30% chance of an EMP, 30% of the damage is electrical.
+[/list]
+
+[size=4][b][color=#ff5a5a]Smart rounds[/color][/b][/size] (10mm, 20mm, 25mm)
+[list]
+[*][color=#b0b0b0][b]Seekers[/b][/color] (Common): the plain guided round.
+[*][color=#3fbf5f][b]Dumbfires[/b][/color] (Uncommon): no guidance, +80% damage.
+[*][color=#3fbf5f][b]Short-Fuse[/b][/color] (Uncommon): +20% damage, much shorter reach.
+[*][color=#3fa0ff][b]EMP Payload[/b][/color] (Rare): 25% chance of an EMP, part electrical damage.
+[*][color=#3fa0ff][b]Incendiary Payload[/b][/color] (Rare): 25% chance to set targets on fire, part fire damage.
+[*][color=#3fa0ff][b]Chem Payload[/b][/color] (Rare): 25% chance to poison, part chemical damage.
+[*][color=#3fa0ff][b]Flash Payload[/b][/color] (Rare): 30% chance to blind the target.
+[*][color=#b04fff][b]Hunter[/b][/color] (Epic): locks two more targets, locks on twice as fast, flies 30% faster.
+[*][color=#b04fff][b]Hack Carrier[/b][/color] (Epic): chance of a cyberware malfunction or a jammed weapon.
+[*][color=#b04fff][b]Shaped Charge[/b][/color] (Epic): ignores 50% of armor, +50% against drones, mechs and vehicles.
+[/list]
+
+[spoiler]
+[b]Every round, by caliber[/b]
+[list]
+[*][b]9mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Rubber, Penetrator, Match, Toxin Core, Shredders
+[*][b].45[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Rubber, Penetrator, Match, Toxin Core, Shredders
+[*][b]12mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Rubber, Hardcast, Match, Toxin Core, Shredders
+[*][b]5.56[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Penetrator, Match, Toxin Core, Shredders
+[*][b]7.62[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Match, Toxin Core, Shredders
+[*][b]12.7[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Match, Toxin Core, HEI
+[*][b]12-gauge[/b]: Buckshot, Slugs, Birdshot, Flechettes, Beanbags, Dragon's Breath Lite, Dragon's Breath, Frag-12, Long Flechettes
+[*][b]4-gauge[/b]: Buckshot, Slugs, Birdshot, Flechettes, Riot, Flares, Dragon's Breath, Thermite Slugs
+[*][b]Light rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor
+[*][b]Heavy rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor
+[*][b]10mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
+[*][b]20mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
+[*][b]25mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
+[/list]
+[/spoiler]
+
+[line]
+
+[size=5][b][color=#2ad4ff]The market[/color][/b][/size]
+[size=4][b]Buying[/b][/size]
+[list]
+[*]Gun shops stock every caliber, Common to Rare. Other vendors that sold ammo sell Common rounds.
+[*]Epic rounds never hit a shelf. Take them off people who had them.
+[/list]
+
+[size=4][b]Looting[/b][/size]
+[list]
+[*]NPCs carry the caliber of the gun in their hands, and better rounds the tougher they are. What they fired at you is what you loot.
+[*]Ammo in containers becomes any caliber and tier, leaning toward the guns you carry.
+[/list]
+
+[size=4][b]Crafting[/b][/size]
+[list]
+[*]Every caliber's Common round is craftable from the start.
+[*]Better rounds need a [b]load sheet[/b]: a recipe that drops from loot or turns up in gun shops. Pick it up and you know it.
+[*]Rounds craft by the box. Higher tiers make smaller boxes from better components.
+[*]Tech rounds are the cheapest to load, Power in the middle, Smart the most expensive.
+[/list]
+
+[size=4][b]Breaking down[/b][/size]
+[list]
+[*]Disassemble rounds by the full box for components of their own grade. Odd rounds stay in the stack.
+[/list]
+
+[line]
+
+[size=5][b][color=#2ad4ff]Requirements[/color][/b][/size]
+Cyberpunk 2077 [b]2.50[/b], with:
+[list]
+[*]RED4ext
+[*]TweakXL
+[*]ArchiveXL
+[*]Codeware
+[*]redscript
+[/list]
+
+[size=5][b][color=#2ad4ff]Install[/color][/b][/size]
 Use a mod manager, or extract the zip into the game folder (the one holding [i]bin[/i] and [i]r6[/i]).
 
-Existing saves work. Ammo you hold becomes the Common rounds of 9mm, 5.56, 12-gauge and 12.7. A gun that moved to a new caliber (a Unity to .45, a Satara to heavy rail, a Kolac to 12.7, an Omaha to light rail) starts empty until you buy or find its rounds.
+[b]Existing saves work.[/b] Ammo you already hold becomes the Common rounds of 9mm, 5.56, 12-gauge and 12.7. A gun that moved to a new caliber (a Unity to .45, a Satara to heavy rail, a Kolac to 12.7, an Omaha to light rail) starts empty until you buy or find its rounds.
 
-[b]Don't remove the mod from a playthrough you'll keep.[/b] Its rounds, recipes and ammo choices are lost or broken without it, so keep a save from before you install it.
+[color=#ff5a5a][b]Don't remove the mod from a playthrough you'll keep.[/b][/color] Its rounds, recipes and ammo choices are lost or broken without it. Keep a save from before you install it.
 
-[size=4][b]Known issues[/b][/size]
+[size=5][b][color=#2ad4ff]Known issues[/color][/b][/size]
 [list]
-[*]Loose ammo lying in the world stays the game's own ammo, which counts as the Common round of 9mm, 5.56, 12.7 or 12-gauge.
+[*]Loose ammo lying around the world is still the game's own ammo, which counts as the Common round of 9mm, 5.56, 12.7 or 12-gauge.
 [*]Some rounds' range and spread changes do nothing for NPCs, because the game gives NPC guns no range or spread values.
 [/list]
 
-Source: https://github.com/halgari/cyberpunk-ammo
+[line]
+
+[center]Source and bug reports: [url=https://github.com/halgari/cyberpunk-ammo]github.com/halgari/cyberpunk-ammo[/url][/center]
 ```
 
 ## First upload (by hand)
@@ -57,8 +219,9 @@ The Nexus upload action only adds versions to a file that already exists, so the
 up through the site:
 
 - **Game:** Cyberpunk 2077. **Category:** Gameplay (or Weapons).
+- **Name:** Brass Market. **Main image:** `art/banner/main-4k.png`.
 - **Requirements** (Requirements tab): RED4ext, TweakXL, ArchiveXL, Codeware, redscript.
 - **File:** `dist/AmmoOverhaul-<version>.zip` from `tools/linux/release.sh <version>`.
-  Category Main, version as in `VERSION`, name "Ammo Overhaul".
+  Category Main, version as in `VERSION`, name "Brass Market".
 - Then note the **mod ID** (in the page URL) and the **file ID** (Files tab, "Advanced"), and
   finish the setup in `docs/RELEASING.md`.
