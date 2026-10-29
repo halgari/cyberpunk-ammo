@@ -39,10 +39,10 @@ setup() {
   done
   [[ $r == ready ]]
 }
-# Lets the NPC shoot V until $1 hits land (6 rounds of 8 s), then freezes it.
+# Lets the NPC shoot V until $1 hits land (${2:-6} rounds of 8 s), then freezes it.
 npcshoot() {
   lua "RIG.clear(); return 1" >/dev/null
-  for _ in $(seq 6); do
+  for _ in $(seq ${2:-6}); do
     lua "RIG.letNpcShoot(); return 1" >/dev/null; sleep 8; lua "RIG.freeze(); return 1" >/dev/null
     [[ $(lua "return #RIG.ratios('NPC')") -ge $1 ]] && break
   done
@@ -55,9 +55,9 @@ return string.format('%s %d $1 NPC hits on V in $2..$3 (%.3f..%.3f)', ok and 'PA
 
 draw() { $C "GUN='$1'; $(cat $S/feed-kit.lua)" >/dev/null; sleep 3; }
 feed() { $C "FEED='$1'; $(cat $S/set-feed.lua)" >/dev/null; sleep 6; }
-# Fires until the rig holds $2 V hits (or 120 tries; set up again after 10 idle tries), redrawing $1 when V holsters.
+# Fires until the rig holds $2 V hits (keeping the hits already there if $3 is keep) (or 120 tries; set up again after 10 idle tries), redrawing $1 when V holsters.
 shoot() {
-  lua "RIG.clear(); return 1" >/dev/null
+  [[ "${3:-}" == keep ]] || lua "RIG.clear(); return 1" >/dev/null
   local have=0 last=0 idle=0
   for _ in $(seq 120); do
     have=$(lua "return #RIG.ratios('V')"); [[ $have -ge $2 ]] && break
@@ -80,7 +80,7 @@ return Game.GetStatsSystem():GetStatValue(w:GetItemData():GetStatsObjectID(), ga
 # up at 3 m and lets it shoot V until 24 hits; tries again when the rig swapped the NPC. 0 if the
 # hits in the rig are the Crusher's.
 crusher_run() {
-  for _ in 1 2 3 4; do
+  for _ in 1 2 3 4 5 6; do
     spawn $1 "$2" Character.AO_Test_Plain_Crusher || return 1
     for _ in 1 2 3 4 5 6 7 8; do [[ $(lua "return RIG.setup(nil, 3)") == ready ]] && break; sleep 3; done
     holds_crusher $3 || continue

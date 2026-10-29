@@ -46,25 +46,31 @@ nphase() { # name lo hi flats ammo
 nphase 'Mushrooms' 1.0776 1.2144 10.0 Ammo.AO_9mm_HollowPoint
 nphase 'Ball (roll factor off)' 0.898 1.012 0.0 Ammo.HandgunAmmo
 
-# Pellets: a 12ga Crusher with Birdshot lands more pellets in a shot on V than Common's 3 (shots are
-# the rig's hits within 0.1 s; at 3 m).
-volley() { # round
-  lua "local v = RIG.volleys('NPC'); table.sort(v, function(a, b) return a.n < b.n end)
-local t = 0 for _, s in ipairs(v) do t = t + s.total end
-AO_VOL = { shots = #v, median = v[math.ceil(#v / 2)] and v[math.ceil(#v / 2)].n or 0, max = v[#v] and v[#v].n or 0, total = #v > 0 and t / #v or 0 }
-return string.format('%d shots, median %d hits, %.1f damage per shot', AO_VOL.shots, AO_VOL.median, AO_VOL.total)"
+# Pellets: a 12ga Crusher with Birdshot lands more pellets in a shot on V than Common's 3, and
+# Birdshot and Slugs deal Common's damage per shot (shots are the rig's hits within 0.1 s, at 3 m).
+# Bounds 0.6..1.5: a Common NPC's pellet alternates between two damage levels 1.28 apart (5.06 and
+# 6.48 before the roll, by spawn), so the ratio spreads over about 0.75..1.3 for equal shots; the
+# broken ratios were 0.44 (Birdshot) and 3.7 (Slug).
+# A shot's damage is the mean damage of a landed pellet times the gun's pellet count, so pellets
+# that miss don't count against it.
+volley() { # variable round-name pellets
+  lua "local v = RIG.volleys('NPC'); local n, t, max = 0, 0, 0
+for _, s in ipairs(v) do n = n + s.n; t = t + s.total; max = math.max(max, s.n) end
+$1 = { shots = #v, max = max, perPellet = n > 0 and t / n or 0, shot = n > 0 and t / n * $3 or 0 }
+return string.format('%d shots, up to %d pellets, %.2f per pellet, %.1f per shot', #v, max, $1.perPellet, $1.shot)"
 }
-if crusher_run 0.0 "" 3; then
-  common="$(volley)"; echo "  Common: $common" >&2
-  lua "AO_COMMON = AO_VOL; return 1" >/dev/null
-  if crusher_run 10.0 Ammo.AO_12ga_Birdshot 6; then bird="$(volley)"; echo "  Birdshot: $bird" >&2; fi
-fi
-out+="$(lua "local c, b = AO_COMMON, AO_VOL
+if crusher_run 0.0 "" 3; then echo "  Common: $(volley AO_COMMON Common 3)" >&2; fi
+if crusher_run 10.0 Ammo.AO_12ga_Birdshot 6; then echo "  Birdshot: $(volley AO_BIRD Birdshot 6)" >&2; fi
+if crusher_run 10.0 Ammo.AO_12ga_Slug 1; then echo "  Slug: $(volley AO_SLUG Slug 1)" >&2; fi
+out+="$(lua "local c, b = AO_COMMON, AO_BIRD
 local ok = c and b and c.shots >= 3 and b.shots >= 3 and c.max <= 3 and b.max > 3
 return string.format('%s Birdshot NPC shots land up to %d pellets, Common up to %d (the gun has 3)', ok and 'PASS' or 'FAIL', b and b.max or 0, c and c.max or 0)")|"
-out+="$(lua "local c, b = AO_COMMON, AO_VOL
-local ok = c and b and c.total > 0 and b.total / c.total < 1.5
-return string.format('%s Birdshot damage per NPC shot %.1f is not double Common %.1f (damage is split across the pellets)', ok and 'PASS' or 'FAIL', b and b.total or 0, c and c.total or 0)")|"
+for r in "BIRD Birdshot" "SLUG Slug"; do
+  set -- $r
+  out+="$(lua "local c, b = AO_COMMON, AO_$1
+local ratio = (c and b and c.shot > 0) and b.shot / c.shot or 0
+return string.format('%s NPC $2 damage per shot %.1f is %.2f of Common %.1f (0.6..1.5)', (b and b.shots >= 3 and ratio >= 0.6 and ratio <= 1.5) and 'PASS' or 'FAIL', b and b.shot or 0, ratio, c and c.shot or 0)")|"
+done
 
 # Phase 3: V's own Mushrooms hits on a Unity target are rolled once, not multiplied by 1.2 again.
 LEX=Items.Preset_Lexington_Default
@@ -72,9 +78,12 @@ $C "Game.AddToInventory('$LEX', 1); Game.AddToInventory('Items.AO_Feed_9mm_Mushr
 sleep 1; draw $LEX; draw $LEX; feed Items.AO_Feed_9mm_Mushrooms
 flats 0.0
 $C 'GetMod("AOTestKit").despawnAll(); return 1' >/dev/null; sleep 2
-for _ in 1 2 3; do
+# Hits pile up across the attempts (V's hit counts are low now and then).
+keep=""
+for _ in 1 2 3 4; do
   setup $LEX
-  shoot $LEX 25
+  shoot $LEX 25 $keep
+  keep=keep
   [[ $(lua "return #RIG.ratios('V')") -ge 10 ]] && break
 done
 out+="$(lua "local v = RIG.ratios('V')
@@ -84,8 +93,8 @@ $C "FEED='Items.AO_Feed_9mm_Ball'; $(cat $S/set-feed.lua)" >/dev/null
 lua "RIG.teardown(); return 1" >/dev/null
 res=$(tr '|' '\n' <<<"$out" | sed '/^$/d'); echo "$res"
 p=$(grep -c '^PASS' <<<"$res"); n=$(grep -c '^FAIL' <<<"$res")
-# ganger 3, stat cases 19, NPC hit phases 2, pellets 2, V phase 1: a chunk that printed nothing can't vanish.
-EXPECT=27
+# ganger 3, stat cases 19, NPC hit phases 2, pellets 3, V phase 1: a chunk that printed nothing can't vanish.
+EXPECT=28
 (( p + n >= EXPECT )) || { echo "FAIL only $((p + n)) of $EXPECT checks reported"; n=$((n + 1)); }
 echo "== parity: $p pass, $n fail"
 (( n == 0 && p > 0 ))

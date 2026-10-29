@@ -563,6 +563,16 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // The weapon's ProjectilesPerShot over its unmodified count (ProjectilesPerShotBase); 1.0 when
+  // either is missing or 0.
+  public static func PelletRatio(weapon: ref<WeaponObject>) -> Float {
+    let stats: ref<StatsSystem> = GameInstance.GetStatsSystem(weapon.GetGame());
+    let id: StatsObjectID = weapon.GetItemData().GetStatsObjectID();
+    let base: Float = stats.GetStatValue(id, gamedataStatType.ProjectilesPerShotBase);
+    let count: Float = stats.GetStatValue(id, gamedataStatType.ProjectilesPerShot);
+    return base > 0.0 && count > 0.0 ? count / base : 1.0;
+  }
+
   // Rolls a ranged gun hit's damage with its loaded round's roll; false (nothing done) for any
   // other hit. Each damage type with its own values rolls on its own, the rest share one roll.
   public static func RollGunHit(hitEvent: ref<gameHitEvent>) -> Bool {
@@ -581,7 +591,12 @@ public class AmmoFeedSystem extends ScriptableSystem {
     let whole: AORoll = system.Roll(ammo, family, "");
     let factor: Float = DamageRoll.Draw(whole);
     // NPC guns have no DamagePerHit to carry the round's multiplier: apply it to the hit here.
-    let npcFactor: Float = instigator.IsPlayer() ? 1.0 : system.DamageFactor(ammo);
+    // The engine also splits an NPC shot's damage by the pellet count twice, so a round that changes
+    // the count (Birdshot, Slugs) changes the shot's total: multiply back by the count's change.
+    let npcFactor: Float = 1.0;
+    if !instigator.IsPlayer() {
+      npcFactor = system.DamageFactor(ammo) * AmmoFeedSystem.PelletRatio(weapon);
+    }
     let types: array<String> = AmmoFeedSystem.DamageTypes();
     let i: Int32 = 1;
     while i < ArraySize(types) {

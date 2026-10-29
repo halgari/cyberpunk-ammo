@@ -6,6 +6,12 @@
 set -uo pipefail
 cd "$(dirname "$0")/../../.."
 C=tools/linux/cet.sh; S=tools/snippets; out=""
+# The NPC's hits are rolled and, with an Uncommon round, multiplied by its damage factor (AO parity.sh):
+# keep the NPC on the Common round here, and put the Uncommon chance back after.
+R='AO_R = {Trash=0.5,Weak=0.5,Normal=1.0,Rare=1.5,Officer=1.5,Elite=2.0,Boss=2.0}'
+$C "$R"' for r in pairs(AO_R) do TweakDB:SetFlat("AmmoOverhaul.npcUncommonFactor."..r, 0.0) end' >/dev/null
+restoreflats() { $C "$R"' for r, v in pairs(AO_R) do TweakDB:SetFlat("AmmoOverhaul.npcUncommonFactor."..r, v) end' >/dev/null; }
+trap restoreflats EXIT
 lua() { $C -t 30 "$(cat $S/calibers/rig.lua); $1" 2>&1 | sed -n 's/^=> //p' | tail -1; }
 draw() { $C "GUN='$1'; $(cat $S/feed-kit.lua)" >/dev/null; sleep 3; }
 feed() { $C "FEED='$1'; $(cat $S/set-feed.lua)" >/dev/null; sleep 6; }

@@ -245,7 +245,7 @@ does nothing when added to an NPC gun's stats. `AmmoFeedSystem.RollGunHit` appli
 for a hit whose instigator is not the player, every damage-type multiplier is also multiplied by
 `AmmoFeedSystem.DamageFactor(ammo)`, the product of the `DamagePerHit` Multiplier modifiers on the
 selector that feeds the round (`AOData.SelectorForAmmo`, `AOData.AmmoDamageFactor`; cached like
-the calibers). Unmanaged ammo and Common rounds are 1.0. V's own hits are not multiplied here:
+the calibers), and by the gun's pellet ratio (see the audit). Unmanaged ammo and Common rounds are 1.0. V's own hits are not multiplied here:
 her gun's `DamagePerHit` carries the modifier already. The `DamagePerHit` modifier still lands
 on the NPC gun's stats, but is multiplied against 0, so it never doubles.
 
@@ -267,7 +267,7 @@ says.
 | `DamagePerHit` | Broken (NPC gun value 0): fixed in the roll hook, checked by `parity.lua`/`parity.sh`. |
 | `CanWeaponIgnoreArmor` | Works. Measured on a Mushrooms NPC gun in hand (`slice/npcdrop.sh`: -0.5). |
 | `SmartGunHitProbability` | Works. Measured: Yukimura with Dumbfires 1 -> 0. |
-| `ProjectilesPerShot` | Was broken for the combined modifiers (see below), fixed in `NpcAmmo.ToModifier`. Measured: 12ga Slugs 3 -> 1, 12ga Birdshot 3 -> 6, 4ga Birdshot 7 -> 17.5; a Birdshot Crusher lands more hits per shot on V than a Common one, and its damage per shot is not doubled. |
+| `ProjectilesPerShot` | Count: was broken for combined modifiers (see below), fixed in `NpcAmmo.ToModifier`. Damage: the engine splits an NPC shot's damage by the pellet count twice (per-pellet damage about 1 / pellets squared; V's shot total stays the same), so Birdshot did ~0.44 of Common per shot and Slugs ~3.7; fixed in the roll hook (`AmmoFeedSystem.PelletRatio`: NPC hits times `ProjectilesPerShot` / `ProjectilesPerShotBase` of the gun). Measured at 3 m (`calibers/parity.sh`, `pellets.sh`): 12ga Slugs 3 -> 1, Birdshot 3 -> 6, 4ga Birdshot 7 -> 17.5; Birdshot lands up to 6 pellets; per-shot damage of Birdshot and Slugs within 0.6..1.5 of Common. |
 | `HitReactionFactor` | Works. Measured: 12ga and 4ga Birdshot 2 -> 2.5. |
 | `EffectiveRange`, `MaximumRange`, `SpreadDefault*`, `SpreadMax*`, `SpreadAds*` | No effect: NPC guns have 0 for them, with or without the round, so a multiplier changes nothing. Known gap. |
 | `RecoilKickMin/Max`, `WeaponEvolutionToStaminaCost` | Irrelevant: NPCs have no camera recoil and no stamina. |
@@ -296,13 +296,6 @@ constant.
 - NPC guns have no value (0) for `EffectiveRange`, `MaximumRange` and the spread stats, so a round's
   multipliers on them (+P range, Short Fuse range, Slug and Birdshot spread) do nothing for NPCs.
   `calibers/parity.sh` reads the stats and fails if one of them stops being 0.
-- NPC shotgun pellets split a shot's damage by the pellet count twice (measured at 3 m with
-  `calibers/pellets.sh`, damage per pellet before the roll): Common 3 pellets at 5.1; Birdshot (6
-  pellets) 1.3 to 1.7, about 0.4 to 0.5 of Common's damage per shot; Slug (1 pellet) 56, about 3.7
-  times Common. V's own shots keep the shot total (Buckshot 51, Birdshot 51 in the same setup). The
-  per-pellet damage for NPCs looks proportional to 1 / pellets squared. A fix would multiply NPC
-  pellet hits by the gun's `ProjectilesPerShot` over `ProjectilesPerShotBase` in `RollGunHit`;
-  not done.
 - Old saves: vanilla ammo already held becomes the four Common rounds. A gun moved to a new
   caliber (a Unity to .45, a Satara to heavy rail, a Kolac to 12.7, an Omaha to 5mm rail) starts
   empty until its rounds are bought or looted.
