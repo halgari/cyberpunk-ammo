@@ -144,7 +144,9 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
   1.8, 4ga Slugs 1.3, Common 1.0). `parity.sh`: the same on live hits with the rig: a Mushrooms
   ganger hits V for 1.2x the roll, a Common one the plain roll, V's own Mushrooms hits roll once;
   every other stat a round changes, read off an NPC's gun in hand; NPC Birdshot and Slug shots
-  land about as hard per shot as Common. Takes about 7 min.
+  land about as hard per shot as Common. Takes about 7 min. The suite runs it last without gating:
+  a Crusher phase can lose its NPC when the rig respawns its own on lost line of sight ("no
+  Crusher with ProjectilesPerShot ..."), which is the rig, not the parity.
 - `sync.sh`: the hidden selectors follow the ammo held: one loose selector per round with at least
   1 round, none at 0, the same round on two guns, a run-out round stays fitted, an open mod screen
   updates (fits guns and opens menus: not while you play).

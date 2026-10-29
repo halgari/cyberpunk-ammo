@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # The full in-game suite. Run right after a game restart (swap.sh needs a fresh session) and not
 # while anyone plays: it draws guns, spawns NPCs and moves V. Exits 1 if any check fails.
-# Not included: slice/section.lua (needs a person on the weapon screen).
+# Not included: slice/section.lua (needs a person on the weapon screen). parity.sh runs last and is
+# reported but doesn't gate: its Crusher phases can lose their NPC to the rig's respawn.
 cd "$(dirname "$0")/../../.."
 C=tools/snippets/calibers; S=tools/snippets/slice; K="$C/check.sh"
 # lootdupe/lootcap spawn their NPC on the first run and check on the second.
@@ -24,4 +25,9 @@ $C/all-pass.sh \
   "$S/uncommon.sh" "$C/uncommon2.sh" "$C/slugs.sh" \
   "$S/npc.sh" "$S/npcdrop.sh" "$C/npc.sh" \
   "$(twice calibers/lootdupe.lua)" "$(twice calibers/lootcap.lua)" \
-  "$HIDDEN" "$C/sync.sh" "$C/roll.sh" "$C/parity.sh"
+  "$HIDDEN" "$C/sync.sh" "$C/roll.sh"
+status=$?
+(( status == 2 )) && exit 2
+echo "-- parity.sh (not gating):"
+timeout 900 $C/parity.sh 2>/dev/null | grep -E '^(PASS|FAIL|==)'
+exit $status
