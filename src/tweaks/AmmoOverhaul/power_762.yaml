@@ -56,6 +56,19 @@ Ammo.AO_762_Ball:
 Ammo.AO_762_HollowPoint:
   $base: Ammo.AO_762_Ball
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   displayName: LocKey#AO-Ammo-762-Mushrooms
   localizedDescription: LocKey#AO-Ammo-Mushrooms-Desc
   iconPath: AO_762_Mushrooms
@@ -112,6 +125,19 @@ Items.AO_Feed_762_Mushrooms:
 Ammo.AO_762_PlusP:
   $base: Ammo.AO_762_Ball
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
   displayName: LocKey#AO-Ammo-762-PlusP
   localizedDescription: LocKey#AO-Ammo-PlusP-Desc

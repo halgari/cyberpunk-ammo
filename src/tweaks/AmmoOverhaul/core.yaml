@@ -20,10 +20,11 @@ AmmoOverhaul.calibers: ["Power_9mm", "Power_45", "Power_12mm", "Power_556", "Pow
   "Tech_Heavy", "Smart_10", "Smart_20", "Smart_25"]
 
 # --- Distribution ------------------------------------------------------------------------------
-# Share of each tier (Common, Uncommon) in a family's ammo, for vendors, world loot and NPCs.
-AmmoOverhaul.shares.Power: [0.85, 0.15]
-AmmoOverhaul.shares.Tech: [0.75, 0.25]
-AmmoOverhaul.shares.Smart: [0.90, 0.10]
+# Share of each tier (Common, Uncommon, Rare, Epic) in a family's ammo, for vendors, world loot
+# and NPCs. Gun shops sell up to Rare, other vendors Common only (Vendors.reds); loot rolls any tier.
+AmmoOverhaul.shares.Power: [0.80, 0.14, 0.05, 0.01]
+AmmoOverhaul.shares.Tech: [0.70, 0.22, 0.07, 0.01]
+AmmoOverhaul.shares.Smart: [0.86, 0.10, 0.035, 0.005]
 
 # Chance that converted world loot goes to the caliber of a gun the player carries, rather than
 # a caliber picked by the calibers' lootWeight.
@@ -86,8 +87,9 @@ AmmoOverhaul.npcMagazines.Boss: 12
 # caps the loot, so an HMG heavy with 1200 rounds of 12.7 leaves 40.
 AmmoOverhaul.npcLootWeight: 6.0
 
-# How much likelier than the family's Uncommon share an NPC of each rarity is to carry the
-# Uncommon round.
+# How much likelier than the family's share of a tier an NPC of each rarity is to carry a round of
+# that tier (NpcAmmo.RollRound); 0 or unset for Rare and Epic means never. Epic rolls first, then
+# Rare, then Uncommon.
 AmmoOverhaul.npcUncommonFactor.Trash: 0.5
 AmmoOverhaul.npcUncommonFactor.Weak: 0.5
 AmmoOverhaul.npcUncommonFactor.Normal: 1.0
@@ -95,6 +97,12 @@ AmmoOverhaul.npcUncommonFactor.Rare: 1.5
 AmmoOverhaul.npcUncommonFactor.Officer: 1.5
 AmmoOverhaul.npcUncommonFactor.Elite: 2.0
 AmmoOverhaul.npcUncommonFactor.Boss: 2.0
+AmmoOverhaul.npcRareFactor.Rare: 1.5
+AmmoOverhaul.npcRareFactor.Officer: 1.5
+AmmoOverhaul.npcRareFactor.Elite: 2.0
+AmmoOverhaul.npcRareFactor.Boss: 3.0
+AmmoOverhaul.npcEpicFactor.Elite: 2.0
+AmmoOverhaul.npcEpicFactor.Boss: 4.0
 
 # --- Vanilla ammo ------------------------------------------------------------------------------
 # Ammo counts against carry capacity: about one point per typical magazine. Stacks track

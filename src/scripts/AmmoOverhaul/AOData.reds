@@ -210,6 +210,21 @@ public abstract class AOData {
     return TweakDBInterface.GetFloat(TDBID.Create("AmmoOverhaul.npcUncommonFactor." + rarity), 1.0);
   }
 
+  // How much likelier than its family's share of `tier` an NPC of `rarity` is to carry a round of
+  // that tier: 1 Uncommon, 2 Rare, 3 Epic. Unset Rare and Epic factors are 0 (never).
+  public static func NpcTierFactor(rarity: String, tier: Int32) -> Float {
+    switch tier {
+      case 1:
+        return AOData.NpcUncommonFactor(rarity);
+      case 2:
+        return TweakDBInterface.GetFloat(TDBID.Create("AmmoOverhaul.npcRareFactor." + rarity), 0.0);
+      case 3:
+        return TweakDBInterface.GetFloat(TDBID.Create("AmmoOverhaul.npcEpicFactor." + rarity), 0.0);
+      default:
+        return 0.0;
+    }
+  }
+
   // Weapon records the caliber takes besides those with its tags (guns with no family tag).
   public static func WeaponRecords(caliber: String) -> array<TweakDBID> {
     return AOData.GetIDs(AOData.Key(caliber, "weaponRecords"));

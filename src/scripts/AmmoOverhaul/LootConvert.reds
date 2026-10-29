@@ -1,7 +1,7 @@
 module AmmoOverhaul
 
 // World loot: when a loot container fills, each stack of vanilla ammo that calibers replace
-// becomes one round picked for it (AmmoDistribution.Pick, up to Uncommon), same quantity. Each
+// becomes one round picked for it (AmmoDistribution.Pick, any tier), same quantity. Each
 // container converts once: 9mm Ball is vanilla handgun ammo, so converted containers are kept on
 // AmmoFeedSystem (saved) rather than told apart by their contents.
 
@@ -28,7 +28,8 @@ public abstract class LootConvert {
     let i: Int32 = 0;
     while i < ArraySize(ids) {
       let vanilla: TweakDBID = ItemID.GetTDBID(ids[i]);
-      let target: TweakDBID = AmmoDistribution.Pick(vanilla, 1, owned);
+      // Loot rolls any tier, Epic included.
+      let target: TweakDBID = AmmoDistribution.Pick(vanilla, 3, owned);
       if target != vanilla {
         ts.RemoveItem(container, ids[i], quantities[i]);
         ts.GiveItem(container, ItemID.FromTDBID(target), quantities[i]);

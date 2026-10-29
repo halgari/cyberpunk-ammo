@@ -56,6 +56,19 @@ Ammo.AO_4ga_Buckshot:
 Ammo.AO_4ga_Slug:
   $base: Ammo.AO_4ga_Buckshot
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   displayName: LocKey#AO-Ammo-4ga-Slugs
   localizedDescription: LocKey#AO-Ammo-4ga-Slugs-Desc
   iconPath: AO_4ga_Slugs
@@ -191,6 +204,19 @@ AmmoOverhaul.Slug4ga.chance: 1.0
 Ammo.AO_4ga_Birdshot:
   $base: Ammo.AO_4ga_Buckshot
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
   displayName: LocKey#AO-Ammo-4ga-Birdshot
   localizedDescription: LocKey#AO-Ammo-4ga-Birdshot-Desc

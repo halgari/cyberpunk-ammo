@@ -53,6 +53,19 @@ Ammo.AO_S10_Dumbfire:
       modifierType: Additive
       value: 0.08
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   displayName: LocKey#AO-Ammo-10mm-Dumbfires
   localizedDescription: LocKey#AO-Ammo-10mm-Dumbfires-Desc
   iconPath: AO_10mm_Dumbfires
@@ -116,6 +129,19 @@ Ammo.AO_S10_ShortFuse:
       modifierType: Additive
       value: 0.08
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
   displayName: LocKey#AO-Ammo-10mm-ShortFuse
   localizedDescription: LocKey#AO-Ammo-ShortFuse-Desc

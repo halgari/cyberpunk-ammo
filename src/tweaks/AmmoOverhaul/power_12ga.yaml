@@ -36,6 +36,19 @@ Ammo.AO_12ga_Slug:
       modifierType: Additive
       value: 0.06
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   displayName: LocKey#AO-Ammo-Slugs
   localizedDescription: LocKey#AO-Ammo-Slugs-Desc
   iconPath: AO_12ga_Slugs
@@ -150,6 +163,19 @@ Ammo.AO_12ga_Birdshot:
       modifierType: Additive
       value: 0.06
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
   displayName: LocKey#AO-Ammo-12ga-Birdshot
   localizedDescription: LocKey#AO-Ammo-Birdshot-Desc

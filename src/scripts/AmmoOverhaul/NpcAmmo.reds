@@ -23,8 +23,8 @@ public let aoStocked: array<TweakDBID>;
 @addField(NPCPuppet)
 public let aoStockedGuns: array<ItemID>;
 
-// Guns already rolled for the Uncommon round (NpcAmmo.RollUncommon), whatever the result, and the
-// ones that got it, with the round (parallel lists).
+// Guns already rolled for a better round (NpcAmmo.RollRound), whatever the result, and the ones
+// that got one, with the round (parallel lists; the names date from when only Uncommons existed).
 @addField(NPCPuppet)
 public let aoRolledGuns: array<ItemID>;
 
@@ -117,7 +117,7 @@ public abstract class NpcAmmo {
     for item in items {
       let id: ItemID = item.GetID();
       if !ArrayContains(npc.aoStockedGuns, id) {
-        NpcAmmo.RollUncommon(npc, id);
+        NpcAmmo.RollRound(npc, id);
       }
       let ammo: TweakDBID = NpcAmmo.GunAmmo(npc, id);
       if TDBID.IsValid(ammo) && !ArrayContains(npc.aoStockedGuns, id) {
@@ -136,26 +136,25 @@ public abstract class NpcAmmo {
     }
   }
 
-  // Gives one of the mod's guns one of its caliber's Uncommon rounds (PickUncommon) with the chance its family's
-  // Uncommon share times the NPC's rarity factor gives: GunAmmo then returns that round, and the
-  // Uncommon selector's stat modifiers go onto the gun. No part is fitted: TransactionSystem.AddPart
-  // on an NPC's drawn gun hangs the game (2.50). Guns whose feed slot is already filled (a preset's
-  // selector) keep it. Each gun is rolled once. True if the gun got the Uncommon round.
-  public static func RollUncommon(npc: ref<NPCPuppet>, gun: ItemID) -> Bool {
+  // Gives one of the mod's guns a better round than Common, by its NPC's rank (RollTier): GunAmmo
+  // then returns that round, and its selector's stat modifiers go onto the gun. No part is fitted:
+  // TransactionSystem.AddPart on an NPC's drawn gun hangs the game (2.50). Guns whose feed slot is
+  // already filled (a preset's selector) keep it. Each gun is rolled once. The tier given, 0 for none.
+  public static func RollRound(npc: ref<NPCPuppet>, gun: ItemID) -> Int32 {
     let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(gun));
     if StrLen(caliber) == 0 || ArrayContains(npc.aoRolledGuns, gun) {
-      return false;
+      return 0;
     }
     ArrayPush(npc.aoRolledGuns, gun);
     let gunData: wref<gameItemData> = GameInstance.GetTransactionSystem(npc.GetGame()).GetItemData(npc, gun);
-    let selector: TweakDBID = NpcAmmo.PickUncommon(caliber);
-    if !IsDefined(gunData) || gunData.HasPartInSlot(AOData.FeedSlot(caliber)) || !TDBID.IsValid(selector) {
-      return false;
+    if !IsDefined(gunData) || gunData.HasPartInSlot(AOData.FeedSlot(caliber)) {
+      return 0;
     }
     let rarity: String = EnumValueToString("gamedataNPCRarity", Cast<Int64>(EnumInt(npc.GetNPCRarity())));
-    let chance: Float = MinF(1.0, AOData.TierShare(AOData.Family(caliber), 1) * AOData.NpcUncommonFactor(rarity));
-    if RandF() >= chance {
-      return false;
+    let tier: Int32 = NpcAmmo.RollTier(caliber, rarity);
+    let selector: TweakDBID = NpcAmmo.PickTier(caliber, tier);
+    if !TDBID.IsValid(selector) {
+      return 0;
     }
     ArrayPush(npc.aoUncommonGuns, gun);
     ArrayPush(npc.aoUncommonAmmo, AOData.SelectorAmmo(caliber, selector));
@@ -166,7 +165,24 @@ public abstract class NpcAmmo {
       stats.AddModifier(gunData.GetStatsObjectID(), NpcAmmo.ToModifier(modifier, stats, gunData.GetStatsObjectID()));
     }
     AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " got " + TDBID.ToStringDEBUG(selector) + " for " + TDBID.ToStringDEBUG(ItemID.GetTDBID(gun)));
-    return true;
+    return tier;
+  }
+
+  // The tier an NPC of `rarity` gets for a gun of `caliber`: Epic, then Rare, then Uncommon each
+  // roll with their family share times the rank's factor, a miss falling to the next tier down;
+  // 0 (Common) if all miss. Tiers the caliber has no round for are skipped.
+  public static func RollTier(caliber: String, rarity: String) -> Int32 {
+    let family: String = AOData.Family(caliber);
+    let tier: Int32 = 3;
+    while tier >= 1 {
+      let chance: Float = MinF(1.0, AOData.TierShare(family, tier) * AOData.NpcTierFactor(rarity, tier));
+      let selectors: array<TweakDBID> = AOData.SelectorsForTier(caliber, tier);
+      if chance > 0.0 && ArraySize(selectors) > 0 && RandF() < chance {
+        return tier;
+      }
+      tier -= 1;
+    }
+    return 0;
   }
 
   // RPGManager.StatRecordToModifier for a modifier on `gunStats`, except for a combined one ("add
@@ -183,9 +199,12 @@ public abstract class NpcAmmo {
     return RPGManager.CreateStatModifier(combined.StatType().StatType(), modType, amount);
   }
 
-  // One of the caliber's Uncommon selectors, each as likely; invalid if it has none.
-  public static func PickUncommon(caliber: String) -> TweakDBID {
-    let selectors: array<TweakDBID> = AOData.SelectorsForTier(caliber, 1);
+  // One of the caliber's selectors of `tier` (1 or above), each as likely; invalid if it has none.
+  public static func PickTier(caliber: String, tier: Int32) -> TweakDBID {
+    if tier < 1 {
+      return TDBID.None();
+    }
+    let selectors: array<TweakDBID> = AOData.SelectorsForTier(caliber, tier);
     return ArraySize(selectors) > 0 ? selectors[RandRange(0, ArraySize(selectors))] : TDBID.None();
   }
 

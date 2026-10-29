@@ -56,6 +56,19 @@ Ammo.AO_S25_Standard:
 Ammo.AO_S25_Dumbfire:
   $base: Ammo.AO_S25_Standard
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   displayName: LocKey#AO-Ammo-25mm-Dumbfires
   localizedDescription: LocKey#AO-Ammo-Dumbfires-Desc
   iconPath: AO_25mm_Dumbfires
@@ -112,6 +125,19 @@ Items.AO_Feed_25mm_Dumbfires:
 Ammo.AO_S25_ShortFuse:
   $base: Ammo.AO_S25_Standard
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Smart]
   displayName: LocKey#AO-Ammo-25mm-ShortFuse
   localizedDescription: LocKey#AO-Ammo-ShortFuse-Desc

@@ -58,6 +58,19 @@ Ammo.AO_THeavy_Slug:
 Ammo.AO_THeavy_Sabot:
   $base: Ammo.AO_THeavy_Slug
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   displayName: LocKey#AO-Ammo-Heavy-Sleevers
   localizedDescription: LocKey#AO-Ammo-Sleevers-Desc
   iconPath: AO_Heavy_Sleevers
@@ -114,6 +127,19 @@ Items.AO_Feed_Heavy_Sleevers:
 Ammo.AO_THeavy_Bricks:
   $base: Ammo.AO_THeavy_Slug
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Tech]
   displayName: LocKey#AO-Ammo-Heavy-Bricks
   localizedDescription: LocKey#AO-Ammo-Bricks-Desc

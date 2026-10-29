@@ -374,13 +374,32 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
-  // "ammo=count;..." over `n` NpcAmmo.PickUncommon calls, as the selector's ammo.
+  // "tier=count;..." over `n` NpcAmmo.RollTier calls for an NPC of `rarity` (no puppet needed).
+  public final func DebugTierPick(caliber: String, rarity: String, n: Int32) -> String {
+    let counts: array<Int32> = [0, 0, 0, 0];
+    let i: Int32 = 0;
+    while i < n {
+      counts[NpcAmmo.RollTier(caliber, rarity)] += 1;
+      i += 1;
+    }
+    let text: String = "";
+    i = 0;
+    while i < 4 {
+      if counts[i] > 0 {
+        text += IntToString(i) + "=" + IntToString(counts[i]) + ";";
+      }
+      i += 1;
+    }
+    return text;
+  }
+
+  // "ammo=count;..." over `n` NpcAmmo.PickTier(caliber, 1) calls, as the selector's ammo.
   public final func DebugUncommonPick(caliber: String, n: Int32) -> String {
     let items: array<TweakDBID>;
     let counts: array<Int32>;
     let i: Int32 = 0;
     while i < n {
-      let ammo: TweakDBID = AOData.SelectorAmmo(caliber, NpcAmmo.PickUncommon(caliber));
+      let ammo: TweakDBID = AOData.SelectorAmmo(caliber, NpcAmmo.PickTier(caliber, 1));
       let at: Int32 = ArrayFindFirst(items, ammo);
       if at < 0 {
         ArrayPush(items, ammo);

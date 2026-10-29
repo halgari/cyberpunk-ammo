@@ -38,6 +38,19 @@ Ammo.AO_9mm_HollowPoint:
       modifierType: Additive
       value: 0.06
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   displayName: LocKey#AO-Ammo-9mm-Mushrooms
   localizedDescription: LocKey#AO-Ammo-9mm-Mushrooms-Desc
   iconPath: AO_9mm_Mushrooms
@@ -103,6 +116,19 @@ Ammo.AO_9mm_PlusP:
       modifierType: Additive
       value: 0.06
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Power]
   displayName: LocKey#AO-Ammo-9mm-PlusP
   localizedDescription: LocKey#AO-Ammo-PlusP-Desc

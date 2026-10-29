@@ -50,6 +50,19 @@ Ammo.AO_TLight_Sabot:
       modifierType: Additive
       value: 0.04
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   displayName: LocKey#AO-Ammo-5mm-Sleevers
   localizedDescription: LocKey#AO-Ammo-5mm-Sleevers-Desc
   iconPath: AO_5mm_Sleevers
@@ -113,6 +126,19 @@ Ammo.AO_TLight_Bricks:
       modifierType: Additive
       value: 0.04
   quality: Quality.Uncommon
+  # Uncommon: twice the Common round's price (as weapons roughly double per quality).
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_1, AO_Family_Tech]
   displayName: LocKey#AO-Ammo-5mm-Bricks
   localizedDescription: LocKey#AO-Ammo-Bricks-Desc

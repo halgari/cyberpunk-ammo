@@ -2,7 +2,7 @@ module AmmoOverhaul
 
 // Vendor ammo: each stack of vanilla ammo a caliber replaces is split into that ammo's calibers
 // and tiers (AmmoDistribution.Spread) whenever the vendor builds its stock. Gun shops sell up to
-// Uncommon, everyone else Common only. A restock rebuilds the stock from the vendor's pool (our
+// Rare, everyone else Common only. A restock rebuilds the stock from the vendor's pool (our
 // rounds are regenerating items, so the old split stacks are dropped first), so each stack is
 // split once.
 
@@ -30,7 +30,8 @@ private final func FillVendorInventory(allowRegeneration: Bool) -> Void {
 
 @addMethod(Vendor)
 private final func AOSplitAmmo() -> Void {
-  let maxTier: Int32 = Equals(this.GetVendorType(), gamedataVendorType.Gunsmith) ? 1 : 0;
+  // Gun shops sell up to Rare; other vendors Common only. Nobody sells Epic.
+  let maxTier: Int32 = Equals(this.GetVendorType(), gamedataVendorType.Gunsmith) ? 2 : 0;
   let stock: array<SItemStack>;
   let split: Int32 = 0;
   for stack in this.m_stock {
