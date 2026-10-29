@@ -26,5 +26,7 @@ if [[ "$at" != "$x" ]]; then
 fi
 grim -o $OUT "$file"
 # Just the game window (it sits at the output's corner).
-size=$(hyprctl clients -j | python3 -c "import json,sys;print('x'.join(map(str, next(c['size'] for c in json.load(sys.stdin) if c['class']=='steam_app_1091500'))))")
+# (window sizes are in logical pixels; grim captures physical ones, so scale them)
+scale=$(hyprctl monitors -j | python3 -c "import json,sys;print([m['scale'] for m in json.load(sys.stdin) if m['name']=='$OUT'][0])")
+size=$(hyprctl clients -j | python3 -c "import json,sys;print('x'.join(str(round(v * $scale)) for v in next(c['size'] for c in json.load(sys.stdin) if c['class']=='steam_app_1091500')))")
 magick "$file" -crop "${size}+0+0" +repage "$file"

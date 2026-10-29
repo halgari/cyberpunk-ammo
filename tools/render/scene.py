@@ -446,7 +446,21 @@ def pistol(s):
     p = head_profile(rc, s.get("rim", rc) / 1.0 if s.get("rimmed") else rc, s.get("rimmed", False), case)
     p += [(rc, s["case"] * 0.5, case), (rc * 0.995, s["case"], case)]
     p += tip_profile(rb, s["case"], s["oal"] - s["case"], s.get("nose", "round"), s.get("hp", False), COPPER())
-    return revolve("Round", p, notches(p, s.get("hp", False))), s["oal"], s.get("rim", rc)
+    ob = revolve("Round", p, notches(p, s.get("hp", False)))
+    seal_ring(s, ob, rc * 0.995, s["case"])
+    return ob, s["oal"], s.get("rim", rc)
+
+
+RED_SEAL = lambda: principled("RedSeal", (0.55, 0.02, 0.02), 0.0, 0.3, bump=0.004)
+
+
+def seal_ring(s, parent, r, z):
+    """+P marking: a red lacquer ring round the case mouth."""
+    if not s.get("seal"):
+        return
+    m = RED_SEAL()
+    q = [(r * 0.98, z - 0.07, m), (r * 1.012, z - 0.06, m), (r * 1.012, z + 0.005, m), (r * 0.98, z + 0.01, m)]
+    revolve("Seal", q).parent = parent
 
 
 def rifle(s):
@@ -457,7 +471,9 @@ def rifle(s):
     p += [(rc * 0.985, sh0, case), (rc * 0.95, sh0 + (sh1 - sh0) * 0.25, case), (rn * 1.05, sh1, case),
           (rn, sh1 + 0.04, case), (rn, s["case"], case)]
     p += tip_profile(rb, s["case"], s["oal"] - s["case"], "spitzer", s.get("hp", False), COPPER())
-    return revolve("Round", p, notches(p, s.get("hp", False))), s["oal"], rc
+    ob = revolve("Round", p, notches(p, s.get("hp", False)))
+    seal_ring(s, ob, rn, s["case"])
+    return ob, s["oal"], rc
 
 
 def fold(t, n=6, w=0.07):
@@ -468,7 +484,7 @@ def fold(t, n=6, w=0.07):
 
 def shell(s):
     R, L, H = s["R"], s["L"], s["head"]
-    hullm = principled("Hull" + s["color"], {"red": (0.42, 0.025, 0.02), "black": (0.03, 0.03, 0.032)}[s["color"]],
+    hullm = principled("Hull" + s["color"], {"red": (0.42, 0.025, 0.02), "black": (0.03, 0.03, 0.032), "green": (0.2, 0.42, 0.14)}[s["color"]],
                        0.0, 0.48, wear=0.12, grime=0.85, scan="Plastic006", tile=6.0,
                        **{"Coat Weight": 0.25, "Coat Roughness": 0.3})
     root = bpy.data.objects.new("Round", None)
@@ -518,12 +534,13 @@ def rail(s):
     b = r * 0.12
     root = bpy.data.objects.new("Round", None)
     bpy.context.collection.objects.link(root)
-    p = [(0, 0, STEEL()), (r - b, 0, STEEL()), (r, b, STEEL())]
+    core = GUNMETAL if s.get("gunmetal") else STEEL   # Bricks: dark gunmetal
+    p = [(0, 0, core()), (r - b, 0, core()), (r, b, core())]
     for zc in s["rings"]:
         z = zc * L
-        p += [(r, z - 0.05 * L, COPPER()), (r * 1.01, z - 0.04 * L, COPPER()), (r * 1.01, z + 0.04 * L, STEEL()),
-              (r, z + 0.05 * L, STEEL())]
-    p += [(r, L - b, STEEL()), (r - b, L, STEEL()), (0, L, STEEL())]
+        p += [(r, z - 0.05 * L, COPPER()), (r * 1.01, z - 0.04 * L, COPPER()), (r * 1.01, z + 0.04 * L, core()),
+              (r, z + 0.05 * L, core())]
+    p += [(r, L - b, core()), (r - b, L, core()), (0, L, core())]
     revolve("Core", p).parent = root
     out = r
     if s.get("sleeve"):
@@ -554,9 +571,16 @@ def fin_mesh(r, span, cr, ct, z0, thick, mat):
 
 
 GOLD = lambda: principled("Gold", (1.0, 0.76, 0.33), 1.0, 0.25, wear=0.05, grime=0.9)
-ANOD = lambda: principled("Anodized", (0.07, 0.075, 0.08), 0.85, 0.34, wear=0.1, grime=0.8, scan="Metal009", tile=2.0)
+# Blue-grey anodizing: dark, but light enough that the round's shape reads at icon size.
+ANOD = lambda: principled("Anodized", (0.14, 0.17, 0.22), 0.85, 0.32, wear=0.1, grime=0.8, scan="Metal009", tile=2.0)
+# Painted ID band per load (teal Seekers, red Short-Fuse), also on the cassette's rear band.
+ID_COLORS = {"teal": (0.02, 0.42, 0.45), "red": (0.6, 0.04, 0.03)}
+
+
+def id_paint(name):
+    return principled("Id" + name, ID_COLORS[name], 0.0, 0.35, bump=0.01, wear=0.08, grime=0.8)
 # Moulded polymer: dark, slightly glossy under a thin clear coat.
-POLY = lambda: principled("CassetteBody", (0.012, 0.013, 0.015), 0.0, 0.36, wear=0.1, grime=0.8,
+POLY = lambda: principled("CassetteBody", (0.06, 0.07, 0.085), 0.0, 0.36, wear=0.1, grime=0.8,
                           scan="Plastic006", tile=1.5, **{"Coat Weight": 0.2, "Coat Roughness": 0.1,
                                                           "Specular IOR Level": 0.4})
 
@@ -612,6 +636,10 @@ def dian(s):
     p += [(r, zb0 - 0.01 * L, band)]
     nb = 30
     p += [(r, zb0 + (zb1 - zb0) * k / nb, band) for k in range(nb + 1)]
+    if s.get("idband") and not dumb:
+        idm = id_paint(s["idband"])
+        p += [(r, zb1 + 0.005 * L, idm), (r * 1.004, zb1 + 0.008 * L, idm), (r * 1.004, zb1 + 0.07 * L, body)]
+        zb1 += 0.07 * L
     p += [(r, zb1 + 0.005 * L, body), (r * 0.985, zb1 + 0.02 * L, body)]
     nose = tip_profile_smart(r * 0.985, zb1 + 0.02 * L, L - zb1 - 0.02 * L - (0.0 if dumb else 0.0), not dumb,
                              STEEL() if dumb else body)
@@ -670,13 +698,14 @@ def cassette(s):
     blk.parent = root
     # Rear band painted like the box stripe: hazard for Dumbfires, white for Seekers.
     band = cube("RearBand", (side * 1.04, side * 1.04, Lc * 0.12), (0, 0, Lc * 0.08),
-                hazard("Hazard", side * 0.15) if s.get("dumbfire") else WHITE_PAINT(), side * 0.02)
+                hazard("Hazard", side * 0.15) if s.get("dumbfire")
+                else id_paint(s["idband"]) if s.get("idband") else WHITE_PAINT(), side * 0.02)
     band.parent = root
     bpy.ops.mesh.primitive_cylinder_add(radius=cr * 0.35, depth=cr * 0.4, location=(0, 0, Lc + cr * 0.1), vertices=24)
     pin = bpy.context.active_object
     pin.data.materials.append(GOLD())
     pin.parent = root
-    rs = dict(kind="dian", r=cr * 0.86, L=Lc * 0.8, dumbfire=s.get("dumbfire", False))
+    rs = dict(kind="dian", r=cr * 0.86, L=Lc * 0.8, dumbfire=s.get("dumbfire", False), idband=s.get("idband"))
     first = None
     for i in (-1, 0, 1):
         for j in (-1, 0, 1):
@@ -713,6 +742,10 @@ def ashura(s):
     if dumb:
         hz = hazard("Hazard", R * 0.9)
         base += [(R, zf, hz), (R * 1.004, zf + 0.003, hz), (R * 1.004, zf + 0.07 * L, body), (R, zf + 0.071 * L, body)]
+        zf += 0.08 * L
+    elif s.get("idband"):
+        idm = id_paint(s["idband"])
+        base += [(R, zf, idm), (R * 1.004, zf + 0.003, idm), (R * 1.004, zf + 0.07 * L, body), (R, zf + 0.071 * L, body)]
         zf += 0.08 * L
     else:
         base += [(R, zf, body)]
@@ -840,8 +873,14 @@ def box(spec, roundspec):
     loose = rnd
     for k in range(2):
         c = loose if (k == 0 and loose is not rnd) else copy_tree(loose)
-        c.rotation_euler = (0, math.radians(90), math.radians(rng.uniform(-6, 6)))
-        c.location = (-L / 2 + W * (0.08 + 0.12 * k), -D / 2 - rad * (2.6 + 2.15 * k), rad)
+        x = -L / 2 + W * (0.08 + 0.12 * k)
+        if roundspec["kind"] == "shell":
+            # Shells lie the other way, crimp toward the camera, so the brass head isn't the focus.
+            c.rotation_euler = (0, math.radians(-90), math.radians(rng.uniform(-6, 6)))
+            c.location = (x + L, -D / 2 - rad * (2.6 + 2.15 * k), rad)
+        else:
+            c.rotation_euler = (0, math.radians(90), math.radians(rng.uniform(-6, 6)))
+            c.location = (x, -D / 2 - rad * (2.6 + 2.15 * k), rad)
         rounds.append(c)
     return [root] + rounds
 

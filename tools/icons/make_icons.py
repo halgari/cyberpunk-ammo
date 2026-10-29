@@ -21,7 +21,7 @@ OUT = ROOT / "art" / "build"
 CELL = (160, 160)
 # Empty margin kept around the art (fraction of the cell): just enough that soft edges aren't cut.
 PAD = 0.02
-ATLAS = (1024, 1024)   # 6 x 5 cells of 160 x 160
+ATLAS = (1024, 2048)   # 6 x 12 cells of 160 x 160 (39 used)
 COLS = 6
 # Source art (art/icons/<name>.png, rendered by tools/render/render.py), one per round. The part is
 # "ao_" + the name with "-" as "_" (9mm-ball -> ao_9mm_ball), matching UIIcon.AO_* and the feed selector.
@@ -30,6 +30,8 @@ NAMES = [
     "556-mushrooms", "762-ball", "762-mushrooms", "127-ball", "127-mushrooms", "12ga-buckshot", "12ga-slugs",
     "4ga-buckshot", "4ga-slugs", "5mm-railslugs", "5mm-sleevers", "heavy-railslugs", "heavy-sleevers",
     "10mm-seekers", "10mm-dumbfires", "20mm-seekers", "20mm-dumbfires", "25mm-seekers", "25mm-dumbfires",
+    "9mm-plusp", "45-plusp", "12mm-plusp", "556-plusp", "762-plusp", "127-plusp", "12ga-birdshot", "4ga-birdshot",
+    "5mm-bricks", "heavy-bricks", "10mm-shortfuse", "20mm-shortfuse", "25mm-shortfuse",
 ]
 PARTS = {"ao_" + n.replace("-", "_"): n + ".png" for n in NAMES}
 # Midtone lift (a gamma on each channel). The renders are darker than the game's own icons (mean

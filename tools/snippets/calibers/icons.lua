@@ -16,6 +16,12 @@ local ROUNDS = {
   { "Ammo.AO_S10_Standard", "10mm_Seekers" }, { "Ammo.AO_S10_Dumbfire", "10mm_Dumbfires" },
   { "Ammo.AO_S20_Standard", "20mm_Seekers" }, { "Ammo.AO_S20_Dumbfire", "20mm_Dumbfires" },
   { "Ammo.AO_S25_Standard", "25mm_Seekers" }, { "Ammo.AO_S25_Dumbfire", "25mm_Dumbfires" },
+  { "Ammo.AO_9mm_PlusP", "9mm_PlusP" }, { "Ammo.AO_45_PlusP", "45_PlusP" }, { "Ammo.AO_12mm_PlusP", "12mm_PlusP" },
+  { "Ammo.AO_556_PlusP", "556_PlusP" }, { "Ammo.AO_762_PlusP", "762_PlusP" }, { "Ammo.AO_127_PlusP", "127_PlusP" },
+  { "Ammo.AO_12ga_Birdshot", "12ga_Birdshot" }, { "Ammo.AO_4ga_Birdshot", "4ga_Birdshot" },
+  { "Ammo.AO_TLight_Bricks", "5mm_Bricks" }, { "Ammo.AO_THeavy_Bricks", "Heavy_Bricks" },
+  { "Ammo.AO_S10_ShortFuse", "10mm_ShortFuse" }, { "Ammo.AO_S20_ShortFuse", "20mm_ShortFuse" },
+  { "Ammo.AO_S25_ShortFuse", "25mm_ShortFuse" },
 }
 local seen = {}
 for _, r in ipairs(ROUNDS) do

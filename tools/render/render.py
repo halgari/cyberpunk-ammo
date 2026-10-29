@@ -35,9 +35,10 @@ G12 = dict(kind="shell", R=1.0, L=7.0, head=1.4, color="red")
 G4 = dict(kind="shell", R=1.35, L=9.5, head=3.0, color="black")
 T5 = dict(kind="rail", r=0.25, L=1.0, rings=[0.8])
 TH = dict(kind="rail", r=0.45, L=2.7, rings=[0.72, 0.86])
-S10 = dict(kind="dian", r=0.5, L=5.4)
-S20 = dict(kind="cassette", cell_r=0.35, L=6.0)
-S25 = dict(kind="ashura", R=0.625, L=6.5)
+# idband: the painted ID band (teal Seekers, red Short-Fuse; Dumbfires carry a hazard band instead).
+S10 = dict(kind="dian", r=0.5, L=5.4, idband="teal")
+S20 = dict(kind="cassette", cell_r=0.35, L=6.0, idband="teal")
+S25 = dict(kind="ashura", R=0.625, L=6.5, idband="teal")
 
 # Box looks per load, in sRGB: (panel, stripe). Same load, same box in every caliber.
 LOOK = {
@@ -49,6 +50,10 @@ LOOK = {
     "Dumbfires": ((70, 78, 44), None),
     "Buckshot": ((30, 44, 80), (225, 225, 220)),
     "Slugs": ((28, 66, 38), (220, 170, 30)),
+    "PlusP": ((150, 112, 70), (170, 30, 30)),
+    "Birdshot": ((70, 110, 60), (225, 225, 220)),
+    "Bricks": ((40, 42, 46), (215, 110, 30)),
+    "ShortFuse": ((70, 78, 44), (180, 30, 30)),
 }
 
 
@@ -84,6 +89,21 @@ ROUNDS = {
     "20mm-dumbfires": (dict(S20, dumbfire=True), "Dumbfires", ["20MM", "DUMBFIRES"]),
     "25mm-seekers": (S25, "Seekers", ["25MM", "SEEKERS"]),
     "25mm-dumbfires": (dict(S25, dumbfire=True), "Dumbfires", ["25MM", "DUMBFIRES"]),
+    # Second Uncommons. +P: Ball with a red case-mouth seal; Birdshot: light green star-crimped shell;
+    # Bricks: thicker dark gunmetal rail slug; Short-Fuse: shorter, fatter smart round.
+    "9mm-plusp": (dict(P9, seal=True), "PlusP", ["9MM", "+P"]),
+    "45-plusp": (dict(P45, seal=True), "PlusP", [".45", "+P"]),
+    "12mm-plusp": (dict(P12, seal=True), "PlusP", ["12MM", "+P"]),
+    "556-plusp": (dict(R556, seal=True), "PlusP", ["5.56", "+P"]),
+    "762-plusp": (dict(R762, seal=True), "PlusP", ["7.62", "+P"]),
+    "127-plusp": (dict(R127, seal=True), "PlusP", ["12.7", "+P"]),
+    "12ga-birdshot": (dict(G12, color="green", crimp="star"), "Birdshot", ["BIRDSHOT"]),
+    "4ga-birdshot": (dict(G4, color="green", crimp="star"), "Birdshot", ["4GA", "BIRDSHOT"]),
+    "5mm-bricks": (dict(T5, r=T5["r"] * 1.3, gunmetal=True), "Bricks", ["5MM", "BRICKS"]),
+    "heavy-bricks": (dict(TH, r=TH["r"] * 1.25, gunmetal=True), "Bricks", ["HEAVY", "BRICKS"]),
+    "10mm-shortfuse": (dict(S10, L=S10["L"] * 0.78, r=S10["r"] * 1.2, idband="red"), "ShortFuse", ["10MM", "SHORT-FUSE"]),
+    "20mm-shortfuse": (dict(S20, L=S20["L"] * 0.78, cell_r=S20["cell_r"] * 1.15, idband="red"), "ShortFuse", ["20MM", "SHORT-FUSE"]),
+    "25mm-shortfuse": (dict(S25, L=S25["L"] * 0.78, R=S25["R"] * 1.15, idband="red"), "ShortFuse", ["25MM", "SHORT-FUSE"]),
 }
 
 
