@@ -17,4 +17,14 @@ if [[ "$game" != "$ws" ]]; then
   hyprctl dispatch "hl.dsp.window.move({ workspace = \"$ws\", follow = false, window = \"class:steam_app_1091500\" })" >/dev/null
   sleep 1
 fi
+# The window floats and can drift partly off the output: pin it to the output's corner.
+x=$(hyprctl monitors -j | python3 -c "import json,sys;print([m['x'] for m in json.load(sys.stdin) if m['name']=='$OUT'][0])")
+at=$(hyprctl clients -j | python3 -c "import json,sys;print(next(c['at'][0] for c in json.load(sys.stdin) if c['class']=='steam_app_1091500'))")
+if [[ "$at" != "$x" ]]; then
+  hyprctl dispatch "hl.dsp.window.move({ x = $x, y = 0, window = \"class:steam_app_1091500\" })" >/dev/null
+  sleep 1
+fi
 grim -o $OUT "$file"
+# Just the game window (it sits at the output's corner).
+size=$(hyprctl clients -j | python3 -c "import json,sys;print('x'.join(map(str, next(c['size'] for c in json.load(sys.stdin) if c['class']=='steam_app_1091500'))))")
+magick "$file" -crop "${size}+0+0" +repage "$file"

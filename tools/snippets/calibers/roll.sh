@@ -20,14 +20,23 @@ setup() {
   done
   echo "setup $1: $r" >&2
 }
-# Fires until the rig holds $2 V hits (or 80 tries), redrawing $1 when V holsters.
+# Fires until the rig holds $2 V hits (or 120 tries; set up again after 10 tries with no new hit), redrawing $1 when V holsters.
 shoot() {
   lua "RIG.clear(); return 1" >/dev/null
-  for _ in $(seq 80); do
-    [[ $(lua "return #RIG.ratios('V')") -ge $2 ]] && break
+  local have=0 last=0 idle=0
+  for _ in $(seq 120); do
+    have=$(lua "return #RIG.ratios('V')"); [[ $have -ge $2 ]] && break
+    # No new hit for 10 tries: the NPC got loose or out of sight; set the rig up again.
+    if (( have > last )); then last=$have; idle=0; else idle=$((idle + 1)); fi
+    (( idle >= 10 )) && { setup "$1"; idle=0; }
     [[ $(lua "return RIG.fireV()") == holstered ]] && draw "$1"
     sleep 0.4
   done
+  local got; got=$(lua "return #RIG.ratios('V')")
+  if [[ $got -lt $2 ]]; then
+    echo "  shoot $1: $got of $2 hits ($(lua "return RIG.fireV()"))" >&2
+    [[ -n "${SHOTS:-}" ]] && tools/linux/game-shot.sh "$SHOTS/shoot-$(date +%s).png"
+  fi
 }
 UNITY=Items.Preset_Unity_Default; CRUSHER=Items.Preset_Crusher_Default
 $C "for _, i in ipairs({'$UNITY', '$CRUSHER', 'Items.AO_Feed_45_Ball', 'Items.AO_Feed_Test_Roll'}) do Game.AddToInventory(i, 1) end
@@ -39,18 +48,6 @@ out+="$(lua "local v = RIG.ratios('V')
 local ok = #v >= 25 and v[1] >= 0.898 and v[#v] <= 1.012
 return string.format('%s %d .45 Ball hits by V roll in 0.90..1.01 (%.3f..%.3f)|%s some roll below 0.95',
   ok and 'PASS' or 'FAIL', #v, v[1] or 0, v[#v] or 0, (v[1] or 1) < 0.95 and 'PASS' or 'FAIL')")|"
-# The NPC's own AI shoots V, a few seconds at a time, until 20 hits land.
-lua "RIG.clear(); return 1" >/dev/null
-for _ in $(seq 6); do
-  lua "RIG.letNpcShoot(); return 1" >/dev/null; sleep 8; lua "RIG.freeze(); return 1" >/dev/null
-  [[ $(lua "return #RIG.ratios('NPC')") -ge 20 ]] && break
-done
-out+="$(lua "local n = RIG.ratios('NPC')
-local differ = false
-for _, r in ipairs(n) do if math.abs(r - 1) > 0.001 then differ = true end end
-local ok = #n >= 10 and n[1] >= 0.898 and n[#n] <= 1.012
-return string.format('%s %d NPC hits on V roll in 0.90..1.01 (%.3f..%.3f)|%s NPC hits are rolled',
-  ok and 'PASS' or 'FAIL', #n, n[1] or 0, n[#n] or 0, differ and 'PASS' or 'FAIL')")|"
 # The test round, fed through the .45 lists for this run.
 L='local K = "AmmoOverhaul.Power_45."
 local function add(f, v) local a = TweakDB:GetFlat(K .. f); table.insert(a, v); TweakDB:SetFlat(K .. f, a) end'
@@ -73,7 +70,20 @@ draw $CRUSHER; draw $CRUSHER; setup $CRUSHER
 shoot $CRUSHER 12
 out+="$(lua "local v = RIG.ratios('V')
 local ok = #v >= 12 and v[1] >= 0.898 and v[#v] <= 1.012 and math.abs(v[#v] - v[1]) > 0.001
-return string.format('%s %d Crusher pellet hits roll in 0.90..1.01 (%.3f..%.3f)', ok and 'PASS' or 'FAIL', #v, v[1] or 0, v[#v] or 0)")"
+return string.format('%s %d Crusher pellet hits roll in 0.90..1.01 (%.3f..%.3f)', ok and 'PASS' or 'FAIL', #v, v[1] or 0, v[#v] or 0)")|"
+# Last, as letting the NPC loose unsettles it: its own AI shoots V until 20 hits land.
+draw $UNITY; setup $UNITY
+lua "RIG.clear(); return 1" >/dev/null
+for _ in $(seq 6); do
+  lua "RIG.letNpcShoot(); return 1" >/dev/null; sleep 8; lua "RIG.freeze(); return 1" >/dev/null
+  [[ $(lua "return #RIG.ratios('NPC')") -ge 20 ]] && break
+done
+out+="$(lua "local n = RIG.ratios('NPC')
+local differ = false
+for _, r in ipairs(n) do if math.abs(r - 1) > 0.001 then differ = true end end
+local ok = #n >= 10 and n[1] >= 0.898 and n[#n] <= 1.012
+return string.format('%s %d NPC hits on V roll in 0.90..1.01 (%.3f..%.3f)|%s NPC hits are rolled',
+  ok and 'PASS' or 'FAIL', #n, n[1] or 0, n[#n] or 0, differ and 'PASS' or 'FAIL')")|"
 lua "RIG.teardown(); return 1" >/dev/null
 res=$(tr '|' '\n' <<<"$out" | sed '/^$/d'); echo "$res"
 p=$(grep -c '^PASS' <<<"$res"); n=$(grep -c '^FAIL' <<<"$res")

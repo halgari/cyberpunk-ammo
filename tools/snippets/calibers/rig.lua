@@ -50,9 +50,19 @@ local function respawn(p, why)
   return "wait: " .. why .. ", respawning"
 end
 
+-- Shooting in the street draws police heat, and police crowd in, block shots and fire at V:
+-- the police system is locked off while the rig runs (TogglePreventionSystem with a lock source).
+local function police(on)
+  local r = TogglePreventionSystem.new()
+  r.sourceName = tag
+  r.isActive = on
+  Game.GetScriptableSystemsContainer():Get("PreventionSystem"):QueueRequest(r)
+end
+
 function RIG.setup(gun, dist)
   dist = dist or 5
   local p = Game.GetPlayer()
+  police(false)
   if StatusEffectSystem.ObjectHasStatusEffectWithTag(p, CName.new("NoCombat")) then return "V is in a no-combat zone" end
   if gun then
     local w = p:GetActiveWeapon()
@@ -103,10 +113,12 @@ local function chest(o) local v = o:GetWorldPosition(); v.z = v.z + 1.0; return 
 function RIG.fireV()
   local p, n = Game.GetPlayer(), RIG.npc()
   if not p:GetActiveWeapon() then return "holstered" end
-  -- AIWeapon.Fire doesn't reload, and V only auto-reloads some guns (not the Crusher).
+  -- AIWeapon.Fire doesn't reload, and V only auto-reloads some guns. StartReload alone leaves
+  -- V's gun stuck mid-reload; StopReload(Standard) completes it and fills the magazine.
   if WeaponObject.GetMagazineAmmoCount(p:GetActiveWeapon()) == 0 then
     p:GetActiveWeapon():StartReload()
-    return "reloading"
+    p:GetActiveWeapon():StopReload(gameweaponReloadStatus.Standard)
+    return "reloaded"
   end
   AIWeapon.Fire(p, p:GetActiveWeapon(), EngineTime.ToFloat(Game.GetSimTime()), 1.0, gamedataTriggerMode.SemiAuto, chest(n), n)
   return "fired"
@@ -133,6 +145,7 @@ function RIG.clear() RIG.hits = {} end
 
 function RIG.teardown()
   local n = RIG.npc()
+  police(true)
   gm():RemoveGodMode(Game.GetPlayer():GetEntityID(), gameGodModeType.Immortal, tag)
   if n then GetMod("AOTestKit").despawnAll() end
 end
