@@ -148,19 +148,21 @@ the parity hook, as for the Uncommons).
   the Uncommon pattern (selector lists, tiers, icons, text). Each new round gets its own icon
   from the existing icon pipeline.
 
-## Testing (in game, CET harness)
+## Testing
 
-- Records, generic over every Rare and Epic: ammo and selector exist, tier lists line up,
-  quality, price x4 / x8 (Uncommon x2), weight, text keys, icon cells, selector hidden.
-- Distribution: shares sum to 1 per family; vendor caps (gun shop up to Rare, no Epic); loot
-  can produce each tier; NPC rank caps and factors (forced rolls per rank).
-- Effects, live on the hit rig both ways (V on the NPC, the NPC on V), one round per effect
-  kind: a status effect lands at a forced chance of 1; the damage-type share shows in the hit's
-  per-type values; the machine bonus on a drone versus a human; non-lethal leaves the target
-  unconscious, not dead; Match hits stay in 0.98-1.06.
-- Handling stats: each new stat type read off an NPC gun in hand against its selector's value
-  (generalized `parity-stats.lua`); a stat that fails moves its round to slice 2.
-- The existing suite stays green; Common rounds unchanged (`vanilla.lua`).
+Test the new features and major changes only; the full suite runs before a release, not per
+slice. The game is the bottleneck, so one agent uses it at a time, code is compile-checked
+offline first, and in-game checks are batched into a few sessions.
+
+- **Data, one fast script (no restart):** generic over every Rare and Epic: ammo and selector
+  exist, tier lists line up, quality, price x2 / x4 / x8, weight, text keys, icon cells,
+  selector hidden; shares sum to 1 per family.
+- **Live, per mechanism, not per round:** one round per kind on the hit rig: a status effect
+  lands (forced chance 1), a damage-type share shows in the hit's per-type values, the machine
+  bonus on a drone versus a human, non-lethal leaves the target unconscious, Match hits stay in
+  0.98-1.06; each new handling stat read off an NPC gun in hand (a stat that fails moves its
+  round to slice 2). Vendor and NPC tier caps checked once.
+- Which spot checks run, beyond these, is decided as the code lands.
 
 ## Out of scope (slice 2)
 
