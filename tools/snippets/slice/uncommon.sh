@@ -8,7 +8,16 @@ run() { $C -t 30 "MODE='$1'; $(cat $S/slice/common.lua $S/slice/uncommon.lua)"; 
 for g in "Lexington 9mm_Ball 9mm_Mushrooms" "Omaha 5mm_RailSlugs 5mm_Sleevers" "Yukimura 10mm_Seekers 10mm_Dumbfires"; do
   set -- $g
   # The selectors may be fitted in another copy of the gun by an earlier run: hand out fresh ones.
-  $C "Game.AddToInventory('Items.AO_Feed_$2', 1); Game.AddToInventory('Items.AO_Feed_$3', 1)" >/dev/null
+  # The selector sync keeps a selector only while its ammo is held: give 60 of each round too.
+  $C "for _, sel in ipairs({'Items.AO_Feed_$2', 'Items.AO_Feed_$3'}) do
+  Game.AddToInventory(sel, 1)
+  for _, cal in ipairs(TweakDB:GetFlat('AmmoOverhaul.calibers')) do
+    local ammo = TweakDB:GetFlat('AmmoOverhaul.'..cal..'.selectorAmmo')
+    for i, s in ipairs(TweakDB:GetFlat('AmmoOverhaul.'..cal..'.selectors')) do
+      if TDBID.ToStringDEBUG(s) == sel then Game.AddToInventory(TDBID.ToStringDEBUG(ammo[i]), 60) end
+    end
+  end
+end" >/dev/null
   # The first run after a load only hands out the kit; the second equips and draws.
   $C "GUN='Items.Preset_$1_Default'; $(cat $S/feed-kit.lua)" | grep -q "gave the slice kit" && sleep 1 &&
     $C "GUN='Items.Preset_$1_Default'; $(cat $S/feed-kit.lua)" >/dev/null

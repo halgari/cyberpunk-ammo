@@ -57,6 +57,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     }
     this.m_player = player;
     AmmoFeedSystem.Log("attached, " + IntToString(ArraySize(this.m_unload)) + " gun(s) waiting to unload");
+    SelectorSync.Attach(player);
   }
 
   private final func OnPlayerDetach(request: ref<PlayerDetachRequest>) -> Void {
@@ -305,6 +306,36 @@ public class AmmoFeedSystem extends ScriptableSystem {
   // weapon screen hasn't been opened since the game started.
   public final func DebugAmmoSection() -> String {
     return this.m_ammoSection;
+  }
+
+  // Selector syncs run since the player attached (SelectorSync.reds).
+  public final func DebugSyncCount() -> Int32 {
+    return SelectorSyncSystem.Get(this.GetGameInstance()).count;
+  }
+
+  // "<selector>=<n> ..." for the loose selectors in V's inventory.
+  public final func DebugLooseSelectors() -> String {
+    let loose: array<wref<gameItemData>>;
+    GameInstance.GetTransactionSystem(this.GetGameInstance()).GetItemListByTag(this.m_player, n"AO_AmmoSelector", loose);
+    let names: array<String>;
+    let counts: array<Int32>;
+    for item in loose {
+      let name: String = TDBID.ToStringDEBUG(ItemID.GetTDBID(item.GetID()));
+      let at: Int32 = ArrayFindFirst(names, name);
+      if at < 0 {
+        ArrayPush(names, name);
+        ArrayPush(counts, item.GetQuantity());
+      } else {
+        counts[at] += item.GetQuantity();
+      }
+    }
+    let text: String = "";
+    let i: Int32 = 0;
+    while i < ArraySize(names) {
+      text += (i > 0 ? " " : "") + names[i] + "=" + IntToString(counts[i]);
+      i += 1;
+    }
+    return text;
   }
 
   // "<loot-window placeholder of item> <empty-slot placeholder of slot>".
