@@ -84,7 +84,7 @@ Items.AO_Feed_25mm_Seekers:
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Smart_25]
-  tags: [itemPart, AO_AmmoSelector]
+  tags: [itemPart, AO_AmmoSelector, HideInBackpackUI]
   buyPrice: []
   sellPrice: []
 

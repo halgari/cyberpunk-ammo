@@ -105,6 +105,19 @@ public final func GetPlayerInventoryPartsForItemRef(item: ItemID, const slotIDs:
   }
 }
 
+// Selectors are never sold: the vendor's sell list carries every held item the vendor accepts.
+@wrapMethod(VendorDataManager)
+public final func GetItemsPlayerCanSellFast(player: wref<GameObject>, opt excludeEquipped: Bool) -> [wref<gameItemData>] {
+  let all: array<wref<gameItemData>> = wrappedMethod(player, excludeEquipped);
+  let kept: array<wref<gameItemData>>;
+  for item in all {
+    if !AOData.IsSelector(item.GetID()) {
+      ArrayPush(kept, item);
+    }
+  }
+  return kept;
+}
+
 // Selectors are swapped freely; vanilla only lets scopes, muzzles and iconic mods come off.
 @wrapMethod(RPGManager)
 public final static func CanPartBeUnequipped(data: InventoryItemData, slotId: TweakDBID) -> Bool {

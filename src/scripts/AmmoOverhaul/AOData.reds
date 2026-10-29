@@ -96,6 +96,12 @@ public abstract class AOData {
     return TDBID.None();
   }
 
+  // True for any ammo selector part (tag AO_AmmoSelector); screens other than a gun's mod screen
+  // filter these out.
+  public static func IsSelector(item: ItemID) -> Bool {
+    return TweakDBInterface.GetItemRecord(ItemID.GetTDBID(item)).TagsContains(n"AO_AmmoSelector");
+  }
+
   // --- Tiers and distribution ----------------------------------------------------------------
 
   // "Power", "Tech" or "Smart".

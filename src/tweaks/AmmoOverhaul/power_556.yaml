@@ -65,7 +65,7 @@ Items.AO_Feed_556_Ball:
   itemType: ItemType.Prt_Magazine
   quality: Quality.Common
   placementSlots: [AttachmentSlots.AO_AmmoFeed_Power_556]
-  tags: [itemPart, AO_AmmoSelector]
+  tags: [itemPart, AO_AmmoSelector, HideInBackpackUI]
   buyPrice: []
   sellPrice: []
 
