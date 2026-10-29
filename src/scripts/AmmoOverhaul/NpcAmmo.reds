@@ -163,10 +163,24 @@ public abstract class NpcAmmo {
     let modifiers: array<wref<StatModifier_Record>>;
     TweakDBInterface.GetItemRecord(selector).StatModifiers(modifiers);
     for modifier in modifiers {
-      stats.AddModifier(gunData.GetStatsObjectID(), RPGManager.StatRecordToModifier(modifier));
+      stats.AddModifier(gunData.GetStatsObjectID(), NpcAmmo.ToModifier(modifier, stats, gunData.GetStatsObjectID()));
     }
     AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " got " + TDBID.ToStringDEBUG(selector) + " for " + TDBID.ToStringDEBUG(ItemID.GetTDBID(gun)));
     return true;
+  }
+
+  // RPGManager.StatRecordToModifier for a modifier on `gunStats`, except for a combined one ("add
+  // value times a stat of the gun"): put on an NPC's gun the game ignores its value (measured: a
+  // Slug's -1 added the gun's pellets, a 4ga Birdshot's 1.5 added them once), so it is worked out
+  // here and added as a constant.
+  public static func ToModifier(record: ref<StatModifier_Record>, stats: ref<StatsSystem>, gunStats: StatsObjectID) -> ref<gameStatModifierData> {
+    let combined: ref<CombinedStatModifier_Record> = record as CombinedStatModifier_Record;
+    if !IsDefined(combined) || !Equals(combined.OpSymbol(), n"*") {
+      return RPGManager.StatRecordToModifier(record);
+    }
+    let modType: gameStatModifierType = IntEnum<gameStatModifierType>(Cast<Int32>(EnumValueFromName(n"gameStatModifierType", combined.ModifierType())));
+    let amount: Float = combined.Value() * stats.GetStatValue(gunStats, combined.RefStatHandle().StatType());
+    return RPGManager.CreateStatModifier(combined.StatType().StatType(), modType, amount);
   }
 
   // One of the caliber's Uncommon selectors, each as likely; invalid if it has none.
