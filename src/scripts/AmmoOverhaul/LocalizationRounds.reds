@@ -90,7 +90,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-5mm-Feedback"); ArrayPush(t, "5mm Feedback");
     ArrayPush(t, "AO-Ammo-Feedback-Desc"); ArrayPush(t, "Slugs with a pickup coil that the gun's targeting can steer a little in flight.\n\nShots bend toward targets near the crosshair. -10% damage.");
     ArrayPush(t, "AO-Ammo-5mm-DUPen"); ArrayPush(t, "5mm DU Penetrator");
-    ArrayPush(t, "AO-Ammo-DUPen-Desc"); ArrayPush(t, "Depleted uranium slugs. They go through cover at half charge and through armor at any charge.\n\nPierces cover at a lower charge. +50% damage through cover. Ignores 50% of armor.");
+    ArrayPush(t, "AO-Ammo-DUPen-Desc"); ArrayPush(t, "Depleted uranium slugs. They go through cover at half charge and through armor at any charge.\n\nPierces cover at a lower charge. Loses half as much damage through cover. Ignores 50% of armor.");
     ArrayPush(t, "AO-Ammo-5mm-ToxicScatter"); ArrayPush(t, "5mm Toxic Scatter");
     ArrayPush(t, "AO-Ammo-ToxicScatter-Desc"); ArrayPush(t, "Five toxin-coated flechettes stacked in one sabot. They spread out and each one carries a dose.\n\nFires five projectiles that share the shot's damage. Wider spread. 25% chance per hit to poison.");
     ArrayPush(t, "AO-Ammo-5mm-Superconductor"); ArrayPush(t, "5mm Superconductor");

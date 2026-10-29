@@ -323,6 +323,48 @@ Calibers differ in ammo weight, price and how often they turn up, not in how the
 | 20mm cluster | 1.5× the 10mm round | 1.3× |
 | 25mm dart | 3× the 10mm round | 2.5× |
 
+### Built (Rare and Epic, 2026-10-29)
+
+91 Rare and Epic rounds, all made by `tools/rounds/rounds.py` (records, list entries, text, icon
+data; edit there and rerun it). Each is its caliber's plain Uncommon with the changes below, at
+x4 (Rare) or x8 (Epic) the Common price. The effect line is the one the item shows.
+
+- **Steel-Core** (Rare; 9mm, .45, 12mm, 5.56, 7.62, 12.7): Ignores 25% of armor. -10% damage.
+- **Incendiary** (Rare; 9mm, .45, 12mm, 5.56, 7.62, 12.7): 15% chance (9mm: 8%) to set the target on fire. A quarter of the damage is fire damage. -5% damage.
+- **Subsonic** (Rare; 9mm, .45, 5.56): Much quieter shots. Silent kills. -10% damage. -10% range.
+- **Bouncers** (Rare; 9mm, .45, 5.56): 30% chance to ricochet once. -15% damage.
+- **Rubber** (Rare; 9mm, .45, 12mm): Non-lethal: targets go down unconscious instead of dying. Much stronger flinch. -40% damage.
+- **Penetrator** (Epic; 9mm, .45, 5.56): Ignores 60% of armor.
+- **Match** (Epic; 9mm, .45, 12mm, 5.56, 7.62, 12.7): Damage varies -2% to +6% instead of -10% to +1%. 30% less spread and sway.
+- **Toxin Core** (Epic; 9mm, .45, 12mm, 5.56, 7.62, 12.7): 25% chance to poison. 30% of the damage is chemical damage.
+- **Shredders** (Epic; 9mm, .45, 12mm, 5.56, 7.62): 30% chance to cause bleeding. Twice the dismemberment chance.
+- **Hardcast** (Rare; 12mm): 25% chance to stagger. Ignores 10% of armor. +20% recoil.
+- **Ballistic Tip** (Rare; 7.62, 12.7): +40% range. +5% damage. Armor is 10% more effective against it.
+- **HEI** (Epic; 12.7): +50% damage against drones, mechs and vehicles. 20% chance to set the target on fire.
+- **Flechettes** (Rare; 12ga, 4ga): Tighter spread. Double range. -15% damage.
+- **Beanbags** (Rare; 12ga): Fires one projectile with the whole shot's damage. Knocks targets down. Non-lethal: targets go down unconscious instead of dying. -50% damage.
+- **Dragon's Breath Lite** (Rare; 12ga): 30% chance to set the target on fire. Half the damage is fire damage. -20% range.
+- **Dragon's Breath** (Epic; 12ga, 4ga): All damage is fire damage. 60% chance to set the target badly on fire.
+- **Frag-12** (Epic; 12ga): Fires one projectile with the whole shot's damage. Ignores 50% of armor. +50% damage against drones, mechs and vehicles.
+- **Long Flechettes** (Epic; 12ga): Tighter spread. 3.5x range.
+- **Riot** (Rare; 4ga): Fires one projectile with the whole shot's damage. Knocks targets down. Non-lethal: targets go down unconscious instead of dying. -50% damage.
+- **Flares** (Rare; 4ga): Fires one projectile with the whole shot's damage. Blinds the target for a moment. 30% chance to set the target on fire.
+- **Thermite Slugs** (Epic; 4ga): Fires one projectile with the whole shot's damage. Sets the target badly on fire. Double damage against drones, mechs and vehicles.
+- **Ferro** (Rare; 5mm, Heavy): 40% chance to ricochet, up to twice. -10% damage.
+- **Split Slugs** (Rare; 5mm, Heavy): Fires three projectiles that share the shot's damage. Wider spread. Doesn't pierce cover.
+- **Feedback** (Rare; 5mm, Heavy): Shots bend toward targets near the crosshair. -10% damage.
+- **DU Penetrator** (Epic; 5mm, Heavy): Pierces cover at a lower charge. Loses half as much damage through cover. Ignores 50% of armor.
+- **Toxic Scatter** (Epic; 5mm, Heavy): Fires five projectiles that share the shot's damage. Wider spread. 25% chance per hit to poison.
+- **Superconductor** (Epic; 5mm, Heavy): Full auto at full charge.
+- **EMP Capacitor** (Epic; 5mm, Heavy): 30% chance of an EMP. 30% of the damage is electrical damage.
+- **EMP Payload** (Rare; 10mm, 20mm, 25mm): 25% chance of an EMP. 30% of the damage is electrical damage. -10% damage.
+- **Incendiary Payload** (Rare; 10mm, 20mm, 25mm): 25% chance to set the target on fire. 30% of the damage is fire damage. -10% damage.
+- **Chem Payload** (Rare; 10mm, 20mm, 25mm): 25% chance to poison. 30% of the damage is chemical damage. -10% damage.
+- **Flash Payload** (Rare; 10mm, 20mm, 25mm): 30% chance to blind the target. -20% damage.
+- **Hunter** (Epic; 10mm, 20mm, 25mm): Locks two more targets. Locks on twice as fast. +20% hit chance. Rounds fly 30% faster.
+- **Hack Carrier** (Epic; 10mm, 20mm, 25mm): 15% chance of a cyberware malfunction. 15% chance to jam the target's weapon.
+- **Shaped Charge** (Epic; 10mm, 20mm, 25mm): Ignores 50% of armor. +50% damage against drones, mechs and vehicles.
+
 ### Ammo ideas so far
 
 - **Dumbfire (Smart):** much more damage, guidance removed entirely, so the smart gun becomes a

@@ -3,7 +3,7 @@
 # (npcUncommonFactor flats 10, respawned until it carries Ammo.AO_9mm_HollowPoint, as slice/npcdrop.sh)
 # hits V for 1.2x the roll; with the factor 0 it carries 9mm Ball and hits for the plain roll; and V's
 # own Mushrooms hits on the NPC are not multiplied again. Also runs parity-ganger.lua with the ganger out, and measures the other stats
-# the Uncommon selectors modify on NPC guns (parity-stats.lua; shotgun pellets via the rig's volleys).
+# the Uncommon, Rare and Epic selectors modify on NPC guns (parity-stats.lua; shotgun pellets via the rig's volleys).
 # Draws guns and spawns an NPC: not while the user plays. Exits 1 on any FAIL.
 source "$(dirname "$0")/npc-lib.sh"
 
@@ -21,7 +21,7 @@ statcase() {
   if [[ "$($C "AO_PS_BASE = nil; $pre PS_MODE='base'; $(cat $S/slice/common.lua $S/calibers/parity-stats.lua)" 2>&1)" != *"=> stored"* ]]; then
     out+="FAIL $1: could not read the base stats of $2|"; return
   fi
-  if ! spawn 10.0 "$3" "$2"; then return; fi
+  if ! spawn ${AO_FACTOR:-10.0} "$3" "$2"; then return; fi
   res=$(PRE="$pre PS_MODE='held';" tools/snippets/calibers/check.sh calibers/parity-stats.lua 2>&1)
   lines="$(grep -E '^(PASS|FAIL)' <<<"$res")"
   out+="$(tr '\n' '|' <<<"$lines")"
@@ -34,7 +34,25 @@ statcase "+P" Character.AO_Test_Plain_Lexington Ammo.AO_9mm_PlusP Items.AO_Feed_
 statcase "12ga Slugs" Character.AO_Test_Plain_Crusher Ammo.AO_12ga_Slug Items.AO_Feed_12ga_Slugs ProjectilesPerShot SpreadDefaultX,SpreadDefaultY,SpreadMaxX,SpreadMaxY,SpreadAdsDefaultX,SpreadAdsDefaultY,SpreadAdsMaxX,SpreadAdsMaxY,EffectiveRange
 statcase "12ga Birdshot" Character.AO_Test_Plain_Crusher Ammo.AO_12ga_Birdshot Items.AO_Feed_12ga_Birdshot ProjectilesPerShot,HitReactionFactor SpreadDefaultX,SpreadMaxX
 statcase "4ga Birdshot" Character.AO_Test_Plain_Carnage Ammo.AO_4ga_Birdshot Items.AO_Feed_4ga_Birdshot ProjectilesPerShot,HitReactionFactor
-
+# Rare (2) and Epic (3) rounds: the roll forced to that tier (factor 100: Epic shares are as low
+# as 0.005), which holds several rounds, so more spawns. Zero lists: DamagePerHit (the roll hook
+# applies it), range and spread (known gap), noise and sway (NPCs have neither), pierce (NPC rail
+# guns don't), lock times (NPC aim is the AI's). Not read: Hunter's hit chance (an NPC smart gun is
+# at the cap, 1) and SmartGunPlayerProjectileVelocity (V's rounds only).
+tiercase() { AO_TIER=$1 AO_TRIES=30 AO_FACTOR=100.0 statcase "${@:2}"; }
+SPREAD=SpreadDefaultX,SpreadDefaultY,SpreadMaxX,SpreadMaxY,SpreadAdsDefaultX,SpreadAdsDefaultY,SpreadAdsMaxX,SpreadAdsMaxY
+tiercase 2 "9mm Subsonic" Character.AO_Test_Plain_Lexington Ammo.AO_9mm_Subsonic Items.AO_Feed_9mm_Subsonic CanSilentKill DamagePerHit,EffectiveRange,WeaponNoise
+tiercase 2 "9mm Bouncers" Character.AO_Test_Plain_Lexington Ammo.AO_9mm_Bouncers Items.AO_Feed_9mm_Bouncers RicochetChance,RicochetCount DamagePerHit
+tiercase 3 "9mm Match" Character.AO_Test_Plain_Lexington Ammo.AO_9mm_Match Items.AO_Feed_9mm_Match "" SwayTraversalTime,SwaySideMaximumAngleDistance,$SPREAD
+tiercase 3 "9mm Shredders" Character.AO_Test_Plain_Lexington Ammo.AO_9mm_Shredders Items.AO_Feed_9mm_Shredders HitDismembermentFactor
+tiercase 2 "5mm Split Slug" Character.AO_Test_Plain_Omaha Ammo.AO_TLight_SplitSlug Items.AO_Feed_5mm_SplitSlug "" TechPierceEnabled,$SPREAD
+# An NPC Omaha fires 1 but its ProjectilesPerShotBase is 3, so "the gun's own, then n" leaves Split
+# Slugs at 1 and Toxic Scatter at 3 for NPCs (DESIGN.md Known gaps).
+tiercase 3 "5mm Toxic Scatter" Character.AO_Test_Plain_Omaha Ammo.AO_TLight_ToxicScatter Items.AO_Feed_5mm_ToxicScatter ProjectilesPerShot $SPREAD
+tiercase 2 "5mm Feedback" Character.AO_Test_Plain_Omaha Ammo.AO_TLight_Feedback Items.AO_Feed_5mm_Feedback BulletMagnetismDefaultAngle DamagePerHit
+tiercase 3 "5mm DU Pen" Character.AO_Test_Plain_Omaha Ammo.AO_TLight_DUPen Items.AO_Feed_5mm_DUPen CanWeaponIgnoreArmor,TechPierceChargeLevel,TechPierceDamageFactor
+tiercase 3 "5mm Superconductor" Character.AO_Test_Plain_Omaha Ammo.AO_TLight_Superconductor Items.AO_Feed_5mm_Superconductor FullAutoOnFullCharge
+tiercase 3 "10mm Hunter" Character.AO_Test_Plain_Yukimura Ammo.AO_S10_Hunter Items.AO_Feed_10mm_Hunter SmartGunHipMaxLockedTargets,SmartGunAdsMaxLockedTargets SmartGunHipTimeToLock,SmartGunAdsTimeToLock
 # Phases 1 and 2: an NPC Lexington shoots V (retried when the rig could not get 10 hits).
 nphase() { # name lo hi flats ammo
   for _ in 1 2 3; do
@@ -93,8 +111,8 @@ $C "FEED='Items.AO_Feed_9mm_Ball'; $(cat $S/set-feed.lua)" >/dev/null
 lua "RIG.teardown(); return 1" >/dev/null
 res=$(tr '|' '\n' <<<"$out" | sed '/^$/d'); echo "$res"
 p=$(grep -c '^PASS' <<<"$res"); n=$(grep -c '^FAIL' <<<"$res")
-# ganger 3, stat cases 19, NPC hit phases 2, pellets 3, V phase 1: a chunk that printed nothing can't vanish.
-EXPECT=28
+# ganger 3, stat cases 19 + Rare/Epic 46, NPC hit phases 2, pellets 3, V phase 1: a chunk that printed nothing can't vanish.
+EXPECT=74
 (( p + n >= EXPECT )) || { echo "FAIL only $((p + n)) of $EXPECT checks reported"; n=$((n + 1)); }
 echo "== parity: $p pass, $n fail"
 (( n == 0 && p > 0 ))

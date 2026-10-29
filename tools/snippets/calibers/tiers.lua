@@ -1,3 +1,4 @@
+-- Blocks the game for about a minute (the roll counts): CET_T=240 FROZEN_AFTER=240 check.sh calibers/tiers.lua
 -- Rare and Epic tiers (spec "Tiers: price, frequency, sources"): four tier shares per family,
 -- prices x2 / x4 / x8 of the caliber's Common round, gun shops up to Rare and other vendors
 -- Common only, and the NPC roll's caps and factors by rank. Static: no restart, no NPC.
@@ -43,7 +44,10 @@ for c, byTier in pairs(CAL) do
     for _, a in ipairs(byTier[t]) do
       local got, want = price(a), base * MULT[t]
       priced[t] = priced[t] + 1
-      check(a .. " costs x" .. MULT[t] .. " of " .. tostring(common), base > 0 and math.abs(got - want) <= math.max(1, 0.05 * want), got .. " vs " .. base)
+      -- Shown prices are rounded up: the Common's real price is in (base - 1, base], so a cheap
+      -- round's multiple can sit well under base * MULT (exact ratios: records.lua).
+      local lo = math.min((base - 1) * MULT[t], want * 0.95) - 1
+      check(a .. " costs x" .. MULT[t] .. " of " .. tostring(common), base > 0 and got >= lo and got <= math.max(want + 1, want * 1.05), got .. " vs " .. base)
     end
   end
 end

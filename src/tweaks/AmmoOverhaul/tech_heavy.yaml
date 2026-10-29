@@ -256,10 +256,18 @@ Items.AO_Feed_Heavy_SplitSlug:
   quality: Quality.Rare
   statModifiers:
     - !append
+      $type: CombinedStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      refStat: BaseStats.ProjectilesPerShotBase
+      refObject: Root
+      opSymbol: '*'
+      value: -1
+    - !append
       $type: ConstantStatModifier
       statType: BaseStats.ProjectilesPerShot
       modifierType: Additive
-      value: 2
+      value: 3
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.SpreadDefaultX
@@ -302,9 +310,9 @@ Items.AO_Feed_Heavy_SplitSlug:
       value: 2.0
     - !append
       $type: ConstantStatModifier
-      statType: BaseStats.TechPierceChargeLevel
-      modifierType: Additive
-      value: 1.0
+      statType: BaseStats.TechPierceEnabled
+      modifierType: Multiplier
+      value: 0.0
 
 # Heavy Feedback (Rare)
 Ammo.AO_THeavy_Feedback:
@@ -394,7 +402,7 @@ Items.AO_Feed_Heavy_DUPen:
       $type: ConstantStatModifier
       statType: BaseStats.TechPierceDamageFactor
       modifierType: Multiplier
-      value: 1.5
+      value: 0.5
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.CanWeaponIgnoreArmor
@@ -439,10 +447,18 @@ Items.AO_Feed_Heavy_ToxicScatter:
   quality: Quality.Epic
   statModifiers:
     - !append
+      $type: CombinedStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      refStat: BaseStats.ProjectilesPerShotBase
+      refObject: Root
+      opSymbol: '*'
+      value: -1
+    - !append
       $type: ConstantStatModifier
       statType: BaseStats.ProjectilesPerShot
       modifierType: Additive
-      value: 4
+      value: 5
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.SpreadDefaultX

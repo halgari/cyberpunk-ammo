@@ -2,27 +2,27 @@
 -- and its guns (iconics included) load its Common round and carry its feed slot.
 --   tools/snippets/calibers/check.sh calibers/records.lua
 local ROUNDS = {
-  -- round, name, weight, selector, price multiplier on the source ammo's price
+  -- round, name, weight, selector, price multiplier on the source ammo's price (Uncommon x2 on top)
   { "Ammo.AO_45_Ball", ".45 Ball", 0.09, "Items.AO_Feed_45_Ball", 1.2 },
-  { "Ammo.AO_45_HollowPoint", ".45 Mushrooms", 0.09, "Items.AO_Feed_45_Mushrooms", 1.2 },
+  { "Ammo.AO_45_HollowPoint", ".45 Mushrooms", 0.09, "Items.AO_Feed_45_Mushrooms", 2.4 },
   { "Ammo.AO_12mm_Ball", "12mm Ball", 0.12, "Items.AO_Feed_12mm_Ball", 1.6 },
-  { "Ammo.AO_12mm_HollowPoint", "12mm Mushrooms", 0.12, "Items.AO_Feed_12mm_Mushrooms", 1.6 },
+  { "Ammo.AO_12mm_HollowPoint", "12mm Mushrooms", 0.12, "Items.AO_Feed_12mm_Mushrooms", 3.2 },
   { "Ammo.RifleAmmo", "5.56 Ball", 0.06, "Items.AO_Feed_556_Ball", 1 },
-  { "Ammo.AO_556_HollowPoint", "5.56 Mushrooms", 0.06, "Items.AO_Feed_556_Mushrooms", 1 },
+  { "Ammo.AO_556_HollowPoint", "5.56 Mushrooms", 0.06, "Items.AO_Feed_556_Mushrooms", 2 },
   { "Ammo.AO_762_Ball", "7.62 Ball", 0.09, "Items.AO_Feed_762_Ball", 1.3 },
-  { "Ammo.AO_762_HollowPoint", "7.62 Mushrooms", 0.09, "Items.AO_Feed_762_Mushrooms", 1.3 },
+  { "Ammo.AO_762_HollowPoint", "7.62 Mushrooms", 0.09, "Items.AO_Feed_762_Mushrooms", 2.6 },
   { "Ammo.SniperRifleAmmo", "12.7 Ball", 0.15, "Items.AO_Feed_127_Ball", 2 },
-  { "Ammo.AO_127_HollowPoint", "12.7 Mushrooms", 0.15, "Items.AO_Feed_127_Mushrooms", 2 },
+  { "Ammo.AO_127_HollowPoint", "12.7 Mushrooms", 0.15, "Items.AO_Feed_127_Mushrooms", 4 },
   { "Ammo.AO_THeavy_Slug", "Heavy Rail Slugs", 0.08, "Items.AO_Feed_Heavy_RailSlugs", 1.5 },
-  { "Ammo.AO_THeavy_Sabot", "Heavy Sleevers", 0.08, "Items.AO_Feed_Heavy_Sleevers", 1.5 },
+  { "Ammo.AO_THeavy_Sabot", "Heavy Sleevers", 0.08, "Items.AO_Feed_Heavy_Sleevers", 3 },
   { "Ammo.AO_S20_Standard", "20mm Seekers", 0.12, "Items.AO_Feed_20mm_Seekers", 1.3 },
-  { "Ammo.AO_S20_Dumbfire", "20mm Dumbfires", 0.12, "Items.AO_Feed_20mm_Dumbfires", 1.3 },
+  { "Ammo.AO_S20_Dumbfire", "20mm Dumbfires", 0.12, "Items.AO_Feed_20mm_Dumbfires", 2.6 },
   { "Ammo.AO_S25_Standard", "25mm Seekers", 0.24, "Items.AO_Feed_25mm_Seekers", 2.5 },
-  { "Ammo.AO_S25_Dumbfire", "25mm Dumbfires", 0.24, "Items.AO_Feed_25mm_Dumbfires", 2.5 },
+  { "Ammo.AO_S25_Dumbfire", "25mm Dumbfires", 0.24, "Items.AO_Feed_25mm_Dumbfires", 5 },
   { "Ammo.ShotgunAmmo", "Buckshot", 0.06, "Items.AO_Feed_12ga_Buckshot", 1 },
-  { "Ammo.AO_12ga_Slug", "Slugs", 0.06, "Items.AO_Feed_12ga_Slugs", 1 },
+  { "Ammo.AO_12ga_Slug", "Slugs", 0.06, "Items.AO_Feed_12ga_Slugs", 2 },
   { "Ammo.AO_4ga_Buckshot", "4ga Buckshot", 0.15, "Items.AO_Feed_4ga_Buckshot", 2 },
-  { "Ammo.AO_4ga_Slug", "4ga Slugs", 0.15, "Items.AO_Feed_4ga_Slugs", 2 },
+  { "Ammo.AO_4ga_Slug", "4ga Slugs", 0.15, "Items.AO_Feed_4ga_Slugs", 4 },
 }
 local GUNS = {
   -- weapon record, Common round, feed element
@@ -159,6 +159,62 @@ for _, r in ipairs(SECOND) do
   for i, x in ipairs(sels) do if str(x) == sel then at = i end end
   check(cal .. " lists " .. sel .. " at tier 1 for " .. ammo, at ~= nil and tiers[at] == 1 and str(ammos[at]) == ammo,
     at and (tostring(tiers[at]) .. " " .. str(ammos[at])) or "not listed")
+end
+
+-- Rare and Epic rounds (tools/rounds/rounds.py), every caliber: quality, price x4 / x8 of the
+-- Common round (on the price lists), the Common round's weight, text, icon, a hidden selector of the
+-- tier's quality, no damage-type or machine stats on the selector (those are hit data, applied to
+-- V and NPCs alike), valid hit data.
+local QUAL, PRICE = { [2] = "Quality.Rare", [3] = "Quality.Epic" }, { [2] = 4, [3] = 8 }
+local SHARE_TYPES = { Thermal = true, Chemical = true, Electric = true }
+local BANNED = { ["BaseStats.ThermalDamage"] = true, ["BaseStats.ChemicalDamage"] = true, ["BaseStats.ElectricDamage"] = true,
+  ["BaseStats.BonusDamageAgainstMechanicals"] = true }
+local counted = { [2] = 0, [3] = 0 }
+for _, cal in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
+  local K = "AmmoOverhaul." .. cal
+  local sels, ammos, tiers = flat(K, "selectors") or {}, flat(K, "selectorAmmo") or {}, flat(K, "selectorTiers") or {}
+  local common = str(ammos[1])
+  for i, t in ipairs(tiers) do
+    if t >= 2 then
+      local ammo, sel = str(ammos[i]), str(sels[i])
+      counted[t] = counted[t] + 1
+      local bad = {}
+      local function need(ok, what) if not ok then table.insert(bad, what) end end
+      need(rec(ammo) ~= nil and rec(sel) ~= nil, "records exist")
+      if rec(ammo) and rec(sel) then
+        need(str(flat(ammo, "quality")) == QUAL[t] and str(flat(sel, "quality")) == QUAL[t], "quality " .. str(flat(ammo, "quality")))
+        local p, pc = priceMult(ammo, "buyPrice"), priceMult(common, "buyPrice")
+        need(near(p, pc * PRICE[t]) and near(priceMult(ammo, "sellPrice"), p), string.format("price x%.2f of Common's x%.2f", p, pc))
+        need(near(statSum(ammo, "Weight"), statSum(common, "Weight")), "weight " .. statSum(ammo, "Weight"))
+        local name, desc = locName(ammo) or "", Game.GetLocalizedTextByKey(rec(ammo):LocalizedDescription())
+        need(name ~= "" and not name:find("^AO%-") and locName(sel) == name, "name " .. name)
+        need(desc ~= "" and not desc:find("^AO%-") and desc:find("\n\n", 1, true) ~= nil, "description")
+        need(rec("UIIcon." .. tostring(flat(ammo, "iconPath"))) ~= nil, "icon record")
+        local tags = {}
+        for _, x in ipairs(flat(sel, "tags") or {}) do tags[type(x) == "string" and x or x.value] = true end
+        need(tags.HideInBackpackUI and tags.AO_AmmoSelector, "selector tags")
+        for _, m in ipairs(flat(sel, "statModifiers") or {}) do
+          need(not BANNED[str(flat(m, "statType"))], "selector carries " .. str(flat(m, "statType")))
+        end
+        local fx, ch = flat(ammo, "aoEffects") or {}, flat(ammo, "aoEffectChances") or {}
+        need(#ch == 0 or #ch == #fx, "effect chances")
+        for _, e in ipairs(fx) do
+          need(TweakDB:GetRecord(type(e) == "string" and e or str(e)) ~= nil, "effect " .. tostring(e))
+        end
+        local st = flat(ammo, "aoShareType")
+        need(st == nil or SHARE_TYPES[st], "share type " .. tostring(st))
+      end
+      check(cal .. " " .. ammo .. " (tier " .. t .. ")", #bad == 0, table.concat(bad, "; "))
+    end
+  end
+end
+check("91 Rare and Epic rounds listed", counted[2] + counted[3] == 91, counted[2] .. " Rare, " .. counted[3] .. " Epic")
+
+-- Every record the generator names exists (stat types, status effects, bases): tools/rounds/refs.txt.
+if AO_REFS then
+  local missing = {}
+  for _, r in ipairs(AO_REFS) do if not TweakDB:GetRecord(r) then table.insert(missing, r) end end
+  check(#AO_REFS .. " generator references exist", #missing == 0, table.concat(missing, " "))
 end
 
 for _, g in ipairs(GUNS) do

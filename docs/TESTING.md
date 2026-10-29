@@ -115,7 +115,17 @@ each step); the rest needs a person at the game. Give yourself the kit first (te
 The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a `.lua` one):
 
 - `records.lua`: every caliber's rounds and selectors (names, weights, prices), its guns load its
-  Common round and carry its feed slot.
+  Common round and carry its feed slot. Rare and Epic rounds too: quality, x4 / x8 price, weight, text, icon,
+  selector tags, no damage-type or machine stats on a selector, valid hit data, all 91 listed.
+  Run it with the generator's stat list in front:
+  `PRE="AO_REFS={$(sed 's/.*/"&",/' tools/rounds/refs.txt | tr -d '\n')};" check.sh calibers/records.lua`.
+- `tiers.lua`: tier shares, prices, vendor and loot caps (gun shops up to Rare, loot up to Epic),
+  and the NPC tier roll by rank. It blocks the game for about a minute:
+  `CET_T=240 FROZEN_AFTER=240 check.sh calibers/tiers.lua`.
+- `hitdata.lua`: every round's hit data (effects and chances, damage share, machine bonus,
+  non-lethal) reads as its YAML says; the old `ammoEffects` list is gone. `hitdata.sh`: the same
+  on live hits with a test round (burns, half Thermal, x2 on machines, non-lethal): V on a ganger,
+  a ganger on V, V's killing shot knocks out, V on an android (draws guns: not while you play).
 - `vanilla.lua`: no gun carries a stat change; Common rounds fire like vanilla ammo.
 - `distribution.lua`: each vanilla ammo item splits in the shares of `docs/DESIGN.md`; with
   `PRE="VENDOR=true;"` gun shops split their rifle, sniper and shotgun ammo too.
@@ -135,7 +145,9 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
   Unity (draw it first).
 - `rig.lua` / `rig.sh`: the hit rig, a frozen invulnerable test NPC in front of V on the open road
   by the test save's load point, logging every hit's damage before and after the roll. Police
-  are locked off while it runs; it reloads, respawns a stray NPC and checks line of sight.
+  are locked off while it runs; it reloads, respawns a stray NPC and checks line of sight. Before
+  each shot it turns V to face the NPC and pitches the camera at its chest, and fires only when
+  the game's look-at target is the NPC (what turns the crosshair red); only hits on that NPC count.
 - `roll.sh`: the roll on real hits: V's .45 Ball, the test round's duds and hot rounds, Crusher
   pellets, and the NPC's hits on V. V's shots follow V's camera, so the rig pitches it at the
   NPC's Chest slot before each shot (a level camera fires over a crouching NPC). If it fails, read
@@ -143,7 +155,8 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 - `parity.lua`: each round's NPC damage factor from its selector record (Mushrooms 1.2, Dumbfires
   1.8, 4ga Slugs 1.3, Common 1.0). `parity.sh`: the same on live hits with the rig: a Mushrooms
   ganger hits V for 1.2x the roll, a Common one the plain roll, V's own Mushrooms hits roll once;
-  every other stat a round changes, read off an NPC's gun in hand; NPC Birdshot and Slug shots
+  every other stat a round changes, read off an NPC's gun in hand (Uncommon, and one Rare or Epic
+  round per new stat, with the roll forced to that tier); NPC Birdshot and Slug shots
   land about as hard per shot as Common. Takes about 7 min. The suite runs it last without gating:
   a Crusher phase can lose its NPC when the rig respawns its own on lost line of sight ("no
   Crusher with ProjectilesPerShot ..."), which is the rig, not the parity.

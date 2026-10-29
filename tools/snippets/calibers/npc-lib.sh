@@ -5,16 +5,22 @@ set -uo pipefail
 cd "$(dirname "$0")/../../.."
 C=tools/linux/cet.sh; S=tools/snippets; out=""
 lua() { $C -t 30 "$(cat $S/calibers/rig.lua); $1" 2>&1 | sed -n 's/^=> //p' | tail -1; }
-R='AO_R = {Trash=0.5,Weak=0.5,Normal=1.0,Rare=1.5,Officer=1.5,Elite=2.0,Boss=2.0}'
-flats() { $C "$R"' for r in pairs(AO_R) do TweakDB:SetFlat("AmmoOverhaul.npcUncommonFactor."..r, '"$1"') end return "set"' >/dev/null; }
-restore() { $C "$R"' for r, v in pairs(AO_R) do TweakDB:SetFlat("AmmoOverhaul.npcUncommonFactor."..r, v) end; GetMod("AOTestKit").despawnAll(); return "x"' >/dev/null; }
+# The NPC round factors (core.yaml), per tier flat: forced by spawn/flats, put back by restore.
+R='AO_R = { npcUncommonFactor = {Trash=0.5,Weak=0.5,Normal=1.0,Rare=1.5,Officer=1.5,Elite=2.0,Boss=2.0},
+  npcRareFactor = {Trash=0.0,Weak=0.0,Normal=0.0,Rare=1.5,Officer=1.5,Elite=2.0,Boss=3.0},
+  npcEpicFactor = {Trash=0.0,Weak=0.0,Normal=0.0,Rare=0.0,Officer=0.0,Elite=2.0,Boss=4.0} }'
+# Lua setting every rarity's factor to $1 for tier AO_TIER (1 unless set; 2 Rare, 3 Epic) and 0 for
+# the others, so the roll lands on that tier.
+setf() { echo "$R"' local on = ({"npcUncommonFactor", "npcRareFactor", "npcEpicFactor"})['"${AO_TIER:-1}"']
+for f, rs in pairs(AO_R) do for r in pairs(rs) do TweakDB:SetFlat("AmmoOverhaul."..f.."."..r, f == on and '"$1"' or 0.0) end end'; }
+flats() { $C "$(setf $1) return \"set\"" >/dev/null; }
+restore() { $C "$R"' for f, rs in pairs(AO_R) do for r, v in pairs(rs) do TweakDB:SetFlat("AmmoOverhaul."..f.."."..r, v) end end; GetMod("AOTestKit").despawnAll(); return "x"' >/dev/null; }
 trap restore EXIT
-# Spawns $3 with the roll at factor $1 until it holds $2 (any, if empty); returns when its gun is out.
+# Spawns $3 with the roll at factor $1 (tier AO_TIER) until it holds $2 (any, if empty); returns when its gun is out.
 spawn() {
-  for _ in $(seq 1 10); do
-    $C "$R"'
+  for _ in $(seq 1 ${AO_TRIES:-10}); do
+    $C "$(setf $1)"'
     local k = GetMod("AOTestKit"); k.despawnAll(); k.state.distance = 12
-    for r in pairs(AO_R) do TweakDB:SetFlat("AmmoOverhaul.npcUncommonFactor."..r, '"$1"') end
     k.spawn("'"$3"'", 1); return "spawned"' >/dev/null
     local gun=0
     for _ in $(seq 1 20); do

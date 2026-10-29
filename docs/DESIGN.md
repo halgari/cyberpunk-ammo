@@ -176,10 +176,12 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
   ammo its feed slot selects, as for the player (a preset can fit a selector through
   `slotPartListPreset`); other guns use their record's. Like the player's, the stack includes the
   loaded rounds. NPCs friendly to the player and companions aren't counted.
-- **Uncommon rounds:** before stocking a managed gun with an empty feed slot, the NPC rolls once
-  for the caliber's Uncommon round: chance = the family's Uncommon share ×
-  `npcUncommonFactor.<rarity>`, capped at 1. On a hit the gun is stocked with the Uncommon round
-  and the selector's stat modifiers are added straight to the gun's stats. No part is fitted:
+- **Better rounds:** before stocking a managed gun with an empty feed slot, the NPC rolls once
+  per tier, Epic first, then Rare, then Uncommon (`NpcAmmo.RollTier`): chance = the family's share
+  of the tier × `npc<Uncommon|Rare|Epic>Factor.<rarity>`, capped at 1; the first hit wins. Only
+  Rare and higher ranks roll Rare rounds, only Elite and Boss roll Epics (Boss twice as often).
+  On a hit the gun is stocked with one of that tier's rounds at random (`NpcAmmo.PickTier`) and
+  the selector's stat modifiers are added straight to the gun's stats. No part is fitted:
   `TransactionSystem.AddPart` on an NPC's drawn gun hangs the game, and an
   `ItemModificationSystem` install request does nothing for NPCs. The roll is kept per gun for the
   session only.
@@ -223,13 +225,13 @@ Heavy rail comes from sniper ammo although its guns used all four vanilla items.
   Mushrooms, 112 Rail Slugs and 38 Sleevers, 135 Seekers and 15 Dumbfires.
 - **Pick** chooses one round for a whole stack (loot): with chance `loot.ownedBias` a caliber of a
   gun the player carries, else one by `lootWeight`; then a tier by share, then one of the tier's
-  rounds at random.
+  rounds at random. Loot picks up to Epic.
 - **Several rounds per tier:** a tier's share is split evenly among its rounds (Spread rounds by
   largest remainder), so a caliber's two Uncommons each get half its Uncommon share. NPCs that
-  roll their Uncommon pick one of them at random (`NpcAmmo.PickUncommon`).
+  roll a tier pick one of its rounds at random (`NpcAmmo.PickTier`).
 - **Vendors:** each stack of a replaced vanilla ammo is split whenever the vendor builds its stock
-  (`Vendor.InitializeStock`, `RegenerateStock`). Gun shops (`Gunsmith`) sell up to Uncommon, other
-  vendors Common only. A restock rebuilds the stock from the vendor's pool and drops our split
+  (`Vendor.InitializeStock`, `RegenerateStock`). Gun shops (`Gunsmith`) sell up to Rare, other
+  vendors Common only. Epics come only from loot and NPCs. A restock rebuilds the stock from the vendor's pool and drops our split
   stacks first (they're regenerating items), so nothing is split twice. Vendors whose stock has
   been split are kept on `AmmoFeedSystem` (saved); stock saved before the mod was installed is
   split the first time the vendor fills its inventory (`FillVendorInventory`). Contents can't
@@ -237,7 +239,7 @@ Heavy rail comes from sniper ammo although its guns used all four vanilla items.
   again on every load.
 - **Loot containers:** a container fills with loot the first time the player looks at it
   (`gameLootContainerBase.OnInventoryFilledEvent`). Then each stack of replaced vanilla ammo
-  becomes one Pick (up to Uncommon), same quantity. Converted containers are kept by entity ID on
+  becomes one Pick (up to Epic), same quantity. Converted containers are kept by entity ID on
   `AmmoFeedSystem` (saved), so a container converts once.
 - **NPC bodies** drop the round their gun used (see NPC ammo).
 
@@ -269,6 +271,24 @@ The tooltip's damage range comes from the base weapon's min/max factors
 set to 1.01 to match. Melee weapons use their own records and keep 0.9..1.1. A round with its own
 range doesn't change the tooltip yet (none ships with one).
 
+## Hit data
+
+What a round does on a hit besides damage, kept as flats on its ammo record (`AOData`), and
+applied in the damage pipeline to V's shots and NPCs' alike:
+
+- `<ammo>.aoEffects` / `aoEffectChances`: status effects and the chance of each per hit
+  (`AmmoFeedSystem.ApplyAmmoOnHit`, before vanilla applies the attack's effects, so its blocked,
+  friendly and immunity checks still apply). The 4ga Slug's knockdown is one of these.
+- `aoShareType` / `aoShare`: that share of the hit's Physical damage moves to Thermal, Electric
+  or Chemical (`AmmoFeedSystem.ApplyHitDamage`, after the roll).
+- `aoMachineBonus`: every damage type times this against a machine (`AOData.IsMachine`: a
+  vehicle, drone, turret or mechanical puppet).
+- `aoNonlethal`: the hit carries the game's non-lethal flag, so a killing shot knocks out.
+
+The round is the one the gun is loaded with (`AOData.LoadedAmmo`). The Rare and Epic rounds are
+generated with their hit data (`tools/rounds/rounds.py`). The machine bonus is not yet confirmed on
+live hits: the android `calibers/hitdata.sh` spawns looked human in game.
+
 ## NPC damage parity
 
 NPC guns have `DamagePerHit` 0 (their damage comes from elsewhere), so the `DamagePerHit`
@@ -292,7 +312,7 @@ Every stat type a selector modifies (read from `src/tweaks/AmmoOverhaul/*.yaml`)
 reaches NPC shots. The modifiers are added to the NPC gun's stats object (`NpcAmmo.RollUncommon`).
 `calibers/parity.sh` reads the gun's stats while it is in an NPC's hand (a `Plain_*` NPC with the
 roll forced on, against the same gun with the roll off) and compares them with what the selector
-says.
+says. Rare and Epic rounds are read the same way with the roll forced to their tier.
 
 | Stat | On NPC shots |
 | --- | --- |
@@ -305,6 +325,19 @@ says.
 | `RecoilKickMin/Max`, `WeaponEvolutionToStaminaCost` | Irrelevant: NPCs have no camera recoil and no stamina. |
 | `ChargeTime` | Known gap: NPC rail guns have `ChargeTime` 0. |
 | `Weight`, `Price` | Irrelevant: inventory and vendor stats of the ammo item. |
+| `CanSilentKill` | Works. Measured: 9mm Subsonic 0 -> 1. |
+| `RicochetChance`, `RicochetCount` | Work. Measured: 9mm Bouncers 0 -> 0.3 and 0 -> 1. |
+| `HitDismembermentFactor` | Works. Measured: 9mm Shredders 0.5 -> 1. |
+| `BulletMagnetismDefaultAngle` | Works. Measured: 5mm Feedback 0 -> 2. |
+| `TechPierceChargeLevel`, `TechPierceDamageFactor` | Work. Measured: 5mm DU Pen 0.9 -> 0.45 and -0.44 -> -0.22. Damage through cover is times (1 + factor) (`DamageSystem`), so DU Pen keeps 78% instead of 56%. The charge level caps at 1, so it can't stop a full charge from piercing. |
+| `TechPierceEnabled` | Irrelevant: NPC rail guns have 0. On V's Omaha Split Slugs take it 1 -> 0 (measured). |
+| `FullAutoOnFullCharge` | Works. Measured: 5mm Superconductor 0 -> 1. |
+| `SmartGunHipMaxLockedTargets`, `SmartGunAdsMaxLockedTargets` | Work. Measured: 10mm Hunter 0 -> 2. |
+| `SmartGunHipTimeToLock`, `SmartGunAdsTimeToLock` | Irrelevant: 0 on NPC smart guns (the AI aims). |
+| `SmartGunHitProbability` (Hunter's +0.2) | Irrelevant: an NPC smart gun is already at the cap, 1. |
+| `SmartGunPlayerProjectileVelocity` | Irrelevant: V's rounds only. |
+| `WeaponNoise`, `SwayTraversalTime`, `SwaySideMaximumAngleDistance` | Irrelevant: 0 on NPC guns. |
+| `ProjectilesPerShot` (exactly n: Split Slugs 3, Toxic Scatter 5) | The gun's `ProjectilesPerShotBase` is taken away and n added. V's Omaha (3, base 3) gets 3 and 5 (measured). An NPC Omaha fires 1 but has base 3, so it gets 1 and 3 (measured; Known gaps). Damage per shot stays right through the pellet ratio. |
 
 Combined modifiers ("add value times a stat of the gun", used for pellet counts):
 `RPGManager.StatRecordToModifier` reads their value from a null record, and on an NPC's gun the game
@@ -328,14 +361,17 @@ constant.
 - NPC guns have no value (0) for `EffectiveRange`, `MaximumRange` and the spread stats, so a round's
   multipliers on them (+P range, Short Fuse range, Slug and Birdshot spread) do nothing for NPCs.
   `calibers/parity.sh` reads the stats and fails if one of them stops being 0.
+- NPC Tech guns whose shot count differs from `ProjectilesPerShotBase` (the Omaha: 1 against 3)
+  get two fewer projectiles than V from Split Slugs and Toxic Scatter (1 and 3, not 3 and 5).
+  Damage per shot is unchanged.
 - Old saves: vanilla ammo already held becomes the four Common rounds. A gun moved to a new
   caliber (a Unity to .45, a Satara to heavy rail, a Kolac to 12.7, an Omaha to 5mm rail) starts
   empty until its rounds are bought or looted.
 - Vendors already split in a save from the slice (which split only handgun ammo) are marked done,
   so their rifle, sniper and shotgun ammo splits across the new calibers only at their next
   restock.
-- The Uncommon roll isn't saved. After loading a save, an NPC stocked with an Uncommon round reads
-  its gun's ammo as the Common round again, and its stock holds the Uncommon one, so it can run
+- The NPC round roll isn't saved. After loading a save, an NPC stocked with a better round reads
+  its gun's ammo as the Common round again, and its stock holds the better one, so it can run
   dry early. Untested.
 - Loose ammo lying in the world (`gameItemDropObject`) and loot bags aren't converted: they stay
   vanilla ammo, which is the Common round of 9mm, 5.56, 12.7 or 12-gauge.

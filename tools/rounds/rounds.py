@@ -109,8 +109,10 @@ def one_projectile():
 
 
 def projectiles(n):
-    # n projectiles from a one-projectile gun; the engine splits the shot's damage across them.
-    return [add("ProjectilesPerShot", n - 1)]
+    # Exactly n projectiles, whatever the gun fires (a player's Omaha fires 3, an NPC's 1): take away
+    # the gun's own, add n, as one_projectile(). The engine splits the shot's damage across them.
+    return [("BaseStats.ProjectilesPerShot", "Additive", -1, "ProjectilesPerShotBase"),
+            add("ProjectilesPerShot", n)]
 
 
 # --- Round kinds ------------------------------------------------------------------------------
@@ -231,7 +233,7 @@ KINDS = [
          desc="Hardened ferrous slugs that skip off hard surfaces instead of shattering.\n\n40% chance to ricochet, up to twice. -10% damage."),
     dict(load="SplitSlug", title="Split Slugs", tier=RARE, look=((52, 55, 60), (215, 110, 30)),
          calibers=["5mm", "Heavy"],
-         stats=projectiles(3) + spread(2.0) + [add("TechPierceChargeLevel", 1.0)],
+         stats=projectiles(3) + spread(2.0) + [mult("TechPierceEnabled", 0.0)],
          desc="A slug scored to come apart in the rails. Three pieces leave the barrel and spread out. None of them go through walls.\n\nFires three projectiles that share the shot's damage. Wider spread. Doesn't pierce cover."),
     dict(load="Feedback", title="Feedback", tier=RARE, look=((52, 55, 60), (40, 160, 140)),
          calibers=["5mm", "Heavy"],
@@ -240,8 +242,8 @@ KINDS = [
     # Tech, Epic
     dict(load="DUPen", title="DU Penetrator", tier=EPIC, look=((40, 42, 46), (190, 160, 60)),
          calibers=["5mm", "Heavy"],
-         stats=[mult("TechPierceChargeLevel", 0.5), mult("TechPierceDamageFactor", 1.5)] + armor(0.50),
-         desc="Depleted uranium slugs. They go through cover at half charge and through armor at any charge.\n\nPierces cover at a lower charge. +50% damage through cover. Ignores 50% of armor."),
+         stats=[mult("TechPierceChargeLevel", 0.5), mult("TechPierceDamageFactor", 0.5)] + armor(0.50),
+         desc="Depleted uranium slugs. They go through cover at half charge and through armor at any charge.\n\nPierces cover at a lower charge. Loses half as much damage through cover. Ignores 50% of armor."),
     dict(load="ToxicScatter", title="Toxic Scatter", tier=EPIC, look=((60, 90, 40), (40, 42, 46)),
          calibers=["5mm", "Heavy"],
          stats=projectiles(5) + spread(2.0),

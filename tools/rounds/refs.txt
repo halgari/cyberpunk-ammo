@@ -43,6 +43,7 @@ BaseStats.SwaySideMaximumAngleDistance
 BaseStats.SwayTraversalTime
 BaseStats.TechPierceChargeLevel
 BaseStats.TechPierceDamageFactor
+BaseStats.TechPierceEnabled
 BaseStats.WeaponNoise
 BaseStatusEffect.Bleeding
 BaseStatusEffect.Blind

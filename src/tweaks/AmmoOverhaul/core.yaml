@@ -88,8 +88,8 @@ AmmoOverhaul.npcMagazines.Boss: 12
 AmmoOverhaul.npcLootWeight: 6.0
 
 # How much likelier than the family's share of a tier an NPC of each rarity is to carry a round of
-# that tier (NpcAmmo.RollRound); 0 or unset for Rare and Epic means never. Epic rolls first, then
-# Rare, then Uncommon.
+# that tier (NpcAmmo.RollRound); 0 means never (every rarity is listed so tests can raise one).
+# Epic rolls first, then Rare, then Uncommon.
 AmmoOverhaul.npcUncommonFactor.Trash: 0.5
 AmmoOverhaul.npcUncommonFactor.Weak: 0.5
 AmmoOverhaul.npcUncommonFactor.Normal: 1.0
@@ -97,10 +97,18 @@ AmmoOverhaul.npcUncommonFactor.Rare: 1.5
 AmmoOverhaul.npcUncommonFactor.Officer: 1.5
 AmmoOverhaul.npcUncommonFactor.Elite: 2.0
 AmmoOverhaul.npcUncommonFactor.Boss: 2.0
+AmmoOverhaul.npcRareFactor.Trash: 0.0
+AmmoOverhaul.npcRareFactor.Weak: 0.0
+AmmoOverhaul.npcRareFactor.Normal: 0.0
 AmmoOverhaul.npcRareFactor.Rare: 1.5
 AmmoOverhaul.npcRareFactor.Officer: 1.5
 AmmoOverhaul.npcRareFactor.Elite: 2.0
 AmmoOverhaul.npcRareFactor.Boss: 3.0
+AmmoOverhaul.npcEpicFactor.Trash: 0.0
+AmmoOverhaul.npcEpicFactor.Weak: 0.0
+AmmoOverhaul.npcEpicFactor.Normal: 0.0
+AmmoOverhaul.npcEpicFactor.Rare: 0.0
+AmmoOverhaul.npcEpicFactor.Officer: 0.0
 AmmoOverhaul.npcEpicFactor.Elite: 2.0
 AmmoOverhaul.npcEpicFactor.Boss: 4.0
 
