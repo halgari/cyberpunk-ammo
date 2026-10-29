@@ -1,5 +1,6 @@
 -- Damage roll values (DamageRoll.reds): each layer's resolved range, and the draws' spread.
--- Reads AmmoFeedSystem.DebugRollFor/DebugRollDraws; no gun or NPC needed.
+-- Reads AmmoFeedSystem.DebugRollFor/DebugRollDraws, and the tooltip range of a drawn Unity
+-- (draw it first: GUN=Items.Preset_Unity_Default with feed-kit.lua).
 local sys = Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem")
 local function nums(s) local t = {} for v in s:gmatch("%S+") do table.insert(t, tonumber(v)) end return t end
 local function near(a, b, e) return a and math.abs(a - b) <= (e or 0.001) end
@@ -47,4 +48,17 @@ for _, r in ipairs(TweakDB:GetRecords("gamedataWeaponItem_Record") or {}) do
   if cached ~= fresh then table.insert(bad, id .. " " .. cached .. "/" .. fresh) end
 end
 check("cached CaliberForWeapon matches fresh for " .. n .. " weapon records", n > 0 and #bad == 0, table.concat(bad, ", "))
+-- The tooltip's damage range matches the roll (0.90..1.01 of the hit), on a drawn Unity.
+local w = Game.GetPlayer():GetActiveWeapon()
+if w and str(w:GetItemID().id) == "Items.Preset_Unity_Default" then
+  local ss, wid = Game.GetStatsSystem(), w:GetEntityID()
+  local function stat(n) return ss:GetStatValue(wid, gamedataStatType[n]) end
+  local hit = stat("EffectiveDamagePerHit")
+  check("tooltip min is 0.90 of the hit", near(stat("EffectiveDamagePerHitMin") / hit, 0.90, 0.005), tostring(stat("EffectiveDamagePerHitMin") / hit))
+  check("tooltip max is 1.01 of the hit", near(stat("EffectiveDamagePerHitMax") / hit, 1.01, 0.005), tostring(stat("EffectiveDamagePerHitMax") / hit))
+  local pmin, pmax = stat("PhysicalDamageMin"), stat("PhysicalDamageMax")
+  check("physical range is 0.90..1.01", near(pmax / pmin, 1.01 / 0.90, 0.006), tostring(pmax / pmin))
+else
+  check("tooltip range (draw Items.Preset_Unity_Default first)", false, "no Unity drawn")
+end
 report()

@@ -61,6 +61,15 @@ AmmoOverhaul.roll.Smart.dudMult: -1.0
 AmmoOverhaul.roll.Smart.hotChance: -1.0
 AmmoOverhaul.roll.Smart.hotMult: -1.0
 
+# The tooltip's damage range is the base damage times vanilla's 0.9..1.1 roll; ranged guns now
+# roll 0.90..1.01, so the max factors become 1.01 (whole hit, then each damage type). Melee
+# weapons use other records and keep vanilla's.
+Items.Base_Weapon_inline107.value: 1.01
+Items.Base_Weapon_Damage_Type_Min_Max_inline3.value: 1.01
+Items.Base_Weapon_Damage_Type_Min_Max_inline7.value: 1.01
+Items.Base_Weapon_Damage_Type_Min_Max_inline11.value: 1.01
+Items.Base_Weapon_Damage_Type_Min_Max_inline15.value: 1.01
+
 # --- NPCs --------------------------------------------------------------------------------------
 # Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
 # loaded in the gun count toward it; the rest is the body's loot.
