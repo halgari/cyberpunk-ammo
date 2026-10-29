@@ -28,6 +28,26 @@ Every gun takes the caliber that fits it. Every caliber has Common, Uncommon, Ra
 [*][b]Every round has its own box.[/b] 130 hand-rendered icons, labeled and color coded so you can tell your Mushrooms from your Penetrators at a glance.
 [/list]
 
+[size=5][b][color=#2ad4ff]How it works: ammo is a gun mod[/color][/b][/size]
+Think of a round as an attachment with charges. Every gun gets an [b]Ammo[/b] slot on its mod screen, next to the scope and muzzle. Fit a round there and the gun is modified for as long as it stays fitted. The rounds in your backpack are the charges, and every shot spends one.
+[list]
+[*]Because it's a real mod on the gun, a round can change anything a gun mod can: damage, armor pen, damage type, spread, range, charge time, how many projectiles come out, what happens on a hit.
+[*]One stack feeds every gun of its caliber. Fit Steel-Core on your Lexington and your Saratoga and both draw from the same box.
+[*]The gun never switches rounds on its own. Run a round dry and the gun stays empty until you pick another, so it won't quietly start burning through your Epics.
+[*]Take the round out and the gun goes back to Common.
+[/list]
+Everything else in the mod is about the charges: who sells them, who carries them, what they cost to make.
+
+[size=5][b][color=#2ad4ff]Why it plays different[/color][/b][/size]
+Brass Market is horizontal progression. You don't level into better ammo. You find it, buy it, load it yourself, and decide when it's worth spending.
+[list]
+[*][b]Ammo is a resource.[/b] The best rounds are scarce. Your fastest-firing SMG loaded with Epic Penetrators shreds one fight, and then the box is empty and every new one costs Epic components. Spend them on the fights that need them.
+[*][b]Think before the fight.[/b] Rubber for a job where nobody can die. Subsonic for a quiet way in. EMP or Shaped Charge for a floor full of drones. Ball for the gangers who drop anyway.
+[*][b]Kill them before they shoot.[/b] NPCs carry the same rounds you do, and they fire them. A merc shooting Toxin Core at you is spending rounds you could have looted. Drop them fast and what's left in the box is yours.
+[*][b]Every family has its angle.[/b] Want cheap rounds you can spray? Tech slugs are the cheapest to load. Want the most tricks? Smart rounds carry EMP, fire, chem, flash and hack payloads, but they cost the most to make. Power sits in the middle: the most calibers, the most loads, a fair price.
+[*][b]Guns earn their place.[/b] A gun is only as good as what you can feed it. The 9mm you'd have sold might be your best gun when you're sitting on 400 rounds of Incendiary. Carry two or three calibers and you can use what you've got instead of picking one gun type for the whole game.
+[/list]
+
 [size=5][b][color=#2ad4ff]Tiers[/color][/b][/size]
 [list]
 [*][color=#b0b0b0][b]Common[/b][/color]: the caliber's plain round. Works exactly like the game's ammo did. No bonuses, no catches.
@@ -174,8 +194,8 @@ What each load does. Percentages are changes from the plain round.
 [list]
 [*]Every caliber's Common round is craftable from the start.
 [*]Better rounds need a [b]load sheet[/b]: a recipe that drops from loot or turns up in gun shops. Pick it up and you know it.
-[*]Rounds craft by the box. Higher tiers make smaller boxes from better components.
-[*]Tech rounds are the cheapest to load, Power in the middle, Smart the most expensive.
+[*]Rounds craft by the box, from components of the round's own grade: Common components for Common rounds, up to Epic components for Epic rounds. Higher tiers make smaller boxes.
+[*]What a box costs depends on the family. [b]Tech[/b] slugs are the cheapest (1 component a box), [b]Power[/b] cartridges cost twice that (2), and [b]Smart[/b] rounds are the most expensive (4).
 [/list]
 
 [size=4][b]Breaking down[/b][/size]
@@ -202,10 +222,38 @@ Use a mod manager, or extract the zip into the game folder (the one holding [i]b
 
 [color=#ff5a5a][b]Don't remove the mod from a playthrough you'll keep.[/b][/color] Its rounds, recipes and ammo choices are lost or broken without it. Keep a save from before you install it.
 
+[size=5][b][color=#2ad4ff]Compatibility and how it's built[/color][/b][/size]
+[list]
+[*][b]Hooked functions.[/b] Brass Market wraps a lot of game functions. Wraps chain with other mods' wraps, but a mod that replaces or hooks the same functions may not play well with this one. The ones most likely to clash:
+[list]
+[*]damage calculation: [i]DamageSystem.CalculateDamageVariants[/i] and [i]ProcessStatusEffects[/i]
+[*]NPC weapons: [i]AIWeapon.Fire[/i], NPC reload, NPC equipment and loot ([i]ScriptedPuppet.EvaluateLootQuality[/i], death and knockout)
+[*]the weapon mod screen and part install and removal ([i]ItemModificationSystem[/i], [i]RPGManager.CanPartBeUnequipped[/i], the mod screen's slot lists)
+[*]vendor stock ([i]Vendor.InitializeStock[/i], [i]RegenerateStock[/i], [i]FillVendorInventory[/i]) and loot containers
+[*]ammo crafting and disassembly ([i]CraftingSystem[/i], [i]GetAmmoBulletAmount[/i])
+[*]ammo counts on the HUD, weapon cards and the weapon wheel ([i]RPGManager.GetAmmoCountValue[/i] and friends)
+[/list]
+Other ammo, damage, vendor and loot overhauls are the likely conflicts.
+[*][b]Damage variance.[/b] The game rolls your gun damage between 90% and 110% of the listed number and doesn't roll NPC damage at all. Brass Market replaces that roll ([i]CalculateDamageVariants[/i]) for every ranged gun hit, yours and NPCs': 90% to 101% by default, so guns are a little weaker on average and both sides roll the same way. Match rounds roll in a narrower band that sits higher. Melee, explosions and damage over time keep the game's roll. A mod that changes damage variance will fight with this.
+[*][b]Same damage for NPCs.[/b] NPC guns have no damage stat for a round to modify, so their rounds' multipliers are applied in the damage pipeline instead. A Mushrooms round hits as hard from their gun as from yours.
+[*][b]Native plugin.[/b] A small RED4ext plugin writes each gun's loaded ammo into the weapon itself. That's how one gun can load a different round than the game's data says. It finds what it needs at runtime and checks before every write, so after a game patch it stops working instead of corrupting anything.
+[*][b]Guns from other mods[/b] get a caliber if they carry a vanilla gun's family tag (most guns built on a vanilla gun do). Others keep using the game's ammo.
+[/list]
+
 [size=5][b][color=#2ad4ff]Known issues[/color][/b][/size]
 [list]
+[*][b]Two reloads after changing rounds? Not a bug.[/b] Fitting a new round empties the gun (the rounds go back in your pack, nothing is lost). Back in the game, V looks the gun over, then draws it and reloads it with the new round. It looks like two reloads in a row, but it's an inspect, then a draw and one reload.
 [*]Loose ammo lying around the world is still the game's own ammo, which counts as the Common round of 9mm, 5.56, 12.7 or 12-gauge.
 [*]Some rounds' range and spread changes do nothing for NPCs, because the game gives NPC guns no range or spread values.
+[/list]
+
+[line]
+
+[size=5][b][color=#2ad4ff]Coming next[/color][/b][/size]
+The next version adds:
+[list]
+[*][b]Legendary rounds.[/b] Extremely rare and hard to find.
+[*][b]Faction ammo.[/b] Rounds tied to Night City's factions. Not all of it can be crafted: some you'll have to hunt down.
 [/list]
 
 [line]
