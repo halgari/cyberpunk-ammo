@@ -22,7 +22,7 @@ rm -f "$HARNESS_DIR/heartbeat"
 # on umu's Cyberpunk protonfixes.
 launcher="$(dirname "$0")/launch-lutris.sh"
 [[ -f "$launcher" ]] || { echo "missing $launcher: run 'lutris -b cyberpunk-2077' in tools/linux and rename it" >&2; exit 2; }
-PROTONPATH="$PROTON" GAMEID="${GAMEID:-umu-1091500}" STORE="${STORE:-gog}" setsid -f bash "$launcher" >"${TMPDIR:-/tmp}/ammo-overhaul-game.log" 2>&1
+PROTONPATH="$PROTON" GAMEID="${GAMEID:-umu-1091500}" STORE="${STORE:-gog}" setsid -f bash "$launcher" 9>&- >"${TMPDIR:-/tmp}/ammo-overhaul-game.log" 2>&1
 echo "game launching"
 # Turn the game down (GAME_VOLUME, default 3%; "mute" mutes it) so test runs aren't loud. Its audio
 # streams appear some time after launch, so a detached watcher sets every "Cyberpunk 2077" stream
