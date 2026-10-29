@@ -296,6 +296,13 @@ constant.
 - NPC guns have no value (0) for `EffectiveRange`, `MaximumRange` and the spread stats, so a round's
   multipliers on them (+P range, Short Fuse range, Slug and Birdshot spread) do nothing for NPCs.
   `calibers/parity.sh` reads the stats and fails if one of them stops being 0.
+- NPC shotgun pellets split a shot's damage by the pellet count twice (measured at 3 m with
+  `calibers/pellets.sh`, damage per pellet before the roll): Common 3 pellets at 5.1; Birdshot (6
+  pellets) 1.3 to 1.7, about 0.4 to 0.5 of Common's damage per shot; Slug (1 pellet) 56, about 3.7
+  times Common. V's own shots keep the shot total (Buckshot 51, Birdshot 51 in the same setup). The
+  per-pellet damage for NPCs looks proportional to 1 / pellets squared. A fix would multiply NPC
+  pellet hits by the gun's `ProjectilesPerShot` over `ProjectilesPerShotBase` in `RollGunHit`;
+  not done.
 - Old saves: vanilla ammo already held becomes the four Common rounds. A gun moved to a new
   caliber (a Unity to .45, a Satara to heavy rail, a Kolac to 12.7, an Omaha to 5mm rail) starts
   empty until its rounds are bought or looted.
