@@ -190,7 +190,11 @@ Heavy rail comes from sniper ammo although its guns used all four vanilla items.
   become about 340 9mm Ball and 60 Mushrooms, 170 .45 Ball and 30 Mushrooms, 85 12mm Ball and 15
   Mushrooms, 112 Rail Slugs and 38 Sleevers, 135 Seekers and 15 Dumbfires.
 - **Pick** chooses one round for a whole stack (loot): with chance `loot.ownedBias` a caliber of a
-  gun the player carries, else one by `lootWeight`; then a tier by share.
+  gun the player carries, else one by `lootWeight`; then a tier by share, then one of the tier's
+  rounds at random.
+- **Several rounds per tier:** a tier's share is split evenly among its rounds (Spread rounds by
+  largest remainder), so a caliber's two Uncommons each get half its Uncommon share. NPCs that
+  roll their Uncommon pick one of them at random (`NpcAmmo.PickUncommon`).
 - **Vendors:** each stack of a replaced vanilla ammo is split whenever the vendor builds its stock
   (`Vendor.InitializeStock`, `RegenerateStock`). Gun shops (`Gunsmith`) sell up to Uncommon, other
   vendors Common only. A restock rebuilds the stock from the vendor's pool and drops our split
@@ -204,6 +208,34 @@ Heavy rail comes from sniper ammo although its guns used all four vanilla items.
   becomes one Pick (up to Uncommon), same quantity. Converted containers are kept by entity ID on
   `AmmoFeedSystem` (saved), so a container converts once.
 - **NPC bodies** drop the round their gun used (see NPC ammo).
+
+## Damage roll
+
+Every ranged gun hit, by V or an NPC, is multiplied by a roll (`DamageRoll.reds`, applied in a
+wrap of `DamageSystem.CalculateDamageVariants`). Vanilla rolls 0.90..1.10 on V's hits only; the
+mod's default is 0.90..1.01 on everyone's, so guns are a little weaker on average. Melee,
+explosions and damage over time keep vanilla's roll.
+
+A roll is a dud (`dudChance`, damage times `dudMult`), else a hot round (`hotChance`, times
+`hotMult`), else uniform in `min`..`max`. Values come from four layers, the first one set wins:
+
+1. the round: `<ammo>.rollMin`, `.rollMax`, `.rollDudChance`, `.rollDudMult`, `.rollHotChance`,
+   `.rollHotMult` (standalone flats, as TweakXL won't add properties to an item record);
+2. its faction: `AmmoOverhaul.roll.<faction>.min` ..., where `<ammo>.aoFaction` names the faction;
+3. its family: `AmmoOverhaul.roll.<Power|Tech|Smart>.min` ... (declared at −1, unset);
+4. global: `AmmoOverhaul.roll.min` ... in `core.yaml`, always set.
+
+A value below 0 is unset. Appending a damage type (`Physical`, `Thermal`, `Electric`, `Chemical`)
+gives a per-type value (`<ammo>.rollMinThermal`, `AmmoOverhaul.roll.Power.minThermal`); a type no
+layer sets uses the whole-hit roll. Each type with its own values rolls on its own; the rest share
+one draw. The round a shot is loaded with is `AOData.LoadedAmmo` (the NPC's rolled or selected
+round, V's selection, or the gun record's ammo for unmanaged guns). Resolved rolls and each weapon
+record's caliber are cached on `AmmoFeedSystem`.
+
+The tooltip's damage range comes from the base weapon's min/max factors
+(`Items.Base_Weapon_inline106/107` and `Items.Base_Weapon_Damage_Type_Min_Max_*`); the max ones are
+set to 1.01 to match. Melee weapons use their own records and keep 0.9..1.1. A round with its own
+range doesn't change the tooltip yet (none ships with one).
 
 ## Weight and inventory
 

@@ -6,12 +6,18 @@ set -uo pipefail
 cd "$(dirname "$0")/../../.."
 C=tools/linux/cet.sh; S=tools/snippets/slice
 R='AO_R = {Trash=0.5,Weak=0.5,Normal=1.0,Rare=1.5,Officer=1.5,Elite=2.0,Boss=2.0}'
-$C "$R"'
-local k = GetMod("AOTestKit"); k.despawnAll(); k.state.distance = 6
-for r in pairs(AO_R) do TweakDB:SetFlat("AmmoOverhaul.npcUncommonFactor."..r, 10.0) end
-k.spawn("Character.AO_Test_Plain_Lexington", 1); return "spawned"' >/dev/null
-for _ in $(seq 1 20); do
-  [[ "$($C -t 10 'local n=0 for _,npc in ipairs(Game.GetDynamicEntitySystem():GetTagged("AO_Test")) do if ScriptedPuppet.GetActiveWeapon(npc) then n=n+1 end end return n' 2>/dev/null)" == "=> 1" ]] && break
+# A forced Uncommon picks one of the 9mm's two (Mushrooms or +P); only Mushrooms changes armor pen,
+# so respawn until the ganger carries Mushrooms.
+for _ in $(seq 1 8); do
+  $C "$R"'
+  local k = GetMod("AOTestKit"); k.despawnAll(); k.state.distance = 6
+  for r in pairs(AO_R) do TweakDB:SetFlat("AmmoOverhaul.npcUncommonFactor."..r, 10.0) end
+  k.spawn("Character.AO_Test_Plain_Lexington", 1); return "spawned"' >/dev/null
+  for _ in $(seq 1 20); do
+    [[ "$($C -t 10 'local n=0 for _,npc in ipairs(Game.GetDynamicEntitySystem():GetTagged("AO_Test")) do if ScriptedPuppet.GetActiveWeapon(npc) then n=n+1 end end return n' 2>/dev/null)" == "=> 1" ]] && break
+  done
+  [[ "$($C -t 10 'local npc = Game.GetDynamicEntitySystem():GetTagged("AO_Test")[1]
+  return Game.GetTransactionSystem():GetItemQuantity(npc, ItemID.CreateQuery(TweakDBID.new("Ammo.AO_9mm_HollowPoint"))) > 0' 2>/dev/null)" == "=> true" ]] && break
 done
 $C -t 15 '
 local npc = Game.GetDynamicEntitySystem():GetTagged("AO_Test")[1]

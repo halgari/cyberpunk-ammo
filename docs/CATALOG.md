@@ -298,6 +298,16 @@ all but name, weight and price: guns aren't modified. Only the Uncommon loads ch
 | S-CLUSTER | 20mm Seekers | 20mm Dumbfires | as 10mm Dumbfires |
 | S-DART | 25mm Seekers | 25mm Dumbfires | as 10mm Dumbfires |
 
+Each caliber also has a second Uncommon round (2026-10-28):
+
+| Load | Calibers | Effect |
+|---|---|---|
+| +P | 9mm, .45, 12mm, 5.56, 7.62, 12.7 | damage ×1.1, effective range ×1.15, recoil ×1.25, stamina per shot ×1.3 |
+| Birdshot | 12-gauge | pellets ×2 (same total damage), spread ×1.6, armor pen −0.5, flinch +0.5 |
+| 4ga Birdshot | 4-gauge | pellets ×2.5 (same total damage), spread ×2, armor pen −0.5, flinch +0.5 |
+| Bricks | 5mm rail, heavy rail | damage ×1.15, charge time ×1.3 |
+| Short-Fuse | 10mm, 20mm, 25mm smart | damage ×1.2, reach ×0.4 |
+
 4-gauge has no Common slug: Buckshot is its Common round and the Slug is Uncommon only. 4ga Slugs
 don't pierce cover; piercing is kept for the higher-tier penetrators.
 

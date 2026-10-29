@@ -128,6 +128,21 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
   twice. `lootcap.lua`: a body leaves at most `npcLootWeight` carry points of a round (1200
   rounds of 12.7 leave 40). Both spawn a test NPC on the first run; run them again once it loads.
 
+- `uncommon2.sh`: each second Uncommon (+P, Birdshot, 4ga Birdshot, Bricks, Short-Fuse) changes
+  its gun's stats as `docs/CATALOG.md` says (draws weapons: not while you play).
+- `roll.lua`: the damage roll's layers (round, faction, family, global, per damage type), its
+  draws (5000 each), the cached caliber of every weapon record, and the tooltip range of a drawn
+  Unity (draw it first).
+- `rig.lua` / `rig.sh`: the hit rig, a frozen invulnerable test NPC in front of V on the open road
+  by the test save's load point, logging every hit's damage before and after the roll. Police
+  are locked off while it runs; it reloads, respawns a stray NPC and checks line of sight.
+- `roll.sh`: the roll on real hits: V's .45 Ball, the test round's duds and hot rounds, Crusher
+  pellets, and the NPC's hits on V. The rig is still flaky (the NPC drifts when let loose to
+  shoot), so read its FAIL lines: a short hit count is the rig, a ratio out of range is the roll.
+- `tools/linux/game-shot.sh out.png`: a screenshot of the game from a headless Hyprland output,
+  without touching the screen you're using (`--remove` puts the game back on a real monitor).
+- `tools/icons/check_parts.py`: every `UIIcon` part in the YAML has a cell in the built atlas.
+
 By hand:
 
 10. **Buckshot against Slugs.** With a Crusher or Tactician, fire both at an enemy at 5 m and at
@@ -137,6 +152,13 @@ By hand:
     than 4ga Buckshot and does better against an armored enemy. It does not shoot through cover.
 12. **Icons.** The backpack, the weapon screen's Ammo section and the HUD show each round's own box
     art, and the four vanilla stacks show 9mm Ball, 5.56 Ball, 12.7 Ball and Buckshot.
+
+13. **Birdshot against a group.** Birdshot and 4ga Birdshot spread wide, make several gangers
+    flinch at once and do little to an armored one.
+14. **Short-Fuse at range.** A Short-Fuse rocket hits harder than a Seeker up close and doesn't
+    reach a target 50 m away (its reach is 40 m).
+15. **A Very Hard fight.** Damage rolls feel steady, a little weaker than vanilla, from you and
+    from enemies alike.
 
 For each step, note pass or fail and what you saw.
 
