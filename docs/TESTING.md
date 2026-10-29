@@ -5,9 +5,10 @@
 Needs Cyberpunk 2077 2.50 (exe 3.0.88.46235) with RED4ext 1.31, TweakXL 1.12, ArchiveXL 1.28,
 Codeware 1.21, CET 1.38 and redscript 0.5.32 or newer of each.
 
-Extract `AmmoOverhaul.zip` into the game folder (the one containing `bin` and `r6`). It adds
-`r6\scripts\AmmoOverhaul`, `r6\tweaks\AmmoOverhaul` and `red4ext\plugins\AmmoOverhaul`. Delete
-those three folders to uninstall.
+For testing, deploy from the repo (`tools/linux/deploy.sh`, below): that carries the test data
+(`test.yaml`: test NPCs, presets and rounds) the checks use. The release zip
+(`tools/linux/package.sh`, `docs/RELEASING.md`) leaves it out; install that one as `README.md`
+says.
 
 ## Get the test items (CET console)
 
