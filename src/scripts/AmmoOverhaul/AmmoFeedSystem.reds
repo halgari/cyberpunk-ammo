@@ -419,6 +419,11 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return FloatToString(this.DamageFactor(TDBID.Create(ammo)));
   }
 
+  // AmmoFeedSystem.PelletRatioFor, for parity.lua.
+  public final func DebugPelletRatio(ammo: String, count: Float, base: Float) -> String {
+    return FloatToString(AmmoFeedSystem.PelletRatioFor(TDBID.Create(ammo), count, base));
+  }
+
   // The ammo AOData.LoadedAmmo reads for `target`'s active weapon ("" if it holds none).
   public final func DebugLoadedAmmo(target: ref<GameObject>) -> String {
     let weapon: ref<WeaponObject> = GameObject.GetActiveWeapon(target);
@@ -631,28 +636,42 @@ public class AmmoFeedSystem extends ScriptableSystem {
   // The weapon's ProjectilesPerShot over its count without the round's pellet change; 1.0 for a
   // round that doesn't change the count.
   public static func PelletRatio(weapon: ref<WeaponObject>, ammo: TweakDBID) -> Float {
-    let selector: TweakDBID = AOData.SelectorForAmmo(ammo);
-    if !TDBID.IsValid(selector) {
-      return 1.0;
-    }
-    let stats: ref<StatsSystem> = GameInstance.GetStatsSystem(weapon.GetGame());
     let itemData: wref<gameItemData> = weapon.GetItemData();
     if !IsDefined(itemData) {
       return 1.0;
     }
+    let stats: ref<StatsSystem> = GameInstance.GetStatsSystem(weapon.GetGame());
     let id: StatsObjectID = itemData.GetStatsObjectID();
-    // Only the round's own change to the count counts: the gun's own pellets (iconic shotguns whose
-    // count differs from their base) keep vanilla damage. NpcAmmo.ToModifier added exactly these.
+    let count: Float = stats.GetStatValue(id, gamedataStatType.ProjectilesPerShot);
+    let base: Float = stats.GetStatValue(id, gamedataStatType.ProjectilesPerShotBase);
+    return AmmoFeedSystem.PelletRatioFor(ammo, count, base);
+  }
+
+  // PelletRatio for a gun with `count` pellets and `base` ProjectilesPerShotBase. Only the round's
+  // own change counts (its selector's Additive ProjectilesPerShot modifiers: constants, and combined
+  // ones times the base as NpcAmmo.ToModifier added them), so a gun whose vanilla count differs from its base keeps
+  // vanilla damage on the Common round.
+  public static func PelletRatioFor(ammo: TweakDBID, count: Float, base: Float) -> Float {
+    let selector: TweakDBID = AOData.SelectorForAmmo(ammo);
+    if !TDBID.IsValid(selector) {
+      return 1.0;
+    }
     let added: Float = 0.0;
     let modifiers: array<wref<StatModifier_Record>>;
     TweakDBInterface.GetItemRecord(selector).StatModifiers(modifiers);
     for modifier in modifiers {
-      let combined: wref<CombinedStatModifier_Record> = modifier as CombinedStatModifier_Record;
-      if IsDefined(combined) && Equals(combined.StatType().StatType(), gamedataStatType.ProjectilesPerShot) && Equals(combined.OpSymbol(), n"*") {
-        added += combined.Value() * stats.GetStatValue(id, combined.RefStatHandle().StatType());
+      if Equals(modifier.StatType().StatType(), gamedataStatType.ProjectilesPerShot) && Equals(modifier.ModifierType(), n"Additive") {
+        let combined: wref<CombinedStatModifier_Record> = modifier as CombinedStatModifier_Record;
+        let constant: wref<ConstantStatModifier_Record> = modifier as ConstantStatModifier_Record;
+        if IsDefined(combined) && Equals(combined.OpSymbol(), n"*") {
+          added += combined.Value() * base;
+        } else {
+          if IsDefined(constant) {
+            added += constant.Value();
+          }
+        }
       }
     }
-    let count: Float = stats.GetStatValue(id, gamedataStatType.ProjectilesPerShot);
     let without: Float = count - added;
     return added != 0.0 && count > 0.0 && without > 0.0 ? count / without : 1.0;
   }

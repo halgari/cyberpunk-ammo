@@ -13,6 +13,15 @@ for ammo, want in pairs({
   local got = factor(ammo)
   check(ammo .. " damage factor " .. want, near(got, want), tostring(got))
 end
+-- NPC pellet ratio (the hit's damage times count over the count without the round's own change):
+-- round, gun's pellets with the round, its ProjectilesPerShotBase, expected ratio.
+for _, c in ipairs({
+  { "Ammo.AO_12ga_Slug", 1, 3, 1 / 3 }, { "Ammo.AO_4ga_Slug", 1, 7, 1 / 7 },
+  { "Ammo.AO_12ga_Birdshot", 6, 3, 2 }, { "Ammo.AO_4ga_Birdshot", 17.5, 7, 2.5 },
+  { "Ammo.ShotgunAmmo", 3, 3, 1 }, { "Ammo.ShotgunAmmo", 5, 3, 1 }, { "Ammo.HandgunAmmo", 1, 1, 1 } }) do
+  local got = tonumber(sys:DebugPelletRatio(c[1], c[2], c[3]))
+  check(string.format("%s pellet ratio %g pellets, base %g = %.3f", c[1], c[2], c[3], c[4]), near(got, c[4]), tostring(got))
+end
 check("unmanaged ammo factor 1.0", near(factor("Ammo.Special_Missile"), 1.0), tostring(factor("Ammo.Special_Missile")))
 
 -- Every caliber's tier-1 rounds: the factor is the product of the selector's DamagePerHit multipliers.
