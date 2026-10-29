@@ -339,16 +339,53 @@ public abstract class AOData {
     return TDBID.IsValid(ammo) ? GameInstance.GetTransactionSystem(player.GetGame()).GetItemQuantity(player, ItemID.CreateQuery(ammo)) : 0;
   }
 
-  // --- Ammo effects --------------------------------------------------------------------------
+  // --- Hit data ------------------------------------------------------------------------------
+  // What a round does on a hit besides its gun's stats, read from the ammo record's own flats and
+  // applied by the hit hooks to every ranged gun hit, V's or an NPC's (AmmoFeedSystem.RollGunHit,
+  // ApplyAmmoOnHit). All optional:
+  //   <ammo>.aoEffects: status effects; <ammo>.aoEffectChances: each one's chance (missing = 1)
+  //   <ammo>.aoShareType ("Thermal", "Chemical" or "Electric") and <ammo>.aoShare: the fraction of
+  //     the hit's Physical damage dealt as that type instead
+  //   <ammo>.aoMachineBonus: damage factor against drones, mechs, androids, turrets and vehicles
+  //   <ammo>.aoNonlethal: a kill knocks the target out instead
 
-  // The on-hit status effect of an ammo type and its chance, or an invalid ID if it has none.
-  public static func OnHitEffect(ammo: TweakDBID, out chance: Float) -> TweakDBID {
-    for name in AOData.GetStrings(t"AmmoOverhaul.ammoEffects") {
-      if AOData.GetID(AOData.Key(name, "ammo")) == ammo {
-        chance = TweakDBInterface.GetFloat(AOData.Key(name, "chance"), 1.0);
-        return AOData.GetID(AOData.Key(name, "effect"));
-      }
+  public static func HitEffects(ammo: TweakDBID, out chances: array<Float>) -> array<TweakDBID> {
+    let effects: array<TweakDBID> = AOData.GetIDs(AOData.Flat(ammo, "aoEffects"));
+    let given: array<Float> = TweakDBInterface.GetFloatArray(AOData.Flat(ammo, "aoEffectChances"));
+    ArrayClear(chances);
+    let i: Int32 = 0;
+    while i < ArraySize(effects) {
+      ArrayPush(chances, i < ArraySize(given) ? given[i] : 1.0);
+      i += 1;
     }
-    return TDBID.None();
+    return effects;
+  }
+
+  // The fraction of Physical damage moved to `damageType`; 0 if the round moves none.
+  public static func DamageShare(ammo: TweakDBID, out damageType: gamedataDamageType) -> Float {
+    let name: String = TweakDBInterface.GetString(AOData.Flat(ammo, "aoShareType"), "");
+    let share: Float = TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoShare"), 0.0);
+    if StrLen(name) == 0 || share <= 0.0 {
+      return 0.0;
+    }
+    damageType = IntEnum<gamedataDamageType>(Cast<Int32>(EnumValueFromString("gamedataDamageType", name)));
+    return MinF(1.0, share);
+  }
+
+  public static func MachineBonus(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoMachineBonus"), 1.0);
+  }
+
+  public static func IsNonlethal(ammo: TweakDBID) -> Bool {
+    return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoNonlethal"), false);
+  }
+
+  // Drones, mechs, androids and turrets (ScriptedPuppet.IsMechanical), and vehicles.
+  public static func IsMachine(target: ref<GameObject>) -> Bool {
+    if !IsDefined(target) {
+      return false;
+    }
+    let puppet: ref<ScriptedPuppet> = target as ScriptedPuppet;
+    return target.IsVehicle() || target.IsDrone() || target.IsTurret() || (IsDefined(puppet) && puppet.IsMechanical());
   }
 }

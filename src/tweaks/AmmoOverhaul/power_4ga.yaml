@@ -1,5 +1,5 @@
 # Power 4-gauge (P-4G): Carnage. Common 4ga Buckshot; Uncommon 4ga Slugs are a hand cannon: the whole shot
-# in one heavy slug that knocks the target down (AmmoOverhaul.Slug4ga). They do not pierce cover.
+# in one heavy slug that knocks the target down (its aoEffects). They do not pierce cover.
 
 AmmoOverhaul.Power_4ga.family: "Power"
 AmmoOverhaul.Power_4ga.weaponTags: ["Carnage"]
@@ -192,12 +192,10 @@ Items.AO_Feed_4ga_Slugs:
       value: 1.6
 
 # --- On hit ------------------------------------------------------------------------------------
-# A 4ga Slug that connects knocks the target down (AmmoFeedSystem.ApplyAmmoOnHit; the engine's
+# A 4ga Slug that connects knocks the target down (hit data, AOData.HitEffects; the engine's
 # immunity checks still apply).
-AmmoOverhaul.ammoEffects: ["Slug4ga"]
-AmmoOverhaul.Slug4ga.ammo: "Ammo.AO_4ga_Slug"
-AmmoOverhaul.Slug4ga.effect: "BaseStatusEffect.Knockdown"
-AmmoOverhaul.Slug4ga.chance: 1.0
+Ammo.AO_4ga_Slug.aoEffects: ["BaseStatusEffect.Knockdown"]
+Ammo.AO_4ga_Slug.aoEffectChances: [1.0]
 
 # --- Second Uncommon: Birdshot ---------------------------------------------------------------
 

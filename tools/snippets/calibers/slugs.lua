@@ -2,15 +2,8 @@
 -- stores the stats, MODE='check' with Slugs fitted compares (stored in AO_SLUGS between runs).
 -- MODE='static' checks the 4ga Slug's knockdown entry.
 if MODE == "static" then
-  local found = false
-  for _, n in ipairs(flat("AmmoOverhaul", "ammoEffects") or {}) do
-    local name = "AmmoOverhaul." .. n
-    if str(flat(name, "ammo") or TweakDBID.new("")) == "Ammo.AO_4ga_Slug" or flat(name, "ammo") == "Ammo.AO_4ga_Slug" then
-      local e = flat(name, "effect")
-      found = (type(e) == "string" and e or str(e)) == "BaseStatusEffect.Knockdown"
-    end
-  end
-  check("4ga Slugs knock the target down (ammoEffects)", found)
+  local d = tostring(Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem"):DebugHitData("Ammo.AO_4ga_Slug"))
+  check("4ga Slugs knock the target down (aoEffects)", d:find("effects=BaseStatusEffect.Knockdown:1;", 1, true) ~= nil, d)
   report()
   return
 end

@@ -438,6 +438,27 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return FloatToString(this.DamageFactor(TDBID.Create(ammo)));
   }
 
+  // A round's hit data as the hooks read it, for hitdata.lua:
+  // "effects=<id>:<chance>;...;share=<type>:<f>|none;machine=<f>;nonlethal=<bool>" (FloatToStringPrec drops trailing zeros).
+  public final func DebugHitData(ammo: String) -> String {
+    let id: TweakDBID = TDBID.Create(ammo);
+    let chances: array<Float>;
+    let effects: array<TweakDBID> = AOData.HitEffects(id, chances);
+    let text: String = "effects=";
+    let i: Int32 = 0;
+    while i < ArraySize(effects) {
+      text += TDBID.ToStringDEBUG(effects[i]) + ":" + FloatToStringPrec(chances[i], 2) + ";";
+      i += 1;
+    }
+    if ArraySize(effects) == 0 {
+      text += ";";
+    }
+    let shareType: gamedataDamageType;
+    let share: Float = AOData.DamageShare(id, shareType);
+    text += share > 0.0 ? "share=" + EnumValueToString("gamedataDamageType", Cast<Int64>(EnumInt(shareType))) + ":" + FloatToStringPrec(share, 2) + ";" : "share=none;";
+    return text + "machine=" + FloatToStringPrec(AOData.MachineBonus(id), 2) + ";nonlethal=" + (AOData.IsNonlethal(id) ? "true" : "false");
+  }
+
   // AmmoFeedSystem.PelletRatioFor, for parity.lua.
   public final func DebugPelletRatio(ammo: String, count: Float, base: Float) -> String {
     return FloatToString(AmmoFeedSystem.PelletRatioFor(TDBID.Create(ammo), count, base));
@@ -727,11 +748,34 @@ public class AmmoFeedSystem extends ScriptableSystem {
       hitEvent.attackComputed.MultAttackValue((DamageRoll.Same(own, whole) ? factor : DamageRoll.Draw(own)) * npcFactor, damageType);
       i += 1;
     }
+    AmmoFeedSystem.ApplyHitDamage(hitEvent, ammo);
     return true;
   }
 
-  // Applies the on-hit effect of the ammo the firing weapon uses, for the player's shots and NPCs'
-  // alike (the gun's selection is read from its owner's inventory). Called from the damage pipeline
+  // The round's damage share and machine bonus (AOData hit data) on a rolled hit, whoever fired.
+  public static func ApplyHitDamage(hitEvent: ref<gameHitEvent>, ammo: TweakDBID) -> Void {
+    let shareType: gamedataDamageType;
+    let share: Float = AOData.DamageShare(ammo, shareType);
+    if share > 0.0 && NotEquals(shareType, gamedataDamageType.Physical) {
+      let physical: Float = hitEvent.attackComputed.GetAttackValue(gamedataDamageType.Physical);
+      hitEvent.attackComputed.SetAttackValue(physical * (1.0 - share), gamedataDamageType.Physical);
+      hitEvent.attackComputed.AddAttackValue(physical * share, shareType);
+    }
+    let bonus: Float = AOData.MachineBonus(ammo);
+    if bonus != 1.0 && AOData.IsMachine(hitEvent.target) {
+      // Each type by name, read and set as the share is.
+      let types: array<String> = AmmoFeedSystem.DamageTypes();
+      let i: Int32 = 1;
+      while i < ArraySize(types) {
+        let damageType: gamedataDamageType = IntEnum<gamedataDamageType>(Cast<Int32>(EnumValueFromString("gamedataDamageType", types[i])));
+        hitEvent.attackComputed.SetAttackValue(hitEvent.attackComputed.GetAttackValue(damageType) * bonus, damageType);
+        i += 1;
+      }
+    }
+  }
+
+  // Applies the on-hit effects and non-lethal flag of the ammo the firing weapon uses (AOData hit
+  // data), for the player's shots and NPCs' alike (the gun's selection is read from its owner's inventory). Called from the damage pipeline
   // before vanilla applies the attack's status effects, so vanilla's blocked/friendly/immunity
   // checks still apply to ours.
   public static func ApplyAmmoOnHit(hitEvent: ref<gameHitEvent>) -> Void {
@@ -755,11 +799,18 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if StrLen(caliber) == 0 {
       return;
     }
-    let chance: Float;
     let ammo: TweakDBID = AOData.LoadedAmmo(instigator, weapon);
-    let effect: TweakDBID = AOData.OnHitEffect(ammo, chance);
-    if TDBID.IsValid(effect) && RandF() < chance {
-      attackData.AddStatusEffect(effect, 1.0);
+    let chances: array<Float>;
+    let effects: array<TweakDBID> = AOData.HitEffects(ammo, chances);
+    let i: Int32 = 0;
+    while i < ArraySize(effects) {
+      if TDBID.IsValid(effects[i]) && RandF() < chances[i] {
+        attackData.AddStatusEffect(effects[i], 1.0);
+      }
+      i += 1;
+    }
+    if AOData.IsNonlethal(ammo) {
+      attackData.AddFlag(hitFlag.Nonlethal, n"AmmoOverhaul");
     }
   }
 }

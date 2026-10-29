@@ -299,3 +299,46 @@ AmmoOverhaul.roll.AOTest.max: 0.8
 # Feeds Ammo.AO_Test_Roll on a .45 gun; roll.sh adds it to the .45 selector lists for the run.
 Items.AO_Feed_Test_Roll:
   $base: Items.AO_Feed_45_Ball
+
+# Per-round hit data (hitdata.sh): every hit burns, half its Physical damage is Thermal, x2 against
+# machines, and a kill knocks out. hitdata.sh adds the selector to the 9mm lists for the run.
+Ammo.AO_Test_HitData:
+  $base: Ammo.HandgunAmmo
+
+Ammo.AO_Test_HitData.aoEffects: ["BaseStatusEffect.Burning"]
+Ammo.AO_Test_HitData.aoEffectChances: [1.0]
+Ammo.AO_Test_HitData.aoShareType: "Thermal"
+Ammo.AO_Test_HitData.aoShare: 0.5
+Ammo.AO_Test_HitData.aoMachineBonus: 2.0
+Ammo.AO_Test_HitData.aoNonlethal: true
+
+Items.AO_Feed_Test_HitData:
+  $base: Items.AO_Feed_9mm_Ball
+
+Items.AO_Preset_Lexington_Test_HitData:
+  $base: Items.Preset_Lexington_Default
+  slotPartListPreset:
+    - Items.Preset_Base_Lexington_inline0
+    - Items.Preset_Base_Lexington_inline1
+    - Items.Preset_Base_Lexington_inline2
+    - Items.Preset_Base_Lexington_inline3
+    - Items.HandgunAndRevolverScopesPartList
+    - Items.Preset_Base_Lexington_inline4
+    - Items.Preset_Base_Lexington_inline5
+    - $type: SlotItemPartPreset
+      slot: AttachmentSlots.AO_AmmoFeed_Power_9mm
+      itemPartPreset: Items.AO_Feed_Test_HitData
+
+Character.AO_Test_Ganger_9mm_HitData:
+  $base: Character.dtn_tyger_claws_biker1_ranged1_nue_wa
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.AO_Preset_Lexington_Test_HitData
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
