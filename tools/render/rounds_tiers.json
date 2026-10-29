@@ -829,7 +829,9 @@
   },
   "12ga-flechette": {
    "shape": "G12",
-   "over": {},
+   "over": {
+    "crimp": "star"
+   },
    "look": "Flechette",
    "label": [
     "FLECHETTES"
@@ -837,7 +839,9 @@
   },
   "12ga-beanbag": {
    "shape": "G12",
-   "over": {},
+   "over": {
+    "crimp": "roll"
+   },
    "look": "Beanbag",
    "label": [
     "BEANBAGS"
@@ -845,7 +849,9 @@
   },
   "12ga-dragonlight": {
    "shape": "G12",
-   "over": {},
+   "over": {
+    "crimp": "star"
+   },
    "look": "DragonLight",
    "label": [
     "DRAGON'S BREATH LITE"
@@ -853,7 +859,9 @@
   },
   "12ga-dragon": {
    "shape": "G12",
-   "over": {},
+   "over": {
+    "crimp": "star"
+   },
    "look": "Dragon",
    "label": [
     "DRAGON'S BREATH"
@@ -861,7 +869,9 @@
   },
   "12ga-frag12": {
    "shape": "G12",
-   "over": {},
+   "over": {
+    "crimp": "roll"
+   },
    "look": "Frag12",
    "label": [
     "FRAG-12"
@@ -869,7 +879,9 @@
   },
   "12ga-flechettelong": {
    "shape": "G12",
-   "over": {},
+   "over": {
+    "crimp": "star"
+   },
    "look": "FlechetteLong",
    "label": [
     "LONG FLECHETTES"
@@ -877,7 +889,9 @@
   },
   "4ga-flechette": {
    "shape": "G4",
-   "over": {},
+   "over": {
+    "crimp": "star"
+   },
    "look": "Flechette",
    "label": [
     "4GA",
@@ -886,7 +900,9 @@
   },
   "4ga-riot": {
    "shape": "G4",
-   "over": {},
+   "over": {
+    "crimp": "roll"
+   },
    "look": "Riot",
    "label": [
     "4GA",
@@ -895,7 +911,9 @@
   },
   "4ga-flare": {
    "shape": "G4",
-   "over": {},
+   "over": {
+    "crimp": "roll"
+   },
    "look": "Flare",
    "label": [
     "4GA",
@@ -904,7 +922,9 @@
   },
   "4ga-dragon": {
    "shape": "G4",
-   "over": {},
+   "over": {
+    "crimp": "star"
+   },
    "look": "Dragon",
    "label": [
     "4GA",
@@ -913,7 +933,9 @@
   },
   "4ga-thermite": {
    "shape": "G4",
-   "over": {},
+   "over": {
+    "crimp": "roll"
+   },
    "look": "Thermite",
    "label": [
     "4GA",

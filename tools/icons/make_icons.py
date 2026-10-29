@@ -21,8 +21,8 @@ OUT = ROOT / "art" / "build"
 CELL = (160, 160)
 # Empty margin kept around the art (fraction of the cell): just enough that soft edges aren't cut.
 PAD = 0.02
-ATLAS = (1024, 2048)   # 6 x 12 cells of 160 x 160 (39 used)
-COLS = 6
+ATLAS = (2048, 2048)   # 12 x 12 cells of 160 x 160 (130 used)
+COLS = 12
 # Source art (art/icons/<name>.png, rendered by tools/render/render.py), one per round. The part is
 # "ao_" + the name with "-" as "_" (9mm-ball -> ao_9mm_ball), matching UIIcon.AO_* and the feed selector.
 NAMES = [
@@ -32,7 +32,7 @@ NAMES = [
     "10mm-seekers", "10mm-dumbfires", "20mm-seekers", "20mm-dumbfires", "25mm-seekers", "25mm-dumbfires",
     "9mm-plusp", "45-plusp", "12mm-plusp", "556-plusp", "762-plusp", "127-plusp", "12ga-birdshot", "4ga-birdshot",
     "5mm-bricks", "heavy-bricks", "10mm-shortfuse", "20mm-shortfuse", "25mm-shortfuse",
-]
+] + list(json.loads((ROOT / "tools" / "render" / "rounds_tiers.json").read_text())["rounds"])  # Rare and Epic (tools/rounds/rounds.py)
 PARTS = {"ao_" + n.replace("-", "_"): n + ".png" for n in NAMES}
 # Midtone lift (a gamma on each channel). The renders are darker than the game's own icons (mean
 # luminance 56 against about 89 for the vanilla item atlas), which reads as greyed out in the

@@ -452,7 +452,11 @@ def write_art(all_rounds):
     for tag, k in all_rounds:
         c = CALIBERS[tag]
         label = [c["label"], k["title"].upper()] if c["label"] else [k["title"].upper()]
-        art[ids(tag, k)["art"]] = dict(shape=c["shape"], over=k.get("art", {}), look=k["load"], label=label)
+        over = dict(k.get("art", {}))
+        if c["shape"] in ("G12", "G4"):
+            # Shells: a rolled crimp over one projectile (as the Slugs), a star crimp over pellets.
+            over.setdefault("crimp", "roll" if "Fires one projectile" in k["desc"] else "star")
+        art[ids(tag, k)["art"]] = dict(shape=c["shape"], over=over, look=k["load"], label=label)
     (ROOT / "tools" / "render" / "rounds_tiers.json").write_text(
         json.dumps(dict(looks=looks, rounds=art), indent=1) + "\n")
 
