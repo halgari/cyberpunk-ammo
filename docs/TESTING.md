@@ -137,14 +137,14 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
   by the test save's load point, logging every hit's damage before and after the roll. Police
   are locked off while it runs; it reloads, respawns a stray NPC and checks line of sight.
 - `roll.sh`: the roll on real hits: V's .45 Ball, the test round's duds and hot rounds, Crusher
-  pellets, and the NPC's hits on V. The rig is still flaky (the NPC drifts when let loose to
-  shoot), so read its FAIL lines: a short hit count is the rig, a ratio out of range is the roll.
+  pellets, and the NPC's hits on V. V's shots follow V's camera, so the rig pitches it at the
+  NPC's Chest slot before each shot (a level camera fires over a crouching NPC). If it fails, read
+  the FAIL lines: a short hit count is the rig, a ratio out of range is the roll.
 - `parity.lua`: each round's NPC damage factor from its selector record (Mushrooms 1.2, Dumbfires
   1.8, 4ga Slugs 1.3, Common 1.0). `parity.sh`: the same on live hits with the rig: a Mushrooms
   ganger hits V for 1.2x the roll, a Common one the plain roll, V's own Mushrooms hits roll once;
   every other stat a round changes, read off an NPC's gun in hand; NPC Birdshot and Slug shots
-  land about as hard per shot as Common. Takes 10-25 min and shares the rig's flakiness, so the
-  suite runs it last without gating, like `roll.sh` (`STEP_TIMEOUT=2400` to gate it by hand).
+  land about as hard per shot as Common. Takes about 7 min.
 - `sync.sh`: the hidden selectors follow the ammo held: one loose selector per round with at least
   1 round, none at 0, the same round on two guns, a run-out round stays fitted, an open mod screen
   updates (fits guns and opens menus: not while you play).
