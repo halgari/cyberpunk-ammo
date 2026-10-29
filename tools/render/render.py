@@ -106,6 +106,14 @@ ROUNDS = {
     "25mm-shortfuse": (dict(S25, L=S25["L"] * 0.78, R=S25["R"] * 1.15, idband="red"), "ShortFuse", ["25MM", "SHORT-FUSE"]),
 }
 
+# Rare and Epic rounds, from tools/rounds/rounds.py (rounds_tiers.json): each takes its caliber's
+# shape (with any overrides) and a box look of its own per load.
+_TIERS = json.loads((pathlib.Path(__file__).parent / "rounds_tiers.json").read_text())
+for _load, (_panel, _stripe) in _TIERS["looks"].items():
+    LOOK.setdefault(_load, (tuple(_panel), tuple(_stripe) if _stripe else None))
+for _name, _r in _TIERS["rounds"].items():
+    ROUNDS[_name] = (dict(globals()[_r["shape"]], **_r["over"]), _r["look"], _r["label"])
+
 
 def extent(s):
     """(length, radius) of a round as scene.py builds it."""

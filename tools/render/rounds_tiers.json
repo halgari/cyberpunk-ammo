@@ -1,0 +1,1239 @@
+{
+ "looks": {
+  "SteelCore": [
+   [
+    70,
+    74,
+    80
+   ],
+   [
+    40,
+    38,
+    34
+   ]
+  ],
+  "Incendiary": [
+   [
+    150,
+    112,
+    70
+   ],
+   [
+    200,
+    90,
+    20
+   ]
+  ],
+  "Subsonic": [
+   [
+    40,
+    40,
+    44
+   ],
+   [
+    120,
+    120,
+    125
+   ]
+  ],
+  "Bouncers": [
+   [
+    150,
+    112,
+    70
+   ],
+   [
+    40,
+    120,
+    160
+   ]
+  ],
+  "Rubber": [
+   [
+    30,
+    30,
+    32
+   ],
+   [
+    230,
+    200,
+    40
+   ]
+  ],
+  "Penetrator": [
+   [
+    25,
+    25,
+    28
+   ],
+   [
+    190,
+    160,
+    60
+   ]
+  ],
+  "Match": [
+   [
+    235,
+    232,
+    220
+   ],
+   [
+    40,
+    38,
+    34
+   ]
+  ],
+  "Toxin": [
+   [
+    60,
+    90,
+    40
+   ],
+   [
+    20,
+    18,
+    18
+   ]
+  ],
+  "Shredders": [
+   [
+    96,
+    22,
+    18
+   ],
+   [
+    200,
+    200,
+    195
+   ]
+  ],
+  "Hardcast": [
+   [
+    110,
+    100,
+    90
+   ],
+   [
+    40,
+    38,
+    34
+   ]
+  ],
+  "BallisticTip": [
+   [
+    150,
+    112,
+    70
+   ],
+   [
+    30,
+    110,
+    60
+   ]
+  ],
+  "HEI": [
+   [
+    200,
+    170,
+    30
+   ],
+   [
+    180,
+    30,
+    30
+   ]
+  ],
+  "Flechette": [
+   [
+    60,
+    64,
+    72
+   ],
+   [
+    225,
+    225,
+    220
+   ]
+  ],
+  "Beanbag": [
+   [
+    30,
+    30,
+    32
+   ],
+   [
+    230,
+    200,
+    40
+   ]
+  ],
+  "DragonLight": [
+   [
+    200,
+    90,
+    20
+   ],
+   [
+    40,
+    38,
+    34
+   ]
+  ],
+  "Dragon": [
+   [
+    200,
+    90,
+    20
+   ],
+   [
+    200,
+    200,
+    195
+   ]
+  ],
+  "Frag12": [
+   [
+    70,
+    78,
+    44
+   ],
+   [
+    200,
+    170,
+    30
+   ]
+  ],
+  "FlechetteLong": [
+   [
+    60,
+    64,
+    72
+   ],
+   [
+    190,
+    160,
+    60
+   ]
+  ],
+  "Riot": [
+   [
+    30,
+    30,
+    32
+   ],
+   [
+    230,
+    200,
+    40
+   ]
+  ],
+  "Flare": [
+   [
+    190,
+    30,
+    30
+   ],
+   [
+    230,
+    200,
+    40
+   ]
+  ],
+  "Thermite": [
+   [
+    120,
+    40,
+    20
+   ],
+   [
+    230,
+    200,
+    40
+   ]
+  ],
+  "Ferro": [
+   [
+    52,
+    55,
+    60
+   ],
+   [
+    200,
+    200,
+    195
+   ]
+  ],
+  "SplitSlug": [
+   [
+    52,
+    55,
+    60
+   ],
+   [
+    215,
+    110,
+    30
+   ]
+  ],
+  "Feedback": [
+   [
+    52,
+    55,
+    60
+   ],
+   [
+    40,
+    160,
+    140
+   ]
+  ],
+  "DUPen": [
+   [
+    40,
+    42,
+    46
+   ],
+   [
+    190,
+    160,
+    60
+   ]
+  ],
+  "ToxicScatter": [
+   [
+    60,
+    90,
+    40
+   ],
+   [
+    40,
+    42,
+    46
+   ]
+  ],
+  "Superconductor": [
+   [
+    30,
+    60,
+    120
+   ],
+   [
+    225,
+    225,
+    220
+   ]
+  ],
+  "EMPCap": [
+   [
+    30,
+    60,
+    120
+   ],
+   [
+    230,
+    200,
+    40
+   ]
+  ],
+  "EMPPayload": [
+   [
+    70,
+    78,
+    44
+   ],
+   [
+    40,
+    120,
+    200
+   ]
+  ],
+  "FirePayload": [
+   [
+    70,
+    78,
+    44
+   ],
+   [
+    200,
+    90,
+    20
+   ]
+  ],
+  "ChemPayload": [
+   [
+    70,
+    78,
+    44
+   ],
+   [
+    90,
+    160,
+    50
+   ]
+  ],
+  "FlashPayload": [
+   [
+    70,
+    78,
+    44
+   ],
+   [
+    235,
+    232,
+    220
+   ]
+  ],
+  "Hunter": [
+   [
+    70,
+    78,
+    44
+   ],
+   [
+    190,
+    160,
+    60
+   ]
+  ],
+  "HackCarrier": [
+   [
+    40,
+    40,
+    44
+   ],
+   [
+    40,
+    200,
+    120
+   ]
+  ],
+  "ShapedCharge": [
+   [
+    70,
+    78,
+    44
+   ],
+   [
+    40,
+    38,
+    34
+   ]
+  ]
+ },
+ "rounds": {
+  "9mm-steelcore": {
+   "shape": "P9",
+   "over": {},
+   "look": "SteelCore",
+   "label": [
+    "9MM",
+    "STEEL-CORE"
+   ]
+  },
+  "9mm-incendiary": {
+   "shape": "P9",
+   "over": {},
+   "look": "Incendiary",
+   "label": [
+    "9MM",
+    "INCENDIARY"
+   ]
+  },
+  "9mm-subsonic": {
+   "shape": "P9",
+   "over": {},
+   "look": "Subsonic",
+   "label": [
+    "9MM",
+    "SUBSONIC"
+   ]
+  },
+  "9mm-bouncers": {
+   "shape": "P9",
+   "over": {},
+   "look": "Bouncers",
+   "label": [
+    "9MM",
+    "BOUNCERS"
+   ]
+  },
+  "9mm-rubber": {
+   "shape": "P9",
+   "over": {},
+   "look": "Rubber",
+   "label": [
+    "9MM",
+    "RUBBER"
+   ]
+  },
+  "9mm-penetrator": {
+   "shape": "P9",
+   "over": {},
+   "look": "Penetrator",
+   "label": [
+    "9MM",
+    "PENETRATOR"
+   ]
+  },
+  "9mm-match": {
+   "shape": "P9",
+   "over": {},
+   "look": "Match",
+   "label": [
+    "9MM",
+    "MATCH"
+   ]
+  },
+  "9mm-toxin": {
+   "shape": "P9",
+   "over": {},
+   "look": "Toxin",
+   "label": [
+    "9MM",
+    "TOXIN CORE"
+   ]
+  },
+  "9mm-shredders": {
+   "shape": "P9",
+   "over": {},
+   "look": "Shredders",
+   "label": [
+    "9MM",
+    "SHREDDERS"
+   ]
+  },
+  "45-steelcore": {
+   "shape": "P45",
+   "over": {},
+   "look": "SteelCore",
+   "label": [
+    ".45",
+    "STEEL-CORE"
+   ]
+  },
+  "45-incendiary": {
+   "shape": "P45",
+   "over": {},
+   "look": "Incendiary",
+   "label": [
+    ".45",
+    "INCENDIARY"
+   ]
+  },
+  "45-subsonic": {
+   "shape": "P45",
+   "over": {},
+   "look": "Subsonic",
+   "label": [
+    ".45",
+    "SUBSONIC"
+   ]
+  },
+  "45-bouncers": {
+   "shape": "P45",
+   "over": {},
+   "look": "Bouncers",
+   "label": [
+    ".45",
+    "BOUNCERS"
+   ]
+  },
+  "45-rubber": {
+   "shape": "P45",
+   "over": {},
+   "look": "Rubber",
+   "label": [
+    ".45",
+    "RUBBER"
+   ]
+  },
+  "45-penetrator": {
+   "shape": "P45",
+   "over": {},
+   "look": "Penetrator",
+   "label": [
+    ".45",
+    "PENETRATOR"
+   ]
+  },
+  "45-match": {
+   "shape": "P45",
+   "over": {},
+   "look": "Match",
+   "label": [
+    ".45",
+    "MATCH"
+   ]
+  },
+  "45-toxin": {
+   "shape": "P45",
+   "over": {},
+   "look": "Toxin",
+   "label": [
+    ".45",
+    "TOXIN CORE"
+   ]
+  },
+  "45-shredders": {
+   "shape": "P45",
+   "over": {},
+   "look": "Shredders",
+   "label": [
+    ".45",
+    "SHREDDERS"
+   ]
+  },
+  "12mm-steelcore": {
+   "shape": "P12",
+   "over": {},
+   "look": "SteelCore",
+   "label": [
+    "12MM",
+    "STEEL-CORE"
+   ]
+  },
+  "12mm-incendiary": {
+   "shape": "P12",
+   "over": {},
+   "look": "Incendiary",
+   "label": [
+    "12MM",
+    "INCENDIARY"
+   ]
+  },
+  "12mm-rubber": {
+   "shape": "P12",
+   "over": {},
+   "look": "Rubber",
+   "label": [
+    "12MM",
+    "RUBBER"
+   ]
+  },
+  "12mm-hardcast": {
+   "shape": "P12",
+   "over": {},
+   "look": "Hardcast",
+   "label": [
+    "12MM",
+    "HARDCAST"
+   ]
+  },
+  "12mm-match": {
+   "shape": "P12",
+   "over": {},
+   "look": "Match",
+   "label": [
+    "12MM",
+    "MATCH"
+   ]
+  },
+  "12mm-toxin": {
+   "shape": "P12",
+   "over": {},
+   "look": "Toxin",
+   "label": [
+    "12MM",
+    "TOXIN CORE"
+   ]
+  },
+  "12mm-shredders": {
+   "shape": "P12",
+   "over": {},
+   "look": "Shredders",
+   "label": [
+    "12MM",
+    "SHREDDERS"
+   ]
+  },
+  "556-steelcore": {
+   "shape": "R556",
+   "over": {},
+   "look": "SteelCore",
+   "label": [
+    "5.56",
+    "STEEL-CORE"
+   ]
+  },
+  "556-incendiary": {
+   "shape": "R556",
+   "over": {},
+   "look": "Incendiary",
+   "label": [
+    "5.56",
+    "INCENDIARY"
+   ]
+  },
+  "556-subsonic": {
+   "shape": "R556",
+   "over": {},
+   "look": "Subsonic",
+   "label": [
+    "5.56",
+    "SUBSONIC"
+   ]
+  },
+  "556-bouncers": {
+   "shape": "R556",
+   "over": {},
+   "look": "Bouncers",
+   "label": [
+    "5.56",
+    "BOUNCERS"
+   ]
+  },
+  "556-penetrator": {
+   "shape": "R556",
+   "over": {},
+   "look": "Penetrator",
+   "label": [
+    "5.56",
+    "PENETRATOR"
+   ]
+  },
+  "556-match": {
+   "shape": "R556",
+   "over": {},
+   "look": "Match",
+   "label": [
+    "5.56",
+    "MATCH"
+   ]
+  },
+  "556-toxin": {
+   "shape": "R556",
+   "over": {},
+   "look": "Toxin",
+   "label": [
+    "5.56",
+    "TOXIN CORE"
+   ]
+  },
+  "556-shredders": {
+   "shape": "R556",
+   "over": {},
+   "look": "Shredders",
+   "label": [
+    "5.56",
+    "SHREDDERS"
+   ]
+  },
+  "762-steelcore": {
+   "shape": "R762",
+   "over": {},
+   "look": "SteelCore",
+   "label": [
+    "7.62",
+    "STEEL-CORE"
+   ]
+  },
+  "762-incendiary": {
+   "shape": "R762",
+   "over": {},
+   "look": "Incendiary",
+   "label": [
+    "7.62",
+    "INCENDIARY"
+   ]
+  },
+  "762-ballistictip": {
+   "shape": "R762",
+   "over": {},
+   "look": "BallisticTip",
+   "label": [
+    "7.62",
+    "BALLISTIC TIP"
+   ]
+  },
+  "762-match": {
+   "shape": "R762",
+   "over": {},
+   "look": "Match",
+   "label": [
+    "7.62",
+    "MATCH"
+   ]
+  },
+  "762-toxin": {
+   "shape": "R762",
+   "over": {},
+   "look": "Toxin",
+   "label": [
+    "7.62",
+    "TOXIN CORE"
+   ]
+  },
+  "762-shredders": {
+   "shape": "R762",
+   "over": {},
+   "look": "Shredders",
+   "label": [
+    "7.62",
+    "SHREDDERS"
+   ]
+  },
+  "127-steelcore": {
+   "shape": "R127",
+   "over": {},
+   "look": "SteelCore",
+   "label": [
+    "12.7",
+    "STEEL-CORE"
+   ]
+  },
+  "127-incendiary": {
+   "shape": "R127",
+   "over": {},
+   "look": "Incendiary",
+   "label": [
+    "12.7",
+    "INCENDIARY"
+   ]
+  },
+  "127-ballistictip": {
+   "shape": "R127",
+   "over": {},
+   "look": "BallisticTip",
+   "label": [
+    "12.7",
+    "BALLISTIC TIP"
+   ]
+  },
+  "127-match": {
+   "shape": "R127",
+   "over": {},
+   "look": "Match",
+   "label": [
+    "12.7",
+    "MATCH"
+   ]
+  },
+  "127-toxin": {
+   "shape": "R127",
+   "over": {},
+   "look": "Toxin",
+   "label": [
+    "12.7",
+    "TOXIN CORE"
+   ]
+  },
+  "127-hei": {
+   "shape": "R127",
+   "over": {},
+   "look": "HEI",
+   "label": [
+    "12.7",
+    "HEI"
+   ]
+  },
+  "12ga-flechette": {
+   "shape": "G12",
+   "over": {},
+   "look": "Flechette",
+   "label": [
+    "FLECHETTES"
+   ]
+  },
+  "12ga-beanbag": {
+   "shape": "G12",
+   "over": {},
+   "look": "Beanbag",
+   "label": [
+    "BEANBAGS"
+   ]
+  },
+  "12ga-dragonlight": {
+   "shape": "G12",
+   "over": {},
+   "look": "DragonLight",
+   "label": [
+    "DRAGON'S BREATH LITE"
+   ]
+  },
+  "12ga-dragon": {
+   "shape": "G12",
+   "over": {},
+   "look": "Dragon",
+   "label": [
+    "DRAGON'S BREATH"
+   ]
+  },
+  "12ga-frag12": {
+   "shape": "G12",
+   "over": {},
+   "look": "Frag12",
+   "label": [
+    "FRAG-12"
+   ]
+  },
+  "12ga-flechettelong": {
+   "shape": "G12",
+   "over": {},
+   "look": "FlechetteLong",
+   "label": [
+    "LONG FLECHETTES"
+   ]
+  },
+  "4ga-flechette": {
+   "shape": "G4",
+   "over": {},
+   "look": "Flechette",
+   "label": [
+    "4GA",
+    "FLECHETTES"
+   ]
+  },
+  "4ga-riot": {
+   "shape": "G4",
+   "over": {},
+   "look": "Riot",
+   "label": [
+    "4GA",
+    "RIOT"
+   ]
+  },
+  "4ga-flare": {
+   "shape": "G4",
+   "over": {},
+   "look": "Flare",
+   "label": [
+    "4GA",
+    "FLARES"
+   ]
+  },
+  "4ga-dragon": {
+   "shape": "G4",
+   "over": {},
+   "look": "Dragon",
+   "label": [
+    "4GA",
+    "DRAGON'S BREATH"
+   ]
+  },
+  "4ga-thermite": {
+   "shape": "G4",
+   "over": {},
+   "look": "Thermite",
+   "label": [
+    "4GA",
+    "THERMITE SLUGS"
+   ]
+  },
+  "5mm-ferro": {
+   "shape": "T5",
+   "over": {},
+   "look": "Ferro",
+   "label": [
+    "5MM",
+    "FERRO"
+   ]
+  },
+  "5mm-splitslug": {
+   "shape": "T5",
+   "over": {},
+   "look": "SplitSlug",
+   "label": [
+    "5MM",
+    "SPLIT SLUGS"
+   ]
+  },
+  "5mm-feedback": {
+   "shape": "T5",
+   "over": {},
+   "look": "Feedback",
+   "label": [
+    "5MM",
+    "FEEDBACK"
+   ]
+  },
+  "5mm-dupen": {
+   "shape": "T5",
+   "over": {},
+   "look": "DUPen",
+   "label": [
+    "5MM",
+    "DU PENETRATOR"
+   ]
+  },
+  "5mm-toxicscatter": {
+   "shape": "T5",
+   "over": {},
+   "look": "ToxicScatter",
+   "label": [
+    "5MM",
+    "TOXIC SCATTER"
+   ]
+  },
+  "5mm-superconductor": {
+   "shape": "T5",
+   "over": {},
+   "look": "Superconductor",
+   "label": [
+    "5MM",
+    "SUPERCONDUCTOR"
+   ]
+  },
+  "5mm-empcap": {
+   "shape": "T5",
+   "over": {},
+   "look": "EMPCap",
+   "label": [
+    "5MM",
+    "EMP CAPACITOR"
+   ]
+  },
+  "heavy-ferro": {
+   "shape": "TH",
+   "over": {},
+   "look": "Ferro",
+   "label": [
+    "HEAVY",
+    "FERRO"
+   ]
+  },
+  "heavy-splitslug": {
+   "shape": "TH",
+   "over": {},
+   "look": "SplitSlug",
+   "label": [
+    "HEAVY",
+    "SPLIT SLUGS"
+   ]
+  },
+  "heavy-feedback": {
+   "shape": "TH",
+   "over": {},
+   "look": "Feedback",
+   "label": [
+    "HEAVY",
+    "FEEDBACK"
+   ]
+  },
+  "heavy-dupen": {
+   "shape": "TH",
+   "over": {},
+   "look": "DUPen",
+   "label": [
+    "HEAVY",
+    "DU PENETRATOR"
+   ]
+  },
+  "heavy-toxicscatter": {
+   "shape": "TH",
+   "over": {},
+   "look": "ToxicScatter",
+   "label": [
+    "HEAVY",
+    "TOXIC SCATTER"
+   ]
+  },
+  "heavy-superconductor": {
+   "shape": "TH",
+   "over": {},
+   "look": "Superconductor",
+   "label": [
+    "HEAVY",
+    "SUPERCONDUCTOR"
+   ]
+  },
+  "heavy-empcap": {
+   "shape": "TH",
+   "over": {},
+   "look": "EMPCap",
+   "label": [
+    "HEAVY",
+    "EMP CAPACITOR"
+   ]
+  },
+  "10mm-emppayload": {
+   "shape": "S10",
+   "over": {},
+   "look": "EMPPayload",
+   "label": [
+    "10MM",
+    "EMP PAYLOAD"
+   ]
+  },
+  "10mm-firepayload": {
+   "shape": "S10",
+   "over": {},
+   "look": "FirePayload",
+   "label": [
+    "10MM",
+    "INCENDIARY PAYLOAD"
+   ]
+  },
+  "10mm-chempayload": {
+   "shape": "S10",
+   "over": {},
+   "look": "ChemPayload",
+   "label": [
+    "10MM",
+    "CHEM PAYLOAD"
+   ]
+  },
+  "10mm-flashpayload": {
+   "shape": "S10",
+   "over": {},
+   "look": "FlashPayload",
+   "label": [
+    "10MM",
+    "FLASH PAYLOAD"
+   ]
+  },
+  "10mm-hunter": {
+   "shape": "S10",
+   "over": {},
+   "look": "Hunter",
+   "label": [
+    "10MM",
+    "HUNTER"
+   ]
+  },
+  "10mm-hackcarrier": {
+   "shape": "S10",
+   "over": {},
+   "look": "HackCarrier",
+   "label": [
+    "10MM",
+    "HACK CARRIER"
+   ]
+  },
+  "10mm-shapedcharge": {
+   "shape": "S10",
+   "over": {},
+   "look": "ShapedCharge",
+   "label": [
+    "10MM",
+    "SHAPED CHARGE"
+   ]
+  },
+  "20mm-emppayload": {
+   "shape": "S20",
+   "over": {},
+   "look": "EMPPayload",
+   "label": [
+    "20MM",
+    "EMP PAYLOAD"
+   ]
+  },
+  "20mm-firepayload": {
+   "shape": "S20",
+   "over": {},
+   "look": "FirePayload",
+   "label": [
+    "20MM",
+    "INCENDIARY PAYLOAD"
+   ]
+  },
+  "20mm-chempayload": {
+   "shape": "S20",
+   "over": {},
+   "look": "ChemPayload",
+   "label": [
+    "20MM",
+    "CHEM PAYLOAD"
+   ]
+  },
+  "20mm-flashpayload": {
+   "shape": "S20",
+   "over": {},
+   "look": "FlashPayload",
+   "label": [
+    "20MM",
+    "FLASH PAYLOAD"
+   ]
+  },
+  "20mm-hunter": {
+   "shape": "S20",
+   "over": {},
+   "look": "Hunter",
+   "label": [
+    "20MM",
+    "HUNTER"
+   ]
+  },
+  "20mm-hackcarrier": {
+   "shape": "S20",
+   "over": {},
+   "look": "HackCarrier",
+   "label": [
+    "20MM",
+    "HACK CARRIER"
+   ]
+  },
+  "20mm-shapedcharge": {
+   "shape": "S20",
+   "over": {},
+   "look": "ShapedCharge",
+   "label": [
+    "20MM",
+    "SHAPED CHARGE"
+   ]
+  },
+  "25mm-emppayload": {
+   "shape": "S25",
+   "over": {},
+   "look": "EMPPayload",
+   "label": [
+    "25MM",
+    "EMP PAYLOAD"
+   ]
+  },
+  "25mm-firepayload": {
+   "shape": "S25",
+   "over": {},
+   "look": "FirePayload",
+   "label": [
+    "25MM",
+    "INCENDIARY PAYLOAD"
+   ]
+  },
+  "25mm-chempayload": {
+   "shape": "S25",
+   "over": {},
+   "look": "ChemPayload",
+   "label": [
+    "25MM",
+    "CHEM PAYLOAD"
+   ]
+  },
+  "25mm-flashpayload": {
+   "shape": "S25",
+   "over": {},
+   "look": "FlashPayload",
+   "label": [
+    "25MM",
+    "FLASH PAYLOAD"
+   ]
+  },
+  "25mm-hunter": {
+   "shape": "S25",
+   "over": {},
+   "look": "Hunter",
+   "label": [
+    "25MM",
+    "HUNTER"
+   ]
+  },
+  "25mm-hackcarrier": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCarrier",
+   "label": [
+    "25MM",
+    "HACK CARRIER"
+   ]
+  },
+  "25mm-shapedcharge": {
+   "shape": "S25",
+   "over": {},
+   "look": "ShapedCharge",
+   "label": [
+    "25MM",
+    "SHAPED CHARGE"
+   ]
+  }
+ }
+}
