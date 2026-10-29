@@ -327,7 +327,8 @@ Calibers differ in ammo weight, price and how often they turn up, not in how the
 
 91 Rare and Epic rounds, all made by `tools/rounds/rounds.py` (records, list entries, text, icon
 data; edit there and rerun it). Each is its caliber's plain Uncommon with the changes below, at
-x4 (Rare) or x8 (Epic) the Common price. The effect line is the one the item shows.
+x4 (Rare) or x8 (Epic) the Common price. The effect line is the one the item shows. Chances are per
+shot (each pellet of a shotgun rolls its share).
 
 - **Steel-Core** (Rare; 9mm, .45, 12mm, 5.56, 7.62, 12.7): Ignores 25% of armor. -10% damage.
 - **Incendiary** (Rare; 9mm, .45, 12mm, 5.56, 7.62, 12.7): 15% chance (9mm: 8%) to set the target on fire. A quarter of the damage is fire damage. -5% damage.
@@ -354,7 +355,7 @@ x4 (Rare) or x8 (Epic) the Common price. The effect line is the one the item sho
 - **Split Slugs** (Rare; 5mm, Heavy): Fires three projectiles that share the shot's damage. Wider spread. Doesn't pierce cover.
 - **Feedback** (Rare; 5mm, Heavy): Shots bend toward targets near the crosshair. -10% damage.
 - **DU Penetrator** (Epic; 5mm, Heavy): Pierces cover at a lower charge. Loses half as much damage through cover. Ignores 50% of armor.
-- **Toxic Scatter** (Epic; 5mm, Heavy): Fires five projectiles that share the shot's damage. Wider spread. 25% chance per hit to poison.
+- **Toxic Scatter** (Epic; 5mm, Heavy): Fires five projectiles that share the shot's damage. Wider spread. 25% chance to poison.
 - **Superconductor** (Epic; 5mm, Heavy): Full auto at full charge.
 - **EMP Capacitor** (Epic; 5mm, Heavy): 30% chance of an EMP. 30% of the damage is electrical damage.
 - **EMP Payload** (Rare; 10mm, 20mm, 25mm): 25% chance of an EMP. 30% of the damage is electrical damage. -10% damage.

@@ -361,6 +361,34 @@ public abstract class AOData {
     return effects;
   }
 
+  // The effect V gets for `effect`: vanilla gives V its own Player versions of burning, poison,
+  // bleeding and shock (DamageSystem.ProcessStatusEffectApplicationStats); anything else is unchanged.
+  public static func PlayerEffect(effect: TweakDBID) -> TweakDBID {
+    let name: String = TDBID.ToStringDEBUG(effect);
+    switch name {
+      case "BaseStatusEffect.Burning":
+      case "BaseStatusEffect.MediumBurning":
+        return t"BaseStatusEffect.PlayerBurning";
+      case "BaseStatusEffect.Poisoned":
+        return t"BaseStatusEffect.PlayerPoisoned";
+      case "BaseStatusEffect.Bleeding":
+        return t"BaseStatusEffect.PlayerBleeding";
+      case "BaseStatusEffect.EMP":
+        return t"BaseStatusEffect.PlayerElectrocuted";
+      default:
+        return effect;
+    }
+  }
+
+  // A round's effect chance is per shot: each of a shot's `pellets` hits rolls this, so a shot that
+  // lands them all applies the effect with `chance`.
+  public static func PelletChance(chance: Float, pellets: Int32) -> Float {
+    if pellets <= 1 || chance >= 1.0 || chance <= 0.0 {
+      return chance;
+    }
+    return 1.0 - PowF(1.0 - chance, 1.0 / Cast<Float>(pellets));
+  }
+
   // The fraction of Physical damage moved to `damageType`; 0 if the round moves none.
   public static func DamageShare(ammo: TweakDBID, out damageType: gamedataDamageType) -> Float {
     let name: String = TweakDBInterface.GetString(AOData.Flat(ammo, "aoShareType"), "");

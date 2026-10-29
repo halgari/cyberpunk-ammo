@@ -125,7 +125,9 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 - `hitdata.lua`: every round's hit data (effects and chances, damage share, machine bonus,
   non-lethal) reads as its YAML says; the old `ammoEffects` list is gone. `hitdata.sh`: the same
   on live hits with a test round (burns, half Thermal, x2 on machines, non-lethal): V on a ganger,
-  a ganger on V, V's killing shot knocks out, V on an android (draws guns: not while you play).
+  a ganger on V (V gets PlayerBurning), V's killing shot knocks out (Unconscious) where Ball's
+  doesn't, V on an android (draws guns: not while you play). Also each player effect swap and the
+  per-pellet chance.
 - `vanilla.lua`: no gun carries a stat change; Common rounds fire like vanilla ammo.
 - `distribution.lua`: each vanilla ammo item splits in the shares of `docs/DESIGN.md`; with
   `PRE="VENDOR=true;"` gun shops split their rifle, sniper and shotgun ammo too.
@@ -199,7 +201,8 @@ names are in `docs/CATALOG.md`):
 18. **Icons.** Hold a Rare and an Epic 9mm round (Steel-Core, Match). A Lexington's Ammo slot
     lists both with their own box art, and the backpack shows it too.
 19. **Machine bonus.** Shoot a drone or a mech with 12.7 HEI, then with 12.7 Ball. HEI hits clearly
-    harder (x1.5). The automated android check spawned a human, so this is the first real one.
+    harder (x1.5). (`hitdata.sh` measures it on a security android; check the record it spawns
+    really looks like one.)
 20. **Burning from an NPC.** Spawn `Character.AO_Test_Ganger_9mm_HitData` with the test kit and let
     it shoot you: you catch fire, and part of each hit is fire damage.
 21. **Non-lethal.** Finish a ganger with 9mm Rubber or 12ga Beanbags: it goes down unconscious, not
@@ -209,7 +212,8 @@ names are in `docs/CATALOG.md`):
 23. **Hunter.** A Yukimura or another smart gun with Hunter locks two more targets, and faster.
 24. **Through cover.** With an Omaha, DU Penetrator goes through cover at about half charge and
     hits harder through it than Rail Slugs; Split Slugs never go through.
-25. **Gun shop.** A gunsmith's stock has some Rare rounds and no Epic ones.
+25. **Gun shop.** A gunsmith's stock has some Rare rounds and no Epic ones. Rare stacks are small
+    (a few rounds of each), so a shop can show none of some Rares.
 
 For each step, note pass or fail and what you saw.
 

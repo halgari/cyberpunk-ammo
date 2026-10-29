@@ -440,6 +440,15 @@ public class AmmoFeedSystem extends ScriptableSystem {
 
   // A round's hit data as the hooks read it, for hitdata.lua:
   // "effects=<id>:<chance>;...;share=<type>:<f>|none;machine=<f>;nonlethal=<bool>" (FloatToStringPrec drops trailing zeros).
+  // The effect V gets for `effect` (AOData.PlayerEffect), as a record name.
+  public final func DebugPlayerEffect(effect: String) -> String {
+    return TDBID.ToStringDEBUG(AOData.PlayerEffect(TDBID.Create(effect)));
+  }
+
+  public final func DebugPelletChance(chance: Float, pellets: Int32) -> Float {
+    return AOData.PelletChance(chance, pellets);
+  }
+
   public final func DebugHitData(ammo: String) -> String {
     let id: TweakDBID = TDBID.Create(ammo);
     let chances: array<Float>;
@@ -802,10 +811,16 @@ public class AmmoFeedSystem extends ScriptableSystem {
     let ammo: TweakDBID = AOData.LoadedAmmo(instigator, weapon);
     let chances: array<Float>;
     let effects: array<TweakDBID> = AOData.HitEffects(ammo, chances);
+    if ArraySize(effects) == 0 && !AOData.IsNonlethal(ammo) {
+      return;
+    }
+    // Chances are per shot, and each pellet that lands comes through here.
+    let pellets: Int32 = Cast<Int32>(GameInstance.GetStatsSystem(weapon.GetGame()).GetStatValue(Cast<StatsObjectID>(weapon.GetEntityID()), gamedataStatType.ProjectilesPerShot));
+    let onPlayer: Bool = IsDefined(hitEvent.target) && hitEvent.target.IsPlayer();
     let i: Int32 = 0;
     while i < ArraySize(effects) {
-      if TDBID.IsValid(effects[i]) && RandF() < chances[i] {
-        attackData.AddStatusEffect(effects[i], 1.0);
+      if TDBID.IsValid(effects[i]) && RandF() < AOData.PelletChance(chances[i], pellets) {
+        attackData.AddStatusEffect(onPlayer ? AOData.PlayerEffect(effects[i]) : effects[i], 1.0);
       }
       i += 1;
     }

@@ -92,7 +92,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-5mm-DUPen"); ArrayPush(t, "5mm DU Penetrator");
     ArrayPush(t, "AO-Ammo-DUPen-Desc"); ArrayPush(t, "Depleted uranium slugs. They go through cover at half charge and through armor at any charge.\n\nPierces cover at a lower charge. Loses half as much damage through cover. Ignores 50% of armor.");
     ArrayPush(t, "AO-Ammo-5mm-ToxicScatter"); ArrayPush(t, "5mm Toxic Scatter");
-    ArrayPush(t, "AO-Ammo-ToxicScatter-Desc"); ArrayPush(t, "Five toxin-coated flechettes stacked in one sabot. They spread out and each one carries a dose.\n\nFires five projectiles that share the shot's damage. Wider spread. 25% chance per hit to poison.");
+    ArrayPush(t, "AO-Ammo-ToxicScatter-Desc"); ArrayPush(t, "Five toxin-coated flechettes stacked in one sabot. They spread out and each one carries a dose.\n\nFires five projectiles that share the shot's damage. Wider spread. 25% chance to poison.");
     ArrayPush(t, "AO-Ammo-5mm-Superconductor"); ArrayPush(t, "5mm Superconductor");
     ArrayPush(t, "AO-Ammo-Superconductor-Desc"); ArrayPush(t, "Supercooled slugs that the rails can cycle as fast as they charge.\n\nFull auto at full charge.");
     ArrayPush(t, "AO-Ammo-5mm-EMPCap"); ArrayPush(t, "5mm EMP Capacitor");

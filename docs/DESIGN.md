@@ -276,18 +276,23 @@ range doesn't change the tooltip yet (none ships with one).
 What a round does on a hit besides damage, kept as flats on its ammo record (`AOData`), and
 applied in the damage pipeline to V's shots and NPCs' alike:
 
-- `<ammo>.aoEffects` / `aoEffectChances`: status effects and the chance of each per hit
+- `<ammo>.aoEffects` / `aoEffectChances`: status effects and the chance of each per shot
   (`AmmoFeedSystem.ApplyAmmoOnHit`, before vanilla applies the attack's effects, so its blocked,
-  friendly and immunity checks still apply). The 4ga Slug's knockdown is one of these.
+  friendly and immunity checks still apply). Each of a shot's n pellets rolls
+  1 - (1 - chance)^(1/n) (`AOData.PelletChance`), so a Dragon's Breath shot burns 60% of the time,
+  not on nearly every shot. On V, burning, poison, bleeding and EMP become vanilla's Player versions
+  (`AOData.PlayerEffect`: `PlayerBurning`, `PlayerPoisoned`, `PlayerBleeding`, `PlayerElectrocuted`),
+  as vanilla does for its own weapons. The 4ga Slug's knockdown is one of these.
 - `aoShareType` / `aoShare`: that share of the hit's Physical damage moves to Thermal, Electric
   or Chemical (`AmmoFeedSystem.ApplyHitDamage`, after the roll).
 - `aoMachineBonus`: every damage type times this against a machine (`AOData.IsMachine`: a
-  vehicle, drone, turret or mechanical puppet).
-- `aoNonlethal`: the hit carries the game's non-lethal flag, so a killing shot knocks out.
+  vehicle, drone, turret or mechanical puppet). Measured: x1.8..1.96 on a security android's
+  hits (`calibers/hitdata.sh`).
+- `aoNonlethal`: the hit carries the game's non-lethal flag, so a killing shot knocks out (the
+  target is Unconscious; a Ball kill on the same ganger is not, `calibers/hitdata.sh`).
 
 The round is the one the gun is loaded with (`AOData.LoadedAmmo`). The Rare and Epic rounds are
-generated with their hit data (`tools/rounds/rounds.py`). The machine bonus is not yet confirmed on
-live hits: the android `calibers/hitdata.sh` spawns looked human in game.
+generated with their hit data (`tools/rounds/rounds.py`).
 
 ## NPC damage parity
 
