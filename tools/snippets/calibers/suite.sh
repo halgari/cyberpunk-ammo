@@ -18,6 +18,7 @@ HIDDEN="tools/linux/cet.sh 'Game.AddToInventory(\"Ammo.AO_9mm_HollowPoint\", 10)
 $C/all-pass.sh \
   "$S/swap.sh" \
   "$K calibers/records.lua calibers/vanilla.lua calibers/distribution.lua calibers/icons.lua calibers/parity.lua" \
+  "CET_T=60 $K calibers/crafting.lua" "$C/crafting.sh" \
   "python3 tools/icons/check_parts.py" \
   "$UNITY $K calibers/roll.lua" \
   "$K slice/records.lua slice/icons.lua slice/vendors.lua slice/loot.lua" \

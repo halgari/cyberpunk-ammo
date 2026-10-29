@@ -214,6 +214,16 @@ names are in `docs/CATALOG.md`):
     hits harder through it than Rail Slugs; Split Slugs never go through.
 25. **Gun shop.** A gunsmith's stock has some Rare rounds and no Epic ones. Rare stacks are small
     (a few rounds of each), so a shop can show none of some Rares.
+26. **Craft a Common round.** At the crafting screen's ammo list, .45 Ball (and every other
+    caliber's Common round) is there. One batch makes 90 .45 rounds for 2 Common components.
+27. **Learn a recipe.** Give yourself `Items.AO_Recipe_AO_9mm_Match` (CET:
+    `Game.AddToInventory("Items.AO_Recipe_AO_9mm_Match", 1)`): 9mm Match shows up in the ammo
+    list, and a batch makes 23 rounds for 2 Epic components.
+28. **Break down rounds.** In the backpack, disassemble 200 rounds of 9mm Steel-core (2 full
+    batches): you get 2 Rare components. 50 rounds of 9mm Ball give nothing.
+29. **Recipes in the wild.** Over a few gun shop visits some Uncommon and Rare "load sheet"
+    recipes are for sale (none Epic). They're rare in loot: about 1 in 20 drops of an Uncommon or
+    better round.
 
 For each step, note pass or fail and what you saw.
 

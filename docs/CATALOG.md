@@ -532,5 +532,6 @@ modifiers. The hook looks up the loaded round per hit, so `CaliberForWeapon` get
 ## Open questions
 
 1. Rarity budget units: how many perk points per tier, and how quirks offset them.
-2. Crafting: no caliber has recipes yet. Vendors and loot split the four game ammo items across
-   the calibers (`docs/DESIGN.md`, Distribution).
+2. Crafting: answered 2026-10-29 (`docs/DESIGN.md`, Crafting). Every caliber's Common round is
+   known; Uncommon and up are recipe items from loot and gun shops. Cost to make goes Tech < Power
+   < Smart.

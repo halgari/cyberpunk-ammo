@@ -4,8 +4,8 @@ module AmmoOverhaul
 // its 4 ammo items: their batch size (GetAmmoBulletAmount), their recipes (AddAmmoRecipes), and
 // every ammo item breaks down into 1 Common component per round. Here:
 //   - each round's batch is its recipe record's (<ammo>.aoRecipe);
-//   - every caliber's Common round is known from the start; Uncommon and up are learned by picking
-//     up their recipe item (vanilla's CraftingSystemInventoryCallback);
+//   - every caliber's Common round is known from the start (added on player attach); Uncommon and
+//     up are learned by picking up their recipe item (vanilla's CraftingSystemInventoryCallback);
 //   - rounds break down per full batch (<ammo>.aoScrapRounds) into aoScrapGive components of the
 //     round's own quality; leftover rounds give nothing;
 //   - feed selectors can't be broken down (that would drop a gun's ammo choice).
@@ -22,9 +22,19 @@ public final static func GetAmmoBulletAmount(ammoId: TweakDBID) -> Int32 {
   return wrappedMethod(ammoId);
 }
 
+// Vanilla adds its ammo recipes once per save (behind facts), so ours are added whenever the
+// player attaches: new games, and saves from before the mod or a new caliber.
 @wrapMethod(CraftingSystem)
-private final func AddAmmoRecipes() -> Void {
-  wrappedMethod();
+private final func OnPlayerAttach(request: ref<PlayerAttachRequest>) -> Void {
+  wrappedMethod(request);
+  this.AOAddCommonRecipes();
+}
+
+@addMethod(CraftingSystem)
+private final func AOAddCommonRecipes() -> Void {
+  if !IsDefined(this.m_playerCraftBook) {
+    return;
+  }
   for caliber in AOData.Calibers() {
     for ammo in AOData.AmmosForTier(caliber, 0) {
       if !AOData.IsVanillaAmmo(ammo) && !this.m_playerCraftBook.KnowsRecipe(ammo) {

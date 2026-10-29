@@ -528,7 +528,6 @@ Crafting.AO_Cost_Smart_3:
 
 Ammo.AO_S25_Standard.aoScrapRounds: 10
 Ammo.AO_S25_Standard.aoScrapGive: 2
-Ammo.AO_S25_Standard.craftingData: Crafting.AO_Cost_Smart_0
 Ammo.AO_S25_Standard.aoRecipe: "Items.AO_Recipe_AO_S25_Standard"
 Items.AO_Recipe_AO_S25_Standard:
   $base: Items.AO_RecipeBase
@@ -557,7 +556,6 @@ Items.AO_Recipe_AO_S25_Standard:
 
 Ammo.AO_S25_Dumbfire.aoScrapRounds: 10
 Ammo.AO_S25_Dumbfire.aoScrapGive: 2
-Ammo.AO_S25_Dumbfire.craftingData: Crafting.AO_Cost_Smart_1
 Ammo.AO_S25_Dumbfire.aoRecipe: "Items.AO_Recipe_AO_S25_Dumbfire"
 Items.AO_Recipe_AO_S25_Dumbfire:
   $base: Items.AO_RecipeBase
@@ -586,7 +584,6 @@ Items.AO_Recipe_AO_S25_Dumbfire:
 
 Ammo.AO_S25_ShortFuse.aoScrapRounds: 10
 Ammo.AO_S25_ShortFuse.aoScrapGive: 2
-Ammo.AO_S25_ShortFuse.craftingData: Crafting.AO_Cost_Smart_1
 Ammo.AO_S25_ShortFuse.aoRecipe: "Items.AO_Recipe_AO_S25_ShortFuse"
 Items.AO_Recipe_AO_S25_ShortFuse:
   $base: Items.AO_RecipeBase
@@ -615,7 +612,6 @@ Items.AO_Recipe_AO_S25_ShortFuse:
 
 Ammo.AO_S25_EMPPayload.aoScrapRounds: 10
 Ammo.AO_S25_EMPPayload.aoScrapGive: 2
-Ammo.AO_S25_EMPPayload.craftingData: Crafting.AO_Cost_Smart_2
 Ammo.AO_S25_EMPPayload.aoRecipe: "Items.AO_Recipe_AO_S25_EMPPayload"
 Items.AO_Recipe_AO_S25_EMPPayload:
   $base: Items.AO_RecipeBase
@@ -644,7 +640,6 @@ Items.AO_Recipe_AO_S25_EMPPayload:
 
 Ammo.AO_S25_FirePayload.aoScrapRounds: 10
 Ammo.AO_S25_FirePayload.aoScrapGive: 2
-Ammo.AO_S25_FirePayload.craftingData: Crafting.AO_Cost_Smart_2
 Ammo.AO_S25_FirePayload.aoRecipe: "Items.AO_Recipe_AO_S25_FirePayload"
 Items.AO_Recipe_AO_S25_FirePayload:
   $base: Items.AO_RecipeBase
@@ -673,7 +668,6 @@ Items.AO_Recipe_AO_S25_FirePayload:
 
 Ammo.AO_S25_ChemPayload.aoScrapRounds: 10
 Ammo.AO_S25_ChemPayload.aoScrapGive: 2
-Ammo.AO_S25_ChemPayload.craftingData: Crafting.AO_Cost_Smart_2
 Ammo.AO_S25_ChemPayload.aoRecipe: "Items.AO_Recipe_AO_S25_ChemPayload"
 Items.AO_Recipe_AO_S25_ChemPayload:
   $base: Items.AO_RecipeBase
@@ -702,7 +696,6 @@ Items.AO_Recipe_AO_S25_ChemPayload:
 
 Ammo.AO_S25_FlashPayload.aoScrapRounds: 10
 Ammo.AO_S25_FlashPayload.aoScrapGive: 2
-Ammo.AO_S25_FlashPayload.craftingData: Crafting.AO_Cost_Smart_2
 Ammo.AO_S25_FlashPayload.aoRecipe: "Items.AO_Recipe_AO_S25_FlashPayload"
 Items.AO_Recipe_AO_S25_FlashPayload:
   $base: Items.AO_RecipeBase
@@ -731,7 +724,6 @@ Items.AO_Recipe_AO_S25_FlashPayload:
 
 Ammo.AO_S25_Hunter.aoScrapRounds: 10
 Ammo.AO_S25_Hunter.aoScrapGive: 2
-Ammo.AO_S25_Hunter.craftingData: Crafting.AO_Cost_Smart_3
 Ammo.AO_S25_Hunter.aoRecipe: "Items.AO_Recipe_AO_S25_Hunter"
 Items.AO_Recipe_AO_S25_Hunter:
   $base: Items.AO_RecipeBase
@@ -760,7 +752,6 @@ Items.AO_Recipe_AO_S25_Hunter:
 
 Ammo.AO_S25_HackCarrier.aoScrapRounds: 10
 Ammo.AO_S25_HackCarrier.aoScrapGive: 2
-Ammo.AO_S25_HackCarrier.craftingData: Crafting.AO_Cost_Smart_3
 Ammo.AO_S25_HackCarrier.aoRecipe: "Items.AO_Recipe_AO_S25_HackCarrier"
 Items.AO_Recipe_AO_S25_HackCarrier:
   $base: Items.AO_RecipeBase
@@ -789,7 +780,6 @@ Items.AO_Recipe_AO_S25_HackCarrier:
 
 Ammo.AO_S25_ShapedCharge.aoScrapRounds: 10
 Ammo.AO_S25_ShapedCharge.aoScrapGive: 2
-Ammo.AO_S25_ShapedCharge.craftingData: Crafting.AO_Cost_Smart_3
 Ammo.AO_S25_ShapedCharge.aoRecipe: "Items.AO_Recipe_AO_S25_ShapedCharge"
 Items.AO_Recipe_AO_S25_ShapedCharge:
   $base: Items.AO_RecipeBase

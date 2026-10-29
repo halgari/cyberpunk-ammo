@@ -615,7 +615,6 @@ Crafting.AO_Cost_Tech_3:
 
 Ammo.AO_TLight_Slug.aoScrapRounds: 180
 Ammo.AO_TLight_Slug.aoScrapGive: 1
-Ammo.AO_TLight_Slug.craftingData: Crafting.AO_Cost_Tech_0
 Ammo.AO_TLight_Slug.aoRecipe: "Items.AO_Recipe_AO_TLight_Slug"
 Items.AO_Recipe_AO_TLight_Slug:
   $base: Items.AO_RecipeBase
@@ -644,7 +643,6 @@ Items.AO_Recipe_AO_TLight_Slug:
 
 Ammo.AO_TLight_Sabot.aoScrapRounds: 180
 Ammo.AO_TLight_Sabot.aoScrapGive: 1
-Ammo.AO_TLight_Sabot.craftingData: Crafting.AO_Cost_Tech_1
 Ammo.AO_TLight_Sabot.aoRecipe: "Items.AO_Recipe_AO_TLight_Sabot"
 Items.AO_Recipe_AO_TLight_Sabot:
   $base: Items.AO_RecipeBase
@@ -673,7 +671,6 @@ Items.AO_Recipe_AO_TLight_Sabot:
 
 Ammo.AO_TLight_Bricks.aoScrapRounds: 180
 Ammo.AO_TLight_Bricks.aoScrapGive: 1
-Ammo.AO_TLight_Bricks.craftingData: Crafting.AO_Cost_Tech_1
 Ammo.AO_TLight_Bricks.aoRecipe: "Items.AO_Recipe_AO_TLight_Bricks"
 Items.AO_Recipe_AO_TLight_Bricks:
   $base: Items.AO_RecipeBase
@@ -702,7 +699,6 @@ Items.AO_Recipe_AO_TLight_Bricks:
 
 Ammo.AO_TLight_Ferro.aoScrapRounds: 180
 Ammo.AO_TLight_Ferro.aoScrapGive: 1
-Ammo.AO_TLight_Ferro.craftingData: Crafting.AO_Cost_Tech_2
 Ammo.AO_TLight_Ferro.aoRecipe: "Items.AO_Recipe_AO_TLight_Ferro"
 Items.AO_Recipe_AO_TLight_Ferro:
   $base: Items.AO_RecipeBase
@@ -731,7 +727,6 @@ Items.AO_Recipe_AO_TLight_Ferro:
 
 Ammo.AO_TLight_SplitSlug.aoScrapRounds: 180
 Ammo.AO_TLight_SplitSlug.aoScrapGive: 1
-Ammo.AO_TLight_SplitSlug.craftingData: Crafting.AO_Cost_Tech_2
 Ammo.AO_TLight_SplitSlug.aoRecipe: "Items.AO_Recipe_AO_TLight_SplitSlug"
 Items.AO_Recipe_AO_TLight_SplitSlug:
   $base: Items.AO_RecipeBase
@@ -760,7 +755,6 @@ Items.AO_Recipe_AO_TLight_SplitSlug:
 
 Ammo.AO_TLight_Feedback.aoScrapRounds: 180
 Ammo.AO_TLight_Feedback.aoScrapGive: 1
-Ammo.AO_TLight_Feedback.craftingData: Crafting.AO_Cost_Tech_2
 Ammo.AO_TLight_Feedback.aoRecipe: "Items.AO_Recipe_AO_TLight_Feedback"
 Items.AO_Recipe_AO_TLight_Feedback:
   $base: Items.AO_RecipeBase
@@ -789,7 +783,6 @@ Items.AO_Recipe_AO_TLight_Feedback:
 
 Ammo.AO_TLight_DUPen.aoScrapRounds: 180
 Ammo.AO_TLight_DUPen.aoScrapGive: 1
-Ammo.AO_TLight_DUPen.craftingData: Crafting.AO_Cost_Tech_3
 Ammo.AO_TLight_DUPen.aoRecipe: "Items.AO_Recipe_AO_TLight_DUPen"
 Items.AO_Recipe_AO_TLight_DUPen:
   $base: Items.AO_RecipeBase
@@ -818,7 +811,6 @@ Items.AO_Recipe_AO_TLight_DUPen:
 
 Ammo.AO_TLight_ToxicScatter.aoScrapRounds: 180
 Ammo.AO_TLight_ToxicScatter.aoScrapGive: 1
-Ammo.AO_TLight_ToxicScatter.craftingData: Crafting.AO_Cost_Tech_3
 Ammo.AO_TLight_ToxicScatter.aoRecipe: "Items.AO_Recipe_AO_TLight_ToxicScatter"
 Items.AO_Recipe_AO_TLight_ToxicScatter:
   $base: Items.AO_RecipeBase
@@ -847,7 +839,6 @@ Items.AO_Recipe_AO_TLight_ToxicScatter:
 
 Ammo.AO_TLight_Superconductor.aoScrapRounds: 180
 Ammo.AO_TLight_Superconductor.aoScrapGive: 1
-Ammo.AO_TLight_Superconductor.craftingData: Crafting.AO_Cost_Tech_3
 Ammo.AO_TLight_Superconductor.aoRecipe: "Items.AO_Recipe_AO_TLight_Superconductor"
 Items.AO_Recipe_AO_TLight_Superconductor:
   $base: Items.AO_RecipeBase
@@ -876,7 +867,6 @@ Items.AO_Recipe_AO_TLight_Superconductor:
 
 Ammo.AO_TLight_EMPCap.aoScrapRounds: 180
 Ammo.AO_TLight_EMPCap.aoScrapGive: 1
-Ammo.AO_TLight_EMPCap.craftingData: Crafting.AO_Cost_Tech_3
 Ammo.AO_TLight_EMPCap.aoRecipe: "Items.AO_Recipe_AO_TLight_EMPCap"
 Items.AO_Recipe_AO_TLight_EMPCap:
   $base: Items.AO_RecipeBase

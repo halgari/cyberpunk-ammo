@@ -616,7 +616,6 @@ Crafting.AO_Cost_Tech_3:
 
 Ammo.AO_THeavy_Slug.aoScrapRounds: 80
 Ammo.AO_THeavy_Slug.aoScrapGive: 1
-Ammo.AO_THeavy_Slug.craftingData: Crafting.AO_Cost_Tech_0
 Ammo.AO_THeavy_Slug.aoRecipe: "Items.AO_Recipe_AO_THeavy_Slug"
 Items.AO_Recipe_AO_THeavy_Slug:
   $base: Items.AO_RecipeBase
@@ -645,7 +644,6 @@ Items.AO_Recipe_AO_THeavy_Slug:
 
 Ammo.AO_THeavy_Sabot.aoScrapRounds: 80
 Ammo.AO_THeavy_Sabot.aoScrapGive: 1
-Ammo.AO_THeavy_Sabot.craftingData: Crafting.AO_Cost_Tech_1
 Ammo.AO_THeavy_Sabot.aoRecipe: "Items.AO_Recipe_AO_THeavy_Sabot"
 Items.AO_Recipe_AO_THeavy_Sabot:
   $base: Items.AO_RecipeBase
@@ -674,7 +672,6 @@ Items.AO_Recipe_AO_THeavy_Sabot:
 
 Ammo.AO_THeavy_Bricks.aoScrapRounds: 80
 Ammo.AO_THeavy_Bricks.aoScrapGive: 1
-Ammo.AO_THeavy_Bricks.craftingData: Crafting.AO_Cost_Tech_1
 Ammo.AO_THeavy_Bricks.aoRecipe: "Items.AO_Recipe_AO_THeavy_Bricks"
 Items.AO_Recipe_AO_THeavy_Bricks:
   $base: Items.AO_RecipeBase
@@ -703,7 +700,6 @@ Items.AO_Recipe_AO_THeavy_Bricks:
 
 Ammo.AO_THeavy_Ferro.aoScrapRounds: 80
 Ammo.AO_THeavy_Ferro.aoScrapGive: 1
-Ammo.AO_THeavy_Ferro.craftingData: Crafting.AO_Cost_Tech_2
 Ammo.AO_THeavy_Ferro.aoRecipe: "Items.AO_Recipe_AO_THeavy_Ferro"
 Items.AO_Recipe_AO_THeavy_Ferro:
   $base: Items.AO_RecipeBase
@@ -732,7 +728,6 @@ Items.AO_Recipe_AO_THeavy_Ferro:
 
 Ammo.AO_THeavy_SplitSlug.aoScrapRounds: 80
 Ammo.AO_THeavy_SplitSlug.aoScrapGive: 1
-Ammo.AO_THeavy_SplitSlug.craftingData: Crafting.AO_Cost_Tech_2
 Ammo.AO_THeavy_SplitSlug.aoRecipe: "Items.AO_Recipe_AO_THeavy_SplitSlug"
 Items.AO_Recipe_AO_THeavy_SplitSlug:
   $base: Items.AO_RecipeBase
@@ -761,7 +756,6 @@ Items.AO_Recipe_AO_THeavy_SplitSlug:
 
 Ammo.AO_THeavy_Feedback.aoScrapRounds: 80
 Ammo.AO_THeavy_Feedback.aoScrapGive: 1
-Ammo.AO_THeavy_Feedback.craftingData: Crafting.AO_Cost_Tech_2
 Ammo.AO_THeavy_Feedback.aoRecipe: "Items.AO_Recipe_AO_THeavy_Feedback"
 Items.AO_Recipe_AO_THeavy_Feedback:
   $base: Items.AO_RecipeBase
@@ -790,7 +784,6 @@ Items.AO_Recipe_AO_THeavy_Feedback:
 
 Ammo.AO_THeavy_DUPen.aoScrapRounds: 80
 Ammo.AO_THeavy_DUPen.aoScrapGive: 1
-Ammo.AO_THeavy_DUPen.craftingData: Crafting.AO_Cost_Tech_3
 Ammo.AO_THeavy_DUPen.aoRecipe: "Items.AO_Recipe_AO_THeavy_DUPen"
 Items.AO_Recipe_AO_THeavy_DUPen:
   $base: Items.AO_RecipeBase
@@ -819,7 +812,6 @@ Items.AO_Recipe_AO_THeavy_DUPen:
 
 Ammo.AO_THeavy_ToxicScatter.aoScrapRounds: 80
 Ammo.AO_THeavy_ToxicScatter.aoScrapGive: 1
-Ammo.AO_THeavy_ToxicScatter.craftingData: Crafting.AO_Cost_Tech_3
 Ammo.AO_THeavy_ToxicScatter.aoRecipe: "Items.AO_Recipe_AO_THeavy_ToxicScatter"
 Items.AO_Recipe_AO_THeavy_ToxicScatter:
   $base: Items.AO_RecipeBase
@@ -848,7 +840,6 @@ Items.AO_Recipe_AO_THeavy_ToxicScatter:
 
 Ammo.AO_THeavy_Superconductor.aoScrapRounds: 80
 Ammo.AO_THeavy_Superconductor.aoScrapGive: 1
-Ammo.AO_THeavy_Superconductor.craftingData: Crafting.AO_Cost_Tech_3
 Ammo.AO_THeavy_Superconductor.aoRecipe: "Items.AO_Recipe_AO_THeavy_Superconductor"
 Items.AO_Recipe_AO_THeavy_Superconductor:
   $base: Items.AO_RecipeBase
@@ -877,7 +868,6 @@ Items.AO_Recipe_AO_THeavy_Superconductor:
 
 Ammo.AO_THeavy_EMPCap.aoScrapRounds: 80
 Ammo.AO_THeavy_EMPCap.aoScrapGive: 1
-Ammo.AO_THeavy_EMPCap.craftingData: Crafting.AO_Cost_Tech_3
 Ammo.AO_THeavy_EMPCap.aoRecipe: "Items.AO_Recipe_AO_THeavy_EMPCap"
 Items.AO_Recipe_AO_THeavy_EMPCap:
   $base: Items.AO_RecipeBase

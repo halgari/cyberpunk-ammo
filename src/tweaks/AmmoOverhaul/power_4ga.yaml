@@ -737,7 +737,6 @@ Crafting.AO_Cost_Power_3:
 
 Ammo.AO_4ga_Buckshot.aoScrapRounds: 20
 Ammo.AO_4ga_Buckshot.aoScrapGive: 1
-Ammo.AO_4ga_Buckshot.craftingData: Crafting.AO_Cost_Power_0
 Ammo.AO_4ga_Buckshot.aoRecipe: "Items.AO_Recipe_AO_4ga_Buckshot"
 Items.AO_Recipe_AO_4ga_Buckshot:
   $base: Items.AO_RecipeBase
@@ -766,7 +765,6 @@ Items.AO_Recipe_AO_4ga_Buckshot:
 
 Ammo.AO_4ga_Slug.aoScrapRounds: 20
 Ammo.AO_4ga_Slug.aoScrapGive: 1
-Ammo.AO_4ga_Slug.craftingData: Crafting.AO_Cost_Power_1
 Ammo.AO_4ga_Slug.aoRecipe: "Items.AO_Recipe_AO_4ga_Slug"
 Items.AO_Recipe_AO_4ga_Slug:
   $base: Items.AO_RecipeBase
@@ -795,7 +793,6 @@ Items.AO_Recipe_AO_4ga_Slug:
 
 Ammo.AO_4ga_Birdshot.aoScrapRounds: 20
 Ammo.AO_4ga_Birdshot.aoScrapGive: 1
-Ammo.AO_4ga_Birdshot.craftingData: Crafting.AO_Cost_Power_1
 Ammo.AO_4ga_Birdshot.aoRecipe: "Items.AO_Recipe_AO_4ga_Birdshot"
 Items.AO_Recipe_AO_4ga_Birdshot:
   $base: Items.AO_RecipeBase
@@ -824,7 +821,6 @@ Items.AO_Recipe_AO_4ga_Birdshot:
 
 Ammo.AO_4ga_Flechette.aoScrapRounds: 20
 Ammo.AO_4ga_Flechette.aoScrapGive: 1
-Ammo.AO_4ga_Flechette.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_4ga_Flechette.aoRecipe: "Items.AO_Recipe_AO_4ga_Flechette"
 Items.AO_Recipe_AO_4ga_Flechette:
   $base: Items.AO_RecipeBase
@@ -853,7 +849,6 @@ Items.AO_Recipe_AO_4ga_Flechette:
 
 Ammo.AO_4ga_Riot.aoScrapRounds: 20
 Ammo.AO_4ga_Riot.aoScrapGive: 1
-Ammo.AO_4ga_Riot.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_4ga_Riot.aoRecipe: "Items.AO_Recipe_AO_4ga_Riot"
 Items.AO_Recipe_AO_4ga_Riot:
   $base: Items.AO_RecipeBase
@@ -882,7 +877,6 @@ Items.AO_Recipe_AO_4ga_Riot:
 
 Ammo.AO_4ga_Flare.aoScrapRounds: 20
 Ammo.AO_4ga_Flare.aoScrapGive: 1
-Ammo.AO_4ga_Flare.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_4ga_Flare.aoRecipe: "Items.AO_Recipe_AO_4ga_Flare"
 Items.AO_Recipe_AO_4ga_Flare:
   $base: Items.AO_RecipeBase
@@ -911,7 +905,6 @@ Items.AO_Recipe_AO_4ga_Flare:
 
 Ammo.AO_4ga_Dragon.aoScrapRounds: 20
 Ammo.AO_4ga_Dragon.aoScrapGive: 1
-Ammo.AO_4ga_Dragon.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_4ga_Dragon.aoRecipe: "Items.AO_Recipe_AO_4ga_Dragon"
 Items.AO_Recipe_AO_4ga_Dragon:
   $base: Items.AO_RecipeBase
@@ -940,7 +933,6 @@ Items.AO_Recipe_AO_4ga_Dragon:
 
 Ammo.AO_4ga_Thermite.aoScrapRounds: 20
 Ammo.AO_4ga_Thermite.aoScrapGive: 1
-Ammo.AO_4ga_Thermite.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_4ga_Thermite.aoRecipe: "Items.AO_Recipe_AO_4ga_Thermite"
 Items.AO_Recipe_AO_4ga_Thermite:
   $base: Items.AO_RecipeBase

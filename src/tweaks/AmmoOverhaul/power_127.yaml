@@ -523,7 +523,6 @@ Ammo.SniperRifleAmmo.aoRecipe: "Ammo.RecipeSniperRifleAmmo"
 
 Ammo.AO_127_HollowPoint.aoScrapRounds: 20
 Ammo.AO_127_HollowPoint.aoScrapGive: 1
-Ammo.AO_127_HollowPoint.craftingData: Crafting.AO_Cost_Power_1
 Ammo.AO_127_HollowPoint.aoRecipe: "Items.AO_Recipe_AO_127_HollowPoint"
 Items.AO_Recipe_AO_127_HollowPoint:
   $base: Items.AO_RecipeBase
@@ -552,7 +551,6 @@ Items.AO_Recipe_AO_127_HollowPoint:
 
 Ammo.AO_127_PlusP.aoScrapRounds: 20
 Ammo.AO_127_PlusP.aoScrapGive: 1
-Ammo.AO_127_PlusP.craftingData: Crafting.AO_Cost_Power_1
 Ammo.AO_127_PlusP.aoRecipe: "Items.AO_Recipe_AO_127_PlusP"
 Items.AO_Recipe_AO_127_PlusP:
   $base: Items.AO_RecipeBase
@@ -581,7 +579,6 @@ Items.AO_Recipe_AO_127_PlusP:
 
 Ammo.AO_127_SteelCore.aoScrapRounds: 20
 Ammo.AO_127_SteelCore.aoScrapGive: 1
-Ammo.AO_127_SteelCore.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_127_SteelCore.aoRecipe: "Items.AO_Recipe_AO_127_SteelCore"
 Items.AO_Recipe_AO_127_SteelCore:
   $base: Items.AO_RecipeBase
@@ -610,7 +607,6 @@ Items.AO_Recipe_AO_127_SteelCore:
 
 Ammo.AO_127_Incendiary.aoScrapRounds: 20
 Ammo.AO_127_Incendiary.aoScrapGive: 1
-Ammo.AO_127_Incendiary.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_127_Incendiary.aoRecipe: "Items.AO_Recipe_AO_127_Incendiary"
 Items.AO_Recipe_AO_127_Incendiary:
   $base: Items.AO_RecipeBase
@@ -639,7 +635,6 @@ Items.AO_Recipe_AO_127_Incendiary:
 
 Ammo.AO_127_BallisticTip.aoScrapRounds: 20
 Ammo.AO_127_BallisticTip.aoScrapGive: 1
-Ammo.AO_127_BallisticTip.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_127_BallisticTip.aoRecipe: "Items.AO_Recipe_AO_127_BallisticTip"
 Items.AO_Recipe_AO_127_BallisticTip:
   $base: Items.AO_RecipeBase
@@ -668,7 +663,6 @@ Items.AO_Recipe_AO_127_BallisticTip:
 
 Ammo.AO_127_Match.aoScrapRounds: 20
 Ammo.AO_127_Match.aoScrapGive: 1
-Ammo.AO_127_Match.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_127_Match.aoRecipe: "Items.AO_Recipe_AO_127_Match"
 Items.AO_Recipe_AO_127_Match:
   $base: Items.AO_RecipeBase
@@ -697,7 +691,6 @@ Items.AO_Recipe_AO_127_Match:
 
 Ammo.AO_127_Toxin.aoScrapRounds: 20
 Ammo.AO_127_Toxin.aoScrapGive: 1
-Ammo.AO_127_Toxin.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_127_Toxin.aoRecipe: "Items.AO_Recipe_AO_127_Toxin"
 Items.AO_Recipe_AO_127_Toxin:
   $base: Items.AO_RecipeBase
@@ -726,7 +719,6 @@ Items.AO_Recipe_AO_127_Toxin:
 
 Ammo.AO_127_HEI.aoScrapRounds: 20
 Ammo.AO_127_HEI.aoScrapGive: 1
-Ammo.AO_127_HEI.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_127_HEI.aoRecipe: "Items.AO_Recipe_AO_127_HEI"
 Items.AO_Recipe_AO_127_HEI:
   $base: Items.AO_RecipeBase

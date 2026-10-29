@@ -621,7 +621,6 @@ Ammo.RifleAmmo.aoRecipe: "Ammo.RecipeRifleAmmo"
 
 Ammo.AO_556_HollowPoint.aoScrapRounds: 90
 Ammo.AO_556_HollowPoint.aoScrapGive: 1
-Ammo.AO_556_HollowPoint.craftingData: Crafting.AO_Cost_Power_1
 Ammo.AO_556_HollowPoint.aoRecipe: "Items.AO_Recipe_AO_556_HollowPoint"
 Items.AO_Recipe_AO_556_HollowPoint:
   $base: Items.AO_RecipeBase
@@ -650,7 +649,6 @@ Items.AO_Recipe_AO_556_HollowPoint:
 
 Ammo.AO_556_PlusP.aoScrapRounds: 90
 Ammo.AO_556_PlusP.aoScrapGive: 1
-Ammo.AO_556_PlusP.craftingData: Crafting.AO_Cost_Power_1
 Ammo.AO_556_PlusP.aoRecipe: "Items.AO_Recipe_AO_556_PlusP"
 Items.AO_Recipe_AO_556_PlusP:
   $base: Items.AO_RecipeBase
@@ -679,7 +677,6 @@ Items.AO_Recipe_AO_556_PlusP:
 
 Ammo.AO_556_SteelCore.aoScrapRounds: 90
 Ammo.AO_556_SteelCore.aoScrapGive: 1
-Ammo.AO_556_SteelCore.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_556_SteelCore.aoRecipe: "Items.AO_Recipe_AO_556_SteelCore"
 Items.AO_Recipe_AO_556_SteelCore:
   $base: Items.AO_RecipeBase
@@ -708,7 +705,6 @@ Items.AO_Recipe_AO_556_SteelCore:
 
 Ammo.AO_556_Incendiary.aoScrapRounds: 90
 Ammo.AO_556_Incendiary.aoScrapGive: 1
-Ammo.AO_556_Incendiary.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_556_Incendiary.aoRecipe: "Items.AO_Recipe_AO_556_Incendiary"
 Items.AO_Recipe_AO_556_Incendiary:
   $base: Items.AO_RecipeBase
@@ -737,7 +733,6 @@ Items.AO_Recipe_AO_556_Incendiary:
 
 Ammo.AO_556_Subsonic.aoScrapRounds: 90
 Ammo.AO_556_Subsonic.aoScrapGive: 1
-Ammo.AO_556_Subsonic.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_556_Subsonic.aoRecipe: "Items.AO_Recipe_AO_556_Subsonic"
 Items.AO_Recipe_AO_556_Subsonic:
   $base: Items.AO_RecipeBase
@@ -766,7 +761,6 @@ Items.AO_Recipe_AO_556_Subsonic:
 
 Ammo.AO_556_Bouncers.aoScrapRounds: 90
 Ammo.AO_556_Bouncers.aoScrapGive: 1
-Ammo.AO_556_Bouncers.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_556_Bouncers.aoRecipe: "Items.AO_Recipe_AO_556_Bouncers"
 Items.AO_Recipe_AO_556_Bouncers:
   $base: Items.AO_RecipeBase
@@ -795,7 +789,6 @@ Items.AO_Recipe_AO_556_Bouncers:
 
 Ammo.AO_556_Penetrator.aoScrapRounds: 90
 Ammo.AO_556_Penetrator.aoScrapGive: 1
-Ammo.AO_556_Penetrator.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_556_Penetrator.aoRecipe: "Items.AO_Recipe_AO_556_Penetrator"
 Items.AO_Recipe_AO_556_Penetrator:
   $base: Items.AO_RecipeBase
@@ -824,7 +817,6 @@ Items.AO_Recipe_AO_556_Penetrator:
 
 Ammo.AO_556_Match.aoScrapRounds: 90
 Ammo.AO_556_Match.aoScrapGive: 1
-Ammo.AO_556_Match.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_556_Match.aoRecipe: "Items.AO_Recipe_AO_556_Match"
 Items.AO_Recipe_AO_556_Match:
   $base: Items.AO_RecipeBase
@@ -853,7 +845,6 @@ Items.AO_Recipe_AO_556_Match:
 
 Ammo.AO_556_Toxin.aoScrapRounds: 90
 Ammo.AO_556_Toxin.aoScrapGive: 1
-Ammo.AO_556_Toxin.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_556_Toxin.aoRecipe: "Items.AO_Recipe_AO_556_Toxin"
 Items.AO_Recipe_AO_556_Toxin:
   $base: Items.AO_RecipeBase
@@ -882,7 +873,6 @@ Items.AO_Recipe_AO_556_Toxin:
 
 Ammo.AO_556_Shredders.aoScrapRounds: 90
 Ammo.AO_556_Shredders.aoScrapGive: 1
-Ammo.AO_556_Shredders.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_556_Shredders.aoRecipe: "Items.AO_Recipe_AO_556_Shredders"
 Items.AO_Recipe_AO_556_Shredders:
   $base: Items.AO_RecipeBase

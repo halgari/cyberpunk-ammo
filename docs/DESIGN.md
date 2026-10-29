@@ -350,6 +350,29 @@ ignored it (measured: a Slug's -1 added the gun's pellets, a 4ga Birdshot's 1.5 
 these `NpcAmmo.ToModifier` works the amount out (value times the gun's reference stat) and adds a
 constant.
 
+## Crafting
+
+Records come from `tools/crafting/crafting.py` (run after `tools/rounds/rounds.py`); hooks are in
+`Crafting.reds`. Spec: `docs/superpowers/specs/2026-10-29-ammo-crafting-design.md`.
+
+- **Cost per batch:** the family sets the count (Tech 1, Power 2, Smart 4), the tier the grade
+  of component. `Crafting.AO_Cost_<family>_<tier>` packages, set as each round's `CraftingData`
+  in `zz_crafting_costs.yaml` (record updates: TweakXL can't type a one-line foreign-key flat,
+  and the file loads after the caliber files). The 4 vanilla ammo items keep vanilla's cost.
+- **Batch:** `AmmoOverhaul.<caliber>.craftBatch` for Common; Uncommon 1/2, Rare 1/3, Epic 1/4,
+  rounded half up. Each round's `aoRecipe` names an `ItemRecipe` making that batch; the wrapped
+  `GetAmmoBulletAmount` reads it (vanilla's switch only knows its 4 items).
+- **Recipes:** every caliber's Common round is added on player attach (vanilla adds its own once
+  per save, behind facts). Uncommon and up are `Items.AO_Recipe_<round>` items: picking one up
+  teaches it (vanilla's `CraftingSystemInventoryCallback`, tag `Recipe`); they never show in the
+  backpack. Loot and NPC bodies with an Uncommon+ round carry its recipe at `recipeDropFactor`;
+  gun shops list each Uncommon and Rare recipe at `recipeVendorChance` per restock. A recipe item
+  costs `recipePriceBatches` batches of its round.
+- **Disassembly:** vanilla gives 1 Common component per round of any ammo. Rounds now break down
+  per full batch (`aoScrapRounds`: the Common batch, twice that for Tech) into `aoScrapGive`
+  components (1, Smart 2) of the round's quality; leftover rounds give nothing. Feed selectors
+  can't be broken down.
+
 ## Weight and inventory
 
 - Ammo items have a Weight stat (about one carry point per typical magazine). Stack items update

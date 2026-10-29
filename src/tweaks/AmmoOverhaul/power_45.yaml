@@ -677,7 +677,6 @@ Crafting.AO_Cost_Power_3:
 
 Ammo.AO_45_Ball.aoScrapRounds: 90
 Ammo.AO_45_Ball.aoScrapGive: 1
-Ammo.AO_45_Ball.craftingData: Crafting.AO_Cost_Power_0
 Ammo.AO_45_Ball.aoRecipe: "Items.AO_Recipe_AO_45_Ball"
 Items.AO_Recipe_AO_45_Ball:
   $base: Items.AO_RecipeBase
@@ -706,7 +705,6 @@ Items.AO_Recipe_AO_45_Ball:
 
 Ammo.AO_45_HollowPoint.aoScrapRounds: 90
 Ammo.AO_45_HollowPoint.aoScrapGive: 1
-Ammo.AO_45_HollowPoint.craftingData: Crafting.AO_Cost_Power_1
 Ammo.AO_45_HollowPoint.aoRecipe: "Items.AO_Recipe_AO_45_HollowPoint"
 Items.AO_Recipe_AO_45_HollowPoint:
   $base: Items.AO_RecipeBase
@@ -735,7 +733,6 @@ Items.AO_Recipe_AO_45_HollowPoint:
 
 Ammo.AO_45_PlusP.aoScrapRounds: 90
 Ammo.AO_45_PlusP.aoScrapGive: 1
-Ammo.AO_45_PlusP.craftingData: Crafting.AO_Cost_Power_1
 Ammo.AO_45_PlusP.aoRecipe: "Items.AO_Recipe_AO_45_PlusP"
 Items.AO_Recipe_AO_45_PlusP:
   $base: Items.AO_RecipeBase
@@ -764,7 +761,6 @@ Items.AO_Recipe_AO_45_PlusP:
 
 Ammo.AO_45_SteelCore.aoScrapRounds: 90
 Ammo.AO_45_SteelCore.aoScrapGive: 1
-Ammo.AO_45_SteelCore.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_45_SteelCore.aoRecipe: "Items.AO_Recipe_AO_45_SteelCore"
 Items.AO_Recipe_AO_45_SteelCore:
   $base: Items.AO_RecipeBase
@@ -793,7 +789,6 @@ Items.AO_Recipe_AO_45_SteelCore:
 
 Ammo.AO_45_Incendiary.aoScrapRounds: 90
 Ammo.AO_45_Incendiary.aoScrapGive: 1
-Ammo.AO_45_Incendiary.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_45_Incendiary.aoRecipe: "Items.AO_Recipe_AO_45_Incendiary"
 Items.AO_Recipe_AO_45_Incendiary:
   $base: Items.AO_RecipeBase
@@ -822,7 +817,6 @@ Items.AO_Recipe_AO_45_Incendiary:
 
 Ammo.AO_45_Subsonic.aoScrapRounds: 90
 Ammo.AO_45_Subsonic.aoScrapGive: 1
-Ammo.AO_45_Subsonic.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_45_Subsonic.aoRecipe: "Items.AO_Recipe_AO_45_Subsonic"
 Items.AO_Recipe_AO_45_Subsonic:
   $base: Items.AO_RecipeBase
@@ -851,7 +845,6 @@ Items.AO_Recipe_AO_45_Subsonic:
 
 Ammo.AO_45_Bouncers.aoScrapRounds: 90
 Ammo.AO_45_Bouncers.aoScrapGive: 1
-Ammo.AO_45_Bouncers.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_45_Bouncers.aoRecipe: "Items.AO_Recipe_AO_45_Bouncers"
 Items.AO_Recipe_AO_45_Bouncers:
   $base: Items.AO_RecipeBase
@@ -880,7 +873,6 @@ Items.AO_Recipe_AO_45_Bouncers:
 
 Ammo.AO_45_Rubber.aoScrapRounds: 90
 Ammo.AO_45_Rubber.aoScrapGive: 1
-Ammo.AO_45_Rubber.craftingData: Crafting.AO_Cost_Power_2
 Ammo.AO_45_Rubber.aoRecipe: "Items.AO_Recipe_AO_45_Rubber"
 Items.AO_Recipe_AO_45_Rubber:
   $base: Items.AO_RecipeBase
@@ -909,7 +901,6 @@ Items.AO_Recipe_AO_45_Rubber:
 
 Ammo.AO_45_Penetrator.aoScrapRounds: 90
 Ammo.AO_45_Penetrator.aoScrapGive: 1
-Ammo.AO_45_Penetrator.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_45_Penetrator.aoRecipe: "Items.AO_Recipe_AO_45_Penetrator"
 Items.AO_Recipe_AO_45_Penetrator:
   $base: Items.AO_RecipeBase
@@ -938,7 +929,6 @@ Items.AO_Recipe_AO_45_Penetrator:
 
 Ammo.AO_45_Match.aoScrapRounds: 90
 Ammo.AO_45_Match.aoScrapGive: 1
-Ammo.AO_45_Match.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_45_Match.aoRecipe: "Items.AO_Recipe_AO_45_Match"
 Items.AO_Recipe_AO_45_Match:
   $base: Items.AO_RecipeBase
@@ -967,7 +957,6 @@ Items.AO_Recipe_AO_45_Match:
 
 Ammo.AO_45_Toxin.aoScrapRounds: 90
 Ammo.AO_45_Toxin.aoScrapGive: 1
-Ammo.AO_45_Toxin.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_45_Toxin.aoRecipe: "Items.AO_Recipe_AO_45_Toxin"
 Items.AO_Recipe_AO_45_Toxin:
   $base: Items.AO_RecipeBase
@@ -996,7 +985,6 @@ Items.AO_Recipe_AO_45_Toxin:
 
 Ammo.AO_45_Shredders.aoScrapRounds: 90
 Ammo.AO_45_Shredders.aoScrapGive: 1
-Ammo.AO_45_Shredders.craftingData: Crafting.AO_Cost_Power_3
 Ammo.AO_45_Shredders.aoRecipe: "Items.AO_Recipe_AO_45_Shredders"
 Items.AO_Recipe_AO_45_Shredders:
   $base: Items.AO_RecipeBase

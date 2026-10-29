@@ -23,10 +23,11 @@ for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
   for i, a in ipairs(ammo) do
     local name, t = str(a), tiers[i]
     -- Cost: one element, the tier's material, the family's count.
-    local cd = flat(a, "craftingData")
-    local els = cd and flat(cd, "craftingRecipe") or {}
+    -- (CET can't read these foreign-key flats; the record accessors can.)
+    local cd = rec(a) and rec(a):CraftingData()
+    local els = cd and cd:CraftingRecipe() or {}
     local e = els[1]
-    local ing, n = e and str(flat(e, "ingredient")), e and flat(e, "amount")
+    local ing, n = e and str(e:Ingredient():GetID()), e and e:Amount()
     check(name .. " costs " .. COST[family] .. " x " .. MATERIAL[t], #els == 1 and ing == MATERIAL[t] and n == COST[family],
       #els .. " elements, " .. tostring(ing) .. " x " .. tostring(n))
     cost[t] = cost[t] or {}
@@ -42,10 +43,12 @@ for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
       check(name .. " recipe item is a Recipe hidden in the backpack", has(tags, "Recipe") and has(tags, "HideInBackpackUI"))
       local ln = r and r ~= "" and locName(r) or ""
       check(name .. " recipe item reads '...: load sheet'", ln:sub(-12) == ": load sheet" and #ln > 12, ln)
-      -- Price: 10 crafted batches of the round. Shown prices round up, so allow 10%.
+      -- Price: 10 crafted batches of the round. Prices are shown rounded up, so the round's real
+      -- price is in (shown - 1, shown]; allow 2% more for the recipe's own rounding.
       local function price(id) return RPGManager.CalculateBuyPrice(Game.GetPlayer(), ItemID.FromTDBID(TweakDBID.new(id)), 1.0) end
-      local got, want = r and r ~= "" and price(r) or 0, 10 * tierBatch(b, t) * price(name)
-      check(name .. " recipe item costs about 10 batches", want > 0 and math.abs(got - want) <= 0.1 * want, got .. " vs " .. want)
+      local got, one, n = r and r ~= "" and price(r) or 0, price(name), 10 * tierBatch(b, t)
+      check(name .. " recipe item costs about 10 batches", one > 0 and got >= 0.98 * n * (one - 1) and got <= 1.02 * n * one,
+        got .. " vs " .. n .. " x " .. one)
     end
     -- Disassembly: Power (b, 1), Smart (b, 2), Tech (2b, 1).
     local want = ({ Power = { b, 1 }, Smart = { b, 2 }, Tech = { 2 * b, 1 } })[family]
