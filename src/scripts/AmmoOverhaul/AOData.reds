@@ -205,6 +205,44 @@ public abstract class AOData {
     return TweakDBInterface.GetFloat(t"AmmoOverhaul.loot.ownedBias", 0.0);
   }
 
+  // --- Crafting (Crafting.reds; records from tools/crafting/crafting.py) ----------------------
+
+  // The ItemRecipe record that makes `ammo` (vanilla's for the 4 vanilla ammo items); invalid if none.
+  public static func Recipe(ammo: TweakDBID) -> TweakDBID {
+    return AOData.GetID(AOData.Flat(ammo, "aoRecipe"));
+  }
+
+  // Rounds per full batch when breaking `ammo` down (0: not a round, vanilla result).
+  public static func ScrapRounds(ammo: TweakDBID) -> Int32 {
+    return TweakDBInterface.GetInt(AOData.Flat(ammo, "aoScrapRounds"), 0);
+  }
+
+  // Components each full batch of `ammo` breaks down into.
+  public static func ScrapGive(ammo: TweakDBID) -> Int32 {
+    return TweakDBInterface.GetInt(AOData.Flat(ammo, "aoScrapGive"), 0);
+  }
+
+  public static func IsVanillaAmmo(ammo: TweakDBID) -> Bool {
+    return ammo == t"Ammo.HandgunAmmo" || ammo == t"Ammo.RifleAmmo" || ammo == t"Ammo.ShotgunAmmo" || ammo == t"Ammo.SniperRifleAmmo";
+  }
+
+  // The recipe item for `ammo` that loot and gun shops hand out: Uncommon and up only.
+  public static func RecipeItem(ammo: TweakDBID) -> TweakDBID {
+    let item: ref<Item_Record> = TweakDBInterface.GetItemRecord(ammo);
+    if !IsDefined(item) || Equals(item.Quality().Type(), gamedataQuality.Common) || AOData.IsVanillaAmmo(ammo) {
+      return TDBID.None();
+    }
+    return AOData.Recipe(ammo);
+  }
+
+  public static func RecipeDropFactor() -> Float {
+    return TweakDBInterface.GetFloat(t"AmmoOverhaul.recipeDropFactor", 0.0);
+  }
+
+  public static func RecipeVendorChance() -> Float {
+    return TweakDBInterface.GetFloat(t"AmmoOverhaul.recipeVendorChance", 0.0);
+  }
+
   // By gamedataNPCRarity name, e.g. "Elite".
   public static func NpcUncommonFactor(rarity: String) -> Float {
     return TweakDBInterface.GetFloat(TDBID.Create("AmmoOverhaul.npcUncommonFactor." + rarity), 1.0);
