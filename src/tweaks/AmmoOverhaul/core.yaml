@@ -71,6 +71,21 @@ Items.Base_Weapon_Damage_Type_Min_Max_inline7.value: 1.01
 Items.Base_Weapon_Damage_Type_Min_Max_inline11.value: 1.01
 Items.Base_Weapon_Damage_Type_Min_Max_inline15.value: 1.01
 
+# --- Crafting ----------------------------------------------------------------------------------
+# Every caliber's Common round is known from the start; Uncommon and up are recipe items
+# (Items.AO_Recipe_*, tools/crafting/crafting.py), learned on pickup. Crafting.reds and the loot
+# and vendor hooks read these.
+# Chance, times the round's own chance, that loot carrying an Uncommon+ round also has its recipe.
+AmmoOverhaul.recipeDropFactor: 0.05
+# Chance per recipe per restock that a gun shop lists an Uncommon or Rare recipe.
+AmmoOverhaul.recipeVendorChance: 0.10
+# A recipe item costs this many crafted batches of its round.
+AmmoOverhaul.recipePriceBatches: 10
+
+# What every recipe item builds on: vanilla's recipe item (picked up, never shown in the backpack).
+Items.AO_RecipeBase:
+  $base: Items.EpicUnityRecipe
+
 # --- NPCs --------------------------------------------------------------------------------------
 # Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
 # loaded in the gun count toward it; the rest is the body's loot.
