@@ -14,6 +14,7 @@ version="$(tr -d '[:space:]' < "$ROOT/VERSION")"
 dist="$ROOT/dist"
 stage="$dist/stage"
 zip="$dist/AmmoOverhaul-$version.zip"
+mkdir -p "$dist"
 
 "$(dirname "$0")/check.sh" > "$dist/package-check.log" 2>&1 || {
   grep -E "ERROR|Build failed" -A3 "$dist/package-check.log" >&2; echo "compile check failed" >&2; exit 1; }

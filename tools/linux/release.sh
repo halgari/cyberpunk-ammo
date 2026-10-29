@@ -28,12 +28,13 @@ if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
   [[ "$(git rev-parse "$tag^{commit}")" == "$(git rev-parse HEAD)" ]] || { echo "tag $tag exists and isn't HEAD" >&2; exit 1; }
   [[ -f "$zip" ]] || tools/linux/package.sh
 else
+  # Build first, so a failed build leaves no commit or tag (and VERSION as it was).
   echo "$version" > VERSION
+  tools/linux/package.sh || { git checkout -q VERSION; exit 1; }
   git add VERSION
   # VERSION may already say it (set ahead of time): then the tag goes on HEAD as it is.
   git diff --cached --quiet || git commit -q -m "release: $tag"
   git tag -a "$tag" -m "Ammo Overhaul $version" -m "$notes"
-  tools/linux/package.sh
 fi
 
 if [[ "$publish" != "--publish" ]]; then
