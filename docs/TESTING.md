@@ -100,7 +100,7 @@ each step); the rest needs a person at the game. Give yourself the kit first (te
 4. **5mm Sleevers.** The Omaha charges in about 1.05 s instead of 1.5 s (`uncommon.sh` checks the
    stat).
 5. **10mm Dumbfires.** Shots fly straight at a moving enemy off to the side; Seekers curve.
-   (`uncommon.sh` checks hit probability 0 and damage ×1.25.)
+   (`uncommon.sh` checks hit probability 0 and damage ×1.8.)
 6. **NPCs.** `npc.sh`: each test ganger carries and drops only its gun's round; with the roll
    forced on, plain gangers carry the Uncommon. In a normal fight, gangers with an Omaha or
    Yukimura drop 5mm or 10mm rounds.
@@ -139,6 +139,18 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 - `roll.sh`: the roll on real hits: V's .45 Ball, the test round's duds and hot rounds, Crusher
   pellets, and the NPC's hits on V. The rig is still flaky (the NPC drifts when let loose to
   shoot), so read its FAIL lines: a short hit count is the rig, a ratio out of range is the roll.
+- `parity.lua`: each round's NPC damage factor from its selector record (Mushrooms 1.2, Dumbfires
+  1.8, 4ga Slugs 1.3, Common 1.0). `parity.sh`: the same on live hits with the rig: a Mushrooms
+  ganger hits V for 1.2x the roll, a Common one the plain roll, V's own Mushrooms hits roll once;
+  every other stat a round changes, read off an NPC's gun in hand; NPC Birdshot and Slug shots
+  land about as hard per shot as Common. Takes 10-25 min and shares the rig's flakiness, so the
+  suite runs it last without gating, like `roll.sh` (`STEP_TIMEOUT=2400` to gate it by hand).
+- `sync.sh`: the hidden selectors follow the ammo held: one loose selector per round with at least
+  1 round, none at 0, the same round on two guns, a run-out round stays fitted, an open mod screen
+  updates (fits guns and opens menus: not while you play).
+- `hidden.lua`: selectors are tagged `HideInBackpackUI`, weigh 0, are left out of the backpack's
+  item map and a vendor's sell list, and still listed on a gun's mod screen. Hold a selector
+  before running it (the suite gives Mushrooms rounds first).
 - `tools/linux/game-shot.sh out.png`: a screenshot of the game from a headless Hyprland output,
   without touching the screen you're using (`--remove` puts the game back on a real monitor).
 - `tools/icons/check_parts.py`: every `UIIcon` part in the YAML has a cell in the built atlas.
@@ -159,6 +171,12 @@ By hand:
     reach a target 50 m away (its reach is 40 m).
 15. **A Very Hard fight.** Damage rolls feel steady, a little weaker than vanilla, from you and
     from enemies alike.
+16. **Selectors stay hidden.** Pick up a new round: the backpack, the stash, a vendor's sell tab
+    and the crafting and dismantle screens show no selector, but the gun's Ammo slot lists the
+    round. Fit it on two guns of that caliber. Shoot one dry: it stays on that round at 0 until you
+    pick another.
+17. **Old save.** Load a save from before this change that holds selectors: after loading, the
+    backpack shows none, and each gun's Ammo slot lists one entry per round you hold.
 
 For each step, note pass or fail and what you saw.
 

@@ -133,6 +133,38 @@ fighting it gave endless reloads. So both are written, and the records stay unch
   checks still apply to it. NPC shots get their gun's effect too (the selection is read from the
   shooter's inventory).
 
+## Selectors: free loading
+
+Selectors are the only way to pick a gun's round, and a fitted one leaves the inventory, so the
+player is kept holding exactly one **loose** selector per round they have at least 1 of (Common
+included), and none for a round at 0. Any number of guns can then take the same round: fitting
+takes the loose one, the sync hands out the next.
+
+- **The sync** (`SelectorSync.reds`, state on `SelectorSyncSystem`: redscript rejects `@addField`
+  on the mod's own `AmmoFeedSystem`): for each selector of every caliber, gives or removes loose
+  copies until there is 1 if `GetItemQuantity` of its ammo is > 0 (that count includes loaded
+  rounds), else 0. Fitted selectors are inner items of the gun, never in the loose list, so they're
+  never touched: a gun whose round runs out keeps it fitted at 0 and doesn't reload until the
+  player picks another round (no automatic switch). Removing the round loads Common.
+- **Triggers:** item added, changed and removed on V for ammo (tag `Ammo` or `Con_Ammo`: vanilla
+  `HandgunAmmo` drives the 9mm Ball selector) and for selectors; part install and remove; player
+  attach (so a save's leftover duplicates and zero-ammo selectors go on load); the mod screen
+  opening. One pending flag and `DelayCallbackNextFrame`: many events in a frame make one sync, the
+  next frame (items added this frame aren't in the item list yet). The sync's own adds and removes
+  queue one follow-up that changes nothing and schedules nothing. Its items skip the activity log.
+- **Open mod screen:** refreshed after any sync that changed something (vanilla has no handler for
+  an added part).
+- **Hidden everywhere else:** selectors are tagged `HideInBackpackUI` (backpack and stash drop it;
+  the mod screen's `IsItemBlacklisted` doesn't, unlike `HideInUI`), weigh 0 and have no price. The
+  vendor sell list (`VendorDataManager.GetItemsPlayerCanSellFast`) is wrapped to drop
+  `AO_AmmoSelector` items. Crafting and dismantling list only craftable/disassemblable items, which
+  selectors aren't (from the scripts; not tested live).
+
+Checked by `calibers/sync.sh` (new round adds a selector, 0 removes it, vanilla 9mm, the same
+round on two guns, fitted not counted, run-out stays fitted, removal loads Common, duplicate
+cleanup, bounded syncs, open mod screen) and `calibers/hidden.lua` (tags, weight, backpack item
+map, stash blacklist, mod screen lists it, vendor sell list with a bypassed control).
+
 ## NPC ammo
 
 Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (from
@@ -246,7 +278,7 @@ for a hit whose instigator is not the player, every damage-type multiplier is al
 `AmmoFeedSystem.DamageFactor(ammo)`, the product of the `DamagePerHit` Multiplier modifiers on the
 selector that feeds the round (`AOData.SelectorForAmmo`, `AOData.AmmoDamageFactor`; cached like
 the calibers), and by the gun's pellet ratio (see the audit). Unmanaged ammo and Common rounds are 1.0. V's own hits are not multiplied here:
-her gun's `DamagePerHit` carries the modifier already. The `DamagePerHit` modifier still lands
+V's gun's `DamagePerHit` carries the modifier already. The `DamagePerHit` modifier still lands
 on the NPC gun's stats, but is multiplied against 0, so it never doubles.
 
 Checked by `calibers/parity.lua` (factors per round, generic over every tier-1 round) and
@@ -267,7 +299,7 @@ says.
 | `DamagePerHit` | Broken (NPC gun value 0): fixed in the roll hook, checked by `parity.lua`/`parity.sh`. |
 | `CanWeaponIgnoreArmor` | Works. Measured on a Mushrooms NPC gun in hand (`slice/npcdrop.sh`: -0.5). |
 | `SmartGunHitProbability` | Works. Measured: Yukimura with Dumbfires 1 -> 0. |
-| `ProjectilesPerShot` | Count: was broken for combined modifiers (see below), fixed in `NpcAmmo.ToModifier`. Damage: the engine splits an NPC shot's damage by the pellet count twice (per-pellet damage about 1 / pellets squared; V's shot total stays the same), so Birdshot did ~0.44 of Common per shot and Slugs ~3.7; fixed in the roll hook (`AmmoFeedSystem.PelletRatio`: NPC hits times `ProjectilesPerShot` / `ProjectilesPerShotBase` of the gun). Measured at 3 m (`calibers/parity.sh`, `pellets.sh`): 12ga Slugs 3 -> 1, Birdshot 3 -> 6, 4ga Birdshot 7 -> 17.5; Birdshot lands up to 6 pellets; per-shot damage of Birdshot and Slugs within 0.6..1.5 of Common. |
+| `ProjectilesPerShot` | Count: was broken for combined modifiers (see below), fixed in `NpcAmmo.ToModifier`. Damage: the engine splits an NPC shot's damage by the pellet count twice (per-pellet damage about 1 / pellets squared; V's shot total stays the same), so Birdshot did ~0.44 of Common per shot and Slugs ~3.7; fixed in the roll hook (`AmmoFeedSystem.PelletRatio`: NPC hits times the gun's `ProjectilesPerShot` over that count without the round's own change, so a gun whose vanilla count differs from its base keeps vanilla damage on the Common round). Measured at 3 m (`calibers/parity.sh`, `pellets.sh`): 12ga Slugs 3 -> 1, Birdshot 3 -> 6, 4ga Birdshot 7 -> 17.5; Birdshot lands up to 6 pellets; per-shot damage of Birdshot and Slugs within 0.6..1.5 of Common. |
 | `HitReactionFactor` | Works. Measured: 12ga and 4ga Birdshot 2 -> 2.5. |
 | `EffectiveRange`, `MaximumRange`, `SpreadDefault*`, `SpreadMax*`, `SpreadAds*` | No effect: NPC guns have 0 for them, with or without the round, so a multiplier changes nothing. Known gap. |
 | `RecoilKickMin/Max`, `WeaponEvolutionToStaminaCost` | Irrelevant: NPCs have no camera recoil and no stamina. |

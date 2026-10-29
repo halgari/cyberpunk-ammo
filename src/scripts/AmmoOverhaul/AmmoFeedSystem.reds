@@ -628,14 +628,33 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
-  // The weapon's ProjectilesPerShot over its unmodified count (ProjectilesPerShotBase); 1.0 when
-  // either is missing or 0.
-  public static func PelletRatio(weapon: ref<WeaponObject>) -> Float {
+  // The weapon's ProjectilesPerShot over its count without the round's pellet change; 1.0 for a
+  // round that doesn't change the count.
+  public static func PelletRatio(weapon: ref<WeaponObject>, ammo: TweakDBID) -> Float {
+    let selector: TweakDBID = AOData.SelectorForAmmo(ammo);
+    if !TDBID.IsValid(selector) {
+      return 1.0;
+    }
     let stats: ref<StatsSystem> = GameInstance.GetStatsSystem(weapon.GetGame());
-    let id: StatsObjectID = weapon.GetItemData().GetStatsObjectID();
-    let base: Float = stats.GetStatValue(id, gamedataStatType.ProjectilesPerShotBase);
+    let itemData: wref<gameItemData> = weapon.GetItemData();
+    if !IsDefined(itemData) {
+      return 1.0;
+    }
+    let id: StatsObjectID = itemData.GetStatsObjectID();
+    // Only the round's own change to the count counts: the gun's own pellets (iconic shotguns whose
+    // count differs from their base) keep vanilla damage. NpcAmmo.ToModifier added exactly these.
+    let added: Float = 0.0;
+    let modifiers: array<wref<StatModifier_Record>>;
+    TweakDBInterface.GetItemRecord(selector).StatModifiers(modifiers);
+    for modifier in modifiers {
+      let combined: wref<CombinedStatModifier_Record> = modifier as CombinedStatModifier_Record;
+      if IsDefined(combined) && Equals(combined.StatType().StatType(), gamedataStatType.ProjectilesPerShot) && Equals(combined.OpSymbol(), n"*") {
+        added += combined.Value() * stats.GetStatValue(id, combined.RefStatHandle().StatType());
+      }
+    }
     let count: Float = stats.GetStatValue(id, gamedataStatType.ProjectilesPerShot);
-    return base > 0.0 && count > 0.0 ? count / base : 1.0;
+    let without: Float = count - added;
+    return added != 0.0 && count > 0.0 && without > 0.0 ? count / without : 1.0;
   }
 
   // Rolls a ranged gun hit's damage with its loaded round's roll; false (nothing done) for any
@@ -660,7 +679,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     // the count (Birdshot, Slugs) changes the shot's total: multiply back by the count's change.
     let npcFactor: Float = 1.0;
     if !instigator.IsPlayer() {
-      npcFactor = system.DamageFactor(ammo) * AmmoFeedSystem.PelletRatio(weapon);
+      npcFactor = system.DamageFactor(ammo) * AmmoFeedSystem.PelletRatio(weapon, ammo);
     }
     let types: array<String> = AmmoFeedSystem.DamageTypes();
     let i: Int32 = 1;

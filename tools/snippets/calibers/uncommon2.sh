@@ -13,15 +13,7 @@ for g in "Lexington 9mm_Ball 9mm_PlusP PlusP" "Crusher 12ga_Buckshot 12ga_Birdsh
   set -- $g
   # The selector sync keeps a selector only while its ammo is held: give 60 of each round too.
   $C "Game.AddToInventory('Items.Preset_$1_Default', 1)
-for _, sel in ipairs({'Items.AO_Feed_$2', 'Items.AO_Feed_$3'}) do
-  Game.AddToInventory(sel, 1)
-  for _, cal in ipairs(TweakDB:GetFlat('AmmoOverhaul.calibers')) do
-    local ammo = TweakDB:GetFlat('AmmoOverhaul.'..cal..'.selectorAmmo')
-    for i, s in ipairs(TweakDB:GetFlat('AmmoOverhaul.'..cal..'.selectors')) do
-      if TDBID.ToStringDEBUG(s) == sel then Game.AddToInventory(TDBID.ToStringDEBUG(ammo[i]), 60) end
-    end
-  end
-end" >/dev/null
+SELS = {'Items.AO_Feed_$2', 'Items.AO_Feed_$3'}; $(cat $S/give-selectors.lua)" >/dev/null
   sleep 1
   for _ in $(seq 20); do
     $C "GUN='Items.Preset_$1_Default'; $(cat $S/feed-kit.lua)" >/dev/null
