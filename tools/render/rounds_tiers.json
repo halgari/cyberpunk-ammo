@@ -424,7 +424,9 @@
  "rounds": {
   "9mm-steelcore": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "tip": "black"
+   },
    "look": "SteelCore",
    "label": [
     "9MM",
@@ -433,7 +435,9 @@
   },
   "9mm-incendiary": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "tip": "blue"
+   },
    "look": "Incendiary",
    "label": [
     "9MM",
@@ -442,7 +446,10 @@
   },
   "9mm-subsonic": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "jacket": "dark",
+    "nose_mult": 1.15
+   },
    "look": "Subsonic",
    "label": [
     "9MM",
@@ -451,7 +458,10 @@
   },
   "9mm-bouncers": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "case_mat": "nickel",
+    "jacket": "steel"
+   },
    "look": "Bouncers",
    "label": [
     "9MM",
@@ -460,7 +470,10 @@
   },
   "9mm-rubber": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "jacket": "rubber",
+    "nose": "round"
+   },
    "look": "Rubber",
    "label": [
     "9MM",
@@ -469,7 +482,12 @@
   },
   "9mm-penetrator": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.25,
+    "tip": "black",
+    "tipfrac": 0.55
+   },
    "look": "Penetrator",
    "label": [
     "9MM",
@@ -478,7 +496,11 @@
   },
   "9mm-match": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.15,
+    "hp": true
+   },
    "look": "Match",
    "label": [
     "9MM",
@@ -487,7 +509,9 @@
   },
   "9mm-toxin": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "tip": "green"
+   },
    "look": "Toxin",
    "label": [
     "9MM",
@@ -496,7 +520,9 @@
   },
   "9mm-shredders": {
    "shape": "P9",
-   "over": {},
+   "over": {
+    "scored": true
+   },
    "look": "Shredders",
    "label": [
     "9MM",
@@ -505,7 +531,9 @@
   },
   "45-steelcore": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "tip": "black"
+   },
    "look": "SteelCore",
    "label": [
     ".45",
@@ -514,7 +542,9 @@
   },
   "45-incendiary": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "tip": "blue"
+   },
    "look": "Incendiary",
    "label": [
     ".45",
@@ -523,7 +553,10 @@
   },
   "45-subsonic": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "jacket": "dark",
+    "nose_mult": 1.15
+   },
    "look": "Subsonic",
    "label": [
     ".45",
@@ -532,7 +565,10 @@
   },
   "45-bouncers": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "case_mat": "nickel",
+    "jacket": "steel"
+   },
    "look": "Bouncers",
    "label": [
     ".45",
@@ -541,7 +577,10 @@
   },
   "45-rubber": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "jacket": "rubber",
+    "nose": "round"
+   },
    "look": "Rubber",
    "label": [
     ".45",
@@ -550,7 +589,12 @@
   },
   "45-penetrator": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.25,
+    "tip": "black",
+    "tipfrac": 0.55
+   },
    "look": "Penetrator",
    "label": [
     ".45",
@@ -559,7 +603,11 @@
   },
   "45-match": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.15,
+    "hp": true
+   },
    "look": "Match",
    "label": [
     ".45",
@@ -568,7 +616,9 @@
   },
   "45-toxin": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "tip": "green"
+   },
    "look": "Toxin",
    "label": [
     ".45",
@@ -577,7 +627,9 @@
   },
   "45-shredders": {
    "shape": "P45",
-   "over": {},
+   "over": {
+    "scored": true
+   },
    "look": "Shredders",
    "label": [
     ".45",
@@ -586,7 +638,9 @@
   },
   "12mm-steelcore": {
    "shape": "P12",
-   "over": {},
+   "over": {
+    "tip": "black"
+   },
    "look": "SteelCore",
    "label": [
     "12MM",
@@ -595,7 +649,9 @@
   },
   "12mm-incendiary": {
    "shape": "P12",
-   "over": {},
+   "over": {
+    "tip": "blue"
+   },
    "look": "Incendiary",
    "label": [
     "12MM",
@@ -604,7 +660,10 @@
   },
   "12mm-rubber": {
    "shape": "P12",
-   "over": {},
+   "over": {
+    "jacket": "rubber",
+    "nose": "round"
+   },
    "look": "Rubber",
    "label": [
     "12MM",
@@ -613,7 +672,10 @@
   },
   "12mm-hardcast": {
    "shape": "P12",
-   "over": {},
+   "over": {
+    "jacket": "lead",
+    "nose": "flat"
+   },
    "look": "Hardcast",
    "label": [
     "12MM",
@@ -622,7 +684,11 @@
   },
   "12mm-match": {
    "shape": "P12",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.15,
+    "hp": true
+   },
    "look": "Match",
    "label": [
     "12MM",
@@ -631,7 +697,9 @@
   },
   "12mm-toxin": {
    "shape": "P12",
-   "over": {},
+   "over": {
+    "tip": "green"
+   },
    "look": "Toxin",
    "label": [
     "12MM",
@@ -640,7 +708,9 @@
   },
   "12mm-shredders": {
    "shape": "P12",
-   "over": {},
+   "over": {
+    "scored": true
+   },
    "look": "Shredders",
    "label": [
     "12MM",
@@ -649,7 +719,9 @@
   },
   "556-steelcore": {
    "shape": "R556",
-   "over": {},
+   "over": {
+    "tip": "black"
+   },
    "look": "SteelCore",
    "label": [
     "5.56",
@@ -658,7 +730,9 @@
   },
   "556-incendiary": {
    "shape": "R556",
-   "over": {},
+   "over": {
+    "tip": "blue"
+   },
    "look": "Incendiary",
    "label": [
     "5.56",
@@ -667,7 +741,10 @@
   },
   "556-subsonic": {
    "shape": "R556",
-   "over": {},
+   "over": {
+    "jacket": "dark",
+    "nose_mult": 1.15
+   },
    "look": "Subsonic",
    "label": [
     "5.56",
@@ -676,7 +753,10 @@
   },
   "556-bouncers": {
    "shape": "R556",
-   "over": {},
+   "over": {
+    "case_mat": "nickel",
+    "jacket": "steel"
+   },
    "look": "Bouncers",
    "label": [
     "5.56",
@@ -685,7 +765,12 @@
   },
   "556-penetrator": {
    "shape": "R556",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.25,
+    "tip": "black",
+    "tipfrac": 0.55
+   },
    "look": "Penetrator",
    "label": [
     "5.56",
@@ -694,7 +779,11 @@
   },
   "556-match": {
    "shape": "R556",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.15,
+    "hp": true
+   },
    "look": "Match",
    "label": [
     "5.56",
@@ -703,7 +792,9 @@
   },
   "556-toxin": {
    "shape": "R556",
-   "over": {},
+   "over": {
+    "tip": "green"
+   },
    "look": "Toxin",
    "label": [
     "5.56",
@@ -712,7 +803,9 @@
   },
   "556-shredders": {
    "shape": "R556",
-   "over": {},
+   "over": {
+    "scored": true
+   },
    "look": "Shredders",
    "label": [
     "5.56",
@@ -721,7 +814,9 @@
   },
   "762-steelcore": {
    "shape": "R762",
-   "over": {},
+   "over": {
+    "tip": "black"
+   },
    "look": "SteelCore",
    "label": [
     "7.62",
@@ -730,7 +825,9 @@
   },
   "762-incendiary": {
    "shape": "R762",
-   "over": {},
+   "over": {
+    "tip": "blue"
+   },
    "look": "Incendiary",
    "label": [
     "7.62",
@@ -739,7 +836,10 @@
   },
   "762-ballistictip": {
    "shape": "R762",
-   "over": {},
+   "over": {
+    "tip": "red",
+    "tipfrac": 0.35
+   },
    "look": "BallisticTip",
    "label": [
     "7.62",
@@ -748,7 +848,11 @@
   },
   "762-match": {
    "shape": "R762",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.15,
+    "hp": true
+   },
    "look": "Match",
    "label": [
     "7.62",
@@ -757,7 +861,9 @@
   },
   "762-toxin": {
    "shape": "R762",
-   "over": {},
+   "over": {
+    "tip": "green"
+   },
    "look": "Toxin",
    "label": [
     "7.62",
@@ -766,7 +872,9 @@
   },
   "762-shredders": {
    "shape": "R762",
-   "over": {},
+   "over": {
+    "scored": true
+   },
    "look": "Shredders",
    "label": [
     "7.62",
@@ -775,7 +883,9 @@
   },
   "127-steelcore": {
    "shape": "R127",
-   "over": {},
+   "over": {
+    "tip": "black"
+   },
    "look": "SteelCore",
    "label": [
     "12.7",
@@ -784,7 +894,9 @@
   },
   "127-incendiary": {
    "shape": "R127",
-   "over": {},
+   "over": {
+    "tip": "blue"
+   },
    "look": "Incendiary",
    "label": [
     "12.7",
@@ -793,7 +905,10 @@
   },
   "127-ballistictip": {
    "shape": "R127",
-   "over": {},
+   "over": {
+    "tip": "red",
+    "tipfrac": 0.35
+   },
    "look": "BallisticTip",
    "label": [
     "12.7",
@@ -802,7 +917,11 @@
   },
   "127-match": {
    "shape": "R127",
-   "over": {},
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.15,
+    "hp": true
+   },
    "look": "Match",
    "label": [
     "12.7",
@@ -811,7 +930,9 @@
   },
   "127-toxin": {
    "shape": "R127",
-   "over": {},
+   "over": {
+    "tip": "green"
+   },
    "look": "Toxin",
    "label": [
     "12.7",
@@ -820,7 +941,11 @@
   },
   "127-hei": {
    "shape": "R127",
-   "over": {},
+   "over": {
+    "tip": "yellow",
+    "tipfrac": 0.3,
+    "seal": true
+   },
    "look": "HEI",
    "label": [
     "12.7",
@@ -830,7 +955,9 @@
   "12ga-flechette": {
    "shape": "G12",
    "over": {
-    "crimp": "star"
+    "color": "grey",
+    "load": "darts",
+    "crimp": "roll"
    },
    "look": "Flechette",
    "label": [
@@ -840,6 +967,8 @@
   "12ga-beanbag": {
    "shape": "G12",
    "over": {
+    "color": "yellow",
+    "load": "bag",
     "crimp": "roll"
    },
    "look": "Beanbag",
@@ -850,6 +979,8 @@
   "12ga-dragonlight": {
    "shape": "G12",
    "over": {
+    "color": "darkred",
+    "band": "orange",
     "crimp": "star"
    },
    "look": "DragonLight",
@@ -860,6 +991,9 @@
   "12ga-dragon": {
    "shape": "G12",
    "over": {
+    "color": "black",
+    "band": "orange",
+    "head_mat": "steel",
     "crimp": "star"
    },
    "look": "Dragon",
@@ -870,6 +1004,8 @@
   "12ga-frag12": {
    "shape": "G12",
    "over": {
+    "color": "olive",
+    "load": "frag",
     "crimp": "roll"
    },
    "look": "Frag12",
@@ -880,6 +1016,8 @@
   "12ga-flechettelong": {
    "shape": "G12",
    "over": {
+    "color": "clear",
+    "darts_inside": true,
     "crimp": "star"
    },
    "look": "FlechetteLong",
@@ -890,7 +1028,9 @@
   "4ga-flechette": {
    "shape": "G4",
    "over": {
-    "crimp": "star"
+    "color": "grey",
+    "load": "darts",
+    "crimp": "roll"
    },
    "look": "Flechette",
    "label": [
@@ -901,6 +1041,9 @@
   "4ga-riot": {
    "shape": "G4",
    "over": {
+    "color": "orange",
+    "load": "rubber",
+    "band": "black",
     "crimp": "roll"
    },
    "look": "Riot",
@@ -912,6 +1055,10 @@
   "4ga-flare": {
    "shape": "G4",
    "over": {
+    "color": "white",
+    "band": "red",
+    "load": "flare",
+    "head_mat": "steel",
     "crimp": "roll"
    },
    "look": "Flare",
@@ -923,6 +1070,9 @@
   "4ga-dragon": {
    "shape": "G4",
    "over": {
+    "color": "black",
+    "band": "orange",
+    "head_mat": "steel",
     "crimp": "star"
    },
    "look": "Dragon",
@@ -934,6 +1084,10 @@
   "4ga-thermite": {
    "shape": "G4",
    "over": {
+    "color": "grey",
+    "band": "red",
+    "load": "thermite",
+    "head_mat": "steel",
     "crimp": "roll"
    },
    "look": "Thermite",
@@ -944,7 +1098,14 @@
   },
   "5mm-ferro": {
    "shape": "T5",
-   "over": {},
+   "over": {
+    "rings": [
+     0.2,
+     0.4,
+     0.6,
+     0.8
+    ]
+   },
    "look": "Ferro",
    "label": [
     "5MM",
@@ -953,7 +1114,13 @@
   },
   "5mm-splitslug": {
    "shape": "T5",
-   "over": {},
+   "over": {
+    "rings": [],
+    "cuts": [
+     0.34,
+     0.67
+    ]
+   },
    "look": "SplitSlug",
    "label": [
     "5MM",
@@ -962,7 +1129,9 @@
   },
   "5mm-feedback": {
    "shape": "T5",
-   "over": {},
+   "over": {
+    "coil": "teal"
+   },
    "look": "Feedback",
    "label": [
     "5MM",
@@ -971,7 +1140,13 @@
   },
   "5mm-dupen": {
    "shape": "T5",
-   "over": {},
+   "over": {
+    "core": "du",
+    "point": true,
+    "rings": [
+     0.35
+    ]
+   },
    "look": "DUPen",
    "label": [
     "5MM",
@@ -980,7 +1155,10 @@
   },
   "5mm-toxicscatter": {
    "shape": "T5",
-   "over": {},
+   "over": {
+    "sleeve": true,
+    "sleeve_color": "green"
+   },
    "look": "ToxicScatter",
    "label": [
     "5MM",
@@ -989,7 +1167,9 @@
   },
   "5mm-superconductor": {
    "shape": "T5",
-   "over": {},
+   "over": {
+    "core": "frost"
+   },
    "look": "Superconductor",
    "label": [
     "5MM",
@@ -998,7 +1178,9 @@
   },
   "5mm-empcap": {
    "shape": "T5",
-   "over": {},
+   "over": {
+    "coil": "blue"
+   },
    "look": "EMPCap",
    "label": [
     "5MM",
@@ -1007,7 +1189,14 @@
   },
   "heavy-ferro": {
    "shape": "TH",
-   "over": {},
+   "over": {
+    "rings": [
+     0.2,
+     0.4,
+     0.6,
+     0.8
+    ]
+   },
    "look": "Ferro",
    "label": [
     "HEAVY",
@@ -1016,7 +1205,13 @@
   },
   "heavy-splitslug": {
    "shape": "TH",
-   "over": {},
+   "over": {
+    "rings": [],
+    "cuts": [
+     0.34,
+     0.67
+    ]
+   },
    "look": "SplitSlug",
    "label": [
     "HEAVY",
@@ -1025,7 +1220,9 @@
   },
   "heavy-feedback": {
    "shape": "TH",
-   "over": {},
+   "over": {
+    "coil": "teal"
+   },
    "look": "Feedback",
    "label": [
     "HEAVY",
@@ -1034,7 +1231,13 @@
   },
   "heavy-dupen": {
    "shape": "TH",
-   "over": {},
+   "over": {
+    "core": "du",
+    "point": true,
+    "rings": [
+     0.35
+    ]
+   },
    "look": "DUPen",
    "label": [
     "HEAVY",
@@ -1043,7 +1246,10 @@
   },
   "heavy-toxicscatter": {
    "shape": "TH",
-   "over": {},
+   "over": {
+    "sleeve": true,
+    "sleeve_color": "green"
+   },
    "look": "ToxicScatter",
    "label": [
     "HEAVY",
@@ -1052,7 +1258,9 @@
   },
   "heavy-superconductor": {
    "shape": "TH",
-   "over": {},
+   "over": {
+    "core": "frost"
+   },
    "look": "Superconductor",
    "label": [
     "HEAVY",
@@ -1061,7 +1269,9 @@
   },
   "heavy-empcap": {
    "shape": "TH",
-   "over": {},
+   "over": {
+    "coil": "blue"
+   },
    "look": "EMPCap",
    "label": [
     "HEAVY",
@@ -1070,7 +1280,9 @@
   },
   "10mm-emppayload": {
    "shape": "S10",
-   "over": {},
+   "over": {
+    "idband": "blue"
+   },
    "look": "EMPPayload",
    "label": [
     "10MM",
@@ -1079,7 +1291,9 @@
   },
   "10mm-firepayload": {
    "shape": "S10",
-   "over": {},
+   "over": {
+    "idband": "orange"
+   },
    "look": "FirePayload",
    "label": [
     "10MM",
@@ -1088,7 +1302,9 @@
   },
   "10mm-chempayload": {
    "shape": "S10",
-   "over": {},
+   "over": {
+    "idband": "green"
+   },
    "look": "ChemPayload",
    "label": [
     "10MM",
@@ -1097,7 +1313,9 @@
   },
   "10mm-flashpayload": {
    "shape": "S10",
-   "over": {},
+   "over": {
+    "idband": "white"
+   },
    "look": "FlashPayload",
    "label": [
     "10MM",
@@ -1106,7 +1324,10 @@
   },
   "10mm-hunter": {
    "shape": "S10",
-   "over": {},
+   "over": {
+    "nose_mat": "gold",
+    "idband": "gold"
+   },
    "look": "Hunter",
    "label": [
     "10MM",
@@ -1115,7 +1336,10 @@
   },
   "10mm-hackcarrier": {
    "shape": "S10",
-   "over": {},
+   "over": {
+    "sensor": "green",
+    "idband": "black"
+   },
    "look": "HackCarrier",
    "label": [
     "10MM",
@@ -1124,7 +1348,11 @@
   },
   "10mm-shapedcharge": {
    "shape": "S10",
-   "over": {},
+   "over": {
+    "nose_mat": "copper",
+    "noseeker": true,
+    "idband": "yellow"
+   },
    "look": "ShapedCharge",
    "label": [
     "10MM",
@@ -1133,7 +1361,9 @@
   },
   "20mm-emppayload": {
    "shape": "S20",
-   "over": {},
+   "over": {
+    "idband": "blue"
+   },
    "look": "EMPPayload",
    "label": [
     "20MM",
@@ -1142,7 +1372,9 @@
   },
   "20mm-firepayload": {
    "shape": "S20",
-   "over": {},
+   "over": {
+    "idband": "orange"
+   },
    "look": "FirePayload",
    "label": [
     "20MM",
@@ -1151,7 +1383,9 @@
   },
   "20mm-chempayload": {
    "shape": "S20",
-   "over": {},
+   "over": {
+    "idband": "green"
+   },
    "look": "ChemPayload",
    "label": [
     "20MM",
@@ -1160,7 +1394,9 @@
   },
   "20mm-flashpayload": {
    "shape": "S20",
-   "over": {},
+   "over": {
+    "idband": "white"
+   },
    "look": "FlashPayload",
    "label": [
     "20MM",
@@ -1169,7 +1405,10 @@
   },
   "20mm-hunter": {
    "shape": "S20",
-   "over": {},
+   "over": {
+    "nose_mat": "gold",
+    "idband": "gold"
+   },
    "look": "Hunter",
    "label": [
     "20MM",
@@ -1178,7 +1417,10 @@
   },
   "20mm-hackcarrier": {
    "shape": "S20",
-   "over": {},
+   "over": {
+    "sensor": "green",
+    "idband": "black"
+   },
    "look": "HackCarrier",
    "label": [
     "20MM",
@@ -1187,7 +1429,11 @@
   },
   "20mm-shapedcharge": {
    "shape": "S20",
-   "over": {},
+   "over": {
+    "nose_mat": "copper",
+    "noseeker": true,
+    "idband": "yellow"
+   },
    "look": "ShapedCharge",
    "label": [
     "20MM",
@@ -1196,7 +1442,9 @@
   },
   "25mm-emppayload": {
    "shape": "S25",
-   "over": {},
+   "over": {
+    "idband": "blue"
+   },
    "look": "EMPPayload",
    "label": [
     "25MM",
@@ -1205,7 +1453,9 @@
   },
   "25mm-firepayload": {
    "shape": "S25",
-   "over": {},
+   "over": {
+    "idband": "orange"
+   },
    "look": "FirePayload",
    "label": [
     "25MM",
@@ -1214,7 +1464,9 @@
   },
   "25mm-chempayload": {
    "shape": "S25",
-   "over": {},
+   "over": {
+    "idband": "green"
+   },
    "look": "ChemPayload",
    "label": [
     "25MM",
@@ -1223,7 +1475,9 @@
   },
   "25mm-flashpayload": {
    "shape": "S25",
-   "over": {},
+   "over": {
+    "idband": "white"
+   },
    "look": "FlashPayload",
    "label": [
     "25MM",
@@ -1232,7 +1486,10 @@
   },
   "25mm-hunter": {
    "shape": "S25",
-   "over": {},
+   "over": {
+    "nose_mat": "gold",
+    "idband": "gold"
+   },
    "look": "Hunter",
    "label": [
     "25MM",
@@ -1241,7 +1498,10 @@
   },
   "25mm-hackcarrier": {
    "shape": "S25",
-   "over": {},
+   "over": {
+    "sensor": "green",
+    "idband": "black"
+   },
    "look": "HackCarrier",
    "label": [
     "25MM",
@@ -1250,7 +1510,11 @@
   },
   "25mm-shapedcharge": {
    "shape": "S25",
-   "over": {},
+   "over": {
+    "nose_mat": "copper",
+    "noseeker": true,
+    "idband": "yellow"
+   },
    "look": "ShapedCharge",
    "label": [
     "25MM",

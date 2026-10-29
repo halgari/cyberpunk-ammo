@@ -330,6 +330,20 @@ WHITE_PAINT = lambda: principled("WhitePaint", (0.78, 0.77, 0.72), 0.0, 0.5, bum
 
 # ---------------------------------------------------------------- geometry
 
+# Paint colours (linear RGB) for tips, bands, hulls and ID bands, by name.
+PAINTS = {"black": (0.012, 0.012, 0.014), "blue": (0.02, 0.09, 0.42), "green": (0.05, 0.3, 0.06),
+          "yellow": (0.8, 0.55, 0.02), "red": (0.6, 0.03, 0.02), "orange": (0.85, 0.22, 0.02),
+          "white": (0.78, 0.77, 0.72), "silver": (0.6, 0.6, 0.62), "teal": (0.02, 0.42, 0.45),
+          "gold": (0.8, 0.55, 0.15), "grey": (0.22, 0.23, 0.25), "olive": (0.17, 0.19, 0.07),
+          "darkred": (0.22, 0.01, 0.01), "pink": (0.7, 0.12, 0.25)}
+
+
+def paint(name, gloss=False):
+    """Painted or lacquered colour: tip paint, bands, ID bands."""
+    return principled("Paint" + name + ("G" if gloss else ""), PAINTS[name], 0.0, 0.18 if gloss else 0.4,
+                      bump=0.006, wear=0.06, grime=0.8)
+
+
 def revolve(name, profile, perturb=None):
     """Mesh from a list of (r, z, material) points revolved around Z. The material of a point
     covers the band up to the next point. perturb(theta, i, r, z) -> (dr, dz)."""
@@ -440,15 +454,59 @@ def notches(profile, hp):
     return f
 
 
+JACKETS = {
+    "copper": COPPER,
+    "lead": LEAD,
+    "steel": STEEL,
+    "dark": lambda: principled("DarkJacket", (0.08, 0.085, 0.1), 0.6, 0.45, wear=0.08, grime=0.8),
+    "rubber": lambda: principled("Rubber", (0.025, 0.025, 0.027), 0.0, 0.75, bump=0.02, wear=0.02, grime=0.6),
+}
+
+
+def case_mat(s, default):
+    c = s.get("case_mat")
+    return GREEN_LACQUER() if c == "green" else NICKEL() if c == "nickel" else default
+
+
+def bullet(s, rb, z0, length, shape):
+    """The bullet's profile, with the round's jacket, painted tip (s["tip"], over the last
+    s["tipfrac"] of its length) and nose length (s["nose_mult"])."""
+    length *= s.get("nose_mult", 1.0)
+    mat = JACKETS[s.get("jacket", "copper")]()
+    p = tip_profile(rb, z0, length, shape, s.get("hp", False), mat)
+    if s.get("tip"):
+        tm = paint(s["tip"], gloss=s.get("tipfrac", 0.0) >= 0.3)
+        z1 = z0 + length * (1 - s.get("tipfrac", 0.22))
+        p = [(r, z, tm if z >= z1 and m is mat else m) for r, z, m in p]
+    return p, z0 + length
+
+
+def scored(s, start, prev):
+    """Shredders: six slits down the nose, from profile point `start` on (combined with `prev`)."""
+    if not s.get("scored"):
+        return prev
+
+    def f(t, i, r, z):
+        dr, dz = prev(t, i, r, z) if prev else (0.0, 0.0)
+        if i > start + 2:
+            d = (t * 6 / (2 * math.pi)) % 1.0
+            d = min(d, 1 - d)
+            dr -= r * 0.16 * math.exp(-(d / 0.035) ** 2)
+        return (dr, dz)
+    return f
+
+
 def pistol(s):
     rc, rb = s["d"] / 2 * 1.04, s["d"] / 2
-    case = BRASS()
+    case = case_mat(s, BRASS())
     p = head_profile(rc, s.get("rim", rc) / 1.0 if s.get("rimmed") else rc, s.get("rimmed", False), case)
     p += [(rc, s["case"] * 0.5, case), (rc * 0.995, s["case"], case)]
-    p += tip_profile(rb, s["case"], s["oal"] - s["case"], s.get("nose", "round"), s.get("hp", False), COPPER())
-    ob = revolve("Round", p, notches(p, s.get("hp", False)))
+    start = len(p)
+    tip, oal = bullet(s, rb, s["case"], s["oal"] - s["case"], s.get("nose", "round"))
+    p += tip
+    ob = revolve("Round", p, scored(s, start, notches(p, s.get("hp", False))))
     seal_ring(s, ob, rc * 0.995, s["case"])
-    return ob, s["oal"], s.get("rim", rc)
+    return ob, oal, s.get("rim", rc)
 
 
 RED_SEAL = lambda: principled("RedSeal", (0.55, 0.02, 0.02), 0.0, 0.3, bump=0.004)
@@ -465,15 +523,17 @@ def seal_ring(s, parent, r, z):
 
 def rifle(s):
     rc, rn, rb = s["base"] / 2, s["neck"] / 2, s["neck"] / 2 * 0.93
-    case = GREEN_LACQUER() if s.get("case_mat") == "green" else BRASS()
+    case = case_mat(s, BRASS())
     p = head_profile(rc, rc, False, case)
     sh0, sh1 = s["shoulder"]
     p += [(rc * 0.985, sh0, case), (rc * 0.95, sh0 + (sh1 - sh0) * 0.25, case), (rn * 1.05, sh1, case),
           (rn, sh1 + 0.04, case), (rn, s["case"], case)]
-    p += tip_profile(rb, s["case"], s["oal"] - s["case"], "spitzer", s.get("hp", False), COPPER())
-    ob = revolve("Round", p, notches(p, s.get("hp", False)))
+    start = len(p)
+    tip, oal = bullet(s, rb, s["case"], s["oal"] - s["case"], s.get("nose", "spitzer"))
+    p += tip
+    ob = revolve("Round", p, scored(s, start, notches(p, s.get("hp", False))))
     seal_ring(s, ob, rn, s["case"])
-    return ob, s["oal"], rc
+    return ob, oal, rc
 
 
 def fold(t, n=6, w=0.07):
@@ -484,9 +544,16 @@ def fold(t, n=6, w=0.07):
 
 def shell(s):
     R, L, H = s["R"], s["L"], s["head"]
-    hullm = principled("Hull" + s["color"], {"red": (0.42, 0.025, 0.02), "black": (0.03, 0.03, 0.032), "green": (0.2, 0.42, 0.14)}[s["color"]],
-                       0.0, 0.48, wear=0.12, grime=0.85, scan="Plastic006", tile=6.0,
-                       **{"Coat Weight": 0.25, "Coat Roughness": 0.3})
+    hulls = {"red": (0.42, 0.025, 0.02), "black": (0.03, 0.03, 0.032), "green": (0.2, 0.42, 0.14),
+             "yellow": (0.75, 0.5, 0.03), "orange": (0.8, 0.2, 0.02), "grey": (0.32, 0.33, 0.35),
+             "olive": (0.15, 0.17, 0.06), "darkred": (0.16, 0.01, 0.01), "white": (0.75, 0.74, 0.7),
+             "blue": (0.03, 0.1, 0.4)}
+    if s["color"] == "clear":
+        # Clear hull: the load shows through.
+        hullm = glass("HullClear", (0.85, 0.9, 0.92), 0.12, transmission=0.95, ior=1.5)
+    else:
+        hullm = principled("Hull" + s["color"], hulls[s["color"]], 0.0, 0.48, wear=0.12, grime=0.85, scan="Plastic006",
+                           tile=6.0, **{"Coat Weight": 0.25, "Coat Roughness": 0.3})
     root = bpy.data.objects.new("Round", None)
     bpy.context.collection.objects.link(root)
     rim = R * 1.1
@@ -494,7 +561,21 @@ def shell(s):
           (rim, 0.02, BRASS()), (rim, 0.14 * R, BRASS()), (rim * 0.97, 0.16 * R, BRASS()), (R * 1.0, 0.18 * R, BRASS()),
           (R * 0.97, 0.24 * R, BRASS()), (R * 0.97, 0.3 * R, BRASS()), (R * 1.025, 0.4 * R, BRASS()),
           (R * 1.025, H - 0.03, BRASS()), (R * 1.015, H, BRASS()), (R * 1.003, H + 0.02, BRASS())]
-    revolve("Head", hp).parent = root
+    revolve("Head", [(r, z, NICKEL() if m is not hp[0][2] and s.get("head_mat") == "steel" else m) for r, z, m in hp]
+            if s.get("head_mat") == "steel" else hp).parent = root
+    if s.get("band"):
+        bm = paint(s["band"])
+        zb = H + (L - H) * 0.45
+        revolve("Band", [(R * 0.99, zb - 0.09 * L, bm), (R * 1.01, zb - 0.085 * L, bm), (R * 1.01, zb + 0.085 * L, bm),
+                         (R * 0.99, zb + 0.09 * L, bm)]).parent = root
+    if s.get("darts_inside"):
+        # A bundle of steel darts down the hull, seen through a clear hull.
+        for k in range(7):
+            a, rr = k * 2 * math.pi / 6, (0.0 if k == 6 else R * 0.45)
+            dart = revolve("Dart", [(0, H + 0.05, STEEL()), (R * 0.1, H + 0.1, STEEL()), (R * 0.1, L - 0.9 * R, STEEL()),
+                                    (0, L - 0.3 * R, STEEL())])
+            dart.location = (math.cos(a) * rr, math.sin(a) * rr, 0)
+            dart.parent = root
     side = [(R, z, hullm) for z in [H - 0.05 + (L - 0.18 * R - H + 0.05) * k / 50 for k in range(51)]]
     if s["crimp"] == "star":
         r0 = R - 0.18 * R
@@ -521,11 +602,34 @@ def shell(s):
             return (0.0, 0.0)
         revolve("Hull", prof, pert).parent = root
         zt = L - 0.17 * R
-        lead = [(0, zt, LEAD())]
+        load = s.get("load", "lead")
+        faces = {"lead": LEAD, "rubber": JACKETS["rubber"],
+                 "bag": lambda: principled("Bag", (0.32, 0.26, 0.14), 0.0, 0.9, bump=0.15, wear=0.02),
+                 "thermite": lambda: emission("Thermite", (1.0, 0.3, 0.04), 6.0),
+                 "flare": lambda: paint("red", gloss=True), "darts": LEAD, "frag": LEAD}
+        fm = faces[load]()
+        lead = [(0, zt, fm)]
         for k, rr in enumerate([0.12, 0.2, 0.32, 0.42, 0.55, 0.66, 0.76]):
-            lead += [(ri * rr, zt - (0.012 if k % 2 else 0.0) * R, LEAD())]
-        lead += [(ri * 0.99, zt - 0.04 * R, LEAD()), (ri * 0.99, zt - 0.4 * R, LEAD())]
+            lead += [(ri * rr, zt - (0.012 if k % 2 else 0.0) * R, fm)]
+        lead += [(ri * 0.99, zt - 0.04 * R, fm), (ri * 0.99, zt - 0.4 * R, fm)]
         revolve("Load", lead).parent = root
+        if load == "darts":
+            # Flechette tips standing out of the mouth.
+            for k in range(7):
+                a, rr = k * 2 * math.pi / 6, (0.0 if k == 6 else ri * 0.55)
+                dart = revolve("Dart", [(0, zt, STEEL()), (R * 0.07, zt, STEEL()), (R * 0.07, zt + 0.25 * R, STEEL()),
+                                        (0, zt + 0.55 * R, STEEL())])
+                dart.location = (math.cos(a) * rr, math.sin(a) * rr, 0)
+                dart.parent = root
+            L += 0.55 * R
+        elif load == "frag":
+            # A Frag-12's nose: an olive projectile with a yellow band standing out of the hull.
+            ol, yb = paint("olive"), paint("yellow")
+            nose = [(0, zt, ol), (ri * 0.9, zt, ol), (ri * 0.9, zt + 0.25 * R, yb), (ri * 0.9, zt + 0.4 * R, ol)]
+            nose += [(ri * 0.9 * (1 - t ** 1.6) ** 0.8, zt + 0.4 * R + 0.9 * R * t, ol) for t in (0.2, 0.4, 0.6, 0.8, 0.95)]
+            nose += [(0, zt + 1.32 * R, ol)]
+            revolve("Frag", nose).parent = root
+            L += 1.3 * R
     return root, L, rim
 
 
@@ -534,20 +638,35 @@ def rail(s):
     b = r * 0.12
     root = bpy.data.objects.new("Round", None)
     bpy.context.collection.objects.link(root)
-    core = GUNMETAL if s.get("gunmetal") else STEEL   # Bricks: dark gunmetal
+    cores = {"steel": STEEL, "gunmetal": GUNMETAL,
+             "du": lambda: principled("DU", (0.05, 0.05, 0.045), 0.8, 0.55, wear=0.05, grime=0.9),
+             "frost": lambda: principled("Frost", (0.55, 0.72, 0.9), 0.9, 0.28, wear=0.04, grime=0.6)}
+    core = GUNMETAL if s.get("gunmetal") else cores[s.get("core", "steel")]   # Bricks: dark gunmetal
+    ringm = (lambda: emission("Coil" + s["coil"], PAINTS[s["coil"]], 8.0)) if s.get("coil") else COPPER
     p = [(0, 0, core()), (r - b, 0, core()), (r, b, core())]
     for zc in s["rings"]:
         z = zc * L
-        p += [(r, z - 0.05 * L, COPPER()), (r * 1.01, z - 0.04 * L, COPPER()), (r * 1.01, z + 0.04 * L, core()),
+        p += [(r, z - 0.05 * L, ringm()), (r * 1.01, z - 0.04 * L, ringm()), (r * 1.01, z + 0.04 * L, core()),
               (r, z + 0.05 * L, core())]
-    p += [(r, L - b, core()), (r - b, L, core()), (0, L, core())]
+    for zc in s.get("cuts", []):
+        # Split Slugs: a deep dark cut where the slug comes apart.
+        z = zc * L
+        p += [(r, z - 0.02 * L, core()), (r * 0.7, z - 0.01 * L, GUNMETAL()), (r * 0.7, z + 0.01 * L, core()),
+              (r, z + 0.02 * L, core())]
+    if s.get("point"):
+        # A long pointed penetrator nose.
+        p += [(r, L * 0.75, core())] + [(r * (1 - t ** 1.4), L * 0.75 + L * 0.45 * t, core()) for t in (0.3, 0.6, 0.85, 1.0)]
+        L = L * 1.2
+    else:
+        p += [(r, L - b, core()), (r - b, L, core()), (0, L, core())]
     revolve("Core", p).parent = root
     out = r
     if s.get("sleeve"):
         rs = r * 1.12
         # Frosted, faintly milky polymer wrap: cloudier and more refractive than clear glass, so a
         # Sleever reads differently from a bare rail slug.
-        sl = glass("Sleeve", (0.82, 0.88, 0.92), 0.24, transmission=0.9, ior=1.6)
+        tint = {"green": (0.35, 0.8, 0.3)}.get(s.get("sleeve_color"), (0.82, 0.88, 0.92))
+        sl = glass("Sleeve" + s.get("sleeve_color", ""), tint, 0.24, transmission=0.9, ior=1.6)
         q = [(0, -0.06 * L, sl)] + arc(rs - 0.3 * rs, -0.06 * L + 0.3 * rs, 0.3 * rs, -math.pi / 2, 0, 6, sl)[1:]
         q += arc(rs - 0.3 * rs, L * 1.06 - 0.3 * rs, 0.3 * rs, 0, math.pi / 2, 6, sl) + [(0, L * 1.06, sl)]
         revolve("Sleeve", q).parent = root
@@ -574,11 +693,20 @@ GOLD = lambda: principled("Gold", (1.0, 0.76, 0.33), 1.0, 0.25, wear=0.05, grime
 # Blue-grey anodizing: dark, but light enough that the round's shape reads at icon size.
 ANOD = lambda: principled("Anodized", (0.14, 0.17, 0.22), 0.85, 0.32, wear=0.1, grime=0.8, scan="Metal009", tile=2.0)
 # Painted ID band per load (teal Seekers, red Short-Fuse), also on the cassette's rear band.
-ID_COLORS = {"teal": (0.02, 0.42, 0.45), "red": (0.6, 0.04, 0.03)}
-
-
 def id_paint(name):
-    return principled("Id" + name, ID_COLORS[name], 0.0, 0.35, bump=0.01, wear=0.08, grime=0.8)
+    return principled("Id" + name, PAINTS[name], 0.0, 0.35, bump=0.01, wear=0.08, grime=0.8)
+
+
+def nose_mat(s, default):
+    """Smart nose: gold (Hunter's seeker head), copper (Shaped Charge's cone), else the body."""
+    return {"gold": GOLD, "copper": COPPER}.get(s.get("nose_mat"), lambda: default)()
+
+
+def sensor_glass(s):
+    """The seeker's sensor: dark glass, or glowing green (Hack Carrier)."""
+    if s.get("sensor") == "green":
+        return emission("SensorGreen", (0.1, 0.9, 0.25), 5.0)
+    return glass("SensorGlass", (0.04, 0.06, 0.09), 0.03)
 # Moulded polymer: dark, slightly glossy under a thin clear coat.
 POLY = lambda: principled("CassetteBody", (0.06, 0.07, 0.085), 0.0, 0.36, wear=0.1, grime=0.8,
                           scan="Plastic006", tile=1.5, **{"Coat Weight": 0.2, "Coat Roughness": 0.1,
@@ -603,7 +731,7 @@ def cube(name, size, loc, mat, bevel=0.0, rot=(0, 0, 0)):
     return ob
 
 
-def tip_profile_smart(r, z0, nl, seeker, body):
+def tip_profile_smart(r, z0, nl, seeker, body, g=None):
     """Ogive nose from radius r at z0, length nl. Seekers end in a small dark glass sensor tip."""
     p, n = [], 20
     stop = 0.86 if seeker else 1.0
@@ -611,7 +739,7 @@ def tip_profile_smart(r, z0, nl, seeker, body):
         t = stop * k / n
         p.append((r * (1 - t ** 1.8) ** 0.75 if t < 1 else 0.0, z0 + nl * t, body if not seeker else body))
     if seeker:
-        g = glass("SensorGlass", (0.04, 0.06, 0.09), 0.03)
+        g = g or glass("SensorGlass", (0.04, 0.06, 0.09), 0.03)
         rt, zt = p[-1][0], p[-1][1]
         p[-1] = (rt, zt, g)
         p += [(rt * 0.6, zt + nl * 0.1, g), (0, zt + nl * 0.13, g)]
@@ -641,8 +769,8 @@ def dian(s):
         p += [(r, zb1 + 0.005 * L, idm), (r * 1.004, zb1 + 0.008 * L, idm), (r * 1.004, zb1 + 0.07 * L, body)]
         zb1 += 0.07 * L
     p += [(r, zb1 + 0.005 * L, body), (r * 0.985, zb1 + 0.02 * L, body)]
-    nose = tip_profile_smart(r * 0.985, zb1 + 0.02 * L, L - zb1 - 0.02 * L - (0.0 if dumb else 0.0), not dumb,
-                             STEEL() if dumb else body)
+    nose = tip_profile_smart(r * 0.985, zb1 + 0.02 * L, L - zb1 - 0.02 * L - (0.0 if dumb else 0.0),
+                             not dumb and not s.get("noseeker"), STEEL() if dumb else nose_mat(s, body), sensor_glass(s))
     p += nose[1:]
     first_band = next(i for i, q in enumerate(p) if q[2] is band)
 
@@ -705,7 +833,8 @@ def cassette(s):
     pin = bpy.context.active_object
     pin.data.materials.append(GOLD())
     pin.parent = root
-    rs = dict(kind="dian", r=cr * 0.86, L=Lc * 0.8, dumbfire=s.get("dumbfire", False), idband=s.get("idband"))
+    rs = dict(kind="dian", r=cr * 0.86, L=Lc * 0.8, dumbfire=s.get("dumbfire", False), idband=s.get("idband"),
+              **{k: s[k] for k in ("nose_mat", "sensor", "noseeker") if k in s})
     first = None
     for i in (-1, 0, 1):
         for j in (-1, 0, 1):
@@ -749,7 +878,7 @@ def ashura(s):
         zf += 0.08 * L
     else:
         base += [(R, zf, body)]
-    base += tip_profile_smart(R, zf, L - zf, False, STEEL() if dumb else body)[1:]
+    base += tip_profile_smart(R, zf, L - zf, False, STEEL() if dumb else nose_mat(s, body))[1:]
     revolve("Body", base).parent = root
     # Cage struts and the base lugs.
     for k in range(6):
@@ -760,11 +889,11 @@ def ashura(s):
         lug = cube("Lug", (R * 0.32, R * 0.12, 0.06 * L), (math.cos(a + 0.5) * R * 0.95, math.sin(a + 0.5) * R * 0.95,
                    0.035 * L), body, R * 0.02, rot=(0, 0, a + 0.5))
         lug.parent = root
-    if not dumb:
+    if not dumb and not s.get("noseeker"):
         # Sensor facet: a dark glass window cut into one side of the nose near the tip.
         zt = L - (L - zf) * 0.28
         rn = R * (1 - 0.72 ** 1.8) ** 0.75
-        w = cube("Facet", (rn * 1.1, rn * 0.12, (L - zf) * 0.2), (0, -rn * 0.92, zt), glass("SensorGlass", (0.04, 0.06, 0.09), 0.03),
+        w = cube("Facet", (rn * 1.1, rn * 0.12, (L - zf) * 0.2), (0, -rn * 0.92, zt), sensor_glass(s),
                  rn * 0.03, rot=(-0.12, 0, 0))
         w.parent = root
     for k in range(3):
