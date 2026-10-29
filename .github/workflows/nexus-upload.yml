@@ -1,0 +1,63 @@
+# Uploads a published GitHub release's zip to Nexus Mods as a new version of the mod's main file.
+# The zip is built locally (tools/linux/release.sh: the native plugin is cross-built with the
+# Windows SDK, which CI doesn't have) and attached to the release with its .sha256.
+#
+# Setup (once, after the first upload made by hand on the site; docs/RELEASING.md):
+#   - secret   NEXUSMODS_API_KEY  (https://www.nexusmods.com/settings/api-keys)
+#   - variable NEXUS_MOD_ID       (the mod page's ID)
+#   - variable NEXUS_FILE_ID      (the main file's ID: Files tab, "Advanced")
+# Without NEXUS_FILE_ID the job is skipped, so a release can't upload by accident before setup.
+name: Upload to Nexus Mods
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to upload (e.g. v0.1.0)
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    # Prereleases (e.g. a 0.2.0-rc.1 for testers) stay on GitHub.
+    if: ${{ vars.NEXUS_FILE_ID != '' && !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Download the release zip
+        run: |
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern 'AmmoOverhaul-*.zip*'
+          sha256sum -c AmmoOverhaul-*.zip.sha256
+          zip=$(ls AmmoOverhaul-*.zip)
+          echo "ZIP=$zip" >> "$GITHUB_ENV"
+          echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
+          [[ "$zip" == "AmmoOverhaul-${TAG#v}.zip" ]] || { echo "zip $zip doesn't match tag $TAG"; exit 1; }
+
+      - name: Release notes as the changelog
+        run: |
+          {
+            echo 'CHANGELOG<<AO_EOF'
+            gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json body --jq .body
+            echo 'AO_EOF'
+          } >> "$GITHUB_ENV"
+
+      - name: Upload to Nexus Mods
+        # v1.0.0-beta.11, pinned to its commit.
+        uses: Nexus-Mods/upload-action@98532f7670c27cbecc78fae03fa3e278147827e2
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          mod_id: ${{ vars.NEXUS_MOD_ID }}
+          file_id: ${{ vars.NEXUS_FILE_ID }}
+          filename: ${{ env.ZIP }}
+          version: ${{ env.VERSION }}
+          display_name: Ammo Overhaul ${{ env.VERSION }}
+          category: main
+          archive_existing_version: true
+          update_mod_version: true
+          changelog: ${{ env.CHANGELOG }}
