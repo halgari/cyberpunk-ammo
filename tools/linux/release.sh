@@ -4,7 +4,8 @@
 #   tools/linux/release.sh <version> --publish  push and create the GitHub release
 # The first needs a clean master and a "## <version>" section in CHANGELOG.md. It writes VERSION,
 # commits "release: v<version>", tags v<version> and builds dist/AmmoOverhaul-<version>.zip
-# (package.sh) with its .sha256. Undo it with: git tag -d v<version>; git reset --hard HEAD~1
+# (package.sh) with its .sha256. Undo it with git tag -d v<version>, plus
+# git reset --hard HEAD~1 if it made the release commit.
 # The second (tagging first if the tag doesn't exist yet) pushes master and the tag and creates
 # the GitHub release with the zip; publishing it runs .github/workflows/nexus-upload.yml, the
 # Nexus upload. A version with a suffix (0.2.0-rc.1) becomes a GitHub prerelease, not uploaded.
@@ -29,7 +30,8 @@ if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
 else
   echo "$version" > VERSION
   git add VERSION
-  git commit -q -m "release: $tag"
+  # VERSION may already say it (set ahead of time): then the tag goes on HEAD as it is.
+  git diff --cached --quiet || git commit -q -m "release: $tag"
   git tag -a "$tag" -m "Ammo Overhaul $version" -m "$notes"
   tools/linux/package.sh
 fi

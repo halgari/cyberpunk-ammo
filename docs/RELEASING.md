@@ -36,7 +36,8 @@ tools/linux/release.sh 0.1.0            # VERSION, commit, tag, zip; nothing pus
 tools/linux/release.sh 0.1.0 --publish  # push master and the tag, create the GitHub release
 ```
 
-The first step can be undone with `git tag -d v0.1.0; git reset --hard HEAD~1`. Publishing the
+The first step can be undone with `git tag -d v0.1.0`, plus `git reset --hard HEAD~1` if it
+made a release commit (it doesn't when `VERSION` already says the version). Publishing the
 GitHub release runs `.github/workflows/nexus-upload.yml`, which checks the zip against its
 `.sha256` and uploads it as a new version of the main file, with the changelog section as the
 Nexus changelog. A version with a suffix (`0.2.0-rc.1`) becomes a GitHub prerelease and isn't
