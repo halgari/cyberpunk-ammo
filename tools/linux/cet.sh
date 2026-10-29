@@ -3,6 +3,7 @@
 #   tools/linux/cet.sh 'return Game.GetPlayer() ~= nil'
 #   tools/linux/cet.sh -f snippet.lua [-t 30]
 # Only answers while the game window is updating (not paused, not on a loading screen).
+# Exits 3 at once if the game is frozen (harness heartbeat older than FROZEN_AFTER, default 30 s).
 set -euo pipefail
 source "$(dirname "$0")/common.sh"
 
@@ -17,6 +18,8 @@ while [[ $# -gt 0 ]]; do
 done
 [[ -n "$code" ]] || { echo "no code given" >&2; exit 2; }
 game_running || { echo "game is not running" >&2; exit 1; }
+frozen() { echo "game frozen: no frame for $(heartbeat_age) s" >&2; exit 3; }
+game_frozen "${FROZEN_AFTER:-30}" && frozen
 
 id="$(head -c 4 /dev/urandom | od -An -tx1 | tr -d ' \n')"
 out="$HARNESS_DIR/out.log"
@@ -35,6 +38,7 @@ while (( $(date +%s) < deadline )); do
     fi
   fi
   sleep 0.25
+  game_frozen "${FROZEN_AFTER:-30}" && frozen
 done
 echo "no response within ${timeout_sec}s (game paused/unfocused, still loading, or harness not installed?)" >&2
 exit 1

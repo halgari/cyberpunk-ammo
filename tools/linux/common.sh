@@ -20,3 +20,15 @@ proton_wine() { WINEPREFIX="$TOOLS_PREFIX" WINEDEBUG=-all "$PROTON/files/bin/win
 # on the drive letter keeps shells and umu wrappers that merely mention the exe from matching.
 GAME_PROCESS='^[A-Z]:.*\\bin\\x64\\Cyberpunk2077\.exe'
 game_running() { pgrep -f "$GAME_PROCESS" >/dev/null; }
+
+# Seconds since the harness last wrote its heartbeat (once a second while the game ticks); empty
+# if it hasn't written one this session (restart-game.sh removes the old one).
+heartbeat_age() {
+  local f="$HARNESS_DIR/heartbeat"
+  [[ -f "$f" ]] && echo $(( $(date +%s) - $(stat -c %Y "$f") ))
+}
+# True if the game runs but hasn't ticked for $1 seconds (default 30).
+game_frozen() {
+  local age; age="$(heartbeat_age)"
+  game_running && [[ -n "$age" ]] && (( age > ${1:-30} ))
+}

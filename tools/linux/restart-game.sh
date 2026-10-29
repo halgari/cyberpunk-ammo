@@ -11,6 +11,7 @@ if game_running; then
   game_running && { echo "game still running after kill" >&2; exit 1; }
   echo "game stopped"
 fi
+rm -f "$HARNESS_DIR/heartbeat"
 [[ "${1:-}" == "--kill" ]] && exit 0
 
 # `lutris lutris:rungameid/N` stops the game when Lutris exits, and with no window open it exits

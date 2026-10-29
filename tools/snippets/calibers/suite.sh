@@ -21,6 +21,7 @@ $C/all-pass.sh \
   "$S/npc.sh" "$S/npcdrop.sh" "$C/npc.sh" \
   "$(twice calibers/lootdupe.lua)" "$(twice calibers/lootcap.lua)"
 status=$?
+(( status == 2 )) && exit 2
 echo "-- roll.sh (not gating):"
-$C/roll.sh 2>/dev/null | grep -E '^(PASS|FAIL|==)'
+timeout 900 $C/roll.sh 2>/dev/null | grep -E '^(PASS|FAIL|==)'
 exit $status

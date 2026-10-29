@@ -66,7 +66,19 @@ registerForEvent("onInit", function()
     append("@@ready " .. os.date("%Y-%m-%d %H:%M:%S"))
 end)
 
+-- Rewritten every second while the game ticks: the Linux tools read its age to tell a frozen game
+-- (stale heartbeat) from a slow command.
+local beat = 0
 registerForEvent("onUpdate", function(dt)
+    beat = beat + dt
+    if beat >= 1 then
+        beat = 0
+        local h = io.open("heartbeat", "w")
+        if h then
+            h:write(os.time())
+            h:close()
+        end
+    end
     poll = poll + dt
     if poll < 0.5 then return end
     poll = 0
