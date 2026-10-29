@@ -1,8 +1,8 @@
-"""The mod's title, BRASSMARKET, as extruded metal letters on a transparent ground, for banner.py:
+"""The mod's logo, BRA€$MARKET (Brass Market, the two S's as the eddie sign €$), as extruded metal letters on a transparent ground, for banner.py:
 
-  blender -b -P tools/render/title.py -- OUT.png [--size 7680x4320] [--samples 128] [--cpu] [--brass BRA€$]
+  blender -b -P tools/render/title.py -- OUT.png [--size 7680x4320] [--samples 128] [--cpu] [--brass BRASS]
 
-BRASS is polished brass, MARKET dark gunmetal, over a thin cyan neon bar. The font is Orbitron Black
+BRA€$ is polished brass, MARKET dark gunmetal, over a thin cyan neon bar. The font is Orbitron Black
 (OFL, google/fonts), a static 900 instance of the variable font in ~/.cache/ammo-overhaul/fonts
 (fontTools: python -m fontTools.varLib.instancer Orbitron[wght].ttf wght=900). The lighting and
 studio HDRI are the ones the round art uses (scene.py), so the letters match the boxes.
@@ -19,8 +19,8 @@ OUT = os.path.abspath(ARGS[0])
 SIZE = tuple(int(v) for v in (ARGS[ARGS.index("--size") + 1] if "--size" in ARGS else "7680x4320").split("x"))
 SAMPLES = int(ARGS[ARGS.index("--samples") + 1]) if "--samples" in ARGS else 128
 CPU = "--cpu" in ARGS
-# The brass half of the title. BRA€$ (the eddie sign) was tried: in this font the € reads as an E.
-BRASS = ARGS[ARGS.index("--brass") + 1] if "--brass" in ARGS else "BRASS"
+# The brass half of the title: BRA€$, with the eddie sign as the game prints prices.
+BRASS = ARGS[ARGS.index("--brass") + 1] if "--brass" in ARGS else "BRA€$"
 FONT = os.path.expanduser("~/.cache/ammo-overhaul/fonts/Orbitron-Black.ttf")
 ASSETS = os.path.expanduser("~/.cache/ammo-overhaul/assets")
 # Width of the title as a share of the frame.

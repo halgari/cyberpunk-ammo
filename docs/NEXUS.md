@@ -9,7 +9,7 @@ tables don't render reliably, so everything is lists. The tier colors are the ga
 colors (Common grey, Uncommon green, Rare blue, Epic purple).
 
 ```
-[center][size=6][b][color=#d4a04c]BRASS[/color][color=#9aa3ad]MARKET[/color][/b][/size]
+[center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
 [size=4]13 calibers. 130 rounds. One market.[/size][/center]
 
 [line]
