@@ -25,7 +25,7 @@ elseif gun:find("Omaha") then
   check("Sleevers charge x0.7", near(ratio("ChargeTime"), 0.7), tostring(ratio("ChargeTime")))
   check("Sleevers damage x0.95", near(ratio("DamagePerHit"), 0.95), tostring(ratio("DamagePerHit")))
 elseif gun:find("Yukimura") then
-  check("Dumbfires damage x1.25", near(ratio("DamagePerHit"), 1.25), tostring(ratio("DamagePerHit")))
+  check("Dumbfires damage x1.8", near(ratio("DamagePerHit"), 1.8), tostring(ratio("DamagePerHit")))
   check("Dumbfires hit probability 0", stat("SmartGunHitProbability") == 0, tostring(stat("SmartGunHitProbability")))
 end
 report()

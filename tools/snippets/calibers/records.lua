@@ -193,4 +193,15 @@ for _, r in ipairs(TweakDB:GetRecords("gamedataWeaponItem_Record")) do
 end
 check(#cals .. " calibers read for the double-claim scan", #cals >= 8, tostring(#cals))
 check("no weapon record claimed by two calibers", #doubles == 0, table.concat(doubles, " "))
+-- Dumbfires trade all guidance for damage x1.8 (play-test: x1.25 lost to Short-Fuse's x1.2 with guidance).
+for _, cal in ipairs({ "10mm", "20mm", "25mm" }) do
+  local feed = TweakDB:GetRecord("Items.AO_Feed_" .. cal .. "_Dumbfires")
+  local dmg
+  for _, m in ipairs(feed and feed:StatModifiers() or {}) do
+    if m:IsA("gamedataConstantStatModifier_Record") and m:StatType():StatType() == gamedataStatType.DamagePerHit then dmg = m:Value() end
+  end
+  check(cal .. " Dumbfires damage x1.8", dmg and math.abs(dmg - 1.8) < 0.001, tostring(dmg))
+  local d = feed and Game.GetLocalizedTextByKey(feed:LocalizedDescription()) or ""
+  check(cal .. " Dumbfires text says +80% damage", d:find("+80% damage", 1, true) ~= nil, d)
+end
 report()

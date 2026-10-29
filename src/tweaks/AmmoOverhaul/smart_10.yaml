@@ -98,7 +98,7 @@ Items.AO_Feed_10mm_Dumbfires:
       $type: ConstantStatModifier
       statType: BaseStats.DamagePerHit
       modifierType: Multiplier
-      value: 1.25
+      value: 1.8
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.SmartGunHitProbability

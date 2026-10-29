@@ -46,7 +46,7 @@ public class AmmoOverhaulEnglish extends ModLocalizationPackage {
     this.Text("AO-Ammo-127-Mushrooms", "12.7 Mushrooms");
     // Shared by every caliber's Sleevers and Dumbfires.
     this.Text("AO-Ammo-Sleevers-Desc", "Skinny slug in a plastic sleeve. The rails grab it quicker, so you charge faster, but it hits a bit softer.\n\nCharges 30% faster. -5% damage.");
-    this.Text("AO-Ammo-Dumbfires-Desc", "Smart rockets with the chip pulled and extra propellant packed in. Hits harder, but it only goes where you point it.\n\n+25% damage. Doesn't track targets.");
+    this.Text("AO-Ammo-Dumbfires-Desc", "Smart rockets with the guidance chip swapped for a bigger warhead. Hits a lot harder, but it only goes where you point it.\n\n+80% damage. Doesn't track targets.");
     this.Text("AO-Ammo-Heavy-RailSlugs", "Heavy Rail Slugs");
     this.Text("AO-Ammo-Heavy-RailSlugs-Desc", "Steel slugs for full-size railguns.\n\nStandard heavy rail ammo. No special effects.");
     this.Text("AO-Ammo-Heavy-Sleevers", "Heavy Sleevers");
@@ -71,7 +71,7 @@ public class AmmoOverhaulEnglish extends ModLocalizationPackage {
     this.Text("AO-Ammo-10mm-Seekers", "10mm Seekers");
     this.Text("AO-Ammo-10mm-Seekers-Desc", "Standard smart rockets. Get a lock and they chase the target for you.\n\nStandard smart ammo. Tracks locked targets.");
     this.Text("AO-Ammo-10mm-Dumbfires", "10mm Dumbfires");
-    this.Text("AO-Ammo-10mm-Dumbfires-Desc", "Smart rockets with the chip pulled and extra propellant packed in. Hits harder, but it only goes where you point it.\n\n+25% damage. Doesn't track targets.");
+    this.Text("AO-Ammo-10mm-Dumbfires-Desc", "Smart rockets with the guidance chip swapped for a bigger warhead. Hits a lot harder, but it only goes where you point it.\n\n+80% damage. Doesn't track targets.");
     // Second Uncommon rounds. One description per load, shared across calibers.
     this.Text("AO-Ammo-9mm-PlusP", "9mm +P");
     this.Text("AO-Ammo-45-PlusP", ".45 +P");

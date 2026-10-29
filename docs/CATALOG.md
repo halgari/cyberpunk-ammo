@@ -294,7 +294,7 @@ all but name, weight and price: guns aren't modified. Only the Uncommon loads ch
 | P-4G | 4ga Buckshot | 4ga Slugs | as Slugs, plus damage ×1.3, armor pen +0.5, knockdown, recoil ×1.6 |
 | T-LIGHT | 5mm Rail Slugs | 5mm Sleevers | charge time ×0.7, damage ×0.95 |
 | T-HEAVY | Heavy Rail Slugs | Heavy Sleevers | as 5mm Sleevers |
-| S-10 | 10mm Seekers | 10mm Dumbfires | damage ×1.25, no guidance |
+| S-10 | 10mm Seekers | 10mm Dumbfires | damage ×1.8, no guidance |
 | S-CLUSTER | 20mm Seekers | 20mm Dumbfires | as 10mm Dumbfires |
 | S-DART | 25mm Seekers | 25mm Dumbfires | as 10mm Dumbfires |
 
