@@ -25,6 +25,15 @@ same("Tech family layer applies to TLight Slug", roll("Ammo.AO_TLight_Slug", "",
 if old then TweakDB:SetFlat(key, old) else TweakDB:SetFlat(key, -1.0) end
 same("Tech family layer restored", roll("Ammo.AO_TLight_Slug", "", true), { 0.90, 1.01 })
 
+-- A vanilla Common round (no family tag) fired by an unmanaged gun takes the global roll, and by a
+-- managed gun its family's, whichever comes first in the session (the cache keys on the family).
+TweakDB:SetFlat("AmmoOverhaul.roll.Power.min", 0.95)
+sys:DebugRollFor("Ammo.AO_45_Ball", "", true)   -- clears the cache
+same("unmanaged gun with 5.56 Common: global roll", sys:DebugRollWith("Ammo.RifleAmmo", "", ""), { 0.90, 1.01 })
+same("managed 5.56 gun after it: Power family roll", sys:DebugRollWith("Ammo.RifleAmmo", "Power", ""), { 0.95, 1.01 })
+TweakDB:SetFlat("AmmoOverhaul.roll.Power.min", -1.0)
+sys:DebugRollFor("Ammo.AO_45_Ball", "", true)
+
 local d = nums(sys:DebugRollDraws("Ammo.AO_45_Ball", "", 5000))
 check("45 Ball draws within 0.90..1.01", d[1] >= 0.90 - 1e-4 and d[2] <= 1.01 + 1e-4, d[1] .. ".." .. d[2])
 check("45 Ball mean 0.955", near(d[3], 0.955, 0.01), tostring(d[3]))

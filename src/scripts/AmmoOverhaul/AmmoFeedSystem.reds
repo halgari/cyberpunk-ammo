@@ -39,8 +39,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
 
   private let m_ammoSection: String;
 
-  // Resolved damage rolls, one map per damage type ("" first, then DamageTypes()), keyed by the
-  // ammo's TDBID number; and each weapon record's caliber ("" boxed too), keyed the same way.
+  // Resolved damage rolls, one map per (family, damage type): families "" (unmanaged), Power, Tech,
+  // Smart; types "" first, then DamageTypes(). Keyed by the ammo's TDBID number. And each weapon
+  // record's caliber ("" boxed too), keyed the same way.
   private let m_rolls: array<ref<inkHashMap>>;
   private let m_calibers: ref<inkHashMap>;
 
@@ -236,7 +237,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
   }
 
   // The damage roll of `ammo` for one damage type ("" for the whole hit). The family is the
-  // ammo's own AO_Family tag, else `family` (vanilla Common rounds carry no tag).
+  // ammo's own AO_Family tag, else `family`: the vanilla Common rounds carry no tag, and are fired
+  // by managed guns (their family's layer) and unmanaged ones ("", the global roll) alike.
   public final func Roll(ammo: TweakDBID, family: String, damageType: String) -> AORoll {
     let types: array<String> = AmmoFeedSystem.DamageTypes();
     let index: Int32 = ArrayFindFirst(types, damageType);
@@ -244,15 +246,24 @@ public class AmmoFeedSystem extends ScriptableSystem {
       index = 0;
       damageType = "";
     }
+    let tagged: String = DamageRoll.AmmoFamily(ammo);
+    if StrLen(tagged) > 0 {
+      family = tagged;
+    }
+    let families: array<String> = ["", "Power", "Tech", "Smart"];
+    let fam: Int32 = Max(ArrayFindFirst(families, family), 0);
+    if fam == 0 {
+      family = "";
+    }
+    index = fam * ArraySize(types) + index;
     while ArraySize(this.m_rolls) <= index {
       ArrayPush(this.m_rolls, new inkHashMap());
     }
     let key: Uint64 = TDBID.ToNumber(ammo);
     let box: ref<AORollBox> = this.m_rolls[index].Get(key) as AORollBox;
     if !IsDefined(box) {
-      let tagged: String = DamageRoll.AmmoFamily(ammo);
       box = new AORollBox();
-      box.roll = DamageRoll.Values(ammo, StrLen(tagged) > 0 ? tagged : family, damageType);
+      box.roll = DamageRoll.Values(ammo, family, damageType);
       this.m_rolls[index].Insert(key, box);
     }
     return box.roll;
@@ -346,6 +357,12 @@ public class AmmoFeedSystem extends ScriptableSystem {
     let r: AORoll = this.Roll(TDBID.Create(ammo), "", damageType);
     return FloatToString(r.min) + " " + FloatToString(r.max) + " " + FloatToString(r.dudChance) + " "
       + FloatToString(r.dudMult) + " " + FloatToString(r.hotChance) + " " + FloatToString(r.hotMult);
+  }
+
+  // As DebugRollFor, through the cache, with the caller's family ("" for an unmanaged gun).
+  public final func DebugRollWith(ammo: String, family: String, damageType: String) -> String {
+    let r: AORoll = this.Roll(TDBID.Create(ammo), family, damageType);
+    return FloatToString(r.min) + " " + FloatToString(r.max);
   }
 
   // "min max mean duds hots" over `n` draws of an ammo's roll (duds and hots counted by value).
