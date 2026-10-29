@@ -40,10 +40,32 @@ local function goHome(p)
   end
 end
 
+-- The NPC's chest: its Chest slot, which follows crouches and cover (1.0 m above its feet if the
+-- slot can't be read).
+local function chest(o)
+  local sc = o:GetSlotComponent()
+  local ok, t = false, nil
+  if sc then ok, t = sc:GetSlotTransform(CName.new("Chest")) end
+  if ok and t then return WorldPosition.ToVector4(WorldTransform.GetWorldPosition(t)) end
+  local v = o:GetWorldPosition(); v.z = v.z + 1.0; return v
+end
+
+-- V's shots follow V's camera, not AIWeapon.Fire's target position: a level camera fires at eye
+-- height, over a crouching NPC's head. Pitch the camera at the NPC's chest (lands next frame).
+local function aim(p, n, pitch)
+  if not pitch then
+    local a, c = p:GetWorldPosition(), chest(n)
+    a.z = a.z + 1.7
+    local dx, dy = c.x - a.x, c.y - a.y
+    pitch = math.deg(math.atan2(c.z - a.z, math.sqrt(dx * dx + dy * dy)))
+  end
+  p:GetFPPCameraComponent():SetLocalOrientation(EulerAngles.new(0, pitch, 0):ToQuat())
+end
+
 -- Whether level geometry blocks a shot from V's eyes to the NPC's chest.
 local function blocked(p, n)
-  local a, b = p:GetWorldPosition(), n:GetWorldPosition()
-  a.z = a.z + 1.5; b.z = b.z + 1.2
+  local a, b = p:GetWorldPosition(), chest(n)
+  a.z = a.z + 1.5
   return (Game.GetSpatialQueriesSystem():SyncRaycastByCollisionGroup(a, b, CName.new("Static"), true, false))
 end
 local function respawn(p, why)
@@ -106,10 +128,9 @@ function RIG.setup(gun, dist)
     Game.GetTeleportationFacility():Teleport(p, Vector4.new(b.x + dx / l * dist, b.y + dy / l * dist, a.z, 1), EulerAngles.new(0, 0, yaw))
     return "wait: moved V"
   end
+  aim(p, n)
   return "ready"
 end
-
-local function chest(o) local v = o:GetWorldPosition(); v.z = v.z + 1.0; return v end
 
 -- "holstered" when V has put the gun away (it happens after teleports and spawns): redraw, retry.
 function RIG.fireV()
@@ -122,6 +143,7 @@ function RIG.fireV()
     p:GetActiveWeapon():StopReload(gameweaponReloadStatus.Standard)
     return "reloaded"
   end
+  aim(p, n)
   AIWeapon.Fire(p, p:GetActiveWeapon(), EngineTime.ToFloat(Game.GetSimTime()), 1.0, gamedataTriggerMode.SemiAuto, chest(n), n)
   return "fired"
 end
@@ -164,6 +186,7 @@ function RIG.clear() RIG.hits = {} end
 function RIG.teardown()
   local n = RIG.npc()
   police(true)
+  aim(Game.GetPlayer(), nil, 0)
   gm():RemoveGodMode(Game.GetPlayer():GetEntityID(), gameGodModeType.Immortal, tag)
   if n then GetMod("AOTestKit").despawnAll() end
 end
