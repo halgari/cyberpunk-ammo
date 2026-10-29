@@ -10,7 +10,7 @@ colors (Common grey, Uncommon green, Rare blue, Epic purple).
 
 ```
 [center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
-[size=4]13 calibers. 130 rounds. One market.[/size][/center]
+[size=4]130 rounds across 13 calibers, and a market to trade them in[/size][/center]
 
 [line]
 
@@ -20,12 +20,12 @@ Every gun takes the caliber that fits it. Every caliber has Common, Uncommon, Ra
 
 [size=5][b][color=#2ad4ff]What you get[/color][/b][/size]
 [list]
-[*][b]13 calibers.[/b] 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
-[*][b]130 rounds.[/b] Hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and plenty more.
-[*][b]Pick your load.[/b] A gun's mod screen gets an [b]Ammo[/b] slot. Choose any round you carry for that caliber and the gun keeps loading it until you change it. No surprise switching.
-[*][b]Same rules for everyone.[/b] NPCs carry real rounds, better ones the tougher they are. A gang boss with steel core goes through your armor the same way your steel core goes through theirs. They can run dry, too: an NPC out of rounds switches guns or comes at you with fists. Loot what they carried.
-[*][b]A real ammo economy.[/b] Gun shops stock every caliber up to Rare. Recipes drop and turn up on shelves. Craft by the box, break boxes down for components.
-[*][b]Every round has its own box.[/b] 130 hand-rendered icons, labeled and color coded so you can tell your Mushrooms from your Penetrators at a glance.
+[*]13 calibers: 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
+[*]130 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
+[*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
+[*]NPCs carry real rounds, better ones the tougher they are. A gang boss with steel core goes through your armor the way your steel core goes through theirs. NPCs can run dry too: out of rounds, they switch guns or come at you with fists. You loot what they carried.
+[*]Gun shops stock every caliber up to Rare. Recipes drop from loot and show up on shelves. You craft rounds by the box and break boxes down for components.
+[*]Every round has its own box icon, labeled with its name, so Mushrooms and Penetrators don't look alike in your backpack.
 [/list]
 
 [size=5][b][color=#2ad4ff]How it works: ammo is a gun mod[/color][/b][/size]
@@ -36,24 +36,27 @@ Think of a round as an attachment with charges. Every gun gets an [b]Ammo[/b] sl
 [*]The gun never switches rounds on its own. Run a round dry and the gun stays empty until you pick another, so it won't quietly start burning through your Epics.
 [*]Take the round out and the gun goes back to Common.
 [/list]
-Everything else in the mod is about the charges: who sells them, who carries them, what they cost to make.
+The rest of the mod is about getting more charges.
 
 [size=5][b][color=#2ad4ff]Why it plays different[/color][/b][/size]
-Brass Market is horizontal progression. You don't level into better ammo. You find it, buy it, load it yourself, and decide when it's worth spending.
-[list]
-[*][b]Ammo is a resource.[/b] The best rounds are scarce. Your fastest-firing SMG loaded with Epic Penetrators shreds one fight, and then the box is empty and every new one costs Epic components. Spend them on the fights that need them.
-[*][b]Think before the fight.[/b] Rubber for a job where nobody can die. Subsonic for a quiet way in. EMP or Shaped Charge for a floor full of drones. Ball for the gangers who drop anyway.
-[*][b]Kill them before they shoot.[/b] NPCs carry the same rounds you do, and they fire them. A merc shooting Toxin Core at you is spending rounds you could have looted. Drop them fast and what's left in the box is yours.
-[*][b]Every family has its angle.[/b] Want cheap rounds you can spray? Tech slugs are the cheapest to load. Want the most tricks? Smart rounds carry EMP, fire, chem, flash and hack payloads, but they cost the most to make. Power sits in the middle: the most calibers, the most loads, a fair price.
-[*][b]Guns earn their place.[/b] A gun is only as good as what you can feed it. The 9mm you'd have sold might be your best gun when you're sitting on 400 rounds of Incendiary. Carry two or three calibers and you can use what you've got instead of picking one gun type for the whole game.
-[/list]
+Brass Market is horizontal progression. You don't level into better ammo. You find it, buy it or load it yourself, and then decide when it's worth spending.
+
+The good rounds run out. Load your fastest SMG with Epic Penetrators and it tears through one fight, then the box is empty and every new box costs Epic components.
+
+So you plan. Rubber for a job where nobody can die. Subsonic for a quiet way in. EMP or Shaped Charge for a floor full of drones. Ball for the gangers who drop anyway.
+
+NPCs carry the same rounds you do, and they fire them. A merc shooting Toxin Core at you is spending rounds you could have looted, so drop them fast and take what's left.
+
+The families cost different amounts. Tech slugs are the cheapest to load, good for spraying. Smart rounds have the most payloads (EMP, fire, chem, flash, hacks) and cost the most to make. Power sits between them, with the most calibers and loads.
+
+A gun is only as good as what you can feed it. The 9mm you'd have sold might be your best gun when you're sitting on 400 rounds of Incendiary. Carry two or three calibers and you can shoot what you've got instead of sticking to one gun type all game.
 
 [size=5][b][color=#2ad4ff]Tiers[/color][/b][/size]
 [list]
-[*][color=#b0b0b0][b]Common[/b][/color]: the caliber's plain round. Works exactly like the game's ammo did. No bonuses, no catches.
-[*][color=#3fbf5f][b]Uncommon[/b][/color]: two per caliber. Small, honest trade-offs: more damage for less armor pen, faster charge for less punch.
+[*][color=#b0b0b0][b]Common[/b][/color]: the caliber's plain round. Works like the game's ammo did, with no bonuses.
+[*][color=#3fbf5f][b]Uncommon[/b][/color]: two per caliber. Small trades: more damage for less armor pen, faster charge for less punch.
 [*][color=#3fa0ff][b]Rare[/b][/color]: specialist loads. Fire, ricochets, non-lethal, quiet, armor piercing.
-[*][color=#b04fff][b]Epic[/b][/color]: the good stuff. Penetrators, toxin cores, thermite, EMP, match grade. Loot only; no shop sells it.
+[*][color=#b04fff][b]Epic[/b][/color]: Penetrators, toxin cores, thermite, EMP, match grade. Loot only; no shop sells it.
 [/list]
 
 [line]
@@ -224,7 +227,7 @@ Use a mod manager, or extract the zip into the game folder (the one holding [i]b
 
 [size=5][b][color=#2ad4ff]Compatibility and how it's built[/color][/b][/size]
 [list]
-[*][b]Hooked functions.[/b] Brass Market wraps a lot of game functions. Wraps chain with other mods' wraps, but a mod that replaces or hooks the same functions may not play well with this one. The ones most likely to clash:
+[*][b]Hooked functions.[/b] Brass Market wraps a lot of game functions. A wrap chains with other mods' wraps, but a mod that replaces or hooks the same functions may break this one or be broken by it. The ones most likely to clash:
 [list]
 [*]damage calculation: [i]DamageSystem.CalculateDamageVariants[/i] and [i]ProcessStatusEffects[/i]
 [*]NPC weapons: [i]AIWeapon.Fire[/i], NPC reload, NPC equipment and loot ([i]ScriptedPuppet.EvaluateLootQuality[/i], death and knockout)
@@ -234,7 +237,7 @@ Use a mod manager, or extract the zip into the game folder (the one holding [i]b
 [*]ammo counts on the HUD, weapon cards and the weapon wheel ([i]RPGManager.GetAmmoCountValue[/i] and friends)
 [/list]
 Other ammo, damage, vendor and loot overhauls are the likely conflicts.
-[*][b]Damage variance.[/b] The game rolls your gun damage between 90% and 110% of the listed number and doesn't roll NPC damage at all. Brass Market replaces that roll ([i]CalculateDamageVariants[/i]) for every ranged gun hit, yours and NPCs': 90% to 101% by default, so guns are a little weaker on average and both sides roll the same way. Match rounds roll in a narrower band that sits higher. Melee, explosions and damage over time keep the game's roll. A mod that changes damage variance will fight with this.
+[*][b]Damage variance.[/b] The game rolls your gun damage between 90% and 110% of the listed number and doesn't roll NPC damage at all. Brass Market replaces that roll ([i]CalculateDamageVariants[/i]) for every ranged gun hit, yours and NPCs': 90% to 101% by default, so guns are a little weaker on average and both sides roll the same way. Match rounds roll in a narrower, higher band. Melee, explosions and damage over time keep the game's roll. A mod that changes damage variance will conflict with this.
 [*][b]Same damage for NPCs.[/b] NPC guns have no damage stat for a round to modify, so their rounds' multipliers are applied in the damage pipeline instead. A Mushrooms round hits as hard from their gun as from yours.
 [*][b]Native plugin.[/b] A small RED4ext plugin writes each gun's loaded ammo into the weapon itself. That's how one gun can load a different round than the game's data says. It finds what it needs at runtime and checks before every write, so after a game patch it stops working instead of corrupting anything.
 [*][b]Guns from other mods[/b] get a caliber if they carry a vanilla gun's family tag (most guns built on a vanilla gun do). Others keep using the game's ammo.
