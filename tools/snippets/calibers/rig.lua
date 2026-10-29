@@ -4,6 +4,7 @@
 -- Defines the global RIG; driven one call per shot by rig.sh / roll.sh:
 --   RIG.setup(gun, dist=5)  -> "ready" or "wait" (first call spawns); RIG.fireV()  RIG.letNpcShoot() then RIG.freeze()
 --   RIG.ratios(who) -> sorted post/pre ratios of hits by "V" (on the NPC) or "NPC" (on V)
+--   RIG.volleys(who) -> {n, total} per shot (hits within 0.1 s)
 --   RIG.clear()  RIG.teardown()
 RIG = RIG or { hits = {} }
 local gm = function() return Game.GetGodModeSystem() end
@@ -18,6 +19,7 @@ if not RIG.hooked then
     table.insert(RIG.hits, {
       pre = RIG.pre or 0,
       post = e.attackComputed:GetTotalAttackValue(gamedataStatPoolType.Health),
+      t = EngineTime.ToFloat(Game.GetSimTime()),
       byV = i ~= nil and i:IsPlayer(),
       onV = e.target ~= nil and e.target:IsPlayer(),
     })
@@ -138,6 +140,22 @@ function RIG.ratios(who)
     if match and h.pre > 0 then table.insert(out, h.post / h.pre) end
   end
   table.sort(out)
+  return out
+end
+
+-- Shots as groups of hits within 0.1 s (a shotgun's pellets land together): {n = hits, total = damage}.
+function RIG.volleys(who)
+  local out, last = {}, nil
+  for _, h in ipairs(RIG.hits) do
+    if (who == "V" and h.byV and not h.onV) or (who == "NPC" and not h.byV and h.onV) then
+      if last and h.t - last < 0.1 then
+        out[#out].n = out[#out].n + 1; out[#out].total = out[#out].total + h.post
+      else
+        table.insert(out, { n = 1, total = h.post })
+      end
+      last = h.t
+    end
+  end
   return out
 end
 

@@ -102,6 +102,42 @@ public abstract class AOData {
     return TweakDBInterface.GetItemRecord(ItemID.GetTDBID(item)).TagsContains(n"AO_AmmoSelector");
   }
 
+  // The first selector, across all calibers, that feeds `ammo`; invalid if none does.
+  public static func SelectorForAmmo(ammo: TweakDBID) -> TweakDBID {
+    for caliber in AOData.Calibers() {
+      let selectors: array<TweakDBID> = AOData.Selectors(caliber);
+      let stacks: array<TweakDBID> = AOData.GetIDs(AOData.Key(caliber, "selectorAmmo"));
+      let i: Int32 = 0;
+      while i < ArraySize(selectors) && i < ArraySize(stacks) {
+        if stacks[i] == ammo {
+          return selectors[i];
+        }
+        i += 1;
+      }
+    }
+    return TDBID.None();
+  }
+
+  // What a round multiplies damage by: the product of the DamagePerHit Multiplier modifiers on its
+  // selector part, 1.0 if it has none (or isn't one of the mod's rounds). NPC guns have no
+  // DamagePerHit to carry the modifier, so the damage roll applies it (RollGunHit).
+  public static func AmmoDamageFactor(ammo: TweakDBID) -> Float {
+    let factor: Float = 1.0;
+    let selector: TweakDBID = AOData.SelectorForAmmo(ammo);
+    if !TDBID.IsValid(selector) {
+      return factor;
+    }
+    let modifiers: array<wref<StatModifier_Record>>;
+    TweakDBInterface.GetItemRecord(selector).StatModifiers(modifiers);
+    for modifier in modifiers {
+      let constant: wref<ConstantStatModifier_Record> = modifier as ConstantStatModifier_Record;
+      if IsDefined(constant) && Equals(constant.StatType().StatType(), gamedataStatType.DamagePerHit) && Equals(constant.ModifierType(), n"Multiplier") {
+        factor *= constant.Value();
+      }
+    }
+    return factor;
+  }
+
   // --- Tiers and distribution ----------------------------------------------------------------
 
   // "Power", "Tech" or "Smart".
