@@ -110,8 +110,11 @@ public final func GetPlayerInventoryPartsForItemRef(item: ItemID, const slotIDs:
 public final func GetItemsPlayerCanSellFast(player: wref<GameObject>, opt excludeEquipped: Bool) -> [wref<gameItemData>] {
   let all: array<wref<gameItemData>> = wrappedMethod(player, excludeEquipped);
   let kept: array<wref<gameItemData>>;
+  if !IsDefined(player) || AmmoFeedSystem.Get(player.GetGame()).debugKeepSelectors {
+    return all;
+  }
   for item in all {
-    if !AOData.IsSelector(item.GetID()) {
+    if IsDefined(item) && !AOData.IsSelector(item.GetID()) {
       ArrayPush(kept, item);
     }
   }
