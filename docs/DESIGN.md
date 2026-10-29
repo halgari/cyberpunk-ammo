@@ -237,6 +237,45 @@ The tooltip's damage range comes from the base weapon's min/max factors
 set to 1.01 to match. Melee weapons use their own records and keep 0.9..1.1. A round with its own
 range doesn't change the tooltip yet (none ships with one).
 
+## NPC damage parity
+
+NPC guns have `DamagePerHit` 0 (their damage comes from elsewhere), so the `DamagePerHit`
+Multiplier on a round's selector part (Mushrooms 1.2, +P 1.1, Dumbfires 1.8, 4ga Slugs 1.3, ...)
+does nothing when added to an NPC gun's stats. `AmmoFeedSystem.RollGunHit` applies it instead:
+for a hit whose instigator is not the player, every damage-type multiplier is also multiplied by
+`AmmoFeedSystem.DamageFactor(ammo)`, the product of the `DamagePerHit` Multiplier modifiers on the
+selector that feeds the round (`AOData.SelectorForAmmo`, `AOData.AmmoDamageFactor`; cached like
+the calibers). Unmanaged ammo and Common rounds are 1.0. V's own hits are not multiplied here:
+her gun's `DamagePerHit` carries the modifier already. The `DamagePerHit` modifier still lands
+on the NPC gun's stats, but is multiplied against 0, so it never doubles.
+
+Checked by `calibers/parity.lua` (factors per round, generic over every tier-1 round, and the
+Mushrooms ganger) and `calibers/parity.sh` (live hits: a Mushrooms Lexington on V is 1.2 x the
+roll, a Common one the plain roll, and V's own Mushrooms hits are rolled once).
+
+### Stat audit
+
+Every stat type a selector modifies (read from `src/tweaks/AmmoOverhaul/*.yaml`), and how it
+reaches NPC shots. The modifiers are added to the NPC gun's stats object (`NpcAmmo.RollUncommon`),
+so a stat the engine reads from the gun applies; only a stat the NPC path doesn't read from the
+gun needs help.
+
+| Stat | On NPC shots |
+| --- | --- |
+| `DamagePerHit` | Broken (gun value 0): fixed in the hook, checked by `parity.lua`/`parity.sh`. |
+| `CanWeaponIgnoreArmor` | Applies. Measured on a Mushrooms NPC gun in hand (`slice/npcdrop.sh`: -0.5). |
+| `SmartGunHitProbability` | Applies as a gun stat; smart rounds in NPC hands were seen to home (not measured as a number). |
+| `EffectiveRange`, `MaximumRange` | Read from the gun for falloff and range; not measured on an NPC. |
+| `ProjectilesPerShot` | Read by the firing code from the gun; not measured on an NPC shotgun. |
+| `HitReactionFactor` | Read from the attacker's weapon by the hit reaction; not measured on an NPC. |
+| `SpreadDefault*`, `SpreadMax*` | Applies to NPC aim spread; not measured. |
+| `SpreadAds*`, `RecoilKickMin/Max`, `WeaponEvolutionToStaminaCost` | Irrelevant: NPCs don't aim down sights, have no camera recoil and no stamina. |
+| `ChargeTime` | Irrelevant for now: NPC rail guns have `ChargeTime` 0, so a multiplier changes nothing. |
+| `Weight`, `Price` | Irrelevant: inventory and vendor stats of the ammo item. |
+
+"Not measured" rows follow the one rule above and have not been seen broken; none is a per-hit
+value that is 0 on NPC guns the way `DamagePerHit` is.
+
 ## Weight and inventory
 
 - Ammo items have a Weight stat (about one carry point per typical magazine). Stack items update
@@ -249,9 +288,7 @@ range doesn't change the tooltip yet (none ships with one).
 - Dual wield: only the right-hand gun is watched by the safety net.
 - Ammo of the same type shares one NPC stack; a gun first given to an NPC after its first draw
   adds no stock if the NPC already carries that ammo.
-- NPC guns have `DamagePerHit` 0 (their damage comes from elsewhere), so damage multipliers on a
-  round (Mushrooms, Dumbfires, 4ga Slugs) do nothing on NPC shots. Pen, hit probability, spread
-  and other stats do apply. NPC rail guns have `ChargeTime` 0, so Sleevers change nothing for them.
+- NPC rail guns have `ChargeTime` 0, so Sleevers change nothing for them.
 - Old saves: vanilla ammo already held becomes the four Common rounds. A gun moved to a new
   caliber (a Unity to .45, a Satara to heavy rail, a Kolac to 12.7, an Omaha to 5mm rail) starts
   empty until its rounds are bought or looted.

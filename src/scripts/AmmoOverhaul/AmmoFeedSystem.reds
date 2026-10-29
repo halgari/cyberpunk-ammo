@@ -44,6 +44,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
   // record's caliber ("" boxed too), keyed the same way.
   private let m_rolls: array<ref<inkHashMap>>;
   private let m_calibers: ref<inkHashMap>;
+  private let m_factors: ref<inkHashMap>;
 
   public static func Get(game: GameInstance) -> ref<AmmoFeedSystem> {
     return GameInstance.GetScriptableSystemsContainer(game).Get(n"AmmoOverhaul.AmmoFeedSystem") as AmmoFeedSystem;
@@ -283,6 +284,21 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return box.caliber;
   }
 
+  // AOData.AmmoDamageFactor of `ammo`, cached (keyed like the calibers).
+  public final func DamageFactor(ammo: TweakDBID) -> Float {
+    if !IsDefined(this.m_factors) {
+      this.m_factors = new inkHashMap();
+    }
+    let key: Uint64 = TDBID.ToNumber(ammo);
+    let box: ref<AOFactorBox> = this.m_factors.Get(key) as AOFactorBox;
+    if !IsDefined(box) {
+      box = new AOFactorBox();
+      box.factor = AOData.AmmoDamageFactor(ammo);
+      this.m_factors.Insert(key, box);
+    }
+    return box.factor;
+  }
+
   public static func Log(message: String) -> Void {
     ModLog(n"AmmoOverhaul", message);
     let system: ref<AmmoFeedSystem> = AmmoFeedSystem.Get(GetGameInstance());
@@ -363,6 +379,16 @@ public class AmmoFeedSystem extends ScriptableSystem {
   public final func DebugRollWith(ammo: String, family: String, damageType: String) -> String {
     let r: AORoll = this.Roll(TDBID.Create(ammo), family, damageType);
     return FloatToString(r.min) + " " + FloatToString(r.max);
+  }
+
+  public final func DebugDamageFactor(ammo: String) -> String {
+    return FloatToString(this.DamageFactor(TDBID.Create(ammo)));
+  }
+
+  // The ammo AOData.LoadedAmmo reads for `target`'s active weapon ("" if it holds none).
+  public final func DebugLoadedAmmo(target: ref<GameObject>) -> String {
+    let weapon: ref<WeaponObject> = GameObject.GetActiveWeapon(target);
+    return IsDefined(weapon) ? TDBID.ToStringDEBUG(AOData.LoadedAmmo(target, weapon)) : "";
   }
 
   // "min max mean duds hots" over `n` draws of an ammo's roll (duds and hots counted by value).
@@ -554,12 +580,14 @@ public class AmmoFeedSystem extends ScriptableSystem {
     let family: String = AOData.Family(AOData.CaliberForWeapon(ItemID.GetTDBID(weapon.GetItemID())));
     let whole: AORoll = system.Roll(ammo, family, "");
     let factor: Float = DamageRoll.Draw(whole);
+    // NPC guns have no DamagePerHit to carry the round's multiplier: apply it to the hit here.
+    let npcFactor: Float = instigator.IsPlayer() ? 1.0 : system.DamageFactor(ammo);
     let types: array<String> = AmmoFeedSystem.DamageTypes();
     let i: Int32 = 1;
     while i < ArraySize(types) {
       let own: AORoll = system.Roll(ammo, family, types[i]);
       let damageType: gamedataDamageType = IntEnum<gamedataDamageType>(Cast<Int32>(EnumValueFromString("gamedataDamageType", types[i])));
-      hitEvent.attackComputed.MultAttackValue(DamageRoll.Same(own, whole) ? factor : DamageRoll.Draw(own), damageType);
+      hitEvent.attackComputed.MultAttackValue((DamageRoll.Same(own, whole) ? factor : DamageRoll.Draw(own)) * npcFactor, damageType);
       i += 1;
     }
     return true;
@@ -597,6 +625,10 @@ public class AmmoFeedSystem extends ScriptableSystem {
       attackData.AddStatusEffect(effect, 1.0);
     }
   }
+}
+
+public class AOFactorBox extends IScriptable {
+  let factor: Float;
 }
 
 public class AOCaliberBox extends IScriptable {
