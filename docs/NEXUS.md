@@ -10,46 +10,46 @@ colors (Common grey, Uncommon green, Rare blue, Epic purple).
 
 ```
 [center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
-[size=4]130 rounds across 13 calibers, and a market to trade them in[/size][/center]
+[size=4]An ammo overhaul: 13 calibers, 130 rounds, and the shops, loot and crafting that go with them[/size][/center]
 
 [line]
 
-The game gives you four kinds of ammo. [b]Brass Market[/b] gives you 13 calibers and 130 different rounds, from plain ball to Epic match grade, and the economy to go with them: shops that stock them, NPCs who carry and fire them, recipes to load your own, and boxes you can break down for parts.
+The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 130 different rounds, from plain ball up to Epic match grade. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
 
-Every gun takes the caliber that fits it. Every caliber has Common, Uncommon, Rare and Epic rounds. Pick what goes in the mag from the gun's mod screen.
+Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon, Rare and Epic rounds. You pick which round the gun loads from its mod screen.
 
-[size=5][b][color=#2ad4ff]What you get[/color][/b][/size]
+[size=5][b][color=#2ad4ff]What the mod adds[/color][/b][/size]
 [list]
 [*]13 calibers: 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
 [*]130 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
-[*]NPCs carry real rounds, better ones the tougher they are. A gang boss with steel core goes through your armor the way your steel core goes through theirs. NPCs can run dry too: out of rounds, they switch guns or come at you with fists. You loot what they carried.
-[*]Gun shops stock every caliber up to Rare. Recipes drop from loot and show up on shelves. You craft rounds by the box and break boxes down for components.
-[*]Every round has its own box icon, labeled with its name, so Mushrooms and Penetrators don't look alike in your backpack.
+[*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
+[*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
+[*]Each round has its own box icon with the name printed on it, so Mushrooms and Penetrators look different in your backpack.
 [/list]
 
 [size=5][b][color=#2ad4ff]How it works: ammo is a gun mod[/color][/b][/size]
-Think of a round as an attachment with charges. Every gun gets an [b]Ammo[/b] slot on its mod screen, next to the scope and muzzle. Fit a round there and the gun is modified for as long as it stays fitted. The rounds in your backpack are the charges, and every shot spends one.
+A round is implemented as a weapon mod with charges. Every gun gets an [b]Ammo[/b] slot on its mod screen, next to the scope and muzzle slots. Fit a round there and the gun carries that round's stats for as long as it stays fitted. The rounds in your backpack are the charges, and each shot uses one.
 [list]
-[*]Because it's a real mod on the gun, a round can change anything a gun mod can: damage, armor pen, damage type, spread, range, charge time, how many projectiles come out, what happens on a hit.
+[*]Because it's a mod on the gun, a round can change anything a gun mod can: damage, armor pen, damage type, spread, range, charge time, how many projectiles come out, what happens on a hit.
 [*]One stack feeds every gun of its caliber. Fit Steel-Core on your Lexington and your Saratoga and both draw from the same box.
-[*]The gun never switches rounds on its own. Run a round dry and the gun stays empty until you pick another, so it won't quietly start burning through your Epics.
+[*]The gun doesn't switch rounds on its own. When a round runs out the gun stays empty until you fit another, so it won't start spending your Epic rounds without you choosing to.
 [*]Take the round out and the gun goes back to Common.
 [/list]
-The rest of the mod is about getting more charges.
+The rest of the mod covers where rounds come from: shops, loot and crafting.
 
-[size=5][b][color=#2ad4ff]Why it plays different[/color][/b][/size]
-Brass Market is horizontal progression. You don't level into better ammo. You find it, buy it or load it yourself, and then decide when it's worth spending.
+[size=5][b][color=#2ad4ff]Progression[/color][/b][/size]
+Brass Market is horizontal progression. Better ammo isn't tied to your level. You get it from loot, shops or crafting, and once you have it you decide when to use it.
 
-The good rounds run out. Load your fastest SMG with Epic Penetrators and it tears through one fight, then the box is empty and every new box costs Epic components.
+Higher tier rounds run out. An SMG loaded with Epic Penetrators will go through a box in one fight, and each new box costs Epic components to craft.
 
-So you plan. Rubber for a job where nobody can die. Subsonic for a quiet way in. EMP or Shaped Charge for a floor full of drones. Ball for the gangers who drop anyway.
+Which round you fit depends on the job. Rubber is for a job where nobody can die, Subsonic for going in quietly, EMP or Shaped Charge for a floor full of drones, and Ball for gangers who don't need anything better.
 
-NPCs carry the same rounds you do, and they fire them. A merc shooting Toxin Core at you is spending rounds you could have looted, so drop them fast and take what's left.
+NPCs carry the same rounds you do and fire them during the fight. Whatever an NPC shoots at you comes out of the stack you'd loot, so a merc firing Toxin Core has fewer rounds left by the time you reach the body.
 
-The families cost different amounts. Tech slugs are the cheapest to load, good for spraying. Smart rounds have the most payloads (EMP, fire, chem, flash, hacks) and cost the most to make. Power sits between them, with the most calibers and loads.
+The three families cost different amounts to craft. Tech slugs are the cheapest, which suits guns that spray. Smart rounds have the most payload types (EMP, fire, chem, flash, hacks) and cost the most. Power is in the middle and has the most calibers and loads.
 
-A gun is only as good as what you can feed it. The 9mm you'd have sold might be your best gun when you're sitting on 400 rounds of Incendiary. Carry two or three calibers and you can shoot what you've got instead of sticking to one gun type all game.
+Which gun is worth using depends partly on what ammo you have for it. A 9mm you'd otherwise sell is worth keeping if you're holding 400 rounds of Incendiary for it. Carrying guns in two or three calibers lets you shoot whatever ammo you've picked up instead of sticking to one gun type all game.
 
 [size=5][b][color=#2ad4ff]Tiers[/color][/b][/size]
 [list]
@@ -62,7 +62,7 @@ A gun is only as good as what you can feed it. The 9mm you'd have sold might be 
 [line]
 
 [size=5][b][color=#2ad4ff]Calibers[/color][/b][/size]
-Each caliber is a size. What the round does is up to the load you pick.
+Each gun is assigned one of the calibers below and loads only rounds of that caliber.
 
 [size=4][b][color=#d4a04c]Power[/color][/b][/size] (gunpowder cartridges)
 [list]
@@ -89,7 +89,7 @@ Each caliber is a size. What the round does is up to the load you pick.
 [*][b]25mm dart[/b]: Ashura
 [/list]
 
-Guns keep their own fire rate, pellet count and handling. The caliber only decides which box they load from; the round decides what happens when it hits. Heavier calibers weigh more and cost more.
+Guns keep their vanilla fire rate, pellet count and handling. The caliber decides which box a gun draws from, and the round decides what the shot does when it hits. Heavier calibers weigh more and cost more.
 
 [line]
 
@@ -103,9 +103,9 @@ What each load does. Percentages are changes from the plain round.
 [*][color=#3fbf5f][b]+P[/b][/color] (Uncommon): hot loads. +10% damage, +15% range, more recoil.
 [*][color=#3fa0ff][b]Steel-Core[/b][/color] (Rare): ignores 25% of armor. -10% damage.
 [*][color=#3fa0ff][b]Incendiary[/b][/color] (Rare): a chance to set the target on fire, a quarter of the damage is fire.
-[*][color=#3fa0ff][b]Subsonic[/b][/color] (Rare): much quieter. Silent kills. A little less damage and range.
+[*][color=#3fa0ff][b]Subsonic[/b][/color] (Rare): much quieter, kills stay silent. A little less damage and range.
 [*][color=#3fa0ff][b]Bouncers[/b][/color] (Rare): 30% chance to ricochet once.
-[*][color=#3fa0ff][b]Rubber[/b][/color] (Rare): non-lethal. Targets go down unconscious. Big flinch.
+[*][color=#3fa0ff][b]Rubber[/b][/color] (Rare): non-lethal, targets go down unconscious. Big flinch.
 [*][color=#3fa0ff][b]Hardcast[/b][/color] (Rare, 12mm): 25% chance to stagger, a little armor pen, more kick.
 [*][color=#3fa0ff][b]Ballistic Tip[/b][/color] (Rare, 7.62 and 12.7): +40% range, +5% damage.
 [*][color=#b04fff][b]Penetrator[/b][/color] (Epic): ignores 60% of armor.
@@ -118,7 +118,7 @@ What each load does. Percentages are changes from the plain round.
 [size=4][b][color=#d4a04c]Shotgun shells[/color][/b][/size]
 [list]
 [*][color=#b0b0b0][b]Buckshot[/b][/color] (Common): the plain shell.
-[*][color=#3fbf5f][b]Slugs[/b][/color] (Uncommon): one projectile with the whole shot, tight and long. 4-gauge slugs hit harder and knock targets down.
+[*][color=#3fbf5f][b]Slugs[/b][/color] (Uncommon): one projectile carrying the whole shot, tight spread and long range. 4-gauge slugs hit harder and knock targets down.
 [*][color=#3fbf5f][b]Birdshot[/b][/color] (Uncommon): twice the pellets, wide spread, big flinch.
 [*][color=#3fa0ff][b]Flechettes[/b][/color] (Rare): tighter spread, double range.
 [*][color=#3fa0ff][b]Beanbags[/b][/color] (Rare, 12ga): non-lethal knockdown.
@@ -184,19 +184,19 @@ What each load does. Percentages are changes from the plain round.
 [size=4][b]Buying[/b][/size]
 [list]
 [*]Gun shops stock every caliber, Common to Rare. Other vendors that sold ammo sell Common rounds.
-[*]Epic rounds never hit a shelf. Take them off people who had them.
+[*]Epic rounds aren't sold anywhere. They only come from loot.
 [/list]
 
 [size=4][b]Looting[/b][/size]
 [list]
-[*]NPCs carry the caliber of the gun in their hands, and better rounds the tougher they are. What they fired at you is what you loot.
+[*]NPCs carry ammo for the gun they're holding, and tougher NPCs carry better rounds. You loot whatever they have left after the fight.
 [*]Ammo in containers becomes any caliber and tier, leaning toward the guns you carry.
 [/list]
 
 [size=4][b]Crafting[/b][/size]
 [list]
 [*]Every caliber's Common round is craftable from the start.
-[*]Better rounds need a [b]load sheet[/b]: a recipe that drops from loot or turns up in gun shops. Pick it up and you know it.
+[*]Better rounds need a [b]load sheet[/b]: a recipe that drops from loot or turns up in gun shops. Picking it up teaches you the recipe.
 [*]Rounds craft by the box, from components of the round's own grade: Common components for Common rounds, up to Epic components for Epic rounds. Higher tiers make smaller boxes.
 [*]What a box costs depends on the family. [b]Tech[/b] slugs are the cheapest (1 component a box), [b]Power[/b] cartridges cost twice that (2), and [b]Smart[/b] rounds are the most expensive (4).
 [/list]
@@ -245,7 +245,7 @@ Other ammo, damage, vendor and loot overhauls are the likely conflicts.
 
 [size=5][b][color=#2ad4ff]Known issues[/color][/b][/size]
 [list]
-[*][b]Two reloads after changing rounds? Not a bug.[/b] Fitting a new round empties the gun (the rounds go back in your pack, nothing is lost). Back in the game, V looks the gun over, then draws it and reloads it with the new round. It looks like two reloads in a row, but it's an inspect, then a draw and one reload.
+[*][b]Two reloads after changing rounds is expected.[/b] Fitting a new round empties the gun (the rounds go back in your pack, nothing is lost). Back in the game, V looks the gun over, then draws it and reloads it with the new round. It looks like two reloads in a row, but it's an inspect, then a draw and one reload.
 [*]Loose ammo lying around the world is still the game's own ammo, which counts as the Common round of 9mm, 5.56, 12.7 or 12-gauge.
 [*]Some rounds' range and spread changes do nothing for NPCs, because the game gives NPC guns no range or spread values.
 [/list]
@@ -256,7 +256,7 @@ Other ammo, damage, vendor and loot overhauls are the likely conflicts.
 The next version adds:
 [list]
 [*][b]Legendary rounds.[/b] Extremely rare and hard to find.
-[*][b]Faction ammo.[/b] Rounds made by Night City's gangs and corps, each matching its faction's quirks. Most of it likely won't be craftable: you'll have to take it off the people who use it.
+[*][b]Faction ammo.[/b] Rounds made by Night City's gangs and corps, each matching its faction's quirks. Most of it probably won't be craftable; you'd get it from the people who use it.
 [/list]
 
 [line]
