@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Legendary rounds on live hits (spec docs/superpowers/specs/2026-10-29-legendary-rounds-design.md,
-# "Testing"), one check per mechanism. Parts: heartseeker cookoff lockout kebab gatecrasher stacks
+# "Testing"), one check per mechanism. Parts: heartseeker cookoff lockout kebab gatecrasher mulekick stacks
 # (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/legendary.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(stacks gatecrasher heartseeker lockout cookoff kebab)
+parts=("$@"); (( ${#parts[@]} )) || parts=(stacks gatecrasher heartseeker lockout cookoff kebab mulekick)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 pass() { echo "PASS $*"; }
 fail() { echo "FAIL $*"; out+="FAIL $*|"; }
@@ -19,7 +19,7 @@ stacks() {
   is "a Legendary stack in place of 1 is 1" "$(lua "return $SYS:DebugLegendaryStack(1)")" 1
   local n; n=$(lua "return $SYS:DebugLegendaryRolls('Ammo.AO_9mm_Match', 100000)")
   awk -v n="$n" 'BEGIN { exit !(n >= 140 && n <= 260) }' && pass "container roll ~0.2% ($n of 100000)" || fail "container roll ~0.2%: $n of 100000"
-  is "no Legendary roll for a caliber without one (4ga)" "$(lua "return $SYS:DebugLegendaryRolls('Ammo.AO_4ga_Slug', 20000)")" 0
+  [[ $(lua "return $SYS:DebugLegendaryRolls('Ammo.AO_4ga_Slug', 100000)") -gt 100 ]] && pass "4ga rolls Mule Kick in containers" || fail "4ga rolls Mule Kick in containers"
 }
 
 # --- gatecrasher: an NPC rolled to it carries its stats on the gun ------------------------------
@@ -261,6 +261,57 @@ return string.format('%d %d %.1f %.1f', #a, #b, avg(a), avg(b))")
   [[ $nb -ge 1 ]] && pass "Kebab's charged shots went through the near NPC into the far one" || fail "Kebab's charged shots reached the far NPC: $nb hits"
   awk -v a="$da" -v b="$db" 'BEGIN { exit !(a > 0 && b / a >= 0.9) }' && pass "the far NPC lost no damage (far/near $db/$da)" || fail "the far NPC lost damage: far $db, near $da"
   gone2
+}
+
+# --- mulekick: stats, V's shove, knockdown once per shot, an Elite staggers, an NPC's hit downs V ---
+CAR=Items.Preset_Carnage_Default
+MK=Items.AO_Feed_4ga_MuleKick
+mulekick() {
+  kit "{'$CAR', 1}, {'$MK', 1}, {'Ammo.AO_4ga_MuleKick', 300}"
+  draw $CAR; draw $CAR; feed $MK; sleep 2
+  is "the gun's knockback is at the cap" "$(lua "local s = Game.GetStatsSystem(); local id = Game.GetPlayer():GetActiveWeapon():GetEntityID()
+return string.format('%.0f %.0f', s:GetStatValue(id, gamedataStatType.KnockdownImpulse), s:GetStatValue(id, gamedataStatType.BaseKnockdownImpulse))")" "100 100"
+  # The shove itself; the trigger path (ShootEvents) needs a real shot, which the rig can't make.
+  local before after
+  before=$(lua "local p = Game.GetPlayer():GetWorldPosition(); return string.format('%.2f %.2f %.2f', p.x, p.y, p.z)")
+  local n0; n0=$(trail_count "V shoved")
+  lua "$SYS:DebugMuleKick(); return 1" >/dev/null; sleep 1
+  after=$(lua "local p = Game.GetPlayer():GetWorldPosition(); return string.format('%.2f %.2f %.2f', p.x, p.y, p.z)")
+  [[ "$before" != "$after" ]] && pass "the shove moved V ($before -> $after)" || fail "the shove moved V: $before"
+  # AIWeapon shots (the rig's, and every NPC's) don't go through the shooting state: no shove.
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Lexington
+  setup $CAR
+  n0=$(trail_count "V shoved")
+  shoot $CAR 2
+  is "a shot outside V's shooting state shoves nobody" "$(( $(trail_count "V shoved") - n0 ))" 0
+  local n; n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.Knockdown')")
+  local h; h=$(lua "return #RIG.ratios('V')")
+  [[ $n -ge 1 ]] && pass "Mule Kick hits knocked the NPC down ($n effects from $h pellet hits)" || fail "Mule Kick knockdown: $n from $h pellet hits"
+  (( n * 3 <= h )) && pass "one knockdown per shot, not per pellet ($n of $h)" || fail "one knockdown per shot: $n of $h"
+  lua "GetMod('AOTestKit').despawnAll(); return 1" >/dev/null
+  local FS=BaseStatusEffect.ForceStagger
+  is "Elite, Boss and MaxTac stagger, the rest fall" "$(lua "return $SYS:DebugMuleEffect('Elite') .. ' ' .. $SYS:DebugMuleEffect('Boss') .. ' ' .. $SYS:DebugMuleEffect('MaxTac') .. ' ' .. $SYS:DebugMuleEffect('Normal')")" "$FS $FS $FS BaseStatusEffect.Knockdown"
+  # A real Elite: the test character's rarity, for this spawn only.
+  lua "TweakDB:SetFlat('Character.AO_Test_Plain_Lexington.rarity', TweakDBID.new('NPCRarity.Elite')); TweakDB:Update('Character.AO_Test_Plain_Lexington'); return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Lexington
+  setup $CAR
+  lua "TweakDB:SetFlat('Character.AO_Test_Plain_Lexington.rarity', TweakDBID.new('NPCRarity.Normal')); TweakDB:Update('Character.AO_Test_Plain_Lexington'); return 1" >/dev/null
+  is "the spawned NPC is Elite" "$(lua "return tostring(RIG.npc():GetNPCRarity())")" "gamedataNPCRarity : Elite (1)"
+  shoot $CAR 2
+  n=$(lua "return RIG.effects('NPC', '$FS')")
+  [[ $n -ge 1 && $(lua "return RIG.effects('NPC', 'BaseStatusEffect.Knockdown')") == 0 ]] && pass "an Elite staggers and doesn't fall ($n)" || fail "an Elite: stagger $n, knockdown $(lua "return RIG.effects('NPC', 'BaseStatusEffect.Knockdown')")"
+  lua "GetMod('AOTestKit').despawnAll(); return 1" >/dev/null
+  legendary_roll on
+  spawn 0.0 Ammo.AO_4ga_MuleKick Character.AO_Test_Plain_Carnage
+  vulnerable
+  setup $CAR
+  legendary_roll off
+  npcshoot 2 6
+  n=$(lua "return RIG.effects('V', 'BaseStatusEffect.Knockdown')")
+  [[ $n -ge 1 ]] && pass "an NPC's Mule Kick knocked V down ($n)" || fail "an NPC's Mule Kick knocked V down: $n"
+  kitgod
+  lua "RIG.npcMode = nil; return 1" >/dev/null
 }
 
 for p in "${parts[@]}"; do echo "== $p"; $p; done

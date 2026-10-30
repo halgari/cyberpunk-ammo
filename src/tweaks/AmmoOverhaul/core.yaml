@@ -179,6 +179,8 @@ AmmoOverhaul.npcLegendaryChance.Boss: 0.10
 AmmoOverhaul.npcLegendaryChance.MaxTac: 0.10
 # Loot containers holding an Epic round: each ammo stack's chance to be its caliber's Legendary.
 AmmoOverhaul.lootLegendaryChance: 0.002
+# How hard a Mule Kick shot shoves V, in m/s (MuleKick.reds; the user's pick in play, 2026-10-30).
+AmmoOverhaul.muleKickShove: 14.0
 # A Legendary stack is this share of the stack it replaces, rounded up (containers, NPC loot).
 AmmoOverhaul.legendaryStackShare: 0.25
 

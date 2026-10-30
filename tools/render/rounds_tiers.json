@@ -312,6 +312,18 @@
     40
    ]
   ],
+  "MuleKick": [
+   [
+    200,
+    110,
+    20
+   ],
+   [
+    230,
+    200,
+    60
+   ]
+  ],
   "Ferro": [
    [
     52,
@@ -1426,6 +1438,21 @@
     "THERMITE SLUGS"
    ],
    "tier": 3
+  },
+  "4ga-mulekick": {
+   "shape": "G4",
+   "over": {
+    "color": "black",
+    "band": "yellow",
+    "head_mat": "steel",
+    "crimp": "star"
+   },
+   "look": "MuleKick",
+   "label": [
+    "4GA",
+    "MULE KICK"
+   ],
+   "tier": 4
   },
   "5mm-ferro": {
    "shape": "T5",

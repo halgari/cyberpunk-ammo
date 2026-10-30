@@ -375,6 +375,13 @@ KINDS = [
          stats=[],
          hit=dict(effects=[("AmmoOverhaul.LockoutJam", 1.0)]),
          desc="Smart rounds that push a lockout code into the target's gun on impact.\n\nEvery hit jams the target's weapon for 4 seconds."),
+    dict(load="MuleKick", title="Mule Kick", tier=LEGENDARY, look=((200, 110, 20), (230, 200, 60)),
+         art={'color': 'black', 'band': 'yellow', 'head_mat': 'steel'},
+         calibers=["4ga"],
+         # The target's fall and V's shove are MuleKick.reds (aoMuleKick); knockback at the game's cap.
+         stats=[add("KnockdownImpulse", 100.0), add("BaseKnockdownImpulse", 100.0)],
+         hit=dict(mulekick=True),
+         desc="Overloaded 4-gauge shells with more powder than the gun was built for. It throws whoever it hits and it throws you the other way.\n\nEvery hit knocks the target down; tough ones stagger. A hit on you knocks you down. Each shot shoves you hard away from your aim, so a shot at the floor takes you up."),
     dict(load="Heartseeker", title="Heartseeker", tier=LEGENDARY, look=((200, 110, 20), (190, 30, 40)),
          art={'color': 'red', 'band': 'black', 'load': 'frag', 'head_mat': 'steel', 'crimp': 'roll'},
          calibers=["12ga"],
@@ -486,6 +493,8 @@ def round_yaml(tag, k):
         flats.append((name, fmt(float(v))))
     if hit.get("cookoff"):
         flats.append(("aoCookOff", "true"))
+    if hit.get("mulekick"):
+        flats.append(("aoMuleKick", "true"))
     if hit.get("ranged_attack"):
         flats.append(("aoRangedAttack", f'"{hit["ranged_attack"]}"'))
     for name, v in flats:

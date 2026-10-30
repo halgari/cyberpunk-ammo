@@ -103,6 +103,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-4ga-Dragon"); ArrayPush(t, "4ga Dragon's Breath");
     ArrayPush(t, "AO-Ammo-4ga-Thermite"); ArrayPush(t, "4ga Thermite Slugs");
     ArrayPush(t, "AO-Ammo-Thermite-Desc"); ArrayPush(t, "A slug packed with thermite. It burns through plating and sets whoever it hits on fire.\n\nFires one projectile with the whole shot's damage. Sets the target badly on fire. Double damage against drones, mechs and vehicles.");
+    ArrayPush(t, "AO-Ammo-4ga-MuleKick"); ArrayPush(t, "4ga Mule Kick");
+    ArrayPush(t, "AO-Ammo-MuleKick-Desc"); ArrayPush(t, "Overloaded 4-gauge shells with more powder than the gun was built for. It throws whoever it hits and it throws you the other way.\n\nEvery hit knocks the target down; tough ones stagger. A hit on you knocks you down. Each shot shoves you hard away from your aim, so a shot at the floor takes you up.");
     ArrayPush(t, "AO-Ammo-5mm-Ferro"); ArrayPush(t, "5mm Ferro");
     ArrayPush(t, "AO-Ammo-Ferro-Desc"); ArrayPush(t, "Hardened ferrous slugs that skip off hard surfaces instead of shattering.\n\n40% chance to ricochet, up to twice. -10% damage.");
     ArrayPush(t, "AO-Ammo-5mm-SplitSlug"); ArrayPush(t, "5mm Split Slugs");

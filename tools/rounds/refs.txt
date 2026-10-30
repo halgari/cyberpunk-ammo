@@ -14,6 +14,7 @@ Ammo.AO_TLight_Sabot
 AmmoOverhaul.LockoutJam
 AmmoOverhaul.PingTag
 Attacks.SmartBulletHighPackage
+BaseStats.BaseKnockdownImpulse
 BaseStats.BulletMagnetismDefaultAngle
 BaseStats.CanSilentKill
 BaseStats.CanWeaponIgnoreArmor
@@ -25,6 +26,7 @@ BaseStats.FullAutoOnFullCharge
 BaseStats.HeadshotDamageMultiplier
 BaseStats.HitDismembermentFactor
 BaseStats.HitReactionFactor
+BaseStats.KnockdownImpulse
 BaseStats.ProjectilesPerShot
 BaseStats.ProjectilesPerShotBase
 BaseStats.RecoilKickMax

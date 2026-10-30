@@ -10,18 +10,18 @@ colors (Common grey, Uncommon green, Rare blue, Epic purple, Legendary orange).
 
 ```
 [center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
-[size=4]An ammo overhaul: 13 calibers, 148 rounds, and the shops, loot and crafting that go with them[/size][/center]
+[size=4]An ammo overhaul: 13 calibers, 149 rounds, and the shops, loot and crafting that go with them[/size][/center]
 
 [line]
 
-The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 148 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
+The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 149 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
 
 Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon, Rare and Epic rounds. You pick which round the gun loads from its mod screen.
 
 [size=5][b][color=#2ad4ff]What the mod adds[/color][/b][/size]
 [list]
 [*]13 calibers: 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
-[*]148 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
+[*]149 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
 [*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
 [*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
@@ -66,6 +66,7 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [*][color=#e8a33c][b]Cook-off[/b][/color] (9mm, .45, 12mm, 5.56, 7.62): a kill sets off a blast at the body that hurts everyone close by, you included. An enemy's Cook-off hit on you sets off your own grenade if it's charged.
 [*][color=#e8a33c][b]Kebab[/b][/color] (light and heavy rail): a charged shot goes through every body and wall in its line with no damage lost.
 [*][color=#e8a33c][b]Lockout[/b][/color] (10mm, 20mm, 25mm): every hit jams the target's weapon for 4 seconds.
+[*][color=#e8a33c][b]Mule Kick[/b][/color] (4-gauge): every hit knocks the target down, tough ones stagger. Each shot shoves you hard away from your aim, so a shot at the floor sends you up.
 [*][color=#e8a33c][b]Heartseeker[/b][/color] (12-gauge): one guided slug that locks onto heads, no Smart Link needed. Ignores all armor, +100% headshot damage, +50% crit chance.
 [*]4-gauge's Legendary round is still to come.
 [/list]

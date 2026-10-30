@@ -452,6 +452,14 @@ public class AmmoFeedSystem extends ScriptableSystem {
     CookOff.OnHit(this.m_player, target);
   }
 
+  public final func DebugMuleKick() -> Void {
+    MuleKick.Shove(this.m_player);
+  }
+
+  public final func DebugMuleEffect(rarity: String) -> String {
+    return TDBID.ToStringDEBUG(MuleKick.NpcEffect(rarity));
+  }
+
   public final func DebugLegendaryStack(quantity: Int32) -> Int32 {
     return AOData.LegendaryStack(quantity);
   }
@@ -916,6 +924,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
       || attackData.HasFlag(hitFlag.FriendlyFireIgnored);
     if AOData.CookOff(ammo) && IsDefined(hitEvent.target) && !gated {
       CookOff.OnHit(instigator, hitEvent.target);
+    }
+    if AOData.MuleKick(ammo) && !gated {
+      MuleKick.OnHit(attackData, hitEvent.target);
     }
     let chances: array<Float>;
     let effects: array<TweakDBID> = AOData.HitEffects(ammo, chances);

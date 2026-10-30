@@ -421,6 +421,7 @@ public abstract class AOData {
   //   <ammo>.aoMachineBonus: damage factor against drones, mechs, androids, turrets and vehicles
   //   <ammo>.aoNonlethal: a kill knocks the target out instead
   //   <ammo>.aoCookOff: a kill sets off a blast at the body, a hit on V V's grenade (CookOff.reds)
+  //   <ammo>.aoMuleKick: knocks the target down and shoves V on each shot (MuleKick.reds)
   //   <ammo>.aoRangedAttack: the RangedAttackPackage the gun fires instead of its own (Heartseeker.reds)
 
   public static func HitEffects(ammo: TweakDBID, out chances: array<Float>) -> array<TweakDBID> {
@@ -480,6 +481,10 @@ public abstract class AOData {
 
   public static func CookOff(ammo: TweakDBID) -> Bool {
     return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoCookOff"), false);
+  }
+
+  public static func MuleKick(ammo: TweakDBID) -> Bool {
+    return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoMuleKick"), false);
   }
 
   public static func RangedAttack(ammo: TweakDBID) -> TweakDBID {
