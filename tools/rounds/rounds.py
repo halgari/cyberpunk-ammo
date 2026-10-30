@@ -180,7 +180,9 @@ KINDS = [
          # is half damage.
          per_caliber={tag: dict(stats=armor(0.60) + [add("TechPierceEnabled", 1.0), mult("TechPierceChargeLevel", 0.0),
                                                      add("TechPierceDamageFactor", -0.5)],
-                                desc="Tungsten-core rounds. They punch through armor and thin cover.\n\nIgnores 60% of armor. Goes through thin cover at half damage.")
+                                desc="Tungsten-core rounds. They punch through armor and thin cover.\n\nIgnores 60% of armor. Goes through thin cover at half damage.",
+                                # A red stripe, so the cover-piercing boxes stand apart from the gold armor-only ones.
+                                look=((25, 25, 28), (180, 40, 30)), look_key="PenetratorCover")
                       for tag in ("12mm", "762", "127")},
          desc="Tungsten-core rounds. Armor barely slows them down.\n\nIgnores 60% of armor."),
     dict(load="Match", title="Match", tier=EPIC, look=((235, 232, 220), (40, 38, 34)),
@@ -496,7 +498,8 @@ def write_text(all_rounds):
 
 
 def write_art(all_rounds):
-    looks = {k["load"]: k["look"] for _, k in all_rounds}
+    # A caliber can have its own box colors (per_caliber look and look_key); otherwise the kind's.
+    looks = {k.get("look_key", k["load"]): k["look"] for _, k in all_rounds}
     art = {}
     for tag, k in all_rounds:
         c = CALIBERS[tag]
@@ -505,7 +508,7 @@ def write_art(all_rounds):
         if c["shape"] in ("G12", "G4"):
             # Shells: a rolled crimp over one projectile (as the Slugs), a star crimp over pellets.
             over.setdefault("crimp", "roll" if "Fires one projectile" in k["desc"] else "star")
-        art[ids(tag, k)["art"]] = dict(shape=c["shape"], over=over, look=k["load"], label=label)
+        art[ids(tag, k)["art"]] = dict(shape=c["shape"], over=over, look=k.get("look_key", k["load"]), label=label)
     (ROOT / "tools" / "render" / "rounds_tiers.json").write_text(
         json.dumps(dict(looks=looks, rounds=art), indent=1) + "\n")
 

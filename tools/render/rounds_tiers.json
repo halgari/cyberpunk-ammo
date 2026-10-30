@@ -120,6 +120,18 @@
     34
    ]
   ],
+  "PenetratorCover": [
+   [
+    25,
+    25,
+    28
+   ],
+   [
+    180,
+    40,
+    30
+   ]
+  ],
   "BallisticTip": [
    [
     150,
@@ -702,7 +714,7 @@
     "tip": "black",
     "tipfrac": 0.55
    },
-   "look": "Penetrator",
+   "look": "PenetratorCover",
    "label": [
     "12MM",
     "PENETRATOR"
@@ -893,7 +905,7 @@
     "tip": "black",
     "tipfrac": 0.55
    },
-   "look": "Penetrator",
+   "look": "PenetratorCover",
    "label": [
     "7.62",
     "PENETRATOR"
@@ -989,7 +1001,7 @@
     "tip": "black",
     "tipfrac": 0.55
    },
-   "look": "Penetrator",
+   "look": "PenetratorCover",
    "label": [
     "12.7",
     "PENETRATOR"
