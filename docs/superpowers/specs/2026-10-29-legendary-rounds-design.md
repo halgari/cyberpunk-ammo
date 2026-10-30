@@ -65,10 +65,13 @@ Penetrators) to 149.
 
 **Mule Kick** (4ga; replaces Bouncing Betty, see the probe results)
 - An overloaded shell that throws both ends of the gun.
-- The target hit is launched and ragdolled, far harder than any lower round.
+- Every hit knocks the target down (`BaseStatusEffect.Knockdown`) and the gun's knockback stats go
+  to their cap of 100, so a kill throws the body. Elite, Boss and MaxTac NPCs stagger instead of
+  falling (user ruling).
 - V is shoved hard away from the shot, using the game's own push (`PSMImpulse`, as jump pads do):
   fired forward, V is thrown back; fired at the floor, V goes up; fired in the air, V gets a
-  second jump or a dodge.
+  second jump or a dodge. Strength 14, played and approved by the user: push = -14 x the camera's
+  forward. Only a real shot kicks, not a trigger pull on an empty gun.
 - An NPC's hit on V knocks V down hard. An NPC firing it doesn't move.
 
 ## Probes (in the game, before the plan)
