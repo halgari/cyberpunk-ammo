@@ -117,3 +117,35 @@ round is built.
 ## Out of scope
 
 Faction rounds. Legendary rounds for the other mechanics. Crafting of Legendary rounds.
+
+## Probe results (2026-10-30, played by the user)
+
+**Probe 4, the jam on V: passes.** `StatusEffectHelper.ApplyStatusEffect(player,
+"BaseStatusEffect.WeaponMalfunction")` jams V's drawn gun for its 14 s, then it clears. Lockout
+applies it again on every hit.
+
+**Probe 2, a blast from script: passes.**
+- `RPGManager.PrepareGameEffectAttack(instigator, source, attackID, position)` then
+  `:StartAttack()` sets off a blast at a point. From CET the call takes the instigator first (no
+  game instance).
+- `Attacks.Explosion` (the device and barrel blast) has `OverridePlayerDamageWithFixedPercentage`
+  and `OverrideNPCDamageBasedOnTiers`: a fixed share of V's health, NPC damage by tier. It killed a
+  test NPC from full and took a large chunk off V. Cook-off's damage uses it.
+- A grenade's own attack (`Attacks.CommonFragGrenade`, from the grenade record's `attack` flat)
+  set off from script does almost no damage: its damage comes from the thrown grenade item, and
+  there is none. It still shows the grenade's blast and carries its effects (EMP and so on), so
+  Cook-off on V sets off both: the grenade's attack for its look and effects, the device blast
+  for the damage.
+- **V's grenade:** the selected grenade is `EquipmentSystem.GetData(player):GetActiveGadget()`
+  (the equip slots read empty). Charges are the `GrenadesCharges` stat pool: max = stat
+  `GrenadesCharges` (70), charges = stat `GrenadesMaxCharges` (2), so one charge = max / charges
+  (35). A thrown grenade takes one charge off. Cook-off checks pool >= one charge and takes it
+  off with `RequestChangingStatPoolValue`; the pool recharges as normal.
+- In play: Copperhead kills set off a blast at the body (Cook-off on NPCs); an NPC hit on V with a
+  charge ready cooked off V's frag, hits with no charge did nothing until it refilled.
+- Hooks used: CET `Observe("NPCPuppet", "OnHit"/"OnDeath")` and `Observe("PlayerPuppet",
+  "OnHit")`, filtered to ranged attacks so blasts don't set off more blasts. The real build puts
+  this in the mod's hit code.
+
+Still to run: probe 1 (a projectile or thrown grenade from a Power gun) and probe 3 (Tech pierce
+through bodies).
