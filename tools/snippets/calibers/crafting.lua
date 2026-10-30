@@ -22,11 +22,11 @@ for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
   local ammo, tiers = flat(K, "selectorAmmo") or {}, flat(K, "selectorTiers") or {}
   for i, a in ipairs(ammo) do
     local name, t = str(a), tiers[i]
-    if t == 4 then
-      -- Legendary: never crafted (no recipe at all), broken down as the other tiers.
+    if t >= 4 then
+      -- Legendary and faction rounds: never crafted (no recipe at all), broken down as the other tiers.
       local r = flat(a, "aoRecipe")
-      check(name .. " (Legendary) has no recipe", r == nil or r == "", tostring(r))
-      check(name .. " (Legendary) has no recipe record", rec("Items.AO_Recipe_" .. name:gsub("^Ammo%.", "")) == nil)
+      check(name .. " (tier " .. t .. ") has no recipe", r == nil or r == "", tostring(r))
+      check(name .. " (tier " .. t .. ") has no recipe record", rec("Items.AO_Recipe_" .. name:gsub("^Ammo%.", "")) == nil)
       local want = ({ Power = { b, 1 }, Smart = { b, 2 }, Tech = { 2 * b, 1 } })[family]
       check(name .. " (Legendary) breaks down " .. want[2] .. " per " .. want[1],
         flat(a, "aoScrapRounds") == want[1] and flat(a, "aoScrapGive") == want[2])

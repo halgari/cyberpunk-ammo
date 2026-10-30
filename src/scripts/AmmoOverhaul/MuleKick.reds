@@ -62,5 +62,10 @@ public abstract class MuleKick {
 @wrapMethod(ShootEvents)
 protected final func OnEnter(stateContext: ref<StateContext>, scriptInterface: ref<StateGameScriptInterface>) -> Void {
   wrappedMethod(stateContext, scriptInterface);
-  MuleKick.OnShot(scriptInterface.executionOwner as PlayerPuppet, this.GetWeaponObject(scriptInterface));
+  let player: ref<PlayerPuppet> = scriptInterface.executionOwner as PlayerPuppet;
+  let weapon: ref<WeaponObject> = this.GetWeaponObject(scriptInterface);
+  MuleKick.OnShot(player, weapon);
+  if IsDefined(player) && IsDefined(weapon) {
+    FactionRounds.OnShot(player, AOData.LoadedAmmo(player, weapon));
+  }
 }

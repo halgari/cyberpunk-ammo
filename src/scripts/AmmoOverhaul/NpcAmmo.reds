@@ -136,7 +136,7 @@ public abstract class NpcAmmo {
     }
   }
 
-  // Gives one of the mod's guns a better round than Common, by its NPC's rank (RollTier): GunAmmo
+  // Gives one of the mod's guns a better round than Common, by its NPC's rank (RollSelector): GunAmmo
   // then returns that round, and its selector's stat modifiers go onto the gun. No part is fitted:
   // TransactionSystem.AddPart on an NPC's drawn gun hangs the game (2.50). Guns whose feed slot is
   // already filled (a preset's selector) keep it. Each gun is rolled once. The tier given, 0 for none.
@@ -151,8 +151,7 @@ public abstract class NpcAmmo {
       return 0;
     }
     let rarity: String = EnumValueToString("gamedataNPCRarity", Cast<Int64>(EnumInt(npc.GetNPCRarity())));
-    let tier: Int32 = NpcAmmo.RollTier(caliber, rarity);
-    let selector: TweakDBID = NpcAmmo.PickTier(caliber, tier);
+    let selector: TweakDBID = NpcAmmo.RollSelector(caliber, rarity, AOData.FactionOf(npc));
     if !TDBID.IsValid(selector) {
       return 0;
     }
@@ -165,20 +164,36 @@ public abstract class NpcAmmo {
       stats.AddModifier(gunData.GetStatsObjectID(), NpcAmmo.ToModifier(modifier, stats, gunData.GetStatsObjectID()));
     }
     AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " got " + TDBID.ToStringDEBUG(selector) + " for " + TDBID.ToStringDEBUG(ItemID.GetTDBID(gun)));
-    return tier;
+    return AOData.SelectorTier(caliber, selector);
   }
 
-  // The tier an NPC of `rarity` gets for a gun of `caliber`: Legendary rolls first with the rank's
-  // own chance (Elite, Boss and MaxTac only); then Epic, Rare and Uncommon each roll with their
-  // family share times the rank's factor, a miss falling to the next tier down; 0 (Common) if all
-  // miss. Tiers the caliber has no round for are skipped.
+  // The selector an NPC of `rarity` and `faction` ("" for none) gets for a gun of `caliber`, invalid
+  // for Common: Legendary, then its faction's rounds, then the general tiers; a miss falls to the next.
+  public static func RollSelector(caliber: String, rarity: String, faction: String) -> TweakDBID {
+    if NpcAmmo.RollsLegendary(caliber, rarity) {
+      return NpcAmmo.PickTier(caliber, 4);
+    }
+    let rolled: TweakDBID = FactionRounds.Roll(caliber, rarity, faction);
+    return TDBID.IsValid(rolled) ? rolled : NpcAmmo.PickTier(caliber, NpcAmmo.RollGeneral(caliber, rarity));
+  }
+
+  // The tier an NPC of `rarity` with no faction gets for a gun of `caliber`.
   public static func RollTier(caliber: String, rarity: String) -> Int32 {
-    let family: String = AOData.Family(caliber);
+    return NpcAmmo.RollsLegendary(caliber, rarity) ? 4 : NpcAmmo.RollGeneral(caliber, rarity);
+  }
+
+  // Legendary rolls with the rank's own chance (Elite, Boss and MaxTac only).
+  private static func RollsLegendary(caliber: String, rarity: String) -> Bool {
     let legendary: Float = AOData.LegendaryChance(rarity);
     let legendaries: array<TweakDBID> = AOData.SelectorsForTier(caliber, 4);
-    if legendary > 0.0 && ArraySize(legendaries) > 0 && RandF() < legendary {
-      return 4;
-    }
+    return legendary > 0.0 && ArraySize(legendaries) > 0 && RandF() < legendary;
+  }
+
+  // Epic, Rare and Uncommon each roll with their family share times the rank's factor, a miss
+  // falling to the next tier down; 0 (Common) if all miss. Tiers the caliber has no round for are
+  // skipped.
+  private static func RollGeneral(caliber: String, rarity: String) -> Int32 {
+    let family: String = AOData.Family(caliber);
     let tier: Int32 = 3;
     while tier >= 1 {
       let chance: Float = MinF(1.0, AOData.TierShare(family, tier) * AOData.NpcTierFactor(rarity, tier));
@@ -232,6 +247,7 @@ public abstract class NpcAmmo {
     }
     let cost: Int32 = Cast<Int32>(GameInstance.GetStatsSystem(npc.GetGame()).GetStatValue(Cast<StatsObjectID>(weapon.GetEntityID()), gamedataStatType.NumShotsToFire));
     GameInstance.GetTransactionSystem(npc.GetGame()).RemoveItem(npc, ItemID.CreateQuery(ammo), Min(Max(cost, 1), have));
+    FactionRounds.OnShot(npc, ammo);
     return true;
   }
 
@@ -289,6 +305,7 @@ public abstract class NpcAmmo {
   // Gives back whatever of the noted ammo the body is missing, once per note: after that, rounds
   // missing are rounds the player took.
   public static func TopUpLoot(npc: ref<NPCPuppet>) -> Void {
+    FactionRounds.GiveParts(npc);
     if npc.aoLootGiven {
       return;
     }
@@ -414,6 +431,7 @@ public final static func Update(context: ScriptExecutionContext, record: wref<AI
 @wrapMethod(NPCPuppet)
 protected cb func OnDeath(evt: ref<gameDeathEvent>) -> Bool {
   CookOff.OnDeath(this);
+  FactionRounds.OnDeath(this);
   NpcAmmo.NoteLoot(this);
   NpcLootCallback.Schedule(this);
   return wrappedMethod(evt);
@@ -433,7 +451,7 @@ public class NpcLootCallback extends DelayCallback {
   public let npc: wref<NPCPuppet>;
 
   public static func Schedule(npc: ref<NPCPuppet>) -> Void {
-    if ArraySize(npc.aoLootAmmo) == 0 {
+    if ArraySize(npc.aoLootAmmo) == 0 && !TDBID.IsValid(npc.aoPartsKill) {
       return;
     }
     let callback: ref<NpcLootCallback> = new NpcLootCallback();
@@ -442,7 +460,7 @@ public class NpcLootCallback extends DelayCallback {
   }
 
   public func Call() -> Void {
-    if IsDefined(this.npc) && ArraySize(this.npc.aoLootAmmo) > 0 {
+    if IsDefined(this.npc) && (ArraySize(this.npc.aoLootAmmo) > 0 || TDBID.IsValid(this.npc.aoPartsKill)) {
       NpcAmmo.TopUpLoot(this.npc);
       AmmoFeedSystem.Log(NpcAmmo.Name(this.npc) + " topped up its loot after death");
     }
@@ -452,7 +470,7 @@ public class NpcLootCallback extends DelayCallback {
 @wrapMethod(ScriptedPuppet)
 private final func EvaluateLootQuality() -> Bool {
   let npc: ref<NPCPuppet> = this as NPCPuppet;
-  if IsDefined(npc) && (ArraySize(npc.aoLootAmmo) > 0 || ArraySize(npc.aoStashedGuns) > 0) {
+  if IsDefined(npc) && (ArraySize(npc.aoLootAmmo) > 0 || ArraySize(npc.aoStashedGuns) > 0 || TDBID.IsValid(npc.aoPartsKill)) {
     NpcAmmo.RestoreLoot(npc);
   }
   return wrappedMethod();

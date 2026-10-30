@@ -290,6 +290,32 @@ public abstract class AOData {
     return "";
   }
 
+  // The faction whose rounds `npc` carries, from its character record's affiliation
+  // (AmmoOverhaul.factionOf.<EnumName>); "" for everyone else.
+  public static func FactionOf(npc: ref<NPCPuppet>) -> String {
+    let record: ref<Character_Record> = TweakDBInterface.GetCharacterRecord(npc.GetRecordID());
+    if !IsDefined(record) || !IsDefined(record.Affiliation()) {
+      return "";
+    }
+    return TweakDBInterface.GetString(TDBID.Create("AmmoOverhaul.factionOf." + NameToString(record.Affiliation().EnumName())), "");
+  }
+
+  // The chance an NPC of `rarity` carries a faction round in a gun, Epic or not (0: never).
+  public static func FactionChance(rarity: String, epic: Bool) -> Float {
+    return TweakDBInterface.GetFloat(TDBID.Create((epic ? "AmmoOverhaul.npcFactionEpicChance." : "AmmoOverhaul.npcFactionChance.") + rarity), 0.0);
+  }
+
+  // The selectors of a tier whose rounds belong to `faction`.
+  public static func SelectorsForFaction(caliber: String, faction: String, tier: Int32) -> array<TweakDBID> {
+    let out: array<TweakDBID>;
+    for selector in AOData.SelectorsForTier(caliber, tier) {
+      if Equals(TweakDBInterface.GetString(AOData.Flat(AOData.SelectorAmmo(caliber, selector), "aoFaction"), ""), faction) {
+        ArrayPush(out, selector);
+      }
+    }
+    return out;
+  }
+
   // A round's tier, or -1 if it isn't one of the mod's.
   public static func AmmoTier(ammo: TweakDBID) -> Int32 {
     let caliber: String = AOData.CaliberForAmmo(ammo);
@@ -422,6 +448,8 @@ public abstract class AOData {
   //   <ammo>.aoNonlethal: a kill knocks the target out instead
   //   <ammo>.aoCookOff: a kill sets off a blast at the body, a hit on V V's grenade (CookOff.reds)
   //   <ammo>.aoMuleKick: knocks the target down and shoves V on each shot (MuleKick.reds)
+  //   <ammo>.aoSelfJam: each shot's chance to jam the shooter's own gun (FactionRounds.reds)
+  //   <ammo>.aoPartsPuller: V's kill leaves crafting components on the body (FactionRounds.reds)
 
   public static func HitEffects(ammo: TweakDBID, out chances: array<Float>) -> array<TweakDBID> {
     let effects: array<TweakDBID> = AOData.GetIDs(AOData.Flat(ammo, "aoEffects"));
@@ -484,6 +512,14 @@ public abstract class AOData {
 
   public static func MuleKick(ammo: TweakDBID) -> Bool {
     return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoMuleKick"), false);
+  }
+
+  public static func SelfJam(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoSelfJam"), 0.0);
+  }
+
+  public static func PartsPuller(ammo: TweakDBID) -> Bool {
+    return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoPartsPuller"), false);
   }
 
   public static func IsNonlethal(ammo: TweakDBID) -> Bool {

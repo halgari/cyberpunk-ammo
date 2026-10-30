@@ -378,6 +378,38 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // The faction `npc` rolls for ("" for none).
+  public final func DebugFactionOf(npc: ref<NPCPuppet>) -> String {
+    return AOData.FactionOf(npc);
+  }
+
+  // "ammo=count;..." over `n` NpcAmmo.RollSelector calls for an NPC of `rarity` and `faction` (no
+  // puppet needed); "none" counts the Common results.
+  public final func DebugFactionPick(caliber: String, rarity: String, faction: String, n: Int32) -> String {
+    let names: array<String>;
+    let counts: array<Int32>;
+    let i: Int32 = 0;
+    while i < n {
+      let selector: TweakDBID = NpcAmmo.RollSelector(caliber, rarity, faction);
+      let name: String = TDBID.IsValid(selector) ? TDBID.ToStringDEBUG(AOData.SelectorAmmo(caliber, selector)) : "none";
+      let at: Int32 = ArrayFindFirst(names, name);
+      if at < 0 {
+        ArrayPush(names, name);
+        ArrayPush(counts, 1);
+      } else {
+        counts[at] += 1;
+      }
+      i += 1;
+    }
+    let text: String = "";
+    i = 0;
+    while i < ArraySize(names) {
+      text += names[i] + "=" + IntToString(counts[i]) + ";";
+      i += 1;
+    }
+    return text;
+  }
+
   // "tier=count;..." over `n` NpcAmmo.RollTier calls for an NPC of `rarity` (no puppet needed).
   public final func DebugTierPick(caliber: String, rarity: String, n: Int32) -> String {
     let counts: array<Int32> = [0, 0, 0, 0, 0];
@@ -857,6 +889,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     // A Cook-off mark only counts for a death straight after that hit: any other hit (a blast, a
     // melee finisher, another round) clears it, so a Cook-off blast kill sets off nothing.
     CookOff.Clear(hitEvent.target);
+    FactionRounds.ClearParts(hitEvent.target);
     let instigator: ref<GameObject> = attackData.GetInstigator();
     if !IsDefined(instigator) {
       return;
@@ -883,6 +916,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
     }
     if AOData.MuleKick(ammo) && !gated {
       MuleKick.OnHit(attackData, hitEvent.target);
+    }
+    if AOData.PartsPuller(ammo) && instigator.IsPlayer() && !gated {
+      FactionRounds.MarkParts(hitEvent.target, ammo);
     }
     let chances: array<Float>;
     let effects: array<TweakDBID> = AOData.HitEffects(ammo, chances);
