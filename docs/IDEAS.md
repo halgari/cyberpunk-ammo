@@ -712,3 +712,100 @@ Useful smart levers: SmartGunAds/HipMaxLockedTargets, TimeToLock, HitProbability
 3. **Swarm** (10mm): mass lock is a different playstyle, and it is stats only.
 4. **Spotters** (25mm): the sniper dart as the squad's force multiplier; unusual and memorable.
 5. **Corner-turners** (10mm): lock around corners; cheap to do, clearly different, and a real threat from NPCs too.
+
+# Faction rounds
+
+Added 2026-10-30. The odder ideas above work better as faction ammo than as general stock: a
+round tied to one faction can be stranger and more one-sided than something every gun shop
+sells. The faction's NPCs carry and fire it, so V meets it in their fights before getting any.
+Same rules for NPCs and V, as always.
+
+## Open questions
+
+- **Tier.** Faction rounds could be their own label at Rare and Epic quality, or sit inside the
+  normal tiers with a faction tag. Suggest Rare and Epic only, so the effects have room.
+- **Where they come from.** Suggest: dropped by that faction's NPCs, and sometimes stocked by
+  gun shops on their turf. Not crafted at first.
+- **Calibers.** Each faction gets the calibers its NPCs actually carry. That needs a pass over
+  the NPC loadouts in TweakDB before the rounds are pinned down.
+
+## Themes, all factions
+
+Gangs:
+- **Maelstrom:** overclocked and unstable. Rounds that push the gun past spec: faster cycle
+  time, harder recoil, heat. Chrome disruption on the Tech side. Drawbacks that bite the
+  shooter. Brutal kills.
+- **Scavengers:** junk and harvest. Recycled, hand-loaded, cheap and unreliable rounds. Dirty
+  wounds. A kill that leaves more to strip off the body.
+- **Tyger Claws:** speed and style. Handling, quick aim-in and fast draws, for bikes and close
+  fights. Bleeding, from the blade culture.
+- **Valentinos:** luck and showing off. Crits, headshots and one big shot, mostly on pistols and
+  revolvers. Rounds that reward the risky play.
+- **6th Street:** military surplus. Old stock that works: cheap steel-core, tracer belts,
+  steady handling. Holding a street with suppressing fire.
+- **Animals:** brute force. Heavy rounds with big knockback, stagger and knockdown, and the kick
+  to match. Only works if you're strong enough to hold the gun.
+- **Voodoo Boys:** netrunner ammo. Hits that set up quickhacks: tag the target, open it up, or
+  pass a hack along to whoever's nearby. Tech and Smart guns.
+- **Moxes:** self-defense. Pepper, flash and knockout rounds that stop someone without a body.
+  They rarely fight V, so these would mostly come from vendors.
+- **Wraiths:** Badlands raiders. Anti-vehicle and ambush rounds: hit the car and the driver.
+  Fire.
+- **Barghest:** Dogtown militia with stolen Militech gear. War-zone overkill: dismemberment,
+  explosive heads on the big calibers, fear.
+
+Corps:
+- **Arasaka:** precision and control. Every round the same, low recoil, quiet kills, and
+  surveillance: a hit marks the target for the whole team. Best on Smart and Tech, which they
+  make.
+- **Militech:** battlefield munitions. Belted mixes (every Nth round is tracer or AP), suppression,
+  HE on the big guns, anti-armor.
+- **Kang Tao:** smart guidance, cheap and mass-produced. More locks and more rockets, each one
+  weaker.
+- **Biotechnica:** chemicals. Poison and chem damage, stronger than the general Chem payloads.
+- **Petrochem:** fuel. Incendiary and lingering fire.
+
+Law and others:
+- **NCPD:** duty loads. Stop the threat: stagger and less-lethal, plus tagging suspects. The
+  mod already has Rubber and Beanbags, so this is the thinnest theme.
+- **MaxTac:** borg killers. Rounds for putting down someone full of chrome: shut down
+  cyberware, a bonus against heavy armor and bosses.
+- **Aldecaldos:** nomad hunters. Hand-loaded long-range rounds, reliable, good against vehicles
+  and big game. Friendly to V, so vendor-only.
+- **FIA (Dogtown):** spy craft. Suppressed, quiet and precise.
+- **Trauma Team, NetWatch:** skip; they barely fight V.
+
+## First three: candidates
+
+For the next release. Two or three ideas each; pick one or two per faction.
+
+**Maelstrom**
+- **Redliners** (Power rifles and SMGs). Overpressure loads that make the gun cycle faster. The
+  cost is a lot more recoil and spread, and a small chance each shot that the gun jams.
+  Levers: CycleTime, recoil, spread; WeaponMalfunction on the shooter. `stats` plus `probe`
+  (jamming the shooter's own gun; Lockout's probe 4 covers half of it).
+- **Chrome-cookers** (Tech). Each hit has a chance to make the target's cyberware malfunction.
+  On V, V's cyberware glitches. Tech only, since Power rounds don't carry a charge. Levers:
+  CyberwareMalfunction in the hit code. `hit-code`.
+- **Meat-grinders** (Power). Kills tear bodies apart and hits cause bleeding. Levers:
+  dismemberment thresholds, Bleeding chance. `stats` plus `hit-code`.
+
+**Scavengers**
+- **Reloads** (Power, many calibers). Recycled brass from mixed lots. Cheap, about half the price
+  of the caliber's Common round, with a wide damage roll: some duds, some hot. Levers: the
+  damage-roll band with dud and hot chances. `hit-code`.
+- **Parts-pullers** (Power). A kill with this round leaves extra crafting components on the
+  body. Levers: on kill, add components to the body's loot. `probe` (loot on kill).
+- **Dirties** (Power). Rough, hand-cast bullets that leave a dirty wound: bleeding plus poison,
+  a little less damage up front. Levers: Bleeding and Poisoned chances, damage down. `hit-code`.
+
+**Arasaka**
+- **House loads** (Power and Tech). Arasaka's own spec: a very narrow damage roll, less recoil
+  and faster aim-in. A straight upgrade at Epic. Levers: damage-roll band, recoil, AimInTime.
+  `stats` plus `hit-code`.
+- **Watchlist** (Smart). A hit tags the target for everyone on the shooter's side, and smart
+  rounds lock onto a tagged target right away. On V: V is tagged and the whole enemy squad knows
+  where V is. Levers: Ping's tag, lock time. `hit-code` plus `probe` (instant lock on a tagged
+  target, and the tag telling NPCs where V is).
+- **Quiet professionals** (Power pistols and SMGs). Quiet rounds with silent kills and a headshot
+  bonus. Levers: WeaponNoise, CanSilentKill, HeadshotDamageMultiplier. `stats`.
