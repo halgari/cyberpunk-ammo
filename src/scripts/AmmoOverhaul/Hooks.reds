@@ -36,19 +36,29 @@ protected func OnEnter(stateContext: ref<StateContext>, scriptInterface: ref<Sta
 @wrapMethod(ItemModificationSystem)
 private final func InstallItemPart(obj: ref<GameObject>, itemID: ItemID, partItemID: ItemID, opt slotID: TweakDBID) -> Bool {
   let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(itemID));
-  if StrLen(caliber) > 0 && TDBID.IsValid(AOData.SelectorAmmo(caliber, ItemID.GetTDBID(partItemID))) {
+  let feed: Bool = StrLen(caliber) > 0 && TDBID.IsValid(AOData.SelectorAmmo(caliber, ItemID.GetTDBID(partItemID)));
+  if feed {
     AmmoFeedSystem.Get(obj.GetGame()).BeforeFeedChange(obj, itemID);
   }
-  return wrappedMethod(obj, itemID, partItemID, slotID);
+  let result: Bool = wrappedMethod(obj, itemID, partItemID, slotID);
+  if feed {
+    AmmoFeedSystem.Get(obj.GetGame()).AfterFeedChange(obj, itemID);
+  }
+  return result;
 }
 
 @wrapMethod(ItemModificationSystem)
 private final const func RemoveItemPart(obj: ref<GameObject>, itemID: ItemID, slotID: TweakDBID, shouldUpdateEntity: Bool) -> ItemID {
   let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(itemID));
-  if StrLen(caliber) > 0 && slotID == AOData.FeedSlot(caliber) {
+  let feed: Bool = StrLen(caliber) > 0 && slotID == AOData.FeedSlot(caliber);
+  if feed {
     AmmoFeedSystem.Get(obj.GetGame()).BeforeFeedChange(obj, itemID);
   }
-  return wrappedMethod(obj, itemID, slotID, shouldUpdateEntity);
+  let removed: ItemID = wrappedMethod(obj, itemID, slotID, shouldUpdateEntity);
+  if feed {
+    AmmoFeedSystem.Get(obj.GetGame()).AfterFeedChange(obj, itemID);
+  }
+  return removed;
 }
 
 // --- Damage roll -----------------------------------------------------------------------------

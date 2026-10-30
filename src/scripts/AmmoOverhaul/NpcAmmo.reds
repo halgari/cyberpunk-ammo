@@ -164,7 +164,6 @@ public abstract class NpcAmmo {
     for modifier in modifiers {
       stats.AddModifier(gunData.GetStatsObjectID(), NpcAmmo.ToModifier(modifier, stats, gunData.GetStatsObjectID()));
     }
-    RangedAttackSwap.SyncTags(npc, gun);
     AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " got " + TDBID.ToStringDEBUG(selector) + " for " + TDBID.ToStringDEBUG(ItemID.GetTDBID(gun)));
     return tier;
   }

@@ -1,10 +1,10 @@
 module AmmoOverhaul
 
 // Cook-off rounds (Legendary; <ammo>.aoCookOff, docs/superpowers/specs/2026-10-29-legendary-rounds-design.md):
-//   - a kill with one sets off a blast at the body (Attacks.Explosion: a fixed share of V's health,
-//     NPC damage by tier), which hurts everyone near it, V included;
+//   - a kill with one sets off a blast at the body (AmmoOverhaul.CookOffBlast, core.yaml: 35% of
+//     each target's max health), which hurts everyone near it, V included;
 //   - a hit on V sets off the grenade V has selected, on V, if it has a charge: its own attack for
-//     the look and effects (a script-started grenade attack does almost no damage), the device blast
+//     the look and effects (a script-started grenade attack does little damage), the Cook-off blast
 //     for the damage, and one charge taken off.
 // Both go off a frame later, outside the hit that caused them. Blasts aren't ranged hits, so a
 // blast kill sets off nothing more.
@@ -79,7 +79,7 @@ public abstract class CookOff {
     if TDBID.IsValid(attack) {
       CookOff.Blast(instigator, player, attack, at);
     }
-    CookOff.Blast(instigator, player, t"Attacks.Explosion", at);
+    CookOff.Blast(instigator, player, t"AmmoOverhaul.CookOffBlast", at);
     AmmoFeedSystem.Log("cook-off: V's " + TDBID.ToStringDEBUG(ItemID.GetTDBID(gadget)) + " went off");
     return true;
   }
@@ -115,7 +115,7 @@ public class CookOffCallback extends DelayCallback {
     }
     let at: Vector4 = this.at;
     at.Z += 0.5;
-    CookOff.Blast(instigator, target, t"Attacks.Explosion", at);
+    CookOff.Blast(instigator, target, t"AmmoOverhaul.CookOffBlast", at);
     AmmoFeedSystem.Log("cook-off: blast at " + TDBID.ToStringDEBUG((target as NPCPuppet).GetRecordID()));
   }
 }

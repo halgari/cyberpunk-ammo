@@ -1,11 +1,16 @@
 module AmmoOverhaul
 
-// Rounds that change what the gun fires (<ammo>.aoRangedAttack; Heartseeker, Legendary 12ga):
-// the shot takes that RangedAttackPackage instead of the gun's, for V (the shooting state's attack
-// pick) and NPCs (AIWeapon's). Probe 1 (2026-10-30) made a Carnage fire homing smart slugs with
-// the smart package, the smart weapon tags and a smart pistol's lock stats; here the lock stats
-// come from the round's selector and the tags are put on the gun as dynamic tags while the round
-// is loaded (AmmoOverhaul marks the ones it added, so a swap back takes only those off).
+// Rounds that change what the gun fires (<ammo>.aoRangedAttack; Heartseeker, Legendary 12ga).
+//   - The shot takes that RangedAttackPackage instead of the gun's: V's through the shooting
+//     state's attack pick, NPCs' (and V's shots fired through AIWeapon) through AIWeapon's.
+//   - The smart lock: the game only runs a gun's smart targeting when its weapon record's
+//     evolution is Smart (measured 2026-10-30: the Smart and SmartWeapon tags and V's HasSmartLink
+//     stat made no difference). Records are shared, so while V's drawn gun has such a round its
+//     record's evolution is set to Smart, and put back as soon as V draws anything else. The
+//     change only applies to a gun drawn after it, so the gun is redrawn once. The lock stats come
+//     from the round's selector. The crosshair stays the gun's own: a redraw with the smart
+//     crosshair (Crosshairs.SmartGun) on the Tactician crashed the game (measured 2026-10-30).
+// NPCs' guns aren't changed: their shots are the package's NPC smart attack.
 
 public abstract class RangedAttackSwap {
 
@@ -17,35 +22,59 @@ public abstract class RangedAttackSwap {
     return TDBID.IsValid(id) ? TweakDBInterface.GetRangedAttackPackageRecord(id) : null;
   }
 
-  // Puts the smart weapon tags on `gun` while its round fires a smart package, and takes the ones
-  // added here off when it doesn't.
-  public static func SyncTags(owner: ref<GameObject>, gun: ItemID) -> Void {
-    let data: wref<gameItemData> = GameInstance.GetTransactionSystem(owner.GetGame()).GetItemData(owner, gun);
-    if !IsDefined(data) {
+  private static func SetRecord(record: TweakDBID, evolution: TweakDBID) -> Void {
+    TweakDBManager.SetFlat(AOData.Flat(record, "evolution"), ToVariant(evolution));
+    TweakDBManager.UpdateRecord(record);
+  }
+
+  // Puts back every weapon record made Smart here, except `keep`.
+  public static func Restore(system: ref<AmmoFeedSystem>, keep: TweakDBID) -> Void {
+    let i: Int32 = ArraySize(system.m_smartRecords) - 1;
+    while i >= 0 {
+      if system.m_smartRecords[i] != keep {
+        RangedAttackSwap.SetRecord(system.m_smartRecords[i], system.m_smartEvolution[i]);
+        AmmoFeedSystem.Log("smart round: " + TDBID.ToStringDEBUG(system.m_smartRecords[i]) + " back to its own evolution");
+        ArrayErase(system.m_smartRecords, i);
+        ArrayErase(system.m_smartEvolution, i);
+      }
+      i -= 1;
+    }
+  }
+
+  // V drew `weapon`: makes its record Smart if its round fires a smart package (and redraws it so
+  // the change takes), and puts any other record back.
+  public static func Sync(system: ref<AmmoFeedSystem>, player: ref<PlayerPuppet>, weapon: ref<WeaponObject>) -> Void {
+    let record: TweakDBID = ItemID.GetTDBID(weapon.GetItemID());
+    let smart: Bool = IsDefined(RangedAttackSwap.Package(player, weapon));
+    RangedAttackSwap.Restore(system, smart ? record : TDBID.None());
+    if !smart || ArrayContains(system.m_smartRecords, record) || !IsDefined(TweakDBInterface.GetWeaponItemRecord(record)) {
       return;
     }
-    let caliber: String = AOData.CaliberForWeapon(ItemID.GetTDBID(gun));
-    if StrLen(caliber) == 0 {
-      return;
-    }
-    let ammo: TweakDBID = owner.IsPlayer() ? AOData.SelectedAmmo(owner, gun, caliber) : NpcAmmo.GunAmmo(owner as NPCPuppet, gun);
-    let smart: Bool = TDBID.IsValid(AOData.RangedAttack(ammo));
-    let dynamic: array<CName> = data.GetDynamicTags();
-    let added: Bool = ArrayContains(dynamic, n"AO_SmartTags");
-    if smart && !added {
-      if !data.HasTag(n"Smart") {
-        data.SetDynamicTag(n"Smart");
-      }
-      if !data.HasTag(n"SmartWeapon") {
-        data.SetDynamicTag(n"SmartWeapon");
-      }
-      data.SetDynamicTag(n"AO_SmartTags");
-    } else {
-      if !smart && added {
-        data.RemoveDynamicTag(n"Smart");
-        data.RemoveDynamicTag(n"SmartWeapon");
-        data.RemoveDynamicTag(n"AO_SmartTags");
-      }
+    ArrayPush(system.m_smartRecords, record);
+    ArrayPush(system.m_smartEvolution, TweakDBInterface.GetForeignKey(AOData.Flat(record, "evolution"), TDBID.None()));
+    RangedAttackSwap.SetRecord(record, t"WeaponEvolution.Smart");
+    AmmoFeedSystem.Log("smart round: " + TDBID.ToStringDEBUG(record) + " made Smart, redrawing");
+    AmmoFeedRedrawCallback.Schedule(player, weapon.GetItemID(), 1, 0.3);
+  }
+}
+
+// Sync after a feed change, outside the item part transaction.
+public class RangedAttackSyncCallback extends DelayCallback {
+  public let player: wref<PlayerPuppet>;
+  public let weaponID: ItemID;
+
+  public static func Schedule(player: ref<PlayerPuppet>, weaponID: ItemID) -> Void {
+    let callback: ref<RangedAttackSyncCallback> = new RangedAttackSyncCallback();
+    callback.player = player;
+    callback.weaponID = weaponID;
+    GameInstance.GetDelaySystem(player.GetGame()).DelayCallback(callback, 0.5, false);
+  }
+
+  public func Call() -> Void {
+    let player: ref<PlayerPuppet> = this.player;
+    let weapon: ref<WeaponObject> = IsDefined(player) ? GameObject.GetActiveWeapon(player) : null;
+    if IsDefined(weapon) && weapon.GetItemID() == this.weaponID {
+      RangedAttackSwap.Sync(AmmoFeedSystem.Get(player.GetGame()), player, weapon);
     }
   }
 }
@@ -74,7 +103,8 @@ protected final func GetDesiredAttackRecord(stateContext: ref<StateContext>, scr
 
 @wrapMethod(AIWeapon)
 public final static func SetAttackBasedOnTimeDilation(owner: wref<GameObject>, weapon: wref<WeaponObject>, opt overrideRangedAttack: TweakDBID) -> Void {
-  if !TDBID.IsValid(overrideRangedAttack) && IsDefined(owner) && owner.IsNPC() {
+  // NPCs' shots, and any shot of V's fired through AIWeapon (the live checks' rig).
+  if !TDBID.IsValid(overrideRangedAttack) && IsDefined(owner) {
     let package: ref<RangedAttackPackage_Record> = RangedAttackSwap.Package(owner, weapon);
     if IsDefined(package) && IsDefined(package.DefaultFire()) {
       overrideRangedAttack = package.DefaultFire().GetID();

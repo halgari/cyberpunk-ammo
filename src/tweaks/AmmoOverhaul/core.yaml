@@ -114,6 +114,20 @@ AmmoOverhaul.LockoutJam:
         modifierType: Additive
         value: 4
 
+# Cook-off's blast (CookOff.reds), at a killed NPC and on V with V's grenade: physical damage of
+# 35% of each target's max health, V and NPCs alike. Attacks.Explosion alone does 1 damage when set
+# off from script (its damage comes from the device that explodes; measured 2026-10-30).
+AmmoOverhaul.CookOffBlast:
+  $base: Attacks.Explosion
+  statModifiers:
+    - $type: CombinedStatModifier
+      statType: BaseStats.PhysicalDamage
+      modifierType: Additive
+      refStat: BaseStats.Health
+      refObject: Target
+      opSymbol: '*'
+      value: 0.35
+
 # --- NPCs --------------------------------------------------------------------------------------
 # Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
 # loaded in the gun count toward it; the rest is the body's loot.
@@ -155,7 +169,11 @@ AmmoOverhaul.npcEpicFactor.Officer: 0.0
 AmmoOverhaul.npcEpicFactor.Elite: 2.0
 AmmoOverhaul.npcEpicFactor.Boss: 4.0
 # Chance per gun of a Legendary round, rolled before the Epic roll (a miss falls through to it).
-# Ranks not listed never roll it.
+AmmoOverhaul.npcLegendaryChance.Trash: 0.0
+AmmoOverhaul.npcLegendaryChance.Weak: 0.0
+AmmoOverhaul.npcLegendaryChance.Normal: 0.0
+AmmoOverhaul.npcLegendaryChance.Rare: 0.0
+AmmoOverhaul.npcLegendaryChance.Officer: 0.0
 AmmoOverhaul.npcLegendaryChance.Elite: 0.03
 AmmoOverhaul.npcLegendaryChance.Boss: 0.10
 AmmoOverhaul.npcLegendaryChance.MaxTac: 0.10
