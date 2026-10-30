@@ -3,7 +3,7 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
-## Unreleased
+## 0.5.0
 
 - A Legendary tier: 14 new rounds, 149 in all. Elite enemies, bosses and MaxTac sometimes carry
   them, and a stash holding Epic rounds now and then has a small stack. No shop sells them and
@@ -17,10 +17,13 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
   - Mule Kick (4-gauge): every hit knocks the target down and tough ones stagger; each shot shoves
     V hard away from the aim, so a shot at the floor sends V up.
   - Heartseeker (12-gauge): one guided slug that locks onto heads, no Smart Link needed.
-- Five new rounds, 135 in all:
+- Five new rounds:
   - Ping (Rare; 7.62, 12.7): targets hit show through walls for 5 seconds. -10% damage.
   - Penetrator (Epic) in 12mm, 7.62 and 12.7: ignores 60% of armor and goes through thin cover
     at half damage. NPCs firing it get the same.
+- Known issues:
+  - While you hold a gun with Heartseeker fitted, NPCs' guns of the same model count as Smart too.
+  - Heartseeker locks and homes, but the gun shows no lock markers.
 
 ## 0.1.0
 

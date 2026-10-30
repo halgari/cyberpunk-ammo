@@ -260,6 +260,8 @@ Other ammo, damage, vendor and loot overhauls are the likely conflicts.
 [*][b]Two reloads after changing rounds is expected.[/b] Fitting a new round empties the gun (the rounds go back in your pack, nothing is lost). Back in the game, V looks the gun over, then draws it and reloads it with the new round. It looks like two reloads in a row, but it's an inspect, then a draw and one reload.
 [*]Loose ammo lying around the world is still the game's own ammo, which counts as the Common round of 9mm, 5.56, 12.7 or 12-gauge.
 [*]Some rounds' range and spread changes do nothing for NPCs, because the game gives NPC guns no range or spread values.
+[*]While you hold a gun with Heartseeker fitted, NPCs' guns of the same model count as Smart too.
+[*]Heartseeker locks and homes, but the gun shows no lock markers.
 [/list]
 
 [line]
@@ -267,9 +269,13 @@ Other ammo, damage, vendor and loot overhauls are the likely conflicts.
 [size=5][b][color=#2ad4ff]Coming next[/color][/b][/size]
 The next version adds:
 [list]
-[*][b]Legendary rounds.[/b] Extremely rare and hard to find.
 [*][b]Faction ammo.[/b] Rounds made by Night City's gangs and corps, each matching its faction's quirks. Most of it probably won't be craftable; you'd get it from the people who use it.
 [/list]
+
+[line]
+
+[size=5][b][color=#2ad4ff]Permissions[/color][/b][/size]
+Brass Market is free software under the GPL-3.0 license. You can use, change and share it, as long as what you share stays under the GPL-3.0 with its source available.
 
 [line]
 
@@ -284,7 +290,8 @@ up through the site:
 - **Game:** Cyberpunk 2077. **Category:** Gameplay (or Weapons).
 - **Name:** Brass Market. **Main image:** `art/banner/main-4k.png`.
 - **Requirements** (Requirements tab): RED4ext, TweakXL, ArchiveXL, Codeware, redscript.
-- **File:** `dist/AmmoOverhaul-<version>.zip` from `tools/linux/release.sh <version>`.
+- **Permissions:** the mod is GPL-3.0 (`LICENSE`): set the page's permissions to match.
+- **File:** `dist/BrassMarket-<version>.zip` from `tools/linux/release.sh <version>`.
   Category Main, version as in `VERSION`, name "Brass Market".
 - Then note the **mod ID** (in the page URL) and the **file ID** (Files tab, "Advanced"), and
   finish the setup in `docs/RELEASING.md`.

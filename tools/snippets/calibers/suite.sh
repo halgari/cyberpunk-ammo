@@ -26,7 +26,7 @@ $C/all-pass.sh \
   "$S/uncommon.sh" "$C/uncommon2.sh" "$C/slugs.sh" \
   "$S/npc.sh" "$S/npcdrop.sh" "$C/npc.sh" "$C/ping.sh" \
   "$(twice calibers/lootdupe.lua)" "$(twice calibers/lootcap.lua)" \
-  "$HIDDEN" "$C/sync.sh" "$C/roll.sh"
+  "$HIDDEN" "$C/sync.sh" "$C/roll.sh" "$C/legendary.sh"
 status=$?
 (( status == 2 )) && exit 2
 echo "-- parity.sh (not gating):"
