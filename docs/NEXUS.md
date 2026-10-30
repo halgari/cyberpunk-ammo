@@ -68,7 +68,6 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [*][color=#e8a33c][b]Lockout[/b][/color] (10mm, 20mm, 25mm): every hit jams the target's weapon for 4 seconds.
 [*][color=#e8a33c][b]Mule Kick[/b][/color] (4-gauge): every hit knocks the target down, tough ones stagger. Each shot shoves you hard away from your aim, so a shot at the floor sends you up.
 [*][color=#e8a33c][b]Heartseeker[/b][/color] (12-gauge): one guided slug that locks onto heads, no Smart Link needed. Ignores all armor, +100% headshot damage, +50% crit chance.
-[*]4-gauge's Legendary round is still to come.
 [/list]
 
 [line]

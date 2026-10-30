@@ -17,7 +17,6 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
   - Mule Kick (4-gauge): every hit knocks the target down and tough ones stagger; each shot shoves
     V hard away from the aim, so a shot at the floor sends V up.
   - Heartseeker (12-gauge): one guided slug that locks onto heads, no Smart Link needed.
-  - 4-gauge's Legendary round is still to come.
 - Five new rounds, 135 in all:
   - Ping (Rare; 7.62, 12.7): targets hit show through walls for 5 seconds. -10% damage.
   - Penetrator (Epic) in 12mm, 7.62 and 12.7: ignores 60% of armor and goes through thin cover
