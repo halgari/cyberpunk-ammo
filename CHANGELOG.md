@@ -3,6 +3,13 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
+## Unreleased
+
+- Five new rounds, 135 in all:
+  - Ping (Rare; 7.62, 12.7): targets hit show through walls for 5 seconds. -10% damage.
+  - Penetrator (Epic) in 12mm, 7.62 and 12.7: ignores 60% of armor and goes through thin cover
+    at half damage. NPCs firing it get the same.
+
 ## 0.1.0
 
 First release.

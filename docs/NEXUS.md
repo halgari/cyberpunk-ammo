@@ -10,18 +10,18 @@ colors (Common grey, Uncommon green, Rare blue, Epic purple).
 
 ```
 [center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
-[size=4]An ammo overhaul: 13 calibers, 130 rounds, and the shops, loot and crafting that go with them[/size][/center]
+[size=4]An ammo overhaul: 13 calibers, 135 rounds, and the shops, loot and crafting that go with them[/size][/center]
 
 [line]
 
-The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 130 different rounds, from plain ball up to Epic match grade. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
+The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 135 different rounds, from plain ball up to Epic match grade. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
 
 Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon, Rare and Epic rounds. You pick which round the gun loads from its mod screen.
 
 [size=5][b][color=#2ad4ff]What the mod adds[/color][/b][/size]
 [list]
 [*]13 calibers: 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
-[*]130 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
+[*]135 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
 [*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
 [*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
@@ -108,7 +108,8 @@ What each load does. Percentages are changes from the plain round.
 [*][color=#3fa0ff][b]Rubber[/b][/color] (Rare): non-lethal, targets go down unconscious. Big flinch.
 [*][color=#3fa0ff][b]Hardcast[/b][/color] (Rare, 12mm): 25% chance to stagger, a little armor pen, more kick.
 [*][color=#3fa0ff][b]Ballistic Tip[/b][/color] (Rare, 7.62 and 12.7): +40% range, +5% damage.
-[*][color=#b04fff][b]Penetrator[/b][/color] (Epic): ignores 60% of armor.
+[*][color=#3fa0ff][b]Ping[/b][/color] (Rare, 7.62 and 12.7): targets hit show through walls for 5 seconds. -10% damage.
+[*][color=#b04fff][b]Penetrator[/b][/color] (Epic): ignores 60% of armor. In 12mm, 7.62 and 12.7 it also goes through thin cover at half damage.
 [*][color=#b04fff][b]Match[/b][/color] (Epic): tight damage roll that sits high, 30% less spread and sway.
 [*][color=#b04fff][b]Toxin Core[/b][/color] (Epic): 25% chance to poison, 30% of the damage is chemical.
 [*][color=#b04fff][b]Shredders[/b][/color] (Epic): 30% chance to cause bleeding, twice the dismemberment.
@@ -164,10 +165,10 @@ What each load does. Percentages are changes from the plain round.
 [list]
 [*][b]9mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Rubber, Penetrator, Match, Toxin Core, Shredders
 [*][b].45[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Rubber, Penetrator, Match, Toxin Core, Shredders
-[*][b]12mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Rubber, Hardcast, Match, Toxin Core, Shredders
+[*][b]12mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Rubber, Hardcast, Penetrator, Match, Toxin Core, Shredders
 [*][b]5.56[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Penetrator, Match, Toxin Core, Shredders
-[*][b]7.62[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Match, Toxin Core, Shredders
-[*][b]12.7[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Match, Toxin Core, HEI
+[*][b]7.62[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Ping, Penetrator, Match, Toxin Core, Shredders
+[*][b]12.7[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Ping, Penetrator, Match, Toxin Core, HEI
 [*][b]12-gauge[/b]: Buckshot, Slugs, Birdshot, Flechettes, Beanbags, Dragon's Breath Lite, Dragon's Breath, Frag-12, Long Flechettes
 [*][b]4-gauge[/b]: Buckshot, Slugs, Birdshot, Flechettes, Riot, Flares, Dragon's Breath, Thermite Slugs
 [*][b]Light rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor

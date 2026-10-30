@@ -282,7 +282,9 @@ applied in the damage pipeline to V's shots and NPCs' alike:
   1 - (1 - chance)^(1/n) (`AOData.PelletChance`), so a Dragon's Breath shot burns 60% of the time,
   not on nearly every shot. On V, burning, poison, bleeding and EMP become vanilla's Player versions
   (`AOData.PlayerEffect`: `PlayerBurning`, `PlayerPoisoned`, `PlayerBleeding`, `PlayerElectrocuted`),
-  as vanilla does for its own weapons. The 4ga Slug's knockdown is one of these.
+  as vanilla does for its own weapons. The 4ga Slug's knockdown is one of these. Ping's
+  `AmmoOverhaul.PingTag` (Hawk's tag for 5 s) goes on V unchanged when an NPC's Ping hits V: it
+  applies and wears off with no error (`calibers/ping.sh`).
 - `aoShareType` / `aoShare`: that share of the hit's Physical damage moves to Thermal, Electric
   or Chemical (`AmmoFeedSystem.ApplyHitDamage`, after the roll).
 - `aoMachineBonus`: every damage type times this against a machine (`AOData.IsMachine`: a
@@ -335,7 +337,7 @@ says. Rare and Epic rounds are read the same way with the roll forced to their t
 | `HitDismembermentFactor` | Works. Measured: 9mm Shredders 0.5 -> 1. |
 | `BulletMagnetismDefaultAngle` | Works. Measured: 5mm Feedback 0 -> 2. |
 | `TechPierceChargeLevel`, `TechPierceDamageFactor` | Work. Measured: 5mm DU Pen 0.9 -> 0.45 and -0.44 -> -0.22. Damage through cover is times (1 + factor) (`DamageSystem`), so DU Pen keeps 78% instead of 56%. The charge level caps at 1, so it can't stop a full charge from piercing. |
-| `TechPierceEnabled` | Irrelevant: NPC rail guns have 0. On V's Omaha Split Slugs take it 1 -> 0 (measured). |
+| `TechPierceEnabled` | Works on Power guns. Measured: an NPC Ajax with 7.62 Penetrator reads 1 (with `TechPierceChargeLevel` 0, `TechPierceDamageFactor` 0.5; `calibers/ping.sh`). NPC rail guns have 0. On V's Omaha Split Slugs take it 1 -> 0 (measured). |
 | `FullAutoOnFullCharge` | Works. Measured: 5mm Superconductor 0 -> 1. |
 | `SmartGunHipMaxLockedTargets`, `SmartGunAdsMaxLockedTargets` | Work. Measured: 10mm Hunter 0 -> 2. |
 | `SmartGunHipTimeToLock`, `SmartGunAdsTimeToLock` | Irrelevant: 0 on NPC smart guns (the AI aims). |

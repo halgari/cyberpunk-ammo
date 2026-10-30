@@ -325,7 +325,7 @@ Calibers differ in ammo weight, price and how often they turn up, not in how the
 
 ### Built (Rare and Epic, 2026-10-29)
 
-91 Rare and Epic rounds, all made by `tools/rounds/rounds.py` (records, list entries, text, icon
+96 Rare and Epic rounds, all made by `tools/rounds/rounds.py` (records, list entries, text, icon
 data; edit there and rerun it). Each is its caliber's plain Uncommon with the changes below, at
 x4 (Rare) or x8 (Epic) the Common price. The effect line is the one the item shows. Chances are per
 shot (each pellet of a shotgun rolls its share).
@@ -336,11 +336,13 @@ shot (each pellet of a shotgun rolls its share).
 - **Bouncers** (Rare; 9mm, .45, 5.56): 30% chance to ricochet once. -15% damage.
 - **Rubber** (Rare; 9mm, .45, 12mm): Non-lethal: targets go down unconscious instead of dying. Much stronger flinch. -40% damage.
 - **Penetrator** (Epic; 9mm, .45, 5.56): Ignores 60% of armor.
+- **Penetrator** (Epic; 12mm, 7.62, 12.7): Ignores 60% of armor. Goes through thin cover at half damage. (`TechPierceEnabled` +1, `TechPierceChargeLevel` x0, `TechPierceDamageFactor` +0.5: every shot pierces as a charged Tech shot.)
 - **Match** (Epic; 9mm, .45, 12mm, 5.56, 7.62, 12.7): Damage varies -2% to +6% instead of -10% to +1%. 30% less spread and sway.
 - **Toxin Core** (Epic; 9mm, .45, 12mm, 5.56, 7.62, 12.7): 25% chance to poison. 30% of the damage is chemical damage.
 - **Shredders** (Epic; 9mm, .45, 12mm, 5.56, 7.62): 30% chance to cause bleeding. Twice the dismemberment chance.
 - **Hardcast** (Rare; 12mm): 25% chance to stagger. Ignores 10% of armor. +20% recoil.
 - **Ballistic Tip** (Rare; 7.62, 12.7): +40% range. +5% damage. Armor is 10% more effective against it.
+- **Ping** (Rare; 7.62, 12.7): Targets hit show through walls for 5 seconds. -10% damage. (Every hit applies `AmmoOverhaul.PingTag`: Hawk's tag, `BaseStatusEffect.KyubiMyersTag`, for 5 s instead of 15.)
 - **HEI** (Epic; 12.7): +50% damage against drones, mechs and vehicles. 20% chance to set the target on fire.
 - **Flechettes** (Rare; 12ga, 4ga): Tighter spread. Double range. -15% damage.
 - **Beanbags** (Rare; 12ga): Fires one projectile with the whole shot's damage. Knocks targets down. Non-lethal: targets go down unconscious instead of dying. -50% damage.
@@ -381,8 +383,8 @@ shot (each pellet of a shotgun rolls its share).
   that each set a weak, short burn, in a wide spread. Being tested on a 9mm round (8 pellets, a
   light burn). A true cone of fire from the muzzle would need its own area attack at the gun
   (not looked into yet).
-- **Overpressure:** a Power load that punches through cover like a charged Tech shot (whether
-  `TechPierceEnabled` works on a Power gun is untested).
+- **Overpressure:** a Power load that punches through cover like a charged Tech shot. Built as
+  the 12mm, 7.62 and 12.7 Penetrator (`TechPierceEnabled` works on a Power gun: probed on an Ajax).
 - **Capacitor slug (Tech):** stores rail energy and discharges on impact, only on charged shots
   (through the package's `chargeFire`).
 - **Rail feedback slug (Tech):** corrects itself slightly against the rails (bullet magnetism).

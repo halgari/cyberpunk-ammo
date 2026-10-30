@@ -1,7 +1,7 @@
 # Brass Market
 
 Brass Market (internally AmmoOverhaul) is a Cyberpunk 2077 (2.50) mod that replaces the game's four ammo types with 13 calibers and about
-130 rounds, from plain ball to Epic match grade, for V and NPCs alike.
+135 rounds, from plain ball to Epic match grade, for V and NPCs alike.
 
 ## What it does
 

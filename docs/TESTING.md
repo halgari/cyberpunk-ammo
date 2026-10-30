@@ -137,6 +137,9 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 - `slugs.sh`: every shotgun fires one projectile with Slugs, with tighter spread and twice the
   range (draws weapons: not while you play).
 - `icons.lua`: every round and selector has its own icon in the atlas.
+- `ping.sh`: V's 7.62 Ping tags the rig's ganger and the tag wears off about 5 s after the
+  last hit; a Ping ganger's hits tag V the same way, with no new log error; an NPC's 7.62
+  Penetrator gun reads `TechPierceEnabled` 1 (draws weapons and spawns NPCs: not while you play).
 - `lootdupe.lua`: a body knocked out, looted and then killed gives its ammo back once, not
   twice. `lootcap.lua`: a body leaves at most `npcLootWeight` carry points of a round (1200
   rounds of 12.7 leave 40). Both spawn a test NPC on the first run; run them again once it loads.
@@ -226,6 +229,13 @@ names are in `docs/CATALOG.md`):
 29. **Recipes in the wild.** Over a few gun shop visits some Uncommon and Rare "load sheet"
     recipes are for sale (none Epic). They're rare in loot: about 1 in 20 drops of an Uncommon or
     better round.
+30. **Penetrator through a car.** Put a car between you and an enemy. With an Ajax on 7.62
+    Penetrator and a Grad on 12.7 Penetrator, shots go through the car and hit the enemy. With a
+    5.56 Penetrator (a Copperhead) the car stops them.
+31. **Ping.** Hit an enemy with 7.62 or 12.7 Ping, then step behind a wall: the enemy shows
+    through it for about 5 seconds after the last hit, then the outline goes.
+32. **Ping on you.** Let an NPC carrying 7.62 Ping shoot you (`calibers/ping.sh` shows how to roll
+    one): nothing strange happens on your screen, and nothing stays on V after the fight.
 
 For each step, note pass or fail and what you saw.
 
