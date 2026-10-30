@@ -61,14 +61,12 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [/list]
 
 [size=5][b][color=#2ad4ff]Legendary rounds[/color][/b][/size]
+There are 14 Legendary rounds to find. Elite enemies, bosses and MaxTac sometimes carry them, and a stash holding Epic rounds now and then has a small stack. No shop sells them and they can't be crafted. Two of them:
 [list]
-[*][color=#e8a33c][b]Gatecrasher[/b][/color] (7.62, 12.7): ignores all armor, no damage falloff, goes through cover at full damage.
-[*][color=#e8a33c][b]Cook-off[/b][/color] (9mm, .45, 12mm, 5.56, 7.62): a kill sets off a blast at the body that hurts everyone close by, you included. An enemy's Cook-off hit on you sets off your own grenade if it's charged.
-[*][color=#e8a33c][b]Kebab[/b][/color] (light and heavy rail): a charged shot goes through every body and wall in its line with no damage lost.
-[*][color=#e8a33c][b]Lockout[/b][/color] (10mm, 20mm, 25mm): every hit jams the target's weapon for 4 seconds.
 [*][color=#e8a33c][b]Mule Kick[/b][/color] (4-gauge): every hit knocks the target down, tough ones stagger. Each shot shoves you hard away from your aim, so a shot at the floor sends you up.
 [*][color=#e8a33c][b]Pump N Dump[/b][/color] (12-gauge): one slug per shot, greased so the gun cycles at 2.5 times the speed. Burns through ammo fast.
 [/list]
+The rest are for you to find.
 
 [line]
 
@@ -77,25 +75,25 @@ Each gun is assigned one of the calibers below and loads only rounds of that cal
 
 [size=4][b][color=#d4a04c]Power[/color][/b][/size] (gunpowder cartridges)
 [list]
-[*][b]9mm[/b]: Lexington, Slaught-O-Matic, Guillotine, Pulsar, Saratoga, Erebus, Cook-off
-[*][b].45[/b]: Unity, Liberty, Nue, Cook-off
+[*][b]9mm[/b]: Lexington, Slaught-O-Matic, Guillotine, Pulsar, Saratoga, Erebus
+[*][b].45[/b]: Unity, Liberty, Nue
 [*][b]12mm magnum[/b]: Nova, Overture, Metel, Malorian Arms 3516
-[*][b]5.56[/b]: Umbra, Masamune, Copperhead, Defender, Cook-off
-[*][b]7.62[/b]: Ajax, Kyubi, MA70 HB, Gatecrasher, Cook-off
-[*][b]12.7[/b]: Kolac, SOR-22, Grad, Osprey, Mk.31 HMG, Gatecrasher
-[*][b]12-gauge[/b]: Crusher, Pozhar, Tactician, Igla, Testera, Pump N Dump
+[*][b]5.56[/b]: Umbra, Masamune, Copperhead, Defender
+[*][b]7.62[/b]: Ajax, Kyubi, MA70 HB
+[*][b]12.7[/b]: Kolac, SOR-22, Grad, Osprey, Mk.31 HMG
+[*][b]12-gauge[/b]: Crusher, Pozhar, Tactician, Igla, Testera
 [*][b]4-gauge[/b]: Carnage
 [/list]
 
 [size=4][b][color=#2ad4ff]Tech[/color][/b][/size] (rail-fired slugs)
 [list]
 [*][b]Light rail (5mm)[/b]: Kenshin, Ticon, Omaha, Grit, Senkoh LX, Quasar
-[*][b]Heavy rail[/b]: Burya, Achilles, Nekomata, Rasetsu, Satara, Kebab
+[*][b]Heavy rail[/b]: Burya, Achilles, Nekomata, Rasetsu, Satara
 [/list]
 
 [size=4][b][color=#ff5a5a]Smart[/color][/b][/size] (guided micro-rockets)
 [list]
-[*][b]10mm[/b]: Chao, Kappa, Yukimura, Dian, Shingen, Warden, Hercules 3AX, Sidewinder, Lockout
+[*][b]10mm[/b]: Chao, Kappa, Yukimura, Dian, Shingen, Warden, Hercules 3AX, Sidewinder
 [*][b]20mm cluster[/b]: Zhuo, Palica
 [*][b]25mm dart[/b]: Ashura
 [/list]
@@ -172,21 +170,21 @@ What each load does. Percentages are changes from the plain round.
 [/list]
 
 [spoiler]
-[b]Every round, by caliber[/b]
+[b]Every round but the Legendaries, by caliber[/b]
 [list]
 [*][b]9mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Rubber, Penetrator, Match, Toxin Core, Shredders
 [*][b].45[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Rubber, Penetrator, Match, Toxin Core, Shredders
-[*][b]12mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Rubber, Hardcast, Penetrator, Match, Toxin Core, Shredders, Cook-off
+[*][b]12mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Rubber, Hardcast, Penetrator, Match, Toxin Core, Shredders
 [*][b]5.56[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Penetrator, Match, Toxin Core, Shredders
 [*][b]7.62[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Ping, Penetrator, Match, Toxin Core, Shredders
 [*][b]12.7[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Ping, Penetrator, Match, Toxin Core, HEI
 [*][b]12-gauge[/b]: Buckshot, Slugs, Birdshot, Flechettes, Beanbags, Dragon's Breath Lite, Dragon's Breath, Frag-12, Long Flechettes
 [*][b]4-gauge[/b]: Buckshot, Slugs, Birdshot, Flechettes, Riot, Flares, Dragon's Breath, Thermite Slugs
-[*][b]Light rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor, Kebab
+[*][b]Light rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor
 [*][b]Heavy rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor
 [*][b]10mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
-[*][b]20mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge, Lockout
-[*][b]25mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge, Lockout
+[*][b]20mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
+[*][b]25mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
 [/list]
 [/spoiler]
 
