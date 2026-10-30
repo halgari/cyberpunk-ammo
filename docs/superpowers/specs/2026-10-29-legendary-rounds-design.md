@@ -13,8 +13,8 @@ Penetrators) to 149.
   NPC version below says what it does instead.
 - Common rounds stay vanilla. No automatic ammo switching.
 - Item text: slang names, plain gun-counter descriptions, no invented lore; the effect lines
-  after a blank line. Names chosen with the user: Heartseeker, Kebab, Lockout, Cook-off; the
-  Total Penetrator and 4-gauge names are still open (working: Balls Deep, Bouncing Betty).
+  after a blank line. Names chosen with the user: Gatecrasher, Cook-off, Kebab, Lockout,
+  Heartseeker, Bouncing Betty.
 - **No crafting** (user ruling): no recipes, and no Legendary rounds at the crafting screen.
   Breaking rounds down works as for the other tiers. A Legendary stack breaks down into Legendary
   components by the existing disassembly rule.
@@ -38,7 +38,7 @@ Penetrators) to 149.
 
 ## The rounds
 
-**Total Penetrator** (12.7, 7.62)
+**Gatecrasher** (12.7, 7.62; designed as Total Penetrator)
 - Ignores all armor (`CanWeaponIgnoreArmor` full).
 - No damage falloff (`DamageFalloffDisabled`).
 - Goes through cover at full damage: `TechPierceEnabled` +1, `TechPierceChargeLevel` x0, and
@@ -63,7 +63,7 @@ Penetrators) to 149.
 - One heavy slug that steers itself onto the target nearest the crosshair.
 - The guidance is in the shell: V needs no Smart Link. An NPC's Heartseeker steers toward V.
 
-**Launcher round** (4ga; working name Bouncing Betty)
+**Bouncing Betty** (4ga; designed as the launcher round)
 - The shot throws a real grenade out of the muzzle: it flies on an arc, bounces and rolls, and
   goes off on a short fuse, like a thrown frag. The user's preferred version.
 - Fallbacks, in order, if the probe can't throw a grenade from the gun: an explosive projectile
@@ -110,7 +110,7 @@ round is built.
   - Kebab through two NPCs in a line;
   - Lockout jams an NPC's gun, and V's;
   - Heartseeker homes;
-  - the Launcher round arcs, bounces and goes off;
+  - Bouncing Betty arcs, bounces and goes off;
   - Total Penetrator through cover at full damage.
 - **The user's playtest of all six.**
 
