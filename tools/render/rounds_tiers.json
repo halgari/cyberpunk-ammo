@@ -132,6 +132,18 @@
     60
    ]
   ],
+  "Ping": [
+   [
+    150,
+    112,
+    70
+   ],
+   [
+    20,
+    140,
+    150
+   ]
+  ],
   "HEI": [
    [
     200,
@@ -682,6 +694,20 @@
     "HARDCAST"
    ]
   },
+  "12mm-penetrator": {
+   "shape": "P12",
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.25,
+    "tip": "black",
+    "tipfrac": 0.55
+   },
+   "look": "Penetrator",
+   "label": [
+    "12MM",
+    "PENETRATOR"
+   ]
+  },
   "12mm-match": {
    "shape": "P12",
    "over": {
@@ -847,6 +873,32 @@
     "BALLISTIC TIP"
    ]
   },
+  "762-ping": {
+   "shape": "R762",
+   "over": {
+    "tip": "teal",
+    "tipfrac": 0.35
+   },
+   "look": "Ping",
+   "label": [
+    "7.62",
+    "PING"
+   ]
+  },
+  "762-penetrator": {
+   "shape": "R762",
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.25,
+    "tip": "black",
+    "tipfrac": 0.55
+   },
+   "look": "Penetrator",
+   "label": [
+    "7.62",
+    "PENETRATOR"
+   ]
+  },
   "762-match": {
    "shape": "R762",
    "over": {
@@ -915,6 +967,32 @@
    "label": [
     "12.7",
     "BALLISTIC TIP"
+   ]
+  },
+  "127-ping": {
+   "shape": "R127",
+   "over": {
+    "tip": "teal",
+    "tipfrac": 0.35
+   },
+   "look": "Ping",
+   "label": [
+    "12.7",
+    "PING"
+   ]
+  },
+  "127-penetrator": {
+   "shape": "R127",
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.25,
+    "tip": "black",
+    "tipfrac": 0.55
+   },
+   "look": "Penetrator",
+   "label": [
+    "12.7",
+    "PENETRATOR"
    ]
   },
   "127-match": {

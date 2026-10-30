@@ -65,6 +65,8 @@ public abstract class AORecipeTexts {
     ArrayPush(t, "AO-Recipe-AO_12mm_Rubber-Desc"); ArrayPush(t, "Makes 20 rounds of 12mm Rubber.");
     ArrayPush(t, "AO-Recipe-AO_12mm_Hardcast"); ArrayPush(t, "12mm Hardcast: load sheet");
     ArrayPush(t, "AO-Recipe-AO_12mm_Hardcast-Desc"); ArrayPush(t, "Makes 20 rounds of 12mm Hardcast.");
+    ArrayPush(t, "AO-Recipe-AO_12mm_Penetrator"); ArrayPush(t, "12mm Penetrator: load sheet");
+    ArrayPush(t, "AO-Recipe-AO_12mm_Penetrator-Desc"); ArrayPush(t, "Makes 15 rounds of 12mm Penetrator.");
     ArrayPush(t, "AO-Recipe-AO_12mm_Match"); ArrayPush(t, "12mm Match: load sheet");
     ArrayPush(t, "AO-Recipe-AO_12mm_Match-Desc"); ArrayPush(t, "Makes 15 rounds of 12mm Match.");
     ArrayPush(t, "AO-Recipe-AO_12mm_Toxin"); ArrayPush(t, "12mm Toxin Core: load sheet");
@@ -103,6 +105,10 @@ public abstract class AORecipeTexts {
     ArrayPush(t, "AO-Recipe-AO_762_Incendiary-Desc"); ArrayPush(t, "Makes 30 rounds of 7.62 Incendiary.");
     ArrayPush(t, "AO-Recipe-AO_762_BallisticTip"); ArrayPush(t, "7.62 Ballistic Tip: load sheet");
     ArrayPush(t, "AO-Recipe-AO_762_BallisticTip-Desc"); ArrayPush(t, "Makes 30 rounds of 7.62 Ballistic Tip.");
+    ArrayPush(t, "AO-Recipe-AO_762_Ping"); ArrayPush(t, "7.62 Ping: load sheet");
+    ArrayPush(t, "AO-Recipe-AO_762_Ping-Desc"); ArrayPush(t, "Makes 30 rounds of 7.62 Ping.");
+    ArrayPush(t, "AO-Recipe-AO_762_Penetrator"); ArrayPush(t, "7.62 Penetrator: load sheet");
+    ArrayPush(t, "AO-Recipe-AO_762_Penetrator-Desc"); ArrayPush(t, "Makes 23 rounds of 7.62 Penetrator.");
     ArrayPush(t, "AO-Recipe-AO_762_Match"); ArrayPush(t, "7.62 Match: load sheet");
     ArrayPush(t, "AO-Recipe-AO_762_Match-Desc"); ArrayPush(t, "Makes 23 rounds of 7.62 Match.");
     ArrayPush(t, "AO-Recipe-AO_762_Toxin"); ArrayPush(t, "7.62 Toxin Core: load sheet");
@@ -119,6 +125,10 @@ public abstract class AORecipeTexts {
     ArrayPush(t, "AO-Recipe-AO_127_Incendiary-Desc"); ArrayPush(t, "Makes 7 rounds of 12.7 Incendiary.");
     ArrayPush(t, "AO-Recipe-AO_127_BallisticTip"); ArrayPush(t, "12.7 Ballistic Tip: load sheet");
     ArrayPush(t, "AO-Recipe-AO_127_BallisticTip-Desc"); ArrayPush(t, "Makes 7 rounds of 12.7 Ballistic Tip.");
+    ArrayPush(t, "AO-Recipe-AO_127_Ping"); ArrayPush(t, "12.7 Ping: load sheet");
+    ArrayPush(t, "AO-Recipe-AO_127_Ping-Desc"); ArrayPush(t, "Makes 7 rounds of 12.7 Ping.");
+    ArrayPush(t, "AO-Recipe-AO_127_Penetrator"); ArrayPush(t, "12.7 Penetrator: load sheet");
+    ArrayPush(t, "AO-Recipe-AO_127_Penetrator-Desc"); ArrayPush(t, "Makes 5 rounds of 12.7 Penetrator.");
     ArrayPush(t, "AO-Recipe-AO_127_Match"); ArrayPush(t, "12.7 Match: load sheet");
     ArrayPush(t, "AO-Recipe-AO_127_Match-Desc"); ArrayPush(t, "Makes 5 rounds of 12.7 Match.");
     ArrayPush(t, "AO-Recipe-AO_127_Toxin"); ArrayPush(t, "12.7 Toxin Core: load sheet");

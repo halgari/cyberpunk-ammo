@@ -208,7 +208,42 @@ for _, cal in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
     end
   end
 end
-check("91 Rare and Epic rounds listed", counted[2] + counted[3] == 91, counted[2] .. " Rare, " .. counted[3] .. " Epic")
+check("96 Rare and Epic rounds listed", counted[2] + counted[3] == 96, counted[2] .. " Rare, " .. counted[3] .. " Epic")
+check("Rare count", counted[2] == 50, tostring(counted[2]))
+check("Epic count", counted[3] == 46, tostring(counted[3]))
+
+-- The 12mm, 7.62 and 12.7 Penetrator go through thin cover (the Tech pierce stats, probed on an
+-- Ajax) and have their own text; the 9mm, .45 and 5.56 Penetrator stay armor-only.
+local function modSum(id, stat, mtype)
+  local sum, any = (mtype == "Multiplier") and 1 or 0, false
+  for _, m in ipairs(flat(id, "statModifiers") or {}) do
+    local mt = flat(m, "modifierType")
+    if str(flat(m, "statType")) == "BaseStats." .. stat and mt and mt.value == mtype then
+      any = true
+      if mtype == "Multiplier" then sum = sum * (flat(m, "value") or 1) else sum = sum + (flat(m, "value") or 0) end
+    end
+  end
+  return sum, any
+end
+-- The description's LocKey is stored hashed: compare it with the hash of the expected key.
+local function hasDescKey(id, key)
+  local r = rec(id)
+  return r ~= nil and r:LocalizedDescription() == CName.new(key)
+end
+local pen9 = statSum("Items.AO_Feed_9mm_Penetrator", "CanWeaponIgnoreArmor")
+for _, loc in ipairs({ "12mm", "762", "127" }) do
+  local sel = "Items.AO_Feed_" .. loc .. "_Penetrator"
+  check(sel .. " exists", rec(sel) ~= nil, "no record")
+  check(sel .. " TechPierceEnabled 1", near(statSum(sel, "TechPierceEnabled"), 1), tostring(statSum(sel, "TechPierceEnabled")))
+  local ch, chAny = modSum(sel, "TechPierceChargeLevel", "Multiplier")
+  check(sel .. " TechPierceChargeLevel x0", chAny and near(ch, 0), tostring(ch))
+  check(sel .. " TechPierceDamageFactor +0.5", near(statSum(sel, "TechPierceDamageFactor"), 0.5), tostring(statSum(sel, "TechPierceDamageFactor")))
+  check(sel .. " armor pen as the 9mm Penetrator", near(statSum(sel, "CanWeaponIgnoreArmor"), pen9) and pen9 > 0, tostring(statSum(sel, "CanWeaponIgnoreArmor")))
+  check(sel .. " own text key", hasDescKey(sel, "AO-Ammo-" .. loc .. "-Penetrator-Desc"), "other key")
+end
+local _, pierce9 = modSum("Items.AO_Feed_9mm_Penetrator", "TechPierceEnabled", "Additive")
+check("9mm Penetrator has no TechPierceEnabled", not pierce9, "has it")
+check("9mm Penetrator keeps the shared text", hasDescKey("Items.AO_Feed_9mm_Penetrator", "AO-Ammo-Penetrator-Desc"), "other key")
 
 -- Every record the generator names exists (stat types, status effects, bases): tools/rounds/refs.txt.
 if AO_REFS then

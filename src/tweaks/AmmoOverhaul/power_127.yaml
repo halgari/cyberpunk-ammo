@@ -10,9 +10,9 @@ AmmoOverhaul.Power_127.feedElement: "Items.AO_AmmoFeed_Power_127_Element"
 AmmoOverhaul.Power_127.defaultAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Power_127.vanillaAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Power_127.lootWeight: 0.6
-AmmoOverhaul.Power_127.selectors: ["Items.AO_Feed_127_Ball", "Items.AO_Feed_127_Mushrooms", "Items.AO_Feed_127_PlusP", "Items.AO_Feed_127_SteelCore", "Items.AO_Feed_127_Incendiary", "Items.AO_Feed_127_BallisticTip", "Items.AO_Feed_127_Match", "Items.AO_Feed_127_Toxin", "Items.AO_Feed_127_HEI"]
-AmmoOverhaul.Power_127.selectorAmmo: ["Ammo.SniperRifleAmmo", "Ammo.AO_127_HollowPoint", "Ammo.AO_127_PlusP", "Ammo.AO_127_SteelCore", "Ammo.AO_127_Incendiary", "Ammo.AO_127_BallisticTip", "Ammo.AO_127_Match", "Ammo.AO_127_Toxin", "Ammo.AO_127_HEI"]
-AmmoOverhaul.Power_127.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3]
+AmmoOverhaul.Power_127.selectors: ["Items.AO_Feed_127_Ball", "Items.AO_Feed_127_Mushrooms", "Items.AO_Feed_127_PlusP", "Items.AO_Feed_127_SteelCore", "Items.AO_Feed_127_Incendiary", "Items.AO_Feed_127_BallisticTip", "Items.AO_Feed_127_Ping", "Items.AO_Feed_127_Penetrator", "Items.AO_Feed_127_Match", "Items.AO_Feed_127_Toxin", "Items.AO_Feed_127_HEI"]
+AmmoOverhaul.Power_127.selectorAmmo: ["Ammo.SniperRifleAmmo", "Ammo.AO_127_HollowPoint", "Ammo.AO_127_PlusP", "Ammo.AO_127_SteelCore", "Ammo.AO_127_Incendiary", "Ammo.AO_127_BallisticTip", "Ammo.AO_127_Ping", "Ammo.AO_127_Penetrator", "Ammo.AO_127_Match", "Ammo.AO_127_Toxin", "Ammo.AO_127_HEI"]
+AmmoOverhaul.Power_127.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_127.craftBatch: 20
 
@@ -316,6 +316,104 @@ Items.AO_Feed_127_BallisticTip:
       statType: BaseStats.CanWeaponIgnoreArmor
       modifierType: Additive
       value: -0.1
+
+# 12.7 Ping (Rare)
+Ammo.AO_127_Ping:
+  $base: Ammo.AO_127_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-127-Ping
+  localizedDescription: LocKey#AO-Ammo-Ping-Desc
+  iconPath: AO_127_Ping
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_2, AO_Family_Power]
+
+Ammo.AO_127_Ping.aoEffects: ["AmmoOverhaul.PingTag"]
+Ammo.AO_127_Ping.aoEffectChances: [1.0]
+
+UIIcon.AO_127_Ping:
+  $type: UIIcon
+  atlasPartName: ao_127_ping
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_127_Ping:
+  $base: Items.AO_Feed_127_Ball
+  displayName: LocKey#AO-Ammo-127-Ping
+  localizedDescription: LocKey#AO-Ammo-Ping-Desc
+  iconPath: AO_127_Ping
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 0.9
+
+# 12.7 Penetrator (Epic)
+Ammo.AO_127_Penetrator:
+  $base: Ammo.AO_127_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-127-Penetrator
+  localizedDescription: LocKey#AO-Ammo-127-Penetrator-Desc
+  iconPath: AO_127_Penetrator
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_3, AO_Family_Power]
+
+UIIcon.AO_127_Penetrator:
+  $type: UIIcon
+  atlasPartName: ao_127_penetrator
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_127_Penetrator:
+  $base: Items.AO_Feed_127_Ball
+  displayName: LocKey#AO-Ammo-127-Penetrator
+  localizedDescription: LocKey#AO-Ammo-127-Penetrator-Desc
+  iconPath: AO_127_Penetrator
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.TechPierceEnabled
+      modifierType: Additive
+      value: 1.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.TechPierceChargeLevel
+      modifierType: Multiplier
+      value: 0.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.TechPierceDamageFactor
+      modifierType: Additive
+      value: 0.5
 
 # 12.7 Match (Epic)
 Ammo.AO_127_Match:
@@ -660,6 +758,62 @@ Items.AO_Recipe_AO_127_BallisticTip:
       statType: BaseStats.Price
       modifierType: Multiplier
       value: 560
+
+Ammo.AO_127_Ping.aoScrapRounds: 20
+Ammo.AO_127_Ping.aoScrapGive: 1
+Ammo.AO_127_Ping.aoRecipe: "Items.AO_Recipe_AO_127_Ping"
+Items.AO_Recipe_AO_127_Ping:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  displayName: LocKey#AO-Recipe-AO_127_Ping
+  localizedDescription: LocKey#AO-Recipe-AO_127_Ping-Desc
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_127_Ping
+    amount: 7
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, AO_Recipe, Rare]
+  # 10 batches of the round.
+  buyPrice:
+    - Price.Ammo
+    - Price.BuyPrice_StreetCred_Discount
+    - $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 560
+  sellPrice:
+    - Price.Ammo
+    - $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 560
+
+Ammo.AO_127_Penetrator.aoScrapRounds: 20
+Ammo.AO_127_Penetrator.aoScrapGive: 1
+Ammo.AO_127_Penetrator.aoRecipe: "Items.AO_Recipe_AO_127_Penetrator"
+Items.AO_Recipe_AO_127_Penetrator:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  displayName: LocKey#AO-Recipe-AO_127_Penetrator
+  localizedDescription: LocKey#AO-Recipe-AO_127_Penetrator-Desc
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_127_Penetrator
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, AO_Recipe, Epic]
+  # 10 batches of the round.
+  buyPrice:
+    - Price.Ammo
+    - Price.BuyPrice_StreetCred_Discount
+    - $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 800
+  sellPrice:
+    - Price.Ammo
+    - $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 800
 
 Ammo.AO_127_Match.aoScrapRounds: 20
 Ammo.AO_127_Match.aoScrapGive: 1

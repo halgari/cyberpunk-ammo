@@ -96,6 +96,9 @@ Ammo.AO_12mm_Rubber:
 Ammo.AO_12mm_Hardcast:
   CraftingData: Crafting.AO_Cost_Power_2
 
+Ammo.AO_12mm_Penetrator:
+  CraftingData: Crafting.AO_Cost_Power_3
+
 Ammo.AO_12mm_Match:
   CraftingData: Crafting.AO_Cost_Power_3
 
@@ -155,6 +158,12 @@ Ammo.AO_762_Incendiary:
 Ammo.AO_762_BallisticTip:
   CraftingData: Crafting.AO_Cost_Power_2
 
+Ammo.AO_762_Ping:
+  CraftingData: Crafting.AO_Cost_Power_2
+
+Ammo.AO_762_Penetrator:
+  CraftingData: Crafting.AO_Cost_Power_3
+
 Ammo.AO_762_Match:
   CraftingData: Crafting.AO_Cost_Power_3
 
@@ -179,6 +188,12 @@ Ammo.AO_127_Incendiary:
 
 Ammo.AO_127_BallisticTip:
   CraftingData: Crafting.AO_Cost_Power_2
+
+Ammo.AO_127_Ping:
+  CraftingData: Crafting.AO_Cost_Power_2
+
+Ammo.AO_127_Penetrator:
+  CraftingData: Crafting.AO_Cost_Power_3
 
 Ammo.AO_127_Match:
   CraftingData: Crafting.AO_Cost_Power_3

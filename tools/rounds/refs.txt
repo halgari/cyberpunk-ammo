@@ -11,6 +11,7 @@ Ammo.AO_S20_Dumbfire
 Ammo.AO_S25_Dumbfire
 Ammo.AO_THeavy_Sabot
 Ammo.AO_TLight_Sabot
+AmmoOverhaul.PingTag
 BaseStats.BulletMagnetismDefaultAngle
 BaseStats.CanSilentKill
 BaseStats.CanWeaponIgnoreArmor

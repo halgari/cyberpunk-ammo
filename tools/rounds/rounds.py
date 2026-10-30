@@ -163,11 +163,23 @@ KINDS = [
          calibers=["762", "127"],
          stats=range_(1.40) + damage(1.05) + armor(-0.10),
          desc="Polymer-tipped hunting rounds. They fly flatter and hit a little harder, but they break up on armor.\n\n+40% range. +5% damage. Armor is 10% more effective against it."),
+    dict(load="Ping", title="Ping", tier=RARE, look=((150, 112, 70), (20, 140, 150)),
+         art={'tip': 'teal', 'tipfrac': 0.35},
+         calibers=["762", "127"],
+         stats=damage(0.90),
+         hit=dict(effects=[("AmmoOverhaul.PingTag", 1.0)]),
+         desc="Rounds with a tag chip in the nose. Whatever they hit shows up on your optics for a few seconds, through walls.\n\nTargets hit show through walls for 5 seconds. -10% damage."),
     # Power, Epic
     dict(load="Penetrator", title="Penetrator", tier=EPIC, look=((25, 25, 28), (190, 160, 60)),
          art={'nose': 'spitzer', 'nose_mult': 1.25, 'tip': 'black', 'tipfrac': 0.55},
-         calibers=["9mm", "45", "556"],
+         calibers=["9mm", "45", "12mm", "556", "762", "127"],
          stats=armor(0.60),
+         # The heavier calibers also go through cover, as a charged Tech shot does (the Tech pierce
+         # stats work on a Power gun: probed on an Ajax, 2026-10-29).
+         per_caliber={tag: dict(stats=armor(0.60) + [add("TechPierceEnabled", 1.0), mult("TechPierceChargeLevel", 0.0),
+                                                     add("TechPierceDamageFactor", 0.5)],
+                                desc="Tungsten-core rounds. They punch through armor and thin cover.\n\nIgnores 60% of armor. Goes through thin cover at half damage.")
+                      for tag in ("12mm", "762", "127")},
          desc="Tungsten-core rounds. Armor barely slows them down.\n\nIgnores 60% of armor."),
     dict(load="Match", title="Match", tier=EPIC, look=((235, 232, 220), (40, 38, 34)),
          art={'case_mat': 'nickel', 'nose': 'spitzer', 'nose_mult': 1.2, 'hp': True},

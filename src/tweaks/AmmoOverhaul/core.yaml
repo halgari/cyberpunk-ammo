@@ -86,6 +86,19 @@ AmmoOverhaul.recipePriceBatches: 10
 Items.AO_RecipeBase:
   $base: Items.EpicUnityRecipe
 
+# --- On-hit effects ----------------------------------------------------------------------------
+# Ping rounds tag what they hit: Hawk's tag (outlined through walls), for 5 s instead of 15.
+AmmoOverhaul.PingTag:
+  $base: BaseStatusEffect.KyubiMyersTag
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 5
+
 # --- NPCs --------------------------------------------------------------------------------------
 # Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
 # loaded in the gun count toward it; the rest is the body's loot.

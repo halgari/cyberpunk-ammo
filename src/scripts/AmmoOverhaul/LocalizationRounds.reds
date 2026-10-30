@@ -38,6 +38,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-12mm-Rubber"); ArrayPush(t, "12mm Rubber");
     ArrayPush(t, "AO-Ammo-12mm-Hardcast"); ArrayPush(t, "12mm Hardcast");
     ArrayPush(t, "AO-Ammo-Hardcast-Desc"); ArrayPush(t, "Hard-cast lead with a flat nose, loaded heavy. It shoves people back a step and gets a little way into armor, but it kicks.\n\n25% chance to stagger. Ignores 10% of armor. +20% recoil.");
+    ArrayPush(t, "AO-Ammo-12mm-Penetrator"); ArrayPush(t, "12mm Penetrator");
+    ArrayPush(t, "AO-Ammo-12mm-Penetrator-Desc"); ArrayPush(t, "Tungsten-core rounds. They punch through armor and thin cover.\n\nIgnores 60% of armor. Goes through thin cover at half damage.");
     ArrayPush(t, "AO-Ammo-12mm-Match"); ArrayPush(t, "12mm Match");
     ArrayPush(t, "AO-Ammo-12mm-Toxin"); ArrayPush(t, "12mm Toxin Core");
     ArrayPush(t, "AO-Ammo-12mm-Shredders"); ArrayPush(t, "12mm Shredders");
@@ -53,12 +55,19 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-762-Incendiary"); ArrayPush(t, "7.62 Incendiary");
     ArrayPush(t, "AO-Ammo-762-BallisticTip"); ArrayPush(t, "7.62 Ballistic Tip");
     ArrayPush(t, "AO-Ammo-BallisticTip-Desc"); ArrayPush(t, "Polymer-tipped hunting rounds. They fly flatter and hit a little harder, but they break up on armor.\n\n+40% range. +5% damage. Armor is 10% more effective against it.");
+    ArrayPush(t, "AO-Ammo-762-Ping"); ArrayPush(t, "7.62 Ping");
+    ArrayPush(t, "AO-Ammo-Ping-Desc"); ArrayPush(t, "Rounds with a tag chip in the nose. Whatever they hit shows up on your optics for a few seconds, through walls.\n\nTargets hit show through walls for 5 seconds. -10% damage.");
+    ArrayPush(t, "AO-Ammo-762-Penetrator"); ArrayPush(t, "7.62 Penetrator");
+    ArrayPush(t, "AO-Ammo-762-Penetrator-Desc"); ArrayPush(t, "Tungsten-core rounds. They punch through armor and thin cover.\n\nIgnores 60% of armor. Goes through thin cover at half damage.");
     ArrayPush(t, "AO-Ammo-762-Match"); ArrayPush(t, "7.62 Match");
     ArrayPush(t, "AO-Ammo-762-Toxin"); ArrayPush(t, "7.62 Toxin Core");
     ArrayPush(t, "AO-Ammo-762-Shredders"); ArrayPush(t, "7.62 Shredders");
     ArrayPush(t, "AO-Ammo-127-SteelCore"); ArrayPush(t, "12.7 Steel-Core");
     ArrayPush(t, "AO-Ammo-127-Incendiary"); ArrayPush(t, "12.7 Incendiary");
     ArrayPush(t, "AO-Ammo-127-BallisticTip"); ArrayPush(t, "12.7 Ballistic Tip");
+    ArrayPush(t, "AO-Ammo-127-Ping"); ArrayPush(t, "12.7 Ping");
+    ArrayPush(t, "AO-Ammo-127-Penetrator"); ArrayPush(t, "12.7 Penetrator");
+    ArrayPush(t, "AO-Ammo-127-Penetrator-Desc"); ArrayPush(t, "Tungsten-core rounds. They punch through armor and thin cover.\n\nIgnores 60% of armor. Goes through thin cover at half damage.");
     ArrayPush(t, "AO-Ammo-127-Match"); ArrayPush(t, "12.7 Match");
     ArrayPush(t, "AO-Ammo-127-Toxin"); ArrayPush(t, "12.7 Toxin Core");
     ArrayPush(t, "AO-Ammo-127-HEI"); ArrayPush(t, "12.7 HEI");

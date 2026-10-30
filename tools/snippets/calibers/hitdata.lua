@@ -35,4 +35,28 @@ local p1, p8 = sys:DebugPelletChance(0.6, 1), sys:DebugPelletChance(0.6, 8)
 check("one projectile rolls the chance as given", near(p1, 0.6), tostring(p1))
 check("8 pellets: 0.6 per shot is 0.108 per pellet", near(p8, 1 - 0.4 ^ (1 / 8)), tostring(p8))
 check("certain stays certain per pellet", near(sys:DebugPelletChance(1.0, 6), 1.0), "")
+
+-- Ping: tags what it hits (AmmoOverhaul.PingTag, Hawk's tag for 5 s); the only drawback is -10% damage.
+for _, loc in ipairs({ "762", "127" }) do
+  local d = data("Ammo.AO_" .. loc .. "_Ping")
+  check("Ammo.AO_" .. loc .. "_Ping tags every hit", d:find("effects=AmmoOverhaul.PingTag:1;", 1, true) ~= nil, d)
+  local sel = "Items.AO_Feed_" .. loc .. "_Ping"
+  local mods = flat(sel, "statModifiers") or {}
+  local m = mods[1]
+  local only = #mods == 1 and str(flat(m, "statType")) == "BaseStats.DamagePerHit"
+    and flat(m, "modifierType") ~= nil and flat(m, "modifierType").value == "Multiplier" and near(flat(m, "value") or 0, 0.90)
+  check(sel .. " carries only DamagePerHit x0.90", rec(sel) ~= nil and only, tostring(#mods) .. " modifiers")
+end
+local tag = rec("AmmoOverhaul.PingTag")
+check("AmmoOverhaul.PingTag exists", tag ~= nil, "no record")
+if tag then
+  local dur
+  for _, m in ipairs(tag:Duration() and tag:Duration():StatModifiers() or {}) do
+    if m:IsA("gamedataConstantStatModifier_Record") then dur = m:Value() end
+  end
+  check("AmmoOverhaul.PingTag lasts 5 s", dur ~= nil and near(dur, 5), tostring(dur))
+  local auto = false
+  for _, t in ipairs(tag:GameplayTags()) do if t.value == "AutoTag" then auto = true end end
+  check("AmmoOverhaul.PingTag is an AutoTag", auto, "no AutoTag tag")
+end
 report()
