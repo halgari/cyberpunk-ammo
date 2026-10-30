@@ -1,7 +1,7 @@
 # Faction rounds, first three: design
 
 Date: 2026-10-30. Status: draft for the user's review; no code yet. Decisions the user has not
-made yet are marked **Open** and collected at the end. Round ideas come from `docs/IDEAS.md`
+made are collected at the end. Round ideas come from `docs/IDEAS.md`
 ("Faction rounds").
 
 Maelstrom, Scavengers and Arasaka each get rounds nobody else sells. A faction's NPCs carry and
@@ -34,7 +34,7 @@ across 9 kinds, which takes the mod from 149 rounds to 175.
   of the general NPC rolls, `AmmoDistribution.Spread`, `Pick` and vendors without special cases.
   That's the same way tier 4 keeps Legendary rounds out. The generator maps 5 and 6 to Rare and
   Epic for quality, price and disassembly.
-- **No crafting** (Open, recommended): no recipe and no load sheet. `tools/crafting/crafting.py`
+- **No crafting:** no recipe and no load sheet. `tools/crafting/crafting.py`
   already skips tier 4 for recipes and keeps its disassembly flats; 5 and 6 join that rule. A stack
   breaks down into Rare or Epic components by the existing rule.
 - **Price:** Rare x4 and Epic x8 of the caliber's Common round, as for the general tiers. Reloads
@@ -69,14 +69,13 @@ feel test.
 
 **Scavengers: junk and harvest**
 
-- **Reloads** (quality Open, see below; 12mm, .45, 9mm)
+- **Reloads** (Common quality; 12mm, .45, 9mm)
   - Recycled brass from mixed lots. A wide damage roll with real duds and hot rounds. Half the
     price of the caliber's Common round.
   - Levers: `rollMin`, `rollMax`, `rollDudChance`, `rollHotChance`, set once for all Scav rounds
     in `AmmoOverhaul.roll.Scavengers.*`, the faction layer that already exists. Feasibility: hit
     code, proven by Match.
-  - These are worse than Common, so a Rare badge would read wrong. **Open:** recommended Uncommon
-    quality, an exception to the Rare and Epic rule.
+  - Worse than a Common round, so Common quality (see Decisions).
 - **Dirties** (Rare; 12mm, .45, 9mm)
   - Rough hand-cast bullets: 10% less damage, 25% chance to bleed, 25% chance to poison.
   - Levers: `aoEffects` with both effects. Feasibility: hit code, proven. On V: `PlayerPoisoned`
@@ -87,8 +86,7 @@ feel test.
     small stack of components of the round's grade to what's given back. Feasibility: existing
     hook, new code; needs a test that the killing round is known at loot time (Cook-off marks its
     kills the same way).
-  - NPC side: no effect. V's body isn't looted. That's the one round with no NPC version; flagged
-    because of the same-rules rule. **Open.**
+  - NPC side: no effect. V's body isn't looted. The one round with no NPC version (see Decisions).
 
 **Arasaka: precision and control**
 
@@ -160,7 +158,7 @@ by rank, less what was fired. This is V's main source.
 **Containers.** None at first: a container has no known faction. `LootConvert` keeps rolling up to
 Epic from general rounds, which excludes tiers 5 and 6.
 
-**Turf gun shops** (Open, recommended: build second, after the NPC side plays well)
+**Turf gun shops** (built second, after the NPC side plays well)
 - The hook exists: `Vendor.AOSplitAmmo` runs on every stock build and already knows
   `GetVendorType()` is Gunsmith.
 - **Shops have no faction.** Dumped in the game 2026-10-30: all 266 vendors have
@@ -269,18 +267,17 @@ What this changed from `docs/IDEAS.md`: Maelstrom barely carry SMGs (Redliners s
 their main Power gun), and light rail, not rifles, is what they carry most, which suits
 Chrome-cookers. Scav guns are mostly 12mm Novas, so 12mm leads their list.
 
-## Open questions, recommendation first
+## Decisions (the user, 2026-10-30)
 
-1. **Tiers.** Rare and Epic only, as IDEAS suggests, with one exception: Reloads at Uncommon
-   quality, since they're worse than Common.
-2. **Sources.** NPC drops first, turf gun shops second, no crafting and no containers.
-3. **Drop rates.** The chance list above, which makes faction rounds common in that faction's
-   fights, even from Weak and Normal NPCs.
-4. **Parts-pullers.** Keep them as the one round with no effect when an NPC fires it, or drop them
-   and give Scavs only Reloads and Dirties. Recommended: keep.
-5. **Kansatsu.** Run the instant-lock probe first; if the engine can't do it, take the fallback
-   (faster lock at all times, plus the tag) rather than faking it from a script.
-6. **Faction marking on the item.** Rely on the name and the box, with no "Arasaka" line in the
-   text. Recommended, since it stays out of lore.
-7. **Turf map.** After the vendor dump, the user approves which gun shops count as whose turf.
-8. **Round count.** 26 rounds in the first set, or fewer calibers per kind to ship sooner.
+1. **Tiers.** Rare and Epic, except Reloads, which are Common quality because they're trash: an
+   exception to both the Rare and Epic rule and to "Common rounds are vanilla", for this one kind.
+2. **Sources.** NPC drops first, turf gun shops second. No crafting, no containers.
+3. **Drop rates.** The chance list above.
+4. **Parts-pullers.** Kept, with no effect when an NPC fires them.
+5. **Kansatsu.** Probe instant lock first; if the engine can't do it, take the fallback. No faking
+   from a script. (Recommended; the user raised no objection.)
+6. **Faction marking.** A short tag in brackets in the item name: [Mael], [Scav], [Ara]. The item
+   text may mention the faction offhand but doesn't have to.
+7. **Turf map.** The shop list above is still a proposal; the user hasn't approved it.
+8. **Round count.** 26.
+9. **Release.** Faction rounds come in the version after 0.5.0.
