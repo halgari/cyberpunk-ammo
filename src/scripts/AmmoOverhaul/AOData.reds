@@ -422,7 +422,6 @@ public abstract class AOData {
   //   <ammo>.aoNonlethal: a kill knocks the target out instead
   //   <ammo>.aoCookOff: a kill sets off a blast at the body, a hit on V V's grenade (CookOff.reds)
   //   <ammo>.aoMuleKick: knocks the target down and shoves V on each shot (MuleKick.reds)
-  //   <ammo>.aoRangedAttack: the RangedAttackPackage the gun fires instead of its own (Heartseeker.reds)
 
   public static func HitEffects(ammo: TweakDBID, out chances: array<Float>) -> array<TweakDBID> {
     let effects: array<TweakDBID> = AOData.GetIDs(AOData.Flat(ammo, "aoEffects"));
@@ -485,10 +484,6 @@ public abstract class AOData {
 
   public static func MuleKick(ammo: TweakDBID) -> Bool {
     return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoMuleKick"), false);
-  }
-
-  public static func RangedAttack(ammo: TweakDBID) -> TweakDBID {
-    return AOData.GetID(AOData.Flat(ammo, "aoRangedAttack"));
   }
 
   public static func IsNonlethal(ammo: TweakDBID) -> Bool {

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Legendary rounds on live hits (spec docs/superpowers/specs/2026-10-29-legendary-rounds-design.md,
-# "Testing"), one check per mechanism. Parts: heartseeker cookoff lockout kebab gatecrasher mulekick stacks
+# "Testing"), one check per mechanism. Parts: cookoff lockout kebab gatecrasher mulekick stacks
 # (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/legendary.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(stacks gatecrasher heartseeker lockout cookoff kebab mulekick)
+parts=("$@"); (( ${#parts[@]} )) || parts=(stacks gatecrasher lockout cookoff kebab mulekick)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 pass() { echo "PASS $*"; }
 fail() { echo "FAIL $*"; out+="FAIL $*|"; }
@@ -32,44 +32,6 @@ local m = TweakDB:GetRecord('Items.AO_Feed_762_Gatecrasher'):StatModifiers()
 for _, x in ipairs(m) do s:AddModifier(id, RPGManager.StatRecordToModifier(x)) end
 return string.format('%.2f %.0f %.0f', s:GetStatValue(id, gamedataStatType.CanWeaponIgnoreArmor), s:GetStatValue(id, gamedataStatType.DamageFalloffDisabled), s:GetStatValue(id, gamedataStatType.TechPierceEnabled))")
   is "Gatecrasher's selector stats on an NPC's Ajax, as NpcAmmo adds them (armor ignore, no falloff, pierce)" "$r" "1.00 1 1"
-}
-
-# --- heartseeker: smart attack, smart record while fitted, lock, swap back, damage --------------
-TAC=Items.Preset_Tactician_Default
-heartseeker() {
-  kit "{'$TAC', 1}, {'$UNI', 1}, {'Items.Preset_Katana_Default', 1}, {'Items.AO_Feed_12ga_Heartseeker', 1}, {'Ammo.AO_12ga_Heartseeker', 200}, {'Items.AO_Feed_12ga_Buckshot', 1}, {'Ammo.ShotgunAmmo', 200}"
-  local cross0; cross0=$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.crosshair'))")
-  draw $TAC; draw $TAC; feed Items.AO_Feed_12ga_Buckshot; feed Items.AO_Feed_12ga_Heartseeker; sleep 4
-  spawn 0.0 "" Character.AO_Test_Plain_Lexington
-  setup $TAC
-  is "Tactician record is Smart while Heartseeker is fitted" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Smart
-  is "Tactician crosshair is its own (the smart one crashes a redraw)" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.crosshair'))")" "$cross0"
-  local lock=""
-  for _ in 1 2 3 4 5; do
-    lock=$(lua "aim(Game.GetPlayer(), RIG.npc()); return $SYS:DebugSmartTargets()")
-    [[ $lock == *targets=1* ]] && break; sleep 1
-  done
-  [[ $lock == *targets=1*lock=0.3* ]] && pass "Heartseeker locks the NPC in 0.3 s ($lock)" || fail "Heartseeker lock: $lock"
-  is "V's shot is the smart attack" "$(lua "return $SYS:DebugCurrentAttack(Game.GetPlayer():GetActiveWeapon())")" Attacks.SmartBulletHigh
-  shoot $TAC 3
-  lua "local n = RIG.npc(); local s = 0; local c = 0
-for _, h in ipairs(RIG.hits) do if h.byV and h.onNpc and not h.dot then s = s + h.post; c = c + 1 end end
-return string.format('NOTE Heartseeker: %d hits on the rig NPC, %.1f damage each (after the roll)', c, c > 0 and s / c or 0)"
-  [[ $(lua "return #RIG.ratios('V')") -ge 3 ]] && pass "Heartseeker slugs hit the rig NPC" || fail "Heartseeker slugs hit the rig NPC"
-  feed Items.AO_Feed_12ga_Buckshot; sleep 6
-  is "Tactician record back to Power after the swap" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Power
-  [[ $(lua "return $SYS:DebugCurrentAttack(Game.GetPlayer():GetActiveWeapon())") != Attacks.SmartBulletHigh ]] && pass "Buckshot shot is not the smart attack" || fail "Buckshot still fires the smart attack"
-  # Left Smart by an earlier load in this session (TweakDB outlives a load): drawing the gun with
-  # Buckshot puts it back.
-  lua "TweakDB:SetFlat('$TAC.evolution', 'WeaponEvolution.Smart'); TweakDB:Update('$TAC'); return 1" >/dev/null
-  draw $UNI; draw $TAC; sleep 4
-  is "a Tactician left Smart goes back to Power when drawn with Buckshot" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Power
-  # Heartseeker in, then a melee weapon drawn: the record goes back.
-  feed Items.AO_Feed_12ga_Heartseeker; sleep 4
-  is "Smart again with Heartseeker" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Smart
-  draw Items.Preset_Katana_Default; sleep 3
-  is "a katana drawn puts the Tactician back to Power" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Power
-  draw $TAC; sleep 4; feed Items.AO_Feed_12ga_Buckshot; sleep 6
 }
 
 # --- helpers for the parts with two NPCs or kills -----------------------------------------------

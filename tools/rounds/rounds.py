@@ -382,30 +382,6 @@ KINDS = [
          stats=[add("KnockdownImpulse", 100.0), add("BaseKnockdownImpulse", 100.0)],
          hit=dict(mulekick=True),
          desc="Overloaded 4-gauge shells with more powder than the gun was built for. It throws whoever it hits and it throws you the other way.\n\nEvery hit knocks the target down; tough ones stagger. A hit on you knocks you down. Each shot shoves you hard away from your aim, so a shot at the floor takes you up."),
-    dict(load="Heartseeker", title="Heartseeker", tier=LEGENDARY, look=((200, 110, 20), (190, 30, 40)),
-         art={'color': 'red', 'band': 'black', 'load': 'frag', 'head_mat': 'steel', 'crimp': 'roll'},
-         calibers=["12ga"],
-         # One guided slug (probe 1, 2026-10-30): the shot takes the smart package
-         # (aoRangedAttack, Heartseeker.reds) and the gun gets a smart pistol's lock stats, locking
-         # heads only. A shotgun has none of these stats, so Additive sets them.
-         stats=one_projectile() + armor(1.0) + [
-             add("HeadshotDamageMultiplier", 1.0), add("CritChance", 50.0),
-             add("SmartGunHitProbability", 1.0), add("SmartGunPlayerProjectileVelocity", 35.0),
-             add("SmartGunHipMaxLockedTargets", 1), add("SmartGunAdsMaxLockedTargets", 1),
-             add("SmartGunHipTimeToLock", 0.3), add("SmartGunAdsTimeToLock", 0.3),
-             add("SmartGunHipTimeToUnlock", 1.6), add("SmartGunAdsTimeToUnlock", 1.6),
-             add("SmartGunHipLockingAnglePitch", 9.0), add("SmartGunHipLockingAngleYaw", 9.0),
-             add("SmartGunAdsLockingAnglePitch", 9.0), add("SmartGunAdsLockingAngleYaw", 9.0),
-             add("SmartGunHipTargetableAnglePitch", 9.0), add("SmartGunHipTargetableAngleYaw", 9.0),
-             add("SmartGunAdsTargetableAnglePitch", 9.0), add("SmartGunAdsTargetableAngleYaw", 9.0),
-             add("SmartGunTargetAcquisitionRange", 25.0), add("SmartGunMaxLockedPointsPerTarget", 1),
-             add("SmartGunTrackHeadComponents", 3), add("SmartGunTimeToLockHeadComponentMultiplier", 1.0),
-             add("SmartGunMissDelay", 0.05), add("SmartGunMissRadius", 6.5),
-             add("SmartGunSpreadMultiplier", 0.1), add("SmartGunTimeToRemoveOccludedTarget", 1.6),
-             add("SmartGunEvenDistributionPeriod", 0.2), add("SmartGunUseEvenDistributionTargeting", 1),
-             add("SmartGunTimeToMaxAccuracy", 0.5), add("SmartGunUseTimeBasedAccuracy", 1)],
-         hit=dict(ranged_attack="Attacks.SmartBulletHighPackage"),
-         desc="One heavy slug with its own seeker and motor. It locks onto the nearest head by your crosshair and flies there, no Smart Link needed.\n\nFires one guided slug with the whole shot's damage. Locks onto heads. Ignores all armor. +100% headshot damage. +50% crit chance."),
 ]
 
 

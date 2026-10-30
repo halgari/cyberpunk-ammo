@@ -264,18 +264,6 @@
     60
    ]
   ],
-  "Heartseeker": [
-   [
-    200,
-    110,
-    20
-   ],
-   [
-    190,
-    30,
-    40
-   ]
-  ],
   "Riot": [
    [
     30,
@@ -1347,21 +1335,6 @@
     "LONG FLECHETTES"
    ],
    "tier": 3
-  },
-  "12ga-heartseeker": {
-   "shape": "G12",
-   "over": {
-    "color": "red",
-    "band": "black",
-    "load": "frag",
-    "head_mat": "steel",
-    "crimp": "roll"
-   },
-   "look": "Heartseeker",
-   "label": [
-    "HEARTSEEKER"
-   ],
-   "tier": 4
   },
   "4ga-flechette": {
    "shape": "G4",

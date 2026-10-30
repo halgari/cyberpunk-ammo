@@ -40,11 +40,7 @@ private final func InstallItemPart(obj: ref<GameObject>, itemID: ItemID, partIte
   if feed {
     AmmoFeedSystem.Get(obj.GetGame()).BeforeFeedChange(obj, itemID);
   }
-  let result: Bool = wrappedMethod(obj, itemID, partItemID, slotID);
-  if feed {
-    AmmoFeedSystem.Get(obj.GetGame()).AfterFeedChange(obj, itemID);
-  }
-  return result;
+  return wrappedMethod(obj, itemID, partItemID, slotID);
 }
 
 @wrapMethod(ItemModificationSystem)
@@ -54,11 +50,7 @@ private final const func RemoveItemPart(obj: ref<GameObject>, itemID: ItemID, sl
   if feed {
     AmmoFeedSystem.Get(obj.GetGame()).BeforeFeedChange(obj, itemID);
   }
-  let removed: ItemID = wrappedMethod(obj, itemID, slotID, shouldUpdateEntity);
-  if feed {
-    AmmoFeedSystem.Get(obj.GetGame()).AfterFeedChange(obj, itemID);
-  }
-  return removed;
+  return wrappedMethod(obj, itemID, slotID, shouldUpdateEntity);
 }
 
 // --- Damage roll -----------------------------------------------------------------------------
