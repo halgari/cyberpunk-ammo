@@ -919,9 +919,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
     }
     let ammo: TweakDBID = AOData.LoadedAmmo(instigator, weapon);
     // Vanilla's own effect gate (DamageSystem.ProcessStatusEffects): no Cook-off on a blocked or
-    // deflected hit, or ignored friendly fire.
+    // deflected hit, or ignored friendly fire. Added here: none on a dodged or evaded hit either.
     let gated: Bool = attackData.WasBlocked() || !instigator.IsPlayer() && attackData.WasDeflectedAny()
-      || attackData.HasFlag(hitFlag.FriendlyFireIgnored);
+      || attackData.HasFlag(hitFlag.FriendlyFireIgnored) || attackData.HasFlag(hitFlag.DealNoDamage);
     if AOData.CookOff(ammo) && IsDefined(hitEvent.target) && !gated {
       CookOff.OnHit(instigator, hitEvent.target);
     }
