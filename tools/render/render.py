@@ -444,7 +444,7 @@ def main():
     ap.add_argument("--only", default="")
     ap.add_argument("--samples", type=int, default=256)
     ap.add_argument("--out", default=str(ART))
-    ap.add_argument("--legendary", default="magenta", choices=sorted(LEGENDARY), help="Legendary look")
+    ap.add_argument("--legendary", default="crimson", choices=sorted(LEGENDARY), help="Legendary look")
     ap.add_argument("--form", default="case", choices=("box", "case", "hero"), help="Legendary form")
     args = ap.parse_args()
     names = args.only.split(",") if args.only else list(ROUNDS)
