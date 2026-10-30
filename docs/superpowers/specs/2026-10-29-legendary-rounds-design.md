@@ -74,15 +74,15 @@ Penetrators) to 149.
 ## Probes (in the game, before the plan)
 
 1. **Can a Power gun fire a projectile instead of an instant-hit shot?** A smart projectile for
-   Heartseeker. For the Launcher round, first: can the mod spawn a real grenade (the frag's
+   Heartseeker. For Bouncing Betty, first: can the mod spawn a real grenade (the frag's
    projectile) at the muzzle and throw it forward with the gun's aim, so it arcs, bounces and
    goes off on its fuse? Then a grenade-like projectile. The candidates are the
    weapon's projectile and smart stats, as the smart guns and the grenade launchers use them.
    - Fallback for Heartseeker: a single slug with strong bullet magnetism, much stronger than
      Feedback's +2 degrees.
-   - Fallback for the Launcher round: probe 2's blast, set off at the point of impact.
+   - Fallback for Bouncing Betty: probe 2's blast, set off at the point of impact.
 2. **Can the mod set off a grenade-style blast at a point from script?** Cook-off's blast at a
-   body and V's grenade cooking off on V depend on it. So does the Launcher round's fallback.
+   body and V's grenade cooking off on V depend on it. So does Bouncing Betty's fallback.
    For V's grenade, the probe also has to find the grenade in V's grenade slot, its charge, and
    how to use one up.
 3. **Does Tech pierce go through bodies as well as walls,** with `TechPierceDamageFactor` at no
@@ -111,7 +111,7 @@ round is built.
   - Lockout jams an NPC's gun, and V's;
   - Heartseeker homes;
   - Bouncing Betty arcs, bounces and goes off;
-  - Total Penetrator through cover at full damage.
+  - Gatecrasher through cover at full damage.
 - **The user's playtest of all six.**
 
 ## Out of scope
