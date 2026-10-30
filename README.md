@@ -50,3 +50,7 @@ belong to the mod and are lost or broken without it. Keep a save from before ins
 - `docs/DESIGN.md`: how the mod works. `docs/CATALOG.md`: guns, calibers and rounds.
 - `docs/TESTING.md`: the dev loop (Linux, Lutris/GE-Proton) and the in-game checks.
 - `docs/RELEASING.md`: building the zip and releasing to GitHub and Nexus Mods.
+
+## License
+
+GPL-3.0. See `LICENSE`.
