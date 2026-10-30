@@ -1113,6 +1113,11 @@ def disc(name, r, depth, loc, rot, mat):
     return ob
 
 
+def art_fit(aspect, w, h):
+    """The largest size of a printed part of width/height `aspect` inside w by h."""
+    return (w, w / aspect) if w / h < aspect else (h * aspect, h)
+
+
 def case_form(spec, roundspec):
     """Open black hard case: the rounds lie bedded in glowing sockets cut into the foam; the lid's
     liner carries the crest and the round's name, the front wall the plate, seal and tamper strip."""
@@ -1122,12 +1127,10 @@ def case_form(spec, roundspec):
     shell_m = principled("CaseShell", (0.018, 0.018, 0.022), 0.0, 0.34, wear=0.05, bump=0.04)
     foam_m = principled("Foam", (0.012, 0.011, 0.014), 0.0, 0.9, wear=0.0, bump=0.3)
     metal = STEEL()
-    W = L * 1.42
+    # Sized in render.py (case_dims), which draws the lid's art to this shape.
+    W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
+    print(f"CASE L {L:.3f} of W/1.42 {W / 1.42:.3f}, lid {W / D:.3f}")
     wall = W * 0.04
-    pitch = R * 2.7
-    n = max(2, min(6, round(0.6 * W / pitch)))
-    D = n * pitch + R * 0.7
-    H = max(R * 2.2, W * 0.2)
     lid_h = H * 0.6
     OW, OD = W + 2 * wall, D + 2 * wall
     root = bpy.data.objects.new("Case", None)
@@ -1178,10 +1181,12 @@ def case_form(spec, roundspec):
     cube("Seam", (OW * 0.9, wall * 0.1, wall * 0.22), (0, -OD / 2 - wall * 0.02, H - wall * 0.9),
          emission("Seam", spec["accent"], 3.0)).parent = root
     fy = -OD / 2 - wall * 0.05
-    panel("Plate", W * 0.24, H * 0.32, printed("Plate", spec["plate"], metal=1.0, rough=0.3), (0, fy, H * 0.4),
+    pw, ph = art_fit(spec["plate_aspect"], W * 0.3, H * 0.32)
+    panel("Plate", pw, ph, printed("Plate", spec["plate"], metal=1.0, rough=0.3), (0, fy, H * 0.4),
           (math.pi / 2, 0, 0), wall * 0.1).parent = root
     disc("Seal", H * 0.25, wall * 0.05, (W * 0.39, fy, H * 0.45), (math.pi / 2, 0, 0), holo()).parent = root
-    panel("Tamper", W * 0.075, H * 0.72, printed("Tamper", spec["tamper"], rough=0.45), (-W * 0.39, fy, H * 0.56),
+    tw, th = art_fit(spec["tamper_aspect"], W * 0.075, H * 0.72)
+    panel("Tamper", tw, th, printed("Tamper", spec["tamper"], rough=0.45), (-W * 0.39, fy, H * 0.56),
           (math.pi / 2, 0, 0), wall * 0.03).parent = root
     base.parent = foam.parent = root
     # The sockets light the liner a little.
@@ -1294,10 +1299,12 @@ def hero_form(spec, roundspec):
         c.location = (-PW * 0.36 + i * R * (3.0 if slim else 3.6), PD * 0.28, T)
         rounds.append(c)
     fy = -PD / 2 - PH * 0.01
-    panel("Plate", PW * 0.3, PH * 0.42, printed("Plate", spec["plate"], metal=1.0, rough=0.3), (0, fy, PH * 0.3),
+    pw, ph = art_fit(spec["plate_aspect"], PW * 0.3, PH * 0.42)
+    panel("Plate", pw, ph, printed("Plate", spec["plate"], metal=1.0, rough=0.3), (0, fy, PH * 0.3),
           (math.pi / 2, 0, 0), PH * 0.02).parent = root
     disc("Seal", PH * 0.24, PH * 0.012, (PW * 0.34, fy, PH * 0.3), (math.pi / 2, 0, 0), holo()).parent = root
-    panel("Tamper", PW * 0.06, PH * 0.56, printed("Tamper", spec["tamper"], rough=0.45), (-PW * 0.36, fy, PH * 0.3),
+    tw, th = art_fit(spec["tamper_aspect"], PW * 0.06, PH * 0.56)
+    panel("Tamper", tw, th, printed("Tamper", spec["tamper"], rough=0.45), (-PW * 0.36, fy, PH * 0.3),
           (math.pi / 2, 0, 0), PH * 0.006).parent = root
     return [root] + rounds, tuple(axis)
 
@@ -1432,6 +1439,14 @@ def main():
     scene.render.image_settings.file_format = "PNG"
     scene.render.image_settings.color_mode = "RGBA"
     scene.render.filepath = SPEC["out"]
+    # For tools/render/check_lid.py: where the lid liner's corners land in the image.
+    if os.environ.get("AO_LID_DUMP") and "Liner" in bpy.data.objects:
+        from bpy_extras.object_utils import world_to_camera_view
+        bpy.context.view_layer.update()
+        ob = bpy.data.objects["Liner"]
+        pts = [world_to_camera_view(scene, cam, ob.matrix_world @ v.co) for v in ob.data.vertices[:4]]
+        with open(os.environ["AO_LID_DUMP"], "w") as f:
+            json.dump(dict(uv=[list(v.co.xy) for v in ob.data.vertices[:4]], image=[[p.x, 1 - p.y] for p in pts]), f)
     bpy.ops.render.render(write_still=True)
     contact_shadows_only(SPEC["out"])
 

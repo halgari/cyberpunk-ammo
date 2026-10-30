@@ -322,35 +322,53 @@ def linear(rgb):
     return tuple((c / 255) ** 2.2 for c in rgb)
 
 
+def case_dims(L, R):
+    """The Legendary case's inside size and its number of rounds, for a round of L by R; scene.py
+    builds to these, so the lid's art has the lid's shape."""
+    W = L * 1.42
+    pitch = R * 2.7
+    n = max(2, min(6, round(0.6 * W / pitch)))
+    return dict(W=W, D=n * pitch + R * 0.7, H=max(R * 2.2, W * 0.2), n=n, pitch=pitch)
+
+
 def form_art(tmp, name, shape, st, lines, i):
     """The printed parts of the Legendary case and hero forms; returns their spec entries."""
     tmp = pathlib.Path(tmp)
     accent, line, gold = st["panel"], st["glow"], (232, 190, 96)
-    # Lid liner: dark satin, a lit keyline, the crest over the round's name in foil.
+    # Lid liner: dark satin, a lit keyline, the crest over the round's name in foil. The art has the
+    # liner's own shape, in square pixels, so nothing stretches; the layout fits the lid.
     L, R = extent(shape)
-    W, D = 1400, max(620, round(1400 * 0.72))
+    case = case_dims(L, R)
+    W, D = (1400, round(1400 * case["D"] / case["W"])) if case["W"] >= case["D"] else (round(1400 * case["W"] / case["D"]), 1400)
     im = Image.new("RGB", (W, D), (20, 18, 24))
     glow = Image.new("RGB", (W, D))
     dr, gd = ImageDraw.Draw(im), ImageDraw.Draw(glow)
-    m = D // 22
+    m = min(W, D) // 22
     for d in (dr, gd):
-        d.rectangle([m, m, W - m, D - m], outline=line, width=max(4, D // 110))
-    ring = D * 0.19
-    cx, cy = W / 2, D * 0.3
-    dr.ellipse([cx - ring, cy - ring, cx + ring, cy + ring], outline=gold, width=D // 44)
-    f = ImageFont.truetype(FONT, int(ring * 1.25))
-    dr.text((cx, cy), "€$", font=f, fill=gold, anchor="mm")
-    f = ImageFont.truetype(FONT, D // 11)
-    dr.text((cx, D * 0.555), "BRA€$MARKET", font=f, fill=gold, anchor="mm")
+        d.rectangle([m, m, W - m, D - m], outline=line, width=max(4, min(W, D) // 110))
     big = lines[-1]
-    size = D // 4
+    # Crest and wordmark keep one proportion to each other; the name fits under them.
+    ring = min(W, D) * 0.19
+    while True:
+        fw = ImageFont.truetype(FONT, int(ring * 0.48))
+        if dr.textlength("BRA€$MARKET", font=fw) <= W * 0.76:
+            break
+        ring -= 2
+    size = int(ring * 1.3)
     f = ImageFont.truetype(FONT, size)
     while dr.textlength(big, font=f) > W * 0.8:
         size -= 2
         f = ImageFont.truetype(FONT, size)
-    dr.text((cx, D * 0.77), big, font=f, fill=accent, anchor="mm")
+    gap = ring * 0.26
+    top = (D - (2 * ring + gap + ring * 0.48 + gap + size)) / 2
+    cx, cy = W / 2, top + ring
+    dr.ellipse([cx - ring, cy - ring, cx + ring, cy + ring], outline=gold, width=max(3, int(ring / 8.4)))
+    dr.text((cx, cy), "€$", font=ImageFont.truetype(FONT, int(ring * 1.25)), fill=gold, anchor="mm")
+    y = top + 2 * ring + gap
+    dr.text((cx, y + ring * 0.24), "BRA€$MARKET", font=fw, fill=gold, anchor="mm")
+    dr.text((cx, y + ring * 0.48 + gap + size / 2), big, font=f, fill=accent, anchor="mm")
     if len(lines) == 2:
-        dr.text((m * 2.2, m * 2), lines[0], font=ImageFont.truetype(FONT, D // 9), fill=gold)
+        dr.text((m * 2.2, m * 2), lines[0], font=ImageFont.truetype(FONT, int(ring * 0.52)), fill=gold)
     lid = tmp / f"{name}-lid.png"
     im.save(lid)
     glow.save(str(lid).replace(".png", "-glow.png"))
@@ -407,7 +425,8 @@ def form_art(tmp, name, shape, st, lines, i):
                                    w // 2 + strip.width // 2 + 12, h // 2 + strip.height // 2 + 12], fill=0)
     eng = tmp / f"{name}-engrave.png"
     Image.merge("RGB", (red, green, Image.new("L", (w, h)))).save(eng)
-    return dict(lid=str(lid), plate=str(plate), tamper=str(tamper), engrave=str(eng), R=R, accent=linear(accent))
+    return dict(lid=str(lid), plate=str(plate), tamper=str(tamper), engrave=str(eng), R=R, accent=linear(accent),
+                case=case, plate_aspect=640 / 260, tamper_aspect=160 / 800)
 
 
 def run(spec, tmp):
@@ -425,8 +444,8 @@ def main():
     ap.add_argument("--only", default="")
     ap.add_argument("--samples", type=int, default=256)
     ap.add_argument("--out", default=str(ART))
-    ap.add_argument("--legendary", default="blaze", choices=sorted(LEGENDARY), help="Legendary look")
-    ap.add_argument("--form", default="", choices=("", "case", "hero"), help="Legendary form: a box by default")
+    ap.add_argument("--legendary", default="magenta", choices=sorted(LEGENDARY), help="Legendary look")
+    ap.add_argument("--form", default="case", choices=("box", "case", "hero"), help="Legendary form")
     args = ap.parse_args()
     names = args.only.split(",") if args.only else list(ROUNDS)
     out = pathlib.Path(args.out)
@@ -440,7 +459,7 @@ def main():
             if args.rounds:
                 run({"mode": "round", "out": str(out / f"{name}-ref.png"), "round": shape,
                      "samples": args.samples}, tmp)
-            if legendary and args.form:
+            if legendary and args.form != "box":
                 run({"mode": "box", "out": str(out / f"{name}.png"), "round": shape, "samples": args.samples,
                      "rim": legendary["rim"][:3] + [legendary["rim"][3] * 1.5],
                      "box": dict(form_art(tmp, name, shape, legendary, lines, i), form=args.form)}, tmp)
