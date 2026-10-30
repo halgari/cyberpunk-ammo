@@ -138,6 +138,30 @@ LEGENDARY = {
                    round=dict(pistol=dict(case_mat="chrome", tipglow=True), rifle=dict(case_mat="chrome", tipglow=True),
                               shell=dict(head_mat="chrome", color="black"), rail=dict(core="chrome", coil="orange"),
                               **{k: dict(nose_mat="chrome") for k in _SMART})),
+    # Crimson lacquer, black band edged in glowing gold; polished gold cases.
+    "crimson": dict(panel=(170, 12, 30), band=(16, 15, 14), keyline=(240, 190, 70), text=(246, 236, 214),
+                    glow=(255, 190, 60), box=dict(metal=0.0, rough=0.3, glow=4.0), rim=[1.0, 0.1, 0.12, 2.6],
+                    round=dict(pistol=dict(case_mat="gold"), rifle=dict(case_mat="gold"),
+                               shell=dict(head_mat="gold", color="crimson"), rail=dict(coil="crimson", core="gunmetal"),
+                               **{k: dict(idband="crimson", nose_mat="gold") for k in _SMART})),
+    # Hot magenta lacquer, black band edged in glowing cyan; chrome cases.
+    "magenta": dict(panel=(214, 16, 118), band=(16, 15, 14), keyline=(70, 235, 255), text=(16, 15, 14),
+                    glow=(70, 235, 255), box=dict(metal=0.0, rough=0.3, glow=4.0), rim=[1.0, 0.1, 0.6, 2.6],
+                    round=dict(pistol=dict(case_mat="chrome"), rifle=dict(case_mat="chrome"),
+                               shell=dict(head_mat="chrome", color="magenta"), rail=dict(coil="magenta", core="gunmetal"),
+                               **{k: dict(idband="magenta", nose_mat="chrome") for k in _SMART})),
+    # Electric cyan lacquer, black band edged in glowing white; chrome cases.
+    "cyan": dict(panel=(0, 186, 208), band=(16, 15, 14), keyline=(225, 250, 255), text=(10, 16, 20),
+                 glow=(190, 245, 255), box=dict(metal=0.0, rough=0.3, glow=4.0), rim=[0.15, 0.8, 1.0, 2.6],
+                 round=dict(pistol=dict(case_mat="chrome"), rifle=dict(case_mat="chrome"),
+                            shell=dict(head_mat="chrome", color="cyan"), rail=dict(coil="cyan", core="gunmetal"),
+                            **{k: dict(idband="cyan", nose_mat="chrome") for k in _SMART})),
+    # Hazard yellow lacquer, black band edged in glowing cyan; polished gold cases.
+    "yellow": dict(panel=(248, 222, 0), band=(16, 15, 14), keyline=(70, 235, 255), text=(16, 15, 14),
+                   glow=(70, 235, 255), box=dict(metal=0.0, rough=0.3, glow=4.0), rim=[1.0, 0.85, 0.1, 2.4],
+                   round=dict(pistol=dict(case_mat="gold"), rifle=dict(case_mat="gold"),
+                              shell=dict(head_mat="gold", color="yellow"), rail=dict(coil="yellow", core="gunmetal"),
+                              **{k: dict(idband="yellow", nose_mat="gold") for k in _SMART})),
 }
 
 
@@ -293,6 +317,99 @@ def blender():
     return exe
 
 
+def linear(rgb):
+    """sRGB (0-255) to the linear colour a Blender material wants."""
+    return tuple((c / 255) ** 2.2 for c in rgb)
+
+
+def form_art(tmp, name, shape, st, lines, i):
+    """The printed parts of the Legendary case and hero forms; returns their spec entries."""
+    tmp = pathlib.Path(tmp)
+    accent, line, gold = st["panel"], st["glow"], (232, 190, 96)
+    # Lid liner: dark satin, a lit keyline, the crest over the round's name in foil.
+    L, R = extent(shape)
+    W, D = 1400, max(620, round(1400 * 0.72))
+    im = Image.new("RGB", (W, D), (20, 18, 24))
+    glow = Image.new("RGB", (W, D))
+    dr, gd = ImageDraw.Draw(im), ImageDraw.Draw(glow)
+    m = D // 22
+    for d in (dr, gd):
+        d.rectangle([m, m, W - m, D - m], outline=line, width=max(4, D // 110))
+    ring = D * 0.19
+    cx, cy = W / 2, D * 0.3
+    dr.ellipse([cx - ring, cy - ring, cx + ring, cy + ring], outline=gold, width=D // 44)
+    f = ImageFont.truetype(FONT, int(ring * 1.25))
+    dr.text((cx, cy), "€$", font=f, fill=gold, anchor="mm")
+    f = ImageFont.truetype(FONT, D // 11)
+    dr.text((cx, D * 0.555), "BRA€$MARKET", font=f, fill=gold, anchor="mm")
+    big = lines[-1]
+    size = D // 4
+    f = ImageFont.truetype(FONT, size)
+    while dr.textlength(big, font=f) > W * 0.8:
+        size -= 2
+        f = ImageFont.truetype(FONT, size)
+    dr.text((cx, D * 0.77), big, font=f, fill=accent, anchor="mm")
+    if len(lines) == 2:
+        dr.text((m * 2.2, m * 2), lines[0], font=ImageFont.truetype(FONT, D // 9), fill=gold)
+    lid = tmp / f"{name}-lid.png"
+    im.save(lid)
+    glow.save(str(lid).replace(".png", "-glow.png"))
+    # Steel plate: the serial.
+    im = Image.new("RGB", (640, 260), (176, 176, 182))
+    dr = ImageDraw.Draw(im)
+    dr.rectangle([8, 8, 631, 251], outline=(40, 40, 44), width=5)
+    dr.text((320, 84), "BRA€$MARKET", font=ImageFont.truetype(FONT, 62), fill=(20, 20, 22), anchor="mm")
+    dr.text((320, 176), f"No {1007 + i * 137:04d}", font=ImageFont.truetype(FONT, 92), fill=(20, 20, 22), anchor="mm")
+    plate = tmp / f"{name}-plate.png"
+    im.save(plate)
+    # Tamper strip: accent and white diagonals, VOID down the middle.
+    im = Image.new("RGB", (160, 800), (236, 234, 228))
+    dr = ImageDraw.Draw(im)
+    for y in range(-200, 1000, 120):
+        dr.polygon([(0, y), (160, y - 110), (160, y - 50), (0, y + 60)], fill=accent)
+    txt = Image.new("L", (800, 160))
+    ImageDraw.Draw(txt).text((400, 80), "VOID", font=ImageFont.truetype(FONT, 120), fill=255, anchor="mm")
+    im.paste((16, 15, 14), (0, 0), txt.rotate(90, expand=True))
+    tamper = tmp / f"{name}-tamper.png"
+    im.save(tamper)
+    # Engraving, unrolled: red is cut lines (guilloche bands and rings), green the name's inlay, in
+    # square pixels; the middle of the image faces the camera.
+    w = 2048
+    h = min(4096, max(512, round(w * L / (2 * math.pi * R))))
+    red = Image.new("L", (w, h))
+    dr = ImageDraw.Draw(red)
+    for y0 in [h * k for k in (0.13, 0.5, 0.86)]:
+        for k in range(5):
+            for sign in (-1, 1):
+                pts = [(x, y0 + sign * (h * 0.012 + k * h * 0.012) * math.sin(x / w * 2 * math.pi * 24 + k * 0.6))
+                       for x in range(0, w + 8, 8)]
+                dr.line(pts, fill=255, width=max(4, h // 170))
+    for x in range(0, w, w // 48):
+        for yy in (0.3, 0.7):
+            dr.ellipse([x, h * yy - h * 0.012, x + h * 0.024, h * yy + h * 0.012], outline=255, width=max(4, h // 220))
+    for yy in (0.06, 0.2, 0.42, 0.58, 0.8, 0.94):
+        dr.line([(0, h * yy), (w, h * yy)], fill=255, width=max(6, h // 130))
+    green = Image.new("L", (w, h))
+    tw = round(h * 0.62)
+    size = round(w * 0.2)
+    f = ImageFont.truetype(FONT, size)
+    while ImageDraw.Draw(green).textlength(big, font=f) > tw:
+        size -= 2
+        f = ImageFont.truetype(FONT, size)
+    strip = Image.new("L", (tw, round(size * 1.3)))
+    ImageDraw.Draw(strip).text((tw / 2, strip.height / 2), big, font=f, fill=255, anchor="mm")
+    strip = strip.rotate(90, expand=True)
+    # A rail round's glowing coils would cut the name to pieces, so it goes without.
+    if shape["kind"] != "rail":
+        green.paste(strip, (w // 2 - strip.width // 2, h // 2 - strip.height // 2))
+    # Keep the name readable: no cut lines under it.
+    ImageDraw.Draw(red).rectangle([w // 2 - strip.width // 2 - 12, h // 2 - strip.height // 2 - 12,
+                                   w // 2 + strip.width // 2 + 12, h // 2 + strip.height // 2 + 12], fill=0)
+    eng = tmp / f"{name}-engrave.png"
+    Image.merge("RGB", (red, green, Image.new("L", (w, h)))).save(eng)
+    return dict(lid=str(lid), plate=str(plate), tamper=str(tamper), engrave=str(eng), R=R, accent=linear(accent))
+
+
 def run(spec, tmp):
     sp = pathlib.Path(tmp) / "spec.json"
     sp.write_text(json.dumps(spec))
@@ -309,6 +426,7 @@ def main():
     ap.add_argument("--samples", type=int, default=256)
     ap.add_argument("--out", default=str(ART))
     ap.add_argument("--legendary", default="blaze", choices=sorted(LEGENDARY), help="Legendary look")
+    ap.add_argument("--form", default="", choices=("", "case", "hero"), help="Legendary form: a box by default")
     args = ap.parse_args()
     names = args.only.split(",") if args.only else list(ROUNDS)
     out = pathlib.Path(args.out)
@@ -322,6 +440,12 @@ def main():
             if args.rounds:
                 run({"mode": "round", "out": str(out / f"{name}-ref.png"), "round": shape,
                      "samples": args.samples}, tmp)
+            if legendary and args.form:
+                run({"mode": "box", "out": str(out / f"{name}.png"), "round": shape, "samples": args.samples,
+                     "rim": legendary["rim"][:3] + [legendary["rim"][3] * 1.5],
+                     "box": dict(form_art(tmp, name, shape, legendary, lines, i), form=args.form)}, tmp)
+                print(name, flush=True)
+                continue
             lay = layout(shape)
             px = 1024
             front, side = pathlib.Path(tmp) / f"{name}-front.png", pathlib.Path(tmp) / f"{name}-side.png"

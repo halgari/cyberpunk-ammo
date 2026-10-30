@@ -14,7 +14,7 @@ import sys
 
 import bmesh
 import bpy
-from mathutils import Quaternion, Vector
+from mathutils import Matrix, Quaternion, Vector
 
 SPEC = json.load(open(sys.argv[sys.argv.index("--") + 1]))
 SEG = 160
@@ -352,7 +352,8 @@ PAINTS = {"black": (0.012, 0.012, 0.014), "blue": (0.02, 0.09, 0.42), "green": (
           "yellow": (0.8, 0.55, 0.02), "red": (0.6, 0.03, 0.02), "orange": (0.85, 0.22, 0.02),
           "white": (0.78, 0.77, 0.72), "silver": (0.6, 0.6, 0.62), "teal": (0.02, 0.42, 0.45),
           "gold": (0.8, 0.55, 0.15), "grey": (0.22, 0.23, 0.25), "olive": (0.17, 0.19, 0.07),
-          "darkred": (0.22, 0.01, 0.01), "pink": (0.7, 0.12, 0.25)}
+          "darkred": (0.22, 0.01, 0.01), "pink": (0.7, 0.12, 0.25), "crimson": (0.45, 0.005, 0.02),
+          "magenta": (0.7, 0.01, 0.2), "cyan": (0.0, 0.5, 0.65)}
 
 
 def paint(name, gloss=False):
@@ -570,7 +571,8 @@ def shell(s):
     hulls = {"red": (0.42, 0.025, 0.02), "black": (0.03, 0.03, 0.032), "green": (0.2, 0.42, 0.14),
              "yellow": (0.75, 0.5, 0.03), "orange": (0.8, 0.2, 0.02), "grey": (0.32, 0.33, 0.35),
              "olive": (0.15, 0.17, 0.06), "darkred": (0.16, 0.01, 0.01), "white": (0.75, 0.74, 0.7),
-             "blue": (0.03, 0.1, 0.4)}
+             "blue": (0.03, 0.1, 0.4), "crimson": (0.45, 0.005, 0.02),
+             "magenta": (0.7, 0.01, 0.2), "cyan": (0.0, 0.5, 0.65)}
     if s["color"] == "clear":
         # Clear hull: the load shows through.
         hullm = glass("HullClear", (0.85, 0.9, 0.92), 0.12, transmission=0.95, ior=1.5)
@@ -1050,6 +1052,256 @@ def box(spec, roundspec):
     return [root] + rounds
 
 
+# ---------------------------------------------------------------- Legendary forms
+
+def printed(name, path, metal=0.0, rough=0.4, glow=4.0):
+    """A flat printed face, mapped by UV; path's "-glow" image, if there is one, emits."""
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    art = nt.nodes.new("ShaderNodeTexImage")
+    art.image = bpy.data.images.load(path)
+    nt.links.new(art.outputs["Color"], b.inputs["Base Color"])
+    b.inputs["Metallic"].default_value = metal
+    b.inputs["Roughness"].default_value = rough
+    gp = path.replace(".png", "-glow.png")
+    if os.path.exists(gp):
+        g = nt.nodes.new("ShaderNodeTexImage")
+        g.image = bpy.data.images.load(gp)
+        nt.links.new(g.outputs["Color"], b.inputs["Emission Color"])
+        b.inputs["Emission Strength"].default_value = glow
+    return m
+
+
+def holo():
+    """Holographic foil: the hue runs across the sticker and shifts with the viewing angle."""
+    m = bpy.data.materials.new("Holo")
+    m.use_nodes = True
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    b.inputs["Metallic"].default_value = 1.0
+    b.inputs["Roughness"].default_value = 0.2
+    w = nt.nodes.new("ShaderNodeTexWave")
+    w.inputs["Scale"].default_value = 3.0
+    w.inputs["Distortion"].default_value = 3.0
+    nt.links.new(nt.nodes.new("ShaderNodeTexCoord").outputs["Reflection"], w.inputs["Vector"])
+    hsv = nt.nodes.new("ShaderNodeHueSaturation")
+    hsv.inputs["Color"].default_value = (1, 0, 0, 1)
+    nt.links.new(w.outputs["Fac"], hsv.inputs["Hue"])
+    nt.links.new(hsv.outputs["Color"], b.inputs["Base Color"])
+    return m
+
+
+def cut(ob, cutter, transfer=False):
+    """Boolean difference, applied; the cutter goes. With transfer, the cut faces take its material."""
+    mod = ob.modifiers.new("cut", "BOOLEAN")
+    mod.operation, mod.object, mod.solver = "DIFFERENCE", cutter, "EXACT"
+    if transfer:
+        mod.material_mode = "TRANSFER"
+    bpy.context.view_layer.objects.active = ob
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+    bpy.data.objects.remove(cutter)
+
+
+def disc(name, r, depth, loc, rot, mat):
+    bpy.ops.mesh.primitive_cylinder_add(vertices=64, radius=r, depth=depth, location=loc, rotation=rot)
+    ob = bpy.context.active_object
+    ob.name = name
+    ob.data.materials.append(mat)
+    bpy.ops.object.shade_smooth()
+    return ob
+
+
+def case_form(spec, roundspec):
+    """Open black hard case: the rounds lie bedded in glowing sockets cut into the foam; the lid's
+    liner carries the crest and the round's name, the front wall the plate, seal and tamper strip."""
+    rnd, L, _ = make_round(roundspec)
+    R = spec["R"]
+    glow = emission("SocketGlow", spec["accent"], spec.get("socket_glow", 2.5))
+    shell_m = principled("CaseShell", (0.018, 0.018, 0.022), 0.0, 0.34, wear=0.05, bump=0.04)
+    foam_m = principled("Foam", (0.012, 0.011, 0.014), 0.0, 0.9, wear=0.0, bump=0.3)
+    metal = STEEL()
+    W = L * 1.42
+    wall = W * 0.04
+    pitch = R * 2.7
+    n = max(2, min(6, round(0.6 * W / pitch)))
+    D = n * pitch + R * 0.7
+    H = max(R * 2.2, W * 0.2)
+    lid_h = H * 0.6
+    OW, OD = W + 2 * wall, D + 2 * wall
+    root = bpy.data.objects.new("Case", None)
+    bpy.context.collection.objects.link(root)
+    base = cube("Base", (OW, OD, H), (0, 0, H / 2), shell_m, bevel=wall * 0.4)
+    cut(base, cube("BaseCut", (W, D, H), (0, 0, H / 2 + wall), None))
+    top = H - wall * 0.8
+    foam = cube("Foam", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam_m)
+    z = top + R * 0.1
+    rounds = [rnd]
+    for i in range(n):
+        y = -D / 2 + R * 0.35 + pitch * (i + 0.5)
+        if roundspec["kind"] == "cassette":
+            c = cube("Cut", (L * 1.05, R * 2.3, R * 2.3), (0, y, z), glow)
+        else:
+            c = disc("Cut", R * 1.16, L * 1.05, (0, y, z), (0, math.pi / 2, 0), glow)
+        cut(foam, c, transfer=True)
+        ob = rnd if i == 0 else copy_tree(rnd)
+        ob.rotation_euler = (0, math.pi / 2, 0)
+        ob.location = (-L / 2, y, z)
+        rounds.append(ob)
+    # The lid, built closed around its hinge line, then opened a little past upright.
+    hinge = bpy.data.objects.new("Hinge", None)
+    bpy.context.collection.objects.link(hinge)
+    hinge.location = (0, OD / 2, H)
+    hinge.rotation_euler = (math.radians(-100), 0, 0)
+    lid = cube("Lid", (OW, OD, lid_h), (0, -OD / 2, lid_h / 2), shell_m, bevel=wall * 0.4)
+    cut(lid, cube("LidCut", (W, D, lid_h), (0, -OD / 2, lid_h / 2 - wall), None))
+    liner = panel("Liner", W, D, printed("Liner", spec["lid"], metal=0.55, rough=0.38),
+                  (0, -OD / 2, lid_h - wall * 1.02), (math.pi, 0, 0), wall * 0.04)
+    lid_parts = [lid, liner]
+    c = wall * 2.1
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            x, y = sx * (OW / 2 - c / 2 + wall * 0.12), sy * (OD / 2 - c / 2 + wall * 0.12)
+            lid_parts.append(cube("CapL", (c, c, c), (x, y - OD / 2, lid_h - c / 2 + wall * 0.12), metal, bevel=wall * 0.2))
+            lid_parts.append(cube("CapL", (c, c, c), (x, y - OD / 2, c / 2), metal, bevel=wall * 0.2))
+            cube("CapB", (c, c, c), (x, y, c / 2 - wall * 0.12), metal, bevel=wall * 0.2).parent = root
+            cube("CapB", (c, c, c), (x, y, H - c / 2), metal, bevel=wall * 0.2).parent = root
+    for ob in lid_parts:
+        ob.parent = hinge
+    hinge.parent = root
+    for sx in (-1, 1):
+        disc("HingePin", wall * 0.45, W * 0.14, (sx * W * 0.28, OD / 2 + wall * 0.2, H), (0, math.pi / 2, 0), metal).parent = root
+        cube("Latch", (W * 0.085, wall * 0.5, H * 0.42), (sx * W * 0.25, -OD / 2 - wall * 0.2, H * 0.74), metal,
+             bevel=wall * 0.12).parent = root
+    # A lit seam under the base's rim, then the front wall's details.
+    cube("Seam", (OW * 0.9, wall * 0.1, wall * 0.22), (0, -OD / 2 - wall * 0.02, H - wall * 0.9),
+         emission("Seam", spec["accent"], 3.0)).parent = root
+    fy = -OD / 2 - wall * 0.05
+    panel("Plate", W * 0.24, H * 0.32, printed("Plate", spec["plate"], metal=1.0, rough=0.3), (0, fy, H * 0.4),
+          (math.pi / 2, 0, 0), wall * 0.1).parent = root
+    disc("Seal", H * 0.25, wall * 0.05, (W * 0.39, fy, H * 0.45), (math.pi / 2, 0, 0), holo()).parent = root
+    panel("Tamper", W * 0.075, H * 0.72, printed("Tamper", spec["tamper"], rough=0.45), (-W * 0.39, fy, H * 0.56),
+          (math.pi / 2, 0, 0), wall * 0.03).parent = root
+    base.parent = foam.parent = root
+    # The sockets light the liner a little.
+    lamp = bpy.data.lights.new("SocketLight", "POINT")
+    lamp.color, lamp.energy, lamp.shadow_soft_size = spec["accent"], 30 * W * W, W * 0.2
+    ob = bpy.data.objects.new("SocketLight", lamp)
+    bpy.context.collection.objects.link(ob)
+    ob.location = (0, 0, top + W * 0.3)
+    return [root] + rounds
+
+
+def engrave(root, path, L, u0, accent):
+    """Adds the engraving to the round's materials, wrapped round its axis (object space): red in the
+    image is cut in and dark, green is an inlay that glows. u0 is the angle facing the camera."""
+    seen, stack = set(), [root]
+    img = bpy.data.images.load(path)
+    img.colorspace_settings.name = "Non-Color"
+    while stack:
+        ob = stack.pop()
+        stack.extend(ob.children)
+        for m in (ob.data.materials if ob.data else []):
+            if not m or m.name in seen or not m.use_nodes:
+                continue
+            seen.add(m.name)
+            nt = m.node_tree
+            b = nt.nodes.get("Principled BSDF")
+            if not b or b.inputs["Transmission Weight"].default_value > 0 or b.inputs["Emission Strength"].default_value > 0:
+                continue
+            sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+            nt.links.new(nt.nodes.new("ShaderNodeTexCoord").outputs["Object"], sep.inputs[0])
+            def op(kind, a, bv):
+                n = nt.nodes.new("ShaderNodeMath")
+                n.operation = kind
+                for i, v in enumerate((a, bv)):
+                    if isinstance(v, (int, float)):
+                        n.inputs[i].default_value = v
+                    else:
+                        nt.links.new(v, n.inputs[i])
+                return n.outputs[0]
+            ang = op("ARCTAN2", sep.outputs["Y"], sep.outputs["X"])
+            u = op("FRACT", op("ADD", op("DIVIDE", op("SUBTRACT", ang, u0), 2 * math.pi), 0.5), 0)
+            uv = nt.nodes.new("ShaderNodeCombineXYZ")
+            nt.links.new(u, uv.inputs["X"])
+            nt.links.new(op("DIVIDE", sep.outputs["Z"], L), uv.inputs["Y"])
+            tex = nt.nodes.new("ShaderNodeTexImage")
+            tex.image = img
+            nt.links.new(uv.outputs[0], tex.inputs["Vector"])
+            rgb = nt.nodes.new("ShaderNodeSeparateColor")
+            nt.links.new(tex.outputs["Color"], rgb.inputs[0])
+            bump = nt.nodes.new("ShaderNodeBump")
+            bump.inputs["Strength"].default_value = 1.0
+            bump.inputs["Distance"].default_value = L * 0.004
+            nt.links.new(op("SUBTRACT", 1.0, rgb.outputs["Red"]), bump.inputs["Height"])
+            if b.inputs["Normal"].is_linked:
+                nt.links.new(b.inputs["Normal"].links[0].from_socket, bump.inputs["Normal"])
+            nt.links.new(bump.outputs[0], b.inputs["Normal"])
+            mix = nt.nodes.new("ShaderNodeMix")
+            mix.data_type = "RGBA"
+            nt.links.new(op("MULTIPLY", rgb.outputs["Red"], 0.8), mix.inputs[0])
+            bc = b.inputs["Base Color"]
+            if bc.is_linked:
+                nt.links.new(bc.links[0].from_socket, mix.inputs[6])
+            else:
+                mix.inputs[6].default_value = bc.default_value
+            mix.inputs[7].default_value = (0.01, 0.01, 0.012, 1)
+            nt.links.new(mix.outputs[2], bc)
+            b.inputs["Emission Color"].default_value = (*accent, 1)
+            nt.links.new(op("MULTIPLY", rgb.outputs["Green"], 2.2), b.inputs["Emission Strength"])
+
+
+HERO_VIEW = Vector((-0.5, -1.0, 0.3))
+
+
+def hero_form(spec, roundspec):
+    """One big engraved round leaning in a collar on a stepped plinth, on a rod, with spares standing
+    behind it. Returns the objects and the hero's axis."""
+    rnd, L, _ = make_round(roundspec)
+    R = spec["R"]
+    a = math.radians(34 if L / (2 * R) > 2 else 16)
+    axis = Vector((math.sin(a), 0, math.cos(a)))
+    u0 = math.atan2(*(lambda v: (v.y, v.x))(Matrix.Rotation(-a, 3, "Y") @ HERO_VIEW))
+    engrave(rnd, spec["engrave"], L, u0, spec["accent"])
+    shell_m = principled("CaseShell", (0.018, 0.018, 0.022), 0.0, 0.3, wear=0.05, bump=0.04)
+    metal, gold = CHROME(), POLISHED_GOLD()
+    base = max(L, R * 9)
+    PW, PD, PH = base * 1.05, base * 0.7, base * 0.12
+    root = bpy.data.objects.new("Stand", None)
+    bpy.context.collection.objects.link(root)
+    cube("Foot", (PW, PD, PH * 0.6), (0, 0, PH * 0.3), shell_m, bevel=PH * 0.05).parent = root
+    cube("Line", (PW * 0.9, PD * 0.86, PH * 0.07), (0, 0, PH * 0.62), emission("Seam", spec["accent"], 3.0)).parent = root
+    cube("Top", (PW * 0.86, PD * 0.82, PH * 0.5), (0, 0, PH * 0.9), shell_m, bevel=PH * 0.05).parent = root
+    T = PH * 1.15
+    p = Vector((-L * math.sin(a) * 0.45, -PD * 0.2, T + R * math.sin(a) * 0.7))
+    rnd.rotation_euler = (0, a, 0)
+    rnd.location = p
+    bpy.ops.mesh.primitive_torus_add(major_radius=R * 1.22, minor_radius=R * 0.2, major_segments=64, minor_segments=16,
+                                     location=p + axis * R * 0.15, rotation=(0, a, 0))
+    ring = bpy.context.active_object
+    ring.data.materials.append(gold)
+    bpy.ops.object.shade_smooth()
+    ring.parent = root
+    q = p + axis * L * 0.58
+    disc("Rod", R * 0.2, q.z - T, (q.x, q.y, (q.z + T) / 2 - R * 0.5), (0, 0, 0), metal).parent = root
+    disc("RodFoot", R * 0.5, R * 0.16, (q.x, q.y, T + R * 0.08), (0, 0, 0), gold).parent = root
+    rounds = [rnd]
+    slim = L / (2 * R) > 3
+    for i in range(3 if slim else 2):
+        c = copy_tree(rnd)
+        c.rotation_euler = (0, 0, math.atan2(HERO_VIEW.y, HERO_VIEW.x) - u0 + (i - 1) * 0.3)
+        c.location = (-PW * 0.36 + i * R * (3.0 if slim else 3.6), PD * 0.28, T)
+        rounds.append(c)
+    fy = -PD / 2 - PH * 0.01
+    panel("Plate", PW * 0.3, PH * 0.42, printed("Plate", spec["plate"], metal=1.0, rough=0.3), (0, fy, PH * 0.3),
+          (math.pi / 2, 0, 0), PH * 0.02).parent = root
+    disc("Seal", PH * 0.24, PH * 0.012, (PW * 0.34, fy, PH * 0.3), (math.pi / 2, 0, 0), holo()).parent = root
+    panel("Tamper", PW * 0.06, PH * 0.56, printed("Tamper", spec["tamper"], rough=0.45), (-PW * 0.36, fy, PH * 0.3),
+          (math.pi / 2, 0, 0), PH * 0.006).parent = root
+    return [root] + rounds, tuple(axis)
+
+
 # ---------------------------------------------------------------- scene
 
 def look_at(ob, target):
@@ -1099,10 +1351,17 @@ def main():
         tr = math.radians(SPEC.get("turn", 20))
         axis = (math.cos(tr), math.sin(tr), 0)
     else:
-        objs = box(SPEC["box"], SPEC["round"])
-        objs[0].parent = None
+        form = SPEC["box"].get("form")
         view = Vector((-0.5, -1.0, 0.55))
         axis = (0, 0, 1)
+        if form == "case":
+            objs = case_form(SPEC["box"], SPEC["round"])
+        elif form == "hero":
+            objs, axis = hero_form(SPEC["box"], SPEC["round"])
+            view = HERO_VIEW
+        else:
+            objs = box(SPEC["box"], SPEC["round"])
+        objs[0].parent = None
     lo, hi = bounds(None)
     centre = (lo + hi) / 2
     radius = (hi - lo).length / 2
