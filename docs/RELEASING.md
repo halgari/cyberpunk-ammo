@@ -50,7 +50,26 @@ uploaded. To upload a release again: Actions, "Upload to Nexus Mods", Run workfl
 2. Create an API key at https://www.nexusmods.com/settings/api-keys.
 3. In the GitHub repo's settings (Secrets and variables, Actions):
    - secret `NEXUSMODS_API_KEY`;
-   - variables `NEXUS_MOD_ID` (in the mod page URL) and `NEXUS_FILE_ID` (Files tab, "Advanced").
+   - variables `NEXUS_MOD_ID` = `14315126034027` and `NEXUS_FILE_ID` = `8267310` (below).
+
+## Nexus IDs
+
+The page went up on 2026-10-29. The upload action calls the v3 API, which uses its own IDs, not
+the ones in the page URLs:
+
+- Page: https://www.nexusmods.com/cyberpunk2077/mods/36459 (game `cyberpunk2077`, game ID 3333).
+- Mod: page ID `36459`; v3 API ID `14315126034027` (this one goes in `NEXUS_MOD_ID`).
+- Main file "AmmoOverhaul 0.1.0": v3 file ID `8267310` (this one goes in `NEXUS_FILE_ID`). It's
+  the file new versions are added to.
+- Its first version, 0.1.0 (Main, primary): v1 file ID `170708`, v3 version ID `14315126168276`.
+
+To look them up again (API key from https://www.nexusmods.com/settings/api-keys):
+
+```
+curl -s -H "apikey: $NEXUS_API_KEY" https://api.nexusmods.com/v3/games/cyberpunk2077/mods/36459   # data.id
+curl -s -H "apikey: $NEXUS_API_KEY" https://api.nexusmods.com/v3/mods/<mod id>/files              # mod_files[].id
+curl -s -H "apikey: $NEXUS_API_KEY" https://api.nexusmods.com/v3/mod-files/<file id>/versions     # versions
+```
 
 Until `NEXUS_FILE_ID` is set the upload job is skipped, so a GitHub release made before the setup
 uploads nothing.

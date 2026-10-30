@@ -4,8 +4,9 @@
 #
 # Setup (once, after the first upload made by hand on the site; docs/RELEASING.md):
 #   - secret   NEXUSMODS_API_KEY  (https://www.nexusmods.com/settings/api-keys)
-#   - variable NEXUS_MOD_ID       (the mod page's ID)
-#   - variable NEXUS_FILE_ID      (the main file's ID: Files tab, "Advanced")
+#   - variable NEXUS_MOD_ID       the API's mod ID, 14315126034027 (not 36459, the page URL's ID)
+#   - variable NEXUS_FILE_ID      the API's file ID, 8267310 (not 170708, the first version's ID)
+# docs/RELEASING.md lists every ID and how they were found.
 # Without NEXUS_FILE_ID the job is skipped, so a release can't upload by accident before setup.
 name: Upload to Nexus Mods
 
