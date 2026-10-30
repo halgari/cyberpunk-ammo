@@ -108,6 +108,18 @@
     195
    ]
   ],
+  "CookOff": [
+   [
+    200,
+    110,
+    20
+   ],
+   [
+    180,
+    30,
+    30
+   ]
+  ],
   "Hardcast": [
    [
     110,
@@ -154,6 +166,18 @@
     20,
     140,
     150
+   ]
+  ],
+  "Gatecrasher": [
+   [
+    200,
+    110,
+    20
+   ],
+   [
+    25,
+    25,
+    28
    ]
   ],
   "HEI": [
@@ -238,6 +262,18 @@
     190,
     160,
     60
+   ]
+  ],
+  "Heartseeker": [
+   [
+    200,
+    110,
+    20
+   ],
+   [
+    190,
+    30,
+    40
    ]
   ],
   "Riot": [
@@ -360,6 +396,18 @@
     40
    ]
   ],
+  "Kebab": [
+   [
+    200,
+    110,
+    20
+   ],
+   [
+    52,
+    55,
+    60
+   ]
+  ],
   "EMPPayload": [
    [
     70,
@@ -442,6 +490,18 @@
     40,
     38,
     34
+   ]
+  ],
+  "Lockout": [
+   [
+    200,
+    110,
+    20
+   ],
+   [
+    40,
+    200,
+    120
    ]
   ]
  },
@@ -553,6 +613,19 @@
     "SHREDDERS"
    ]
   },
+  "9mm-cookoff": {
+   "shape": "P9",
+   "over": {
+    "tip": "red",
+    "tipfrac": 0.4,
+    "seal": true
+   },
+   "look": "CookOff",
+   "label": [
+    "9MM",
+    "COOK-OFF"
+   ]
+  },
   "45-steelcore": {
    "shape": "P45",
    "over": {
@@ -660,6 +733,19 @@
     "SHREDDERS"
    ]
   },
+  "45-cookoff": {
+   "shape": "P45",
+   "over": {
+    "tip": "red",
+    "tipfrac": 0.4,
+    "seal": true
+   },
+   "look": "CookOff",
+   "label": [
+    ".45",
+    "COOK-OFF"
+   ]
+  },
   "12mm-steelcore": {
    "shape": "P12",
    "over": {
@@ -754,6 +840,19 @@
    "label": [
     "12MM",
     "SHREDDERS"
+   ]
+  },
+  "12mm-cookoff": {
+   "shape": "P12",
+   "over": {
+    "tip": "red",
+    "tipfrac": 0.4,
+    "seal": true
+   },
+   "look": "CookOff",
+   "label": [
+    "12MM",
+    "COOK-OFF"
    ]
   },
   "556-steelcore": {
@@ -851,6 +950,19 @@
     "SHREDDERS"
    ]
   },
+  "556-cookoff": {
+   "shape": "R556",
+   "over": {
+    "tip": "red",
+    "tipfrac": 0.4,
+    "seal": true
+   },
+   "look": "CookOff",
+   "label": [
+    "5.56",
+    "COOK-OFF"
+   ]
+  },
   "762-steelcore": {
    "shape": "R762",
    "over": {
@@ -945,6 +1057,34 @@
    "label": [
     "7.62",
     "SHREDDERS"
+   ]
+  },
+  "762-gatecrasher": {
+   "shape": "R762",
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.3,
+    "tip": "black",
+    "tipfrac": 0.6,
+    "case_mat": "black"
+   },
+   "look": "Gatecrasher",
+   "label": [
+    "7.62",
+    "GATECRASHER"
+   ]
+  },
+  "762-cookoff": {
+   "shape": "R762",
+   "over": {
+    "tip": "red",
+    "tipfrac": 0.4,
+    "seal": true
+   },
+   "look": "CookOff",
+   "label": [
+    "7.62",
+    "COOK-OFF"
    ]
   },
   "127-steelcore": {
@@ -1045,6 +1185,21 @@
     "HEI"
    ]
   },
+  "127-gatecrasher": {
+   "shape": "R127",
+   "over": {
+    "nose": "spitzer",
+    "nose_mult": 1.3,
+    "tip": "black",
+    "tipfrac": 0.6,
+    "case_mat": "black"
+   },
+   "look": "Gatecrasher",
+   "label": [
+    "12.7",
+    "GATECRASHER"
+   ]
+  },
   "12ga-flechette": {
    "shape": "G12",
    "over": {
@@ -1116,6 +1271,20 @@
    "look": "FlechetteLong",
    "label": [
     "LONG FLECHETTES"
+   ]
+  },
+  "12ga-heartseeker": {
+   "shape": "G12",
+   "over": {
+    "color": "red",
+    "band": "black",
+    "load": "frag",
+    "head_mat": "steel",
+    "crimp": "roll"
+   },
+   "look": "Heartseeker",
+   "label": [
+    "HEARTSEEKER"
    ]
   },
   "4ga-flechette": {
@@ -1280,6 +1449,23 @@
     "EMP CAPACITOR"
    ]
   },
+  "5mm-kebab": {
+   "shape": "T5",
+   "over": {
+    "core": "du",
+    "point": true,
+    "rings": [
+     0.25,
+     0.5,
+     0.75
+    ]
+   },
+   "look": "Kebab",
+   "label": [
+    "5MM",
+    "KEBAB"
+   ]
+  },
   "heavy-ferro": {
    "shape": "TH",
    "over": {
@@ -1369,6 +1555,23 @@
    "label": [
     "HEAVY",
     "EMP CAPACITOR"
+   ]
+  },
+  "heavy-kebab": {
+   "shape": "TH",
+   "over": {
+    "core": "du",
+    "point": true,
+    "rings": [
+     0.25,
+     0.5,
+     0.75
+    ]
+   },
+   "look": "Kebab",
+   "label": [
+    "HEAVY",
+    "KEBAB"
    ]
   },
   "10mm-emppayload": {
@@ -1464,6 +1667,20 @@
     "SHAPED CHARGE"
    ]
   },
+  "10mm-lockout": {
+   "shape": "S10",
+   "over": {
+    "sensor": "green",
+    "idband": "black",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Lockout",
+   "label": [
+    "10MM",
+    "LOCKOUT"
+   ]
+  },
   "20mm-emppayload": {
    "shape": "S20",
    "over": {
@@ -1557,6 +1774,20 @@
     "SHAPED CHARGE"
    ]
   },
+  "20mm-lockout": {
+   "shape": "S20",
+   "over": {
+    "sensor": "green",
+    "idband": "black",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Lockout",
+   "label": [
+    "20MM",
+    "LOCKOUT"
+   ]
+  },
   "25mm-emppayload": {
    "shape": "S25",
    "over": {
@@ -1648,6 +1879,20 @@
    "label": [
     "25MM",
     "SHAPED CHARGE"
+   ]
+  },
+  "25mm-lockout": {
+   "shape": "S25",
+   "over": {
+    "sensor": "green",
+    "idband": "black",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Lockout",
+   "label": [
+    "25MM",
+    "LOCKOUT"
    ]
   }
  }

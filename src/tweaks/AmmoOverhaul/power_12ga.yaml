@@ -8,9 +8,9 @@ AmmoOverhaul.Power_12ga.feedElement: "Items.AO_AmmoFeed_Power_12ga_Element"
 AmmoOverhaul.Power_12ga.defaultAmmo: "Ammo.ShotgunAmmo"
 AmmoOverhaul.Power_12ga.vanillaAmmo: "Ammo.ShotgunAmmo"
 AmmoOverhaul.Power_12ga.lootWeight: 0.7
-AmmoOverhaul.Power_12ga.selectors: ["Items.AO_Feed_12ga_Buckshot", "Items.AO_Feed_12ga_Slugs", "Items.AO_Feed_12ga_Birdshot", "Items.AO_Feed_12ga_Flechette", "Items.AO_Feed_12ga_Beanbag", "Items.AO_Feed_12ga_DragonLight", "Items.AO_Feed_12ga_Dragon", "Items.AO_Feed_12ga_Frag12", "Items.AO_Feed_12ga_FlechetteLong"]
-AmmoOverhaul.Power_12ga.selectorAmmo: ["Ammo.ShotgunAmmo", "Ammo.AO_12ga_Slug", "Ammo.AO_12ga_Birdshot", "Ammo.AO_12ga_Flechette", "Ammo.AO_12ga_Beanbag", "Ammo.AO_12ga_DragonLight", "Ammo.AO_12ga_Dragon", "Ammo.AO_12ga_Frag12", "Ammo.AO_12ga_FlechetteLong"]
-AmmoOverhaul.Power_12ga.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3]
+AmmoOverhaul.Power_12ga.selectors: ["Items.AO_Feed_12ga_Buckshot", "Items.AO_Feed_12ga_Slugs", "Items.AO_Feed_12ga_Birdshot", "Items.AO_Feed_12ga_Flechette", "Items.AO_Feed_12ga_Beanbag", "Items.AO_Feed_12ga_DragonLight", "Items.AO_Feed_12ga_Dragon", "Items.AO_Feed_12ga_Frag12", "Items.AO_Feed_12ga_FlechetteLong", "Items.AO_Feed_12ga_Heartseeker"]
+AmmoOverhaul.Power_12ga.selectorAmmo: ["Ammo.ShotgunAmmo", "Ammo.AO_12ga_Slug", "Ammo.AO_12ga_Birdshot", "Ammo.AO_12ga_Flechette", "Ammo.AO_12ga_Beanbag", "Ammo.AO_12ga_DragonLight", "Ammo.AO_12ga_Dragon", "Ammo.AO_12ga_Frag12", "Ammo.AO_12ga_FlechetteLong", "Ammo.AO_12ga_Heartseeker"]
+AmmoOverhaul.Power_12ga.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 4]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_12ga.craftBatch: 40
 
@@ -700,6 +700,251 @@ Items.AO_Feed_12ga_FlechetteLong:
       modifierType: Multiplier
       value: 3.5
 
+# Heartseeker (Legendary)
+Ammo.AO_12ga_Heartseeker:
+  $base: Ammo.AO_12ga_Birdshot
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-12ga-Heartseeker
+  localizedDescription: LocKey#AO-Ammo-Heartseeker-Desc
+  iconPath: AO_12ga_Heartseeker
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_4, AO_Family_Power]
+
+Ammo.AO_12ga_Heartseeker.aoRangedAttack: "Attacks.SmartBulletHighPackage"
+
+UIIcon.AO_12ga_Heartseeker:
+  $type: UIIcon
+  atlasPartName: ao_12ga_heartseeker
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12ga_Heartseeker:
+  $base: Items.AO_Feed_12ga_Buckshot
+  displayName: LocKey#AO-Ammo-12ga-Heartseeker
+  localizedDescription: LocKey#AO-Ammo-Heartseeker-Desc
+  iconPath: AO_12ga_Heartseeker
+  quality: Quality.Legendary
+  statModifiers:
+    - !append
+      $type: CombinedStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      refStat: BaseStats.ProjectilesPerShotBase
+      refObject: Root
+      opSymbol: '*'
+      value: -1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.ProjectilesPerShot
+      modifierType: Additive
+      value: 1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 1.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.HeadshotDamageMultiplier
+      modifierType: Additive
+      value: 1.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CritChance
+      modifierType: Additive
+      value: 50.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHitProbability
+      modifierType: Additive
+      value: 1.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunPlayerProjectileVelocity
+      modifierType: Additive
+      value: 35.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipMaxLockedTargets
+      modifierType: Additive
+      value: 1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsMaxLockedTargets
+      modifierType: Additive
+      value: 1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipTimeToLock
+      modifierType: Additive
+      value: 0.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsTimeToLock
+      modifierType: Additive
+      value: 0.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipTimeToUnlock
+      modifierType: Additive
+      value: 1.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsTimeToUnlock
+      modifierType: Additive
+      value: 1.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipLockingAnglePitch
+      modifierType: Additive
+      value: 9.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipLockingAngleYaw
+      modifierType: Additive
+      value: 9.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsLockingAnglePitch
+      modifierType: Additive
+      value: 9.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsLockingAngleYaw
+      modifierType: Additive
+      value: 9.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipTargetableAnglePitch
+      modifierType: Additive
+      value: 9.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipTargetableAngleYaw
+      modifierType: Additive
+      value: 9.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsTargetableAnglePitch
+      modifierType: Additive
+      value: 9.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsTargetableAngleYaw
+      modifierType: Additive
+      value: 9.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunTargetAcquisitionRange
+      modifierType: Additive
+      value: 25.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunMaxLockedPointsPerTarget
+      modifierType: Additive
+      value: 1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunTrackHeadComponents
+      modifierType: Additive
+      value: 3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunTimeToLockHeadComponentMultiplier
+      modifierType: Additive
+      value: 1.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunMissDelay
+      modifierType: Additive
+      value: 0.05
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunMissRadius
+      modifierType: Additive
+      value: 6.5
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunSpreadMultiplier
+      modifierType: Additive
+      value: 0.1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunTimeToRemoveOccludedTarget
+      modifierType: Additive
+      value: 1.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunEvenDistributionPeriod
+      modifierType: Additive
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunUseEvenDistributionTargeting
+      modifierType: Additive
+      value: 1
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunTimeToMaxAccuracy
+      modifierType: Additive
+      value: 0.5
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunUseTimeBasedAccuracy
+      modifierType: Additive
+      value: 1
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -960,5 +1205,9 @@ Items.AO_Recipe_AO_12ga_FlechetteLong:
       statType: BaseStats.Price
       modifierType: Multiplier
       value: 800
+
+Ammo.AO_12ga_Heartseeker.aoScrapRounds: 40
+Ammo.AO_12ga_Heartseeker.aoScrapGive: 1
+Ammo.AO_12ga_Heartseeker.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

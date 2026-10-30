@@ -23,6 +23,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-Toxin-Desc"); ArrayPush(t, "A hollow core packed with toxin. Whatever it hits gets a dose.\n\n25% chance to poison. 30% of the damage is chemical damage.");
     ArrayPush(t, "AO-Ammo-9mm-Shredders"); ArrayPush(t, "9mm Shredders");
     ArrayPush(t, "AO-Ammo-Shredders-Desc"); ArrayPush(t, "Pre-fragmented bullets that break apart inside the target. The wounds bleed, and limbs come off easier.\n\n30% chance to cause bleeding. Twice the dismemberment chance.");
+    ArrayPush(t, "AO-Ammo-9mm-CookOff"); ArrayPush(t, "9mm Cook-off");
+    ArrayPush(t, "AO-Ammo-CookOff-Desc"); ArrayPush(t, "Rounds with a reactive filler in the core. Kill someone with one and whatever they're carrying goes off with them.\n\nA kill sets off a blast at the body that hurts everyone close by. A hit on you sets off your own grenade if it's charged.");
     ArrayPush(t, "AO-Ammo-45-SteelCore"); ArrayPush(t, ".45 Steel-Core");
     ArrayPush(t, "AO-Ammo-45-Incendiary"); ArrayPush(t, ".45 Incendiary");
     ArrayPush(t, "AO-Ammo-Incendiary-Desc"); ArrayPush(t, "A pinch of incendiary mix in the tip. It flashes when it hits and can set the target alight.\n\n15% chance to set the target on fire. A quarter of the damage is fire damage. -5% damage.");
@@ -33,6 +35,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-45-Match"); ArrayPush(t, ".45 Match");
     ArrayPush(t, "AO-Ammo-45-Toxin"); ArrayPush(t, ".45 Toxin Core");
     ArrayPush(t, "AO-Ammo-45-Shredders"); ArrayPush(t, ".45 Shredders");
+    ArrayPush(t, "AO-Ammo-45-CookOff"); ArrayPush(t, ".45 Cook-off");
     ArrayPush(t, "AO-Ammo-12mm-SteelCore"); ArrayPush(t, "12mm Steel-Core");
     ArrayPush(t, "AO-Ammo-12mm-Incendiary"); ArrayPush(t, "12mm Incendiary");
     ArrayPush(t, "AO-Ammo-12mm-Rubber"); ArrayPush(t, "12mm Rubber");
@@ -43,6 +46,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-12mm-Match"); ArrayPush(t, "12mm Match");
     ArrayPush(t, "AO-Ammo-12mm-Toxin"); ArrayPush(t, "12mm Toxin Core");
     ArrayPush(t, "AO-Ammo-12mm-Shredders"); ArrayPush(t, "12mm Shredders");
+    ArrayPush(t, "AO-Ammo-12mm-CookOff"); ArrayPush(t, "12mm Cook-off");
     ArrayPush(t, "AO-Ammo-556-SteelCore"); ArrayPush(t, "5.56 Steel-Core");
     ArrayPush(t, "AO-Ammo-556-Incendiary"); ArrayPush(t, "5.56 Incendiary");
     ArrayPush(t, "AO-Ammo-556-Subsonic"); ArrayPush(t, "5.56 Subsonic");
@@ -51,6 +55,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-556-Match"); ArrayPush(t, "5.56 Match");
     ArrayPush(t, "AO-Ammo-556-Toxin"); ArrayPush(t, "5.56 Toxin Core");
     ArrayPush(t, "AO-Ammo-556-Shredders"); ArrayPush(t, "5.56 Shredders");
+    ArrayPush(t, "AO-Ammo-556-CookOff"); ArrayPush(t, "5.56 Cook-off");
     ArrayPush(t, "AO-Ammo-762-SteelCore"); ArrayPush(t, "7.62 Steel-Core");
     ArrayPush(t, "AO-Ammo-762-Incendiary"); ArrayPush(t, "7.62 Incendiary");
     ArrayPush(t, "AO-Ammo-762-BallisticTip"); ArrayPush(t, "7.62 Ballistic Tip");
@@ -62,6 +67,9 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-762-Match"); ArrayPush(t, "7.62 Match");
     ArrayPush(t, "AO-Ammo-762-Toxin"); ArrayPush(t, "7.62 Toxin Core");
     ArrayPush(t, "AO-Ammo-762-Shredders"); ArrayPush(t, "7.62 Shredders");
+    ArrayPush(t, "AO-Ammo-762-Gatecrasher"); ArrayPush(t, "7.62 Gatecrasher");
+    ArrayPush(t, "AO-Ammo-Gatecrasher-Desc"); ArrayPush(t, "Solid tungsten-carbide penetrators loaded hot. Armor, cover and distance take nothing off them.\n\nIgnores all armor. No damage falloff. Goes through cover at full damage.");
+    ArrayPush(t, "AO-Ammo-762-CookOff"); ArrayPush(t, "7.62 Cook-off");
     ArrayPush(t, "AO-Ammo-127-SteelCore"); ArrayPush(t, "12.7 Steel-Core");
     ArrayPush(t, "AO-Ammo-127-Incendiary"); ArrayPush(t, "12.7 Incendiary");
     ArrayPush(t, "AO-Ammo-127-BallisticTip"); ArrayPush(t, "12.7 Ballistic Tip");
@@ -72,6 +80,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-127-Toxin"); ArrayPush(t, "12.7 Toxin Core");
     ArrayPush(t, "AO-Ammo-127-HEI"); ArrayPush(t, "12.7 HEI");
     ArrayPush(t, "AO-Ammo-HEI-Desc"); ArrayPush(t, "High-explosive incendiary. A small charge in the nose goes off on impact. It tears up drones, mechs and cars, and can set people alight. No splash.\n\n+50% damage against drones, mechs and vehicles. 20% chance to set the target on fire.");
+    ArrayPush(t, "AO-Ammo-127-Gatecrasher"); ArrayPush(t, "12.7 Gatecrasher");
     ArrayPush(t, "AO-Ammo-12ga-Flechette"); ArrayPush(t, "Flechettes");
     ArrayPush(t, "AO-Ammo-Flechette-Desc"); ArrayPush(t, "Steel darts instead of shot. They keep together and keep going, but each one hits lighter.\n\nTighter spread. Double range. -15% damage.");
     ArrayPush(t, "AO-Ammo-12ga-Beanbag"); ArrayPush(t, "Beanbags");
@@ -84,6 +93,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-Frag12-Desc"); ArrayPush(t, "A fin-stabilized slug with a shaped charge in the nose. Punches through armor and tears up machines. No splash.\n\nFires one projectile with the whole shot's damage. Ignores 50% of armor. +50% damage against drones, mechs and vehicles.");
     ArrayPush(t, "AO-Ammo-12ga-FlechetteLong"); ArrayPush(t, "Long Flechettes");
     ArrayPush(t, "AO-Ammo-FlechetteLong-Desc"); ArrayPush(t, "Long tungsten darts. They stay in a tight group and still hit hard well past where buckshot gives up.\n\nTighter spread. 3.5x range.");
+    ArrayPush(t, "AO-Ammo-12ga-Heartseeker"); ArrayPush(t, "Heartseeker");
+    ArrayPush(t, "AO-Ammo-Heartseeker-Desc"); ArrayPush(t, "One heavy slug with its own seeker and motor. It locks onto the nearest head by your crosshair and flies there, no Smart Link needed.\n\nFires one guided slug with the whole shot's damage. Locks onto heads. Ignores all armor. +100% headshot damage. +50% crit chance.");
     ArrayPush(t, "AO-Ammo-4ga-Flechette"); ArrayPush(t, "4ga Flechettes");
     ArrayPush(t, "AO-Ammo-4ga-Riot"); ArrayPush(t, "4ga Riot");
     ArrayPush(t, "AO-Ammo-Riot-Desc"); ArrayPush(t, "A big rubber baton round for the Carnage. Flattens whoever it hits, and they usually get back up later.\n\nFires one projectile with the whole shot's damage. Knocks targets down. Non-lethal: targets go down unconscious instead of dying. -50% damage.");
@@ -106,6 +117,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-Superconductor-Desc"); ArrayPush(t, "Supercooled slugs that the rails can cycle as fast as they charge.\n\nFull auto at full charge.");
     ArrayPush(t, "AO-Ammo-5mm-EMPCap"); ArrayPush(t, "5mm EMP Capacitor");
     ArrayPush(t, "AO-Ammo-EMPCap-Desc"); ArrayPush(t, "A slug with a charged capacitor in the core. It dumps the charge into whatever it hits.\n\n30% chance of an EMP. 30% of the damage is electrical damage.");
+    ArrayPush(t, "AO-Ammo-5mm-Kebab"); ArrayPush(t, "5mm Kebab");
+    ArrayPush(t, "AO-Ammo-Kebab-Desc"); ArrayPush(t, "Long hardened slugs. A charged shot keeps going through everything lined up in front of it.\n\nA charged shot goes through every body and wall in its line with no damage lost.");
     ArrayPush(t, "AO-Ammo-Heavy-Ferro"); ArrayPush(t, "Heavy Ferro");
     ArrayPush(t, "AO-Ammo-Heavy-SplitSlug"); ArrayPush(t, "Heavy Split Slugs");
     ArrayPush(t, "AO-Ammo-Heavy-Feedback"); ArrayPush(t, "Heavy Feedback");
@@ -113,6 +126,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-Heavy-ToxicScatter"); ArrayPush(t, "Heavy Toxic Scatter");
     ArrayPush(t, "AO-Ammo-Heavy-Superconductor"); ArrayPush(t, "Heavy Superconductor");
     ArrayPush(t, "AO-Ammo-Heavy-EMPCap"); ArrayPush(t, "Heavy EMP Capacitor");
+    ArrayPush(t, "AO-Ammo-Heavy-Kebab"); ArrayPush(t, "Heavy Kebab");
     ArrayPush(t, "AO-Ammo-10mm-EMPPayload"); ArrayPush(t, "10mm EMP Payload");
     ArrayPush(t, "AO-Ammo-EMPPayload-Desc"); ArrayPush(t, "Smart rounds with an EMP charge in place of some of the explosive.\n\n25% chance of an EMP. 30% of the damage is electrical damage. -10% damage.");
     ArrayPush(t, "AO-Ammo-10mm-FirePayload"); ArrayPush(t, "10mm Incendiary Payload");
@@ -127,6 +141,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-HackCarrier-Desc"); ArrayPush(t, "Smart rounds that push malware through the target's link when they hit.\n\n15% chance of a cyberware malfunction. 15% chance to jam the target's weapon.");
     ArrayPush(t, "AO-Ammo-10mm-ShapedCharge"); ArrayPush(t, "10mm Shaped Charge");
     ArrayPush(t, "AO-Ammo-ShapedCharge-Desc"); ArrayPush(t, "Smart rounds with a shaped-charge warhead. Built for armor and machines.\n\nIgnores 50% of armor. +50% damage against drones, mechs and vehicles.");
+    ArrayPush(t, "AO-Ammo-10mm-Lockout"); ArrayPush(t, "10mm Lockout");
+    ArrayPush(t, "AO-Ammo-Lockout-Desc"); ArrayPush(t, "Smart rounds that push a lockout code into the target's gun on impact.\n\nEvery hit jams the target's weapon for 4 seconds.");
     ArrayPush(t, "AO-Ammo-20mm-EMPPayload"); ArrayPush(t, "20mm EMP Payload");
     ArrayPush(t, "AO-Ammo-20mm-FirePayload"); ArrayPush(t, "20mm Incendiary Payload");
     ArrayPush(t, "AO-Ammo-20mm-ChemPayload"); ArrayPush(t, "20mm Chem Payload");
@@ -134,6 +150,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-20mm-Hunter"); ArrayPush(t, "20mm Hunter");
     ArrayPush(t, "AO-Ammo-20mm-HackCarrier"); ArrayPush(t, "20mm Hack Carrier");
     ArrayPush(t, "AO-Ammo-20mm-ShapedCharge"); ArrayPush(t, "20mm Shaped Charge");
+    ArrayPush(t, "AO-Ammo-20mm-Lockout"); ArrayPush(t, "20mm Lockout");
     ArrayPush(t, "AO-Ammo-25mm-EMPPayload"); ArrayPush(t, "25mm EMP Payload");
     ArrayPush(t, "AO-Ammo-25mm-FirePayload"); ArrayPush(t, "25mm Incendiary Payload");
     ArrayPush(t, "AO-Ammo-25mm-ChemPayload"); ArrayPush(t, "25mm Chem Payload");
@@ -141,6 +158,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-25mm-Hunter"); ArrayPush(t, "25mm Hunter");
     ArrayPush(t, "AO-Ammo-25mm-HackCarrier"); ArrayPush(t, "25mm Hack Carrier");
     ArrayPush(t, "AO-Ammo-25mm-ShapedCharge"); ArrayPush(t, "25mm Shaped Charge");
+    ArrayPush(t, "AO-Ammo-25mm-Lockout"); ArrayPush(t, "25mm Lockout");
     return t;
   }
 }

@@ -7,18 +7,18 @@ local sys = Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSyste
 local p = Game.GetPlayer()
 
 local SHARES = {
-  Power = { 0.80, 0.14, 0.05, 0.01 },
-  Tech = { 0.70, 0.22, 0.07, 0.01 },
-  Smart = { 0.86, 0.10, 0.035, 0.005 },
+  Power = { 0.80, 0.14, 0.05, 0.01, 0.0 },
+  Tech = { 0.70, 0.22, 0.07, 0.01, 0.0 },
+  Smart = { 0.86, 0.10, 0.035, 0.005, 0.0 },
 }
 for family, want in pairs(SHARES) do
   local got = flat("AmmoOverhaul.shares", family) or {}
-  local sum, same = 0, #got == 4
+  local sum, same = 0, #got == 5
   for i, v in ipairs(got) do
     sum = sum + v
     same = same and math.abs(v - (want[i] or -1)) < 0.0001
   end
-  check(family .. " has 4 tier shares summing to 1", #got == 4 and math.abs(sum - 1) < 0.001, #got .. " shares, sum " .. sum)
+  check(family .. " has 5 tier shares summing to 1", #got == 5 and math.abs(sum - 1) < 0.001, #got .. " shares, sum " .. sum)
   check(family .. " shares are the spec's", same, table.concat(got, " "))
 end
 
@@ -26,7 +26,7 @@ end
 local CAL = {}
 for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
   local ammo, tiers = flat("AmmoOverhaul." .. c, "selectorAmmo") or {}, flat("AmmoOverhaul." .. c, "selectorTiers") or {}
-  local byTier = { [0] = {}, {}, {}, {} }
+  local byTier = { [0] = {}, {}, {}, {}, {} }
   for i, a in ipairs(ammo) do
     local t = tiers[i]
     if byTier[t] then table.insert(byTier[t], type(a) == "string" and a or str(a)) end
@@ -35,12 +35,12 @@ for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
 end
 
 local function price(id) return RPGManager.CalculateBuyPrice(p, ItemID.FromTDBID(TweakDBID.new(id)), 1.0) end
-local MULT = { 2, 4, 8 }
-local priced = { 0, 0, 0 }
+local MULT = { 2, 4, 8, 16 }
+local priced = { 0, 0, 0, 0 }
 for c, byTier in pairs(CAL) do
   local common = byTier[0][1]
   local base = common and price(common) or 0
-  for t = 1, 3 do
+  for t = 1, 4 do
     for _, a in ipairs(byTier[t]) do
       local got, want = price(a), base * MULT[t]
       priced[t] = priced[t] + 1
@@ -56,7 +56,7 @@ check("found Uncommon rounds to price", priced[1] > 0, "none")
 -- Vendors: a gun shop's cap (2) never gives an Epic; other vendors' (0) only Common.
 local function tierOf(id)
   for _, byTier in pairs(CAL) do
-    for t = 0, 3 do
+    for t = 0, 4 do
       for _, a in ipairs(byTier[t]) do if a == id then return t end end
     end
   end
@@ -77,6 +77,7 @@ end
 for _, vanilla in ipairs({ "Ammo.HandgunAmmo", "Ammo.RifleAmmo", "Ammo.SniperRifleAmmo", "Ammo.ShotgunAmmo" }) do
   local shop = tiersIn(sys:DebugSpread(vanilla, 100000, 2))
   check(vanilla .. " gun shop stock has no Epic", not shop[3], tostring(shop[3]))
+  check(vanilla .. " gun shop stock has no Legendary", not shop[4], tostring(shop[4]))
   if anyRare then
     check(vanilla .. " gun shop stock has Rares", (shop[2] or 0) > 0, "none")
   else
@@ -85,7 +86,9 @@ for _, vanilla in ipairs({ "Ammo.HandgunAmmo", "Ammo.RifleAmmo", "Ammo.SniperRif
   local other = tiersIn(sys:DebugSpread(vanilla, 100000, 0))
   check(vanilla .. " other vendors only Common", not other[1] and not other[2] and not other[3], "")
   if anyEpic then
-    check(vanilla .. " loot can give Epics", (tiersIn(sys:DebugSpread(vanilla, 100000, 3))[3] or 0) > 0, "none")
+    local loot = tiersIn(sys:DebugSpread(vanilla, 100000, 3))
+    check(vanilla .. " loot can give Epics", (loot[3] or 0) > 0, "none")
+    check(vanilla .. " plain loot spread never gives a Legendary", not loot[4], tostring(loot[4]))
   end
 end
 
@@ -96,7 +99,14 @@ local function picks(rarity)
   return t
 end
 local N = {}
-for _, r in ipairs({ "Trash", "Weak", "Normal", "Rare", "Officer", "Elite", "Boss" }) do N[r] = picks(r) end
+for _, r in ipairs({ "Trash", "Weak", "Normal", "Rare", "Officer", "Elite", "Boss", "MaxTac" }) do N[r] = picks(r) end
+-- Legendary: Elite 3%, Boss and MaxTac 10% (9mm has Cook-off); no other rank.
+for _, r in ipairs({ "Trash", "Weak", "Normal", "Rare", "Officer" }) do
+  check(r .. " NPCs roll no Legendary", not N[r][4], tostring(N[r][4]))
+end
+check("Elite Legendary rate ~0.03", math.abs((N.Elite[4] or 0) / 20000 - 0.03) < 0.006, tostring(N.Elite[4]))
+check("Boss Legendary rate ~0.10", math.abs((N.Boss[4] or 0) / 20000 - 0.10) < 0.012, tostring(N.Boss[4]))
+check("MaxTac Legendary rate ~0.10", math.abs((N.MaxTac[4] or 0) / 20000 - 0.10) < 0.012, tostring(N.MaxTac[4]))
 for _, r in ipairs({ "Trash", "Weak", "Normal" }) do
   check(r .. " NPCs roll no Rare or Epic", not N[r][2] and not N[r][3], (N[r][2] or 0) .. " " .. (N[r][3] or 0))
   check(r .. " NPCs roll Uncommons", (N[r][1] or 0) > 0, "none")

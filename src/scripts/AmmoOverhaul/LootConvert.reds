@@ -25,14 +25,32 @@ public abstract class LootConvert {
         ArrayPush(quantities, item.GetQuantity());
       }
     }
+    let targets: array<TweakDBID>;
+    let hasEpic: Bool = false;
     let i: Int32 = 0;
     while i < ArraySize(ids) {
+      // Loot rolls any tier up to Epic.
+      let target: TweakDBID = AmmoDistribution.Pick(ItemID.GetTDBID(ids[i]), 3, owned);
+      ArrayPush(targets, target);
+      hasEpic = hasEpic || AOData.AmmoTier(target) == 3;
+      i += 1;
+    }
+    i = 0;
+    while i < ArraySize(ids) {
       let vanilla: TweakDBID = ItemID.GetTDBID(ids[i]);
-      // Loot rolls any tier, Epic included.
-      let target: TweakDBID = AmmoDistribution.Pick(vanilla, 3, owned);
+      let target: TweakDBID = targets[i];
+      let quantity: Int32 = quantities[i];
+      // A container that holds an Epic round may hold a Legendary one too.
+      if hasEpic {
+        let legendary: TweakDBID = LootConvert.LegendaryRoll(target);
+        if TDBID.IsValid(legendary) {
+          target = legendary;
+          quantity = AOData.LegendaryStack(quantity);
+        }
+      }
       if target != vanilla {
         ts.RemoveItem(container, ids[i], quantities[i]);
-        ts.GiveItem(container, ItemID.FromTDBID(target), quantities[i]);
+        ts.GiveItem(container, ItemID.FromTDBID(target), quantity);
         let recipe: TweakDBID = AmmoDistribution.RecipeRoll(target);
         if TDBID.IsValid(recipe) {
           ts.GiveItem(container, ItemID.FromTDBID(recipe), 1);
@@ -41,6 +59,16 @@ public abstract class LootConvert {
       i += 1;
     }
     return ArraySize(ids);
+  }
+
+  // With chance lootLegendaryChance, one of the Legendary rounds of `ammo`'s caliber; else invalid.
+  public static func LegendaryRoll(ammo: TweakDBID) -> TweakDBID {
+    let caliber: String = AOData.CaliberForAmmo(ammo);
+    if StrLen(caliber) == 0 || RandF() >= AOData.LootLegendaryChance() {
+      return TDBID.None();
+    }
+    let legendary: array<TweakDBID> = AOData.AmmosForTier(caliber, 4);
+    return ArraySize(legendary) > 0 ? legendary[RandRange(0, ArraySize(legendary))] : TDBID.None();
   }
 
   // Convert, unless this container was converted before; marks it.

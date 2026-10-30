@@ -114,6 +114,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if StrLen(AOData.CaliberForWeapon(ItemID.GetTDBID(id))) > 0 {
       this.GiveSelectedAmmo(weapon, 0);
       this.WatchMagazine(weapon);
+      RangedAttackSwap.SyncTags(player, id);
     }
   }
 
@@ -183,6 +184,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
   public final func OnWeaponDrawn(weapon: ref<WeaponObject>) -> Void {
     if IsDefined(weapon) && weapon.GetOwner() == this.m_player && StrLen(AOData.CaliberForWeapon(ItemID.GetTDBID(weapon.GetItemID()))) > 0 {
       this.GiveSelectedAmmo(weapon, 0);
+      RangedAttackSwap.SyncTags(this.m_player, weapon.GetItemID());
     }
   }
 
@@ -376,7 +378,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
 
   // "tier=count;..." over `n` NpcAmmo.RollTier calls for an NPC of `rarity` (no puppet needed).
   public final func DebugTierPick(caliber: String, rarity: String, n: Int32) -> String {
-    let counts: array<Int32> = [0, 0, 0, 0];
+    let counts: array<Int32> = [0, 0, 0, 0, 0];
     let i: Int32 = 0;
     while i < n {
       counts[NpcAmmo.RollTier(caliber, rarity)] += 1;
@@ -384,7 +386,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     }
     let text: String = "";
     i = 0;
-    while i < 4 {
+    while i < 5 {
       if counts[i] > 0 {
         text += IntToString(i) + "=" + IntToString(counts[i]) + ";";
       }
@@ -831,6 +833,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
       return;
     }
     let ammo: TweakDBID = AOData.LoadedAmmo(instigator, weapon);
+    if AOData.CookOff(ammo) && IsDefined(hitEvent.target) {
+      CookOff.OnHit(instigator, hitEvent.target);
+    }
     let chances: array<Float>;
     let effects: array<TweakDBID> = AOData.HitEffects(ammo, chances);
     if ArraySize(effects) == 0 && !AOData.IsNonlethal(ammo) {

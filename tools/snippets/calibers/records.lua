@@ -165,11 +165,11 @@ end
 -- Common round (on the price lists), the Common round's weight, text, icon, a hidden selector of the
 -- tier's quality, no damage-type or machine stats on the selector (those are hit data, applied to
 -- V and NPCs alike), valid hit data.
-local QUAL, PRICE = { [2] = "Quality.Rare", [3] = "Quality.Epic" }, { [2] = 4, [3] = 8 }
+local QUAL, PRICE = { [2] = "Quality.Rare", [3] = "Quality.Epic", [4] = "Quality.Legendary" }, { [2] = 4, [3] = 8, [4] = 16 }
 local SHARE_TYPES = { Thermal = true, Chemical = true, Electric = true }
 local BANNED = { ["BaseStats.ThermalDamage"] = true, ["BaseStats.ChemicalDamage"] = true, ["BaseStats.ElectricDamage"] = true,
   ["BaseStats.BonusDamageAgainstMechanicals"] = true }
-local counted = { [2] = 0, [3] = 0 }
+local counted = { [2] = 0, [3] = 0, [4] = 0 }
 for _, cal in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
   local K = "AmmoOverhaul." .. cal
   local sels, ammos, tiers = flat(K, "selectors") or {}, flat(K, "selectorAmmo") or {}, flat(K, "selectorTiers") or {}
@@ -211,6 +211,8 @@ end
 check("96 Rare and Epic rounds listed", counted[2] + counted[3] == 96, counted[2] .. " Rare, " .. counted[3] .. " Epic")
 check("Rare count", counted[2] == 50, tostring(counted[2]))
 check("Epic count", counted[3] == 46, tostring(counted[3]))
+check("13 Legendary rounds listed", counted[4] == 13, tostring(counted[4]))
+
 
 -- The 12mm, 7.62 and 12.7 Penetrator go through thin cover (the Tech pierce stats, probed on an
 -- Ajax) and have their own text; the 9mm, .45 and 5.56 Penetrator stay armor-only.
@@ -244,6 +246,40 @@ end
 local _, pierce9 = modSum("Items.AO_Feed_9mm_Penetrator", "TechPierceEnabled", "Additive")
 check("9mm Penetrator has no TechPierceEnabled", not pierce9, "has it")
 check("9mm Penetrator keeps the shared text", hasDescKey("Items.AO_Feed_9mm_Penetrator", "AO-Ammo-Penetrator-Desc"), "other key")
+
+-- Legendary rounds (docs/superpowers/specs/2026-10-29-legendary-rounds-design.md).
+local function lsel(loc, load) return "Items.AO_Feed_" .. loc .. "_" .. load end
+for _, loc in ipairs({ "762", "127" }) do
+  local s = lsel(loc, "Gatecrasher")
+  check(s .. " ignores all armor", near(statSum(s, "CanWeaponIgnoreArmor"), 1), tostring(statSum(s, "CanWeaponIgnoreArmor")))
+  check(s .. " no falloff", near(statSum(s, "DamageFalloffDisabled"), 1), tostring(statSum(s, "DamageFalloffDisabled")))
+  check(s .. " pierces cover", near(statSum(s, "TechPierceEnabled"), 1), tostring(statSum(s, "TechPierceEnabled")))
+  local f, any = modSum(s, "TechPierceDamageFactor", "Multiplier")
+  check(s .. " full damage through cover (factor x0)", any and near(f, 0), tostring(f))
+end
+for _, a in ipairs({ "Ammo.AO_9mm_CookOff", "Ammo.AO_45_CookOff", "Ammo.AO_12mm_CookOff", "Ammo.AO_556_CookOff", "Ammo.AO_762_CookOff" }) do
+  check(a .. " cooks off", flat(a, "aoCookOff") == true, tostring(flat(a, "aoCookOff")))
+end
+for _, loc in ipairs({ "5mm", "Heavy" }) do
+  local f, any = modSum(lsel(loc, "Kebab"), "TechPierceDamageFactor", "Multiplier")
+  check(loc .. " Kebab loses no damage through targets (factor x0)", any and near(f, 0), tostring(f))
+end
+local jam = rec("AmmoOverhaul.LockoutJam")
+check("AmmoOverhaul.LockoutJam exists", jam ~= nil)
+local jamMods = jam and jam:Duration() and jam:Duration():StatModifiers() or {}
+check("LockoutJam lasts 4 s", #jamMods == 1 and near(jamMods[1]:Value(), 4), tostring(#jamMods))
+for _, a in ipairs({ "Ammo.AO_S10_Lockout", "Ammo.AO_S20_Lockout", "Ammo.AO_S25_Lockout" }) do
+  local fx, ch = flat(a, "aoEffects") or {}, flat(a, "aoEffectChances") or {}
+  check(a .. " jams on every hit", #fx == 1 and str(fx[1]) == "AmmoOverhaul.LockoutJam" and near(ch[1] or 0, 1), tostring(fx[1]))
+end
+local hs = "Items.AO_Feed_12ga_Heartseeker"
+check("Heartseeker fires the smart package", flat("Ammo.AO_12ga_Heartseeker", "aoRangedAttack") == "Attacks.SmartBulletHighPackage",
+  tostring(flat("Ammo.AO_12ga_Heartseeker", "aoRangedAttack")))
+check("Heartseeker hit chance 1", near(statSum(hs, "SmartGunHitProbability"), 1), tostring(statSum(hs, "SmartGunHitProbability")))
+check("Heartseeker locks heads", near(statSum(hs, "SmartGunTrackHeadComponents"), 3), tostring(statSum(hs, "SmartGunTrackHeadComponents")))
+check("Heartseeker 0.3 s lock", near(statSum(hs, "SmartGunHipTimeToLock"), 0.3), tostring(statSum(hs, "SmartGunHipTimeToLock")))
+check("Heartseeker ignores all armor", near(statSum(hs, "CanWeaponIgnoreArmor"), 1), tostring(statSum(hs, "CanWeaponIgnoreArmor")))
+check("Heartseeker one projectile, as Beanbags", near(statSum(hs, "ProjectilesPerShot"), statSum("Items.AO_Feed_12ga_Beanbag", "ProjectilesPerShot")), tostring(statSum(hs, "ProjectilesPerShot")))
 
 -- Every record the generator names exists (stat types, status effects, bases): tools/rounds/refs.txt.
 if AO_REFS then

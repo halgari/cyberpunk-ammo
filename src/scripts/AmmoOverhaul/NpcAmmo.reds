@@ -164,15 +164,22 @@ public abstract class NpcAmmo {
     for modifier in modifiers {
       stats.AddModifier(gunData.GetStatsObjectID(), NpcAmmo.ToModifier(modifier, stats, gunData.GetStatsObjectID()));
     }
+    RangedAttackSwap.SyncTags(npc, gun);
     AmmoFeedSystem.Log(NpcAmmo.Name(npc) + " got " + TDBID.ToStringDEBUG(selector) + " for " + TDBID.ToStringDEBUG(ItemID.GetTDBID(gun)));
     return tier;
   }
 
-  // The tier an NPC of `rarity` gets for a gun of `caliber`: Epic, then Rare, then Uncommon each
-  // roll with their family share times the rank's factor, a miss falling to the next tier down;
-  // 0 (Common) if all miss. Tiers the caliber has no round for are skipped.
+  // The tier an NPC of `rarity` gets for a gun of `caliber`: Legendary rolls first with the rank's
+  // own chance (Elite, Boss and MaxTac only); then Epic, Rare and Uncommon each roll with their
+  // family share times the rank's factor, a miss falling to the next tier down; 0 (Common) if all
+  // miss. Tiers the caliber has no round for are skipped.
   public static func RollTier(caliber: String, rarity: String) -> Int32 {
     let family: String = AOData.Family(caliber);
+    let legendary: Float = AOData.LegendaryChance(rarity);
+    let legendaries: array<TweakDBID> = AOData.SelectorsForTier(caliber, 4);
+    if legendary > 0.0 && ArraySize(legendaries) > 0 && RandF() < legendary {
+      return 4;
+    }
     let tier: Int32 = 3;
     while tier >= 1 {
       let chance: Float = MinF(1.0, AOData.TierShare(family, tier) * AOData.NpcTierFactor(rarity, tier));
@@ -325,6 +332,10 @@ public abstract class NpcAmmo {
       if weight > 0.0 {
         rounds = Min(rounds, FloorF(carry / weight + 0.001));
       }
+      // A Legendary round leaves a small stack.
+      if rounds > 0 && AOData.AmmoTier(ammo) == 4 {
+        rounds = Min(rounds, AOData.LegendaryStack(rounds));
+      }
       if rounds > 0 {
         ArrayPush(npc.aoLootAmmo, ammo);
         ArrayPush(npc.aoLootQuantity, rounds);
@@ -403,6 +414,7 @@ public final static func Update(context: ScriptExecutionContext, record: wref<AI
 
 @wrapMethod(NPCPuppet)
 protected cb func OnDeath(evt: ref<gameDeathEvent>) -> Bool {
+  CookOff.OnDeath(this);
   NpcAmmo.NoteLoot(this);
   NpcLootCallback.Schedule(this);
   return wrappedMethod(evt);

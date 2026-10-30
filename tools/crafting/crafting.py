@@ -10,7 +10,8 @@ end of that file, a generated block with:
     are the recipe items handed out in loot and gun shops: picking one up teaches the recipe
     (vanilla's CraftingSystemInventoryCallback). Common ones only feed GetAmmoBulletAmount;
   - <ammo>.aoRecipe, <ammo>.aoScrapRounds, <ammo>.aoScrapGive: read by Crafting.reds.
-The 4 vanilla ammo records keep their vanilla cost and recipe; they get only the flats.
+The 4 vanilla ammo records keep their vanilla cost and recipe; they get only the flats. Legendary
+rounds (tier 4) are never crafted: no cost, no recipe, only the disassembly flats.
 Also writes src/scripts/AmmoOverhaul/LocalizationRecipes.reds (recipe item names).
 Run after tools/rounds/rounds.py, which rewrites the caliber lists this reads.
 """
@@ -28,6 +29,7 @@ COSTS = "zz_crafting_costs.yaml"
 COST = {"Tech": 1, "Power": 2, "Smart": 4}
 MATERIAL = ["Items.CommonMaterial1", "Items.UncommonMaterial1", "Items.RareMaterial1", "Items.EpicMaterial1"]
 QUALITY = ["Common", "Uncommon", "Rare", "Epic"]
+LEGENDARY = 4
 DIVISOR = [1, 2, 3, 4]
 # A round's price over its caliber's Common round: x2 per tier (CATALOG, tiers.lua).
 TIER_PRICE = [1, 2, 4, 8]
@@ -114,7 +116,7 @@ def caliber_block(key, text, loc, name_of, batches):
     ammos = strings(flat(text, key, "selectorAmmo"))
     tiers = [int(s) for s in strings(flat(text, key, "selectorTiers"))]
     y = [BEGIN, "", f"# {key}: {family}, {cost(family)} components a batch, {common} rounds a Common batch."]
-    used = sorted(set(tiers))
+    used = sorted(t for t in set(tiers) if t != LEGENDARY)
     for t in used:
         y.append(f"Crafting.AO_Cost_{family}_{t}:\n  $type: CraftingPackage\n  craftingRecipe:\n"
                  f"    - $type: RecipeElement\n      ingredient: {MATERIAL[t]}\n      amount: {cost(family)}\n")
@@ -125,6 +127,10 @@ def caliber_block(key, text, loc, name_of, batches):
         y.append(f"{ammo}.aoScrapRounds: {rounds}\n{ammo}.aoScrapGive: {give}")
         if ammo in VANILLA:
             y.append(f'{ammo}.aoRecipe: "{VANILLA[ammo]}"\n')
+            continue
+        if t == LEGENDARY:
+            # Empty, so the base round's recipe isn't inherited through $base.
+            y.append(f'{ammo}.aoRecipe: ""\n')
             continue
         batch = tier_batch(common, t)
         recipe = f"Items.AO_Recipe_{short}"

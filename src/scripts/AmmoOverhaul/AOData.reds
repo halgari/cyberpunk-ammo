@@ -263,6 +263,40 @@ public abstract class AOData {
     }
   }
 
+  // The chance an NPC of `rarity` carries a Legendary round in a gun (0: never).
+  public static func LegendaryChance(rarity: String) -> Float {
+    return TweakDBInterface.GetFloat(TDBID.Create("AmmoOverhaul.npcLegendaryChance." + rarity), 0.0);
+  }
+
+  // Each ammo stack's chance to become its caliber's Legendary, in a container holding an Epic.
+  public static func LootLegendaryChance() -> Float {
+    return TweakDBInterface.GetFloat(t"AmmoOverhaul.lootLegendaryChance", 0.0);
+  }
+
+  // A Legendary stack in place of a stack of `quantity`: the share legendaryStackShare, rounded up.
+  public static func LegendaryStack(quantity: Int32) -> Int32 {
+    let share: Float = TweakDBInterface.GetFloat(t"AmmoOverhaul.legendaryStackShare", 1.0);
+    return Max(1, CeilF(Cast<Float>(quantity) * share));
+  }
+
+  // The caliber whose selectors feed `ammo`, or "" if none does.
+  public static func CaliberForAmmo(ammo: TweakDBID) -> String {
+    for caliber in AOData.Calibers() {
+      let stacks: array<TweakDBID> = AOData.GetIDs(AOData.Key(caliber, "selectorAmmo"));
+      if ArrayContains(stacks, ammo) {
+        return caliber;
+      }
+    }
+    return "";
+  }
+
+  // A round's tier, or -1 if it isn't one of the mod's.
+  public static func AmmoTier(ammo: TweakDBID) -> Int32 {
+    let caliber: String = AOData.CaliberForAmmo(ammo);
+    let selector: TweakDBID = AOData.SelectorForAmmo(ammo);
+    return StrLen(caliber) > 0 ? AOData.SelectorTier(caliber, selector) : -1;
+  }
+
   // Weapon records the caliber takes besides those with its tags (guns with no family tag).
   public static func WeaponRecords(caliber: String) -> array<TweakDBID> {
     return AOData.GetIDs(AOData.Key(caliber, "weaponRecords"));
@@ -386,6 +420,8 @@ public abstract class AOData {
   //     the hit's Physical damage dealt as that type instead
   //   <ammo>.aoMachineBonus: damage factor against drones, mechs, androids, turrets and vehicles
   //   <ammo>.aoNonlethal: a kill knocks the target out instead
+  //   <ammo>.aoCookOff: a kill sets off a blast at the body, a hit on V V's grenade (CookOff.reds)
+  //   <ammo>.aoRangedAttack: the RangedAttackPackage the gun fires instead of its own (Heartseeker.reds)
 
   public static func HitEffects(ammo: TweakDBID, out chances: array<Float>) -> array<TweakDBID> {
     let effects: array<TweakDBID> = AOData.GetIDs(AOData.Flat(ammo, "aoEffects"));
@@ -440,6 +476,14 @@ public abstract class AOData {
 
   public static func MachineBonus(ammo: TweakDBID) -> Float {
     return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoMachineBonus"), 1.0);
+  }
+
+  public static func CookOff(ammo: TweakDBID) -> Bool {
+    return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoCookOff"), false);
+  }
+
+  public static func RangedAttack(ammo: TweakDBID) -> TweakDBID {
+    return AOData.GetID(AOData.Flat(ammo, "aoRangedAttack"));
   }
 
   public static func IsNonlethal(ammo: TweakDBID) -> Bool {

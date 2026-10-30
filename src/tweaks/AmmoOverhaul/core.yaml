@@ -22,9 +22,11 @@ AmmoOverhaul.calibers: ["Power_9mm", "Power_45", "Power_12mm", "Power_556", "Pow
 # --- Distribution ------------------------------------------------------------------------------
 # Share of each tier (Common, Uncommon, Rare, Epic) in a family's ammo, for vendors, world loot
 # and NPCs. Gun shops sell up to Rare, other vendors Common only (Vendors.reds); loot rolls any tier.
-AmmoOverhaul.shares.Power: [0.80, 0.14, 0.05, 0.01]
-AmmoOverhaul.shares.Tech: [0.70, 0.22, 0.07, 0.01]
-AmmoOverhaul.shares.Smart: [0.86, 0.10, 0.035, 0.005]
+# The fifth entry is Legendary: 0, never in vendor stock or plain world loot. Legendary rounds come
+# only from the NPC rank roll (npcLegendaryChance) and Epic-holding containers (lootLegendaryChance).
+AmmoOverhaul.shares.Power: [0.80, 0.14, 0.05, 0.01, 0.0]
+AmmoOverhaul.shares.Tech: [0.70, 0.22, 0.07, 0.01, 0.0]
+AmmoOverhaul.shares.Smart: [0.86, 0.10, 0.035, 0.005, 0.0]
 
 # Chance that converted world loot goes to the caliber of a gun the player carries, rather than
 # a caliber picked by the calibers' lootWeight.
@@ -99,6 +101,19 @@ AmmoOverhaul.PingTag:
         modifierType: Additive
         value: 5
 
+# Lockout's jam (Legendary smart rounds): the weapon malfunction Hack Carrier uses, 4 s instead of
+# its 14 s, on NPCs and V alike.
+AmmoOverhaul.LockoutJam:
+  $base: BaseStatusEffect.WeaponMalfunction
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 4
+
 # --- NPCs --------------------------------------------------------------------------------------
 # Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
 # loaded in the gun count toward it; the rest is the body's loot.
@@ -139,6 +154,15 @@ AmmoOverhaul.npcEpicFactor.Rare: 0.0
 AmmoOverhaul.npcEpicFactor.Officer: 0.0
 AmmoOverhaul.npcEpicFactor.Elite: 2.0
 AmmoOverhaul.npcEpicFactor.Boss: 4.0
+# Chance per gun of a Legendary round, rolled before the Epic roll (a miss falls through to it).
+# Ranks not listed never roll it.
+AmmoOverhaul.npcLegendaryChance.Elite: 0.03
+AmmoOverhaul.npcLegendaryChance.Boss: 0.10
+AmmoOverhaul.npcLegendaryChance.MaxTac: 0.10
+# Loot containers holding an Epic round: each ammo stack's chance to be its caliber's Legendary.
+AmmoOverhaul.lootLegendaryChance: 0.002
+# A Legendary stack is this share of the stack it replaces, rounded up (containers, NPC loot).
+AmmoOverhaul.legendaryStackShare: 0.25
 
 # --- Vanilla ammo ------------------------------------------------------------------------------
 # Ammo counts against carry capacity: about one point per typical magazine. Stacks track
