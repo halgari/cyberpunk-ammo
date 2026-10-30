@@ -14,7 +14,7 @@ Penetrators) to 149.
 - Common rounds stay vanilla. No automatic ammo switching.
 - Item text: slang names, plain gun-counter descriptions, no invented lore; the effect lines
   after a blank line. Names chosen with the user: Gatecrasher, Cook-off, Kebab, Lockout,
-  Heartseeker, Bouncing Betty.
+  Heartseeker, Mule Kick.
 - **No crafting** (user ruling): no recipes, and no Legendary rounds at the crafting screen.
   Breaking rounds down works as for the other tiers. A Legendary stack breaks down into Legendary
   components by the existing disassembly rule.
@@ -63,13 +63,13 @@ Penetrators) to 149.
 - One heavy slug that steers itself onto the target nearest the crosshair.
 - The guidance is in the shell: V needs no Smart Link. An NPC's Heartseeker steers toward V.
 
-**Bouncing Betty** (4ga; designed as the launcher round)
-- The shot throws a real grenade out of the muzzle: it flies on an arc, bounces and rolls, and
-  goes off on a short fuse, like a thrown frag. The user's preferred version.
-- Fallbacks, in order, if the probe can't throw a grenade from the gun: an explosive projectile
-  that bursts where it hits (a body, a wall or the floor); a blast at the point of impact.
-- It can hurt V at close range (default; the user can turn this off).
-- An NPC's round does the same to V.
+**Mule Kick** (4ga; replaces Bouncing Betty, see the probe results)
+- An overloaded shell that throws both ends of the gun.
+- The target hit is launched and ragdolled, far harder than any lower round.
+- V is shoved hard away from the shot, using the game's own push (`PSMImpulse`, as jump pads do):
+  fired forward, V is thrown back; fired at the floor, V goes up; fired in the air, V gets a
+  second jump or a dodge.
+- An NPC's hit on V knocks V down hard. An NPC firing it doesn't move.
 
 ## Probes (in the game, before the plan)
 
@@ -110,7 +110,7 @@ round is built.
   - Kebab through two NPCs in a line;
   - Lockout jams an NPC's gun, and V's;
   - Heartseeker homes;
-  - Bouncing Betty arcs, bounces and goes off;
+  - Mule Kick throws the target and V, and a floor shot lifts V;
   - Gatecrasher through cover at full damage.
 - **The user's playtest of all six.**
 
@@ -177,5 +177,13 @@ hit code tops up the damage on the second and later targets.
   `ProjectileLaunchHelper.SpawnProjectileFromScreenCenter` from a Carnage spawned nothing, so the
   homing has to come from the smart weapon setup above.
 
-**Probe 1, Bouncing Betty part: not run yet** (paused by the user). Bouncing Betty waits for it;
-the rest of the set is built first.
+**Probe 1, Bouncing Betty part: works, and rejected by the user.** A real frag can be launched
+from script (give the item, `AddItemToSlot` on `WeaponLeft`, wait for it to spawn, then
+`gameprojectileSetUpAndLaunchEvent` with a parabolic trajectory; one ItemID can't be reused while
+its grenade is in flight, so it needs a pool of records). The user: it reads as a thrown grenade,
+not a shot. Tried next and also rejected: `Attacks.ChimeraPowerModExplosiveBulletPackage` on a
+Carnage (nothing visible), and a raycast with a scripted blast at the crosshair ("contrived",
+"chintzy"). The 4ga Legendary is now Mule Kick. Rule from this: Legendary effects use what the
+engine does natively, not scripts faking a weapon.
+- Found on the way: `WeaponObject.OverrideRangedAttackPackage` swaps the attack package on one
+  gun. It may replace Heartseeker's shared-record switch; not tested.
