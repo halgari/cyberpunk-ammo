@@ -37,7 +37,7 @@ return string.format('%.2f %.0f %.0f', s:GetStatValue(id, gamedataStatType.CanWe
 # --- heartseeker: smart attack, smart record while fitted, lock, swap back, damage --------------
 TAC=Items.Preset_Tactician_Default
 heartseeker() {
-  kit "{'$TAC', 1}, {'Items.AO_Feed_12ga_Heartseeker', 1}, {'Ammo.AO_12ga_Heartseeker', 200}, {'Items.AO_Feed_12ga_Buckshot', 1}, {'Ammo.ShotgunAmmo', 200}"
+  kit "{'$TAC', 1}, {'$UNI', 1}, {'Items.Preset_Katana_Default', 1}, {'Items.AO_Feed_12ga_Heartseeker', 1}, {'Ammo.AO_12ga_Heartseeker', 200}, {'Items.AO_Feed_12ga_Buckshot', 1}, {'Ammo.ShotgunAmmo', 200}"
   local cross0; cross0=$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.crosshair'))")
   draw $TAC; draw $TAC; feed Items.AO_Feed_12ga_Buckshot; feed Items.AO_Feed_12ga_Heartseeker; sleep 4
   spawn 0.0 "" Character.AO_Test_Plain_Lexington
@@ -56,9 +56,20 @@ heartseeker() {
 for _, h in ipairs(RIG.hits) do if h.byV and h.onNpc and not h.dot then s = s + h.post; c = c + 1 end end
 return string.format('NOTE Heartseeker: %d hits on the rig NPC, %.1f damage each (after the roll)', c, c > 0 and s / c or 0)"
   [[ $(lua "return #RIG.ratios('V')") -ge 3 ]] && pass "Heartseeker slugs hit the rig NPC" || fail "Heartseeker slugs hit the rig NPC"
-  feed Items.AO_Feed_12ga_Buckshot; sleep 4
+  feed Items.AO_Feed_12ga_Buckshot; sleep 6
   is "Tactician record back to Power after the swap" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Power
   [[ $(lua "return $SYS:DebugCurrentAttack(Game.GetPlayer():GetActiveWeapon())") != Attacks.SmartBulletHigh ]] && pass "Buckshot shot is not the smart attack" || fail "Buckshot still fires the smart attack"
+  # Left Smart by an earlier load in this session (TweakDB outlives a load): drawing the gun with
+  # Buckshot puts it back.
+  lua "TweakDB:SetFlat('$TAC.evolution', 'WeaponEvolution.Smart'); TweakDB:Update('$TAC'); return 1" >/dev/null
+  draw $UNI; draw $TAC; sleep 4
+  is "a Tactician left Smart goes back to Power when drawn with Buckshot" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Power
+  # Heartseeker in, then a melee weapon drawn: the record goes back.
+  feed Items.AO_Feed_12ga_Heartseeker; sleep 4
+  is "Smart again with Heartseeker" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Smart
+  draw Items.Preset_Katana_Default; sleep 3
+  is "a katana drawn puts the Tactician back to Power" "$(lua "return TDBID.ToStringDEBUG(TweakDB:GetFlat('$TAC.evolution'))")" WeaponEvolution.Power
+  draw $TAC; sleep 4; feed Items.AO_Feed_12ga_Buckshot; sleep 6
 }
 
 # --- helpers for the parts with two NPCs or kills -----------------------------------------------
@@ -136,9 +147,11 @@ cookoff() {
   echo "  health set to $h1% and $h2%"
   local blasts0; blasts0=$(trail_count "cook%-off: blast")
   lua "CK.hits = {}; return 1" >/dev/null
+  # The neighbour carries a fresh Cook-off mark (under 0.5 s old) when the blast kills it: the
+  # blast hit must clear it.
   for _ in $(seq 40); do
     [[ $(lua "return RIG.npc():IsDead()") == true ]] && break
-    [[ $(lua "return RIG.fireV()") == holstered ]] && draw $UNI
+    [[ $(lua "$SYS:DebugCookOffMark($N2); return RIG.fireV()") == holstered ]] && draw $UNI
     sleep 0.4
   done
   sleep 3
@@ -156,7 +169,7 @@ return string.format('NOTE neighbour %.1f m from the body; blast hits: %s', Vect
   local n2; n2=$(hits_on AmmoOverhaul.CookOffBlast "$N2")
   [[ $n2 -ge 1 ]] && pass "the blast hit the NPC next to it ($n2 hit)" || fail "the blast hit the NPC next to it: $n2"
   is "the neighbour died to the blast" "$(lua "return $N2:IsDead()")" true
-  is "one blast for two deaths (no chain)" "$(( $(trail_count "cook%-off: blast") - blasts0 ))" 1
+  is "one blast for two deaths, the neighbour marked by Cook-off too (no chain)" "$(( $(trail_count "cook%-off: blast") - blasts0 ))" 1
   gone2; lua "GetMod('AOTestKit').despawnAll(); return 1" >/dev/null
 
   # An NPC's Cook-off hit on V.
@@ -166,8 +179,8 @@ Game.GetScriptableSystemsContainer():Get('EquipmentSystem'):QueueRequest(r); ret
   is "V has the frag selected" "$(lua "return TDBID.ToStringDEBUG(Game.GetScriptableSystemsContainer():Get('EquipmentSystem'):GetPlayerData(Game.GetPlayer()):GetActiveGadget().id)")" Items.GrenadeFragRegular
   legendary_roll on
   spawn 0.0 Ammo.AO_45_CookOff Character.AO_Test_Plain_Unity
+  setup $UNI   # (a respawn in setup rolls again: the chance stays on until it's done)
   legendary_roll off
-  setup $UNI
   local full; full=$(lua "local s = Game.GetStatsSystem(); local id = Game.GetPlayer():GetEntityID()
 Game.GetStatPoolsSystem():RequestSettingStatPoolValue(id, gamedataStatPoolType.GrenadesCharges, s:GetStatValue(id, gamedataStatType.GrenadesCharges), nil, false)
 return string.format('%.0f', $POOL)")
@@ -208,9 +221,9 @@ lockout() {
   lua "RIG.npcMode = nil; GetMod('AOTestKit').despawnAll(); return 1" >/dev/null
   legendary_roll on
   spawn 0.0 Ammo.AO_S10_Lockout Character.AO_Test_Plain_Yukimura
-  legendary_roll off
   vulnerable
   setup $YUK
+  legendary_roll off
   npcshoot 2 6
   n=$(lua "return RIG.effects('V', '$JAM')")
   [[ $n -ge 1 ]] && pass "an NPC's Lockout hits jammed V's gun ($n of $(lua "return #RIG.ratios('NPC')") hits)" || fail "an NPC's Lockout hits jammed V's gun: $n"
@@ -246,6 +259,7 @@ return string.format('%d %d %.1f %.1f', #a, #b, avg(a), avg(b))")
   read -r na nb da db <<<"$r"
   echo "NOTE Kebab: near NPC $na hits at $da each, far NPC (behind it) $nb hits at $db each"
   [[ $nb -ge 1 ]] && pass "Kebab's charged shots went through the near NPC into the far one" || fail "Kebab's charged shots reached the far NPC: $nb hits"
+  awk -v a="$da" -v b="$db" 'BEGIN { exit !(a > 0 && b / a >= 0.9) }' && pass "the far NPC lost no damage (far/near $db/$da)" || fail "the far NPC lost damage: far $db, near $da"
   gone2
 }
 

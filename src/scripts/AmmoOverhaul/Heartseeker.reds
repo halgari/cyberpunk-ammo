@@ -6,9 +6,10 @@ module AmmoOverhaul
 //   - The smart lock: the game only runs a gun's smart targeting when its weapon record's
 //     evolution is Smart (measured 2026-10-30: the Smart and SmartWeapon tags and V's HasSmartLink
 //     stat made no difference). Records are shared, so while V's drawn gun has such a round its
-//     record's evolution is set to Smart, and put back as soon as V draws anything else. The
-//     change only applies to a gun drawn after it, so the gun is redrawn once. The lock stats come
-//     from the round's selector. The crosshair stays the gun's own: a redraw with the smart
+//     record's evolution is set to Smart, and put back (to its caliber's family) as soon as V
+//     draws anything else. The change only applies to a gun drawn after it, so the gun is redrawn
+//     once. The lock stats come from the round's selector. While it lasts, other guns of that
+//     record (NPCs' too) also read as Smart to anything that checks the record's evolution. The crosshair stays the gun's own: a redraw with the smart
 //     crosshair (Crosshairs.SmartGun) on the Tactician crashed the game (measured 2026-10-30).
 // NPCs' guns aren't changed: their shots are the package's NPC smart attack.
 
@@ -27,31 +28,64 @@ public abstract class RangedAttackSwap {
     TweakDBManager.UpdateRecord(record);
   }
 
+  // A gun this can change: one of the mod's Power or Tech guns (no 12ga gun is Smart in the game).
+  // What it goes back to is its caliber's family, so nothing has to be remembered across loads.
+  public static func OwnEvolution(record: TweakDBID) -> TweakDBID {
+    let caliber: String = AOData.CaliberForWeapon(record);
+    let family: String = StrLen(caliber) > 0 ? AOData.Family(caliber) : "";
+    if Equals(family, "Power") {
+      return t"WeaponEvolution.Power";
+    }
+    return Equals(family, "Tech") ? t"WeaponEvolution.Tech" : TDBID.None();
+  }
+
+  public static func IsSmart(record: TweakDBID) -> Bool {
+    return TweakDBInterface.GetForeignKey(AOData.Flat(record, "evolution"), TDBID.None()) == t"WeaponEvolution.Smart";
+  }
+
   // Puts back every weapon record made Smart here, except `keep`.
   public static func Restore(system: ref<AmmoFeedSystem>, keep: TweakDBID) -> Void {
     let i: Int32 = ArraySize(system.m_smartRecords) - 1;
     while i >= 0 {
-      if system.m_smartRecords[i] != keep {
-        RangedAttackSwap.SetRecord(system.m_smartRecords[i], system.m_smartEvolution[i]);
-        AmmoFeedSystem.Log("smart round: " + TDBID.ToStringDEBUG(system.m_smartRecords[i]) + " back to its own evolution");
+      let record: TweakDBID = system.m_smartRecords[i];
+      if record != keep {
+        let own: TweakDBID = RangedAttackSwap.OwnEvolution(record);
+        if TDBID.IsValid(own) {
+          RangedAttackSwap.SetRecord(record, own);
+          AmmoFeedSystem.Log("smart round: " + TDBID.ToStringDEBUG(record) + " back to its own evolution");
+        }
         ArrayErase(system.m_smartRecords, i);
-        ArrayErase(system.m_smartEvolution, i);
       }
       i -= 1;
     }
   }
 
   // V drew `weapon`: makes its record Smart if its round fires a smart package (and redraws it so
-  // the change takes), and puts any other record back.
+  // the change takes), and puts any other record back. A gun in hand whose record was put back (a
+  // second copy of the same gun, a swapped round, or one left Smart by an earlier load in this
+  // session) is redrawn too.
   public static func Sync(system: ref<AmmoFeedSystem>, player: ref<PlayerPuppet>, weapon: ref<WeaponObject>) -> Void {
     let record: TweakDBID = ItemID.GetTDBID(weapon.GetItemID());
-    let smart: Bool = IsDefined(RangedAttackSwap.Package(player, weapon));
+    let own: TweakDBID = RangedAttackSwap.OwnEvolution(record);
+    let smart: Bool = TDBID.IsValid(own) && IsDefined(RangedAttackSwap.Package(player, weapon));
+    let wasSmart: Bool = TDBID.IsValid(own) && RangedAttackSwap.IsSmart(record);
     RangedAttackSwap.Restore(system, smart ? record : TDBID.None());
-    if !smart || ArrayContains(system.m_smartRecords, record) || !IsDefined(TweakDBInterface.GetWeaponItemRecord(record)) {
+    if !smart {
+      if wasSmart {
+        if RangedAttackSwap.IsSmart(record) {
+          RangedAttackSwap.SetRecord(record, own);
+        }
+        AmmoFeedSystem.Log("smart round: " + TDBID.ToStringDEBUG(record) + " in hand put back, redrawing");
+        AmmoFeedRedrawCallback.Schedule(player, weapon.GetItemID(), 1, 0.3);
+      }
       return;
     }
-    ArrayPush(system.m_smartRecords, record);
-    ArrayPush(system.m_smartEvolution, TweakDBInterface.GetForeignKey(AOData.Flat(record, "evolution"), TDBID.None()));
+    if !ArrayContains(system.m_smartRecords, record) {
+      ArrayPush(system.m_smartRecords, record);
+    }
+    if wasSmart {
+      return;
+    }
     RangedAttackSwap.SetRecord(record, t"WeaponEvolution.Smart");
     AmmoFeedSystem.Log("smart round: " + TDBID.ToStringDEBUG(record) + " made Smart, redrawing");
     AmmoFeedRedrawCallback.Schedule(player, weapon.GetItemID(), 1, 0.3);

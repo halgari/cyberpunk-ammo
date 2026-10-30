@@ -36,9 +36,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
   private let m_magWeapon: wref<WeaponObject>;
   private let m_lastRestoreRedraw: Float;
 
-  // Weapon records a smart round made Smart, and what they had (Heartseeker.reds).
-  public let m_smartRecords: array<TweakDBID>;
-  public let m_smartEvolution: array<TweakDBID>;
+  // Weapon records a smart round made Smart (Heartseeker.reds). Saved, so a load puts them back.
+  public persistent let m_smartRecords: array<TweakDBID>;
 
   // The last log lines, for reading live from CET (ModLog output only reaches the file late):
   //   Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem"):Trail()
@@ -64,19 +63,22 @@ public class AmmoFeedSystem extends ScriptableSystem {
       return;
     }
     this.m_player = player;
+    // TweakDB changes outlive a save load, and the save may list records from before it.
+    RangedAttackSwap.Restore(this, TDBID.None());
     AmmoFeedSystem.Log("attached, " + IntToString(ArraySize(this.m_unload)) + " gun(s) waiting to unload");
     SelectorSync.Attach(player);
   }
 
   private final func OnPlayerDetach(request: ref<PlayerDetachRequest>) -> Void {
     let player: ref<GameObject> = request.owner;
+    // TweakDB changes outlive a save load: put back any gun record a smart round changed, whichever
+    // player is detaching.
+    RangedAttackSwap.Restore(this, TDBID.None());
     // Loading a save (e.g. after dying) attaches the new player before the old one detaches;
     // only tear down for the player being tracked.
     if IsDefined(this.m_player) && player != this.m_player {
       return;
     }
-    // TweakDB changes outlive a save load: put back any gun record a smart round changed.
-    RangedAttackSwap.Restore(this, TDBID.None());
     this.m_player = null;
   }
 
@@ -197,9 +199,13 @@ public class AmmoFeedSystem extends ScriptableSystem {
 
   // The player's gun in hand finished a step of drawing.
   public final func OnWeaponDrawn(weapon: ref<WeaponObject>) -> Void {
-    if IsDefined(weapon) && weapon.GetOwner() == this.m_player && StrLen(AOData.CaliberForWeapon(ItemID.GetTDBID(weapon.GetItemID()))) > 0 {
+    if !IsDefined(weapon) || weapon.GetOwner() != this.m_player {
+      return;
+    }
+    // Any draw, melee and cyberware included, puts back a record a smart round changed.
+    RangedAttackSwap.Sync(this, this.m_player, weapon);
+    if StrLen(AOData.CaliberForWeapon(ItemID.GetTDBID(weapon.GetItemID()))) > 0 {
       this.GiveSelectedAmmo(weapon, 0);
-      RangedAttackSwap.Sync(this, this.m_player, weapon);
     }
   }
 
@@ -439,6 +445,11 @@ public class AmmoFeedSystem extends ScriptableSystem {
       + " weaponRecord=" + ToString(IsDefined(TweakDBInterface.GetWeaponItemRecord(record)));
     RangedAttackSwap.Sync(this, this.m_player, weapon);
     return out + " evolution=" + TDBID.ToStringDEBUG(TweakDBInterface.GetForeignKey(AOData.Flat(record, "evolution"), TDBID.None()));
+  }
+
+  // Marks `target` as if V's Cook-off round had just hit it.
+  public final func DebugCookOffMark(target: ref<GameObject>) -> Void {
+    CookOff.OnHit(this.m_player, target);
   }
 
   public final func DebugLegendaryStack(quantity: Int32) -> Int32 {
@@ -879,6 +890,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if !IsDefined(attackData) {
       return;
     }
+    // A Cook-off mark only counts for a death straight after that hit: any other hit (a blast, a
+    // melee finisher, another round) clears it, so a Cook-off blast kill sets off nothing.
+    CookOff.Clear(hitEvent.target);
     let instigator: ref<GameObject> = attackData.GetInstigator();
     if !IsDefined(instigator) {
       return;
@@ -896,7 +910,11 @@ public class AmmoFeedSystem extends ScriptableSystem {
       return;
     }
     let ammo: TweakDBID = AOData.LoadedAmmo(instigator, weapon);
-    if AOData.CookOff(ammo) && IsDefined(hitEvent.target) {
+    // Vanilla's own effect gate (DamageSystem.ProcessStatusEffects): no Cook-off on a blocked or
+    // deflected hit, or ignored friendly fire.
+    let gated: Bool = attackData.WasBlocked() || !instigator.IsPlayer() && attackData.WasDeflectedAny()
+      || attackData.HasFlag(hitFlag.FriendlyFireIgnored);
+    if AOData.CookOff(ammo) && IsDefined(hitEvent.target) && !gated {
       CookOff.OnHit(instigator, hitEvent.target);
     }
     let chances: array<Float>;

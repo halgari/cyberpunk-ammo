@@ -6,8 +6,8 @@ module AmmoOverhaul
 //   - a hit on V sets off the grenade V has selected, on V, if it has a charge: its own attack for
 //     the look and effects (a script-started grenade attack does little damage), the Cook-off blast
 //     for the damage, and one charge taken off.
-// Both go off a frame later, outside the hit that caused them. Blasts aren't ranged hits, so a
-// blast kill sets off nothing more.
+// Both go off a frame later, outside the hit that caused them. Any later hit clears the mark, so a
+// kill by a blast (or anything else after the Cook-off hit) sets off nothing more.
 
 // When this NPC last took a Cook-off hit, and from whom; a death right after it is that hit's kill.
 @addField(NPCPuppet)
@@ -16,10 +16,21 @@ public let aoCookOffAt: Float;
 @addField(NPCPuppet)
 public let aoCookOffBy: wref<GameObject>;
 
+// When V's grenade last cooked off.
+@addField(PlayerPuppet)
+public let aoCookedAt: Float;
+
 public abstract class CookOff {
 
   public static func Now(game: GameInstance) -> Float {
     return EngineTime.ToFloat(GameInstance.GetSimTime(game));
+  }
+
+  public static func Clear(target: ref<GameObject>) -> Void {
+    let npc: ref<NPCPuppet> = target as NPCPuppet;
+    if IsDefined(npc) {
+      npc.aoCookOffAt = 0.0;
+    }
   }
 
   // A Cook-off hit by `instigator` on `target` (from AmmoFeedSystem.ApplyAmmoOnHit).
@@ -52,12 +63,10 @@ public abstract class CookOff {
     }
   }
 
-  // One grenade charge of the `GrenadesCharges` pool: its max over the number of charges.
+  // One grenade throw's cost from the `GrenadesCharges` pool, as the game takes it for a throw
+  // (perks can halve it for some grenades).
   public static func ChargeSize(player: ref<PlayerPuppet>) -> Float {
-    let stats: ref<StatsSystem> = GameInstance.GetStatsSystem(player.GetGame());
-    let id: StatsObjectID = Cast<StatsObjectID>(player.GetEntityID());
-    let charges: Float = stats.GetStatValue(id, gamedataStatType.GrenadesMaxCharges);
-    return charges > 0.0 ? stats.GetStatValue(id, gamedataStatType.GrenadesCharges) / charges : 0.0;
+    return Cast<Float>(player.GetGrenadeThrowCost());
   }
 
   // Sets off V's selected grenade on V if it has a charge; false (nothing done) otherwise.
@@ -73,7 +82,15 @@ public abstract class CookOff {
     if charge <= 0.0 || pools.GetStatPoolValue(id, gamedataStatPoolType.GrenadesCharges, false) < charge - 0.01 {
       return false;
     }
+    // Several hits in one frame each queue a cook-off; the pool change may not be in yet, so one
+    // per half second.
+    let now: Float = CookOff.Now(player.GetGame());
+    if player.aoCookedAt > 0.0 && now - player.aoCookedAt < 0.5 {
+      return false;
+    }
+    player.aoCookedAt = now;
     pools.RequestChangingStatPoolValue(id, gamedataStatPoolType.GrenadesCharges, -charge, player, false, false);
+    ConsumablesChargesHelper.HotkeyRefresh(player.GetGame());
     let at: Vector4 = player.GetWorldPosition();
     at.Z += 1.0;
     if TDBID.IsValid(attack) {
