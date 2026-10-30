@@ -57,7 +57,7 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [*][color=#3fbf5f][b]Uncommon[/b][/color]: two per caliber. Small trades: more damage for less armor pen, faster charge for less punch.
 [*][color=#3fa0ff][b]Rare[/b][/color]: specialist loads. Fire, ricochets, non-lethal, quiet, armor piercing.
 [*][color=#b04fff][b]Epic[/b][/color]: Penetrators, toxin cores, thermite, EMP, match grade. Loot only; no shop sells it.
-[*][color=#e8a33c][b]Legendary[/b][/color]: one per caliber, each doing something no other round does. Carried by elite enemies, bosses and MaxTac, and now and then found in a stash that already holds Epic rounds. Not sold and not craftable; they come in small stacks.
+[*][color=#e8a33c][b]Legendary[/b][/color]: at least one per caliber, each doing something no other round does. Carried by elite enemies, bosses and MaxTac, and now and then found in a stash that already holds Epic rounds. Not sold and not craftable; they come in small stacks.
 [/list]
 
 [size=5][b][color=#2ad4ff]Legendary rounds[/color][/b][/size]
