@@ -24,7 +24,7 @@ $C/all-pass.sh \
   "$K slice/records.lua slice/icons.lua slice/vendors.lua slice/loot.lua" \
   "$K slice/rarity.lua >/dev/null; sleep 6; $K slice/rarity2.lua" \
   "$S/uncommon.sh" "$C/uncommon2.sh" "$C/slugs.sh" \
-  "$S/npc.sh" "$S/npcdrop.sh" "$C/npc.sh" \
+  "$S/npc.sh" "$S/npcdrop.sh" "$C/npc.sh" "$C/ping.sh" \
   "$(twice calibers/lootdupe.lua)" "$(twice calibers/lootcap.lua)" \
   "$HIDDEN" "$C/sync.sh" "$C/roll.sh"
 status=$?
