@@ -809,3 +809,11 @@ For the next release. Two or three ideas each; pick one or two per faction.
   target, and the tag telling NPCs where V is).
 - **Quiet professionals** (Power pistols and SMGs). Quiet rounds with silent kills and a headshot
   bonus. Levers: WeaponNoise, CanSilentKill, HeadshotDamageMultiplier. `stats`.
+
+# 12-gauge Legendary
+
+Added 2026-10-30. Heartseeker came out of 0.5.0 because its lock needs a shared-record switch.
+The user's replacement idea: a fast-cycling slug. One slug per shot and a far higher fire rate, so
+a pump or semi-auto 12-gauge such as the Crusher runs like a heavy autocannon. Stats only
+(`CycleTime`, `ProjectilesPerShot`), with nothing touching other guns. Name still open; candidates:
+Riveter, Jackhammer, Nail Gun.
