@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Offline compile check: compiles src/scripts plus the framework scripts against the vanilla
 # 2.50 bundle with redscript-cli on GE-Proton, in its own prefix (never the game's).
-# Needs tools/redscript-cli.exe and reference/final.redscripts.vanilla (see HANDOFF.md).
+# Needs tools/redscript-cli.exe and reference/final.redscripts.vanilla (see docs/TESTING.md).
 set -euo pipefail
 source "$(dirname "$0")/common.sh"
 
