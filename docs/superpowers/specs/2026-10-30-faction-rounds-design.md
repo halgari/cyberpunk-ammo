@@ -163,17 +163,14 @@ Epic from general rounds, which excludes tiers 5 and 6.
 **Turf gun shops** (Open, recommended: build second, after the NPC side plays well)
 - The hook exists: `Vendor.AOSplitAmmo` runs on every stock build and already knows
   `GetVendorType()` is Gunsmith.
-- **What the code can't tell yet:** which faction a shop belongs to. The repo has no list of vendor
-  IDs. `Vendor_Record` has a `Faction()` field, but I can't see whether gun shops fill it in without
-  the game. The vendor's ID string (`GetVendorTweakID()`) is available, and it's the likely way
-  to hand-map shops.
-- Step one is a read-only dump in the game: every Gunsmith's ID and `Faction()`, through the
-  existing `AODebugVendors`.
-- If `Faction()` is empty, the fallback is a hand-written `AmmoOverhaul.vendorFaction.<vendor id>`
-  list, one entry per shop. Using V's district at stock time was also considered. It's worse: a
-  stock can be built when V is elsewhere, and the prevention system's current district is about
-  V, not the shop.
-- Which shop counts as whose turf is a judgement call; the first list is a proposal for the user.
+- **Shops have no faction.** Dumped in the game 2026-10-30: all 266 vendors have
+  `Faction()` = `Factions.Unaffiliated`, so it's no use. The mapping is by hand: an
+  `AmmoOverhaul.vendorFaction.<vendor id>` list, read with `GetVendorTweakID()`. Using V's district
+  at stock time is worse: a stock can be built when V is elsewhere.
+- Shop IDs carry their district. First proposal, for the user to approve:
+  - Maelstrom: `wat_nid_gunsmith_01` (Northside).
+  - Arasaka: `cct_dtn_guns_01` (City Center, Downtown).
+  - Scavengers: `wat_kab_gunsmith_02` (Kabuki), `std_arr_gunsmith_01` (Arroyo).
 - Rule: a turf shop has a 25% chance per stock build of one or two extra stacks of that faction's
   Rare rounds. Never Epic: nobody sells Epic. Reloads count as stock at any Scav turf shop.
 
