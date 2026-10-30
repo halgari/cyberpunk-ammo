@@ -154,4 +154,28 @@ through a Tyger Claw into a second one behind it: the near one went 100 -> 50.3%
 body loss of its own. Kebab's live check measures it with matched hits; if the loss is real, the
 hit code tops up the damage on the second and later targets.
 
-Still to run: probe 1 (a projectile or thrown grenade from a Power gun).
+**Probe 1, Heartseeker part: passes.** A Carnage clone (`TweakDB:CloneRecord` of
+`Items.Preset_Carnage_Default`) fires a homing smart slug with no Smart Link cyberware:
+- Record: `rangedAttacks` = `Attacks.SmartBulletHighPackage`, `evolution` Smart, tags `Smart` and
+  `SmartWeapon` added, `crosshair` = `Crosshairs.SmartGun`. With the tags and the smart crosshair
+  the gun locks and shows the lock markers; the shotgun reticle stays as well, which the user
+  likes. Without the tags it fired straight (dumb-fire).
+- Stats (copied from the Yukimura, then changed): all the `SmartGun*` lock stats, including the
+  lock angles (9 degrees), which a copy without the tags read as 0; `SmartGunHitProbability` 1;
+  `ProjectilesPerShot` 1 (the game moves the pellets' damage into the one slug: 10 x 11.9 became
+  118.6); `SmartGunHip/AdsTimeToLock` 0.3; `SmartGunHipMaxLockedTargets` 1;
+  `SmartGunPlayerProjectileVelocity` 35 (the clone had 0, which fired slow shells);
+  `SmartGunAddSpiralTrajectory` 0; `SmartGunTrackHeadComponents` 3 with chest and legs 0, so it
+  locks onto heads.
+- V was also given `HasSmartLink` 1 by a stat modifier during the test. It's not yet known
+  whether the lock needs it once the tags and lock angles are there; the build checks.
+- Damage, open: the user saw about 40 per slug against Scav snipers from 118.6 on the gun.
+  Suspects: armor, the Carnage's `HeadshotDamageMultiplier` 0.85, a smart-projectile damage
+  change. Heartseeker gets full armor ignore (Legendary) and a raised headshot multiplier; the
+  live check measures the damage on an unarmored test NPC.
+- A script hook on `BaseProjectile` launch never fires for smart bullets (they are native), and
+  `ProjectileLaunchHelper.SpawnProjectileFromScreenCenter` from a Carnage spawned nothing, so the
+  homing has to come from the smart weapon setup above.
+
+**Probe 1, Bouncing Betty part: not run yet** (paused by the user). Bouncing Betty waits for it;
+the rest of the set is built first.
