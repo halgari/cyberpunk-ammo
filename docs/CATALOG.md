@@ -368,6 +368,19 @@ shot (each pellet of a shotgun rolls its share).
 - **Hack Carrier** (Epic; 10mm, 20mm, 25mm): 15% chance of a cyberware malfunction. 15% chance to jam the target's weapon.
 - **Shaped Charge** (Epic; 10mm, 20mm, 25mm): Ignores 50% of armor. +50% damage against drones, mechs and vehicles.
 
+### Built (Legendary, 2026-10-30)
+
+13 Legendary rounds (tier 4), from `tools/rounds/rounds.py`, spec
+`docs/superpowers/specs/2026-10-29-legendary-rounds-design.md`. x16 the Common price, never sold, no
+recipe; NPC roll Elite 3%, Boss and MaxTac 10%; 0.2% per ammo stack in a container holding Epic
+rounds; a Legendary stack is a quarter of the Epic one it replaces. 4ga's Bouncing Betty is to come.
+
+- **Gatecrasher** (Legendary; 7.62, 12.7): Ignores all armor. No damage falloff. Goes through cover at full damage.
+- **Cook-off** (Legendary; 9mm, .45, 12mm, 5.56, 7.62): A kill sets off a blast at the body (`AmmoOverhaul.CookOffBlast`: 35% of each target's max health, 6 m). A hit on V sets off V's selected grenade if it has a charge, and takes the charge (`CookOff.reds`).
+- **Kebab** (Legendary; 5mm, Heavy): A charged shot goes through every body and wall in its line with no damage lost (`TechPierceDamageFactor` x0; measured: no loss on the second body).
+- **Lockout** (Legendary; 10mm, 20mm, 25mm): Every hit jams the target's weapon for 4 seconds (`AmmoOverhaul.LockoutJam`).
+- **Heartseeker** (Legendary; 12ga): One guided slug (the smart package, `aoRangedAttack`); while it's fitted in V's drawn gun the gun record's evolution is Smart, which turns the lock on (`Heartseeker.reds`). Locks heads. Ignores all armor. +100% headshot damage. +50% crit chance.
+
 ### Ammo ideas so far
 
 - **Dumbfire (Smart):** much more damage, guidance removed entirely, so the smart gun becomes a

@@ -5,6 +5,17 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
 
 ## Unreleased
 
+- A Legendary tier: 13 new rounds, 148 in all. Elite enemies, bosses and MaxTac sometimes carry
+  them, and a stash holding Epic rounds now and then has a small stack. No shop sells them and
+  they can't be crafted.
+  - Gatecrasher (7.62, 12.7): ignores all armor, no damage falloff, through cover at full damage.
+  - Cook-off (9mm, .45, 12mm, 5.56, 7.62): a kill sets off a blast at the body that hurts everyone
+    close by. An enemy's Cook-off hit on you sets off your grenade if it's charged.
+  - Kebab (light and heavy rail): a charged shot goes through every body and wall in its line
+    with no damage lost.
+  - Lockout (10mm, 20mm, 25mm): every hit jams the target's weapon for 4 seconds.
+  - Heartseeker (12-gauge): one guided slug that locks onto heads, no Smart Link needed.
+  - 4-gauge's Legendary round is still to come.
 - Five new rounds, 135 in all:
   - Ping (Rare; 7.62, 12.7): targets hit show through walls for 5 seconds. -10% damage.
   - Penetrator (Epic) in 12mm, 7.62 and 12.7: ignores 60% of armor and goes through thin cover

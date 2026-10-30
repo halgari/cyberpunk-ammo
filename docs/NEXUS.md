@@ -6,22 +6,22 @@ with README.md and docs/CATALOG.md. The main image is `art/banner/main-4k.png` (
 
 Nexus BBCode notes: `[spoiler]`, `[line]`, `[center]`, `[color=#hex]` and `[size=1-6]` all work;
 tables don't render reliably, so everything is lists. The tier colors are the game's own rarity
-colors (Common grey, Uncommon green, Rare blue, Epic purple).
+colors (Common grey, Uncommon green, Rare blue, Epic purple, Legendary orange).
 
 ```
 [center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
-[size=4]An ammo overhaul: 13 calibers, 135 rounds, and the shops, loot and crafting that go with them[/size][/center]
+[size=4]An ammo overhaul: 13 calibers, 148 rounds, and the shops, loot and crafting that go with them[/size][/center]
 
 [line]
 
-The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 135 different rounds, from plain ball up to Epic match grade. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
+The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 148 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
 
 Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon, Rare and Epic rounds. You pick which round the gun loads from its mod screen.
 
 [size=5][b][color=#2ad4ff]What the mod adds[/color][/b][/size]
 [list]
 [*]13 calibers: 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
-[*]135 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
+[*]148 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
 [*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
 [*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
@@ -57,6 +57,17 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [*][color=#3fbf5f][b]Uncommon[/b][/color]: two per caliber. Small trades: more damage for less armor pen, faster charge for less punch.
 [*][color=#3fa0ff][b]Rare[/b][/color]: specialist loads. Fire, ricochets, non-lethal, quiet, armor piercing.
 [*][color=#b04fff][b]Epic[/b][/color]: Penetrators, toxin cores, thermite, EMP, match grade. Loot only; no shop sells it.
+[*][color=#e8a33c][b]Legendary[/b][/color]: one per caliber, each doing something no other round does. Carried by elite enemies, bosses and MaxTac, and now and then found in a stash that already holds Epic rounds. Not sold and not craftable; they come in small stacks.
+[/list]
+
+[size=5][b][color=#2ad4ff]Legendary rounds[/color][/b][/size]
+[list]
+[*][color=#e8a33c][b]Gatecrasher[/b][/color] (7.62, 12.7): ignores all armor, no damage falloff, goes through cover at full damage.
+[*][color=#e8a33c][b]Cook-off[/b][/color] (9mm, .45, 12mm, 5.56, 7.62): a kill sets off a blast at the body that hurts everyone close by, you included. An enemy's Cook-off hit on you sets off your own grenade if it's charged.
+[*][color=#e8a33c][b]Kebab[/b][/color] (light and heavy rail): a charged shot goes through every body and wall in its line with no damage lost.
+[*][color=#e8a33c][b]Lockout[/b][/color] (10mm, 20mm, 25mm): every hit jams the target's weapon for 4 seconds.
+[*][color=#e8a33c][b]Heartseeker[/b][/color] (12-gauge): one guided slug that locks onto heads, no Smart Link needed. Ignores all armor, +100% headshot damage, +50% crit chance.
+[*]4-gauge's Legendary round is still to come.
 [/list]
 
 [line]
@@ -66,25 +77,25 @@ Each gun is assigned one of the calibers below and loads only rounds of that cal
 
 [size=4][b][color=#d4a04c]Power[/color][/b][/size] (gunpowder cartridges)
 [list]
-[*][b]9mm[/b]: Lexington, Slaught-O-Matic, Guillotine, Pulsar, Saratoga, Erebus
-[*][b].45[/b]: Unity, Liberty, Nue
+[*][b]9mm[/b]: Lexington, Slaught-O-Matic, Guillotine, Pulsar, Saratoga, Erebus, Cook-off
+[*][b].45[/b]: Unity, Liberty, Nue, Cook-off
 [*][b]12mm magnum[/b]: Nova, Overture, Metel, Malorian Arms 3516
-[*][b]5.56[/b]: Umbra, Masamune, Copperhead, Defender
-[*][b]7.62[/b]: Ajax, Kyubi, MA70 HB
-[*][b]12.7[/b]: Kolac, SOR-22, Grad, Osprey, Mk.31 HMG
-[*][b]12-gauge[/b]: Crusher, Pozhar, Tactician, Igla, Testera
+[*][b]5.56[/b]: Umbra, Masamune, Copperhead, Defender, Cook-off
+[*][b]7.62[/b]: Ajax, Kyubi, MA70 HB, Gatecrasher, Cook-off
+[*][b]12.7[/b]: Kolac, SOR-22, Grad, Osprey, Mk.31 HMG, Gatecrasher
+[*][b]12-gauge[/b]: Crusher, Pozhar, Tactician, Igla, Testera, Heartseeker
 [*][b]4-gauge[/b]: Carnage
 [/list]
 
 [size=4][b][color=#2ad4ff]Tech[/color][/b][/size] (rail-fired slugs)
 [list]
 [*][b]Light rail (5mm)[/b]: Kenshin, Ticon, Omaha, Grit, Senkoh LX, Quasar
-[*][b]Heavy rail[/b]: Burya, Achilles, Nekomata, Rasetsu, Satara
+[*][b]Heavy rail[/b]: Burya, Achilles, Nekomata, Rasetsu, Satara, Kebab
 [/list]
 
 [size=4][b][color=#ff5a5a]Smart[/color][/b][/size] (guided micro-rockets)
 [list]
-[*][b]10mm[/b]: Chao, Kappa, Yukimura, Dian, Shingen, Warden, Hercules 3AX, Sidewinder
+[*][b]10mm[/b]: Chao, Kappa, Yukimura, Dian, Shingen, Warden, Hercules 3AX, Sidewinder, Lockout
 [*][b]20mm cluster[/b]: Zhuo, Palica
 [*][b]25mm dart[/b]: Ashura
 [/list]
@@ -165,17 +176,17 @@ What each load does. Percentages are changes from the plain round.
 [list]
 [*][b]9mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Rubber, Penetrator, Match, Toxin Core, Shredders
 [*][b].45[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Rubber, Penetrator, Match, Toxin Core, Shredders
-[*][b]12mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Rubber, Hardcast, Penetrator, Match, Toxin Core, Shredders
+[*][b]12mm[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Rubber, Hardcast, Penetrator, Match, Toxin Core, Shredders, Cook-off
 [*][b]5.56[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Subsonic, Bouncers, Penetrator, Match, Toxin Core, Shredders
 [*][b]7.62[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Ping, Penetrator, Match, Toxin Core, Shredders
 [*][b]12.7[/b]: Ball, Mushrooms, +P, Steel-Core, Incendiary, Ballistic Tip, Ping, Penetrator, Match, Toxin Core, HEI
 [*][b]12-gauge[/b]: Buckshot, Slugs, Birdshot, Flechettes, Beanbags, Dragon's Breath Lite, Dragon's Breath, Frag-12, Long Flechettes
 [*][b]4-gauge[/b]: Buckshot, Slugs, Birdshot, Flechettes, Riot, Flares, Dragon's Breath, Thermite Slugs
-[*][b]Light rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor
+[*][b]Light rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor, Kebab
 [*][b]Heavy rail[/b]: Rail Slugs, Sleevers, Bricks, Ferro, Split Slugs, Feedback, DU Penetrator, Toxic Scatter, Superconductor, EMP Capacitor
 [*][b]10mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
-[*][b]20mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
-[*][b]25mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge
+[*][b]20mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge, Lockout
+[*][b]25mm[/b]: Seekers, Dumbfires, Short-Fuse, EMP Payload, Incendiary Payload, Chem Payload, Flash Payload, Hunter, Hack Carrier, Shaped Charge, Lockout
 [/list]
 [/spoiler]
 

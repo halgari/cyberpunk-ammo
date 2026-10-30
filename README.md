@@ -1,7 +1,7 @@
 # Brass Market
 
 Brass Market (internally AmmoOverhaul) is a Cyberpunk 2077 (2.50) mod that replaces the game's four ammo types with 13 calibers and about
-135 rounds, from plain ball to Epic match grade, for V and NPCs alike.
+148 rounds, from plain ball to Legendary, for V and NPCs alike.
 
 ## What it does
 
@@ -9,7 +9,8 @@ Brass Market (internally AmmoOverhaul) is a Cyberpunk 2077 (2.50) mod that repla
   12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds
   (`docs/CATALOG.md` lists every gun).
 - **Rounds.** Every caliber has Common, Uncommon, Rare and Epic rounds: hollow points, steel
-  core, incendiary, subsonic, flechettes, dumbfire smart rounds and more. Common rounds behave
+  core, incendiary, subsonic, flechettes, dumbfire smart rounds and more. Most calibers also
+  have a Legendary round that does something no other round does. Common rounds behave
   like the game's ammo; better rounds change damage, armor, range, effects on hit.
 - **Choosing a round.** A gun's mod screen gets an Ammo section: pick any round you carry for
   that caliber. The gun loads it from then on, until you pick another.

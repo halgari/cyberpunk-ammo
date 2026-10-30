@@ -242,6 +242,29 @@ names are in `docs/CATALOG.md`):
     7.62 Ping (one in four). Untick "Invulnerable" (it blocks the tag). Restart the game afterwards
     to put the NPC round factors back.
 
+Legendary rounds (`tools/snippets/calibers/legendary.sh` checks each one on the hit rig). Give
+yourself a round and its selector in the CET console, e.g.
+`Game.AddToInventory("Items.AO_Feed_12ga_Heartseeker", 1); Game.AddToInventory("Ammo.AO_12ga_Heartseeker", 100)`.
+To have NPCs carry them, set every rank's chance and spawn a ganger:
+`for _, r in ipairs({"Trash","Weak","Normal","Rare","Officer","Elite","Boss","MaxTac"}) do TweakDB:SetFlat("AmmoOverhaul.npcLegendaryChance." .. r, 1.0) end`
+(restart the game afterwards).
+
+33. **Heartseeker.** Fit it to a Tactician or any 12-gauge: the slug locks onto an enemy's head
+    near the crosshair (lock markers may not show: the crosshair stays the gun's own) and curves
+    onto it when you fire off to one side. Swap back to Buckshot: plain pellets again.
+34. **Cook-off.** Kill an enemy standing next to another with 5.56 Cook-off: a blast at the body
+    hurts the one next to it, and you if you're close. An enemy with Cook-off shooting you sets off
+    your selected grenade on you while it has a charge; with no charge nothing happens until it
+    refills.
+35. **Lockout.** Shoot an enemy with 10mm Lockout: its gun jams for about 4 seconds. An enemy's
+    Lockout hit jams yours.
+36. **Kebab.** A fully charged Omaha or Burya shot with Kebab goes through two enemies in a row,
+    both taking about the same damage.
+37. **Gatecrasher.** 7.62 or 12.7 Gatecrasher hits armored enemies at full damage, through thin
+    cover and at long range.
+38. **Where they come from.** Legendary rounds never show at a vendor or on the crafting screen.
+    They break down like other rounds. Dead elites and bosses sometimes drop a small stack.
+
 For each step, note pass or fail and what you saw.
 
 ## Logs

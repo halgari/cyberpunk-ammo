@@ -2,8 +2,8 @@
 
   python3 tools/render/banner.py [--title TITLE.png]
 
-  art/banner/background-8k.png, background-4k.png: every round's box, 15 x 9 on a dark ground,
-    in caliber order (Power, Tech, Smart; Common to Epic within each).
+  art/banner/background-8k.png, background-4k.png: every round's box, 17 x 9 on a dark ground,
+    in caliber order (Power, Tech, Smart; Common to Legendary within each), the last row centred.
   The 8K files aren't committed (.gitignore); rerun to get them.
   art/banner/main-8k.png, main-4k.png, main-4k.jpg (with --title): the background, darkened behind the title,
     with TITLE.png (a transparent 8K render, tools/render/title.py) on top.
@@ -19,7 +19,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "art" / "icons"
 OUT = ROOT / "art" / "banner"
 W, H = 7680, 4320
-COLS, ROWS = 15, 9
+COLS, ROWS = 17, 9
 # Power, Tech, Smart, by the caliber prefix of the icon file names.
 CALIBERS = ["9mm", "45", "12mm", "556", "762", "127", "12ga", "4ga", "5mm", "heavy", "10mm", "20mm", "25mm"]
 
@@ -45,7 +45,7 @@ def ground():
 
 def background():
     names = order([p.stem for p in ART.glob("*.png") if not p.stem.endswith("-ref")])
-    assert len(names) == COLS * ROWS, f"{len(names)} icons for {COLS * ROWS} cells"
+    assert COLS * (ROWS - 1) < len(names) <= COLS * ROWS, f"{len(names)} icons for {COLS * ROWS} cells"
     img = ground().convert("RGBA")
     cw, ch = W / COLS, H / ROWS
     # The boxes fill about 760 x 505 of their 1024 tile: scale the tile so a box fills ~92% of a cell.
@@ -54,6 +54,8 @@ def background():
     boxes = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     for i, n in enumerate(names):
         r, c = divmod(i, COLS)
+        if r == ROWS - 1:   # the last, short row centred
+            c += (COLS * ROWS - len(names)) / 2
         icon = Image.open(ART / f"{n}.png").convert("RGBA").resize((side, side), Image.LANCZOS)
         x = round(c * cw + cw / 2 - side / 2)
         y = round(r * ch + ch / 2 - side / 2)

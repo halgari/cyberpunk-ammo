@@ -180,6 +180,9 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
   per tier, Epic first, then Rare, then Uncommon (`NpcAmmo.RollTier`): chance = the family's share
   of the tier × `npc<Uncommon|Rare|Epic>Factor.<rarity>`, capped at 1; the first hit wins. Only
   Rare and higher ranks roll Rare rounds, only Elite and Boss roll Epics (Boss twice as often).
+  Before all of these, a gun rolls its caliber's Legendary round at `npcLegendaryChance.<rarity>`
+  (Elite 3%, Boss and MaxTac 10%, others never); its loot is a quarter of a normal stack
+  (`AOData.LegendaryStack`).
   On a hit the gun is stocked with one of that tier's rounds at random (`NpcAmmo.PickTier`) and
   the selector's stat modifiers are added straight to the gun's stats. No part is fitted:
   `TransactionSystem.AddPart` on an NPC's drawn gun hangs the game, and an
@@ -225,7 +228,9 @@ Heavy rail comes from sniper ammo although its guns used all four vanilla items.
   Mushrooms, 112 Rail Slugs and 38 Sleevers, 135 Seekers and 15 Dumbfires.
 - **Pick** chooses one round for a whole stack (loot): with chance `loot.ownedBias` a caliber of a
   gun the player carries, else one by `lootWeight`; then a tier by share, then one of the tier's
-  rounds at random. Loot picks up to Epic.
+  rounds at random. Loot picks up to Epic. A container that ends up holding an Epic round gives
+  each ammo stack a `lootLegendaryChance` (0.2%) to become the caliber's Legendary round, a quarter
+  of the size (`LootConvert`).
 - **Several rounds per tier:** a tier's share is split evenly among its rounds (Spread rounds by
   largest remainder), so a caliber's two Uncommons each get half its Uncommon share. NPCs that
   roll a tier pick one of its rounds at random (`NpcAmmo.PickTier`).
