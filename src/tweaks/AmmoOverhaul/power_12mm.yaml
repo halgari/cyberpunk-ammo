@@ -432,7 +432,7 @@ Items.AO_Feed_12mm_Penetrator:
       $type: ConstantStatModifier
       statType: BaseStats.TechPierceDamageFactor
       modifierType: Additive
-      value: 0.5
+      value: -0.5
 
 # 12mm Match (Epic)
 Ammo.AO_12mm_Match:

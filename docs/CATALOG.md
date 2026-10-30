@@ -336,7 +336,7 @@ shot (each pellet of a shotgun rolls its share).
 - **Bouncers** (Rare; 9mm, .45, 5.56): 30% chance to ricochet once. -15% damage.
 - **Rubber** (Rare; 9mm, .45, 12mm): Non-lethal: targets go down unconscious instead of dying. Much stronger flinch. -40% damage.
 - **Penetrator** (Epic; 9mm, .45, 5.56): Ignores 60% of armor.
-- **Penetrator** (Epic; 12mm, 7.62, 12.7): Ignores 60% of armor. Goes through thin cover at half damage. (`TechPierceEnabled` +1, `TechPierceChargeLevel` x0, `TechPierceDamageFactor` +0.5: every shot pierces as a charged Tech shot.)
+- **Penetrator** (Epic; 12mm, 7.62, 12.7): Ignores 60% of armor. Goes through thin cover at half damage. (`TechPierceEnabled` +1, `TechPierceChargeLevel` x0, `TechPierceDamageFactor` -0.5: every shot pierces as a charged Tech shot, and damage through cover is times 1 + factor, so half.)
 - **Match** (Epic; 9mm, .45, 12mm, 5.56, 7.62, 12.7): Damage varies -2% to +6% instead of -10% to +1%. 30% less spread and sway.
 - **Toxin Core** (Epic; 9mm, .45, 12mm, 5.56, 7.62, 12.7): 25% chance to poison. 30% of the damage is chemical damage.
 - **Shredders** (Epic; 9mm, .45, 12mm, 5.56, 7.62): 30% chance to cause bleeding. Twice the dismemberment chance.
@@ -436,8 +436,8 @@ has a pool and each caliber takes what fits it.
 | .45 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Subsonic, Bouncers, Rubber | Penetrator (no cover pierce), Match, Toxin core, Shredders |
 | 12mm | Mushrooms, Hot loads | Steel-core AP, Incendiary, Rubber, Hardcast | Penetrator, Match, Toxin core, Shredders |
 | 5.56 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Subsonic, Bouncers | Penetrator (no cover pierce), Match, Toxin core, Shredders |
-| 7.62 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Tracer, Ballistic tip | Penetrator, Match, Toxin core, Shredders |
-| 12.7 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Tracer, Ballistic tip | Penetrator, HEI, Match, Toxin core |
+| 7.62 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Ping, Ballistic tip | Penetrator, Match, Toxin core, Shredders |
+| 12.7 | Mushrooms, Hot loads | Steel-core AP, Incendiary, Ping, Ballistic tip | Penetrator, HEI, Match, Toxin core |
 | 12ga | Slugs, Birdshot | Flechette, Beanbag, Dragon's breath (light), Gas | Dragon's breath, Frag-12, Tungsten slug, Flechette (long) |
 | 4ga | Slugs, Barn Door | Flare, Riot, Gas canister, Flechette | Kinetic penetrator, Micro-grenade, Dragon's breath, Thermite slug |
 | 5mm rail | Sleevers, Dense slugs | Capacitor, Ferro, Split slug, Feedback | DU penetrator, Toxic scatter, Superconductor, EMP capacitor |
@@ -448,7 +448,7 @@ has a pool and each caliber takes what fits it.
 
 The 4ga EMP shell is dropped (Power guns have no power source). New rounds in the grid:
 
-- Tracer (7.62, 12.7 Rare): the target hit is marked and shows through walls for a few seconds.
+- Ping (7.62, 12.7 Rare; first called Tracer): the target hit is marked and shows through walls for a few seconds.
 - Ballistic tip (7.62, 12.7 Rare): more effective range and more damage at distance, a little
   less armor pen.
 - Hardcast (12mm Rare): heavier hit (stagger, knockdown impulse), a little armor pen.

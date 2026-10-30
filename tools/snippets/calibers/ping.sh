@@ -109,7 +109,7 @@ return string.format("%g/%g/%g", s:GetStatValue(o, gamedataStatType.TechPierceEn
   s:GetStatValue(o, gamedataStatType.TechPierceChargeLevel), s:GetStatValue(o, gamedataStatType.TechPierceDamageFactor))' | sed -n 's/^=> //p')
     [[ $pierce == 1/* ]] && break; sleep 1
   done
-  out+="$([[ $pierce == 1/0/* ]] && echo PASS || echo FAIL) the NPC's 7.62 Penetrator gun pierces (enabled/charge/factor $pierce)|"
+  out+="$([[ $pierce == 1/0/-0.5 ]] && echo PASS || echo FAIL) the NPC's 7.62 Penetrator gun pierces at half damage (enabled/charge/factor $pierce)|"
 fi
 
 $C "FEED='Items.AO_Feed_762_Ball'; $(cat $S/set-feed.lua)" >/dev/null

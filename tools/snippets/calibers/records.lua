@@ -237,7 +237,7 @@ for _, loc in ipairs({ "12mm", "762", "127" }) do
   check(sel .. " TechPierceEnabled 1", near(statSum(sel, "TechPierceEnabled"), 1), tostring(statSum(sel, "TechPierceEnabled")))
   local ch, chAny = modSum(sel, "TechPierceChargeLevel", "Multiplier")
   check(sel .. " TechPierceChargeLevel x0", chAny and near(ch, 0), tostring(ch))
-  check(sel .. " TechPierceDamageFactor +0.5", near(statSum(sel, "TechPierceDamageFactor"), 0.5), tostring(statSum(sel, "TechPierceDamageFactor")))
+  check(sel .. " TechPierceDamageFactor -0.5 (half damage through cover)", near(statSum(sel, "TechPierceDamageFactor"), -0.5), tostring(statSum(sel, "TechPierceDamageFactor")))
   check(sel .. " armor pen as the 9mm Penetrator", near(statSum(sel, "CanWeaponIgnoreArmor"), pen9) and pen9 > 0, tostring(statSum(sel, "CanWeaponIgnoreArmor")))
   check(sel .. " own text key", hasDescKey(sel, "AO-Ammo-" .. loc .. "-Penetrator-Desc"), "other key")
 end

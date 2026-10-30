@@ -35,7 +35,10 @@ to 135:
 
 **Penetrator** (Epic; 12mm, 7.62, 12.7)
 - Stats on the selector part: ignores 60% of armor (`armor(0.60)`, as the other Penetrator);
-  `TechPierceEnabled` +1; `TechPierceChargeLevel` x0; `TechPierceDamageFactor` +0.5.
+  `TechPierceEnabled` +1; `TechPierceChargeLevel` x0; `TechPierceDamageFactor` -0.5.
+  (Corrected from +0.5, the probe's value, 2026-10-29: damage through cover is times
+  1 + `TechPierceDamageFactor` (`DamageSystem.ProcessPierceAttack`), and a Power gun has 0, so
+  +0.5 gave 1.5x, not half. The probe never measured damage; half is the intended design.)
 - Every shot goes through the cover a charged Tech shot goes through, at half damage on the far
   side.
 - Text: "Tungsten-core rounds. They punch through armor and thin cover.\n\nIgnores 60% of

@@ -117,7 +117,7 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 
 - `records.lua`: every caliber's rounds and selectors (names, weights, prices), its guns load its
   Common round and carry its feed slot. Rare and Epic rounds too: quality, x4 / x8 price, weight, text, icon,
-  selector tags, no damage-type or machine stats on a selector, valid hit data, all 91 listed.
+  selector tags, no damage-type or machine stats on a selector, valid hit data, all 96 listed.
   Run it with the generator's stat list in front:
   `PRE="AO_REFS={$(sed 's/.*/"&",/' tools/rounds/refs.txt | tr -d '\n')};" check.sh calibers/records.lua`.
 - `tiers.lua`: tier shares, prices, vendor and loot caps (gun shops up to Rare, loot up to Epic),
@@ -234,8 +234,13 @@ names are in `docs/CATALOG.md`):
     5.56 Penetrator (a Copperhead) the car stops them.
 31. **Ping.** Hit an enemy with 7.62 or 12.7 Ping, then step behind a wall: the enemy shows
     through it for about 5 seconds after the last hit, then the outline goes.
-32. **Ping on you.** Let an NPC carrying 7.62 Ping shoot you (`calibers/ping.sh` shows how to roll
-    one): nothing strange happens on your screen, and nothing stays on V after the fight.
+32. **Ping on you.** Let an NPC carrying 7.62 Ping shoot you: nothing strange happens on your
+    screen, and nothing stays on V after the fight. To get one, force NPCs to Rare rounds and spawn
+    an Ajax ganger (CET console):
+    `for _, r in ipairs({"Trash","Weak","Normal","Rare","Officer","Elite","Boss"}) do TweakDB:SetFlat("AmmoOverhaul.npcRareFactor." .. r, 100.0); TweakDB:SetFlat("AmmoOverhaul.npcEpicFactor." .. r, 0.0) end; GetMod("AOTestKit").spawn("Character.AO_Test_Plain_Ajax", 1)`
+    The test kit window shows the ammo it carries; remove it and spawn again until it carries
+    7.62 Ping (one in four). Untick "Invulnerable" (it blocks the tag). Restart the game afterwards
+    to put the NPC round factors back.
 
 For each step, note pass or fail and what you saw.
 

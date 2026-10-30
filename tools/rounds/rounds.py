@@ -175,9 +175,11 @@ KINDS = [
          calibers=["9mm", "45", "12mm", "556", "762", "127"],
          stats=armor(0.60),
          # The heavier calibers also go through cover, as a charged Tech shot does (the Tech pierce
-         # stats work on a Power gun: probed on an Ajax, 2026-10-29).
+         # stats work on a Power gun: probed on an Ajax, 2026-10-29). Damage through cover is times
+         # 1 + TechPierceDamageFactor (DamageSystem.ProcessPierceAttack) and a Power gun has 0, so -0.5
+         # is half damage.
          per_caliber={tag: dict(stats=armor(0.60) + [add("TechPierceEnabled", 1.0), mult("TechPierceChargeLevel", 0.0),
-                                                     add("TechPierceDamageFactor", 0.5)],
+                                                     add("TechPierceDamageFactor", -0.5)],
                                 desc="Tungsten-core rounds. They punch through armor and thin cover.\n\nIgnores 60% of armor. Goes through thin cover at half damage.")
                       for tag in ("12mm", "762", "127")},
          desc="Tungsten-core rounds. Armor barely slows them down.\n\nIgnores 60% of armor."),

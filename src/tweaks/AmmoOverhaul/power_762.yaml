@@ -423,7 +423,7 @@ Items.AO_Feed_762_Penetrator:
       $type: ConstantStatModifier
       statType: BaseStats.TechPierceDamageFactor
       modifierType: Additive
-      value: 0.5
+      value: -0.5
 
 # 7.62 Match (Epic)
 Ammo.AO_762_Match:
