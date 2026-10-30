@@ -84,9 +84,23 @@ spec.position = Vector4.new(b.x + dx * $2 + dy * $3, b.y + dy * $2 - dx * $3, b.
 spec.orientation = EulerAngles.ToQuat(EulerAngles.new(0, 0, math.deg(math.atan2(dx, -dy))))
 spec.alwaysSpawned = true; spec.tags = { CName.new('AO_Test2') }
 Game.GetDynamicEntitySystem():CreateEntity(spec); return 1" >/dev/null
-  for _ in $(seq 20); do sleep 1; [[ $(lua "return $N2 ~= nil") == true ]] && break; done
+  # Frozen as soon as it's there, before it walks off its spot.
+  for _ in $(seq 60); do
+    [[ $(lua "local n = $N2; if not n then return false end
+n:SetIndividualTimeDilation(CName.new('aorig2'), 0.0001, 9999.0, CName.new(''), CName.new('')); return true") == true ]] && break
+    sleep 0.3
+  done
+  sleep 1
+  # It can still land a few metres off its spot, and NPCs' teleports don't stick.
+  lua "return string.format('  second NPC %.1f m from the rig NPC', Vector4.Distance($N2:GetWorldPosition(), RIG.npc():GetWorldPosition()))" >&2
+}
+# Moves V onto the line from the second NPC through the rig NPC, 5 m past the rig NPC, facing it.
+inline() {
+  lua "local p, n, f = Game.GetPlayer(), RIG.npc(), $N2; local b, c = n:GetWorldPosition(), f:GetWorldPosition()
+local dx, dy = b.x - c.x, b.y - c.y; local l = math.sqrt(dx * dx + dy * dy); dx, dy = dx / l, dy / l
+Game.GetTeleportationFacility():Teleport(p, Vector4.new(b.x + dx * 5, b.y + dy * 5, p:GetWorldPosition().z, 1), EulerAngles.new(0, 0, math.deg(math.atan2(dx, -dy))))
+return 1" >/dev/null
   sleep 2
-  lua "$N2:SetIndividualTimeDilation(CName.new('aorig2'), 0.0001, 9999.0, CName.new(''), CName.new('')); return 1" >/dev/null
 }
 gone2() { lua "local n = $N2; if n then Game.GetDynamicEntitySystem():DeleteEntity(n:GetEntityID()) end return 1" >/dev/null; }
 # Lua: object expression $1 mortal at $2% health.
@@ -110,7 +124,13 @@ cookoff() {
   lua "$HOOK return 1" >/dev/null
   spawn 0.0 "" Character.AO_Test_Plain_Unity
   setup $UNI
-  second Character.AO_Test_Plain_Unity 0 1.5
+  # Inside the blast's 6 m: the spawn lands a few metres off its spot, so it's tried again.
+  local try
+  for try in 1 2 3 4; do
+    second Character.AO_Test_Plain_Unity 0 1.5
+    [[ $(lua "return Vector4.Distance($N2:GetWorldPosition(), RIG.npc():GetWorldPosition()) < 4.5") == true ]] && break
+    [[ $try == 4 ]] || { gone2; sleep 2; }
+  done
   # The neighbour at 30%: the blast (35% of max health) kills it only if it does its damage.
   local h1 h2; h1=$(frail "RIG.npc()" 30.0); h2=$(frail "$N2" 30.0)
   echo "  health set to $h1% and $h2%"
@@ -162,6 +182,71 @@ return string.format('%.0f', $POOL)")
   cooked0=$(trail_count "went off")
   npcshoot 1 4
   is "with no charge left, a hit sets off nothing (pool $(lua "return string.format('%.0f', $POOL)"))" "$(( $(trail_count "went off") - cooked0 ))" 0
+}
+
+# --- lockout: V's hit jams the NPC's gun, an NPC's hit jams V's -------------------------------
+YUK=Items.Preset_Yukimura_Default
+JAM=AmmoOverhaul.LockoutJam
+# V's Invulnerable (test kit) blocks debuffs: lifted for the NPC's shots (hitdata.sh does the same).
+vulnerable() { lua 'local k, gm, p = GetMod("AOTestKit"), Game.GetGodModeSystem(), Game.GetPlayer():GetEntityID()
+if AO_KITGOD == nil then AO_KITGOD = k.state.godMode end
+k.state.godMode = false
+for _, s in ipairs({"AO_TestKit", "AO_Test"}) do gm:RemoveGodMode(p, gameGodModeType.Invulnerable, CName.new(s)) end return 1' >/dev/null; }
+kitgod() { lua 'local k = GetMod("AOTestKit")
+if AO_KITGOD ~= nil then k.state.godMode = AO_KITGOD; AO_KITGOD = nil end
+if k.state.godMode then Game.GetGodModeSystem():AddGodMode(Game.GetPlayer():GetEntityID(), gameGodModeType.Invulnerable, CName.new("AO_TestKit")) end return 1' >/dev/null; }
+lockout() {
+  kit "{'$YUK', 1}, {'Items.AO_Feed_10mm_Lockout', 1}, {'Ammo.AO_S10_Lockout', 300}"
+  draw $YUK; draw $YUK; feed Items.AO_Feed_10mm_Lockout
+  # Immortal, not Invulnerable: vanilla gives an Invulnerable target no debuffs.
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Yukimura
+  setup $YUK
+  shoot $YUK 3
+  local n; n=$(lua "return RIG.effects('NPC', '$JAM')")
+  [[ $n -ge 1 ]] && pass "V's Lockout hits jammed the NPC's gun ($n of $(lua "return #RIG.ratios('V')") hits)" || fail "V's Lockout hits jammed the NPC's gun: $n"
+  lua "RIG.npcMode = nil; GetMod('AOTestKit').despawnAll(); return 1" >/dev/null
+  legendary_roll on
+  spawn 0.0 Ammo.AO_S10_Lockout Character.AO_Test_Plain_Yukimura
+  legendary_roll off
+  vulnerable
+  setup $YUK
+  npcshoot 2 6
+  n=$(lua "return RIG.effects('V', '$JAM')")
+  [[ $n -ge 1 ]] && pass "an NPC's Lockout hits jammed V's gun ($n of $(lua "return #RIG.ratios('NPC')") hits)" || fail "an NPC's Lockout hits jammed V's gun: $n"
+  kitgod
+}
+
+# --- kebab: a charged shot through two NPCs in line, each one's loss recorded --------------------
+OMA=Items.Preset_Omaha_Default
+kebab() {
+  kit "{'$OMA', 1}, {'Items.AO_Feed_5mm_Kebab', 1}, {'Ammo.AO_TLight_Kebab', 300}"
+  draw $OMA; draw $OMA; feed Items.AO_Feed_5mm_Kebab
+  lua "$HOOK return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Omaha
+  setup $OMA
+  second Character.AO_Test_Plain_Omaha 2.0 0
+  lua "Game.GetGodModeSystem():AddGodMode($N2:GetEntityID(), gameGodModeType.Invulnerable, CName.new('aorig')); CK.hits = {}; RIG.clear(); return 1" >/dev/null
+  inline
+  # AIWeapon.Fire reads the charge off the gun's AI blackboard: stamped fully charged before each shot.
+  for _ in $(seq 60); do
+    [[ $(lua "return #RIG.ratios('V')") -ge 4 ]] && break
+    local f; f=$(lua "local w = Game.GetPlayer():GetActiveWeapon(); if not w then return 'holstered' end
+local bb, d, t = w:GetAIBlackboard(), GetAllBlackboardDefs().AIShooting, EngineTime.ToFloat(Game.GetSimTime())
+bb:SetFloat(d.chargeStartTimeStamp, t - 2.0); bb:SetFloat(d.maxChargedTimeStamp, t - 1.0)
+return RIG.fireV()")
+    [[ $f == holstered ]] && draw $OMA
+    sleep 0.5
+  done
+  local r; r=$(lua "local near, far = RIG.npc():GetEntityID().hash, $N2:GetEntityID().hash
+local a, b = {}, {}
+for _, h in ipairs(CK.hits) do if h.on == near then table.insert(a, h.post) elseif h.on == far then table.insert(b, h.post) end end
+local function avg(t) local s = 0 for _, v in ipairs(t) do s = s + v end return #t > 0 and s / #t or 0 end
+return string.format('%d %d %.1f %.1f', #a, #b, avg(a), avg(b))")
+  read -r na nb da db <<<"$r"
+  echo "NOTE Kebab: near NPC $na hits at $da each, far NPC (behind it) $nb hits at $db each"
+  [[ $nb -ge 1 ]] && pass "Kebab's charged shots went through the near NPC into the far one" || fail "Kebab's charged shots reached the far NPC: $nb hits"
+  gone2
 }
 
 for p in "${parts[@]}"; do echo "== $p"; $p; done
