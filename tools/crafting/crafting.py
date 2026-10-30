@@ -29,7 +29,8 @@ COSTS = "zz_crafting_costs.yaml"
 COST = {"Tech": 1, "Power": 2, "Smart": 4}
 MATERIAL = ["Items.CommonMaterial1", "Items.UncommonMaterial1", "Items.RareMaterial1", "Items.EpicMaterial1"]
 QUALITY = ["Common", "Uncommon", "Rare", "Epic"]
-LEGENDARY = 4
+# Legendary and the faction tiers are never crafted (tools/rounds/rounds.py).
+NO_RECIPE = {4, 5, 6, 7}
 DIVISOR = [1, 2, 3, 4]
 # A round's price over its caliber's Common round: x2 per tier (CATALOG, tiers.lua).
 TIER_PRICE = [1, 2, 4, 8]
@@ -116,7 +117,7 @@ def caliber_block(key, text, loc, name_of, batches):
     ammos = strings(flat(text, key, "selectorAmmo"))
     tiers = [int(s) for s in strings(flat(text, key, "selectorTiers"))]
     y = [BEGIN, "", f"# {key}: {family}, {cost(family)} components a batch, {common} rounds a Common batch."]
-    used = sorted(t for t in set(tiers) if t != LEGENDARY)
+    used = sorted(t for t in set(tiers) if t not in NO_RECIPE)
     for t in used:
         y.append(f"Crafting.AO_Cost_{family}_{t}:\n  $type: CraftingPackage\n  craftingRecipe:\n"
                  f"    - $type: RecipeElement\n      ingredient: {MATERIAL[t]}\n      amount: {cost(family)}\n")
@@ -128,7 +129,7 @@ def caliber_block(key, text, loc, name_of, batches):
         if ammo in VANILLA:
             y.append(f'{ammo}.aoRecipe: "{VANILLA[ammo]}"\n')
             continue
-        if t == LEGENDARY:
+        if t in NO_RECIPE:
             # Empty, so the base round's recipe isn't inherited through $base.
             y.append(f'{ammo}.aoRecipe: ""\n')
             continue

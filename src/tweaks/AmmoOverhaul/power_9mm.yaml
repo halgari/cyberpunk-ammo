@@ -9,9 +9,9 @@ AmmoOverhaul.Power_9mm.defaultAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_9mm.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_9mm.lootWeight: 0.40
 # Parallel lists: selector part -> ammo stack it feeds -> tier (0 Common, 1 Uncommon).
-AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "Items.AO_Feed_9mm_PlusP", "Items.AO_Feed_9mm_SteelCore", "Items.AO_Feed_9mm_Incendiary", "Items.AO_Feed_9mm_Subsonic", "Items.AO_Feed_9mm_Bouncers", "Items.AO_Feed_9mm_Rubber", "Items.AO_Feed_9mm_Penetrator", "Items.AO_Feed_9mm_Match", "Items.AO_Feed_9mm_Toxin", "Items.AO_Feed_9mm_Shredders", "Items.AO_Feed_9mm_CookOff"]
-AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_9mm_PlusP", "Ammo.AO_9mm_SteelCore", "Ammo.AO_9mm_Incendiary", "Ammo.AO_9mm_Subsonic", "Ammo.AO_9mm_Bouncers", "Ammo.AO_9mm_Rubber", "Ammo.AO_9mm_Penetrator", "Ammo.AO_9mm_Match", "Ammo.AO_9mm_Toxin", "Ammo.AO_9mm_Shredders", "Ammo.AO_9mm_CookOff"]
-AmmoOverhaul.Power_9mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4]
+AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "Items.AO_Feed_9mm_PlusP", "Items.AO_Feed_9mm_SteelCore", "Items.AO_Feed_9mm_Incendiary", "Items.AO_Feed_9mm_Subsonic", "Items.AO_Feed_9mm_Bouncers", "Items.AO_Feed_9mm_Rubber", "Items.AO_Feed_9mm_Penetrator", "Items.AO_Feed_9mm_Match", "Items.AO_Feed_9mm_Toxin", "Items.AO_Feed_9mm_Shredders", "Items.AO_Feed_9mm_CookOff", "Items.AO_Feed_9mm_Reloads", "Items.AO_Feed_9mm_Dirties", "Items.AO_Feed_9mm_Shinobi"]
+AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_9mm_PlusP", "Ammo.AO_9mm_SteelCore", "Ammo.AO_9mm_Incendiary", "Ammo.AO_9mm_Subsonic", "Ammo.AO_9mm_Bouncers", "Ammo.AO_9mm_Rubber", "Ammo.AO_9mm_Penetrator", "Ammo.AO_9mm_Match", "Ammo.AO_9mm_Toxin", "Ammo.AO_9mm_Shredders", "Ammo.AO_9mm_CookOff", "Ammo.AO_9mm_Reloads", "Ammo.AO_9mm_Dirties", "Ammo.AO_9mm_Shinobi"]
+AmmoOverhaul.Power_9mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 7, 5, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_9mm.craftBatch: 90
 
@@ -688,6 +688,143 @@ Items.AO_Feed_9mm_CookOff:
   iconPath: AO_9mm_CookOff
   quality: Quality.Legendary
 
+# 9mm Reloads [Scav] (Common)
+Ammo.AO_9mm_Reloads:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Common
+  # Common: x0.25 on the Uncommon's price, so x0.5 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 0.25
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 0.25
+  displayName: LocKey#AO-Ammo-9mm-Reloads
+  localizedDescription: LocKey#AO-Ammo-Reloads-Desc
+  iconPath: AO_9mm_Reloads
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_7, AO_Family_Power]
+
+Ammo.AO_9mm_Reloads.aoFaction: "Scavengers"
+
+UIIcon.AO_9mm_Reloads:
+  $type: UIIcon
+  atlasPartName: ao_9mm_reloads
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_Reloads:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-Reloads
+  localizedDescription: LocKey#AO-Ammo-Reloads-Desc
+  iconPath: AO_9mm_Reloads
+  quality: Quality.Common
+
+# 9mm Dirties [Scav] (Rare)
+Ammo.AO_9mm_Dirties:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-9mm-Dirties
+  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
+  iconPath: AO_9mm_Dirties
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_9mm_Dirties.aoFaction: "Scavengers"
+Ammo.AO_9mm_Dirties.aoEffects: ["BaseStatusEffect.Bleeding", "BaseStatusEffect.Poisoned"]
+Ammo.AO_9mm_Dirties.aoEffectChances: [0.25, 0.25]
+
+UIIcon.AO_9mm_Dirties:
+  $type: UIIcon
+  atlasPartName: ao_9mm_dirties
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_Dirties:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-Dirties
+  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
+  iconPath: AO_9mm_Dirties
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 0.9
+
+# 9mm Shinobi [Ara] (Rare)
+Ammo.AO_9mm_Shinobi:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-9mm-Shinobi
+  localizedDescription: LocKey#AO-Ammo-Shinobi-Desc
+  iconPath: AO_9mm_Shinobi
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_9mm_Shinobi.aoFaction: "Arasaka"
+
+UIIcon.AO_9mm_Shinobi:
+  $type: UIIcon
+  atlasPartName: ao_9mm_shinobi
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_Shinobi:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-Shinobi
+  localizedDescription: LocKey#AO-Ammo-Shinobi-Desc
+  iconPath: AO_9mm_Shinobi
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanSilentKill
+      modifierType: Additive
+      value: 1.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.WeaponNoise
+      modifierType: Multiplier
+      value: 0.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.HeadshotDamageMultiplier
+      modifierType: Additive
+      value: 0.5
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.EffectiveRange
+      modifierType: Multiplier
+      value: 0.9
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1036,5 +1173,17 @@ Items.AO_Recipe_AO_9mm_Shredders:
 Ammo.AO_9mm_CookOff.aoScrapRounds: 90
 Ammo.AO_9mm_CookOff.aoScrapGive: 1
 Ammo.AO_9mm_CookOff.aoRecipe: ""
+
+Ammo.AO_9mm_Reloads.aoScrapRounds: 90
+Ammo.AO_9mm_Reloads.aoScrapGive: 1
+Ammo.AO_9mm_Reloads.aoRecipe: ""
+
+Ammo.AO_9mm_Dirties.aoScrapRounds: 90
+Ammo.AO_9mm_Dirties.aoScrapGive: 1
+Ammo.AO_9mm_Dirties.aoRecipe: ""
+
+Ammo.AO_9mm_Shinobi.aoScrapRounds: 90
+Ammo.AO_9mm_Shinobi.aoScrapGive: 1
+Ammo.AO_9mm_Shinobi.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

@@ -9,9 +9,9 @@ AmmoOverhaul.Power_12mm.feedElement: "Items.AO_AmmoFeed_Power_12mm_Element"
 AmmoOverhaul.Power_12mm.defaultAmmo: "Ammo.AO_12mm_Ball"
 AmmoOverhaul.Power_12mm.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_12mm.lootWeight: 0.1
-AmmoOverhaul.Power_12mm.selectors: ["Items.AO_Feed_12mm_Ball", "Items.AO_Feed_12mm_Mushrooms", "Items.AO_Feed_12mm_PlusP", "Items.AO_Feed_12mm_SteelCore", "Items.AO_Feed_12mm_Incendiary", "Items.AO_Feed_12mm_Rubber", "Items.AO_Feed_12mm_Hardcast", "Items.AO_Feed_12mm_Penetrator", "Items.AO_Feed_12mm_Match", "Items.AO_Feed_12mm_Toxin", "Items.AO_Feed_12mm_Shredders", "Items.AO_Feed_12mm_CookOff"]
-AmmoOverhaul.Power_12mm.selectorAmmo: ["Ammo.AO_12mm_Ball", "Ammo.AO_12mm_HollowPoint", "Ammo.AO_12mm_PlusP", "Ammo.AO_12mm_SteelCore", "Ammo.AO_12mm_Incendiary", "Ammo.AO_12mm_Rubber", "Ammo.AO_12mm_Hardcast", "Ammo.AO_12mm_Penetrator", "Ammo.AO_12mm_Match", "Ammo.AO_12mm_Toxin", "Ammo.AO_12mm_Shredders", "Ammo.AO_12mm_CookOff"]
-AmmoOverhaul.Power_12mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4]
+AmmoOverhaul.Power_12mm.selectors: ["Items.AO_Feed_12mm_Ball", "Items.AO_Feed_12mm_Mushrooms", "Items.AO_Feed_12mm_PlusP", "Items.AO_Feed_12mm_SteelCore", "Items.AO_Feed_12mm_Incendiary", "Items.AO_Feed_12mm_Rubber", "Items.AO_Feed_12mm_Hardcast", "Items.AO_Feed_12mm_Penetrator", "Items.AO_Feed_12mm_Match", "Items.AO_Feed_12mm_Toxin", "Items.AO_Feed_12mm_Shredders", "Items.AO_Feed_12mm_CookOff", "Items.AO_Feed_12mm_MeatGrinders", "Items.AO_Feed_12mm_Reloads", "Items.AO_Feed_12mm_Dirties", "Items.AO_Feed_12mm_PartsPullers"]
+AmmoOverhaul.Power_12mm.selectorAmmo: ["Ammo.AO_12mm_Ball", "Ammo.AO_12mm_HollowPoint", "Ammo.AO_12mm_PlusP", "Ammo.AO_12mm_SteelCore", "Ammo.AO_12mm_Incendiary", "Ammo.AO_12mm_Rubber", "Ammo.AO_12mm_Hardcast", "Ammo.AO_12mm_Penetrator", "Ammo.AO_12mm_Match", "Ammo.AO_12mm_Toxin", "Ammo.AO_12mm_Shredders", "Ammo.AO_12mm_CookOff", "Ammo.AO_12mm_MeatGrinders", "Ammo.AO_12mm_Reloads", "Ammo.AO_12mm_Dirties", "Ammo.AO_12mm_PartsPullers"]
+AmmoOverhaul.Power_12mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 6, 7, 5, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_12mm.craftBatch: 60
 
@@ -662,6 +662,167 @@ Items.AO_Feed_12mm_CookOff:
   iconPath: AO_12mm_CookOff
   quality: Quality.Legendary
 
+# 12mm Meat-grinders [Mael] (Epic)
+Ammo.AO_12mm_MeatGrinders:
+  $base: Ammo.AO_12mm_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-12mm-MeatGrinders
+  localizedDescription: LocKey#AO-Ammo-MeatGrinders-Desc
+  iconPath: AO_12mm_MeatGrinders
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_12mm_MeatGrinders.aoFaction: "Maelstrom"
+Ammo.AO_12mm_MeatGrinders.aoEffects: ["BaseStatusEffect.Bleeding"]
+Ammo.AO_12mm_MeatGrinders.aoEffectChances: [0.3]
+
+UIIcon.AO_12mm_MeatGrinders:
+  $type: UIIcon
+  atlasPartName: ao_12mm_meatgrinders
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12mm_MeatGrinders:
+  $base: Items.AO_Feed_12mm_Ball
+  displayName: LocKey#AO-Ammo-12mm-MeatGrinders
+  localizedDescription: LocKey#AO-Ammo-MeatGrinders-Desc
+  iconPath: AO_12mm_MeatGrinders
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.HitDismembermentFactor
+      modifierType: Multiplier
+      value: 3.0
+
+# 12mm Reloads [Scav] (Common)
+Ammo.AO_12mm_Reloads:
+  $base: Ammo.AO_12mm_HollowPoint
+  quality: Quality.Common
+  # Common: x0.25 on the Uncommon's price, so x0.5 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 0.25
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 0.25
+  displayName: LocKey#AO-Ammo-12mm-Reloads
+  localizedDescription: LocKey#AO-Ammo-Reloads-Desc
+  iconPath: AO_12mm_Reloads
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_7, AO_Family_Power]
+
+Ammo.AO_12mm_Reloads.aoFaction: "Scavengers"
+
+UIIcon.AO_12mm_Reloads:
+  $type: UIIcon
+  atlasPartName: ao_12mm_reloads
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12mm_Reloads:
+  $base: Items.AO_Feed_12mm_Ball
+  displayName: LocKey#AO-Ammo-12mm-Reloads
+  localizedDescription: LocKey#AO-Ammo-Reloads-Desc
+  iconPath: AO_12mm_Reloads
+  quality: Quality.Common
+
+# 12mm Dirties [Scav] (Rare)
+Ammo.AO_12mm_Dirties:
+  $base: Ammo.AO_12mm_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-12mm-Dirties
+  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
+  iconPath: AO_12mm_Dirties
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_12mm_Dirties.aoFaction: "Scavengers"
+Ammo.AO_12mm_Dirties.aoEffects: ["BaseStatusEffect.Bleeding", "BaseStatusEffect.Poisoned"]
+Ammo.AO_12mm_Dirties.aoEffectChances: [0.25, 0.25]
+
+UIIcon.AO_12mm_Dirties:
+  $type: UIIcon
+  atlasPartName: ao_12mm_dirties
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12mm_Dirties:
+  $base: Items.AO_Feed_12mm_Ball
+  displayName: LocKey#AO-Ammo-12mm-Dirties
+  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
+  iconPath: AO_12mm_Dirties
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 0.9
+
+# 12mm Parts-pullers [Scav] (Rare)
+Ammo.AO_12mm_PartsPullers:
+  $base: Ammo.AO_12mm_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-12mm-PartsPullers
+  localizedDescription: LocKey#AO-Ammo-PartsPullers-Desc
+  iconPath: AO_12mm_PartsPullers
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_12mm_PartsPullers.aoFaction: "Scavengers"
+Ammo.AO_12mm_PartsPullers.aoPartsPuller: true
+
+UIIcon.AO_12mm_PartsPullers:
+  $type: UIIcon
+  atlasPartName: ao_12mm_partspullers
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12mm_PartsPullers:
+  $base: Items.AO_Feed_12mm_Ball
+  displayName: LocKey#AO-Ammo-12mm-PartsPullers
+  localizedDescription: LocKey#AO-Ammo-PartsPullers-Desc
+  iconPath: AO_12mm_PartsPullers
+  quality: Quality.Rare
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1006,5 +1167,21 @@ Items.AO_Recipe_AO_12mm_Shredders:
 Ammo.AO_12mm_CookOff.aoScrapRounds: 60
 Ammo.AO_12mm_CookOff.aoScrapGive: 1
 Ammo.AO_12mm_CookOff.aoRecipe: ""
+
+Ammo.AO_12mm_MeatGrinders.aoScrapRounds: 60
+Ammo.AO_12mm_MeatGrinders.aoScrapGive: 1
+Ammo.AO_12mm_MeatGrinders.aoRecipe: ""
+
+Ammo.AO_12mm_Reloads.aoScrapRounds: 60
+Ammo.AO_12mm_Reloads.aoScrapGive: 1
+Ammo.AO_12mm_Reloads.aoRecipe: ""
+
+Ammo.AO_12mm_Dirties.aoScrapRounds: 60
+Ammo.AO_12mm_Dirties.aoScrapGive: 1
+Ammo.AO_12mm_Dirties.aoRecipe: ""
+
+Ammo.AO_12mm_PartsPullers.aoScrapRounds: 60
+Ammo.AO_12mm_PartsPullers.aoScrapGive: 1
+Ammo.AO_12mm_PartsPullers.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

@@ -13,6 +13,7 @@ Ammo.AO_THeavy_Sabot
 Ammo.AO_TLight_Sabot
 AmmoOverhaul.LockoutJam
 AmmoOverhaul.PingTag
+BaseStats.AimInTime
 BaseStats.BaseKnockdownImpulse
 BaseStats.BulletMagnetismDefaultAngle
 BaseStats.CanSilentKill
@@ -22,6 +23,7 @@ BaseStats.DamageFalloffDisabled
 BaseStats.DamagePerHit
 BaseStats.EffectiveRange
 BaseStats.FullAutoOnFullCharge
+BaseStats.HeadshotDamageMultiplier
 BaseStats.HitDismembermentFactor
 BaseStats.HitReactionFactor
 BaseStats.KnockdownImpulse

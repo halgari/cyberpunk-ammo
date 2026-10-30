@@ -120,6 +120,90 @@
     30
    ]
   ],
+  "Reloads": [
+   [
+    110,
+    100,
+    90
+   ],
+   [
+    150,
+    112,
+    70
+   ]
+  ],
+  "Dirties": [
+   [
+    110,
+    100,
+    90
+   ],
+   [
+    60,
+    90,
+    40
+   ]
+  ],
+  "Shinobi": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    120,
+    120,
+    125
+   ]
+  ],
+  "Redliners": [
+   [
+    25,
+    25,
+    28
+   ],
+   [
+    190,
+    30,
+    30
+   ]
+  ],
+  "MeatGrinders": [
+   [
+    96,
+    22,
+    18
+   ],
+   [
+    25,
+    25,
+    28
+   ]
+  ],
+  "PartsPullers": [
+   [
+    110,
+    100,
+    90
+   ],
+   [
+    230,
+    200,
+    40
+   ]
+  ],
+  "Kata": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    200,
+    30,
+    30
+   ]
+  ],
   "Hardcast": [
    [
     110,
@@ -420,6 +504,18 @@
     60
    ]
   ],
+  "ChromeCookers": [
+   [
+    30,
+    30,
+    32
+   ],
+   [
+    200,
+    40,
+    30
+   ]
+  ],
   "EMPPayload": [
    [
     70,
@@ -515,6 +611,18 @@
     200,
     120
    ]
+  ],
+  "Kansatsu": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    20,
+    140,
+    150
+   ]
   ]
  },
  "rounds": {
@@ -528,7 +636,8 @@
     "9MM",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-incendiary": {
    "shape": "P9",
@@ -540,7 +649,8 @@
     "9MM",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-subsonic": {
    "shape": "P9",
@@ -553,7 +663,8 @@
     "9MM",
     "SUBSONIC"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-bouncers": {
    "shape": "P9",
@@ -565,7 +676,8 @@
     "9MM",
     "BOUNCERS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-rubber": {
    "shape": "P9",
@@ -578,7 +690,8 @@
     "9MM",
     "RUBBER"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-penetrator": {
    "shape": "P9",
@@ -593,7 +706,8 @@
     "9MM",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "9mm-match": {
    "shape": "P9",
@@ -608,7 +722,8 @@
     "9MM",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "9mm-toxin": {
    "shape": "P9",
@@ -620,7 +735,8 @@
     "9MM",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "9mm-shredders": {
    "shape": "P9",
@@ -632,7 +748,8 @@
     "9MM",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "9mm-cookoff": {
    "shape": "P9",
@@ -646,7 +763,49 @@
     "9MM",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "9mm-reloads": {
+   "shape": "P9",
+   "over": {
+    "jacket": "lead"
+   },
+   "look": "Reloads",
+   "label": [
+    "9MM",
+    "RELOADS"
+   ],
+   "tier": 7,
+   "faction": "Scavengers"
+  },
+  "9mm-dirties": {
+   "shape": "P9",
+   "over": {
+    "jacket": "lead",
+    "nose": "flat"
+   },
+   "look": "Dirties",
+   "label": [
+    "9MM",
+    "DIRTIES"
+   ],
+   "tier": 5,
+   "faction": "Scavengers"
+  },
+  "9mm-shinobi": {
+   "shape": "P9",
+   "over": {
+    "case_mat": "black",
+    "tip": "black"
+   },
+   "look": "Shinobi",
+   "label": [
+    "9MM",
+    "SHINOBI"
+   ],
+   "tier": 5,
+   "faction": "Arasaka"
   },
   "45-steelcore": {
    "shape": "P45",
@@ -658,7 +817,8 @@
     ".45",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-incendiary": {
    "shape": "P45",
@@ -670,7 +830,8 @@
     ".45",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-subsonic": {
    "shape": "P45",
@@ -683,7 +844,8 @@
     ".45",
     "SUBSONIC"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-bouncers": {
    "shape": "P45",
@@ -695,7 +857,8 @@
     ".45",
     "BOUNCERS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-rubber": {
    "shape": "P45",
@@ -708,7 +871,8 @@
     ".45",
     "RUBBER"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-penetrator": {
    "shape": "P45",
@@ -723,7 +887,8 @@
     ".45",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "45-match": {
    "shape": "P45",
@@ -738,7 +903,8 @@
     ".45",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "45-toxin": {
    "shape": "P45",
@@ -750,7 +916,8 @@
     ".45",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "45-shredders": {
    "shape": "P45",
@@ -762,7 +929,8 @@
     ".45",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "45-cookoff": {
    "shape": "P45",
@@ -776,7 +944,110 @@
     ".45",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "45-redliners": {
+   "shape": "P45",
+   "over": {
+    "case_mat": "black",
+    "tip": "red"
+   },
+   "look": "Redliners",
+   "label": [
+    ".45",
+    "REDLINERS"
+   ],
+   "tier": 5,
+   "faction": "Maelstrom"
+  },
+  "45-meatgrinders": {
+   "shape": "P45",
+   "over": {
+    "scored": true,
+    "color": "darkred",
+    "band": "black"
+   },
+   "look": "MeatGrinders",
+   "label": [
+    ".45",
+    "MEAT-GRINDERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
+  },
+  "45-reloads": {
+   "shape": "P45",
+   "over": {
+    "jacket": "lead"
+   },
+   "look": "Reloads",
+   "label": [
+    ".45",
+    "RELOADS"
+   ],
+   "tier": 7,
+   "faction": "Scavengers"
+  },
+  "45-dirties": {
+   "shape": "P45",
+   "over": {
+    "jacket": "lead",
+    "nose": "flat"
+   },
+   "look": "Dirties",
+   "label": [
+    ".45",
+    "DIRTIES"
+   ],
+   "tier": 5,
+   "faction": "Scavengers"
+  },
+  "45-partspullers": {
+   "shape": "P45",
+   "over": {
+    "tip": "yellow"
+   },
+   "look": "PartsPullers",
+   "label": [
+    ".45",
+    "PARTS-PULLERS"
+   ],
+   "tier": 5,
+   "faction": "Scavengers"
+  },
+  "45-kata": {
+   "shape": "P45",
+   "over": {
+    "case_mat": "nickel",
+    "nose": "spitzer",
+    "tip": "red",
+    "tipfrac": 0.2,
+    "rings": [
+     0.5
+    ]
+   },
+   "look": "Kata",
+   "label": [
+    ".45",
+    "KATA"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "45-shinobi": {
+   "shape": "P45",
+   "over": {
+    "case_mat": "black",
+    "tip": "black"
+   },
+   "look": "Shinobi",
+   "label": [
+    ".45",
+    "SHINOBI"
+   ],
+   "tier": 5,
+   "faction": "Arasaka"
   },
   "12mm-steelcore": {
    "shape": "P12",
@@ -788,7 +1059,8 @@
     "12MM",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12mm-incendiary": {
    "shape": "P12",
@@ -800,7 +1072,8 @@
     "12MM",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12mm-rubber": {
    "shape": "P12",
@@ -813,7 +1086,8 @@
     "12MM",
     "RUBBER"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12mm-hardcast": {
    "shape": "P12",
@@ -826,7 +1100,8 @@
     "12MM",
     "HARDCAST"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12mm-penetrator": {
    "shape": "P12",
@@ -841,7 +1116,8 @@
     "12MM",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12mm-match": {
    "shape": "P12",
@@ -856,7 +1132,8 @@
     "12MM",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12mm-toxin": {
    "shape": "P12",
@@ -868,7 +1145,8 @@
     "12MM",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12mm-shredders": {
    "shape": "P12",
@@ -880,7 +1158,8 @@
     "12MM",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12mm-cookoff": {
    "shape": "P12",
@@ -894,7 +1173,63 @@
     "12MM",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "12mm-meatgrinders": {
+   "shape": "P12",
+   "over": {
+    "scored": true,
+    "color": "darkred",
+    "band": "black"
+   },
+   "look": "MeatGrinders",
+   "label": [
+    "12MM",
+    "MEAT-GRINDERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
+  },
+  "12mm-reloads": {
+   "shape": "P12",
+   "over": {
+    "jacket": "lead"
+   },
+   "look": "Reloads",
+   "label": [
+    "12MM",
+    "RELOADS"
+   ],
+   "tier": 7,
+   "faction": "Scavengers"
+  },
+  "12mm-dirties": {
+   "shape": "P12",
+   "over": {
+    "jacket": "lead",
+    "nose": "flat"
+   },
+   "look": "Dirties",
+   "label": [
+    "12MM",
+    "DIRTIES"
+   ],
+   "tier": 5,
+   "faction": "Scavengers"
+  },
+  "12mm-partspullers": {
+   "shape": "P12",
+   "over": {
+    "tip": "yellow"
+   },
+   "look": "PartsPullers",
+   "label": [
+    "12MM",
+    "PARTS-PULLERS"
+   ],
+   "tier": 5,
+   "faction": "Scavengers"
   },
   "556-steelcore": {
    "shape": "R556",
@@ -906,7 +1241,8 @@
     "5.56",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "556-incendiary": {
    "shape": "R556",
@@ -918,7 +1254,8 @@
     "5.56",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "556-subsonic": {
    "shape": "R556",
@@ -931,7 +1268,8 @@
     "5.56",
     "SUBSONIC"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "556-bouncers": {
    "shape": "R556",
@@ -943,7 +1281,8 @@
     "5.56",
     "BOUNCERS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "556-penetrator": {
    "shape": "R556",
@@ -958,7 +1297,8 @@
     "5.56",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "556-match": {
    "shape": "R556",
@@ -973,7 +1313,8 @@
     "5.56",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "556-toxin": {
    "shape": "R556",
@@ -985,7 +1326,8 @@
     "5.56",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "556-shredders": {
    "shape": "R556",
@@ -997,7 +1339,8 @@
     "5.56",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "556-cookoff": {
    "shape": "R556",
@@ -1011,7 +1354,41 @@
     "5.56",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "556-redliners": {
+   "shape": "R556",
+   "over": {
+    "case_mat": "black",
+    "tip": "red"
+   },
+   "look": "Redliners",
+   "label": [
+    "5.56",
+    "REDLINERS"
+   ],
+   "tier": 5,
+   "faction": "Maelstrom"
+  },
+  "556-kata": {
+   "shape": "R556",
+   "over": {
+    "case_mat": "nickel",
+    "nose": "spitzer",
+    "tip": "red",
+    "tipfrac": 0.2,
+    "rings": [
+     0.5
+    ]
+   },
+   "look": "Kata",
+   "label": [
+    "5.56",
+    "KATA"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
   },
   "762-steelcore": {
    "shape": "R762",
@@ -1023,7 +1400,8 @@
     "7.62",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "762-incendiary": {
    "shape": "R762",
@@ -1035,7 +1413,8 @@
     "7.62",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "762-ballistictip": {
    "shape": "R762",
@@ -1048,7 +1427,8 @@
     "7.62",
     "BALLISTIC TIP"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "762-ping": {
    "shape": "R762",
@@ -1061,7 +1441,8 @@
     "7.62",
     "PING"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "762-penetrator": {
    "shape": "R762",
@@ -1076,7 +1457,8 @@
     "7.62",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "762-match": {
    "shape": "R762",
@@ -1091,7 +1473,8 @@
     "7.62",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "762-toxin": {
    "shape": "R762",
@@ -1103,7 +1486,8 @@
     "7.62",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "762-shredders": {
    "shape": "R762",
@@ -1115,7 +1499,8 @@
     "7.62",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "762-gatecrasher": {
    "shape": "R762",
@@ -1131,7 +1516,8 @@
     "7.62",
     "GATECRASHER"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
   },
   "762-cookoff": {
    "shape": "R762",
@@ -1145,7 +1531,41 @@
     "7.62",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "762-redliners": {
+   "shape": "R762",
+   "over": {
+    "case_mat": "black",
+    "tip": "red"
+   },
+   "look": "Redliners",
+   "label": [
+    "7.62",
+    "REDLINERS"
+   ],
+   "tier": 5,
+   "faction": "Maelstrom"
+  },
+  "762-kata": {
+   "shape": "R762",
+   "over": {
+    "case_mat": "nickel",
+    "nose": "spitzer",
+    "tip": "red",
+    "tipfrac": 0.2,
+    "rings": [
+     0.5
+    ]
+   },
+   "look": "Kata",
+   "label": [
+    "7.62",
+    "KATA"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
   },
   "127-steelcore": {
    "shape": "R127",
@@ -1157,7 +1577,8 @@
     "12.7",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "127-incendiary": {
    "shape": "R127",
@@ -1169,7 +1590,8 @@
     "12.7",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "127-ballistictip": {
    "shape": "R127",
@@ -1182,7 +1604,8 @@
     "12.7",
     "BALLISTIC TIP"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "127-ping": {
    "shape": "R127",
@@ -1195,7 +1618,8 @@
     "12.7",
     "PING"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "127-penetrator": {
    "shape": "R127",
@@ -1210,7 +1634,8 @@
     "12.7",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "127-match": {
    "shape": "R127",
@@ -1225,7 +1650,8 @@
     "12.7",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "127-toxin": {
    "shape": "R127",
@@ -1237,7 +1663,8 @@
     "12.7",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "127-hei": {
    "shape": "R127",
@@ -1251,7 +1678,8 @@
     "12.7",
     "HEI"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "127-gatecrasher": {
    "shape": "R127",
@@ -1267,7 +1695,8 @@
     "12.7",
     "GATECRASHER"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
   },
   "12ga-flechette": {
    "shape": "G12",
@@ -1280,7 +1709,8 @@
    "label": [
     "FLECHETTES"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12ga-beanbag": {
    "shape": "G12",
@@ -1293,7 +1723,8 @@
    "label": [
     "BEANBAGS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12ga-dragonlight": {
    "shape": "G12",
@@ -1306,7 +1737,8 @@
    "label": [
     "DRAGON'S BREATH LITE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12ga-dragon": {
    "shape": "G12",
@@ -1320,7 +1752,8 @@
    "label": [
     "DRAGON'S BREATH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12ga-frag12": {
    "shape": "G12",
@@ -1333,7 +1766,8 @@
    "label": [
     "FRAG-12"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12ga-flechettelong": {
    "shape": "G12",
@@ -1346,7 +1780,8 @@
    "label": [
     "LONG FLECHETTES"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12ga-pumpndump": {
    "shape": "G12",
@@ -1361,7 +1796,23 @@
    "label": [
     "PUMP N DUMP"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "12ga-meatgrinders": {
+   "shape": "G12",
+   "over": {
+    "scored": true,
+    "color": "darkred",
+    "band": "black",
+    "crimp": "star"
+   },
+   "look": "MeatGrinders",
+   "label": [
+    "MEAT-GRINDERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
   },
   "4ga-flechette": {
    "shape": "G4",
@@ -1375,7 +1826,8 @@
     "4GA",
     "FLECHETTES"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "4ga-riot": {
    "shape": "G4",
@@ -1390,7 +1842,8 @@
     "4GA",
     "RIOT"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "4ga-flare": {
    "shape": "G4",
@@ -1406,7 +1859,8 @@
     "4GA",
     "FLARES"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "4ga-dragon": {
    "shape": "G4",
@@ -1421,7 +1875,8 @@
     "4GA",
     "DRAGON'S BREATH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "4ga-thermite": {
    "shape": "G4",
@@ -1437,7 +1892,8 @@
     "4GA",
     "THERMITE SLUGS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "4ga-mulekick": {
    "shape": "G4",
@@ -1452,7 +1908,24 @@
     "4GA",
     "MULE KICK"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "4ga-meatgrinders": {
+   "shape": "G4",
+   "over": {
+    "scored": true,
+    "color": "darkred",
+    "band": "black",
+    "crimp": "star"
+   },
+   "look": "MeatGrinders",
+   "label": [
+    "4GA",
+    "MEAT-GRINDERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
   },
   "5mm-ferro": {
    "shape": "T5",
@@ -1469,7 +1942,8 @@
     "5MM",
     "FERRO"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "5mm-splitslug": {
    "shape": "T5",
@@ -1485,7 +1959,8 @@
     "5MM",
     "SPLIT SLUGS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "5mm-feedback": {
    "shape": "T5",
@@ -1497,7 +1972,8 @@
     "5MM",
     "FEEDBACK"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "5mm-dupen": {
    "shape": "T5",
@@ -1513,7 +1989,8 @@
     "5MM",
     "DU PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "5mm-toxicscatter": {
    "shape": "T5",
@@ -1526,7 +2003,8 @@
     "5MM",
     "TOXIC SCATTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "5mm-superconductor": {
    "shape": "T5",
@@ -1538,7 +2016,8 @@
     "5MM",
     "SUPERCONDUCTOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "5mm-empcap": {
    "shape": "T5",
@@ -1550,7 +2029,8 @@
     "5MM",
     "EMP CAPACITOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "5mm-kebab": {
    "shape": "T5",
@@ -1568,7 +2048,40 @@
     "5MM",
     "KEBAB"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "5mm-chromecookers": {
+   "shape": "T5",
+   "over": {
+    "coil": "blue"
+   },
+   "look": "ChromeCookers",
+   "label": [
+    "5MM",
+    "CHROME-COOKERS"
+   ],
+   "tier": 5,
+   "faction": "Maelstrom"
+  },
+  "5mm-kata": {
+   "shape": "T5",
+   "over": {
+    "case_mat": "nickel",
+    "nose": "spitzer",
+    "tip": "red",
+    "tipfrac": 0.2,
+    "rings": [
+     0.5
+    ]
+   },
+   "look": "Kata",
+   "label": [
+    "5MM",
+    "KATA"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
   },
   "heavy-ferro": {
    "shape": "TH",
@@ -1585,7 +2098,8 @@
     "HEAVY",
     "FERRO"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "heavy-splitslug": {
    "shape": "TH",
@@ -1601,7 +2115,8 @@
     "HEAVY",
     "SPLIT SLUGS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "heavy-feedback": {
    "shape": "TH",
@@ -1613,7 +2128,8 @@
     "HEAVY",
     "FEEDBACK"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "heavy-dupen": {
    "shape": "TH",
@@ -1629,7 +2145,8 @@
     "HEAVY",
     "DU PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "heavy-toxicscatter": {
    "shape": "TH",
@@ -1642,7 +2159,8 @@
     "HEAVY",
     "TOXIC SCATTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "heavy-superconductor": {
    "shape": "TH",
@@ -1654,7 +2172,8 @@
     "HEAVY",
     "SUPERCONDUCTOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "heavy-empcap": {
    "shape": "TH",
@@ -1666,7 +2185,8 @@
     "HEAVY",
     "EMP CAPACITOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "heavy-kebab": {
    "shape": "TH",
@@ -1684,7 +2204,21 @@
     "HEAVY",
     "KEBAB"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "heavy-chromecookers": {
+   "shape": "TH",
+   "over": {
+    "coil": "blue"
+   },
+   "look": "ChromeCookers",
+   "label": [
+    "HEAVY",
+    "CHROME-COOKERS"
+   ],
+   "tier": 5,
+   "faction": "Maelstrom"
   },
   "10mm-emppayload": {
    "shape": "S10",
@@ -1698,7 +2232,8 @@
     "10MM",
     "EMP PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "10mm-firepayload": {
    "shape": "S10",
@@ -1712,7 +2247,8 @@
     "10MM",
     "INCENDIARY PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "10mm-chempayload": {
    "shape": "S10",
@@ -1726,7 +2262,8 @@
     "10MM",
     "CHEM PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "10mm-flashpayload": {
    "shape": "S10",
@@ -1740,7 +2277,8 @@
     "10MM",
     "FLASH PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "10mm-hunter": {
    "shape": "S10",
@@ -1754,7 +2292,8 @@
     "10MM",
     "HUNTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "10mm-hackcarrier": {
    "shape": "S10",
@@ -1769,7 +2308,8 @@
     "10MM",
     "HACK CARRIER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "10mm-shapedcharge": {
    "shape": "S10",
@@ -1784,7 +2324,8 @@
     "10MM",
     "SHAPED CHARGE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "10mm-lockout": {
    "shape": "S10",
@@ -1799,7 +2340,24 @@
     "10MM",
     "LOCKOUT"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "10mm-kansatsu": {
+   "shape": "S10",
+   "over": {
+    "sensor": "green",
+    "idband": "red",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Kansatsu",
+   "label": [
+    "10MM",
+    "KANSATSU"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
   },
   "20mm-emppayload": {
    "shape": "S20",
@@ -1813,7 +2371,8 @@
     "20MM",
     "EMP PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "20mm-firepayload": {
    "shape": "S20",
@@ -1827,7 +2386,8 @@
     "20MM",
     "INCENDIARY PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "20mm-chempayload": {
    "shape": "S20",
@@ -1841,7 +2401,8 @@
     "20MM",
     "CHEM PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "20mm-flashpayload": {
    "shape": "S20",
@@ -1855,7 +2416,8 @@
     "20MM",
     "FLASH PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "20mm-hunter": {
    "shape": "S20",
@@ -1869,7 +2431,8 @@
     "20MM",
     "HUNTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "20mm-hackcarrier": {
    "shape": "S20",
@@ -1884,7 +2447,8 @@
     "20MM",
     "HACK CARRIER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "20mm-shapedcharge": {
    "shape": "S20",
@@ -1899,7 +2463,8 @@
     "20MM",
     "SHAPED CHARGE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "20mm-lockout": {
    "shape": "S20",
@@ -1914,7 +2479,24 @@
     "20MM",
     "LOCKOUT"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "20mm-kansatsu": {
+   "shape": "S20",
+   "over": {
+    "sensor": "green",
+    "idband": "red",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Kansatsu",
+   "label": [
+    "20MM",
+    "KANSATSU"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
   },
   "25mm-emppayload": {
    "shape": "S25",
@@ -1928,7 +2510,8 @@
     "25MM",
     "EMP PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "25mm-firepayload": {
    "shape": "S25",
@@ -1942,7 +2525,8 @@
     "25MM",
     "INCENDIARY PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "25mm-chempayload": {
    "shape": "S25",
@@ -1956,7 +2540,8 @@
     "25MM",
     "CHEM PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "25mm-flashpayload": {
    "shape": "S25",
@@ -1970,7 +2555,8 @@
     "25MM",
     "FLASH PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "25mm-hunter": {
    "shape": "S25",
@@ -1984,7 +2570,8 @@
     "25MM",
     "HUNTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "25mm-hackcarrier": {
    "shape": "S25",
@@ -1999,7 +2586,8 @@
     "25MM",
     "HACK CARRIER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "25mm-shapedcharge": {
    "shape": "S25",
@@ -2014,7 +2602,8 @@
     "25MM",
     "SHAPED CHARGE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "25mm-lockout": {
    "shape": "S25",
@@ -2029,7 +2618,24 @@
     "25MM",
     "LOCKOUT"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "25mm-kansatsu": {
+   "shape": "S25",
+   "over": {
+    "sensor": "green",
+    "idband": "red",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Kansatsu",
+   "label": [
+    "25MM",
+    "KANSATSU"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
   }
  }
 }

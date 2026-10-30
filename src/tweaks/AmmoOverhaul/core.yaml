@@ -51,6 +51,12 @@ AmmoOverhaul.roll.Power.dudChance: -1.0
 AmmoOverhaul.roll.Power.dudMult: -1.0
 AmmoOverhaul.roll.Power.hotChance: -1.0
 AmmoOverhaul.roll.Power.hotMult: -1.0
+AmmoOverhaul.roll.Scavengers.min: 0.70
+AmmoOverhaul.roll.Scavengers.max: 1.15
+AmmoOverhaul.roll.Scavengers.dudChance: 0.08
+AmmoOverhaul.roll.Scavengers.dudMult: 0.25
+AmmoOverhaul.roll.Scavengers.hotChance: 0.05
+AmmoOverhaul.roll.Scavengers.hotMult: 1.5
 AmmoOverhaul.roll.Tech.min: -1.0
 AmmoOverhaul.roll.Tech.max: -1.0
 AmmoOverhaul.roll.Tech.dudChance: -1.0
@@ -113,6 +119,18 @@ AmmoOverhaul.LockoutJam:
         statType: BaseStats.MaxDuration
         modifierType: Additive
         value: 4
+
+# Redliners' jam of the shooter's own gun: the same malfunction, 3 s.
+AmmoOverhaul.RedlinerJam:
+  $base: BaseStatusEffect.WeaponMalfunction
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 3
 
 # Cook-off's blast (CookOff.reds), at a killed NPC and on V with V's grenade: physical damage of
 # 35% of each target's max health, V and NPCs alike. Attacks.Explosion alone does 1 damage when set
@@ -177,6 +195,33 @@ AmmoOverhaul.npcLegendaryChance.Officer: 0.0
 AmmoOverhaul.npcLegendaryChance.Elite: 0.03
 AmmoOverhaul.npcLegendaryChance.Boss: 0.10
 AmmoOverhaul.npcLegendaryChance.MaxTac: 0.10
+# Faction rounds (FactionRounds.reds): the faction an NPC's affiliation record belongs to, by the
+# record's EnumName; anything else gets none.
+AmmoOverhaul.factionOf.Maelstrom: "Maelstrom"
+AmmoOverhaul.factionOf.MaelstromAndroid: "Maelstrom"
+AmmoOverhaul.factionOf.Scavengers: "Scavengers"
+AmmoOverhaul.factionOf.ScavengersAndroid: "Scavengers"
+AmmoOverhaul.factionOf.Arasaka: "Arasaka"
+# Chance per gun of a faction round, after the Legendary roll and before the general tiers (a miss
+# falls through): Epic, then Rare.
+AmmoOverhaul.npcFactionEpicChance.Trash: 0.0
+AmmoOverhaul.npcFactionEpicChance.Weak: 0.0
+AmmoOverhaul.npcFactionEpicChance.Normal: 0.0
+AmmoOverhaul.npcFactionEpicChance.Rare: 0.03
+AmmoOverhaul.npcFactionEpicChance.Officer: 0.05
+AmmoOverhaul.npcFactionEpicChance.Elite: 0.10
+AmmoOverhaul.npcFactionEpicChance.Boss: 0.15
+AmmoOverhaul.npcFactionEpicChance.MaxTac: 0.0
+AmmoOverhaul.npcFactionChance.Trash: 0.0
+AmmoOverhaul.npcFactionChance.Weak: 0.05
+AmmoOverhaul.npcFactionChance.Normal: 0.10
+AmmoOverhaul.npcFactionChance.Rare: 0.15
+AmmoOverhaul.npcFactionChance.Officer: 0.20
+AmmoOverhaul.npcFactionChance.Elite: 0.25
+AmmoOverhaul.npcFactionChance.Boss: 0.30
+AmmoOverhaul.npcFactionChance.MaxTac: 0.0
+# Crafting components a Parts-pullers kill leaves on the body.
+AmmoOverhaul.partsPullerGive: 2
 # Loot containers holding an Epic round: each ammo stack's chance to be its caliber's Legendary.
 AmmoOverhaul.lootLegendaryChance: 0.002
 # How hard a Mule Kick shot shoves V, in m/s (MuleKick.reds; the user's pick in play, 2026-10-30).

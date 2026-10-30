@@ -8,9 +8,9 @@ AmmoOverhaul.Power_45.feedElement: "Items.AO_AmmoFeed_Power_45_Element"
 AmmoOverhaul.Power_45.defaultAmmo: "Ammo.AO_45_Ball"
 AmmoOverhaul.Power_45.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_45.lootWeight: 0.2
-AmmoOverhaul.Power_45.selectors: ["Items.AO_Feed_45_Ball", "Items.AO_Feed_45_Mushrooms", "Items.AO_Feed_45_PlusP", "Items.AO_Feed_45_SteelCore", "Items.AO_Feed_45_Incendiary", "Items.AO_Feed_45_Subsonic", "Items.AO_Feed_45_Bouncers", "Items.AO_Feed_45_Rubber", "Items.AO_Feed_45_Penetrator", "Items.AO_Feed_45_Match", "Items.AO_Feed_45_Toxin", "Items.AO_Feed_45_Shredders", "Items.AO_Feed_45_CookOff"]
-AmmoOverhaul.Power_45.selectorAmmo: ["Ammo.AO_45_Ball", "Ammo.AO_45_HollowPoint", "Ammo.AO_45_PlusP", "Ammo.AO_45_SteelCore", "Ammo.AO_45_Incendiary", "Ammo.AO_45_Subsonic", "Ammo.AO_45_Bouncers", "Ammo.AO_45_Rubber", "Ammo.AO_45_Penetrator", "Ammo.AO_45_Match", "Ammo.AO_45_Toxin", "Ammo.AO_45_Shredders", "Ammo.AO_45_CookOff"]
-AmmoOverhaul.Power_45.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4]
+AmmoOverhaul.Power_45.selectors: ["Items.AO_Feed_45_Ball", "Items.AO_Feed_45_Mushrooms", "Items.AO_Feed_45_PlusP", "Items.AO_Feed_45_SteelCore", "Items.AO_Feed_45_Incendiary", "Items.AO_Feed_45_Subsonic", "Items.AO_Feed_45_Bouncers", "Items.AO_Feed_45_Rubber", "Items.AO_Feed_45_Penetrator", "Items.AO_Feed_45_Match", "Items.AO_Feed_45_Toxin", "Items.AO_Feed_45_Shredders", "Items.AO_Feed_45_CookOff", "Items.AO_Feed_45_Redliners", "Items.AO_Feed_45_MeatGrinders", "Items.AO_Feed_45_Reloads", "Items.AO_Feed_45_Dirties", "Items.AO_Feed_45_PartsPullers", "Items.AO_Feed_45_Kata", "Items.AO_Feed_45_Shinobi"]
+AmmoOverhaul.Power_45.selectorAmmo: ["Ammo.AO_45_Ball", "Ammo.AO_45_HollowPoint", "Ammo.AO_45_PlusP", "Ammo.AO_45_SteelCore", "Ammo.AO_45_Incendiary", "Ammo.AO_45_Subsonic", "Ammo.AO_45_Bouncers", "Ammo.AO_45_Rubber", "Ammo.AO_45_Penetrator", "Ammo.AO_45_Match", "Ammo.AO_45_Toxin", "Ammo.AO_45_Shredders", "Ammo.AO_45_CookOff", "Ammo.AO_45_Redliners", "Ammo.AO_45_MeatGrinders", "Ammo.AO_45_Reloads", "Ammo.AO_45_Dirties", "Ammo.AO_45_PartsPullers", "Ammo.AO_45_Kata", "Ammo.AO_45_Shinobi"]
+AmmoOverhaul.Power_45.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5, 6, 7, 5, 5, 6, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_45.craftBatch: 90
 
@@ -698,6 +698,393 @@ Items.AO_Feed_45_CookOff:
   iconPath: AO_45_CookOff
   quality: Quality.Legendary
 
+# .45 Redliners [Mael] (Rare)
+Ammo.AO_45_Redliners:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-45-Redliners
+  localizedDescription: LocKey#AO-Ammo-Redliners-Desc
+  iconPath: AO_45_Redliners
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_45_Redliners.aoFaction: "Maelstrom"
+Ammo.AO_45_Redliners.aoSelfJam: 0.02
+
+UIIcon.AO_45_Redliners:
+  $type: UIIcon
+  atlasPartName: ao_45_redliners
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_Redliners:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-Redliners
+  localizedDescription: LocKey#AO-Ammo-Redliners-Desc
+  iconPath: AO_45_Redliners
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CycleTime
+      modifierType: Multiplier
+      value: 0.8
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
+      modifierType: Multiplier
+      value: 1.4
+
+# .45 Meat-grinders [Mael] (Epic)
+Ammo.AO_45_MeatGrinders:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-45-MeatGrinders
+  localizedDescription: LocKey#AO-Ammo-MeatGrinders-Desc
+  iconPath: AO_45_MeatGrinders
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_45_MeatGrinders.aoFaction: "Maelstrom"
+Ammo.AO_45_MeatGrinders.aoEffects: ["BaseStatusEffect.Bleeding"]
+Ammo.AO_45_MeatGrinders.aoEffectChances: [0.3]
+
+UIIcon.AO_45_MeatGrinders:
+  $type: UIIcon
+  atlasPartName: ao_45_meatgrinders
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_MeatGrinders:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-MeatGrinders
+  localizedDescription: LocKey#AO-Ammo-MeatGrinders-Desc
+  iconPath: AO_45_MeatGrinders
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.HitDismembermentFactor
+      modifierType: Multiplier
+      value: 3.0
+
+# .45 Reloads [Scav] (Common)
+Ammo.AO_45_Reloads:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Common
+  # Common: x0.25 on the Uncommon's price, so x0.5 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 0.25
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 0.25
+  displayName: LocKey#AO-Ammo-45-Reloads
+  localizedDescription: LocKey#AO-Ammo-Reloads-Desc
+  iconPath: AO_45_Reloads
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_7, AO_Family_Power]
+
+Ammo.AO_45_Reloads.aoFaction: "Scavengers"
+
+UIIcon.AO_45_Reloads:
+  $type: UIIcon
+  atlasPartName: ao_45_reloads
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_Reloads:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-Reloads
+  localizedDescription: LocKey#AO-Ammo-Reloads-Desc
+  iconPath: AO_45_Reloads
+  quality: Quality.Common
+
+# .45 Dirties [Scav] (Rare)
+Ammo.AO_45_Dirties:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-45-Dirties
+  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
+  iconPath: AO_45_Dirties
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_45_Dirties.aoFaction: "Scavengers"
+Ammo.AO_45_Dirties.aoEffects: ["BaseStatusEffect.Bleeding", "BaseStatusEffect.Poisoned"]
+Ammo.AO_45_Dirties.aoEffectChances: [0.25, 0.25]
+
+UIIcon.AO_45_Dirties:
+  $type: UIIcon
+  atlasPartName: ao_45_dirties
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_Dirties:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-Dirties
+  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
+  iconPath: AO_45_Dirties
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 0.9
+
+# .45 Parts-pullers [Scav] (Rare)
+Ammo.AO_45_PartsPullers:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-45-PartsPullers
+  localizedDescription: LocKey#AO-Ammo-PartsPullers-Desc
+  iconPath: AO_45_PartsPullers
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_45_PartsPullers.aoFaction: "Scavengers"
+Ammo.AO_45_PartsPullers.aoPartsPuller: true
+
+UIIcon.AO_45_PartsPullers:
+  $type: UIIcon
+  atlasPartName: ao_45_partspullers
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_PartsPullers:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-PartsPullers
+  localizedDescription: LocKey#AO-Ammo-PartsPullers-Desc
+  iconPath: AO_45_PartsPullers
+  quality: Quality.Rare
+
+# .45 Kata [Ara] (Epic)
+Ammo.AO_45_Kata:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-45-Kata
+  localizedDescription: LocKey#AO-Ammo-Kata-Desc
+  iconPath: AO_45_Kata
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_45_Kata.aoFaction: "Arasaka"
+Ammo.AO_45_Kata.rollMin: 0.99
+Ammo.AO_45_Kata.rollMax: 1.01
+Ammo.AO_45_Kata.rollDudChance: 0.0
+Ammo.AO_45_Kata.rollHotChance: 0.0
+
+UIIcon.AO_45_Kata:
+  $type: UIIcon
+  atlasPartName: ao_45_kata
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_Kata:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-Kata
+  localizedDescription: LocKey#AO-Ammo-Kata-Desc
+  iconPath: AO_45_Kata
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.AimInTime
+      modifierType: Multiplier
+      value: 0.7
+
+# .45 Shinobi [Ara] (Rare)
+Ammo.AO_45_Shinobi:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-45-Shinobi
+  localizedDescription: LocKey#AO-Ammo-Shinobi-Desc
+  iconPath: AO_45_Shinobi
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_45_Shinobi.aoFaction: "Arasaka"
+
+UIIcon.AO_45_Shinobi:
+  $type: UIIcon
+  atlasPartName: ao_45_shinobi
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_Shinobi:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-Shinobi
+  localizedDescription: LocKey#AO-Ammo-Shinobi-Desc
+  iconPath: AO_45_Shinobi
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanSilentKill
+      modifierType: Additive
+      value: 1.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.WeaponNoise
+      modifierType: Multiplier
+      value: 0.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.HeadshotDamageMultiplier
+      modifierType: Additive
+      value: 0.5
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.EffectiveRange
+      modifierType: Multiplier
+      value: 0.9
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1070,5 +1457,33 @@ Items.AO_Recipe_AO_45_Shredders:
 Ammo.AO_45_CookOff.aoScrapRounds: 90
 Ammo.AO_45_CookOff.aoScrapGive: 1
 Ammo.AO_45_CookOff.aoRecipe: ""
+
+Ammo.AO_45_Redliners.aoScrapRounds: 90
+Ammo.AO_45_Redliners.aoScrapGive: 1
+Ammo.AO_45_Redliners.aoRecipe: ""
+
+Ammo.AO_45_MeatGrinders.aoScrapRounds: 90
+Ammo.AO_45_MeatGrinders.aoScrapGive: 1
+Ammo.AO_45_MeatGrinders.aoRecipe: ""
+
+Ammo.AO_45_Reloads.aoScrapRounds: 90
+Ammo.AO_45_Reloads.aoScrapGive: 1
+Ammo.AO_45_Reloads.aoRecipe: ""
+
+Ammo.AO_45_Dirties.aoScrapRounds: 90
+Ammo.AO_45_Dirties.aoScrapGive: 1
+Ammo.AO_45_Dirties.aoRecipe: ""
+
+Ammo.AO_45_PartsPullers.aoScrapRounds: 90
+Ammo.AO_45_PartsPullers.aoScrapGive: 1
+Ammo.AO_45_PartsPullers.aoRecipe: ""
+
+Ammo.AO_45_Kata.aoScrapRounds: 90
+Ammo.AO_45_Kata.aoScrapGive: 1
+Ammo.AO_45_Kata.aoRecipe: ""
+
+Ammo.AO_45_Shinobi.aoScrapRounds: 90
+Ammo.AO_45_Shinobi.aoScrapGive: 1
+Ammo.AO_45_Shinobi.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===
