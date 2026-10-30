@@ -147,5 +147,11 @@ applies it again on every hit.
   "OnHit")`, filtered to ranged attacks so blasts don't set off more blasts. The real build puts
   this in the mod's hit code.
 
-Still to run: probe 1 (a projectile or thrown grenade from a Power gun) and probe 3 (Tech pierce
-through bodies).
+**Probe 3, Tech pierce through bodies: passes.** A Nekomata (pierce on at 0.9 charge,
+`TechPierceDamageFactor` raised from -0.5 to 0 with an additive modifier) fired one charged shot
+through a Tyger Claw into a second one behind it: the near one went 100 -> 50.3%, the far one
+100 -> 69.0%. Open: the far target took about 60% of the near one's damage, from hit location or a
+body loss of its own. Kebab's live check measures it with matched hits; if the loss is real, the
+hit code tops up the damage on the second and later targets.
+
+Still to run: probe 1 (a projectile or thrown grenade from a Power gun).
