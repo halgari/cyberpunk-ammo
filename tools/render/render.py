@@ -111,8 +111,34 @@ ROUNDS = {
 _TIERS = json.loads((pathlib.Path(__file__).parent / "rounds_tiers.json").read_text())
 for _load, (_panel, _stripe) in _TIERS["looks"].items():
     LOOK.setdefault(_load, (tuple(_panel), tuple(_stripe) if _stripe else None))
+LEGENDARY_NAMES = {_n for _n, _r in _TIERS["rounds"].items() if _r.get("tier") == 4}
 for _name, _r in _TIERS["rounds"].items():
     ROUNDS[_name] = (dict(globals()[_r["shape"]], **_r["over"]), _r["look"], _r["label"])
+
+# Legendary looks, one per style (--legendary): a lacquered box with a metallic band and keylines,
+# the load's own colour as a thin line through the band; polished or glowing rounds (over the load's
+# art, by round shape); and a strong warm rim light (r, g, b, power factor).
+_SMART = ("dian", "cassette", "ashura")
+LEGENDARY = {
+    # Gold foil box, black band with a glowing orange line; black cases with a glowing mouth ring.
+    "foil": dict(panel=(236, 176, 60), band=(14, 13, 12), keyline=(14, 13, 12), text=(14, 13, 12),
+                 glow=(255, 120, 20), box=dict(metal=1.0, rough=0.26, glow=5.0), rim=[1.0, 0.55, 0.15, 2.4],
+                 round=dict(pistol=dict(case_mat="black", glow="orange"), rifle=dict(case_mat="black", glow="orange"),
+                            shell=dict(head_mat="gold", color="black"), rail=dict(coil="orange"),
+                            **{k: dict(nose_mat="gold") for k in _SMART})),
+    # Blaze-orange lacquer, black band edged in glowing gold; polished gold cases.
+    "blaze": dict(panel=(226, 98, 10), band=(16, 15, 14), keyline=(240, 190, 70), text=(16, 15, 14),
+                  glow=(255, 190, 60), box=dict(metal=0.0, rough=0.35, glow=4.0), rim=[1.0, 0.42, 0.08, 2.6],
+                  round=dict(pistol=dict(case_mat="gold"), rifle=dict(case_mat="gold"),
+                             shell=dict(head_mat="gold", color="orange"), rail=dict(coil="orange", core="gunmetal"),
+                             **{k: dict(idband="orange", nose_mat="gold") for k in _SMART})),
+    # Black chrome box with a neon orange band; chrome cases with glowing tips.
+    "chrome": dict(panel=(40, 42, 48), band=(230, 110, 14), keyline=(255, 150, 40), text=(240, 238, 232),
+                   glow=(255, 110, 15), box=dict(metal=1.0, rough=0.18, glow=7.0), rim=[1.0, 0.6, 0.25, 2.0],
+                   round=dict(pistol=dict(case_mat="chrome", tipglow=True), rifle=dict(case_mat="chrome", tipglow=True),
+                              shell=dict(head_mat="chrome", color="black"), rail=dict(core="chrome", coil="orange"),
+                              **{k: dict(nose_mat="chrome") for k in _SMART})),
+}
 
 
 def extent(s):
@@ -206,6 +232,61 @@ def panel_art(path, w, h, look, lines, seed):
     im.filter(ImageFilter.GaussianBlur(0.6)).save(path)
 
 
+def legendary_panel(path, w, h, style, look, lines, seed):
+    """Lacquered Legendary panel: dark or bright base, a metallic band edged with keylines and the
+    load's colour as a thin line through it, the name in the style's text colour, light wear only."""
+    st = LEGENDARY[style]
+    rng = random.Random(seed)
+    im = Image.new("RGB", (w, h), st["panel"])
+    dr = ImageDraw.Draw(im)
+    b0, b1 = int(h * 0.60), int(h * 0.82)
+    k = max(2, h // 60)
+    dr.rectangle([0, b0, w, b1], fill=st["band"])
+    for y in (b0 - 3 * k, b1 + 2 * k):
+        dr.rectangle([0, y, w, y + k], fill=st["keyline"])
+    kind = LOOK[look][1]
+    mid = (b0 + b1) // 2
+    if kind:
+        dr.rectangle([0, mid - k * 2, w, mid + k * 2], fill=kind)
+    # What glows (the "-glow" image beside the art, read by scene.py): the keylines, and for the
+    # black-band foil look a line through the band.
+    glow = Image.new("RGB", (w, h))
+    gd = ImageDraw.Draw(glow)
+    if style == "foil":
+        gd.rectangle([0, mid + k * 3, w, mid + k * 4], fill=st["glow"])
+        dr.rectangle([0, mid + k * 3, w, mid + k * 4], fill=st["glow"])
+    elif style == "chrome":
+        gd.rectangle([0, b0, w, b1], fill=tuple(c // 3 for c in st["glow"]))
+    for y in (b0 - 3 * k, b1 + 2 * k):
+        if style != "foil":
+            gd.rectangle([0, y, w, y + k], fill=st["glow"])
+    glow.save(str(path).replace(".png", "-glow.png"))
+    # Metallic sheen on the band: lighter toward its top edge.
+    sheen = Image.linear_gradient("L").resize((w, b1 - b0)).point(lambda v: 255 - v * 70 // 255)
+    im.paste(mul(im.crop((0, b0, w, b1)), sheen), (0, b0))
+    if lines:
+        big = lines[-1]
+        top = int(h * 0.12)
+        size = int(h * (0.36 if len(lines) == 2 else 0.44))
+        f = ImageFont.truetype(FONT, size)
+        while dr.textlength(big, font=f) > w * 0.86:
+            size -= 2
+            f = ImageFont.truetype(FONT, size)
+        if len(lines) == 2:
+            fs = ImageFont.truetype(FONT, int(size * 0.62))
+            dr.text((w * 0.07, top), lines[0], font=fs, fill=st["text"])
+            top += int(size * 0.62 * 1.02)
+        else:
+            top += int(h * 0.08)
+        dr.text((w * 0.07, top), big, font=f, fill=st["text"])
+    dirt = blotches(w, h, 40, rng)
+    im = mul(im, dirt.point(lambda v: 236 + v * 19 // 255))
+    grain = Image.effect_noise((w, h), 2)
+    im = ImageChops.add(im, Image.merge("RGB", [grain] * 3), 1.0, -128)
+    im = mul(im, edge_shade(w, h).point(lambda v: 190 + v * 65 // 255))
+    im.filter(ImageFilter.GaussianBlur(0.5)).save(path)
+
+
 def blender():
     exe = os.environ.get("BLENDER") or sorted(glob.glob(os.path.expanduser(
         "~/.cache/ammo-overhaul/blender/blender-*/blender")))[-1]
@@ -227,6 +308,7 @@ def main():
     ap.add_argument("--only", default="")
     ap.add_argument("--samples", type=int, default=256)
     ap.add_argument("--out", default=str(ART))
+    ap.add_argument("--legendary", default="blaze", choices=sorted(LEGENDARY), help="Legendary look")
     args = ap.parse_args()
     names = args.only.split(",") if args.only else list(ROUNDS)
     out = pathlib.Path(args.out)
@@ -234,16 +316,21 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         for i, name in enumerate(names):
             shape, look, lines = ROUNDS[name]
+            legendary = LEGENDARY[args.legendary] if name in LEGENDARY_NAMES else None
+            if legendary:
+                shape = dict(shape, **legendary["round"].get(shape["kind"], {}))
             if args.rounds:
                 run({"mode": "round", "out": str(out / f"{name}-ref.png"), "round": shape,
                      "samples": args.samples}, tmp)
             lay = layout(shape)
             px = 1024
             front, side = pathlib.Path(tmp) / f"{name}-front.png", pathlib.Path(tmp) / f"{name}-side.png"
-            panel_art(front, px, max(64, round(px * lay["H"] / lay["W"])), look, lines, seed=i + 1)
-            panel_art(side, px, max(64, round(px * lay["H"] / lay["D"])), look, [], seed=i + 101)
+            art = (lambda *a, **k: legendary_panel(*a[:3], args.legendary, *a[3:], **k)) if legendary else panel_art
+            art(front, px, max(64, round(px * lay["H"] / lay["W"])), look, lines, seed=i + 1)
+            art(side, px, max(64, round(px * lay["H"] / lay["D"])), look, [], seed=i + 101)
+            extra = dict(rim=legendary["rim"]) if legendary else {}
             run({"mode": "box", "out": str(out / f"{name}.png"), "round": shape, "samples": args.samples,
-                 "box": dict(lay, front=str(front), side=str(side), seed=i + 1)}, tmp)
+                 "box": dict(lay, front=str(front), side=str(side), seed=i + 1, lacquer=legendary and legendary["box"]), **extra}, tmp)
             print(name, flush=True)
 
 

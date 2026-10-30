@@ -515,7 +515,8 @@
    "label": [
     "9MM",
     "STEEL-CORE"
-   ]
+   ],
+   "tier": 2
   },
   "9mm-incendiary": {
    "shape": "P9",
@@ -526,7 +527,8 @@
    "label": [
     "9MM",
     "INCENDIARY"
-   ]
+   ],
+   "tier": 2
   },
   "9mm-subsonic": {
    "shape": "P9",
@@ -538,7 +540,8 @@
    "label": [
     "9MM",
     "SUBSONIC"
-   ]
+   ],
+   "tier": 2
   },
   "9mm-bouncers": {
    "shape": "P9",
@@ -549,7 +552,8 @@
    "label": [
     "9MM",
     "BOUNCERS"
-   ]
+   ],
+   "tier": 2
   },
   "9mm-rubber": {
    "shape": "P9",
@@ -561,7 +565,8 @@
    "label": [
     "9MM",
     "RUBBER"
-   ]
+   ],
+   "tier": 2
   },
   "9mm-penetrator": {
    "shape": "P9",
@@ -575,7 +580,8 @@
    "label": [
     "9MM",
     "PENETRATOR"
-   ]
+   ],
+   "tier": 3
   },
   "9mm-match": {
    "shape": "P9",
@@ -589,7 +595,8 @@
    "label": [
     "9MM",
     "MATCH"
-   ]
+   ],
+   "tier": 3
   },
   "9mm-toxin": {
    "shape": "P9",
@@ -600,7 +607,8 @@
    "label": [
     "9MM",
     "TOXIN CORE"
-   ]
+   ],
+   "tier": 3
   },
   "9mm-shredders": {
    "shape": "P9",
@@ -611,7 +619,8 @@
    "label": [
     "9MM",
     "SHREDDERS"
-   ]
+   ],
+   "tier": 3
   },
   "9mm-cookoff": {
    "shape": "P9",
@@ -624,7 +633,8 @@
    "label": [
     "9MM",
     "COOK-OFF"
-   ]
+   ],
+   "tier": 4
   },
   "45-steelcore": {
    "shape": "P45",
@@ -635,7 +645,8 @@
    "label": [
     ".45",
     "STEEL-CORE"
-   ]
+   ],
+   "tier": 2
   },
   "45-incendiary": {
    "shape": "P45",
@@ -646,7 +657,8 @@
    "label": [
     ".45",
     "INCENDIARY"
-   ]
+   ],
+   "tier": 2
   },
   "45-subsonic": {
    "shape": "P45",
@@ -658,7 +670,8 @@
    "label": [
     ".45",
     "SUBSONIC"
-   ]
+   ],
+   "tier": 2
   },
   "45-bouncers": {
    "shape": "P45",
@@ -669,7 +682,8 @@
    "label": [
     ".45",
     "BOUNCERS"
-   ]
+   ],
+   "tier": 2
   },
   "45-rubber": {
    "shape": "P45",
@@ -681,7 +695,8 @@
    "label": [
     ".45",
     "RUBBER"
-   ]
+   ],
+   "tier": 2
   },
   "45-penetrator": {
    "shape": "P45",
@@ -695,7 +710,8 @@
    "label": [
     ".45",
     "PENETRATOR"
-   ]
+   ],
+   "tier": 3
   },
   "45-match": {
    "shape": "P45",
@@ -709,7 +725,8 @@
    "label": [
     ".45",
     "MATCH"
-   ]
+   ],
+   "tier": 3
   },
   "45-toxin": {
    "shape": "P45",
@@ -720,7 +737,8 @@
    "label": [
     ".45",
     "TOXIN CORE"
-   ]
+   ],
+   "tier": 3
   },
   "45-shredders": {
    "shape": "P45",
@@ -731,7 +749,8 @@
    "label": [
     ".45",
     "SHREDDERS"
-   ]
+   ],
+   "tier": 3
   },
   "45-cookoff": {
    "shape": "P45",
@@ -744,7 +763,8 @@
    "label": [
     ".45",
     "COOK-OFF"
-   ]
+   ],
+   "tier": 4
   },
   "12mm-steelcore": {
    "shape": "P12",
@@ -755,7 +775,8 @@
    "label": [
     "12MM",
     "STEEL-CORE"
-   ]
+   ],
+   "tier": 2
   },
   "12mm-incendiary": {
    "shape": "P12",
@@ -766,7 +787,8 @@
    "label": [
     "12MM",
     "INCENDIARY"
-   ]
+   ],
+   "tier": 2
   },
   "12mm-rubber": {
    "shape": "P12",
@@ -778,7 +800,8 @@
    "label": [
     "12MM",
     "RUBBER"
-   ]
+   ],
+   "tier": 2
   },
   "12mm-hardcast": {
    "shape": "P12",
@@ -790,7 +813,8 @@
    "label": [
     "12MM",
     "HARDCAST"
-   ]
+   ],
+   "tier": 2
   },
   "12mm-penetrator": {
    "shape": "P12",
@@ -804,7 +828,8 @@
    "label": [
     "12MM",
     "PENETRATOR"
-   ]
+   ],
+   "tier": 3
   },
   "12mm-match": {
    "shape": "P12",
@@ -818,7 +843,8 @@
    "label": [
     "12MM",
     "MATCH"
-   ]
+   ],
+   "tier": 3
   },
   "12mm-toxin": {
    "shape": "P12",
@@ -829,7 +855,8 @@
    "label": [
     "12MM",
     "TOXIN CORE"
-   ]
+   ],
+   "tier": 3
   },
   "12mm-shredders": {
    "shape": "P12",
@@ -840,7 +867,8 @@
    "label": [
     "12MM",
     "SHREDDERS"
-   ]
+   ],
+   "tier": 3
   },
   "12mm-cookoff": {
    "shape": "P12",
@@ -853,7 +881,8 @@
    "label": [
     "12MM",
     "COOK-OFF"
-   ]
+   ],
+   "tier": 4
   },
   "556-steelcore": {
    "shape": "R556",
@@ -864,7 +893,8 @@
    "label": [
     "5.56",
     "STEEL-CORE"
-   ]
+   ],
+   "tier": 2
   },
   "556-incendiary": {
    "shape": "R556",
@@ -875,7 +905,8 @@
    "label": [
     "5.56",
     "INCENDIARY"
-   ]
+   ],
+   "tier": 2
   },
   "556-subsonic": {
    "shape": "R556",
@@ -887,7 +918,8 @@
    "label": [
     "5.56",
     "SUBSONIC"
-   ]
+   ],
+   "tier": 2
   },
   "556-bouncers": {
    "shape": "R556",
@@ -898,7 +930,8 @@
    "label": [
     "5.56",
     "BOUNCERS"
-   ]
+   ],
+   "tier": 2
   },
   "556-penetrator": {
    "shape": "R556",
@@ -912,7 +945,8 @@
    "label": [
     "5.56",
     "PENETRATOR"
-   ]
+   ],
+   "tier": 3
   },
   "556-match": {
    "shape": "R556",
@@ -926,7 +960,8 @@
    "label": [
     "5.56",
     "MATCH"
-   ]
+   ],
+   "tier": 3
   },
   "556-toxin": {
    "shape": "R556",
@@ -937,7 +972,8 @@
    "label": [
     "5.56",
     "TOXIN CORE"
-   ]
+   ],
+   "tier": 3
   },
   "556-shredders": {
    "shape": "R556",
@@ -948,7 +984,8 @@
    "label": [
     "5.56",
     "SHREDDERS"
-   ]
+   ],
+   "tier": 3
   },
   "556-cookoff": {
    "shape": "R556",
@@ -961,7 +998,8 @@
    "label": [
     "5.56",
     "COOK-OFF"
-   ]
+   ],
+   "tier": 4
   },
   "762-steelcore": {
    "shape": "R762",
@@ -972,7 +1010,8 @@
    "label": [
     "7.62",
     "STEEL-CORE"
-   ]
+   ],
+   "tier": 2
   },
   "762-incendiary": {
    "shape": "R762",
@@ -983,7 +1022,8 @@
    "label": [
     "7.62",
     "INCENDIARY"
-   ]
+   ],
+   "tier": 2
   },
   "762-ballistictip": {
    "shape": "R762",
@@ -995,7 +1035,8 @@
    "label": [
     "7.62",
     "BALLISTIC TIP"
-   ]
+   ],
+   "tier": 2
   },
   "762-ping": {
    "shape": "R762",
@@ -1007,7 +1048,8 @@
    "label": [
     "7.62",
     "PING"
-   ]
+   ],
+   "tier": 2
   },
   "762-penetrator": {
    "shape": "R762",
@@ -1021,7 +1063,8 @@
    "label": [
     "7.62",
     "PENETRATOR"
-   ]
+   ],
+   "tier": 3
   },
   "762-match": {
    "shape": "R762",
@@ -1035,7 +1078,8 @@
    "label": [
     "7.62",
     "MATCH"
-   ]
+   ],
+   "tier": 3
   },
   "762-toxin": {
    "shape": "R762",
@@ -1046,7 +1090,8 @@
    "label": [
     "7.62",
     "TOXIN CORE"
-   ]
+   ],
+   "tier": 3
   },
   "762-shredders": {
    "shape": "R762",
@@ -1057,7 +1102,8 @@
    "label": [
     "7.62",
     "SHREDDERS"
-   ]
+   ],
+   "tier": 3
   },
   "762-gatecrasher": {
    "shape": "R762",
@@ -1072,7 +1118,8 @@
    "label": [
     "7.62",
     "GATECRASHER"
-   ]
+   ],
+   "tier": 4
   },
   "762-cookoff": {
    "shape": "R762",
@@ -1085,7 +1132,8 @@
    "label": [
     "7.62",
     "COOK-OFF"
-   ]
+   ],
+   "tier": 4
   },
   "127-steelcore": {
    "shape": "R127",
@@ -1096,7 +1144,8 @@
    "label": [
     "12.7",
     "STEEL-CORE"
-   ]
+   ],
+   "tier": 2
   },
   "127-incendiary": {
    "shape": "R127",
@@ -1107,7 +1156,8 @@
    "label": [
     "12.7",
     "INCENDIARY"
-   ]
+   ],
+   "tier": 2
   },
   "127-ballistictip": {
    "shape": "R127",
@@ -1119,7 +1169,8 @@
    "label": [
     "12.7",
     "BALLISTIC TIP"
-   ]
+   ],
+   "tier": 2
   },
   "127-ping": {
    "shape": "R127",
@@ -1131,7 +1182,8 @@
    "label": [
     "12.7",
     "PING"
-   ]
+   ],
+   "tier": 2
   },
   "127-penetrator": {
    "shape": "R127",
@@ -1145,7 +1197,8 @@
    "label": [
     "12.7",
     "PENETRATOR"
-   ]
+   ],
+   "tier": 3
   },
   "127-match": {
    "shape": "R127",
@@ -1159,7 +1212,8 @@
    "label": [
     "12.7",
     "MATCH"
-   ]
+   ],
+   "tier": 3
   },
   "127-toxin": {
    "shape": "R127",
@@ -1170,7 +1224,8 @@
    "label": [
     "12.7",
     "TOXIN CORE"
-   ]
+   ],
+   "tier": 3
   },
   "127-hei": {
    "shape": "R127",
@@ -1183,7 +1238,8 @@
    "label": [
     "12.7",
     "HEI"
-   ]
+   ],
+   "tier": 3
   },
   "127-gatecrasher": {
    "shape": "R127",
@@ -1198,7 +1254,8 @@
    "label": [
     "12.7",
     "GATECRASHER"
-   ]
+   ],
+   "tier": 4
   },
   "12ga-flechette": {
    "shape": "G12",
@@ -1210,7 +1267,8 @@
    "look": "Flechette",
    "label": [
     "FLECHETTES"
-   ]
+   ],
+   "tier": 2
   },
   "12ga-beanbag": {
    "shape": "G12",
@@ -1222,7 +1280,8 @@
    "look": "Beanbag",
    "label": [
     "BEANBAGS"
-   ]
+   ],
+   "tier": 2
   },
   "12ga-dragonlight": {
    "shape": "G12",
@@ -1234,7 +1293,8 @@
    "look": "DragonLight",
    "label": [
     "DRAGON'S BREATH LITE"
-   ]
+   ],
+   "tier": 2
   },
   "12ga-dragon": {
    "shape": "G12",
@@ -1247,7 +1307,8 @@
    "look": "Dragon",
    "label": [
     "DRAGON'S BREATH"
-   ]
+   ],
+   "tier": 3
   },
   "12ga-frag12": {
    "shape": "G12",
@@ -1259,7 +1320,8 @@
    "look": "Frag12",
    "label": [
     "FRAG-12"
-   ]
+   ],
+   "tier": 3
   },
   "12ga-flechettelong": {
    "shape": "G12",
@@ -1271,7 +1333,8 @@
    "look": "FlechetteLong",
    "label": [
     "LONG FLECHETTES"
-   ]
+   ],
+   "tier": 3
   },
   "12ga-heartseeker": {
    "shape": "G12",
@@ -1285,7 +1348,8 @@
    "look": "Heartseeker",
    "label": [
     "HEARTSEEKER"
-   ]
+   ],
+   "tier": 4
   },
   "4ga-flechette": {
    "shape": "G4",
@@ -1298,7 +1362,8 @@
    "label": [
     "4GA",
     "FLECHETTES"
-   ]
+   ],
+   "tier": 2
   },
   "4ga-riot": {
    "shape": "G4",
@@ -1312,7 +1377,8 @@
    "label": [
     "4GA",
     "RIOT"
-   ]
+   ],
+   "tier": 2
   },
   "4ga-flare": {
    "shape": "G4",
@@ -1327,7 +1393,8 @@
    "label": [
     "4GA",
     "FLARES"
-   ]
+   ],
+   "tier": 2
   },
   "4ga-dragon": {
    "shape": "G4",
@@ -1341,7 +1408,8 @@
    "label": [
     "4GA",
     "DRAGON'S BREATH"
-   ]
+   ],
+   "tier": 3
   },
   "4ga-thermite": {
    "shape": "G4",
@@ -1356,7 +1424,8 @@
    "label": [
     "4GA",
     "THERMITE SLUGS"
-   ]
+   ],
+   "tier": 3
   },
   "5mm-ferro": {
    "shape": "T5",
@@ -1372,7 +1441,8 @@
    "label": [
     "5MM",
     "FERRO"
-   ]
+   ],
+   "tier": 2
   },
   "5mm-splitslug": {
    "shape": "T5",
@@ -1387,7 +1457,8 @@
    "label": [
     "5MM",
     "SPLIT SLUGS"
-   ]
+   ],
+   "tier": 2
   },
   "5mm-feedback": {
    "shape": "T5",
@@ -1398,7 +1469,8 @@
    "label": [
     "5MM",
     "FEEDBACK"
-   ]
+   ],
+   "tier": 2
   },
   "5mm-dupen": {
    "shape": "T5",
@@ -1413,7 +1485,8 @@
    "label": [
     "5MM",
     "DU PENETRATOR"
-   ]
+   ],
+   "tier": 3
   },
   "5mm-toxicscatter": {
    "shape": "T5",
@@ -1425,7 +1498,8 @@
    "label": [
     "5MM",
     "TOXIC SCATTER"
-   ]
+   ],
+   "tier": 3
   },
   "5mm-superconductor": {
    "shape": "T5",
@@ -1436,7 +1510,8 @@
    "label": [
     "5MM",
     "SUPERCONDUCTOR"
-   ]
+   ],
+   "tier": 3
   },
   "5mm-empcap": {
    "shape": "T5",
@@ -1447,7 +1522,8 @@
    "label": [
     "5MM",
     "EMP CAPACITOR"
-   ]
+   ],
+   "tier": 3
   },
   "5mm-kebab": {
    "shape": "T5",
@@ -1464,7 +1540,8 @@
    "label": [
     "5MM",
     "KEBAB"
-   ]
+   ],
+   "tier": 4
   },
   "heavy-ferro": {
    "shape": "TH",
@@ -1480,7 +1557,8 @@
    "label": [
     "HEAVY",
     "FERRO"
-   ]
+   ],
+   "tier": 2
   },
   "heavy-splitslug": {
    "shape": "TH",
@@ -1495,7 +1573,8 @@
    "label": [
     "HEAVY",
     "SPLIT SLUGS"
-   ]
+   ],
+   "tier": 2
   },
   "heavy-feedback": {
    "shape": "TH",
@@ -1506,7 +1585,8 @@
    "label": [
     "HEAVY",
     "FEEDBACK"
-   ]
+   ],
+   "tier": 2
   },
   "heavy-dupen": {
    "shape": "TH",
@@ -1521,7 +1601,8 @@
    "label": [
     "HEAVY",
     "DU PENETRATOR"
-   ]
+   ],
+   "tier": 3
   },
   "heavy-toxicscatter": {
    "shape": "TH",
@@ -1533,7 +1614,8 @@
    "label": [
     "HEAVY",
     "TOXIC SCATTER"
-   ]
+   ],
+   "tier": 3
   },
   "heavy-superconductor": {
    "shape": "TH",
@@ -1544,7 +1626,8 @@
    "label": [
     "HEAVY",
     "SUPERCONDUCTOR"
-   ]
+   ],
+   "tier": 3
   },
   "heavy-empcap": {
    "shape": "TH",
@@ -1555,7 +1638,8 @@
    "label": [
     "HEAVY",
     "EMP CAPACITOR"
-   ]
+   ],
+   "tier": 3
   },
   "heavy-kebab": {
    "shape": "TH",
@@ -1572,7 +1656,8 @@
    "label": [
     "HEAVY",
     "KEBAB"
-   ]
+   ],
+   "tier": 4
   },
   "10mm-emppayload": {
    "shape": "S10",
@@ -1585,7 +1670,8 @@
    "label": [
     "10MM",
     "EMP PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "10mm-firepayload": {
    "shape": "S10",
@@ -1598,7 +1684,8 @@
    "label": [
     "10MM",
     "INCENDIARY PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "10mm-chempayload": {
    "shape": "S10",
@@ -1611,7 +1698,8 @@
    "label": [
     "10MM",
     "CHEM PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "10mm-flashpayload": {
    "shape": "S10",
@@ -1624,7 +1712,8 @@
    "label": [
     "10MM",
     "FLASH PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "10mm-hunter": {
    "shape": "S10",
@@ -1637,7 +1726,8 @@
    "label": [
     "10MM",
     "HUNTER"
-   ]
+   ],
+   "tier": 3
   },
   "10mm-hackcarrier": {
    "shape": "S10",
@@ -1651,7 +1741,8 @@
    "label": [
     "10MM",
     "HACK CARRIER"
-   ]
+   ],
+   "tier": 3
   },
   "10mm-shapedcharge": {
    "shape": "S10",
@@ -1665,7 +1756,8 @@
    "label": [
     "10MM",
     "SHAPED CHARGE"
-   ]
+   ],
+   "tier": 3
   },
   "10mm-lockout": {
    "shape": "S10",
@@ -1679,7 +1771,8 @@
    "label": [
     "10MM",
     "LOCKOUT"
-   ]
+   ],
+   "tier": 4
   },
   "20mm-emppayload": {
    "shape": "S20",
@@ -1692,7 +1785,8 @@
    "label": [
     "20MM",
     "EMP PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "20mm-firepayload": {
    "shape": "S20",
@@ -1705,7 +1799,8 @@
    "label": [
     "20MM",
     "INCENDIARY PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "20mm-chempayload": {
    "shape": "S20",
@@ -1718,7 +1813,8 @@
    "label": [
     "20MM",
     "CHEM PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "20mm-flashpayload": {
    "shape": "S20",
@@ -1731,7 +1827,8 @@
    "label": [
     "20MM",
     "FLASH PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "20mm-hunter": {
    "shape": "S20",
@@ -1744,7 +1841,8 @@
    "label": [
     "20MM",
     "HUNTER"
-   ]
+   ],
+   "tier": 3
   },
   "20mm-hackcarrier": {
    "shape": "S20",
@@ -1758,7 +1856,8 @@
    "label": [
     "20MM",
     "HACK CARRIER"
-   ]
+   ],
+   "tier": 3
   },
   "20mm-shapedcharge": {
    "shape": "S20",
@@ -1772,7 +1871,8 @@
    "label": [
     "20MM",
     "SHAPED CHARGE"
-   ]
+   ],
+   "tier": 3
   },
   "20mm-lockout": {
    "shape": "S20",
@@ -1786,7 +1886,8 @@
    "label": [
     "20MM",
     "LOCKOUT"
-   ]
+   ],
+   "tier": 4
   },
   "25mm-emppayload": {
    "shape": "S25",
@@ -1799,7 +1900,8 @@
    "label": [
     "25MM",
     "EMP PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "25mm-firepayload": {
    "shape": "S25",
@@ -1812,7 +1914,8 @@
    "label": [
     "25MM",
     "INCENDIARY PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "25mm-chempayload": {
    "shape": "S25",
@@ -1825,7 +1928,8 @@
    "label": [
     "25MM",
     "CHEM PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "25mm-flashpayload": {
    "shape": "S25",
@@ -1838,7 +1942,8 @@
    "label": [
     "25MM",
     "FLASH PAYLOAD"
-   ]
+   ],
+   "tier": 2
   },
   "25mm-hunter": {
    "shape": "S25",
@@ -1851,7 +1956,8 @@
    "label": [
     "25MM",
     "HUNTER"
-   ]
+   ],
+   "tier": 3
   },
   "25mm-hackcarrier": {
    "shape": "S25",
@@ -1865,7 +1971,8 @@
    "label": [
     "25MM",
     "HACK CARRIER"
-   ]
+   ],
+   "tier": 3
   },
   "25mm-shapedcharge": {
    "shape": "S25",
@@ -1879,7 +1986,8 @@
    "label": [
     "25MM",
     "SHAPED CHARGE"
-   ]
+   ],
+   "tier": 3
   },
   "25mm-lockout": {
    "shape": "S25",
@@ -1893,7 +2001,8 @@
    "label": [
     "25MM",
     "LOCKOUT"
-   ]
+   ],
+   "tier": 4
   }
  }
 }

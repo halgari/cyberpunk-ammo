@@ -275,7 +275,7 @@ def hazard(name, scale):
     return m
 
 
-def image_mat(name, path, rough=0.8, color=(0.47, 0.33, 0.2)):
+def image_mat(name, path, rough=0.8, color=(0.47, 0.33, 0.2), lacquer=None):
     """Printed card: the panel art multiplied over scanned cardboard (Cardboard004), with its normal
     and roughness. The print is mapped by the panel's UVs; the card repeats every few centimetres.
     With no path it is bare unprinted kraft card of `color`."""
@@ -309,10 +309,24 @@ def image_mat(name, path, rough=0.8, color=(0.47, 0.33, 0.2)):
         nt.links.new(k.outputs["Result"], comb.inputs[ch])
     nt.links.new(comb.outputs["Color"], _socket(mul.inputs, "B", "RGBA"))
     nt.links.new(_socket(mul.outputs, "Result", "RGBA"), bsdf.inputs["Base Color"])
-    r = scan_tex(nt, "Cardboard004", "Roughness", mp.outputs["Vector"])
-    nt.links.new(r.outputs["Color"], bsdf.inputs["Roughness"])
+    if lacquer:
+        # Legendary boxes (lacquer = {metal, rough, glow}): a glossy clear coat over the print, which
+        # can be metal foil, little card texture, and glowing lines (the art's "-glow" image).
+        bsdf.inputs["Metallic"].default_value = lacquer.get("metal", 0.0)
+        bsdf.inputs["Roughness"].default_value = lacquer.get("rough", 0.5)
+        bsdf.inputs["Coat Weight"].default_value = 1.0
+        bsdf.inputs["Coat Roughness"].default_value = 0.08
+        glow = path and path.replace(".png", "-glow.png")
+        if glow and os.path.exists(glow):
+            g = nt.nodes.new("ShaderNodeTexImage")
+            g.image = bpy.data.images.load(glow)
+            nt.links.new(g.outputs["Color"], bsdf.inputs["Emission Color"])
+            bsdf.inputs["Emission Strength"].default_value = lacquer.get("glow", 6.0)
+    else:
+        r = scan_tex(nt, "Cardboard004", "Roughness", mp.outputs["Vector"])
+        nt.links.new(r.outputs["Color"], bsdf.inputs["Roughness"])
     nm = nt.nodes.new("ShaderNodeNormalMap")
-    nm.inputs["Strength"].default_value = 0.8
+    nm.inputs["Strength"].default_value = 0.15 if lacquer else 0.8
     nt.links.new(scan_tex(nt, "Cardboard004", "NormalGL", mp.outputs["Vector"]).outputs["Color"], nm.inputs["Color"])
     nt.links.new(nm.outputs["Normal"], bsdf.inputs["Normal"])
     return m
@@ -324,6 +338,9 @@ LEAD = lambda: principled("Lead", (0.36, 0.36, 0.38), 0.4, 0.55, bump=0.1)
 STEEL = lambda: principled("Steel", (0.58, 0.58, 0.60), 1.0, 0.24, wear=0.08, grime=0.8, scan="Metal009")
 GUNMETAL = lambda: principled("Gunmetal", (0.26, 0.26, 0.28), 1.0, 0.4, wear=0.12, grime=0.8, scan="Metal009")
 NICKEL = lambda: principled("Nickel", (0.66, 0.64, 0.60), 1.0, 0.4, bump=0.02, grime=0.7)
+# Legendary cases: polished, nearly unworn.
+POLISHED_GOLD = lambda: principled("PolishedGold", (1.0, 0.7, 0.26), 1.0, 0.12, wear=0.0, bump=0.01, grime=0.95)
+CHROME = lambda: principled("Chrome", (0.86, 0.86, 0.9), 1.0, 0.07, wear=0.0, bump=0.005, grime=0.97)
 GREEN_LACQUER = lambda: principled("GreenLacquer", (0.13, 0.17, 0.07), 0.2, 0.42, bump=0.004)
 WHITE_PAINT = lambda: principled("WhitePaint", (0.78, 0.77, 0.72), 0.0, 0.5, bump=0.02, edge=(0.4, 0.4, 0.42))
 
@@ -469,7 +486,8 @@ BLACK_CASE = lambda: principled("BlackCase", (0.03, 0.03, 0.035), 0.7, 0.35, wea
 
 def case_mat(s, default):
     c = s.get("case_mat")
-    return {"green": GREEN_LACQUER, "nickel": NICKEL, "black": BLACK_CASE}.get(c, lambda: default)()
+    return {"green": GREEN_LACQUER, "nickel": NICKEL, "black": BLACK_CASE, "gold": POLISHED_GOLD,
+            "chrome": CHROME}.get(c, lambda: default)()
 
 
 def bullet(s, rb, z0, length, shape):
@@ -479,7 +497,8 @@ def bullet(s, rb, z0, length, shape):
     mat = JACKETS[s.get("jacket", "copper")]()
     p = tip_profile(rb, z0, length, shape, s.get("hp", False), mat)
     if s.get("tip"):
-        tm = paint(s["tip"], gloss=s.get("tipfrac", 0.0) >= 0.3)
+        tm = emission("TipGlow" + s["tip"], PAINTS[s["tip"]], 6.0) if s.get("tipglow") else \
+            paint(s["tip"], gloss=s.get("tipfrac", 0.0) >= 0.3)
         z1 = z0 + length * (1 - s.get("tipfrac", 0.22))
         p = [(r, z, tm if z >= z1 and m is mat else m) for r, z, m in p]
     return p, z0 + length
@@ -517,10 +536,10 @@ RED_SEAL = lambda: principled("RedSeal", (0.55, 0.02, 0.02), 0.0, 0.3, bump=0.00
 
 
 def seal_ring(s, parent, r, z):
-    """+P marking: a red lacquer ring round the case mouth."""
-    if not s.get("seal"):
+    """+P marking: a red lacquer ring round the case mouth; with s["glow"], a glowing one (Legendary)."""
+    if not s.get("seal") and not s.get("glow"):
         return
-    m = RED_SEAL()
+    m = emission("Glow" + s["glow"], PAINTS[s["glow"]], 8.0) if s.get("glow") else RED_SEAL()
     q = [(r * 0.98, z - 0.07, m), (r * 1.012, z - 0.06, m), (r * 1.012, z + 0.005, m), (r * 0.98, z + 0.01, m)]
     revolve("Seal", q).parent = parent
 
@@ -565,8 +584,9 @@ def shell(s):
           (rim, 0.02, BRASS()), (rim, 0.14 * R, BRASS()), (rim * 0.97, 0.16 * R, BRASS()), (R * 1.0, 0.18 * R, BRASS()),
           (R * 0.97, 0.24 * R, BRASS()), (R * 0.97, 0.3 * R, BRASS()), (R * 1.025, 0.4 * R, BRASS()),
           (R * 1.025, H - 0.03, BRASS()), (R * 1.015, H, BRASS()), (R * 1.003, H + 0.02, BRASS())]
-    revolve("Head", [(r, z, NICKEL() if m is not hp[0][2] and s.get("head_mat") == "steel" else m) for r, z, m in hp]
-            if s.get("head_mat") == "steel" else hp).parent = root
+    heads = {"steel": NICKEL, "gold": POLISHED_GOLD, "chrome": CHROME}
+    revolve("Head", [(r, z, heads[s["head_mat"]]() if m is not hp[0][2] else m) for r, z, m in hp]
+            if s.get("head_mat") in heads else hp).parent = root
     if s.get("band"):
         bm = paint(s["band"])
         zb = H + (L - H) * 0.45
@@ -644,7 +664,8 @@ def rail(s):
     bpy.context.collection.objects.link(root)
     cores = {"steel": STEEL, "gunmetal": GUNMETAL,
              "du": lambda: principled("DU", (0.05, 0.05, 0.045), 0.8, 0.55, wear=0.05, grime=0.9),
-             "frost": lambda: principled("Frost", (0.55, 0.72, 0.9), 0.9, 0.28, wear=0.04, grime=0.6)}
+             "frost": lambda: principled("Frost", (0.55, 0.72, 0.9), 0.9, 0.28, wear=0.04, grime=0.6),
+             "gold": POLISHED_GOLD, "chrome": CHROME}
     core = GUNMETAL if s.get("gunmetal") else cores[s.get("core", "steel")]   # Bricks: dark gunmetal
     ringm = (lambda: emission("Coil" + s["coil"], PAINTS[s["coil"]], 8.0)) if s.get("coil") else COPPER
     p = [(0, 0, core()), (r - b, 0, core()), (r, b, core())]
@@ -703,7 +724,7 @@ def id_paint(name):
 
 def nose_mat(s, default):
     """Smart nose: gold (Hunter's seeker head), copper (Shaped Charge's cone), else the body."""
-    return {"gold": GOLD, "copper": COPPER}.get(s.get("nose_mat"), lambda: default)()
+    return {"gold": GOLD, "copper": COPPER, "chrome": CHROME}.get(s.get("nose_mat"), lambda: default)()
 
 
 def sensor_glass(s):
@@ -973,8 +994,8 @@ def box(spec, roundspec):
     rnd, L, rad = make_round(roundspec)
     d, cols, rows, W, D, H = (spec[k] for k in ("d", "cols", "rows", "W", "D", "H"))
     t = max(W, D) * 0.012
-    front = image_mat("Front", spec["front"])
-    side = image_mat("Side", spec["side"])
+    front = image_mat("Front", spec["front"], lacquer=spec.get("lacquer"))
+    side = image_mat("Side", spec["side"], lacquer=spec.get("lacquer"))
     inner = image_mat("Kraft", None)
     root = bpy.data.objects.new("Box", None)
     bpy.context.collection.objects.link(root)
@@ -1097,7 +1118,10 @@ def main():
     # cartridges; the rest of the surroundings stay dark, so the metal reflects dark there and reads
     # as metal. A large dim fill keeps the shadows open.
     area("Key", centre + Vector((-1.2, -1.0, 1.4)) * s * 3, s * 1.2, 0.5 * 450 * s * s, centre, strip=s * 9, along=axis)
-    area("Rim", centre + Vector((1.3, 1.4, 0.9)) * s * 3, s * 0.9, 0.45 * 450 * s * s, centre, strip=s * 8, along=axis)
+    # Legendary: a stronger coloured rim (SPEC rim = [r, g, b, power factor]).
+    rim = SPEC.get("rim", [1, 1, 1, 1])
+    area("Rim", centre + Vector((1.3, 1.4, 0.9)) * s * 3, s * 0.9, 0.45 * 450 * s * s * rim[3], centre, tuple(rim[:3]),
+         strip=s * 8, along=axis)
     area("Fill", centre + Vector((1.6, -1.4, 0.4)) * s * 3, s * 14, 0.2 * 130 * s * s, centre, (0.85, 0.9, 1.0))
     # Floor that only catches shadows, so things sit on something.
     bpy.ops.mesh.primitive_plane_add(size=radius * 40, location=(centre.x, centre.y, lo.z))
