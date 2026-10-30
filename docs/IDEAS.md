@@ -240,7 +240,7 @@ Directions the current lineup doesn't use yet:
 # Power: shotguns
 
 
-Existing: 12ga has Slugs, Birdshot (Unc), Flechette, Beanbag, Dragon's breath (light), Gas (Rare), Dragon's breath, Frag-12, Tungsten slug, long Flechette (Epic), Heartseeker (Leg). 4ga has Slugs, Barn Door (Unc), Flare, Riot, Gas canister, Flechette (Rare), Kinetic penetrator, Micro-grenade, Dragon's breath, Thermite slug (Epic), Bouncing Betty (Leg).
+Existing: 12ga has Slugs, Birdshot (Unc), Flechette, Beanbag, Dragon's breath (light), Gas (Rare), Dragon's breath, Frag-12, Tungsten slug, long Flechette (Epic), Pump N Dump (Leg). 4ga has Slugs, Barn Door (Unc), Flare, Riot, Gas canister, Flechette (Rare), Kinetic penetrator, Micro-grenade, Dragon's breath, Thermite slug (Epic), Bouncing Betty (Leg).
 
 The grid already fills most slots, so below I propose NEW rounds that sit beside it. Where one is meant to replace a grid entry, I say so.
 

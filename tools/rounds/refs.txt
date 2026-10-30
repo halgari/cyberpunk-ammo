@@ -17,6 +17,7 @@ BaseStats.BaseKnockdownImpulse
 BaseStats.BulletMagnetismDefaultAngle
 BaseStats.CanSilentKill
 BaseStats.CanWeaponIgnoreArmor
+BaseStats.CycleTime
 BaseStats.DamageFalloffDisabled
 BaseStats.DamagePerHit
 BaseStats.EffectiveRange

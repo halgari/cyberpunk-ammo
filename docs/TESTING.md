@@ -244,15 +244,16 @@ names are in `docs/CATALOG.md`):
 
 Legendary rounds (`tools/snippets/calibers/legendary.sh` checks each one on the hit rig). Give
 yourself a round and its selector in the CET console, e.g.
-`Game.AddToInventory("Items.AO_Feed_12ga_Heartseeker", 1); Game.AddToInventory("Ammo.AO_12ga_Heartseeker", 100)`.
+`Game.AddToInventory("Items.AO_Feed_12ga_PumpNDump", 1); Game.AddToInventory("Ammo.AO_12ga_PumpNDump", 100)`.
 To have NPCs carry them, set every rank's chance and spawn a ganger:
 `for _, r in ipairs({"Trash","Weak","Normal","Rare","Officer","Elite","Boss","MaxTac"}) do TweakDB:SetFlat("AmmoOverhaul.npcLegendaryChance." .. r, 1.0) end`
 (restart the game afterwards).
 
 32a. **Mule Kick.** Fit it to a Carnage: a real shot shoves V away from the aim and a shot at the floor sends V up, an empty trigger pull does nothing, and a shot from a vehicle seat doesn't shove. Hits knock NPCs down; Elites stagger. The rig can't fire through the shooting state, so the trigger path is checked here.
-33. **Heartseeker.** Fit it to a Tactician or any 12-gauge: the slug locks onto an enemy's head
-    near the crosshair (lock markers may not show: the crosshair stays the gun's own) and curves
-    onto it when you fire off to one side. Swap back to Buckshot: plain pellets again.
+33. **Pump N Dump.** Fit it to a Tactician or a Crusher (both played and approved): one slug per
+    shot, the gun cycles at 2.5 times the speed, and the box runs dry fast. Still to play: Igla,
+    Pozhar and Testera, for how the faster cycle feels on each. Swap back to Buckshot: normal
+    cycle and pellets again.
 34. **Cook-off.** Kill an enemy standing next to another with 5.56 Cook-off: a blast at the body
     hurts the one next to it, and you if you're close. An enemy with Cook-off shooting you sets off
     your selected grenade on you while it has a charge; with no charge nothing happens until it

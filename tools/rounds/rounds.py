@@ -375,6 +375,12 @@ KINDS = [
          stats=[],
          hit=dict(effects=[("AmmoOverhaul.LockoutJam", 1.0)]),
          desc="Smart rounds that push a lockout code into the target's gun on impact.\n\nEvery hit jams the target's weapon for 4 seconds."),
+    dict(load="PumpNDump", title="Pump N Dump", tier=LEGENDARY, look=((200, 110, 20), (230, 60, 40)),
+         art={'color': 'red', 'band': 'black', 'head_mat': 'steel', 'crimp': 'roll', 'grease': True},
+         calibers=["12ga"],
+         # Stats only: nothing here touches a shared record.
+         stats=one_projectile() + [mult("CycleTime", 0.4)],
+         desc="Slugs with grease all over the hull, so they slide through the action instead of dragging. The gun cycles as fast as you can work it, and your pockets empty just as quick. Wipe your hands after.\n\nOne slug per shot with the whole shot's damage. Tight spread. 2.5 times the fire rate. Burns through ammo fast."),
     dict(load="MuleKick", title="Mule Kick", tier=LEGENDARY, look=((200, 110, 20), (230, 200, 60)),
          art={'color': 'black', 'band': 'yellow', 'head_mat': 'steel'},
          calibers=["4ga"],

@@ -566,6 +566,82 @@ def fold(t, n=6, w=0.07):
     return math.exp(-(d / w) ** 2)
 
 
+def grease(m):
+    """Coat a shell's material in gun grease: wiped streaks along the round's axis (Z) and thumbed-on
+    blotches, dark amber and glassy, standing a little proud of the surface."""
+    if m.get("greased"):
+        return m
+    m["greased"] = True
+    nt = m.node_tree
+    N, link = nt.nodes.new, nt.links.new
+    bsdf = next(n for n in nt.nodes if n.type == "BSDF_PRINCIPLED")
+
+    def noise(vec, scale, detail):
+        n = N("ShaderNodeTexNoise")
+        n.inputs["Scale"].default_value = scale
+        n.inputs["Detail"].default_value = detail
+        link(vec, n.inputs["Vector"])
+        return n.outputs["Fac"]
+
+    def remap(x, a0, a1, b0=0.0, b1=1.0):
+        r = N("ShaderNodeMapRange")
+        for k, v in (("From Min", a0), ("From Max", a1), ("To Min", b0), ("To Max", b1)):
+            r.inputs[k].default_value = v
+        link(x, r.inputs["Value"])
+        return r.outputs["Result"]
+
+    def blend(mask, sock, value):
+        """Feed `sock` with its old input (or default) mixed toward `value` by `mask`."""
+        old = sock.links[0].from_socket if sock.is_linked else None
+        vector = sock.type != "VALUE"
+        mx = N("ShaderNodeMix")
+        mx.data_type = "RGBA" if vector else "FLOAT"
+        kind = "RGBA" if vector else "VALUE"
+        a, b = _socket(mx.inputs, "A", kind), _socket(mx.inputs, "B", kind)
+        if old:
+            link(old, a)
+        else:
+            a.default_value = sock.default_value
+        b.default_value = (*value, 1) if vector else value
+        link(mask, _socket(mx.inputs, "Factor", "VALUE"))
+        link(_socket(mx.outputs, "Result", kind), sock)
+
+    co = N("ShaderNodeTexCoord").outputs["Object"]
+    info = N("ShaderNodeObjectInfo")
+    mp = N("ShaderNodeMapping")
+    mp.inputs["Scale"].default_value = (3.0, 3.0, 0.32)
+    link(co, mp.inputs["Vector"])
+    # Each shell gets its own streaks.
+    add = N("ShaderNodeVectorMath")
+    add.operation = "ADD"
+    link(mp.outputs["Vector"], add.inputs[0])
+    sc = N("ShaderNodeVectorMath")
+    sc.operation = "SCALE"
+    sc.inputs["Scale"].default_value = 40.0
+    link(info.outputs["Random"], sc.inputs[0])
+    link(sc.outputs["Vector"], add.inputs[1])
+    streak, blotch = noise(add.outputs["Vector"], 1.0, 6), noise(co, 1.1, 5)
+    big = N("ShaderNodeMath")
+    big.operation = "MAXIMUM"
+    link(remap(streak, 0.46, 0.55), big.inputs[0])
+    link(remap(blotch, 0.53, 0.6), big.inputs[1])
+    mask = big.outputs[0]
+    blend(mask, bsdf.inputs["Base Color"], (0.07, 0.024, 0.006))
+    blend(mask, bsdf.inputs["Roughness"], 0.03)
+    blend(mask, bsdf.inputs["Coat Weight"], 1.0)
+    blend(mask, bsdf.inputs["Coat Roughness"], 0.02)
+    # The grease has thickness: its edge catches the light.
+    bp = N("ShaderNodeBump")
+    bp.inputs["Strength"].default_value = 0.7
+    bp.inputs["Distance"].default_value = 0.04
+    link(mask, bp.inputs["Height"])
+    normal = bsdf.inputs["Normal"]
+    if normal.is_linked:
+        link(normal.links[0].from_socket, bp.inputs["Normal"])
+    link(bp.outputs["Normal"], normal)
+    return m
+
+
 def shell(s):
     R, L, H = s["R"], s["L"], s["head"]
     hulls = {"red": (0.42, 0.025, 0.02), "black": (0.03, 0.03, 0.032), "green": (0.2, 0.42, 0.14),
@@ -577,8 +653,11 @@ def shell(s):
         # Clear hull: the load shows through.
         hullm = glass("HullClear", (0.85, 0.9, 0.92), 0.12, transmission=0.95, ior=1.5)
     else:
-        hullm = principled("Hull" + s["color"], hulls[s["color"]], 0.0, 0.48, wear=0.12, grime=0.85, scan="Plastic006",
-                           tile=6.0, **{"Coat Weight": 0.25, "Coat Roughness": 0.3})
+        hullm = principled(("Greased" if s.get("grease") else "Hull") + s["color"], hulls[s["color"]], 0.0, 0.48,
+                           wear=0.12, grime=0.85, scan="Plastic006", tile=6.0,
+                           **{"Coat Weight": 0.25, "Coat Roughness": 0.3})
+        if s.get("grease"):
+            grease(hullm)
     root = bpy.data.objects.new("Round", None)
     bpy.context.collection.objects.link(root)
     rim = R * 1.1
@@ -591,6 +670,8 @@ def shell(s):
             if s.get("head_mat") in heads else hp).parent = root
     if s.get("band"):
         bm = paint(s["band"])
+        if s.get("grease"):
+            bm = MATS.setdefault("GreasedBand", grease(bm.copy()))
         zb = H + (L - H) * 0.45
         revolve("Band", [(R * 0.99, zb - 0.09 * L, bm), (R * 1.01, zb - 0.085 * L, bm), (R * 1.01, zb + 0.085 * L, bm),
                          (R * 0.99, zb + 0.09 * L, bm)]).parent = root

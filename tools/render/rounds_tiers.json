@@ -264,6 +264,18 @@
     60
    ]
   ],
+  "PumpNDump": [
+   [
+    200,
+    110,
+    20
+   ],
+   [
+    230,
+    60,
+    40
+   ]
+  ],
   "Riot": [
    [
     30,
@@ -1335,6 +1347,21 @@
     "LONG FLECHETTES"
    ],
    "tier": 3
+  },
+  "12ga-pumpndump": {
+   "shape": "G12",
+   "over": {
+    "color": "red",
+    "band": "black",
+    "head_mat": "steel",
+    "crimp": "roll",
+    "grease": true
+   },
+   "look": "PumpNDump",
+   "label": [
+    "PUMP N DUMP"
+   ],
+   "tier": 4
   },
   "4ga-flechette": {
    "shape": "G4",

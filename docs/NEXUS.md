@@ -67,7 +67,7 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [*][color=#e8a33c][b]Kebab[/b][/color] (light and heavy rail): a charged shot goes through every body and wall in its line with no damage lost.
 [*][color=#e8a33c][b]Lockout[/b][/color] (10mm, 20mm, 25mm): every hit jams the target's weapon for 4 seconds.
 [*][color=#e8a33c][b]Mule Kick[/b][/color] (4-gauge): every hit knocks the target down, tough ones stagger. Each shot shoves you hard away from your aim, so a shot at the floor sends you up.
-[*][color=#e8a33c][b]Heartseeker[/b][/color] (12-gauge): one guided slug that locks onto heads, no Smart Link needed. Ignores all armor, +100% headshot damage, +50% crit chance.
+[*][color=#e8a33c][b]Pump N Dump[/b][/color] (12-gauge): one slug per shot, greased so the gun cycles at 2.5 times the speed. Burns through ammo fast.
 [/list]
 
 [line]
@@ -83,7 +83,7 @@ Each gun is assigned one of the calibers below and loads only rounds of that cal
 [*][b]5.56[/b]: Umbra, Masamune, Copperhead, Defender, Cook-off
 [*][b]7.62[/b]: Ajax, Kyubi, MA70 HB, Gatecrasher, Cook-off
 [*][b]12.7[/b]: Kolac, SOR-22, Grad, Osprey, Mk.31 HMG, Gatecrasher
-[*][b]12-gauge[/b]: Crusher, Pozhar, Tactician, Igla, Testera, Heartseeker
+[*][b]12-gauge[/b]: Crusher, Pozhar, Tactician, Igla, Testera, Pump N Dump
 [*][b]4-gauge[/b]: Carnage
 [/list]
 
@@ -260,8 +260,6 @@ Other ammo, damage, vendor and loot overhauls are the likely conflicts.
 [*][b]Two reloads after changing rounds is expected.[/b] Fitting a new round empties the gun (the rounds go back in your pack, nothing is lost). Back in the game, V looks the gun over, then draws it and reloads it with the new round. It looks like two reloads in a row, but it's an inspect, then a draw and one reload.
 [*]Loose ammo lying around the world is still the game's own ammo, which counts as the Common round of 9mm, 5.56, 12.7 or 12-gauge.
 [*]Some rounds' range and spread changes do nothing for NPCs, because the game gives NPC guns no range or spread values.
-[*]While you hold a gun with Heartseeker fitted, NPCs' guns of the same model count as Smart too.
-[*]Heartseeker locks and homes, but the gun shows no lock markers.
 [/list]
 
 [line]

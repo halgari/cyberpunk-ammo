@@ -93,6 +93,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-Frag12-Desc"); ArrayPush(t, "A fin-stabilized slug with a shaped charge in the nose. Punches through armor and tears up machines. No splash.\n\nFires one projectile with the whole shot's damage. Ignores 50% of armor. +50% damage against drones, mechs and vehicles.");
     ArrayPush(t, "AO-Ammo-12ga-FlechetteLong"); ArrayPush(t, "Long Flechettes");
     ArrayPush(t, "AO-Ammo-FlechetteLong-Desc"); ArrayPush(t, "Long tungsten darts. They stay in a tight group and still hit hard well past where buckshot gives up.\n\nTighter spread. 3.5x range.");
+    ArrayPush(t, "AO-Ammo-12ga-PumpNDump"); ArrayPush(t, "Pump N Dump");
+    ArrayPush(t, "AO-Ammo-PumpNDump-Desc"); ArrayPush(t, "Slugs with grease all over the hull, so they slide through the action instead of dragging. The gun cycles as fast as you can work it, and your pockets empty just as quick. Wipe your hands after.\n\nOne slug per shot with the whole shot's damage. Tight spread. 2.5 times the fire rate. Burns through ammo fast.");
     ArrayPush(t, "AO-Ammo-4ga-Flechette"); ArrayPush(t, "4ga Flechettes");
     ArrayPush(t, "AO-Ammo-4ga-Riot"); ArrayPush(t, "4ga Riot");
     ArrayPush(t, "AO-Ammo-Riot-Desc"); ArrayPush(t, "A big rubber baton round for the Carnage. Flattens whoever it hits, and they usually get back up later.\n\nFires one projectile with the whole shot's damage. Knocks targets down. Non-lethal: targets go down unconscious instead of dying. -50% damage.");

@@ -16,14 +16,12 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
   - Lockout (10mm, 20mm, 25mm): every hit jams the target's weapon for 4 seconds.
   - Mule Kick (4-gauge): every hit knocks the target down and tough ones stagger; each shot shoves
     V hard away from the aim, so a shot at the floor sends V up.
-  - Heartseeker (12-gauge): one guided slug that locks onto heads, no Smart Link needed.
+  - Pump N Dump (12-gauge): one slug per shot, greased so the gun cycles at 2.5 times the speed.
+    Burns through ammo fast.
 - Five new rounds:
   - Ping (Rare; 7.62, 12.7): targets hit show through walls for 5 seconds. -10% damage.
   - Penetrator (Epic) in 12mm, 7.62 and 12.7: ignores 60% of armor and goes through thin cover
     at half damage. NPCs firing it get the same.
-- Known issues:
-  - While you hold a gun with Heartseeker fitted, NPCs' guns of the same model count as Smart too.
-  - Heartseeker locks and homes, but the gun shows no lock markers.
 
 ## 0.1.0
 

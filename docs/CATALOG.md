@@ -380,7 +380,7 @@ rounds; a Legendary stack is a quarter of the Epic one it replaces.
 - **Kebab** (Legendary; 5mm, Heavy): A charged shot goes through every body and wall in its line with no damage lost (`TechPierceDamageFactor` x0; measured: no loss on the second body).
 - **Lockout** (Legendary; 10mm, 20mm, 25mm): Every hit jams the target's weapon for 4 seconds (`AmmoOverhaul.LockoutJam`).
 - **Mule Kick** (Legendary; 4ga): Buckshot with knockback at the game's cap. `aoMuleKick` (MuleKick.reds): each of V's shots shoves V 14 m/s away from the aim (PSMImpulse, the jump pads' push); a hit knocks the target down once per shot, Elite, Boss and MaxTac stagger (ForceStagger), a hit on V knocks V down.
-- **Heartseeker** (Legendary; 12ga): One guided slug (the smart package, `aoRangedAttack`); while it's fitted in V's drawn gun the gun record's evolution is Smart, which turns the lock on (`Heartseeker.reds`). Locks heads. Ignores all armor. +100% headshot damage. +50% crit chance.
+- **Pump N Dump** (Legendary; 12ga): Stats only: one slug per shot (the `one_projectile()` stats of Slugs, x0.2 spread) and x0.4 `CycleTime`, 2.5 times the fire rate. The hull is greased, which is why it cycles fast. No armor ignore or other perks; nothing touches a shared record.
 
 ### Ammo ideas so far
 

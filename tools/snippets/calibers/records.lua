@@ -211,7 +211,7 @@ end
 check("96 Rare and Epic rounds listed", counted[2] + counted[3] == 96, counted[2] .. " Rare, " .. counted[3] .. " Epic")
 check("Rare count", counted[2] == 50, tostring(counted[2]))
 check("Epic count", counted[3] == 46, tostring(counted[3]))
-check("13 Legendary rounds listed", counted[4] == 13, tostring(counted[4]))
+check("14 Legendary rounds listed", counted[4] == 14, tostring(counted[4]))
 
 
 -- The 12mm, 7.62 and 12.7 Penetrator go through thin cover (the Tech pierce stats, probed on an
@@ -272,6 +272,10 @@ for _, a in ipairs({ "Ammo.AO_S10_Lockout", "Ammo.AO_S20_Lockout", "Ammo.AO_S25_
   local fx, ch = flat(a, "aoEffects") or {}, flat(a, "aoEffectChances") or {}
   check(a .. " jams on every hit", #fx == 1 and str(fx[1]) == "AmmoOverhaul.LockoutJam" and near(ch[1] or 0, 1), tostring(fx[1]))
 end
+local pd = "Items.AO_Feed_12ga_PumpNDump"
+check("Pump N Dump spread x0.2, as Slugs", near(statSum(pd, "SpreadDefaultX"), 0.2), tostring(statSum(pd, "SpreadDefaultX")))
+check("Pump N Dump cycles at x0.4", near(statSum(pd, "CycleTime"), 0.4), tostring(statSum(pd, "CycleTime")))
+check("Pump N Dump ignores no armor", near(statSum(pd, "CanWeaponIgnoreArmor"), 0), tostring(statSum(pd, "CanWeaponIgnoreArmor")))
 local mk = "Items.AO_Feed_4ga_MuleKick"
 check("Mule Kick flagged", flat("Ammo.AO_4ga_MuleKick", "aoMuleKick") == true, tostring(flat("Ammo.AO_4ga_MuleKick", "aoMuleKick")))
 check("Mule Kick knockback", near(statSum(mk, "KnockdownImpulse"), 100) and near(statSum(mk, "BaseKnockdownImpulse"), 100), tostring(statSum(mk, "KnockdownImpulse")))
