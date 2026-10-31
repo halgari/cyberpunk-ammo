@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Quickhack rounds on live hits (spec docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md,
-# "Testing"), one check per mechanism. Parts: effects overheat ranks guarded cloud grenade rolls drop nosheet onv shops (default all):
+# "Testing"), one check per mechanism. Parts: effects overheat ranks guarded cloud grenade rolls drop nosheet onv shops known craft scrap (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/quickhack.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(effects overheat ranks guarded cloud grenade rolls drop nosheet onv shops)
+parts=("$@"); (( ${#parts[@]} )) || parts=(effects overheat ranks guarded cloud grenade rolls drop nosheet onv shops known craft scrap)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 YUK=Items.Preset_Yukimura_Default; PLAIN=Character.AO_Test_Plain_Unity
 pass() { echo "PASS $*"; }
@@ -218,6 +218,53 @@ shops() {
   is "a ripperdoc lists none" "$r" ""
   [[ $g$n != *'!'* ]] && pass "every stack can be bought" || fail "unavailable stacks: ${n:0:80}"
   lua "TweakDB:SetFlat('AmmoOverhaul.hackShopChance', 0.5); return 1" >/dev/null
+}
+# --- crafting: the quickhack is an ingredient, and only one goes per batch --------------------------------
+CH='local p, ts = Game.GetPlayer(), Game.GetTransactionSystem()
+local cs = Game.GetScriptableSystemsContainer():Get("CraftingSystem")
+local cb = cs:GetPlayerCraftBook()
+local A, PR = "Ammo.AO_S10_HackOptics1", "Items.BlindLvl1Program"
+local function id(s) return ItemID.FromTDBID(TweakDBID.new(s)) end
+local function q(s) return ts:GetItemQuantityWithDuplicates(p, ItemID.CreateQuery(TweakDBID.new(s))) end
+local function zero(s) local n = q(s); if n > 0 then ts:RemoveItemByTDBID(p, TweakDBID.new(s), n, true) end end
+local function craft(n) local r = CraftItemRequest.new(); r.target = p; r.itemRecord = TweakDB:GetRecord(A); r.amount = n
+  r.bulletAmount = cb:GetRecipeData(TweakDBID.new(A)).amount; cs:QueueRequest(r) end
+local function hacks() local t = {}; for _, h in ipairs(RPGManager.GetPlayerQuickHackList(p)) do t[#t + 1] = TDBID.ToStringDEBUG(h) end table.sort(t); return table.concat(t, ",") end'
+cl() { $C -t 30 "$CH
+$1" 2>&1 | sed -n 's/^=> //p' | tail -1; }
+# Holds $1 of the program and enough components, crafts a batch of $2: "<program left> <rounds>".
+crafted() {
+  cl "zero(PR); zero(A); zero('Items.UncommonMaterial1'); ts:GiveItem(p, id('Items.UncommonMaterial1'), 40)
+for _ = 1, $1 do ts:GiveItem(p, id(PR), 1) end craft($2); return 1" >/dev/null; sleep 2
+  cl "return q(PR) .. ' ' .. q(A)"
+}
+known() {
+  is "a fresh load knows the Uncommon recipe" "$(cl 'return tostring(cb:KnowsRecipe(TweakDBID.new(A)))')" true
+  is "and the Legendary one" "$(cl 'return tostring(cb:KnowsRecipe(TweakDBID.new("Ammo.AO_S10_HackOptics4")))')" true
+}
+craft() {
+  local batch; batch=$(cl 'return CraftingSystem.GetAmmoBulletAmount(TweakDBID.new(A))')
+  is "1 held, 1 craft" "$(crafted 1 1)" "0 $batch"
+  is "5 held, 1 craft" "$(crafted 5 1)" "4 $batch"
+  is "5 held, batch of 3" "$(crafted 5 3)" "2 $((batch * 3))"
+  # The screen refuses a craft when this reads 0. A round in hand gives the call its item data.
+  cl "zero(PR); zero(A); ts:GiveItem(p, id(A), 1); ts:GiveItem(p, id('Items.UncommonMaterial1'), 40); ts:GiveItem(p, id(PR), 1); return 1" >/dev/null; sleep 1
+  is "1 held, the screen allows 1" "$(cl 'return cs:GetMaxCraftingAmount(ts:GetItemData(p, id(A)))')" 1
+  cl "ts:GiveItem(p, id(PR), 1); return 1" >/dev/null; sleep 1
+  is "2 held, the screen stops at 2" "$(cl 'return cs:GetMaxCraftingAmount(ts:GetItemData(p, id(A)))')" 2
+  cl "zero(PR); return 1" >/dev/null; sleep 1
+  is "none held, the screen allows none" "$(cl 'return cs:GetMaxCraftingAmount(ts:GetItemData(p, id(A)))')" 0
+  local before; before=$(cl 'return hacks()'); echo "installed: ${before:0:120}"
+  [[ -n $before ]] && pass "V has hacks installed" || fail "no hacks installed to check"
+  crafted 1 1 >/dev/null; is "installed hacks stay, after a craft" "$(cl 'return hacks()')" "$before"
+  cl "zero(PR); craft(1); return 1" >/dev/null; sleep 2
+  is "installed hacks stay, with none held" "$(cl 'return hacks()')" "$before"
+}
+scrap() {
+  cl "zero(PR); zero(A); zero('Items.UncommonMaterial1'); Game.AddToInventory(A, 300); return 1" >/dev/null; sleep 1
+  cl "local r = DisassembleItemRequest.new(); r.target = p; r.itemID = id(A); r.amount = 300; cs:QueueRequest(r); return 1" >/dev/null; sleep 2
+  is "breaking a box down gives no program" "$(cl 'return q(PR)')" 0
+  [[ $(cl "return q('Items.UncommonMaterial1')") -gt 0 ]] && pass "and gives components" || fail "no components"
 }
 SYS_TRAIL="eval lua \"local n = 0 for _ in string.gmatch(\$SYS:Trail(), 'got Items.AO_Feed_10mm_Hack') do n = n + 1 end return n\""
 

@@ -166,12 +166,13 @@ end
 -- tier's quality, no damage-type or machine stats on the selector (those are hit data, applied to
 -- V and NPCs alike), valid hit data.
 -- Faction tiers: 5 Rare, 6 Epic, 7 Common quality at half the Common round's price, 8 Uncommon.
-local QUAL = { [2] = "Quality.Rare", [3] = "Quality.Epic", [4] = "Quality.Legendary", [5] = "Quality.Rare", [6] = "Quality.Epic", [9] = "Quality.Legendary", [7] = "Quality.Common", [8] = "Quality.Uncommon" }
-local PRICE = { [2] = 4, [3] = 8, [4] = 16, [5] = 4, [6] = 8, [7] = 0.5, [8] = 2, [9] = 16 }
+-- Quickhack tiers: 10 Uncommon, 11 Rare, 12 Epic, 13 Legendary, priced as their quality.
+local QUAL = { [2] = "Quality.Rare", [3] = "Quality.Epic", [4] = "Quality.Legendary", [5] = "Quality.Rare", [6] = "Quality.Epic", [10] = "Quality.Uncommon", [11] = "Quality.Rare", [12] = "Quality.Epic", [13] = "Quality.Legendary", [9] = "Quality.Legendary", [7] = "Quality.Common", [8] = "Quality.Uncommon" }
+local PRICE = { [2] = 4, [3] = 8, [4] = 16, [5] = 4, [6] = 8, [7] = 0.5, [8] = 2, [9] = 16, [10] = 2, [11] = 4, [12] = 8, [13] = 16 }
 local SHARE_TYPES = { Thermal = true, Chemical = true, Electric = true }
 local BANNED = { ["BaseStats.ThermalDamage"] = true, ["BaseStats.ChemicalDamage"] = true, ["BaseStats.ElectricDamage"] = true,
   ["BaseStats.BonusDamageAgainstMechanicals"] = true }
-local counted = { [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0, [8] = 0, [9] = 0 }
+local counted = { [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0, [8] = 0, [9] = 0, [10] = 0, [11] = 0, [12] = 0, [13] = 0 }
 for _, cal in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
   local K = "AmmoOverhaul." .. cal
   local sels, ammos, tiers = flat(K, "selectors") or {}, flat(K, "selectorAmmo") or {}, flat(K, "selectorTiers") or {}
@@ -205,7 +206,10 @@ for _, cal in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
         for _, e in ipairs(fx) do
           need(TweakDB:GetRecord(type(e) == "string" and e or str(e)) ~= nil, "effect " .. tostring(e))
         end
-        need((flat(ammo, "aoFaction") ~= nil) == (t >= 5), "faction flat")
+        need((flat(ammo, "aoFaction") ~= nil) == (t >= 5 and t < 10), "faction flat")
+        local program = flat(ammo, "aoHackProgram")
+        need((program ~= nil) == (t >= 10), "program flat")
+        need(program == nil or rec(program) ~= nil, "program " .. tostring(program))
         local st = flat(ammo, "aoShareType")
         need(st == nil or SHARE_TYPES[st], "share type " .. tostring(st))
       end
@@ -216,6 +220,7 @@ end
 check("96 Rare and Epic rounds listed", counted[2] + counted[3] == 96, counted[2] .. " Rare, " .. counted[3] .. " Epic")
 check("Rare count", counted[2] == 50, tostring(counted[2]))
 check("Epic count", counted[3] == 46, tostring(counted[3]))
+check("117 quickhack rounds listed", counted[10] + counted[11] + counted[12] + counted[13] == 117, counted[10] .. ", " .. counted[11] .. ", " .. counted[12] .. ", " .. counted[13])
 check("14 Legendary rounds listed", counted[4] == 14, tostring(counted[4]))
 check("88 faction rounds listed", counted[5] + counted[6] + counted[7] + counted[8] + counted[9] == 88, counted[5] .. " Rare, " .. counted[6] .. " Epic, " .. counted[7] .. " Common")
 

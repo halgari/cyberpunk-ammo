@@ -2283,4 +2283,862 @@ Ammo.AO_S25_SecondOpinion.aoScrapRounds: 10
 Ammo.AO_S25_SecondOpinion.aoScrapGive: 2
 Ammo.AO_S25_SecondOpinion.aoRecipe: ""
 
+Ammo.AO_S25_HackOptics1.aoScrapRounds: 10
+Ammo.AO_S25_HackOptics1.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackOptics1:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.UncommonMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.BlindLvl1Program
+      amount: 1
+
+Ammo.AO_S25_HackOptics1.aoRecipe: "Items.AO_Recipe_AO_S25_HackOptics1"
+Items.AO_Recipe_AO_S25_HackOptics1:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Uncommon
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackOptics1
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Uncommon]
+
+Ammo.AO_S25_HackOptics2.aoScrapRounds: 10
+Ammo.AO_S25_HackOptics2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackOptics2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.BlindLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackOptics2.aoRecipe: "Items.AO_Recipe_AO_S25_HackOptics2"
+Items.AO_Recipe_AO_S25_HackOptics2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackOptics2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackOptics3.aoScrapRounds: 10
+Ammo.AO_S25_HackOptics3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackOptics3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.BlindLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackOptics3.aoRecipe: "Items.AO_Recipe_AO_S25_HackOptics3"
+Items.AO_Recipe_AO_S25_HackOptics3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackOptics3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackOptics4.aoScrapRounds: 10
+Ammo.AO_S25_HackOptics4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackOptics4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.BlindLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackOptics4.aoRecipe: "Items.AO_Recipe_AO_S25_HackOptics4"
+Items.AO_Recipe_AO_S25_HackOptics4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackOptics4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackSonic1.aoScrapRounds: 10
+Ammo.AO_S25_HackSonic1.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackSonic1:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.UncommonMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.CommsNoiseProgram
+      amount: 1
+
+Ammo.AO_S25_HackSonic1.aoRecipe: "Items.AO_Recipe_AO_S25_HackSonic1"
+Items.AO_Recipe_AO_S25_HackSonic1:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Uncommon
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackSonic1
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Uncommon]
+
+Ammo.AO_S25_HackSonic2.aoScrapRounds: 10
+Ammo.AO_S25_HackSonic2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackSonic2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.CommsNoiseLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackSonic2.aoRecipe: "Items.AO_Recipe_AO_S25_HackSonic2"
+Items.AO_Recipe_AO_S25_HackSonic2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackSonic2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackSonic3.aoScrapRounds: 10
+Ammo.AO_S25_HackSonic3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackSonic3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.CommsNoiseLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackSonic3.aoRecipe: "Items.AO_Recipe_AO_S25_HackSonic3"
+Items.AO_Recipe_AO_S25_HackSonic3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackSonic3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackSonic4.aoScrapRounds: 10
+Ammo.AO_S25_HackSonic4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackSonic4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.CommsNoiseLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackSonic4.aoRecipe: "Items.AO_Recipe_AO_S25_HackSonic4"
+Items.AO_Recipe_AO_S25_HackSonic4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackSonic4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackContagion1.aoScrapRounds: 10
+Ammo.AO_S25_HackContagion1.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackContagion1:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.UncommonMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.ContagionProgram
+      amount: 1
+
+Ammo.AO_S25_HackContagion1.aoRecipe: "Items.AO_Recipe_AO_S25_HackContagion1"
+Items.AO_Recipe_AO_S25_HackContagion1:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Uncommon
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackContagion1
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Uncommon]
+
+Ammo.AO_S25_HackContagion2.aoScrapRounds: 10
+Ammo.AO_S25_HackContagion2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackContagion2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.ContagionLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackContagion2.aoRecipe: "Items.AO_Recipe_AO_S25_HackContagion2"
+Items.AO_Recipe_AO_S25_HackContagion2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackContagion2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackContagion3.aoScrapRounds: 10
+Ammo.AO_S25_HackContagion3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackContagion3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.ContagionLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackContagion3.aoRecipe: "Items.AO_Recipe_AO_S25_HackContagion3"
+Items.AO_Recipe_AO_S25_HackContagion3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackContagion3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackContagion4.aoScrapRounds: 10
+Ammo.AO_S25_HackContagion4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackContagion4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.ContagionLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackContagion4.aoRecipe: "Items.AO_Recipe_AO_S25_HackContagion4"
+Items.AO_Recipe_AO_S25_HackContagion4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackContagion4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackCyberware1.aoScrapRounds: 10
+Ammo.AO_S25_HackCyberware1.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackCyberware1:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.UncommonMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.DisableCyberwareProgram
+      amount: 1
+
+Ammo.AO_S25_HackCyberware1.aoRecipe: "Items.AO_Recipe_AO_S25_HackCyberware1"
+Items.AO_Recipe_AO_S25_HackCyberware1:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Uncommon
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackCyberware1
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Uncommon]
+
+Ammo.AO_S25_HackCyberware2.aoScrapRounds: 10
+Ammo.AO_S25_HackCyberware2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackCyberware2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.DisableCyberwareLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackCyberware2.aoRecipe: "Items.AO_Recipe_AO_S25_HackCyberware2"
+Items.AO_Recipe_AO_S25_HackCyberware2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackCyberware2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackCyberware3.aoScrapRounds: 10
+Ammo.AO_S25_HackCyberware3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackCyberware3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.DisableCyberwareLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackCyberware3.aoRecipe: "Items.AO_Recipe_AO_S25_HackCyberware3"
+Items.AO_Recipe_AO_S25_HackCyberware3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackCyberware3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackCyberware4.aoScrapRounds: 10
+Ammo.AO_S25_HackCyberware4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackCyberware4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.DisableCyberwareLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackCyberware4.aoRecipe: "Items.AO_Recipe_AO_S25_HackCyberware4"
+Items.AO_Recipe_AO_S25_HackCyberware4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackCyberware4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackShort1.aoScrapRounds: 10
+Ammo.AO_S25_HackShort1.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackShort1:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.UncommonMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.EMPOverloadLvl1Program
+      amount: 1
+
+Ammo.AO_S25_HackShort1.aoRecipe: "Items.AO_Recipe_AO_S25_HackShort1"
+Items.AO_Recipe_AO_S25_HackShort1:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Uncommon
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackShort1
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Uncommon]
+
+Ammo.AO_S25_HackShort2.aoScrapRounds: 10
+Ammo.AO_S25_HackShort2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackShort2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.EMPOverloadLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackShort2.aoRecipe: "Items.AO_Recipe_AO_S25_HackShort2"
+Items.AO_Recipe_AO_S25_HackShort2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackShort2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackShort3.aoScrapRounds: 10
+Ammo.AO_S25_HackShort3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackShort3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.EMPOverloadLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackShort3.aoRecipe: "Items.AO_Recipe_AO_S25_HackShort3"
+Items.AO_Recipe_AO_S25_HackShort3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackShort3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackShort4.aoScrapRounds: 10
+Ammo.AO_S25_HackShort4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackShort4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.EMPOverloadLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackShort4.aoRecipe: "Items.AO_Recipe_AO_S25_HackShort4"
+Items.AO_Recipe_AO_S25_HackShort4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackShort4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackCripple1.aoScrapRounds: 10
+Ammo.AO_S25_HackCripple1.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackCripple1:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.UncommonMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.LocomotionMalfunctionProgram
+      amount: 1
+
+Ammo.AO_S25_HackCripple1.aoRecipe: "Items.AO_Recipe_AO_S25_HackCripple1"
+Items.AO_Recipe_AO_S25_HackCripple1:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Uncommon
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackCripple1
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Uncommon]
+
+Ammo.AO_S25_HackCripple2.aoScrapRounds: 10
+Ammo.AO_S25_HackCripple2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackCripple2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.LocomotionMalfunctionLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackCripple2.aoRecipe: "Items.AO_Recipe_AO_S25_HackCripple2"
+Items.AO_Recipe_AO_S25_HackCripple2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackCripple2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackCripple3.aoScrapRounds: 10
+Ammo.AO_S25_HackCripple3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackCripple3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.LocomotionMalfunctionLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackCripple3.aoRecipe: "Items.AO_Recipe_AO_S25_HackCripple3"
+Items.AO_Recipe_AO_S25_HackCripple3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackCripple3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackCripple4.aoScrapRounds: 10
+Ammo.AO_S25_HackCripple4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackCripple4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.LocomotionMalfunctionLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackCripple4.aoRecipe: "Items.AO_Recipe_AO_S25_HackCripple4"
+Items.AO_Recipe_AO_S25_HackCripple4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackCripple4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackOverheat1.aoScrapRounds: 10
+Ammo.AO_S25_HackOverheat1.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackOverheat1:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.UncommonMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.OverheatLvl1Program
+      amount: 1
+
+Ammo.AO_S25_HackOverheat1.aoRecipe: "Items.AO_Recipe_AO_S25_HackOverheat1"
+Items.AO_Recipe_AO_S25_HackOverheat1:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Uncommon
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackOverheat1
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Uncommon]
+
+Ammo.AO_S25_HackOverheat2.aoScrapRounds: 10
+Ammo.AO_S25_HackOverheat2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackOverheat2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.OverheatLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackOverheat2.aoRecipe: "Items.AO_Recipe_AO_S25_HackOverheat2"
+Items.AO_Recipe_AO_S25_HackOverheat2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackOverheat2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackOverheat3.aoScrapRounds: 10
+Ammo.AO_S25_HackOverheat3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackOverheat3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.OverheatLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackOverheat3.aoRecipe: "Items.AO_Recipe_AO_S25_HackOverheat3"
+Items.AO_Recipe_AO_S25_HackOverheat3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackOverheat3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackOverheat4.aoScrapRounds: 10
+Ammo.AO_S25_HackOverheat4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackOverheat4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.OverheatLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackOverheat4.aoRecipe: "Items.AO_Recipe_AO_S25_HackOverheat4"
+Items.AO_Recipe_AO_S25_HackOverheat4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackOverheat4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackGlitch1.aoScrapRounds: 10
+Ammo.AO_S25_HackGlitch1.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackGlitch1:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.UncommonMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.WeaponMalfunctionProgram
+      amount: 1
+
+Ammo.AO_S25_HackGlitch1.aoRecipe: "Items.AO_Recipe_AO_S25_HackGlitch1"
+Items.AO_Recipe_AO_S25_HackGlitch1:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Uncommon
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackGlitch1
+    amount: 5
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Uncommon]
+
+Ammo.AO_S25_HackGlitch2.aoScrapRounds: 10
+Ammo.AO_S25_HackGlitch2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackGlitch2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.WeaponMalfunctionLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackGlitch2.aoRecipe: "Items.AO_Recipe_AO_S25_HackGlitch2"
+Items.AO_Recipe_AO_S25_HackGlitch2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackGlitch2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackGlitch3.aoScrapRounds: 10
+Ammo.AO_S25_HackGlitch3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackGlitch3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.WeaponMalfunctionLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackGlitch3.aoRecipe: "Items.AO_Recipe_AO_S25_HackGlitch3"
+Items.AO_Recipe_AO_S25_HackGlitch3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackGlitch3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackGlitch4.aoScrapRounds: 10
+Ammo.AO_S25_HackGlitch4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackGlitch4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.WeaponMalfunctionLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackGlitch4.aoRecipe: "Items.AO_Recipe_AO_S25_HackGlitch4"
+Items.AO_Recipe_AO_S25_HackGlitch4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackGlitch4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackBurnout2.aoScrapRounds: 10
+Ammo.AO_S25_HackBurnout2.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackBurnout2:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.RareMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.BrainMeltLvl2Program
+      amount: 1
+
+Ammo.AO_S25_HackBurnout2.aoRecipe: "Items.AO_Recipe_AO_S25_HackBurnout2"
+Items.AO_Recipe_AO_S25_HackBurnout2:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Rare
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackBurnout2
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
+
+Ammo.AO_S25_HackBurnout3.aoScrapRounds: 10
+Ammo.AO_S25_HackBurnout3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackBurnout3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.BrainMeltLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackBurnout3.aoRecipe: "Items.AO_Recipe_AO_S25_HackBurnout3"
+Items.AO_Recipe_AO_S25_HackBurnout3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackBurnout3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackBurnout4.aoScrapRounds: 10
+Ammo.AO_S25_HackBurnout4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackBurnout4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.BrainMeltLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackBurnout4.aoRecipe: "Items.AO_Recipe_AO_S25_HackBurnout4"
+Items.AO_Recipe_AO_S25_HackBurnout4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackBurnout4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackPsycho3.aoScrapRounds: 10
+Ammo.AO_S25_HackPsycho3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackPsycho3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.MadnessLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackPsycho3.aoRecipe: "Items.AO_Recipe_AO_S25_HackPsycho3"
+Items.AO_Recipe_AO_S25_HackPsycho3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackPsycho3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackPsycho4.aoScrapRounds: 10
+Ammo.AO_S25_HackPsycho4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackPsycho4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.MadnessLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackPsycho4.aoRecipe: "Items.AO_Recipe_AO_S25_HackPsycho4"
+Items.AO_Recipe_AO_S25_HackPsycho4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackPsycho4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
+Ammo.AO_S25_HackGrenade3.aoScrapRounds: 10
+Ammo.AO_S25_HackGrenade3.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackGrenade3:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.EpicMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.GrenadeExplodeLvl3Program
+      amount: 1
+
+Ammo.AO_S25_HackGrenade3.aoRecipe: "Items.AO_Recipe_AO_S25_HackGrenade3"
+Items.AO_Recipe_AO_S25_HackGrenade3:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Epic
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackGrenade3
+    amount: 3
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
+
+Ammo.AO_S25_HackGrenade4.aoScrapRounds: 10
+Ammo.AO_S25_HackGrenade4.aoScrapGive: 2
+Crafting.AO_Cost_Hack_AO_S25_HackGrenade4:
+  $type: CraftingPackage
+  craftingRecipe:
+    - $type: RecipeElement
+      ingredient: Items.LegendaryMaterial1
+      amount: 4
+    - $type: RecipeElement
+      ingredient: Items.GrenadeExplodeLvl4Program
+      amount: 1
+
+Ammo.AO_S25_HackGrenade4.aoRecipe: "Items.AO_Recipe_AO_S25_HackGrenade4"
+Items.AO_Recipe_AO_S25_HackGrenade4:
+  $base: Items.AO_RecipeBase
+  quality: Quality.Legendary
+  craftingResult:
+    $type: CraftingResult
+    item: Ammo.AO_S25_HackGrenade4
+    amount: 2
+  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
+
 # === END GENERATED CRAFTING ===

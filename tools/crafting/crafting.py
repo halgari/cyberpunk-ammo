@@ -8,7 +8,9 @@ end of that file, a generated block with:
     components), set as each round's craftingData (in zz_crafting_costs.yaml);
   - Items.AO_Recipe_<round>: an ItemRecipe making the tier's batch of the round. Uncommon and up
     are the recipe items handed out in loot and gun shops: picking one up teaches the recipe
-    (vanilla's CraftingSystemInventoryCallback). Common ones only feed GetAmmoBulletAmount;
+    (vanilla's CraftingSystemInventoryCallback). Common and quickhack ones only feed
+    GetAmmoBulletAmount;
+  - Crafting.AO_Cost_Hack_<round>: a quickhack round's cost, the tier's components and its program;
   - <ammo>.aoRecipe, <ammo>.aoScrapRounds, <ammo>.aoScrapGive: read by Crafting.reds.
 The 4 vanilla ammo records keep their vanilla cost and recipe; they get only the flats. Legendary
 rounds (tier 4) are never crafted: no cost, no recipe, only the disassembly flats.
@@ -27,13 +29,16 @@ END = "# === END GENERATED CRAFTING ==="
 COSTS = "zz_crafting_costs.yaml"
 
 COST = {"Tech": 1, "Power": 2, "Smart": 4}
-MATERIAL = ["Items.CommonMaterial1", "Items.UncommonMaterial1", "Items.RareMaterial1", "Items.EpicMaterial1"]
-QUALITY = ["Common", "Uncommon", "Rare", "Epic"]
+MATERIAL = ["Items.CommonMaterial1", "Items.UncommonMaterial1", "Items.RareMaterial1", "Items.EpicMaterial1",
+            "Items.LegendaryMaterial1"]
+QUALITY = ["Common", "Uncommon", "Rare", "Epic", "Legendary"]
 # Legendary and the faction tiers are never crafted (tools/rounds/rounds.py).
 NO_RECIPE = {4, 5, 6, 7, 8, 9}
-DIVISOR = [1, 2, 3, 4]
+# Quickhack rounds craft as tiers 1 to 4, known from the start, with the program on top.
+HACK_TIERS = {10, 11, 12, 13}
+DIVISOR = [1, 2, 3, 4, 5]
 # A round's price over its caliber's Common round: x2 per tier (CATALOG, tiers.lua).
-TIER_PRICE = [1, 2, 4, 8]
+TIER_PRICE = [1, 2, 4, 8, 16]
 VANILLA = {"Ammo.HandgunAmmo": "Ammo.RecipeHandgunAmmo", "Ammo.RifleAmmo": "Ammo.RecipeRifleAmmo",
            "Ammo.ShotgunAmmo": "Ammo.RecipeShotgunAmmo", "Ammo.SniperRifleAmmo": "Ammo.RecipeSniperRifleAmmo"}
 # Each caliber's Common round price, as the multiplier on Price.Ammo (read in game 2026-10-29: the
@@ -117,7 +122,7 @@ def caliber_block(key, text, loc, name_of, batches):
     ammos = strings(flat(text, key, "selectorAmmo"))
     tiers = [int(s) for s in strings(flat(text, key, "selectorTiers"))]
     y = [BEGIN, "", f"# {key}: {family}, {cost(family)} components a batch, {common} rounds a Common batch."]
-    used = sorted(t for t in set(tiers) if t not in NO_RECIPE)
+    used = sorted(t for t in set(tiers) if t not in NO_RECIPE and t not in HACK_TIERS)
     for t in used:
         y.append(f"Crafting.AO_Cost_{family}_{t}:\n  $type: CraftingPackage\n  craftingRecipe:\n"
                  f"    - $type: RecipeElement\n      ingredient: {MATERIAL[t]}\n      amount: {cost(family)}\n")
@@ -133,8 +138,21 @@ def caliber_block(key, text, loc, name_of, batches):
             # Empty, so the base round's recipe isn't inherited through $base.
             y.append(f'{ammo}.aoRecipe: ""\n')
             continue
-        batch = tier_batch(common, t)
         recipe = f"Items.AO_Recipe_{short}"
+        if t in HACK_TIERS:
+            base = t - 9
+            cost_id = f"Crafting.AO_Cost_Hack_{short}"
+            program = re.search(rf'^{re.escape(ammo)}\.aoHackProgram: "(.+)"$', text, flags=re.M).group(1)
+            costs.append(f"{ammo}:\n  CraftingData: {cost_id}\n")
+            y.append(f"{cost_id}:\n  $type: CraftingPackage\n  craftingRecipe:\n"
+                     f"    - $type: RecipeElement\n      ingredient: {MATERIAL[base]}\n      amount: {cost(family)}\n"
+                     f"    - $type: RecipeElement\n      ingredient: {program}\n      amount: 1\n")
+            y.append(f'{ammo}.aoRecipe: "{recipe}"')
+            y.append(f"{recipe}:\n  $base: Items.AO_RecipeBase\n  quality: Quality.{QUALITY[base]}\n"
+                     f"  craftingResult:\n    $type: CraftingResult\n    item: {ammo}\n    amount: {tier_batch(common, base)}\n"
+                     f"  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, {QUALITY[base]}]\n")
+            continue
+        batch = tier_batch(common, t)
         key_name = name_of(ammo)
         if key_name is None or key_name not in loc:
             raise SystemExit(f"{ammo}: no display name")
