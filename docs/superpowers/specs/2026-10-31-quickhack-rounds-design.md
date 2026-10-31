@@ -1,6 +1,6 @@
 # Quickhack rounds: design
 
-Date: 2026-10-31. Status: draft for review. Branch `quickhack-rounds`, on top of `faction-rounds-3`.
+Date: 2026-10-31. Status: approved, probes done. Branch `quickhack-rounds`, on top of `faction-rounds-3`.
 
 Smart rounds that carry a quickhack. The hack's rarity sets the round's rarity, and crafting a box takes
 one copy of that quickhack. Shops sell them and NPCs carry and drop them. On V, an NPC's hack round is
@@ -27,13 +27,34 @@ the quickhack crafting takes.
 
 ## On hit
 
-- Each shot rolls: Uncommon 10%, Rare 15%, Epic 20%, Legendary 25%. Starting points for the feel test.
-- A hit applies the status effect that tier of the hack applies, so tiers differ as they do in vanilla.
-  No upload bar and no RAM cost. It goes through the mod's existing per-shot effect path, so one roll
-  per shot on a burst.
-- **Probe first:** read each program's action for its effect records. A hack whose effect doesn't work
-  applied directly gets a stated substitute, and the user hears about it before the plan. Detonate
-  Grenade is the likely one: vanilla's works through the grenade the target holds.
+- Each shot rolls: Uncommon 10%, Rare 15%, Epic 20%, Legendary 25%. Contagion, Short Circuit and
+  Synapse Burnout hit far harder than the rest, so they roll 4%, 6%, 8% and 10%. Starting points for
+  the feel test.
+- A hit applies the status effect of that tier's own quickhack action (`QuickHack.<Hack>Lvl<N>Hack`),
+  listed below. No upload bar and no RAM cost. It goes through the mod's existing per-shot effect path,
+  so one roll per shot on a burst.
+- **Effects, Uncommon to Legendary, all `BaseStatusEffect`:**
+  - Reboot Optics: `QuickHackBlindLvl1`, `QuickHackBlindLevel2`, `3`, `4`.
+  - Sonic Shock: `CommsNoise`, `CommsNoiseLevel2`, `3`, `4`.
+  - Contagion: `ContagionPoison`, `ContagionPoisonLvl2`, `3`, `4`.
+  - Cyberware Malfunction: `CyberwareMalfunctionLvl1` to `Lvl4`.
+  - Short Circuit: `OverloadLevel1` to `OverloadLevel4`.
+  - Cripple Movement: `LocomotionMalfunction`, `LocomotionMalfunctionLevel2`, `3`, `4`.
+  - Overheat: `OverheatLevel1` to `OverheatLevel4`.
+  - Weapon Glitch: `WeaponMalfunction`, `WeaponMalfunctionLvl2`, `3`, `4`.
+  - Synapse Burnout: `BrainMeltLevel2` to `BrainMeltLevel4`.
+  - Cyberpsychosis: `Madness` (18 s), then `AmmoOverhaul.MadnessHack`, a 30 second copy of
+    `MandessLevel4`, whose 58 seconds is too long, as with Bad Juju.
+- **Probe, on a Normal NPC, lowest and highest tier:** every effect above lands applied directly.
+  Contagion's top tier takes a Normal from full to 0 in 4 seconds, Short Circuit's top tier does the
+  same and leaves it unconscious, and Synapse Burnout runs 67% to 93%, which is why those three roll
+  lower.
+- **Overheat:** it lands but took no health in the probe, with no shooter behind it. The plan's first
+  check is a live hit. If it still does nothing, the round adds the mod's own burn.
+- **Detonate Grenade doesn't work as vanilla's:** `SuicideWithGrenade` sat for 13 seconds and nothing
+  happened on an NPC with no grenade, and the Legendary's `SuicideWithGrenadeDummy` applied nothing.
+  So the round is a stated substitute, not the real hack: the hit makes an explosion at the target
+  (`AmmoOverhaul.HackBlast`, 3 m at Epic, `HackBlastBig`, 5 m at Legendary) through the mod's blast path.
 - Contagion spreads as The Clap does, through a blast (`AmmoOverhaul.ClapCloud`), since the effect
   doesn't spread by itself. The radius grows with rarity.
 - **Who's immune:** quest protected NPCs and machines get nothing that would knock out or kill them, as
@@ -49,14 +70,14 @@ Quality comes from the code as usual.
 
 ## Getting them
 
-- **Shops:** gun shops stock Uncommon and Rare hack rounds, in the Rare cap's existing rule. Vendors who
-  sell quickhacks stock Uncommon to Epic. Legendary is never sold.
+- **Shops:** gun shops stock Uncommon and Rare hack rounds, in the Rare cap's existing rule. The seven
+  netrunner vendors (`Vendors.*_netrunner_*`) stock Uncommon to Epic. Legendary is never sold.
 - **NPCs with smart guns:** roll a hack round before the general roll, by rank: Normal 3%, Officer 5%,
   Elite 8%, Boss 12%. Legendary is 1 in 10 of those on Elite and Boss, never lower. They fire them and
   drop what's left.
 - **Netrunners:** whatever gun they hold, they drop a small stack of a smart caliber's hack round, by
-  the same rank table. **Probe first:** a stat or tag that marks a netrunner, as the record name isn't
-  safe. If none exists, this part drops out and the user hears about it.
+  the same rank table. An NPC is a netrunner when its record's `ArchetypeData` type is `NetrunnerT1`,
+  `NetrunnerT2` or `NetrunnerT3` (probed on a Lexington netrunner).
 - **Containers:** none, as faction rounds.
 
 ## Crafting
