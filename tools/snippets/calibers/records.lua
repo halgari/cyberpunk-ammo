@@ -273,8 +273,8 @@ for _, a in ipairs({ "Ammo.AO_S10_Lockout", "Ammo.AO_S20_Lockout", "Ammo.AO_S25_
   check(a .. " jams on every hit", #fx == 1 and str(fx[1]) == "AmmoOverhaul.LockoutJam" and near(ch[1] or 0, 1), tostring(fx[1]))
 end
 local pd = "Items.AO_Feed_12ga_PumpNDump"
-check("Pump N Dump spread x0.2, as Slugs", near(statSum(pd, "SpreadDefaultX"), 0.2), tostring(statSum(pd, "SpreadDefaultX")))
-check("Pump N Dump cycles at x0.4", near(statSum(pd, "CycleTime"), 0.4), tostring(statSum(pd, "CycleTime")))
+check("Pump N Dump spread x0.2, as Slugs", near(modSum(pd, "SpreadDefaultX", "Multiplier"), 0.2), tostring(modSum(pd, "SpreadDefaultX", "Multiplier")))
+check("Pump N Dump cycles at x0.4", near(modSum(pd, "CycleTime", "Multiplier"), 0.4), tostring(modSum(pd, "CycleTime", "Multiplier")))
 check("Pump N Dump ignores no armor", near(statSum(pd, "CanWeaponIgnoreArmor"), 0), tostring(statSum(pd, "CanWeaponIgnoreArmor")))
 local mk = "Items.AO_Feed_4ga_MuleKick"
 check("Mule Kick flagged", flat("Ammo.AO_4ga_MuleKick", "aoMuleKick") == true, tostring(flat("Ammo.AO_4ga_MuleKick", "aoMuleKick")))
