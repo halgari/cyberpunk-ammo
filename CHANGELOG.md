@@ -8,7 +8,7 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
 - Faction rounds: 26 new rounds, 175 in all. Maelstrom, Scavengers and Arasaka each have their own,
   in their own packaging, marked [Mael], [Scav] or [Ara] in the name. They come from that faction's
   NPCs, who carry and fire them and drop what's left on them. A few gun shops on their turf stock
-  some too. They can't be crafted.
+  some too; on an existing save, a shop adds them the next time it restocks. They can't be crafted.
   - Redliners (.45, 5.56, 7.62): +25% fire rate, +40% recoil and spread, and a 2% chance per shot
     to jam your weapons for 3 seconds.
   - Chrome-cookers (light and heavy rail): 15% chance of a cyberware malfunction. -10% damage.
