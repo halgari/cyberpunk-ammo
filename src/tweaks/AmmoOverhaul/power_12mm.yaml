@@ -865,7 +865,7 @@ Items.AO_Feed_12mm_Tanto:
       $type: ConstantStatModifier
       statType: BaseStats.CritChance
       modifierType: Additive
-      value: 0.1
+      value: 10.0
 
 # 12mm Gold Tips [Val] (Rare)
 Ammo.AO_12mm_GoldTips:
@@ -907,12 +907,12 @@ Items.AO_Feed_12mm_GoldTips:
       $type: ConstantStatModifier
       statType: BaseStats.CritChance
       modifierType: Additive
-      value: 0.15
+      value: 15.0
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.CritDamage
       modifierType: Additive
-      value: 0.3
+      value: 30.0
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.RecoilKickMin
@@ -948,6 +948,7 @@ Ammo.AO_12mm_SantaMuerte:
 
 Ammo.AO_12mm_SantaMuerte.aoFaction: "Valentinos"
 Ammo.AO_12mm_SantaMuerte.aoHeadEffect: "BaseStatusEffect.Burning"
+Ammo.AO_12mm_SantaMuerte.aoHeadFallback: 0.1
 
 UIIcon.AO_12mm_SantaMuerte:
   $type: UIIcon

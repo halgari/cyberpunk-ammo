@@ -1166,7 +1166,7 @@ Items.AO_Feed_45_Tanto:
       $type: ConstantStatModifier
       statType: BaseStats.CritChance
       modifierType: Additive
-      value: 0.1
+      value: 10.0
 
 # .45 Gold Tips [Val] (Rare)
 Ammo.AO_45_GoldTips:
@@ -1208,12 +1208,12 @@ Items.AO_Feed_45_GoldTips:
       $type: ConstantStatModifier
       statType: BaseStats.CritChance
       modifierType: Additive
-      value: 0.15
+      value: 15.0
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.CritDamage
       modifierType: Additive
-      value: 0.3
+      value: 30.0
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.RecoilKickMin
@@ -1249,6 +1249,7 @@ Ammo.AO_45_SantaMuerte:
 
 Ammo.AO_45_SantaMuerte.aoFaction: "Valentinos"
 Ammo.AO_45_SantaMuerte.aoHeadEffect: "BaseStatusEffect.Burning"
+Ammo.AO_45_SantaMuerte.aoHeadFallback: 0.1
 
 UIIcon.AO_45_SantaMuerte:
   $type: UIIcon

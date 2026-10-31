@@ -467,6 +467,14 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return TDBID.ToStringDEBUG(MuleKick.NpcEffect(rarity));
   }
 
+  public final func DebugLegEffect(rarity: String) -> String {
+    return TDBID.ToStringDEBUG(FactionRounds.LegEffect(rarity));
+  }
+
+  public final func DebugStops(rarity: String) -> Bool {
+    return FactionRounds.Stops(rarity);
+  }
+
   public final func DebugLegendaryStack(quantity: Int32) -> Int32 {
     return AOData.LegendaryStack(quantity);
   }
@@ -954,13 +962,19 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if AOData.PartsPuller(ammo) && instigator.IsPlayer() && !gated {
       FactionRounds.MarkParts(hitEvent.target, ammo);
     }
+    if AOData.Pumped(ammo) && !gated {
+      FactionRounds.MarkPump(hitEvent.target, instigator);
+    }
+    // Chances are per shot, and each pellet that lands comes through here.
+    let pellets: Int32 = Cast<Int32>(GameInstance.GetStatsSystem(weapon.GetGame()).GetStatValue(Cast<StatsObjectID>(weapon.GetEntityID()), gamedataStatType.ProjectilesPerShot));
+    if !gated {
+      FactionRounds.OnHit(attackData, hitEvent.target, ammo, pellets);
+    }
     let chances: array<Float>;
     let effects: array<TweakDBID> = AOData.HitEffects(ammo, chances);
     if ArraySize(effects) == 0 && !AOData.IsNonlethal(ammo) {
       return;
     }
-    // Chances are per shot, and each pellet that lands comes through here.
-    let pellets: Int32 = Cast<Int32>(GameInstance.GetStatsSystem(weapon.GetGame()).GetStatValue(Cast<StatsObjectID>(weapon.GetEntityID()), gamedataStatType.ProjectilesPerShot));
     let onPlayer: Bool = IsDefined(hitEvent.target) && hitEvent.target.IsPlayer();
     let i: Int32 = 0;
     while i < ArraySize(effects) {

@@ -906,7 +906,7 @@ Items.AO_Feed_9mm_Tanto:
       $type: ConstantStatModifier
       statType: BaseStats.CritChance
       modifierType: Additive
-      value: 0.1
+      value: 10.0
 
 # 9mm Surplus [6th] (Uncommon)
 Ammo.AO_9mm_Surplus:

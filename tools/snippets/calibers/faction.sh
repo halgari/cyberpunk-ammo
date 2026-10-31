@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Faction rounds on live hits (spec docs/superpowers/specs/2026-10-30-faction-rounds-design.md,
 # "Testing"), one check per mechanism. Parts: affiliation rolls lists turf stats oneGun reloads redliners
-# swap chrome roll parts kansatsu (default all):
+# swap chrome roll parts kansatsu affiliation2 headfx headonv stops legs pumped crits (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/faction.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL. The rig's shots don't
 # go through V's shooting state, so V's self-jam is driven by DebugSelfJam, not a trigger pull.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(affiliation rolls lists turf stats oneGun reloads redliners swap chrome roll parts kansatsu)
+parts=("$@"); (( ${#parts[@]} )) || parts=(affiliation rolls lists turf stats oneGun reloads redliners swap chrome roll parts kansatsu affiliation2 headfx headonv stops legs pumped crits)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 UNI=Items.Preset_Unity_Default; LEX=Items.Preset_Lexington_Default; OMA=Items.Preset_Omaha_Default; YUK=Items.Preset_Yukimura_Default
 pass() { echo "PASS $*"; }
@@ -239,14 +239,11 @@ chrome() {
   kit "{'$OMA', 1}"
   draw $OMA; draw $OMA
   lua "TweakDB:SetFlat('Ammo.AO_TLight_ChromeCookers.aoEffectChances', {1.0}); return 1" >/dev/null
-  chances 0.0 1.0
-  spawn 0.0 Ammo.AO_TLight_ChromeCookers Character.AO_Test_Mael_Omaha
-  vulnerable
-  setup $OMA
-  chances
+  carrier Ammo.AO_TLight_ChromeCookers Character.AO_Test_Mael_Omaha $OMA
   npcshoot 2 6
   local n; n=$(lua "return RIG.effects('V', 'BaseStatusEffect.CyberwareMalfunction')")
   echo "  hits on V $(lua "return #RIG.ratios('NPC')")"
+  echo "  it holds $(qty Ammo.AO_TLight_ChromeCookers), gun $(lua "return NameToString(ScriptedPuppet.GetActiveWeapon(RIG.npc()):GetWeaponRecord():FriendlyName())")"
   [[ $n -ge 1 ]] && pass "an NPC's Chrome-cookers gave V a cyberware malfunction ($n)" || fail "Chrome-cookers on V: $n"
   lua "TweakDB:SetFlat('Ammo.AO_TLight_ChromeCookers.aoEffectChances', {0.15}); return 1" >/dev/null
   kitgod; despawn
@@ -338,6 +335,179 @@ Game.GetStatsSystem():AddModifier(Game.GetPlayer():GetEntityID(), AO_LINK); retu
   feed Items.AO_Feed_10mm_Kansatsu
   within "Kansatsu fallback: hip lock x0.5 plus the probe's +3 (on the gun)" "$(gunstat SmartGunHipTimeToLock)" 0 9
   lua "Game.GetStatsSystem():RemoveModifier(Game.GetPlayer():GetEntityID(), AO_LINK); return 1" >/dev/null
+  despawn
+}
+
+# An NPC $2 holding $1, V vulnerable, with gun $3 drawn. The rig respawns a plain goon when it loses
+# sight of its NPC: only a carrier counts.
+carrier() {
+  local try
+  for try in 1 2 3 4; do
+    chances 0.0 1.0
+    spawn 0.0 "$1" "$2"
+    chances
+    vulnerable
+    setup "$3"
+    (( $(qty "$1") > 0 )) && return
+  done
+  fail "no NPC kept $1"
+}
+
+# --- affiliation2: the second five factions ---------------------------------------------------------
+affiliation2() {
+  local rec
+  for rec in "Tyger TygerClaws" "Val Valentinos" "Six SixthStreet" "Mil Militech" "Animal Animals"; do
+    set -- $rec
+    spawn 0.0 "" "Character.AO_Test_$1_Unity"
+    is "a spawned $1 rolls as $2" "$(lua "return $SYS:DebugFactionOf(RIG.npc())")" "$2"
+  done
+  despawn
+}
+
+# --- headfx: Santa Muerte burns on a headshot, not on the chest --------------------------------------
+headfx() {
+  kit "{'$UNI', 1}, {'Items.AO_Feed_45_SantaMuerte', 1}, {'Ammo.AO_45_SantaMuerte', 300}"
+  draw $UNI; draw $UNI; feed Items.AO_Feed_45_SantaMuerte
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $UNI
+  shoot "" 12
+  is "12 chest shots burn nothing" "$(lua "return RIG.effects('NPC', 'BaseStatusEffect.Burning')")" 0
+  lua "RIG.slot = 'Head'; RIG.clear(); return 1" >/dev/null
+  shoot "" 12 keep
+  local f n; f=$(lua "return RIG.flagged('V', 'head')"); n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.Burning')")
+  lua "RIG.slot = nil; return 1" >/dev/null
+  echo "  head flags $f, burns $n"
+  [[ ${f%/*} -ge 3 && $n -ge 1 ]] && pass "headshots burn ($f flagged, $n burns)" || fail "headshots: $f flagged, $n burns"
+  despawn
+}
+
+# --- headonv: the game flags no headshots on V, so Santa Muerte burns V by aoHeadFallback -------------
+headonv() {
+  lua "TweakDB:SetFlat('Ammo.AO_45_SantaMuerte.aoHeadFallback', 1.0); return 1" >/dev/null
+  carrier Ammo.AO_45_SantaMuerte Character.AO_Test_Val_Unity $UNI
+  npcshoot 2 6
+  local n; n=$(lua "return RIG.effects('V', 'BaseStatusEffect.PlayerBurning')")
+  echo "  NPC hits on V flagged as headshots: $(lua "return RIG.flagged('NPC', 'head')")"
+  [[ $n -ge 1 ]] && pass "an NPC's Santa Muerte burns V ($n)" || fail "burn on V: $n"
+  kitgod; despawn
+  lua "TweakDB:SetFlat('Ammo.AO_45_SantaMuerte.aoHeadFallback', 0.1); return 1" >/dev/null
+}
+
+# --- stops: Cease and Desist staggers by rank, once per shot, and on V ------------------------------
+stops() {
+  local AJA=Items.Preset_Ajax_Default CRU=Items.Preset_Crusher_Default
+  is "a Normal staggers" "$(lua "return $SYS:DebugStops('Normal')")" true
+  is "an Elite staggers" "$(lua "return $SYS:DebugStops('Elite')")" true
+  is "a Boss doesn't" "$(lua "return $SYS:DebugStops('Boss')")" false
+  is "MaxTac doesn't" "$(lua "return $SYS:DebugStops('MaxTac')")" false
+  lua "TweakDB:SetFlat('Ammo.AO_762_CeaseAndDesist.aoStopChance', 1.0); TweakDB:SetFlat('Ammo.AO_12ga_CeaseAndDesist.aoStopChance', 1.0); return 1" >/dev/null
+  kit "{'$AJA', 1}, {'$CRU', 1}, {'Items.AO_Feed_762_CeaseAndDesist', 1}, {'Ammo.AO_762_CeaseAndDesist', 100}, {'Items.AO_Feed_12ga_CeaseAndDesist', 1}, {'Ammo.AO_12ga_CeaseAndDesist', 50}"
+  draw $AJA; draw $AJA; feed Items.AO_Feed_762_CeaseAndDesist
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $AJA
+  shoot "" 3
+  local n; n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.ForceStagger')")
+  [[ $n -ge 1 ]] && pass "a hit staggers a Normal ($n)" || fail "Normal stagger: $n"
+  despawn
+  draw $CRU; draw $CRU; feed Items.AO_Feed_12ga_CeaseAndDesist
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $CRU
+  lua "RIG.clear(); return 1" >/dev/null
+  for _ in $(seq 30); do [[ $(lua "return RIG.fireV()") == fired ]] && break; sleep 0.3; done
+  sleep 2
+  echo "  pellets landed $(lua "return #RIG.ratios('V')")"
+  is "one blast staggers once" "$(lua "return RIG.effects('NPC', 'BaseStatusEffect.ForceStagger')")" 1
+  despawn
+  stopv
+  lua "TweakDB:SetFlat('Ammo.AO_762_CeaseAndDesist.aoStopChance', 0.3); TweakDB:SetFlat('Ammo.AO_12ga_CeaseAndDesist.aoStopChance', 0.3); return 1" >/dev/null
+}
+
+stopv() {
+  local AJA=Items.Preset_Ajax_Default
+  kit "{'$AJA', 1}"
+  draw $AJA; draw $AJA
+  lua "TweakDB:SetFlat('Ammo.AO_762_CeaseAndDesist.aoStopChance', 1.0); return 1" >/dev/null
+  carrier Ammo.AO_762_CeaseAndDesist Character.AO_Test_Mil_Ajax $AJA
+  npcshoot 2 6
+  local n; n=$(lua "return RIG.effects('V', 'BaseStatusEffect.BlockBroken')")
+  echo "  hits on V $(lua "return #RIG.ratios('NPC')")"
+  [[ $n -ge 1 ]] && pass "an NPC's Cease and Desist staggers V ($n)" || fail "stagger on V: $n"
+  is "V never gets the NPC stagger" "$(lua "return RIG.effects('V', 'BaseStatusEffect.ForceStagger')")" 0
+  kitgod; despawn
+}
+
+# --- legs: Leg Day cripples a Normal, staggers an Elite, floors V ------------------------------------
+legs() {
+  local NOV=Items.Preset_Nova_Default
+  is "a Normal is crippled" "$(lua "return $SYS:DebugLegEffect('Normal')")" BaseStatusEffect.CrippledLeg
+  is "an Elite staggers" "$(lua "return $SYS:DebugLegEffect('Elite')")" BaseStatusEffect.ForceStagger
+  is "a Boss staggers" "$(lua "return $SYS:DebugLegEffect('Boss')")" BaseStatusEffect.ForceStagger
+  is "V goes down" "$(lua "return $SYS:DebugLegEffect('')")" BaseStatusEffect.Knockdown
+  lua "TweakDB:SetFlat('Ammo.AO_12mm_LegDay.aoLegChance', 1.0); return 1" >/dev/null
+  kit "{'$NOV', 1}, {'Items.AO_Feed_12mm_LegDay', 1}, {'Ammo.AO_12mm_LegDay', 100}"
+  draw $NOV; draw $NOV; feed Items.AO_Feed_12mm_LegDay
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $NOV
+  shoot "" 2
+  local n; n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.CrippledLeg')")
+  [[ $n -ge 1 ]] && pass "a live hit cripples a Normal ($n)" || fail "cripple: $n"
+  is "its legs are out" "$(lua "return Game.GetStatsSystem():GetStatValue(RIG.npc():GetEntityID(), gamedataStatType.CanUseLegs)")" 0
+  despawn
+  carrier Ammo.AO_12mm_LegDay Character.AO_Test_Animal_Nova $NOV
+  npcshoot 2 6
+  n=$(lua "return RIG.effects('V', 'BaseStatusEffect.Knockdown')")
+  echo "  hits on V $(lua "return #RIG.ratios('NPC')")"
+  [[ $n -ge 1 ]] && pass "an NPC's Leg Day floors V ($n)" || fail "V knockdown: $n"
+  is "V is never crippled" "$(lua "return RIG.effects('V', 'BaseStatusEffect.CrippledLeg')")" 0
+  kitgod; despawn
+  lua "TweakDB:SetFlat('Ammo.AO_12mm_LegDay.aoLegChance', 0.2); return 1" >/dev/null
+}
+
+# --- pumped: Protein Loads' kill buff, its stacks, on V and an NPC -----------------------------------
+pumped() {
+  local NOV=Items.Preset_Nova_Default
+  stacks() { lua "local o = $1; local r = 0; for _, e in ipairs(Game.GetStatusEffectSystem():GetAppliedEffects(o:GetEntityID())) do if e:GetRecord():GetID().hash == TweakDBID.new('AmmoOverhaul.Pumped').hash then r = e:GetStackCount() end end return r"; }
+  kit "{'$NOV', 1}, {'Items.AO_Feed_12mm_ProteinLoads', 1}, {'Ammo.AO_12mm_ProteinLoads', 100}"
+  draw $NOV; draw $NOV; feed Items.AO_Feed_12mm_ProteinLoads
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $NOV; frail "RIG.npc()" 5.0
+  local sp rb; sp=$(lua "return Game.GetStatsSystem():GetStatValue(Game.GetPlayer():GetEntityID(), gamedataStatType.MaxSpeed)")
+  rb=$(lua "return Game.GetStatsSystem():GetStatValue(Game.GetPlayer():GetActiveWeapon():GetEntityID(), gamedataStatType.ReloadTimeBonus)")
+  kill_npc; sleep 0.5
+  is "a kill pumps V once" "$(stacks 'Game.GetPlayer()')" 1
+  echo "  speed $sp -> $(lua "return Game.GetStatsSystem():GetStatValue(Game.GetPlayer():GetEntityID(), gamedataStatType.MaxSpeed)")"
+  echo "  V reload bonus $(lua "return Game.GetStatsSystem():GetStatValue(Game.GetPlayer():GetEntityID(), gamedataStatType.ReloadTimeBonus)"), gun $rb -> $(lua "return Game.GetStatsSystem():GetStatValue(Game.GetPlayer():GetActiveWeapon():GetEntityID(), gamedataStatType.ReloadTimeBonus)")"
+  lua "for _ = 1, 4 do StatusEffectHelper.ApplyStatusEffect(Game.GetPlayer(), TweakDBID.new('AmmoOverhaul.Pumped')) end return 1" >/dev/null; sleep 0.5
+  is "stacks stop at 3" "$(stacks 'Game.GetPlayer()')" 3
+  echo "  speed at 3 stacks $(lua "return Game.GetStatsSystem():GetStatValue(Game.GetPlayer():GetEntityID(), gamedataStatType.MaxSpeed)")"
+  despawn
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  lua "StatusEffectHelper.ApplyStatusEffect(RIG.npc(), TweakDBID.new('AmmoOverhaul.Pumped')); return 1" >/dev/null; sleep 0.5
+  is "it stacks on an NPC too" "$(stacks 'RIG.npc()')" 1
+  echo "  NPC reload bonus $(lua "return Game.GetStatsSystem():GetStatValue(RIG.npc():GetEntityID(), gamedataStatType.ReloadTimeBonus)")"
+  despawn
+  lua "StatusEffectHelper.RemoveStatusEffect(Game.GetPlayer(), TweakDBID.new('AmmoOverhaul.Pumped')); return 1" >/dev/null
+}
+
+# --- crits: a gun's crit stats reach the roll -------------------------------------------------------
+crits() {
+  kit "{'$UNI', 1}, {'Items.AO_Feed_45_GoldTips', 1}, {'Ammo.AO_45_GoldTips', 400}, {'Items.AO_Feed_45_Subsonic', 1}, {'Ammo.AO_45_Subsonic', 400}"
+  draw $UNI; draw $UNI; feed Items.AO_Feed_45_Subsonic
+  local plain gold
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $UNI
+  shoot "" 80; plain=$(lua "return RIG.flagged('V', 'crit')")
+  feed Items.AO_Feed_45_GoldTips
+  echo "  gun crit stat $(gunstat CritChance), crit damage $(gunstat CritDamage)"
+  shoot "" 80; gold=$(lua "return RIG.flagged('V', 'crit')")
+  lua "RIG.npcMode = nil; return 1" >/dev/null
+  echo "  crits: plain $plain, Gold Tips $gold"
+  awk -v a="$plain" -v b="$gold" 'BEGIN { split(a, x, "/"); split(b, y, "/"); exit !(y[1] / y[2] - x[1] / x[2] >= 0.08) }' && pass "Gold Tips crit more" || fail "crit share: $plain against $gold"
   despawn
 }
 

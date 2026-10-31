@@ -453,6 +453,11 @@ public abstract class AOData {
   //   <ammo>.aoMuleKick: knocks the target down and shoves V on each shot (MuleKick.reds)
   //   <ammo>.aoSelfJam: each shot's chance to jam the shooter's own gun (FactionRounds.reds)
   //   <ammo>.aoPartsPuller: V's kill leaves crafting components on the body (FactionRounds.reds)
+  //   <ammo>.aoHeadEffect: a status effect added on a headshot; <ammo>.aoHeadFallback: its chance
+  //     per hit on V, if the game doesn't flag headshots on V (FactionRounds.reds)
+  //   <ammo>.aoStopChance: each shot's chance to stagger the target (FactionRounds.reds)
+  //   <ammo>.aoLegChance: each shot's chance to cripple the target's legs (FactionRounds.reds)
+  //   <ammo>.aoPumped: a kill buffs the shooter (FactionRounds.reds)
 
   public static func HitEffects(ammo: TweakDBID, out chances: array<Float>) -> array<TweakDBID> {
     let effects: array<TweakDBID> = AOData.GetIDs(AOData.Flat(ammo, "aoEffects"));
@@ -523,6 +528,27 @@ public abstract class AOData {
 
   public static func PartsPuller(ammo: TweakDBID) -> Bool {
     return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoPartsPuller"), false);
+  }
+
+  public static func HeadEffect(ammo: TweakDBID) -> TweakDBID {
+    let name: String = TweakDBInterface.GetString(AOData.Flat(ammo, "aoHeadEffect"), "");
+    return StrLen(name) > 0 ? TDBID.Create(name) : TDBID.None();
+  }
+
+  public static func HeadFallback(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoHeadFallback"), 0.0);
+  }
+
+  public static func StopChance(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoStopChance"), 0.0);
+  }
+
+  public static func LegChance(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoLegChance"), 0.0);
+  }
+
+  public static func Pumped(ammo: TweakDBID) -> Bool {
+    return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoPumped"), false);
   }
 
   public static func IsNonlethal(ammo: TweakDBID) -> Bool {

@@ -107,6 +107,45 @@ AmmoOverhaul.PingTag:
         modifierType: Additive
         value: 5
 
+# Protein Loads: what a kill gives the shooter.
+AmmoOverhaul.Pumped:
+  $base: BaseStatusEffect.Sovereign_Speed_Buff
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 10
+  maxStacks:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxStacks
+        modifierType: Additive
+        value: 3
+  packages:
+    - $type: gamedataGameplayLogicPackage_Record
+      stackable: true
+      effectors:
+        - $type: gamedataApplyStatGroupEffector_Record
+          effectorClassName: ApplyStatGroupEffector
+          prereqRecord: Prereqs.AlwaysTruePrereq
+          statGroup:
+            $type: gamedataStatModifierGroup_Record
+            statModsLimit: -1
+            statModifiers:
+              - $type: ConstantStatModifier
+                statType: BaseStats.MaxSpeed
+                modifierType: AdditiveMultiplier
+                value: 0.06
+              - $type: ConstantStatModifier
+                statType: BaseStats.ReloadTimeBonus
+                modifierType: Additive
+                value: -0.1
+
 # Lockout's jam (Legendary smart rounds): the weapon malfunction Hack Carrier uses, 4 s instead of
 # its 14 s, on NPCs and V alike.
 AmmoOverhaul.LockoutJam:
@@ -216,6 +255,7 @@ AmmoOverhaul.factionOf.Arasaka: "Arasaka"
 AmmoOverhaul.factionOf.TygerClaws: "TygerClaws"
 AmmoOverhaul.factionOf.Valentinos: "Valentinos"
 AmmoOverhaul.factionOf.SixthStreet: "SixthStreet"
+AmmoOverhaul.factionOf.SixthStreetAndroid: "SixthStreet"
 AmmoOverhaul.factionOf.Militech: "Militech"
 AmmoOverhaul.factionOf.Animals: "Animals"
 # Chance per gun of a faction round, after the Legendary roll and before the general tiers (a miss

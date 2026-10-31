@@ -72,6 +72,14 @@ def test_second_batch_flats():
     assert "Ammo.AO_TLight_MilSpec.rollMin: 0.95" in by["5mm", "MilSpec"]
 
 
+def test_crit_stats_are_in_percent():
+    # DamageSystem divides a gun's CritChance and CritDamage by 100.
+    for k in KINDS:
+        for m in k["stats"]:
+            if m[0] in ("BaseStats.CritChance", "BaseStats.CritDamage"):
+                assert m[2] >= 1.0, k["load"]
+
+
 def test_gold_tips_sell_for_half_again_the_rare_price():
     y = round_yaml("45", next(k for t, k in faction_rounds() if k["load"] == "GoldTips"))
     assert y.count("value: 3\n") == 2

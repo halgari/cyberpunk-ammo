@@ -6,7 +6,11 @@ module AmmoOverhaul
 //   - the faction roll, and what a gun shop on the faction's turf adds to its stock;
 //   - Redliners (<ammo>.aoSelfJam): a shot can jam the shooter's own gun, V's or an NPC's;
 //   - Parts-pullers (<ammo>.aoPartsPuller): V's kill leaves crafting components of the round's
-//     grade on the body. An NPC firing one gets nothing from it.
+//     grade on the body. An NPC firing one gets nothing from it;
+//   - Santa Muerte (<ammo>.aoHeadEffect): a status effect on a headshot;
+//   - Cease and Desist (<ammo>.aoStopChance) and Leg Day (<ammo>.aoLegChance): a stagger or crippled
+//     legs, per shot and by the target's rank;
+//   - Protein Loads (<ammo>.aoPumped): a kill stacks AmmoOverhaul.Pumped on the shooter, V or NPC.
 
 // The Parts-pullers round that last hit this NPC and when; a death right after it is that hit's kill.
 @addField(NPCPuppet)
@@ -18,6 +22,13 @@ public let aoPartsAmmo: TweakDBID;
 // The kill's round, until the components are in the body's loot.
 @addField(NPCPuppet)
 public let aoPartsKill: TweakDBID;
+
+// The Protein Loads shooter that last hit this NPC and when, read like the Parts-pullers mark.
+@addField(NPCPuppet)
+public let aoPumpAt: Float;
+
+@addField(NPCPuppet)
+public let aoPumpBy: wref<GameObject>;
 
 public abstract class FactionRounds {
 
@@ -92,6 +103,7 @@ public abstract class FactionRounds {
     let npc: ref<NPCPuppet> = target as NPCPuppet;
     if IsDefined(npc) {
       npc.aoPartsAt = 0.0;
+      npc.aoPumpAt = 0.0;
     }
   }
 
@@ -104,7 +116,78 @@ public abstract class FactionRounds {
     }
   }
 
+  // `shooter` hit `target` with a Protein Loads round (from AmmoFeedSystem.ApplyAmmoOnHit).
+  public static func MarkPump(target: ref<GameObject>, shooter: ref<GameObject>) -> Void {
+    let npc: ref<NPCPuppet> = target as NPCPuppet;
+    if IsDefined(npc) {
+      npc.aoPumpAt = CookOff.Now(npc.GetGame());
+      npc.aoPumpBy = shooter;
+    }
+  }
+
+  // Whether Cease and Desist staggers an NPC of `rarity`.
+  public static func Stops(rarity: String) -> Bool {
+    return !Equals(rarity, "Boss") && !Equals(rarity, "MaxTac");
+  }
+
+  // What Cease and Desist does to `rarity`, empty for V: ForceStagger never ends on V and plays
+  // nothing there, BlockBroken is V's own stagger.
+  public static func StopEffect(rarity: String) -> TweakDBID {
+    return StrLen(rarity) == 0 ? t"BaseStatusEffect.BlockBroken" : t"BaseStatusEffect.ForceStagger";
+  }
+
+  // What Leg Day does to `rarity`, empty for V. CrippledLeg never ends, so V goes down instead.
+  public static func LegEffect(rarity: String) -> TweakDBID {
+    if StrLen(rarity) == 0 {
+      return t"BaseStatusEffect.Knockdown";
+    }
+    let tough: Bool = Equals(rarity, "Elite") || Equals(rarity, "Boss") || Equals(rarity, "MaxTac");
+    return tough ? t"BaseStatusEffect.ForceStagger" : t"BaseStatusEffect.CrippledLeg";
+  }
+
+  // A hit by any gun that passed the effect gate (from AmmoFeedSystem.ApplyAmmoOnHit). Each pellet
+  // that lands comes through here; the Mule Kick gate keeps it to one stagger or cripple per shot.
+  public static func OnHit(attackData: ref<AttackData>, target: ref<GameObject>, ammo: TweakDBID, pellets: Int32) -> Void {
+    let puppet: ref<ScriptedPuppet> = target as ScriptedPuppet;
+    if !IsDefined(puppet) {
+      return;
+    }
+    let head: TweakDBID = AOData.HeadEffect(ammo);
+    if TDBID.IsValid(head) {
+      if target.IsPlayer() && (attackData.HasFlag(hitFlag.Headshot) || RandF() < AOData.HeadFallback(ammo)) {
+        attackData.AddStatusEffect(AOData.PlayerEffect(head), 1.0);
+      } else {
+        if !target.IsPlayer() && attackData.HasFlag(hitFlag.Headshot) {
+          attackData.AddStatusEffect(head, 1.0);
+        }
+      }
+    }
+    let stop: Float = AOData.StopChance(ammo);
+    let legs: Float = AOData.LegChance(ammo);
+    if stop <= 0.0 && legs <= 0.0 || target.IsDrone() || target.IsTurret() {
+      return;
+    }
+    let now: Float = CookOff.Now(puppet.GetGame());
+    if puppet.aoMuleKickAt > 0.0 && now - puppet.aoMuleKickAt < MuleKick.Gate() {
+      return;
+    }
+    let rarity: String = MuleKick.Rarity(puppet);
+    if stop > 0.0 && FactionRounds.Stops(rarity) && RandF() < AOData.PelletChance(stop, pellets) {
+      puppet.aoMuleKickAt = now;
+      attackData.AddStatusEffect(FactionRounds.StopEffect(rarity), 1.0);
+    }
+    if legs > 0.0 && RandF() < AOData.PelletChance(legs, pellets) {
+      puppet.aoMuleKickAt = now;
+      attackData.AddStatusEffect(FactionRounds.LegEffect(rarity), 1.0);
+    }
+  }
+
   public static func OnDeath(npc: ref<NPCPuppet>) -> Void {
+    if npc.aoPumpAt > 0.0 && CookOff.Now(npc.GetGame()) - npc.aoPumpAt <= 0.5 && IsDefined(npc.aoPumpBy) {
+      StatusEffectHelper.ApplyStatusEffect(npc.aoPumpBy, t"AmmoOverhaul.Pumped");
+      AmmoFeedSystem.Log("protein loads: pumped " + TDBID.ToStringDEBUG(npc.GetRecordID()));
+    }
+    npc.aoPumpAt = 0.0;
     if npc.aoPartsAt <= 0.0 || CookOff.Now(npc.GetGame()) - npc.aoPartsAt > 0.5 {
       return;
     }

@@ -43,8 +43,8 @@ Numbers are starting points for the feel test. Calibers come from what each fact
     damage. +20% recoil."
 - **Santa Muerte** (Epic; .45, 12mm)
   - +50% headshot damage, and a headshot sets the target on fire.
-  - On V: an NPC's shot sets V on fire on a headshot if the game flags those on V. If it doesn't, each
-    hit on V has a 10% chance instead, so the round still does the same thing to V.
+  - On V: the game flagged no headshots on V (0 of 46 hits), so each hit on V has a 10% chance
+    instead, so the round still does the same thing to V.
   - Text: "Blessed before they're loaded. La Santisima takes who she takes.\n\n+50% headshot damage.
     Headshots set the target on fire."
 
@@ -72,7 +72,8 @@ Numbers are starting points for the feel test. Calibers come from what each fact
   - 30% chance per shot to stagger the target (`BaseStatusEffect.ForceStagger`), 50% armor pen,
     -10% damage. Boss and MaxTac NPCs don't stagger. Whether it really stops return fire is checked
     in the feel test.
-  - On V: a stagger.
+  - On V: `BaseStatusEffect.BlockBroken`, V's own stagger. `ForceStagger` never ends on V and plays
+    nothing there.
   - Text: "Militech Legal's preferred wording. Whoever takes one loses their footing.\n\n30% chance per shot to
     stagger the target. 50% armor penetration. -10% damage."
 
