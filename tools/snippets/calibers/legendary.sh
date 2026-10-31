@@ -107,7 +107,6 @@ cookoff() {
   # The neighbour at 30%: the blast (35% of max health) kills it only if it does its damage.
   local h1 h2; h1=$(frail "RIG.npc()" 30.0); h2=$(frail "$N2" 30.0)
   echo "  health set to $h1% and $h2%"
-  local blasts0; blasts0=$(trail_count "cook%-off: blast")
   lua "CK.hits = {}; return 1" >/dev/null
   # The neighbour carries a fresh Cook-off mark (under 0.5 s old) when the blast kills it: the
   # blast hit must clear it.
@@ -131,7 +130,8 @@ return string.format('NOTE neighbour %.1f m from the body; blast hits: %s', Vect
   local n2; n2=$(hits_on AmmoOverhaul.CookOffBlast "$N2")
   [[ $n2 -ge 1 ]] && pass "the blast hit the NPC next to it ($n2 hit)" || fail "the blast hit the NPC next to it: $n2"
   is "the neighbour died to the blast" "$(lua "return $N2:IsDead()")" true
-  is "one blast for two deaths, the neighbour marked by Cook-off too (no chain)" "$(( $(trail_count "cook%-off: blast") - blasts0 ))" 1
+  # Counted on V, in reach of both bodies: the trail keeps 40 lines, so a count off it can miss one.
+  is "one blast for two deaths, the neighbour marked by Cook-off too (no chain)" "$(hits_on AmmoOverhaul.CookOffBlast "Game.GetPlayer()")" 1
   gone2; lua "GetMod('AOTestKit').despawnAll(); return 1" >/dev/null
 
   # An NPC's Cook-off hit on V.
