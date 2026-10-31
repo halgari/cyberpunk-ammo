@@ -25,13 +25,15 @@ END = "# === END GENERATED ==="
 
 RARE, EPIC, LEGENDARY = 2, 3, 4
 # Faction rounds have their own tier codes, so the general lists (which match tiers exactly) never
-# hold them: rolled by NPCs of their faction only (NpcAmmo.RollFaction), never crafted.
-FACTION_RARE, FACTION_EPIC, FACTION_COMMON = 5, 6, 7
+# hold them: rolled by NPCs of their faction only (FactionRounds.Roll), never crafted. Moving a round
+# between them is its tier= in KINDS and a run of this file and tools/crafting/crafting.py; quality,
+# price, disassembly and the NPC roll follow (test_rounds.py's SPEC holds the list to check against).
+FACTION_RARE, FACTION_EPIC, FACTION_COMMON, FACTION_UNCOMMON = 5, 6, 7, 8
 QUALITY = {RARE: "Rare", EPIC: "Epic", LEGENDARY: "Legendary",
-           FACTION_RARE: "Rare", FACTION_EPIC: "Epic", FACTION_COMMON: "Common"}
+           FACTION_RARE: "Rare", FACTION_EPIC: "Epic", FACTION_COMMON: "Common", FACTION_UNCOMMON: "Uncommon"}
 # Price on top of the base ammo (the caliber's plain Uncommon, already x2 of Common): Rare x4, Epic x8,
 # Legendary x16; faction rounds as their quality, except the faction Common, half the Common round.
-PRICE = {RARE: 2, EPIC: 4, LEGENDARY: 8, FACTION_RARE: 2, FACTION_EPIC: 4, FACTION_COMMON: 0.25}
+PRICE = {RARE: 2, EPIC: 4, LEGENDARY: 8, FACTION_RARE: 2, FACTION_EPIC: 4, FACTION_COMMON: 0.25, FACTION_UNCOMMON: 1}
 # The short tag at the end of a faction round's name.
 FACTION_TAG = {"Maelstrom": "[Mael]", "Scavengers": "[Scav]", "Arasaka": "[Ara]"}
 
@@ -404,7 +406,7 @@ KINDS = [
          stats=[mult("CycleTime", 0.8)] + recoil(1.40) + spread(1.40),
          hit=dict(selfjam=0.02),
          desc="Overpressure loads. They run the gun past what it was built for, and sometimes the gun quits.\n\n+25% fire rate. +40% recoil and spread. 2% chance per shot to jam your weapons for 3 seconds."),
-    dict(load="ChromeCookers", title="Chrome-cookers", tier=FACTION_RARE, faction="Maelstrom", look=((30, 30, 32), (200, 40, 30)),
+    dict(load="ChromeCookers", title="Chrome-cookers", tier=FACTION_EPIC, faction="Maelstrom", look=((30, 30, 32), (200, 40, 30)),
          art={'coil': 'blue'},
          calibers=["5mm", "Heavy"],
          stats=damage(0.90),
@@ -422,7 +424,7 @@ KINDS = [
          calibers=["12mm", "45", "9mm"],
          stats=[],
          desc="Recycled brass from mixed lots, reloaded by hand. Cheap, and you never know what you'll get.\n\nDamage varies -30% to +15%. 8% are duds that hit for a quarter. 5% run hot and hit for +50%."),
-    dict(load="GutterLead", title="Gutter Lead", tier=FACTION_RARE, faction="Scavengers", look=((110, 100, 90), (60, 90, 40)),
+    dict(load="GutterLead", title="Gutter Lead", tier=FACTION_UNCOMMON, faction="Scavengers", look=((110, 100, 90), (60, 90, 40)),
          art={'jacket': 'lead', 'nose': 'flat'},
          calibers=["12mm", "45", "9mm"],
          stats=damage(0.50),
@@ -449,7 +451,7 @@ KINDS = [
          stats=[mult("SmartGunAdsTimeToLock", 0.5), mult("SmartGunHipTimeToLock", 0.5)],
          hit=dict(effects=[("AmmoOverhaul.PingTag", 1.0)]),
          desc="Smart rounds with a tag chip behind the seeker. Whatever they hit stays on your optics, and the gun finds its lock quicker.\n\nTargets hit show through walls for 5 seconds. Locks on twice as fast."),
-    dict(load="Shinobi", title="Shinobi", tier=FACTION_RARE, faction="Arasaka", look=((20, 20, 22), (120, 120, 125)),
+    dict(load="Shinobi", title="Shinobi", tier=FACTION_EPIC, faction="Arasaka", look=((20, 20, 22), (120, 120, 125)),
          art={'case_mat': 'black', 'tip': 'black'},
          calibers=["9mm", "45"],
          stats=[add("CanSilentKill", 1.0), add("HeadshotDamageMultiplier", 0.5)] + range_(0.90),

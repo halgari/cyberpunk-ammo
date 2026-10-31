@@ -2,7 +2,8 @@ module AmmoOverhaul
 
 // Vendor ammo: each stack of vanilla ammo a caliber replaces is split into that ammo's calibers
 // and tiers (AmmoDistribution.Spread) whenever the vendor builds its stock. Gun shops sell up to
-// Rare, everyone else Common only. A restock rebuilds the stock from the vendor's pool (our
+// Rare, everyone else Common only; shops on a faction's turf add that faction's rounds
+// (FactionRounds.TurfStock). A restock rebuilds the stock from the vendor's pool (our
 // rounds are regenerating items, so the old split stacks are dropped first), so each stack is
 // split once.
 
@@ -60,6 +61,15 @@ private final func AOSplitAmmo() -> Void {
       copy.quantity = 1;
       ArrayPush(stock, copy);
     }
+    let faction: String = TweakDBInterface.GetString(AOData.Flat(this.GetVendorTweakID(), "aoFaction"), "");
+    if StrLen(faction) > 0 {
+      for part in FactionRounds.TurfStock(faction) {
+        let copy: SItemStack = template;
+        copy.itemID = ItemID.FromTDBID(part.ammo);
+        copy.quantity = part.quantity;
+        ArrayPush(stock, copy);
+      }
+    }
   }
   if split > 0 {
     this.m_stock = stock;
@@ -68,6 +78,19 @@ private final func AOSplitAmmo() -> Void {
 }
 
 // --- Debug (AmmoFeedSystem.DebugVendors / DebugRestock) ---------------------------------------
+
+// The faction rounds in the stock, "item=quantity;...".
+@addMethod(Vendor)
+public final func AODebugFactionAmmo() -> String {
+  let text: String = "";
+  for stack in this.GetStock() {
+    let id: TweakDBID = ItemID.GetTDBID(stack.itemID);
+    if StrLen(TweakDBInterface.GetString(AOData.Flat(id, "aoFaction"), "")) > 0 {
+      text += TDBID.ToStringDEBUG(id) + "=" + IntToString(stack.quantity) + ";";
+    }
+  }
+  return text;
+}
 
 // "item=quantity;..." of the ammo in the vendor's stock.
 @addMethod(Vendor)

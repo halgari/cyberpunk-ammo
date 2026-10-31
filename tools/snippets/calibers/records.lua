@@ -165,13 +165,13 @@ end
 -- Common round (on the price lists), the Common round's weight, text, icon, a hidden selector of the
 -- tier's quality, no damage-type or machine stats on the selector (those are hit data, applied to
 -- V and NPCs alike), valid hit data.
--- Faction tiers: 5 Rare, 6 Epic, 7 Common quality at half the Common round's price.
-local QUAL = { [2] = "Quality.Rare", [3] = "Quality.Epic", [4] = "Quality.Legendary", [5] = "Quality.Rare", [6] = "Quality.Epic", [7] = "Quality.Common" }
-local PRICE = { [2] = 4, [3] = 8, [4] = 16, [5] = 4, [6] = 8, [7] = 0.5 }
+-- Faction tiers: 5 Rare, 6 Epic, 7 Common quality at half the Common round's price, 8 Uncommon.
+local QUAL = { [2] = "Quality.Rare", [3] = "Quality.Epic", [4] = "Quality.Legendary", [5] = "Quality.Rare", [6] = "Quality.Epic", [7] = "Quality.Common", [8] = "Quality.Uncommon" }
+local PRICE = { [2] = 4, [3] = 8, [4] = 16, [5] = 4, [6] = 8, [7] = 0.5, [8] = 2 }
 local SHARE_TYPES = { Thermal = true, Chemical = true, Electric = true }
 local BANNED = { ["BaseStats.ThermalDamage"] = true, ["BaseStats.ChemicalDamage"] = true, ["BaseStats.ElectricDamage"] = true,
   ["BaseStats.BonusDamageAgainstMechanicals"] = true }
-local counted = { [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0 }
+local counted = { [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 0, [7] = 0, [8] = 0 }
 for _, cal in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
   local K = "AmmoOverhaul." .. cal
   local sels, ammos, tiers = flat(K, "selectors") or {}, flat(K, "selectorAmmo") or {}, flat(K, "selectorTiers") or {}
@@ -215,7 +215,7 @@ check("96 Rare and Epic rounds listed", counted[2] + counted[3] == 96, counted[2
 check("Rare count", counted[2] == 50, tostring(counted[2]))
 check("Epic count", counted[3] == 46, tostring(counted[3]))
 check("14 Legendary rounds listed", counted[4] == 14, tostring(counted[4]))
-check("26 faction rounds listed", counted[5] + counted[6] + counted[7] == 26, counted[5] .. " Rare, " .. counted[6] .. " Epic, " .. counted[7] .. " Common")
+check("26 faction rounds listed", counted[5] + counted[6] + counted[7] + counted[8] == 26, counted[5] .. " Rare, " .. counted[6] .. " Epic, " .. counted[7] .. " Common")
 
 
 -- The 12mm, 7.62 and 12.7 Penetrator go through thin cover (the Tech pierce stats, probed on an

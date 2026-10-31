@@ -43,13 +43,13 @@ def test_legendary_has_scrap_but_no_recipe():
 def test_faction_tiers_have_scrap_but_no_recipe():
     from crafting import caliber_block
     text = ('AmmoOverhaul.Power_9mm.family: "Power"\nAmmoOverhaul.Power_9mm.craftBatch: 90\n'
-            'AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.AO_9mm_Ball", "Ammo.AO_9mm_X", "Ammo.AO_9mm_Y", "Ammo.AO_9mm_Z"]\n'
-            'AmmoOverhaul.Power_9mm.selectorTiers: [0, 5, 6, 7]\n')
+            'AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.AO_9mm_Ball", "Ammo.AO_9mm_W", "Ammo.AO_9mm_X", "Ammo.AO_9mm_Y", "Ammo.AO_9mm_Z"]\n'
+            'AmmoOverhaul.Power_9mm.selectorTiers: [0, 5, 6, 7, 8]\n')
     loc = {"AO-Ammo-9mm-Ball": "9mm Ball"}
     block, pairs, costs = caliber_block("Power_9mm", text, loc, lambda a: "AO-Ammo-9mm-Ball", 10)
-    for short in "XYZ":
+    for short in "WXYZ":
         assert f"Ammo.AO_9mm_{short}.aoScrapRounds: 90" in block
         assert f'Ammo.AO_9mm_{short}.aoRecipe: ""' in block
         assert f"AO_Recipe_AO_9mm_{short}" not in block
         assert not any(f"Ammo.AO_9mm_{short}:" in c for c in costs)
-    assert not re.search(r"AO_Cost_Power_[4567]", block)
+    assert not re.search(r"AO_Cost_Power_[45678]", block)

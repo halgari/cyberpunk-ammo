@@ -7,7 +7,8 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
 
 - Faction rounds: 26 new rounds, 175 in all. Maelstrom, Scavengers and Arasaka each have their own,
   in their own packaging, marked [Mael], [Scav] or [Ara] in the name. They come from that faction's
-  NPCs, who carry and fire them and drop what's left on them. They can't be crafted.
+  NPCs, who carry and fire them and drop what's left on them. A few gun shops on their turf stock
+  some too. They can't be crafted.
   - Redliners (.45, 5.56, 7.62): +25% fire rate, +40% recoil and spread, and a 2% chance per shot
     to jam your weapons for 3 seconds.
   - Chrome-cookers (light and heavy rail): 15% chance of a cyberware malfunction. -10% damage.
@@ -22,7 +23,9 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
   - Kansatsu (10mm, 20mm, 25mm): targets hit show through walls for 5 seconds. Locks on twice as
     fast.
   - Shinobi (9mm, .45): silent kills, +50% headshot damage. -10% range.
-- Gun shops don't sell faction rounds. Containers don't hold them.
+- Gun shops in Northside, Kabuki and the Arroyo sometimes carry a stack or two of their turf's
+  faction rounds, and the two Scav shops always have Reloads. Nobody sells Epic. Containers don't
+  hold faction rounds.
 
 ## 0.5.0
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # Faction rounds on live hits (spec docs/superpowers/specs/2026-10-30-faction-rounds-design.md,
-# "Testing"), one check per mechanism. Parts: affiliation rolls lists stats oneGun reloads redliners
+# "Testing"), one check per mechanism. Parts: affiliation rolls lists turf stats oneGun reloads redliners
 # swap chrome roll parts kansatsu (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/faction.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL. The rig's shots don't
 # go through V's shooting state, so V's self-jam is driven by DebugSelfJam, not a trigger pull.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(affiliation rolls lists stats oneGun reloads redliners swap chrome roll parts kansatsu)
+parts=("$@"); (( ${#parts[@]} )) || parts=(affiliation rolls lists turf stats oneGun reloads redliners swap chrome roll parts kansatsu)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 UNI=Items.Preset_Unity_Default; LEX=Items.Preset_Lexington_Default; OMA=Items.Preset_Omaha_Default; YUK=Items.Preset_Yukimura_Default
 pass() { echo "PASS $*"; }
@@ -21,10 +21,12 @@ within() { awk -v v="$2" -v lo="$3" -v hi="$4" 'BEGIN { exit !(v >= lo && v <= h
 RARITIES="{'Trash','Weak','Normal','Rare','Officer','Elite','Boss','MaxTac'}"
 # Every rank's Rare and Epic faction chance, or back to core.yaml with no argument.
 chances() {
-  if [[ $# == 2 ]]; then lua "for _, r in ipairs($RARITIES) do TweakDB:SetFlat('AmmoOverhaul.npcFactionChance.' .. r, $1); TweakDB:SetFlat('AmmoOverhaul.npcFactionEpicChance.' .. r, $2) end return 1" >/dev/null
+  if [[ $# == 2 ]]; then lua "for _, r in ipairs($RARITIES) do TweakDB:SetFlat('AmmoOverhaul.npcFactionChance.' .. r, $1); TweakDB:SetFlat('AmmoOverhaul.npcFactionEpicChance.' .. r, $2); TweakDB:SetFlat('AmmoOverhaul.npcFactionEpicChance.Arasaka.' .. r, $2) end return 1" >/dev/null
   else lua "local a = { Weak = 0.05, Normal = 0.10, Rare = 0.15, Officer = 0.20, Elite = 0.25, Boss = 0.30 }
 local e = { Rare = 0.03, Officer = 0.05, Elite = 0.10, Boss = 0.15 }
-for _, r in ipairs($RARITIES) do TweakDB:SetFlat('AmmoOverhaul.npcFactionChance.' .. r, a[r] or 0.0); TweakDB:SetFlat('AmmoOverhaul.npcFactionEpicChance.' .. r, e[r] or 0.0) end return 1" >/dev/null; fi
+local z = { Normal = 0.05, Rare = 0.10, Officer = 0.15, Elite = 0.20, Boss = 0.25 }
+for _, r in ipairs($RARITIES) do TweakDB:SetFlat('AmmoOverhaul.npcFactionChance.' .. r, a[r] or 0.0); TweakDB:SetFlat('AmmoOverhaul.npcFactionEpicChance.' .. r, e[r] or 0.0)
+  TweakDB:SetFlat('AmmoOverhaul.npcFactionEpicChance.Arasaka.' .. r, z[r] or 0.0) end return 1" >/dev/null; fi
 }
 selfjam() { lua "TweakDB:SetFlat('Ammo.AO_45_Redliners.aoSelfJam', $1); return 1" >/dev/null; }
 trap 'chances; selfjam 0.02; restore' EXIT
@@ -71,7 +73,16 @@ rolls() {
   within "an Elite Scav's .45 rolls a Rare or Common faction round, 25% of what's past Legendary" "$(awk "BEGIN { print $(share "$r" Reloads) + $(share "$r" GutterLead) + $(share "$r" PartsPullers) }")" 21 27
   within "Reloads, Gutter Lead and Parts-pullers come up alike" "$(share "$r" Reloads)" 6.5 9.5
   r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Boss', 'Arasaka', 20000)")
-  within "a Boss Arasaka's .45 rolls Kata about 15% (after Legendary)" "$(share "$r" Kata)" 12 15.5
+  within "a Boss Arasaka's .45 rolls an Epic of theirs about 25% (after Legendary)" "$(awk "BEGIN { print $(share "$r" Kata) + $(share "$r" Shinobi) }")" 20 25
+  within "Kata and Shinobi come up alike" "$(share "$r" Shinobi)" 9.5 13
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Normal', 'Arasaka', 20000)")
+  within "a Normal Arasaka's .45 rolls one about 5%, from Arasaka's own table" "$(awk "BEGIN { print $(share "$r" Kata) + $(share "$r" Shinobi) }")" 4 6
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Weak', 'Arasaka', 20000)")
+  is "a Weak Arasaka rolls none" "$(awk "BEGIN { print $(share "$r" Kata) + $(share "$r" Shinobi) }")" 0
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Boss', 'Maelstrom', 20000)")
+  within "a Boss Maelstrom's .45 keeps the shared 15% Epic (after Legendary)" "$(share "$r" MeatGrinders)" 12 15.5
+  r=$(lua "return $SYS:DebugFactionPick('Tech_Light', 'Boss', 'Maelstrom', 20000)")
+  within "a Boss Maelstrom's light rail rolls Chrome-cookers, the shared Epic" "$(share "$r" ChromeCookers)" 11.5 16
   r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', '', 20000)")
   is "no faction, no faction round" "$(awk "BEGIN { print $(share "$r" Redliners) + $(share "$r" GutterLead) + $(share "$r" Kata) }")" 0
   within "no faction: an Elite still rolls Legendary about 3%" "$(share "$r" CookOff)" 2 4
@@ -85,7 +96,8 @@ rolls() {
   despawn
   AO_TRIES=20 spawn 0.0 Ammo.AO_45_GutterLead Character.AO_Test_Scav_Unity && pass "a Scav NPC carries Gutter Lead"
   despawn
-  spawn 0.0 Ammo.AO_45_Shinobi Character.AO_Test_Ara_Unity && pass "an Arasaka NPC carries Shinobi"
+  chances 1.0 1.0
+  AO_TRIES=20 spawn 0.0 Ammo.AO_45_Shinobi Character.AO_Test_Ara_Unity && pass "an Arasaka NPC carries Shinobi"
   despawn
   spawn 0.0 "" Character.AO_Test_Plain_Unity
   is "an unaffiliated NPC gets none with the chance at 1" "$(qty Ammo.AO_45_Redliners)$(qty Ammo.AO_45_Shinobi)$(qty Ammo.AO_45_GutterLead)" 000
@@ -99,6 +111,34 @@ lists() {
     r=$(lua "return tostring($SYS:DebugSpread('$v', 100000, 4))")
     [[ -n $r && $r != *Redliners* && $r != *Reloads* && $r != *Kata* && $r != *Kansatsu* && $r != *GutterLead* ]] && pass "$v spread holds no faction round" || fail "$v spread: $r"
   done
+}
+
+# --- turf: the four shops' stock builds, on a vendor object of their own ---------------------------
+turf() {
+  local r shop always
+  # builds with a stack beyond `always`, stacks of the faction, out of the builds.
+  count() { tr '|' '\n' <<<"$1" | tail -n +2 | awk -F';' -v a="$2" -v re="$3" '
+    { n = NF - 1; c = 0; for (i = 1; i < NF; i++) if ($i ~ re) c++; if (c != a) bad++; if (n - a > 0) more++; if (n - a > m) m = n - a; b++ }
+    END { printf "%d %d %d %d", b, more, m, bad }'; }
+  for shop in "wat_nid_gunsmith_01 Redliners MeatGrinders|ChromeCookers 0 x" \
+      "wat_kab_gunsmith_02 GutterLead|PartsPullers Nothing 3 Reloads" "std_arr_gunsmith_01 GutterLead|PartsPullers Nothing 3 Reloads"; do
+    read -r id own never always re <<<"$shop"
+    r=$(lua "return $SYS:DebugTurf('Vendors.$id', 200)")
+    is "$id is a gun shop" "${r%%|*}" Gunsmith
+    read -r b more m bad <<<"$(count "$r" "$always" "$re")"
+    is "$id: 200 builds" "$b" 200
+    is "$id: its $always stacks every build" "$bad" 0
+    within "$id: extra stacks in about 25% of builds" "$(awk "BEGIN { print 100 * $more / $b }")" 16 34
+    [[ $m -ge 1 && $m -le 2 ]] && pass "$id: one or two stacks ($m at most)" || fail "$id: $m extra stacks"
+    grep -qE "$own" <<<"$r" && pass "$id sells its faction's rounds" || fail "$id: none of $own"
+    grep -qE "$never" <<<"$r" && fail "$id sells $never" || pass "$id sells no Epic"
+    [[ $(tr '|;' '\n' <<<"${r#*|}" | grep -v '^$' | grep -cvE "$own|$re") == 0 ]] && pass "$id: no other faction's round" || fail "$id: $r"
+  done
+  # Arasaka has only Epic rounds and nobody sells Epic, so its shop adds nothing.
+  r=$(lua "return $SYS:DebugTurf('Vendors.cct_dtn_guns_01', 40)")
+  [[ ${r%%|*} == Gunsmith && $(tr -d '|' <<<"${r#*|}") == "" ]] && pass "Arasaka's turf shop adds nothing, its rounds being Epic" || fail "Arasaka shop: $r"
+  r=$(lua "return $SYS:DebugTurf('Vendors.wat_lch_gunsmith_01', 40)")
+  [[ ${r%%|*} == Gunsmith && $(tr -d '|' <<<"${r#*|}") == "" ]] && pass "a gun shop off turf sells no faction round" || fail "off turf: $r"
 }
 
 # --- stats: the kinds that are only stats, on V's gun --------------------------------------------
@@ -199,7 +239,7 @@ chrome() {
   kit "{'$OMA', 1}"
   draw $OMA; draw $OMA
   lua "TweakDB:SetFlat('Ammo.AO_TLight_ChromeCookers.aoEffectChances', {1.0}); return 1" >/dev/null
-  chances 1.0 0.0
+  chances 0.0 1.0
   spawn 0.0 Ammo.AO_TLight_ChromeCookers Character.AO_Test_Mael_Omaha
   vulnerable
   setup $OMA

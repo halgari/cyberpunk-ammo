@@ -197,7 +197,7 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 - `tools/icons/check_parts.py`: every `UIIcon` part in the YAML has a cell in the built atlas,
   every Rare and up round has its part, and the cells fit the atlas without overlapping.
 - `faction.sh [part ...]`: faction rounds on live hits, one check per mechanism: who rolls what and
-  how often, the general lists stay clear of them, stats on a gun, one gun's round not touching
+  how often, the general lists stay clear of them, the turf shops' stock, stats on a gun, one gun's round not touching
   another, Reloads' roll, Redliners' jam both ways, a jam across a swap, Chrome-cookers on V,
   Kata's roll, Parts-pullers' components, Kansatsu's short lock and the tag not shortening it. Draws
   guns and spawns NPCs: not while you play.

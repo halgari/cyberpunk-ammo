@@ -46,9 +46,9 @@ standalone `AmmoOverhaul.*` flats keyed by short names (read by `AOData.reds`):
   - `defaultAmmo`: the ammo an empty slot takes (the caliber's cheap standard round). The
     caliber's weapon records are set to it.
   - `selectors` / `selectorAmmo` / `selectorTiers`: parallel lists, selector part -> ammo item
-    it feeds -> tier (0 Common, 1 Uncommon, 2 Rare, 3 Epic, 4 Legendary; 5, 6 and 7 are faction
-    rounds at Rare, Epic and Common quality). General lists look rounds up by exact tier, so 4 to 7
-    never reach them.
+    it feeds -> tier (0 Common, 1 Uncommon, 2 Rare, 3 Epic, 4 Legendary; 5 to 8 are faction
+    rounds at Rare, Epic, Common and Uncommon quality). General lists look rounds up by exact tier,
+    so 4 to 8 never reach them. A faction round's tier is its `tier=` in `tools/rounds/rounds.py`.
   - `family` (`Power`, `Tech`, `Smart`), `vanillaAmmo` (the vanilla item its loot and vendor
     stock are taken from) and `lootWeight` (its share of that item), for distribution.
 - `AmmoOverhaul.shares.<family>`: each tier's share of a family's ammo.
@@ -187,9 +187,10 @@ Vanilla NPCs never use inventory ammo: shots go through script `AIWeapon.Fire` (
   (`AOData.LegendaryStack`).
   Between Legendary and the general tiers, an NPC whose affiliation maps to a faction
   (`factionOf.<affiliation>`, `AOData.FactionOf`) rolls that faction's rounds for the caliber
-  (`FactionRounds.Roll`): Epic at `npcFactionEpicChance.<rarity>`, then `npcFactionChance.<rarity>`
-  for tiers 5 and 7 together, every round as likely. A miss falls through. MaxTac and unaffiliated
-  NPCs get none.
+  (`FactionRounds.Roll`): Epic at `npcFactionEpicChance.<rarity>`, or
+  `npcFactionEpicChance.<faction>.<rarity>` where the faction has its own table (Arasaka, whose
+  rounds are all Epic), then `npcFactionChance.<rarity>` for tiers 5, 7 and 8 together, every round
+  as likely. A miss falls through. MaxTac and unaffiliated NPCs get none.
   On a hit the gun is stocked with one of that tier's rounds at random (`NpcAmmo.PickTier`) and
   the selector's stat modifiers are added straight to the gun's stats. No part is fitted:
   `TransactionSystem.AddPart` on an NPC's drawn gun hangs the game, and an
@@ -287,6 +288,10 @@ range doesn't change the tooltip yet (none ships with one).
 
 `FactionRounds.reds` holds what isn't an ordinary round's stats or hit effects:
 
+- **Turf shops:** no vendor has a usable faction (all are `Factions.Unaffiliated`), so the mapping is
+  by hand: `Vendors.<shop>.aoFaction` in `core.yaml`. `Vendor.AOSplitAmmo` adds
+  `FactionRounds.TurfStock` to a gun shop's stock on each build: tier 7 rounds every time, and at
+  `turfChance` one or two `turfStack` stacks of tiers 5 and 8.
 - **Self-jam:** `aoSelfJam` on the ammo is each shot's chance to apply `WeaponMalfunction` to the
   shooter, for V (`ShootEvents.OnEnter`) and NPCs (`NpcAmmo.TakeShot`). The game's shooting gate
   reads the jam on the character, not the gun, so swapping guns doesn't clear it on V.

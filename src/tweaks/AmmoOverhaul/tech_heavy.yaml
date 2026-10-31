@@ -12,7 +12,7 @@ AmmoOverhaul.Tech_Heavy.vanillaAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Tech_Heavy.lootWeight: 0.3
 AmmoOverhaul.Tech_Heavy.selectors: ["Items.AO_Feed_Heavy_RailSlugs", "Items.AO_Feed_Heavy_Sleevers", "Items.AO_Feed_Heavy_Bricks", "Items.AO_Feed_Heavy_Ferro", "Items.AO_Feed_Heavy_SplitSlug", "Items.AO_Feed_Heavy_Feedback", "Items.AO_Feed_Heavy_DUPen", "Items.AO_Feed_Heavy_ToxicScatter", "Items.AO_Feed_Heavy_Superconductor", "Items.AO_Feed_Heavy_EMPCap", "Items.AO_Feed_Heavy_Kebab", "Items.AO_Feed_Heavy_ChromeCookers"]
 AmmoOverhaul.Tech_Heavy.selectorAmmo: ["Ammo.AO_THeavy_Slug", "Ammo.AO_THeavy_Sabot", "Ammo.AO_THeavy_Bricks", "Ammo.AO_THeavy_Ferro", "Ammo.AO_THeavy_SplitSlug", "Ammo.AO_THeavy_Feedback", "Ammo.AO_THeavy_DUPen", "Ammo.AO_THeavy_ToxicScatter", "Ammo.AO_THeavy_Superconductor", "Ammo.AO_THeavy_EMPCap", "Ammo.AO_THeavy_Kebab", "Ammo.AO_THeavy_ChromeCookers"]
-AmmoOverhaul.Tech_Heavy.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 5]
+AmmoOverhaul.Tech_Heavy.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 6]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Tech_Heavy.craftBatch: 40
 
@@ -661,27 +661,27 @@ Items.AO_Feed_Heavy_Kebab:
       modifierType: Multiplier
       value: 0.0
 
-# Heavy Chrome-cookers [Mael] (Rare)
+# Heavy Chrome-cookers [Mael] (Epic)
 Ammo.AO_THeavy_ChromeCookers:
   $base: Ammo.AO_THeavy_Sabot
-  quality: Quality.Rare
-  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
   buyPrice:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.Price
       modifierType: Multiplier
-      value: 2
+      value: 4
   sellPrice:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.Price
       modifierType: Multiplier
-      value: 2
+      value: 4
   displayName: LocKey#AO-Ammo-Heavy-ChromeCookers
   localizedDescription: LocKey#AO-Ammo-ChromeCookers-Desc
   iconPath: AO_Heavy_ChromeCookers
-  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Tech]
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Tech]
 
 Ammo.AO_THeavy_ChromeCookers.aoFaction: "Maelstrom"
 Ammo.AO_THeavy_ChromeCookers.aoEffects: ["BaseStatusEffect.CyberwareMalfunction"]
@@ -697,7 +697,7 @@ Items.AO_Feed_Heavy_ChromeCookers:
   displayName: LocKey#AO-Ammo-Heavy-ChromeCookers
   localizedDescription: LocKey#AO-Ammo-ChromeCookers-Desc
   iconPath: AO_Heavy_ChromeCookers
-  quality: Quality.Rare
+  quality: Quality.Epic
   statModifiers:
     - !append
       $type: ConstantStatModifier

@@ -790,7 +790,7 @@
     "9MM",
     "GUTTER LEAD"
    ],
-   "tier": 5,
+   "tier": 8,
    "faction": "Scavengers"
   },
   "9mm-shinobi": {
@@ -804,7 +804,7 @@
     "9MM",
     "SHINOBI"
    ],
-   "tier": 5,
+   "tier": 6,
    "faction": "Arasaka"
   },
   "45-steelcore": {
@@ -1000,7 +1000,7 @@
     ".45",
     "GUTTER LEAD"
    ],
-   "tier": 5,
+   "tier": 8,
    "faction": "Scavengers"
   },
   "45-partspullers": {
@@ -1046,7 +1046,7 @@
     ".45",
     "SHINOBI"
    ],
-   "tier": 5,
+   "tier": 6,
    "faction": "Arasaka"
   },
   "12mm-steelcore": {
@@ -1215,7 +1215,7 @@
     "12MM",
     "GUTTER LEAD"
    ],
-   "tier": 5,
+   "tier": 8,
    "faction": "Scavengers"
   },
   "12mm-partspullers": {
@@ -2061,7 +2061,7 @@
     "5MM",
     "CHROME-COOKERS"
    ],
-   "tier": 5,
+   "tier": 6,
    "faction": "Maelstrom"
   },
   "5mm-kata": {
@@ -2217,7 +2217,7 @@
     "HEAVY",
     "CHROME-COOKERS"
    ],
-   "tier": 5,
+   "tier": 6,
    "faction": "Maelstrom"
   },
   "10mm-emppayload": {

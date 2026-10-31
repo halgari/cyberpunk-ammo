@@ -300,9 +300,12 @@ public abstract class AOData {
     return TweakDBInterface.GetString(TDBID.Create("AmmoOverhaul.factionOf." + NameToString(record.Affiliation().EnumName())), "");
   }
 
-  // The chance an NPC of `rarity` carries a faction round in a gun, Epic or not (0: never).
-  public static func FactionChance(rarity: String, epic: Bool) -> Float {
-    return TweakDBInterface.GetFloat(TDBID.Create((epic ? "AmmoOverhaul.npcFactionEpicChance." : "AmmoOverhaul.npcFactionChance.") + rarity), 0.0);
+  // The chance an NPC of `rarity` carries a faction round in a gun, Epic or not (0: never): the
+  // shared table, or `faction`'s own if it has one for that rank (Arasaka's Epic).
+  public static func FactionChance(rarity: String, faction: String, epic: Bool) -> Float {
+    let table: String = epic ? "AmmoOverhaul.npcFactionEpicChance." : "AmmoOverhaul.npcFactionChance.";
+    return TweakDBInterface.GetFloat(TDBID.Create(table + faction + "." + rarity),
+      TweakDBInterface.GetFloat(TDBID.Create(table + rarity), 0.0));
   }
 
   // The selectors of a tier whose rounds belong to `faction`.

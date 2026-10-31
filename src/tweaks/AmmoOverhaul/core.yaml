@@ -197,6 +197,14 @@ AmmoOverhaul.npcLegendaryChance.Boss: 0.10
 AmmoOverhaul.npcLegendaryChance.MaxTac: 0.10
 # Faction rounds (FactionRounds.reds): the faction an NPC's affiliation record belongs to, by the
 # record's EnumName; anything else gets none.
+# Turf gun shops: shops hand-picked to a faction by their district (no shop has a faction of its own,
+# Vendors.*.faction is Unaffiliated on all of them). Each stock build adds FactionRounds.TurfStock.
+Vendors.wat_nid_gunsmith_01.aoFaction: "Maelstrom"
+Vendors.cct_dtn_guns_01.aoFaction: "Arasaka"
+Vendors.wat_kab_gunsmith_02.aoFaction: "Scavengers"
+Vendors.std_arr_gunsmith_01.aoFaction: "Scavengers"
+AmmoOverhaul.turfChance: 0.25
+AmmoOverhaul.turfStack: 30
 AmmoOverhaul.factionOf.Maelstrom: "Maelstrom"
 AmmoOverhaul.factionOf.MaelstromAndroid: "Maelstrom"
 AmmoOverhaul.factionOf.Scavengers: "Scavengers"
@@ -212,6 +220,15 @@ AmmoOverhaul.npcFactionEpicChance.Officer: 0.05
 AmmoOverhaul.npcFactionEpicChance.Elite: 0.10
 AmmoOverhaul.npcFactionEpicChance.Boss: 0.15
 AmmoOverhaul.npcFactionEpicChance.MaxTac: 0.0
+# Arasaka has only Epic rounds, so it has its own Epic table.
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Trash: 0.0
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Weak: 0.0
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Normal: 0.05
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Rare: 0.10
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Officer: 0.15
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Elite: 0.20
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Boss: 0.25
+AmmoOverhaul.npcFactionEpicChance.Arasaka.MaxTac: 0.0
 AmmoOverhaul.npcFactionChance.Trash: 0.0
 AmmoOverhaul.npcFactionChance.Weak: 0.05
 AmmoOverhaul.npcFactionChance.Normal: 0.10

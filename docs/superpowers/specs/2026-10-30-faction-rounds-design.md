@@ -1,6 +1,6 @@
 # Faction rounds, first three: design
 
-Date: 2026-10-30. Status: built, except where marked. Round ideas come from `docs/IDEAS.md`
+Date: 2026-10-30. Status: built. Round ideas come from `docs/IDEAS.md`
 ("Faction rounds").
 
 Maelstrom, Scavengers and Arasaka each get rounds nobody else sells. A faction's NPCs carry and
@@ -27,17 +27,17 @@ across 9 kinds, which takes the mod from 149 rounds to 175.
   as a layer between the round and its family, but no shipped round sets it yet (only
   `Ammo.AO_Test_RollFaction`). `tools/rounds/rounds.py` needs a `faction=` field on a kind to write
   it.
-- **Their own tier codes.** `selectorTiers` gets 5 (faction, Rare quality), 6 (faction, Epic
-  quality) and 7 (faction, Common quality, for Reloads). Every general list looks rounds up by exact tier
-  (`SelectorsForTier(caliber, 2 or 3)`, `AmmosForTier`, `TierWeights`), so tiers 5 to 7 stay out
+- **Their own tier codes.** `selectorTiers` gets 5 (faction, Rare quality), 6 (Epic), 7 (Common, for
+  Reloads) and 8 (Uncommon, for Gutter Lead). Every general list looks rounds up by exact tier
+  (`SelectorsForTier(caliber, 2 or 3)`, `AmmosForTier`, `TierWeights`), so tiers 5 to 8 stay out
   of the general NPC rolls, `AmmoDistribution.Spread`, `Pick` and vendors without special cases.
-  That's the same way tier 4 keeps Legendary rounds out. The generator maps them to Rare, Epic and
-  Common for quality, price and disassembly.
+  That's the same way tier 4 keeps Legendary rounds out. The generator maps them to their quality for
+  quality, price and disassembly, and a round's tier is its `tier=` in `tools/rounds/rounds.py`.
 - **No crafting:** no recipe and no load sheet. `tools/crafting/crafting.py`
-  already skips tier 4 for recipes and keeps its disassembly flats; 5 to 7 join that rule. A stack
+  already skips tier 4 for recipes and keeps its disassembly flats; 5 to 8 join that rule. A stack
   breaks down into components of its quality by the existing rule.
-- **Price:** Rare x4 and Epic x8 of the caliber's Common round, as for the general tiers. Reloads
-  are the exception below.
+- **Price:** Uncommon x2, Rare x4 and Epic x8 of the caliber's Common round, as for the general
+  tiers. Reloads are the exception below.
 
 ## The rounds
 
@@ -55,7 +55,7 @@ feel test.
   - Item text: "Overpressure loads. They run the gun past what it was built for, and sometimes the
     gun quits.\n\n+25% fire rate. +40% recoil and spread. 2% chance per shot to jam your weapons
     for 3 seconds." "Weapons", not "gun": the jam stays on V across a swap (see the probe results).
-- **Chrome-cookers** (Rare; light and heavy rail)
+- **Chrome-cookers** (Epic; light and heavy rail)
   - A hit has a 15% chance of a cyberware malfunction, and 10% less damage.
   - On V: V's cyberware glitches, through the mod's existing player effect mapping
     (`AOData.PlayerEffect`). Check the mapping covers it.
@@ -76,7 +76,7 @@ feel test.
     in `AmmoOverhaul.roll.Scavengers.*`, the faction layer that already exists. Feasibility: hit
     code, proven by Match.
   - Worse than a Common round, so Common quality (see Decisions).
-- **Gutter Lead** (Rare; 12mm, .45, 9mm)
+- **Gutter Lead** (Uncommon; 12mm, .45, 9mm)
   - Rough hand-cast bullets: half damage, 25% chance to bleed, 25% chance to poison. Called
     Dirties until 2026-10-30.
   - Levers: `aoEffects` with both effects. Feasibility: hit code, proven. On V: `PlayerPoisoned`
@@ -104,7 +104,7 @@ feel test.
     walls. The tag and the lock aren't linked: the lock time stats are per gun, and the engine has
     no per-target lock time (see the probe results).
   - On V: V is tagged. NPCs don't act on it, so the NPC version is the short lock only.
-- **Shinobi** (Rare; 9mm, .45)
+- **Shinobi** (Epic; 9mm, .45)
   - Silent kills and +50% headshot damage, with 10% less range.
   - Levers: `CanSilentKill`, `HeadshotDamageMultiplier` (stats). Feasibility: stats,
     proven by Subsonic and Heartseeker.
@@ -128,12 +128,13 @@ becomes:
 2. Legendary, with its rank chance, as now.
 3. **New:** if the NPC's faction has rounds for this gun's caliber, roll that faction's chance for
    the NPC's rank. A hit picks one of the faction's rounds for the caliber: Epic first with its own
-   chance, then Rare, whose roll takes in the Common-quality Reloads so Scav rounds come up alike.
+   chance, then the rest below Epic in one roll, whatever their quality, so Scav rounds come up
+   alike.
    It goes through the same path as any rolled round (`aoUncommonGuns`, selector
    stat modifiers on the gun), so the stats and hit code work with no new NPC code.
 4. A miss falls through to the existing Epic, Rare and Uncommon rolls.
 
-**Chance per gun, by rank** (`AmmoOverhaul.npcFactionChance.<rank>` for Rare,
+**Chance per gun, by rank** (`AmmoOverhaul.npcFactionChance.<rank>` for "Rare", meaning all below Epic,
 `AmmoOverhaul.npcFactionEpicChance.<rank>` for Epic; every rank listed, zeros included, so tests
 can set them):
 - Trash: Rare 0%, Epic 0%
@@ -145,6 +146,10 @@ can set them):
 - Boss: Rare 30%, Epic 15%
 - MaxTac: 0% (no faction)
 
+Arasaka's rounds are all Epic, so it has its own Epic table in place of that column
+(`npcFactionEpicChance.Arasaka.<rank>`): Weak 0, Normal 5%, Rare 10%, Officer 15%, Elite 20%, Boss
+25%, MaxTac 0.
+
 For scale: today Trash, Weak and Normal NPCs never roll a general Rare or Epic, and only Elite and
 Boss roll a general Epic. These chances make faction rounds the most common thing above Uncommon in
 that faction's fights. That is the point, and it also raises difficulty in those fights.
@@ -154,21 +159,22 @@ that faction's fights. That is the point, and it also raises difficulty in those
 by rank, less what was fired. This is V's main source.
 
 **Containers.** None at first: a container has no known faction. `LootConvert` keeps rolling up to
-Epic from general rounds, which excludes tiers 5 to 7.
+Epic from general rounds, which excludes tiers 5 to 8.
 
-**Turf gun shops** (not built)
-- The hook exists: `Vendor.AOSplitAmmo` runs on every stock build and already knows
-  `GetVendorType()` is Gunsmith.
+**Turf gun shops**
+- `Vendor.AOSplitAmmo` runs on every stock build and already knows `GetVendorType()` is Gunsmith.
 - **Shops have no faction.** Dumped in the game 2026-10-30: all 266 vendors have
-  `Faction()` = `Factions.Unaffiliated`, so it's no use. The mapping is by hand: an
-  `AmmoOverhaul.vendorFaction.<vendor id>` list, read with `GetVendorTweakID()`. Using V's district
+  `Faction()` = `Factions.Unaffiliated`, so it's no use. The mapping is by hand: a
+  `Vendors.<shop>.aoFaction` flat in `core.yaml`, read with `GetVendorTweakID()`. Using V's district
   at stock time is worse: a stock can be built when V is elsewhere.
-- Shop IDs carry their district. First proposal, for the user to approve:
+- Shop IDs carry their district. Approved by the user:
   - Maelstrom: `wat_nid_gunsmith_01` (Northside).
-  - Arasaka: `cct_dtn_guns_01` (City Center, Downtown).
+  - Arasaka: `cct_dtn_guns_01` (City Center, Downtown). Mapped, but it adds nothing while all of
+    Arasaka's rounds are Epic.
   - Scavengers: `wat_kab_gunsmith_02` (Kabuki), `std_arr_gunsmith_01` (Arroyo).
-- Rule: a turf shop has a 25% chance per stock build of one or two extra stacks of that faction's
-  Rare rounds. Never Epic: nobody sells Epic. Reloads count as stock at any Scav turf shop.
+- Rule: a turf shop has a 25% chance per stock build (`turfChance`) of one or two extra stacks
+  (`turfStack`, 30 rounds) of that faction's rounds below Epic, not counting Common. Never Epic:
+  nobody sells Epic. Reloads count as stock at any Scav turf shop, every caliber, every build.
 
 **Same rules check.** All of the above only changes which round an NPC holds. Stats, jams, bleeds
 and tags then work through the code every round uses. Parts-pullers is the one exception, noted
@@ -191,7 +197,7 @@ own, extracted by `tools/render/faction_textures.sh` and kept out of the repo.
 
 ## Everything else follows the existing pattern
 
-- `tools/rounds/rounds.py` gains `faction=` and tiers 5 to 7; selectors, prices, icons and item
+- `tools/rounds/rounds.py` gains `faction=` and tiers 5 to 8; selectors, prices, icons and item
   text are generated as for other rounds. `rounds_tiers.json` gains the tiers for the renderer.
 - `AOData` gains `FactionOf(npc)`, `FactionChance(rank, tier)` and `SelectorsForFaction(caliber,
   faction)`.
@@ -202,7 +208,7 @@ own, extracted by `tools/render/faction_textures.sh` and kept out of the repo.
 ## Testing
 
 - **Records:** 26 rounds, right quality and price, no recipe, in no general list, never in a
-  vendor's stock, never rolled by another faction.
+  non-turf vendor's stock, never rolled by another faction.
 - **NPC rolls:** a Maelstrom, a Scav and an Arasaka NPC each roll only their own rounds; an
   unaffiliated NPC never does; the chances by rank; a miss falls through.
 - **Live, one check per mechanism:**
@@ -266,15 +272,16 @@ Chrome-cookers. Scav guns are mostly 12mm Novas, so 12mm leads their list.
 
 ## Decisions (the user, 2026-10-30)
 
-1. **Tiers.** Rare and Epic, except Reloads, which are Common quality because they're trash: an
-   exception to both the Rare and Epic rule and to "Common rounds are vanilla", for this one kind.
+1. **Tiers.** Reloads are Common quality because they're trash: an exception to "Common rounds are
+   vanilla", for this one kind. Gutter Lead moved to Uncommon, and Shinobi and Chrome-cookers to
+   Epic, after the field test.
 2. **Sources.** NPC drops first, turf gun shops second. No crafting, no containers.
 3. **Drop rates.** The chance list above.
 4. **Parts-pullers.** Kept, with no effect when an NPC fires them.
 5. **Kansatsu.** Probed; the engine can't do it, so the fallback stands. No faking from a script.
 6. **Faction marking.** A short tag in brackets in the item name: [Mael], [Scav], [Ara]. The item
    text may mention the faction offhand but doesn't have to.
-7. **Turf map.** The shop list above is still a proposal; the user hasn't approved it.
+7. **Turf map.** The shop list above, approved.
 8. **Round count.** 26.
 9. **Release.** Faction rounds come in the version after 0.5.0.
 

@@ -674,6 +674,21 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // The faction rounds of `n` stock builds of `vendorID`, on a vendor object of its own so the shop
+  // needn't be nearby: its type, then "|item=quantity;..." per build.
+  public final func DebugTurf(vendorID: String, n: Int32) -> String {
+    let vendor: ref<Vendor> = new Vendor();
+    vendor.Initialize(this.GetGameInstance(), TDBID.Create(vendorID), null);
+    let text: String = EnumValueToString("gamedataVendorType", Cast<Int64>(EnumInt(vendor.GetVendorType()))) ;
+    let i: Int32 = 0;
+    while i < n {
+      vendor.AODebugRestock();
+      text += "|" + vendor.AODebugFactionAmmo();
+      i += 1;
+    }
+    return text;
+  }
+
   // What a known vendor's ammo is once its screen opens (an unsplit stock gets split then).
   public final func DebugOpenVendor(vendorID: String) -> String {
     for vendor in MarketSystem.GetInstance(this.GetGameInstance()).AODebugVendors() {

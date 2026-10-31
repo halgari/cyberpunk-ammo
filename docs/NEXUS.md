@@ -24,7 +24,7 @@ Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon
 [*]175 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
 [*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
-[*]Maelstrom, Scavengers and Arasaka have rounds of their own. You get them from that faction's NPCs.
+[*]Maelstrom, Scavengers and Arasaka have rounds of their own. You get them from that faction's NPCs, and a few gun shops on Maelstrom and Scav turf stock some.
 [*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
 [*]Each round has its own box icon with the name printed on it, so Mushrooms and Penetrators look different in your backpack.
 [/list]
@@ -70,25 +70,25 @@ There are 14 Legendary rounds to find. Elite enemies, bosses and MaxTac sometime
 The rest are for you to find.
 
 [size=5][b][color=#2ad4ff]Faction rounds[/color][/b][/size]
-Three factions load rounds nobody else has, 26 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. No crafting, and the name carries a [Mael], [Scav] or [Ara] tag so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
+Three factions load rounds nobody else has, 26 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. Gun shops in Northside, Kabuki and the Arroyo sometimes stock a stack or two below Epic, and the Scav shops always have Reloads. No crafting, and the name carries a [Mael], [Scav] or [Ara] tag so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
 
 [b]Maelstrom[/b]
 [list]
 [*][color=#3fa0ff][b]Redliners[/b][/color] (Rare; .45, 5.56, 7.62): +25% fire rate, +40% recoil and spread, and a 2% chance per shot to jam your weapons for 3 seconds.
-[*][color=#3fa0ff][b]Chrome-cookers[/b][/color] (Rare; light and heavy rail): 15% chance of a cyberware malfunction. -10% damage.
+[*][color=#b04fff][b]Chrome-cookers[/b][/color] (Epic; light and heavy rail): 15% chance of a cyberware malfunction. -10% damage.
 [*][color=#b04fff][b]Meat-grinders[/b][/color] (Epic; .45, 12mm, 12-gauge, 4-gauge): 30% chance to cause bleeding, three times the dismemberment chance.
 [/list]
 
 [b]Scavengers[/b] (all of them swing wide on damage, with duds and hot rounds)
 [list]
 [*][color=#b0b0b0][b]Reloads[/b][/color] (Common; 9mm, .45, 12mm): half the price of a Common round, and you never know what you'll get.
-[*][color=#3fa0ff][b]Gutter Lead[/b][/color] (Rare; 9mm, .45, 12mm): 25% chance to cause bleeding, 25% chance to poison. -50% damage.
+[*][color=#3fbf5f][b]Gutter Lead[/b][/color] (Uncommon; 9mm, .45, 12mm): 25% chance to cause bleeding, 25% chance to poison. -50% damage.
 [*][color=#3fa0ff][b]Parts-pullers[/b][/color] (Rare; .45, 12mm): a kill leaves 2 Rare crafting components on the body.
 [/list]
 
 [b]Arasaka[/b]
 [list]
-[*][color=#3fa0ff][b]Shinobi[/b][/color] (Rare; 9mm, .45): silent kills, +50% headshot damage. -10% range.
+[*][color=#b04fff][b]Shinobi[/b][/color] (Epic; 9mm, .45): silent kills, +50% headshot damage. -10% range.
 [*][color=#b04fff][b]Kata[/b][/color] (Epic; .45, 5.56, 7.62, light rail): damage varies only 1% either way. 30% less recoil, 30% faster aim.
 [*][color=#b04fff][b]Kansatsu[/b][/color] (Epic; 10mm, 20mm, 25mm): targets hit show through walls for 5 seconds. Locks on twice as fast.
 [/list]
