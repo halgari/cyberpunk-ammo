@@ -13,8 +13,9 @@ the first three factions. Voodoo Boys wait for a later release; Zombie Powder an
 - **Five faction keys:** `TygerClaws`, `Valentinos`, `SixthStreet`, `Militech`, `Animals`, set in
   `AmmoOverhaul.factionOf.*` from the game's `Factions.*` names, which are the same words.
 - **Name tags:** `[Tyger]`, `[Val]`, `[6th]`, `[Mil]`, `[Animal]`.
-- **One new mechanism:** an effect that fires only on a headshot (Santa Muerte). Everything else
-  uses levers the mod already has.
+- **New hit behaviour:** an effect that fires only on a headshot (Santa Muerte), and rank-aware
+  stagger and knockdown chances (Hard Stop, Leg Day). Everything else uses levers the mod already
+  has.
 - **No new turf shops.** These rounds reach V from NPCs of the faction only. Turf stock can be added
   later with one flat per shop.
 
@@ -77,17 +78,17 @@ Numbers are starting points for the feel test. Calibers come from what each fact
 
 **Animals: stopping power**
 
-- **Bruisers** (Rare; 12mm, light rail, heavy rail)
+- **Protein Loads** (Rare; 12mm, light rail, heavy rail)
   - +30% damage, +60% recoil, -30% effective range.
-  - Text: "Hot, heavy and made for close work. Your wrist will hear about it.\n\n+30% damage. +60%
-    recoil. -30% range."
-- **Haymakers** (Epic; 12mm, heavy rail)
+  - Text: "Big, hot loads straight from the Animals' gym. Whoever takes one feels it for days.\n\n
+    +30% damage. +60% recoil. -30% range."
+- **Leg Day** (Epic; 12mm, heavy rail)
   - 20% chance per shot to knock the target down, with `MuleKick.NpcEffect`'s rule: Elite, Boss and
     MaxTac NPCs stagger instead. +80% recoil.
   - On V: a knockdown, as Mule Kick. Mule Kick stays the Legendary version: every hit lands, and
     only it shoves the shooter.
-  - Text: "One to the jaw and they sit down. Bring a strong arm.\n\n20% chance per shot to knock the
-    target down. +80% recoil."
+  - Text: "Nobody walks right after leg day. They sit down and think about what they've done.\n\n
+    20% chance per shot to knock the target down. +80% recoil."
 
 ## Headshot effects
 
@@ -121,7 +122,7 @@ New mechanisms only, in `tools/snippets/calibers/faction.sh`:
 - Santa Muerte: a head shot burns, a chest shot doesn't; an NPC's Santa Muerte on V gives the burn
   by the rule above.
 - Fourth of July and Hard Stop on live hits; Boss and MaxTac don't stagger from Hard Stop.
-- Haymakers: Normal NPCs go down, Elites stagger.
+- Leg Day: Normal NPCs go down, Elites stagger.
 - `records.lua`, `icons.lua`, `distribution.lua` and `tiers.lua` at 200 rounds. The atlas holds 300
   cells, so it keeps its size.
 
