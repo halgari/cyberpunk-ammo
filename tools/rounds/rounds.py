@@ -35,7 +35,8 @@ QUALITY = {RARE: "Rare", EPIC: "Epic", LEGENDARY: "Legendary",
 # Legendary x16; faction rounds as their quality, except the faction Common, half the Common round.
 PRICE = {RARE: 2, EPIC: 4, LEGENDARY: 8, FACTION_RARE: 2, FACTION_EPIC: 4, FACTION_COMMON: 0.25, FACTION_UNCOMMON: 1}
 # The short tag at the end of a faction round's name.
-FACTION_TAG = {"Maelstrom": "[Mael]", "Scavengers": "[Scav]", "Arasaka": "[Ara]"}
+FACTION_TAG = {"Maelstrom": "[Mael]", "Scavengers": "[Scav]", "Arasaka": "[Ara]", "TygerClaws": "[Tyger]",
+               "Valentinos": "[Val]", "SixthStreet": "[6th]", "Militech": "[Mil]", "Animals": "[Animal]"}
 
 # --- Calibers ---------------------------------------------------------------------------------
 # tag: the caliber's ID tag (Ammo.AO_<ammo>_..., Items.AO_Feed_<sel>_..., text and icon key <loc>).
@@ -133,6 +134,7 @@ def projectiles(n):
 # aoNonlethal, roll*); desc: the item text, the effect line after a blank line; calibers;
 # faction: the faction's key, for faction rounds (<ammo>.aoFaction).
 BURN, MEDIUM_BURN = "BaseStatusEffect.Burning", "BaseStatusEffect.MediumBurning"
+NARROW = dict(rollMin=0.95, rollMax=1.05, rollDudChance=0.0, rollHotChance=0.0)
 
 KINDS = [
     # Power, Rare
@@ -456,6 +458,71 @@ KINDS = [
          calibers=["9mm", "45"],
          stats=[add("CanSilentKill", 1.0), add("HeadshotDamageMultiplier", 0.5)] + range_(0.90),
          desc="Quiet loads for close work. Put one in the head and nobody hears about it.\n\nSilent kills. +50% headshot damage. -10% range."),
+    # Tyger Claws
+    dict(load="ShinobiSeconds", title="Shinobi Seconds", tier=FACTION_UNCOMMON, faction="TygerClaws", look=((170, 30, 25), (200, 200, 205)),
+         art={},
+         calibers=["9mm", "45"],
+         stats=[add("CanSilentKill", 1.0)] + damage(0.85),
+         hit=dict(roll=dict(rollDudChance=0.05, rollDudMult=0.25)),
+         desc="Shinobi copies off a Kabuki bench. Quiet like the real thing, most of the time.\n\nKills don't alert anyone nearby. -15% damage. 5% are duds that hit for a quarter."),
+    dict(load="Tanto", title="Tanto", tier=FACTION_RARE, faction="TygerClaws", look=((170, 30, 25), (220, 180, 70)),
+         art={},
+         calibers=["9mm", "45", "12mm"],
+         stats=[add("CritChance", 0.10)],
+         hit=dict(effects=[("BaseStatusEffect.Bleeding", 0.25)]),
+         desc="Serrated jackets, cut by hand.\n\n25% chance to cause bleeding. +10% crit chance."),
+    # Valentinos
+    dict(load="GoldTips", title="Gold Tips", tier=FACTION_RARE, faction="Valentinos", look=((90, 20, 35), (225, 180, 60)),
+         art={},
+         calibers=["45", "12mm"],
+         stats=[add("CritChance", 0.15), add("CritDamage", 0.30)] + recoil(1.20),
+         price=3,
+         desc="Real gold on the nose, because anything less is an insult.\n\n+15% crit chance. +30% crit damage. +20% recoil."),
+    dict(load="SantaMuerte", title="Santa Muerte", tier=FACTION_EPIC, faction="Valentinos", look=((20, 20, 22), (225, 180, 60)),
+         art={},
+         calibers=["45", "12mm"],
+         stats=[add("HeadshotDamageMultiplier", 0.5)],
+         hit=dict(head_effect=BURN),
+         desc="Blessed before they're loaded. La Santisima takes who she takes.\n\n+50% headshot damage. Headshots set the target on fire."),
+    # 6th Street
+    dict(load="Surplus", title="Surplus", tier=FACTION_UNCOMMON, faction="SixthStreet", look=((80, 90, 50), (150, 130, 90)),
+         art={},
+         calibers=["9mm", "45", "12mm"],
+         stats=recoil(0.90),
+         hit=dict(roll=NARROW),
+         desc="Old military lots, kept dry and turned regularly. Nothing fancy, nothing surprising.\n\nDamage varies only 5% either way. -10% recoil."),
+    dict(load="FourthOfJuly", title="Fourth of July", tier=FACTION_RARE, faction="SixthStreet", look=((80, 90, 50), (200, 40, 40)),
+         art={},
+         calibers=["9mm", "12mm", "10mm"],
+         stats=[],
+         hit=dict(effects=[("AmmoOverhaul.PingTag", 1.0), (BURN, 0.10)]),
+         desc="Spotting rounds for squad fire. Your friends see what you hit.\n\nHits tag targets through walls for 5 seconds. 10% chance to set the target on fire."),
+    # Militech
+    dict(load="MilSpec", title="Mil-Spec", tier=FACTION_RARE, faction="Militech", look=((55, 58, 62), (230, 190, 30)),
+         art={},
+         calibers=["9mm", "762", "5mm"],
+         stats=armor(0.25) + recoil(0.85),
+         hit=dict(roll=NARROW),
+         desc="Lot-tested, sealed, signed for. Every round does what the last one did.\n\nDamage varies only 5% either way. 25% armor penetration. -15% recoil."),
+    dict(load="CeaseAndDesist", title="Cease and Desist", tier=FACTION_EPIC, faction="Militech", look=((55, 58, 62), (220, 60, 30)),
+         art={},
+         calibers=["762", "12ga"],
+         stats=armor(0.50) + damage(0.90),
+         hit=dict(stop=0.30),
+         desc="Militech Legal's preferred wording. Whoever takes one loses their footing.\n\n30% chance per shot to stagger the target. 50% armor penetration. -10% damage."),
+    # Animals
+    dict(load="ProteinLoads", title="Protein Loads", tier=FACTION_RARE, faction="Animals", look=((20, 20, 22), (235, 200, 30)),
+         art={},
+         calibers=["12mm", "5mm", "Heavy"],
+         stats=[],
+         hit=dict(pumped=True),
+         desc="Big, hot loads straight from the Animals' gym. Every kill gets you pumped.\n\nKills give +6% move speed and 10% faster reloads for 10 seconds, stacking 3 times."),
+    dict(load="LegDay", title="Leg Day", tier=FACTION_EPIC, faction="Animals", look=((20, 20, 22), (210, 40, 30)),
+         art={},
+         calibers=["12mm", "Heavy"],
+         stats=recoil(1.80),
+         hit=dict(legs=0.20),
+         desc="Nobody walks right after leg day. They stay put and think about what they've done.\n\n20% chance per shot to cripple the target's legs. +80% recoil."),
 ]
 
 
@@ -512,8 +579,8 @@ def modifier_yaml(stat, mtype, value, ref=None):
             f"      modifierType: {mtype}\n      value: {fmt(value)}\n")
 
 
-def price_yaml(tier):
-    m = PRICE[tier]
+def price_yaml(tier, price=None):
+    m = PRICE[tier] if price is None else price
     one = (f"    - !append\n      $type: ConstantStatModifier\n      statType: BaseStats.Price\n"
            f"      modifierType: Multiplier\n      value: {m}\n")
     return f"  buyPrice:\n{one}  sellPrice:\n{one}"
@@ -524,7 +591,7 @@ def round_yaml(tag, k):
     y = f"# {title(tag, k)} ({q})\n"
     y += (f"{i['ammo']}:\n  $base: {c['base_ammo']}\n  quality: Quality.{q}\n"
           f"  # {q}: x{PRICE[k['tier']]} on the Uncommon's price, so x{2 * PRICE[k['tier']]} of the Common round's.\n"
-          + price_yaml(k["tier"]) +
+          + price_yaml(k["tier"], k.get("price")) +
           f"  displayName: LocKey#{i['name']}\n  localizedDescription: LocKey#{i['desc']}\n"
           f"  iconPath: {i['icon']}\n"
           f"  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_{k['tier']}, AO_Family_{c['family']}]\n\n")
@@ -552,6 +619,16 @@ def round_yaml(tag, k):
         flats.append(("aoSelfJam", fmt(float(hit["selfjam"]))))
     if hit.get("partspuller"):
         flats.append(("aoPartsPuller", "true"))
+    if hit.get("head_effect"):
+        flats.append(("aoHeadEffect", f'"{hit["head_effect"]}"'))
+    if hit.get("head_fallback"):
+        flats.append(("aoHeadFallback", fmt(float(hit["head_fallback"]))))
+    if hit.get("stop"):
+        flats.append(("aoStopChance", fmt(float(hit["stop"]))))
+    if hit.get("legs"):
+        flats.append(("aoLegChance", fmt(float(hit["legs"]))))
+    if hit.get("pumped"):
+        flats.append(("aoPumped", "true"))
     if hit.get("ranged_attack"):
         flats.append(("aoRangedAttack", f'"{hit["ranged_attack"]}"'))
     for name, v in flats:
@@ -646,6 +723,8 @@ def write_refs(all_rounds):
         refs.update(e for e, _ in k.get("hit", {}).get("effects", []))
         if k.get("hit", {}).get("ranged_attack"):
             refs.add(k["hit"]["ranged_attack"])
+        if k.get("hit", {}).get("head_effect"):
+            refs.add(k["hit"]["head_effect"])
     (ROOT / "tools" / "rounds" / "refs.txt").write_text("\n".join(sorted(refs)) + "\n")
 
 

@@ -8,9 +8,9 @@ AmmoOverhaul.Tech_Light.feedElement: "Items.AO_AmmoFeed_Tech_Light_Element"
 AmmoOverhaul.Tech_Light.defaultAmmo: "Ammo.AO_TLight_Slug"
 AmmoOverhaul.Tech_Light.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Tech_Light.lootWeight: 0.15
-AmmoOverhaul.Tech_Light.selectors: ["Items.AO_Feed_5mm_RailSlugs", "Items.AO_Feed_5mm_Sleevers", "Items.AO_Feed_5mm_Bricks", "Items.AO_Feed_5mm_Ferro", "Items.AO_Feed_5mm_SplitSlug", "Items.AO_Feed_5mm_Feedback", "Items.AO_Feed_5mm_DUPen", "Items.AO_Feed_5mm_ToxicScatter", "Items.AO_Feed_5mm_Superconductor", "Items.AO_Feed_5mm_EMPCap", "Items.AO_Feed_5mm_Kebab", "Items.AO_Feed_5mm_ChromeCookers", "Items.AO_Feed_5mm_Kata"]
-AmmoOverhaul.Tech_Light.selectorAmmo: ["Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot", "Ammo.AO_TLight_Bricks", "Ammo.AO_TLight_Ferro", "Ammo.AO_TLight_SplitSlug", "Ammo.AO_TLight_Feedback", "Ammo.AO_TLight_DUPen", "Ammo.AO_TLight_ToxicScatter", "Ammo.AO_TLight_Superconductor", "Ammo.AO_TLight_EMPCap", "Ammo.AO_TLight_Kebab", "Ammo.AO_TLight_ChromeCookers", "Ammo.AO_TLight_Kata"]
-AmmoOverhaul.Tech_Light.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 6, 6]
+AmmoOverhaul.Tech_Light.selectors: ["Items.AO_Feed_5mm_RailSlugs", "Items.AO_Feed_5mm_Sleevers", "Items.AO_Feed_5mm_Bricks", "Items.AO_Feed_5mm_Ferro", "Items.AO_Feed_5mm_SplitSlug", "Items.AO_Feed_5mm_Feedback", "Items.AO_Feed_5mm_DUPen", "Items.AO_Feed_5mm_ToxicScatter", "Items.AO_Feed_5mm_Superconductor", "Items.AO_Feed_5mm_EMPCap", "Items.AO_Feed_5mm_Kebab", "Items.AO_Feed_5mm_ChromeCookers", "Items.AO_Feed_5mm_Kata", "Items.AO_Feed_5mm_MilSpec", "Items.AO_Feed_5mm_ProteinLoads"]
+AmmoOverhaul.Tech_Light.selectorAmmo: ["Ammo.AO_TLight_Slug", "Ammo.AO_TLight_Sabot", "Ammo.AO_TLight_Bricks", "Ammo.AO_TLight_Ferro", "Ammo.AO_TLight_SplitSlug", "Ammo.AO_TLight_Feedback", "Ammo.AO_TLight_DUPen", "Ammo.AO_TLight_ToxicScatter", "Ammo.AO_TLight_Superconductor", "Ammo.AO_TLight_EMPCap", "Ammo.AO_TLight_Kebab", "Ammo.AO_TLight_ChromeCookers", "Ammo.AO_TLight_Kata", "Ammo.AO_TLight_MilSpec", "Ammo.AO_TLight_ProteinLoads"]
+AmmoOverhaul.Tech_Light.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 6, 6, 5, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Tech_Light.craftBatch: 90
 
@@ -760,6 +760,99 @@ Items.AO_Feed_5mm_Kata:
       modifierType: Multiplier
       value: 0.7
 
+# 5mm Mil-Spec [Mil] (Rare)
+Ammo.AO_TLight_MilSpec:
+  $base: Ammo.AO_TLight_Sabot
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-5mm-MilSpec
+  localizedDescription: LocKey#AO-Ammo-MilSpec-Desc
+  iconPath: AO_5mm_MilSpec
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Tech]
+
+Ammo.AO_TLight_MilSpec.aoFaction: "Militech"
+Ammo.AO_TLight_MilSpec.rollMin: 0.95
+Ammo.AO_TLight_MilSpec.rollMax: 1.05
+Ammo.AO_TLight_MilSpec.rollDudChance: 0.0
+Ammo.AO_TLight_MilSpec.rollHotChance: 0.0
+
+UIIcon.AO_5mm_MilSpec:
+  $type: UIIcon
+  atlasPartName: ao_5mm_milspec
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_5mm_MilSpec:
+  $base: Items.AO_Feed_5mm_RailSlugs
+  displayName: LocKey#AO-Ammo-5mm-MilSpec
+  localizedDescription: LocKey#AO-Ammo-MilSpec-Desc
+  iconPath: AO_5mm_MilSpec
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 0.85
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 0.85
+
+# 5mm Protein Loads [Animal] (Rare)
+Ammo.AO_TLight_ProteinLoads:
+  $base: Ammo.AO_TLight_Sabot
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-5mm-ProteinLoads
+  localizedDescription: LocKey#AO-Ammo-ProteinLoads-Desc
+  iconPath: AO_5mm_ProteinLoads
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Tech]
+
+Ammo.AO_TLight_ProteinLoads.aoFaction: "Animals"
+Ammo.AO_TLight_ProteinLoads.aoPumped: true
+
+UIIcon.AO_5mm_ProteinLoads:
+  $type: UIIcon
+  atlasPartName: ao_5mm_proteinloads
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_5mm_ProteinLoads:
+  $base: Items.AO_Feed_5mm_RailSlugs
+  displayName: LocKey#AO-Ammo-5mm-ProteinLoads
+  localizedDescription: LocKey#AO-Ammo-ProteinLoads-Desc
+  iconPath: AO_5mm_ProteinLoads
+  quality: Quality.Rare
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1084,5 +1177,13 @@ Ammo.AO_TLight_ChromeCookers.aoRecipe: ""
 Ammo.AO_TLight_Kata.aoScrapRounds: 180
 Ammo.AO_TLight_Kata.aoScrapGive: 1
 Ammo.AO_TLight_Kata.aoRecipe: ""
+
+Ammo.AO_TLight_MilSpec.aoScrapRounds: 180
+Ammo.AO_TLight_MilSpec.aoScrapGive: 1
+Ammo.AO_TLight_MilSpec.aoRecipe: ""
+
+Ammo.AO_TLight_ProteinLoads.aoScrapRounds: 180
+Ammo.AO_TLight_ProteinLoads.aoScrapGive: 1
+Ammo.AO_TLight_ProteinLoads.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

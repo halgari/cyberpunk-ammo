@@ -156,6 +156,66 @@
     125
    ]
   ],
+  "ShinobiSeconds": [
+   [
+    170,
+    30,
+    25
+   ],
+   [
+    200,
+    200,
+    205
+   ]
+  ],
+  "Tanto": [
+   [
+    170,
+    30,
+    25
+   ],
+   [
+    220,
+    180,
+    70
+   ]
+  ],
+  "Surplus": [
+   [
+    80,
+    90,
+    50
+   ],
+   [
+    150,
+    130,
+    90
+   ]
+  ],
+  "FourthOfJuly": [
+   [
+    80,
+    90,
+    50
+   ],
+   [
+    200,
+    40,
+    40
+   ]
+  ],
+  "MilSpec": [
+   [
+    55,
+    58,
+    62
+   ],
+   [
+    230,
+    190,
+    30
+   ]
+  ],
   "Redliners": [
    [
     25,
@@ -204,6 +264,30 @@
     30
    ]
   ],
+  "GoldTips": [
+   [
+    90,
+    20,
+    35
+   ],
+   [
+    225,
+    180,
+    60
+   ]
+  ],
+  "SantaMuerte": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    225,
+    180,
+    60
+   ]
+  ],
   "Hardcast": [
    [
     110,
@@ -224,6 +308,30 @@
    ],
    [
     180,
+    40,
+    30
+   ]
+  ],
+  "ProteinLoads": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    235,
+    200,
+    30
+   ]
+  ],
+  "LegDay": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    210,
     40,
     30
    ]
@@ -262,6 +370,18 @@
     25,
     25,
     28
+   ]
+  ],
+  "CeaseAndDesist": [
+   [
+    55,
+    58,
+    62
+   ],
+   [
+    220,
+    60,
+    30
    ]
   ],
   "HEI": [
@@ -807,6 +927,61 @@
    "tier": 6,
    "faction": "Arasaka"
   },
+  "9mm-shinobiseconds": {
+   "shape": "P9",
+   "over": {},
+   "look": "ShinobiSeconds",
+   "label": [
+    "9MM",
+    "SHINOBI SECONDS"
+   ],
+   "tier": 8,
+   "faction": "TygerClaws"
+  },
+  "9mm-tanto": {
+   "shape": "P9",
+   "over": {},
+   "look": "Tanto",
+   "label": [
+    "9MM",
+    "TANTO"
+   ],
+   "tier": 5,
+   "faction": "TygerClaws"
+  },
+  "9mm-surplus": {
+   "shape": "P9",
+   "over": {},
+   "look": "Surplus",
+   "label": [
+    "9MM",
+    "SURPLUS"
+   ],
+   "tier": 8,
+   "faction": "SixthStreet"
+  },
+  "9mm-fourthofjuly": {
+   "shape": "P9",
+   "over": {},
+   "look": "FourthOfJuly",
+   "label": [
+    "9MM",
+    "FOURTH OF JULY"
+   ],
+   "tier": 5,
+   "faction": "SixthStreet"
+  },
+  "9mm-milspec": {
+   "shape": "P9",
+   "over": {},
+   "look": "MilSpec",
+   "label": [
+    "9MM",
+    "MIL-SPEC"
+   ],
+   "tier": 5,
+   "faction": "Militech"
+  },
   "45-steelcore": {
    "shape": "P45",
    "over": {
@@ -1049,6 +1224,61 @@
    "tier": 6,
    "faction": "Arasaka"
   },
+  "45-shinobiseconds": {
+   "shape": "P45",
+   "over": {},
+   "look": "ShinobiSeconds",
+   "label": [
+    ".45",
+    "SHINOBI SECONDS"
+   ],
+   "tier": 8,
+   "faction": "TygerClaws"
+  },
+  "45-tanto": {
+   "shape": "P45",
+   "over": {},
+   "look": "Tanto",
+   "label": [
+    ".45",
+    "TANTO"
+   ],
+   "tier": 5,
+   "faction": "TygerClaws"
+  },
+  "45-goldtips": {
+   "shape": "P45",
+   "over": {},
+   "look": "GoldTips",
+   "label": [
+    ".45",
+    "GOLD TIPS"
+   ],
+   "tier": 5,
+   "faction": "Valentinos"
+  },
+  "45-santamuerte": {
+   "shape": "P45",
+   "over": {},
+   "look": "SantaMuerte",
+   "label": [
+    ".45",
+    "SANTA MUERTE"
+   ],
+   "tier": 6,
+   "faction": "Valentinos"
+  },
+  "45-surplus": {
+   "shape": "P45",
+   "over": {},
+   "look": "Surplus",
+   "label": [
+    ".45",
+    "SURPLUS"
+   ],
+   "tier": 8,
+   "faction": "SixthStreet"
+  },
   "12mm-steelcore": {
    "shape": "P12",
    "over": {
@@ -1230,6 +1460,83 @@
    ],
    "tier": 5,
    "faction": "Scavengers"
+  },
+  "12mm-tanto": {
+   "shape": "P12",
+   "over": {},
+   "look": "Tanto",
+   "label": [
+    "12MM",
+    "TANTO"
+   ],
+   "tier": 5,
+   "faction": "TygerClaws"
+  },
+  "12mm-goldtips": {
+   "shape": "P12",
+   "over": {},
+   "look": "GoldTips",
+   "label": [
+    "12MM",
+    "GOLD TIPS"
+   ],
+   "tier": 5,
+   "faction": "Valentinos"
+  },
+  "12mm-santamuerte": {
+   "shape": "P12",
+   "over": {},
+   "look": "SantaMuerte",
+   "label": [
+    "12MM",
+    "SANTA MUERTE"
+   ],
+   "tier": 6,
+   "faction": "Valentinos"
+  },
+  "12mm-surplus": {
+   "shape": "P12",
+   "over": {},
+   "look": "Surplus",
+   "label": [
+    "12MM",
+    "SURPLUS"
+   ],
+   "tier": 8,
+   "faction": "SixthStreet"
+  },
+  "12mm-fourthofjuly": {
+   "shape": "P12",
+   "over": {},
+   "look": "FourthOfJuly",
+   "label": [
+    "12MM",
+    "FOURTH OF JULY"
+   ],
+   "tier": 5,
+   "faction": "SixthStreet"
+  },
+  "12mm-proteinloads": {
+   "shape": "P12",
+   "over": {},
+   "look": "ProteinLoads",
+   "label": [
+    "12MM",
+    "PROTEIN LOADS"
+   ],
+   "tier": 5,
+   "faction": "Animals"
+  },
+  "12mm-legday": {
+   "shape": "P12",
+   "over": {},
+   "look": "LegDay",
+   "label": [
+    "12MM",
+    "LEG DAY"
+   ],
+   "tier": 6,
+   "faction": "Animals"
   },
   "556-steelcore": {
    "shape": "R556",
@@ -1567,6 +1874,28 @@
    "tier": 6,
    "faction": "Arasaka"
   },
+  "762-milspec": {
+   "shape": "R762",
+   "over": {},
+   "look": "MilSpec",
+   "label": [
+    "7.62",
+    "MIL-SPEC"
+   ],
+   "tier": 5,
+   "faction": "Militech"
+  },
+  "762-ceaseanddesist": {
+   "shape": "R762",
+   "over": {},
+   "look": "CeaseAndDesist",
+   "label": [
+    "7.62",
+    "CEASE AND DESIST"
+   ],
+   "tier": 6,
+   "faction": "Militech"
+  },
   "127-steelcore": {
    "shape": "R127",
    "over": {
@@ -1813,6 +2142,18 @@
    ],
    "tier": 6,
    "faction": "Maelstrom"
+  },
+  "12ga-ceaseanddesist": {
+   "shape": "G12",
+   "over": {
+    "crimp": "star"
+   },
+   "look": "CeaseAndDesist",
+   "label": [
+    "CEASE AND DESIST"
+   ],
+   "tier": 6,
+   "faction": "Militech"
   },
   "4ga-flechette": {
    "shape": "G4",
@@ -2083,6 +2424,28 @@
    "tier": 6,
    "faction": "Arasaka"
   },
+  "5mm-milspec": {
+   "shape": "T5",
+   "over": {},
+   "look": "MilSpec",
+   "label": [
+    "5MM",
+    "MIL-SPEC"
+   ],
+   "tier": 5,
+   "faction": "Militech"
+  },
+  "5mm-proteinloads": {
+   "shape": "T5",
+   "over": {},
+   "look": "ProteinLoads",
+   "label": [
+    "5MM",
+    "PROTEIN LOADS"
+   ],
+   "tier": 5,
+   "faction": "Animals"
+  },
   "heavy-ferro": {
    "shape": "TH",
    "over": {
@@ -2219,6 +2582,28 @@
    ],
    "tier": 6,
    "faction": "Maelstrom"
+  },
+  "heavy-proteinloads": {
+   "shape": "TH",
+   "over": {},
+   "look": "ProteinLoads",
+   "label": [
+    "HEAVY",
+    "PROTEIN LOADS"
+   ],
+   "tier": 5,
+   "faction": "Animals"
+  },
+  "heavy-legday": {
+   "shape": "TH",
+   "over": {},
+   "look": "LegDay",
+   "label": [
+    "HEAVY",
+    "LEG DAY"
+   ],
+   "tier": 6,
+   "faction": "Animals"
   },
   "10mm-emppayload": {
    "shape": "S10",
@@ -2358,6 +2743,17 @@
    ],
    "tier": 6,
    "faction": "Arasaka"
+  },
+  "10mm-fourthofjuly": {
+   "shape": "S10",
+   "over": {},
+   "look": "FourthOfJuly",
+   "label": [
+    "10MM",
+    "FOURTH OF JULY"
+   ],
+   "tier": 5,
+   "faction": "SixthStreet"
   },
   "20mm-emppayload": {
    "shape": "S20",

@@ -213,6 +213,11 @@ AmmoOverhaul.factionOf.MaelstromAndroid: "Maelstrom"
 AmmoOverhaul.factionOf.Scavengers: "Scavengers"
 AmmoOverhaul.factionOf.ScavengersAndroid: "Scavengers"
 AmmoOverhaul.factionOf.Arasaka: "Arasaka"
+AmmoOverhaul.factionOf.TygerClaws: "TygerClaws"
+AmmoOverhaul.factionOf.Valentinos: "Valentinos"
+AmmoOverhaul.factionOf.SixthStreet: "SixthStreet"
+AmmoOverhaul.factionOf.Militech: "Militech"
+AmmoOverhaul.factionOf.Animals: "Animals"
 # Chance per gun of a faction round, after the Legendary roll and before the general tiers (a miss
 # falls through): Epic, then Rare.
 AmmoOverhaul.npcFactionEpicChance.Trash: 0.0

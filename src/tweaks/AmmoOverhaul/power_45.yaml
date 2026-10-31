@@ -8,9 +8,9 @@ AmmoOverhaul.Power_45.feedElement: "Items.AO_AmmoFeed_Power_45_Element"
 AmmoOverhaul.Power_45.defaultAmmo: "Ammo.AO_45_Ball"
 AmmoOverhaul.Power_45.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_45.lootWeight: 0.2
-AmmoOverhaul.Power_45.selectors: ["Items.AO_Feed_45_Ball", "Items.AO_Feed_45_Mushrooms", "Items.AO_Feed_45_PlusP", "Items.AO_Feed_45_SteelCore", "Items.AO_Feed_45_Incendiary", "Items.AO_Feed_45_Subsonic", "Items.AO_Feed_45_Bouncers", "Items.AO_Feed_45_Rubber", "Items.AO_Feed_45_Penetrator", "Items.AO_Feed_45_Match", "Items.AO_Feed_45_Toxin", "Items.AO_Feed_45_Shredders", "Items.AO_Feed_45_CookOff", "Items.AO_Feed_45_Redliners", "Items.AO_Feed_45_MeatGrinders", "Items.AO_Feed_45_Reloads", "Items.AO_Feed_45_GutterLead", "Items.AO_Feed_45_PartsPullers", "Items.AO_Feed_45_Kata", "Items.AO_Feed_45_Shinobi"]
-AmmoOverhaul.Power_45.selectorAmmo: ["Ammo.AO_45_Ball", "Ammo.AO_45_HollowPoint", "Ammo.AO_45_PlusP", "Ammo.AO_45_SteelCore", "Ammo.AO_45_Incendiary", "Ammo.AO_45_Subsonic", "Ammo.AO_45_Bouncers", "Ammo.AO_45_Rubber", "Ammo.AO_45_Penetrator", "Ammo.AO_45_Match", "Ammo.AO_45_Toxin", "Ammo.AO_45_Shredders", "Ammo.AO_45_CookOff", "Ammo.AO_45_Redliners", "Ammo.AO_45_MeatGrinders", "Ammo.AO_45_Reloads", "Ammo.AO_45_GutterLead", "Ammo.AO_45_PartsPullers", "Ammo.AO_45_Kata", "Ammo.AO_45_Shinobi"]
-AmmoOverhaul.Power_45.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5, 6, 7, 8, 5, 6, 6]
+AmmoOverhaul.Power_45.selectors: ["Items.AO_Feed_45_Ball", "Items.AO_Feed_45_Mushrooms", "Items.AO_Feed_45_PlusP", "Items.AO_Feed_45_SteelCore", "Items.AO_Feed_45_Incendiary", "Items.AO_Feed_45_Subsonic", "Items.AO_Feed_45_Bouncers", "Items.AO_Feed_45_Rubber", "Items.AO_Feed_45_Penetrator", "Items.AO_Feed_45_Match", "Items.AO_Feed_45_Toxin", "Items.AO_Feed_45_Shredders", "Items.AO_Feed_45_CookOff", "Items.AO_Feed_45_Redliners", "Items.AO_Feed_45_MeatGrinders", "Items.AO_Feed_45_Reloads", "Items.AO_Feed_45_GutterLead", "Items.AO_Feed_45_PartsPullers", "Items.AO_Feed_45_Kata", "Items.AO_Feed_45_Shinobi", "Items.AO_Feed_45_ShinobiSeconds", "Items.AO_Feed_45_Tanto", "Items.AO_Feed_45_GoldTips", "Items.AO_Feed_45_SantaMuerte", "Items.AO_Feed_45_Surplus"]
+AmmoOverhaul.Power_45.selectorAmmo: ["Ammo.AO_45_Ball", "Ammo.AO_45_HollowPoint", "Ammo.AO_45_PlusP", "Ammo.AO_45_SteelCore", "Ammo.AO_45_Incendiary", "Ammo.AO_45_Subsonic", "Ammo.AO_45_Bouncers", "Ammo.AO_45_Rubber", "Ammo.AO_45_Penetrator", "Ammo.AO_45_Match", "Ammo.AO_45_Toxin", "Ammo.AO_45_Shredders", "Ammo.AO_45_CookOff", "Ammo.AO_45_Redliners", "Ammo.AO_45_MeatGrinders", "Ammo.AO_45_Reloads", "Ammo.AO_45_GutterLead", "Ammo.AO_45_PartsPullers", "Ammo.AO_45_Kata", "Ammo.AO_45_Shinobi", "Ammo.AO_45_ShinobiSeconds", "Ammo.AO_45_Tanto", "Ammo.AO_45_GoldTips", "Ammo.AO_45_SantaMuerte", "Ammo.AO_45_Surplus"]
+AmmoOverhaul.Power_45.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5, 6, 7, 8, 5, 6, 6, 8, 5, 5, 6, 8]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_45.craftBatch: 90
 
@@ -1075,6 +1075,250 @@ Items.AO_Feed_45_Shinobi:
       modifierType: Multiplier
       value: 0.9
 
+# .45 Shinobi Seconds [Tyger] (Uncommon)
+Ammo.AO_45_ShinobiSeconds:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-45-ShinobiSeconds
+  localizedDescription: LocKey#AO-Ammo-ShinobiSeconds-Desc
+  iconPath: AO_45_ShinobiSeconds
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_8, AO_Family_Power]
+
+Ammo.AO_45_ShinobiSeconds.aoFaction: "TygerClaws"
+Ammo.AO_45_ShinobiSeconds.rollDudChance: 0.05
+Ammo.AO_45_ShinobiSeconds.rollDudMult: 0.25
+
+UIIcon.AO_45_ShinobiSeconds:
+  $type: UIIcon
+  atlasPartName: ao_45_shinobiseconds
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_ShinobiSeconds:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-ShinobiSeconds
+  localizedDescription: LocKey#AO-Ammo-ShinobiSeconds-Desc
+  iconPath: AO_45_ShinobiSeconds
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanSilentKill
+      modifierType: Additive
+      value: 1.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 0.85
+
+# .45 Tanto [Tyger] (Rare)
+Ammo.AO_45_Tanto:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-45-Tanto
+  localizedDescription: LocKey#AO-Ammo-Tanto-Desc
+  iconPath: AO_45_Tanto
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_45_Tanto.aoFaction: "TygerClaws"
+Ammo.AO_45_Tanto.aoEffects: ["BaseStatusEffect.Bleeding"]
+Ammo.AO_45_Tanto.aoEffectChances: [0.25]
+
+UIIcon.AO_45_Tanto:
+  $type: UIIcon
+  atlasPartName: ao_45_tanto
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_Tanto:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-Tanto
+  localizedDescription: LocKey#AO-Ammo-Tanto-Desc
+  iconPath: AO_45_Tanto
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CritChance
+      modifierType: Additive
+      value: 0.1
+
+# .45 Gold Tips [Val] (Rare)
+Ammo.AO_45_GoldTips:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 3
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 3
+  displayName: LocKey#AO-Ammo-45-GoldTips
+  localizedDescription: LocKey#AO-Ammo-GoldTips-Desc
+  iconPath: AO_45_GoldTips
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_45_GoldTips.aoFaction: "Valentinos"
+
+UIIcon.AO_45_GoldTips:
+  $type: UIIcon
+  atlasPartName: ao_45_goldtips
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_GoldTips:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-GoldTips
+  localizedDescription: LocKey#AO-Ammo-GoldTips-Desc
+  iconPath: AO_45_GoldTips
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CritChance
+      modifierType: Additive
+      value: 0.15
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CritDamage
+      modifierType: Additive
+      value: 0.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.2
+
+# .45 Santa Muerte [Val] (Epic)
+Ammo.AO_45_SantaMuerte:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-45-SantaMuerte
+  localizedDescription: LocKey#AO-Ammo-SantaMuerte-Desc
+  iconPath: AO_45_SantaMuerte
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_45_SantaMuerte.aoFaction: "Valentinos"
+Ammo.AO_45_SantaMuerte.aoHeadEffect: "BaseStatusEffect.Burning"
+
+UIIcon.AO_45_SantaMuerte:
+  $type: UIIcon
+  atlasPartName: ao_45_santamuerte
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_SantaMuerte:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-SantaMuerte
+  localizedDescription: LocKey#AO-Ammo-SantaMuerte-Desc
+  iconPath: AO_45_SantaMuerte
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.HeadshotDamageMultiplier
+      modifierType: Additive
+      value: 0.5
+
+# .45 Surplus [6th] (Uncommon)
+Ammo.AO_45_Surplus:
+  $base: Ammo.AO_45_HollowPoint
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-45-Surplus
+  localizedDescription: LocKey#AO-Ammo-Surplus-Desc
+  iconPath: AO_45_Surplus
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_8, AO_Family_Power]
+
+Ammo.AO_45_Surplus.aoFaction: "SixthStreet"
+Ammo.AO_45_Surplus.rollMin: 0.95
+Ammo.AO_45_Surplus.rollMax: 1.05
+Ammo.AO_45_Surplus.rollDudChance: 0.0
+Ammo.AO_45_Surplus.rollHotChance: 0.0
+
+UIIcon.AO_45_Surplus:
+  $type: UIIcon
+  atlasPartName: ao_45_surplus
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_45_Surplus:
+  $base: Items.AO_Feed_45_Ball
+  displayName: LocKey#AO-Ammo-45-Surplus
+  localizedDescription: LocKey#AO-Ammo-Surplus-Desc
+  iconPath: AO_45_Surplus
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 0.9
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 0.9
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1475,5 +1719,25 @@ Ammo.AO_45_Kata.aoRecipe: ""
 Ammo.AO_45_Shinobi.aoScrapRounds: 90
 Ammo.AO_45_Shinobi.aoScrapGive: 1
 Ammo.AO_45_Shinobi.aoRecipe: ""
+
+Ammo.AO_45_ShinobiSeconds.aoScrapRounds: 90
+Ammo.AO_45_ShinobiSeconds.aoScrapGive: 1
+Ammo.AO_45_ShinobiSeconds.aoRecipe: ""
+
+Ammo.AO_45_Tanto.aoScrapRounds: 90
+Ammo.AO_45_Tanto.aoScrapGive: 1
+Ammo.AO_45_Tanto.aoRecipe: ""
+
+Ammo.AO_45_GoldTips.aoScrapRounds: 90
+Ammo.AO_45_GoldTips.aoScrapGive: 1
+Ammo.AO_45_GoldTips.aoRecipe: ""
+
+Ammo.AO_45_SantaMuerte.aoScrapRounds: 90
+Ammo.AO_45_SantaMuerte.aoScrapGive: 1
+Ammo.AO_45_SantaMuerte.aoRecipe: ""
+
+Ammo.AO_45_Surplus.aoScrapRounds: 90
+Ammo.AO_45_Surplus.aoScrapGive: 1
+Ammo.AO_45_Surplus.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

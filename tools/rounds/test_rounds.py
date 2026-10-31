@@ -10,20 +10,31 @@ SPEC = {
     "Kata": ("Arasaka", FACTION_EPIC, {"45", "556", "762", "5mm"}),
     "Kansatsu": ("Arasaka", FACTION_EPIC, {"10mm", "20mm", "25mm"}),
     "Shinobi": ("Arasaka", FACTION_EPIC, {"9mm", "45"}),
+    "ShinobiSeconds": ("TygerClaws", FACTION_UNCOMMON, {"9mm", "45"}),
+    "Tanto": ("TygerClaws", FACTION_RARE, {"9mm", "45", "12mm"}),
+    "GoldTips": ("Valentinos", FACTION_RARE, {"45", "12mm"}),
+    "SantaMuerte": ("Valentinos", FACTION_EPIC, {"45", "12mm"}),
+    "Surplus": ("SixthStreet", FACTION_UNCOMMON, {"9mm", "45", "12mm"}),
+    "FourthOfJuly": ("SixthStreet", FACTION_RARE, {"9mm", "12mm", "10mm"}),
+    "MilSpec": ("Militech", FACTION_RARE, {"9mm", "762", "5mm"}),
+    "CeaseAndDesist": ("Militech", FACTION_EPIC, {"762", "12ga"}),
+    "ProteinLoads": ("Animals", FACTION_RARE, {"12mm", "5mm", "Heavy"}),
+    "LegDay": ("Animals", FACTION_EPIC, {"12mm", "Heavy"}),
 }
-TAGS = {"Maelstrom": "[Mael]", "Scavengers": "[Scav]", "Arasaka": "[Ara]"}
+TAGS = {"Maelstrom": "[Mael]", "Scavengers": "[Scav]", "Arasaka": "[Ara]", "TygerClaws": "[Tyger]",
+        "Valentinos": "[Val]", "SixthStreet": "[6th]", "Militech": "[Mil]", "Animals": "[Animal]"}
 
 
 def faction_rounds():
     return [(t, k) for t, k in rounds() if k.get("faction")]
 
 
-def test_twenty_six_rounds_as_specified():
+def test_faction_rounds_as_specified():
     got = {}
     for tag, k in faction_rounds():
         got.setdefault(k["load"], (k["faction"], k["tier"], set()))[2].add(tag)
     assert got == SPEC
-    assert len(faction_rounds()) == 26
+    assert len(faction_rounds()) == 51
 
 
 def test_names_carry_the_tag_and_general_rounds_dont():
@@ -48,6 +59,22 @@ def test_flats():
     assert "Ammo.AO_45_PartsPullers.aoPartsPuller: true" in by["45", "PartsPullers"]
     assert "Ammo.AO_45_Kata.rollMin: 0.99" in by["45", "Kata"]
     assert "quality: Quality.Common" in by["9mm", "Reloads"]
+
+
+def test_second_batch_flats():
+    by = {(t, k["load"]): round_yaml(t, k) for t, k in faction_rounds()}
+    assert 'Ammo.AO_45_SantaMuerte.aoHeadEffect: "BaseStatusEffect.Burning"' in by["45", "SantaMuerte"]
+    assert "Ammo.AO_762_CeaseAndDesist.aoStopChance: 0.3" in by["762", "CeaseAndDesist"]
+    assert "Ammo.AO_12mm_LegDay.aoLegChance: 0.2" in by["12mm", "LegDay"]
+    assert "Ammo.AO_12mm_ProteinLoads.aoPumped: true" in by["12mm", "ProteinLoads"]
+    assert "Ammo.AO_9mm_ShinobiSeconds.rollDudChance: 0.05" in by["9mm", "ShinobiSeconds"]
+    assert "Ammo.AO_9mm_ShinobiSeconds.rollDudMult: 0.25" in by["9mm", "ShinobiSeconds"]
+    assert "Ammo.AO_TLight_MilSpec.rollMin: 0.95" in by["5mm", "MilSpec"]
+
+
+def test_gold_tips_sell_for_half_again_the_rare_price():
+    y = round_yaml("45", next(k for t, k in faction_rounds() if k["load"] == "GoldTips"))
+    assert y.count("value: 3\n") == 2
 
 
 def test_no_runtime_record_switch():
