@@ -114,7 +114,7 @@ end
 -- The field kit: a gun for every caliber with faction rounds, the 12-gauge pumps, and 60 of every
 -- faction round with its selector, plus the Subsonic, Slug and Pump N Dump rounds.
 local FIELD_GUNS = { "Lexington", "Unity", "Nova", "Copperhead", "Ajax", "Crusher", "Tactician", "Igla", "Pozhar",
-  "Testera", "Carnage", "Omaha", "Burya", "Yukimura", "Zhuo", "Ashura" }
+  "Testera", "Carnage", "Omaha", "Burya", "Yukimura", "Zhuo", "Ashura", "Grad" }
 local FIELD_EXTRAS = { "_Subsonic$", "AO_12ga_Slug$", "_PumpNDump$" }
 
 local function isFieldRound(ammo)

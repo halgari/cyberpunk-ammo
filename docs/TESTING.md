@@ -49,6 +49,20 @@ check, one line each:
 - **Protein Loads (12mm, light and heavy rail):** three quick kills, and V runs and reloads visibly faster.
 - **Leg Day (12mm, heavy rail):** a crippled target stops where it stands and keeps shooting, an
   Elite staggers, and an enemy's round knocks V down.
+- **Waste Not (9mm, .45, 12mm):** the rig fires past the shot events, so only a real trigger pull
+  shows it: hold the trigger and a magazine lasts longer than its count, with reserve not going down
+  on the free ones.
+- **Second Opinion (10mm, 20mm, 25mm):** with four or five enemies in view, the Yukimura holds more
+  locks than on Ball.
+- **Standard Issue (9mm, .45):** a long burst stays tighter than Ball.
+- **Bad Juju (.45, light rail, 10mm):** a target that gets it turns on the NPCs next to it.
+- **The Clap (light and heavy rail):** a poisoned target in a tight group passes it on within about
+  4 meters.
+- **Chimera Scrap on an iconic:** an iconic with its own attack still fires the round's explosions.
+- **Dogtown Tax:** loot the body and the eddies land.
+- **Turf shops:** `wat_kab_gunsmith_01` shows Cut Off or Last Call and `bls_ina_se5_gunsmith_01` shows
+  Waste Not after a few restocks.
+- **Save and load:** a gun on Chimera Scrap still explodes after loading a save.
 - **Subsonic (9mm, .45, 5.56):** the shot sounds like a silencer's, the muzzle flash is the silenced
   one, and a kill leaves others unalerted.
 - **Gutter Lead (9mm, .45, 12mm):** bleed and poison show on hit.
@@ -206,7 +220,7 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 - `faction.sh [part ...]`: faction rounds on live hits, one check per mechanism: who rolls what and
   how often, the general lists stay clear of them, the turf shops' stock, stats on a gun, one gun's round not touching
   another, Reloads' roll, Redliners' jam both ways, a jam across a swap, Chrome-cookers on V,
-  Kata's roll, Parts-pullers' components, Kansatsu's short lock and the tag not shortening it, the second five factions' spelling, headshot burns on NPCs and V, stagger, cripple and pump by rank and on V, and a gun's crit stats reaching the roll. Draws
+  Kata's roll, Parts-pullers' components, Kansatsu's short lock and the tag not shortening it, the second five factions' spelling, headshot burns on NPCs and V, stagger, cripple and pump by rank and on V, a gun's crit stats reaching the roll, the last eight factions' spelling and rolls, the Mox and Aldecaldo shops, every rank-aware effect by rank and on V (Pocket Sand, Bad Juju, Cut Off, Last Call, Collect Call), shock and poison spread, Waste Not's refund on NPC and V, Speedloaders' clamp to the pocket, Dogtown Tax on the body, Chimera Scrap on V and NPC, Deniable's unaware bonus, and the Kang Tao and NCPD stats. Draws
   guns and spawns NPCs: not while you play.
 - To look at icons in the game without a mouse: set the backpack's filter with
   `UIScriptableSystemSetBackpackFilter` (`filterMode` 14 is all items), open it with

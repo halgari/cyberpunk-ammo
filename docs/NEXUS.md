@@ -10,21 +10,21 @@ colors (Common grey, Uncommon green, Rare blue, Epic purple, Legendary orange).
 
 ```
 [center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
-[size=4]An ammo overhaul: 13 calibers, 200 rounds, and the shops, loot and crafting that go with them[/size][/center]
+[size=4]An ammo overhaul: 13 calibers, 237 rounds, and the shops, loot and crafting that go with them[/size][/center]
 
 [line]
 
-The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 200 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
+The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 237 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
 
 Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon, Rare and Epic rounds. You pick which round the gun loads from its mod screen.
 
 [size=5][b][color=#2ad4ff]What the mod adds[/color][/b][/size]
 [list]
 [*]13 calibers: 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
-[*]200 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
+[*]237 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
 [*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
-[*]Eight factions have rounds of their own. You get them from that faction's NPCs, and a few gun shops on Maelstrom, Scav and Arasaka turf stock some.
+[*]Sixteen factions have rounds of their own. You get them from that faction's NPCs, and a few gun shops on their turf stock some.
 [*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
 [*]Each round has its own box icon with the name printed on it, so Mushrooms and Penetrators look different in your backpack.
 [/list]
@@ -70,7 +70,7 @@ There are 14 Legendary rounds to find. Elite enemies, bosses and MaxTac sometime
 The rest are for you to find.
 
 [size=5][b][color=#2ad4ff]Faction rounds[/color][/b][/size]
-Eight factions load rounds nobody else has, 51 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. Gun shops in Northside, Kabuki and the Arroyo sometimes stock a stack or two below Epic, and the Scav shops always have Reloads. One gun shop Downtown sometimes has a small stack of Shinobi, the only Epic round on sale anywhere. No crafting, and the name carries a [Mael], [Scav] or [Ara] tag so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
+Sixteen factions load rounds nobody else has, 88 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. Gun shops in Northside, Kabuki and the Arroyo sometimes stock a stack or two below Epic, and the Scav shops always have Reloads. One gun shop Downtown sometimes has a small stack of Shinobi. The Mox's gun shop in Kabuki sometimes has Cut Off and Last Call, and one in the Badlands has Waste Not. No crafting, and the name carries a tag such as [Mael], [Scav] or [Ara] so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
 
 [b]Maelstrom[/b]
 [list]
@@ -121,6 +121,53 @@ Eight factions load rounds nobody else has, 51 in all. You get them from that fa
 [list]
 [*][color=#3fa0ff][b]Protein Loads[/b][/color] (Rare; 12mm, light and heavy rail): kills give +6% move speed and 10% faster reloads for 10 seconds, stacking 3 times.
 [*][color=#b04fff][b]Leg Day[/b][/color] (Epic; 12mm, heavy rail): 20% chance per shot to cripple the target's legs, so it stops where it stands. +80% recoil.
+[/list]
+
+[b]Barghest[/b]
+[list]
+[*][color=#3fa0ff][b]Dogtown Tax[/b][/color] (Rare; 9mm, 5.56): kills leave eddies on the body.
+[*][color=#b04fff][b]Chimera Scrap[/b][/color] (Epic; 7.62, light rail): bullets explode on impact.
+[/list]
+
+[b]Voodoo Boys[/b]
+[list]
+[*][color=#b04fff][b]Bad Juju[/b][/color] (Epic; .45, light rail, 10mm): 15% chance per shot to turn the target on its friends for 20 seconds. Bosses and MaxTac shrug it off, and it blinds you instead.
+[/list]
+
+[b]Wraiths[/b]
+[list]
+[*][color=#3fa0ff][b]Pocket Sand[/b][/color] (Rare; .45, 12-gauge): 20% chance per shot to blind the target for 2 seconds.
+[*][color=#b04fff][b]The Clap[/b][/color] (Epic; light and heavy rail): 20% chance per shot to poison the target, and it spreads to whoever's close.
+[/list]
+
+[b]Aldecaldos[/b]
+[list]
+[*][color=#3fa0ff][b]Waste Not[/b][/color] (Rare; 9mm, .45, 12mm): 15% of shots don't use a round.
+[*][color=#b04fff][b]Speedloaders[/b][/color] (Epic; .45, 12mm): draw the gun and the magazine's full, however you left it.
+[/list]
+
+[b]The Mox[/b]
+[list]
+[*][color=#b04fff][b]Cut Off[/b][/color] (Epic; 9mm, .45, 12-gauge): non-lethal, with a 15% chance per shot to knock the target out. Tougher targets stagger.
+[*][color=#b04fff][b]Last Call[/b][/color] (Epic; 9mm, 12mm): 15% chance per shot to drop the target unconscious 4 seconds later. Tougher targets stagger.
+[/list]
+
+[b]NCPD[/b]
+[list]
+[*][color=#3fbf5f][b]Standard Issue[/b][/color] (Uncommon; 9mm, .45): hold the trigger and shots stay tight instead of spreading.
+[*][color=#3fa0ff][b]Resisting Arrest[/b][/color] (Rare; 9mm, 12-gauge): 20% chance per shot to shock the target.
+[/list]
+
+[b]Kang Tao[/b]
+[list]
+[*][color=#3fa0ff][b]Wide Angle[/b][/color] (Rare; 10mm, 20mm): locks on to targets much further from the crosshair.
+[*][color=#b04fff][b]Second Opinion[/b][/color] (Epic; 10mm, 20mm, 25mm): locks on to 2 more targets at once.
+[/list]
+
+[b]NUSA[/b]
+[list]
+[*][color=#b04fff][b]Deniable[/b][/color] (Epic; .45, light rail, 10mm): silent kills, and double damage on targets who haven't seen you.
+[*][color=#b04fff][b]Black Budget[/b][/color] (Epic; 12.7, heavy rail): 30% chance per shot to badly poison the target.
 [/list]
 
 [line]

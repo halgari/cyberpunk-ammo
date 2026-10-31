@@ -380,6 +380,29 @@ rounds; a Legendary stack is a quarter of the Epic one it replaces.
 
 The other twelve are for finding; the spec has them.
 
+### Built (faction rounds, last eight, 2026-10-31)
+
+37 rounds, spec `docs/superpowers/specs/2026-10-31-faction-rounds-3-design.md`, which has the final
+numbers and what changed against the first design. Same rules as the batches below, plus tier code 9
+for a faction Legendary (Boss 10%, Elite 3%, Officer 1%) and NUSA rolling Epic at half the chance.
+
+- **Dogtown Tax** (Barghest, Rare; 9mm, 5.56): V's kills leave eddies, `dogtownTaxGive` 100.
+- **Chimera Scrap** (Barghest, Epic; 7.62, 5mm): Firecracker attack package; NPCs use `ScrapBlast`.
+- **Bad Juju** (VDB, Epic; 45, 5mm, 10mm): 15% `JujuMadness`, 20 s; Boss immune; V `HackBlind`.
+- **Collect Call** (VDB, Legendary; 5mm, 10mm): 10% Blackwall upload; Boss and V `CyberwareMalfunction`.
+- **Pocket Sand** (Wraith, Rare; 45, 12ga): 20% `ShortBlind`; Boss immune; V `HackBlind`.
+- **The Clap** (Wraith, Epic; 5mm, Heavy): 20% `BaseContagionPoison` and a 4 m `ClapCloud`.
+- **Waste Not** (Nomad, Rare; 9mm, 45, 12mm): 15% of shots hand the round back.
+- **Speedloaders** (Nomad, Epic; 45, 12mm): `MagazineAutoRefill`, on draw.
+- **Cut Off** (Mox, Epic; 9mm, 45, 12ga): non-lethal, 15% `Unconscious`; Elite up `ForceStagger`; V `Knockdown`.
+- **Last Call** (Mox, Epic; 9mm, 12mm): the same, 4 seconds after the hit, not non-lethal.
+- **Standard Issue** (NCPD, Uncommon; 9mm, 45): `SpreadMax*` and `SpreadAdsMax*` x0.3.
+- **Resisting Arrest** (NCPD, Rare; 9mm, 12ga): 20% `Electrocuted`.
+- **Wide Angle** (Kang, Rare; 10mm, 20mm): +25 on the eight smart angle stats.
+- **Second Opinion** (Kang, Epic; 10mm, 20mm, 25mm): +2 hip and ADS locks.
+- **Deniable** (NUSA, Epic; 45, 5mm, 10mm): `CanSilentKill`, x2 on NPCs not in combat.
+- **Black Budget** (NUSA, Epic; 127, Heavy): 30% `HeavyPoision`.
+
 ### Built (faction rounds, second five, 2026-10-31)
 
 25 rounds, spec `docs/superpowers/specs/2026-10-31-faction-rounds-2-design.md`. Same rules as the first

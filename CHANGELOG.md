@@ -5,12 +5,13 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
 
 ## Unreleased
 
-- Faction rounds: 51 new rounds, 200 in all. Maelstrom, Scavengers, Arasaka, Tyger Claws, Valentinos,
-  6th Street, Militech and the Animals each have their own, in their own packaging, marked in the
-  name: [Mael], [Scav], [Ara], [Tyger], [Val], [6th], [Mil] or [Animal]. They come from that faction's
-  NPCs, who carry and fire them and drop what's left on them. A few gun shops on Maelstrom, Scav and
-  Arasaka turf stock some too; on an existing save, a shop adds them the next time it restocks. They
-  can't be crafted.
+- Faction rounds: 88 new rounds, 237 in all. Maelstrom, Scavengers, Arasaka, Tyger Claws, Valentinos,
+  6th Street, Militech, the Animals, Barghest, Voodoo Boys, Wraiths, Aldecaldos, the Mox, NCPD, Kang
+  Tao and NUSA each have their own, in their own packaging, marked in the name: [Mael], [Scav], [Ara],
+  [Tyger], [Val], [6th], [Mil], [Animal], [Barghest], [VDB], [Wraith], [Nomad], [Mox], [NCPD], [Kang]
+  or [NUSA]. They come from that faction's NPCs, who carry and fire them and drop what's left on them.
+  A few gun shops on Maelstrom, Scav, Arasaka, Mox and Aldecaldo turf stock some too; on an existing
+  save, a shop adds them the next time it restocks. They can't be crafted.
   - Redliners (.45, 5.56, 7.62): +25% fire rate, +40% recoil and spread, and a 2% chance per shot
     to jam your weapons for 3 seconds.
   - Chrome-cookers (light and heavy rail): 15% chance of a cyberware malfunction. -10% damage.
@@ -40,9 +41,30 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
     10 seconds, stacking 3 times.
   - Leg Day (12mm, heavy rail): 20% chance per shot to cripple the target's legs, so it stops where
     it stands. Tougher targets stagger, and V gets knocked down. +80% recoil.
+  - Dogtown Tax (9mm, 5.56): kills leave eddies on the body.
+  - Chimera Scrap (7.62, light rail): bullets explode on impact.
+  - Bad Juju (.45, light rail, 10mm): 15% chance per shot to turn the target on its friends for 20
+    seconds. Bosses and MaxTac shrug it off, and it blinds V instead.
+  - Pocket Sand (.45, 12-gauge): 20% chance per shot to blind the target for 2 seconds.
+  - The Clap (light and heavy rail): 20% chance per shot to poison the target, and it spreads to
+    whoever's close.
+  - Waste Not (9mm, .45, 12mm): 15% of shots don't use a round.
+  - Speedloaders (.45, 12mm): draw the gun and the magazine's full, however you left it.
+  - Cut Off (9mm, .45, 12-gauge): non-lethal, with a 15% chance per shot to knock the target out.
+    Tougher targets stagger, and V gets knocked down.
+  - Last Call (9mm, 12mm): 15% chance per shot to drop the target unconscious 4 seconds later.
+    Tougher targets stagger, and V gets knocked down.
+  - Standard Issue (9mm, .45): hold the trigger and shots stay tight instead of spreading.
+  - Resisting Arrest (9mm, 12-gauge): 20% chance per shot to shock the target.
+  - Wide Angle (10mm, 20mm): locks on to targets much further from the crosshair.
+  - Second Opinion (10mm, 20mm, 25mm): locks on to 2 more targets at once.
+  - Deniable (.45, light rail, 10mm): silent kills, and double damage on targets who haven't seen
+    you.
+  - Black Budget (12.7, heavy rail): 30% chance per shot to badly poison the target.
 - Gun shops in Northside, Kabuki and the Arroyo sometimes carry a stack or two of their turf's
   faction rounds, and the two Scav shops always have Reloads. One gun shop Downtown sometimes has a
-  small stack of Shinobi, the only Epic round any shop sells. Containers don't hold faction rounds.
+  small stack of Shinobi. The Mox's gun shop in Kabuki sometimes has Cut Off and Last Call, and one
+  in the Badlands has Waste Not. Containers don't hold faction rounds.
 
 ## 0.5.0
 

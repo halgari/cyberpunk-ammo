@@ -450,7 +450,7 @@ FACTION_ROUND = {
     "Barghest": dict(pistol=dict(case_mat="tarnished"), rifle=dict(case_mat="tarnished", tip="red", tipfrac=0.7),
                      rail=dict(coil="red", core="gunmetal")),
     "VoodooBoys": dict(pistol=dict(case_mat="black", tip="cyan", tipfrac=0.98), rail=dict(coil="cyan", core="gunmetal")),
-    "Wraiths": dict(pistol=dict(case_mat="tarnished"), shell=dict(color="red", band="brass"), rail=dict(coil="green", core="gunmetal")),
+    "Wraiths": dict(pistol=dict(case_mat="tarnished"), shell=dict(color="red", band="gold"), rail=dict(coil="green", core="gunmetal")),
     "Aldecaldos": dict(pistol=dict(tip="copper", tipfrac=0.98)),
     "TheMox": dict(pistol=dict(case_mat="nickel", tip="pink", tipfrac=0.98), shell=dict(color="pink")),
     "NCPD": dict(pistol=dict(case_mat="steel", tip="blue", tipfrac=0.98), shell=dict(color="blue")),

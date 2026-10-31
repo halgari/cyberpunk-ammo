@@ -24,9 +24,13 @@ version). The attack is a hitscan ray (Power and Tech guns) or a projectile (Sma
 carry its own status effects, hit flags, stamina cost and an `explosionAttack`. So the package
 override is the general hook for "what this ammo does on hit", with no script.
 
-Untested: NPC shots with an overridden package (the NPC attack is separate, and the Metel's NPC
-attack has no explosion); a second override on the same gun (iconics with their own package,
-the Chimera mod); whether the engine re-applies the override after loading a save.
+NPC shots ignore an overridden package: the selector's `OnAttach` reaches V's attack only, and an
+NPC's gun fires its own (Chimera Scrap's NPC side is a script blast, `AmmoOverhaul.ScrapBlast`, for
+that reason). Attacks made from script drop the record's `statusEffects`, so the status has to be
+added in the hit hook (The Clap's cloud).
+
+Untested: a second override on the same gun (iconics with their own package, the Chimera mod);
+whether the engine re-applies the override after loading a save.
 
 ## Damage on hit
 
@@ -151,6 +155,13 @@ Other ways vanilla adds blasts: `TriggerAttackEffector` sets off a separate atta
   selector with ×0 (10mm Dumbfires) brings it to 0, checked in game (the stat; whether the
   rounds then fly straight not yet checked).
 
+Lock stats, read on the Yukimura in game:
+
+- `SmartGun{Hip,Ads}{Targetable,Locking}Angle{Yaw,Pitch}` read 0 on every gun, which means the
+  engine's own 8 to 12 degrees. A value replaces it, in degrees, so a multiplier does nothing and
+  these have to be additive. +25 locked a real target 20 degrees off the crosshair.
+- `SmartGun{Hip,Ads}MaxLockedTargets` read 3 hip and 1 ADS. There's no separate track stat.
+
 ## Tech charge
 
 - Tech guns have a Charge trigger mode: hold to charge, release to fire. Kenshin, Omaha, Burya,
@@ -188,3 +199,8 @@ dud (a shot that does little or nothing), an overpressure burst (damage to the s
 per-reload re-rolls. Ammo is a stack item, so every round in a stack is identical; randomness has
 to come per shot or per reload, from script. Per shot needs a hook on the player's shots (NPC shots
 already go through our `AIWeapon.Fire` wrap). Untested.
+
+## Magazines
+
+- `MagazineAutoRefill` on a weapon acts when the gun is drawn, not when it's holstered, and takes
+  rounds from the pocket, so per-gun ammo clamps it to what V carries.

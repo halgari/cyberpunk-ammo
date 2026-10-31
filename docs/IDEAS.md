@@ -825,11 +825,5 @@ Added 2026-10-31, after the 200-round release. Rounds should use different mecha
 damage and recoil: a round can carry almost any effect a vanilla mod, attachment or named gun has
 (`reference/catalog/effectors.tsv`, `parts.tsv`). Probe results are in `docs/MECHANICS.md`.
 
-- **Voodoo Boys:** a Legendary Blackwall upload, the Haunted Gun's `HauntedGunBlackwallUpload`, with a
-  Boss rule and no force kill on V. A Cyberpsychosis round (`MandessLevel*`), with a stated effect on
-  V. Zombie Powder (blind) and Backdoor (cheaper quickhacks on a marked target) stay options.
-- **Barghest:** Chimera Scrap (the Firecracker mod's explosive bullets), Dogtown Tax (kills leave eddies).
-- **Wraiths:** The Clap (Contagion, spreads between NPCs), Pocket Sand (blind).
-- **Aldecaldos:** Waste Not (free shots, as Pride and Prejudice), Speedloaders (Shuffler: holstering refills the magazine).
-- **The Mox:** Safe Word (Tinker Bell's knockout chance), Last Call (the Neurotoxin knife's delayed stun).
-- **Kang Tao:** Second Opinion (Headhopper's extra locks).
+- **Voodoo Boys:** Zombie Powder (blind) and Backdoor (cheaper quickhacks on a marked target) stay
+  options. The rest of this batch is built: see `docs/CATALOG.md`.
