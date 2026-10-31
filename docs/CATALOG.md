@@ -375,7 +375,7 @@ shot (each pellet of a shotgun rolls its share).
 recipe; NPC roll Elite 3%, Boss and MaxTac 10%; 0.2% per ammo stack in a container holding Epic
 rounds; a Legendary stack is a quarter of the Epic one it replaces.
 
-- **Mule Kick** (Legendary; 4ga): Buckshot with knockback at the game's cap. `aoMuleKick` (MuleKick.reds): each of V's shots shoves V 14 m/s away from the aim (PSMImpulse, the jump pads' push); a hit knocks the target down once per shot, Elite, Boss and MaxTac stagger (ForceStagger), a hit on V knocks V down.
+- **Kebab** (Legendary; 5mm, Heavy): A charged shot goes through every body and wall in its line with no damage lost (`TechPierceDamageFactor` x0; measured: no loss on the second body).
 - **Pump N Dump** (Legendary; 12ga): Stats only: one slug per shot (the `one_projectile()` stats of Slugs, x0.2 spread) and x0.4 `CycleTime`, 2.5 times the fire rate. The hull is greased, which is why it cycles fast. No armor ignore or other perks; nothing touches a shared record.
 
 The other twelve are for finding; the spec has them.

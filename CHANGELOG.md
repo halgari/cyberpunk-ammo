@@ -8,8 +8,8 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
 - A Legendary tier: 14 new rounds to find, 149 in all. Elite enemies, bosses and MaxTac sometimes
   carry them, and a stash holding Epic rounds now and then has a small stack. No shop sells them
   and they can't be crafted. Two of them:
-  - Mule Kick (4-gauge): every hit knocks the target down and tough ones stagger; each shot shoves
-    V hard away from the aim, so a shot at the floor sends V up.
+  - Kebab (light and heavy rail): a charged shot goes through every body and wall in its line
+    with no damage lost.
   - Pump N Dump (12-gauge): one slug per shot, greased so the gun cycles at 2.5 times the speed.
     Burns through ammo fast.
   - The rest are for you to find.
@@ -17,6 +17,8 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
   - Ping (Rare; 7.62, 12.7): targets hit show through walls for 5 seconds. -10% damage.
   - Penetrator (Epic) in 12mm, 7.62 and 12.7: ignores 60% of armor and goes through thin cover
     at half damage. NPCs firing it get the same.
+- Spread changes now cover the Tactician's minimum spread, which they used to miss. Slugs are x0.2
+  spread on every shotgun.
 
 ## 0.1.0
 

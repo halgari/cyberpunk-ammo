@@ -63,7 +63,7 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [size=5][b][color=#2ad4ff]Legendary rounds[/color][/b][/size]
 There are 14 Legendary rounds to find. Elite enemies, bosses and MaxTac sometimes carry them, and a stash holding Epic rounds now and then has a small stack. No shop sells them and they can't be crafted. Two of them:
 [list]
-[*][color=#e8a33c][b]Mule Kick[/b][/color] (4-gauge): every hit knocks the target down, tough ones stagger. Each shot shoves you hard away from your aim, so a shot at the floor sends you up.
+[*][color=#e8a33c][b]Kebab[/b][/color] (light and heavy rail): a charged shot goes through every body and wall in its line with no damage lost.
 [*][color=#e8a33c][b]Pump N Dump[/b][/color] (12-gauge): one slug per shot, greased so the gun cycles at 2.5 times the speed. Burns through ammo fast.
 [/list]
 The rest are for you to find.

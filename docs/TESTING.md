@@ -254,6 +254,8 @@ To have NPCs carry them, set every rank's chance and spawn a ganger:
     shot, the gun cycles at 2.5 times the speed, and the box runs dry fast. Still to play: Igla,
     Pozhar and Testera, for how the faster cycle feels on each. Swap back to Buckshot: normal
     cycle and pellets again.
+    Spread is checked on stats only (`tools/snippets/calibers/spread.sh`): the rig's shots ignore
+    spread, so check by eye that Slugs group tight on a Tactician at range.
 34. **Cook-off.** Kill an enemy standing next to another with 5.56 Cook-off: a blast at the body
     hurts the one next to it, and you if you're close. An enemy with Cook-off shooting you sets off
     your selected grenade on you while it has a charge; with no charge nothing happens until it
