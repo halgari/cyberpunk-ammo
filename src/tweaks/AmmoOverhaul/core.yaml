@@ -232,7 +232,18 @@ AmmoOverhaul.ClapCloud:
   hitFlags: []
 AmmoOverhaul.ClapCloud.aoCloudEffect: "BaseStatusEffect.BaseContagionPoison"
 
-# Hack rounds (docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md). Legendary Cyberpsychosis: the
+# Hack rounds (docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md): a smart gun's chance of one by
+# rank (HackRounds.Roll), and a netrunner's stack on its body.
+AmmoOverhaul.npcHackChance.Normal: 0.03
+AmmoOverhaul.npcHackChance.Rare: 0.03
+AmmoOverhaul.npcHackChance.Officer: 0.05
+AmmoOverhaul.npcHackChance.Elite: 0.08
+AmmoOverhaul.npcHackChance.Boss: 0.12
+AmmoOverhaul.npcHackChance.MaxTac: 0.12
+AmmoOverhaul.hackLegendaryShare: 0.1
+AmmoOverhaul.hackDropStack: 10
+
+# Legendary Cyberpsychosis: the
 # game's own at 30 seconds, not 58. Contagion catches on as The Clap does, wider with the rarity; the
 # clouds leave V and quest NPCs alone. Detonate Grenade is a blast at the target: the game's needs a
 # grenade on the belt.

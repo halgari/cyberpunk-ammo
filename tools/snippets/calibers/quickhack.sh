@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Quickhack rounds on live hits (spec docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md,
-# "Testing"), one check per mechanism. Parts: effects overheat ranks guarded cloud grenade (default all):
+# "Testing"), one check per mechanism. Parts: effects overheat ranks guarded cloud grenade rolls drop nosheet onv (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/quickhack.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(effects overheat ranks guarded cloud grenade)
+parts=("$@"); (( ${#parts[@]} )) || parts=(effects overheat ranks guarded cloud grenade rolls drop nosheet onv)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 YUK=Items.Preset_Yukimura_Default; PLAIN=Character.AO_Test_Plain_Unity
 pass() { echo "PASS $*"; }
@@ -14,10 +14,18 @@ is() { [[ "$2" == "$3" ]] && pass "$1" || fail "$1: got '$2', want '$3'"; }
 kit() { $C "for _, i in ipairs({$1}) do Game.AddToInventory(i[1], i[2]) end return 1" >/dev/null; sleep 1; }
 frail() { lua "local o = $1; Game.GetGodModeSystem():ClearGodMode(o:GetEntityID(), CName.new('aorig'))
 Game.GetStatPoolsSystem():RequestSettingStatPoolValue(o:GetEntityID(), gamedataStatPoolType.Health, $2, nil, true); return 1" >/dev/null; }
+kill_npc() { for _ in $(seq 60); do [[ $(lua "return RIG.npc():IsDead()") == true ]] && return; lua "return RIG.fireV()" >/dev/null; sleep 0.4; done; }
 despawn() { lua "RIG.npcMode = nil; GetMod('AOTestKit').despawnAll(); return 1" >/dev/null; sleep 1; }
 rankchance() { lua "TweakDB:SetFlat('$1.aoRankChance', $2); return 1" >/dev/null; }
 health() { lua "return string.format('%.1f', Game.GetStatPoolsSystem():GetStatPoolValue($1:GetEntityID(), gamedataStatPoolType.Health))"; }
 has() { lua "return tostring(StatusEffectSystem.ObjectHasStatusEffect($1, TweakDBID.new('BaseStatusEffect.$2')))"; }
+# The share of names matching $2 in a DebugFactionPick result $1, in percent.
+share() { awk -v s="$1" -v k="$2" 'BEGIN { n = split(s, a, ";"); for (i = 1; i <= n; i++) { split(a[i], p, "=");
+  t += p[2]; if (p[1] ~ k) c += p[2] } printf "%.2f", 100 * c / t }'; }
+within() { awk -v v="$2" -v lo="$3" -v hi="$4" 'BEGIN { exit !(v >= lo && v <= hi) }' && pass "$1 ($2)" || fail "$1: $2 not in $3..$4"; }
+hackchance() { lua "for _, r in ipairs({'Normal','Rare','Officer','Elite','Boss','MaxTac'}) do TweakDB:SetFlat('AmmoOverhaul.npcHackChance.' .. r, $1) end return 1" >/dev/null; }
+hackreset() { lua "local a = {Normal=0.03, Rare=0.03, Officer=0.05, Elite=0.08, Boss=0.12, MaxTac=0.12}
+for r, v in pairs(a) do TweakDB:SetFlat('AmmoOverhaul.npcHackChance.' .. r, v) end return 1" >/dev/null; }
 # Far more health, so a burst leaves the target alive and the hack's own damage shows, as a share.
 tanky() { lua "local o = $1; Game.GetGodModeSystem():ClearGodMode(o:GetEntityID(), CName.new('aorig'))
 Game.GetStatsSystem():AddModifier(o:GetEntityID(), RPGManager.CreateStatModifier(gamedataStatType.Health, gameStatModifierType.Additive, 20000.0)); return 1" >/dev/null; sleep 0.5; frail "$1" 100.0; sleep 0.5; }
@@ -136,6 +144,68 @@ grenade() {
   lua "TweakDB:SetFlat('AmmoOverhaul.HackBlast.range', 3.0); return 1" >/dev/null
   rankchance Ammo.AO_S10_HackGrenade3 0.2
 }
+
+# --- rolls: who gets what ---------------------------------------------------------------------------
+rolls() {
+  local r
+  pick() { lua "return $SYS:DebugFactionPick('$1', '$2', '', 8000)"; }
+  r=$(pick Smart_10 Normal)
+  within "a Normal's 10mm rolls hack rounds about 3%" "$(share "$r" _Hack)" 2.0 4.0
+  is "a Normal rolls no Epic or Legendary hack" "$(share "$r" '_Hack[A-Za-z]*[34]$')" 0.00
+  r=$(pick Smart_20 Boss)
+  within "a Boss's 20mm about 12% (after Legendary)" "$(share "$r" _Hack)" 8.0 14.0
+  r=$(pick Smart_25 Elite)
+  within "an Elite's Legendary hack is about 1 in 10 of 8%" "$(share "$r" '_Hack[A-Za-z]*4$')" 0.3 1.6
+  is "a 9mm gun rolls none" "$(share "$(pick Power_9mm Boss)" _Hack)" 0.00
+}
+
+# --- drop: a netrunner's body holds hack rounds, whatever its gun -------------------------------------
+drop() {
+  dropped() { lua "local n = 0; local ok, items = Game.GetTransactionSystem():GetItemList(RIG.npc())
+for _, it in ipairs(items) do if TDBID.ToStringDEBUG(it:GetID().id):find('_Hack') then n = n + it:GetQuantity() end end return n"; }
+  hackchance 1.0
+  kit "{'$YUK', 1}, {'Ammo.AO_S10_Standard', 200}"
+  draw $YUK; draw $YUK
+  spawn 0.0 "" Character.dtn_security_netrunner_netrunner2_lexington_ma_rare
+  setup $YUK
+  frail "RIG.npc()" 1.0
+  kill_npc; sleep 3.5
+  local n; n=$(dropped)
+  (( n >= 10 )) && pass "a netrunner drops hack rounds ($n)" || fail "netrunner drop: $n"
+  despawn
+  spawn 0.0 "" $PLAIN
+  setup $YUK
+  frail "RIG.npc()" 1.0
+  kill_npc; sleep 3.5
+  is "a plain NPC doesn't" "$(dropped)" 0
+  despawn
+  hackreset
+}
+
+# --- nosheet: a hack round never teaches a recipe from a body -----------------------------------------
+nosheet() {
+  is "no sheet for a hack round" "$(lua "return $SYS:DebugRecipeRolls('Ammo.AO_S10_HackOptics1', 2000)")" 0
+  (( $(lua "return $SYS:DebugRecipeRolls('Ammo.AO_S10_Dumbfire', 2000)") > 0 )) && pass "a plain round's does" || fail "no sheets at all"
+}
+
+# --- onv: an NPC firing a hack round does nothing to V past the hit ------------------------------------
+onv() {
+  lua "for _, l in ipairs({'HackOptics1','HackOptics2','HackSonic1','HackSonic2','HackContagion1','HackContagion2','HackCyberware1','HackCyberware2','HackShort1','HackShort2','HackCripple1','HackCripple2','HackOverheat1','HackOverheat2','HackGlitch1','HackGlitch2','HackBurnout2'}) do TweakDB:SetFlat('Ammo.AO_S10_' .. l .. '.aoRankChance', 1.0) end return 1" >/dev/null
+  hackchance 1.0
+  kit "{'$YUK', 1}, {'Ammo.AO_S10_Standard', 200}"
+  draw $YUK; draw $YUK
+  spawn 0.0 "" Character.AO_Test_Plain_Yukimura
+  setup $YUK
+  hackreset
+  npcshoot 2 6
+  sleep 2
+  local h; h=$(lua "return #RIG.ratios('NPC')")
+  (( h >= 1 )) && pass "the NPC's hack round hit V ($h)" || fail "no hits on V"
+  [[ "$($SYS_TRAIL)" -ge 1 ]] && pass "it carried a hack round" || fail "no hack round rolled"
+  is "no status from it" "$(lua "local n = 0 for _ in pairs(RIG.applied.V) do n = n + 1 end return n")" 0
+  despawn
+}
+SYS_TRAIL="eval lua \"local n = 0 for _ in string.gmatch(\$SYS:Trail(), 'got Items.AO_Feed_10mm_Hack') do n = n + 1 end return n\""
 
 for p in "${parts[@]}"; do echo "== $p"; $p; done
 lua "RIG.teardown(); return 1" >/dev/null

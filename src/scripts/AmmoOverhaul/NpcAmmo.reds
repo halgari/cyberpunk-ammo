@@ -173,6 +173,10 @@ public abstract class NpcAmmo {
     if NpcAmmo.RollsLegendary(caliber, rarity) {
       return NpcAmmo.PickTier(caliber, 4);
     }
+    let hack: TweakDBID = HackRounds.Roll(caliber, rarity);
+    if TDBID.IsValid(hack) {
+      return hack;
+    }
     let rolled: TweakDBID = FactionRounds.Roll(caliber, rarity, faction);
     return TDBID.IsValid(rolled) ? rolled : NpcAmmo.PickTier(caliber, NpcAmmo.RollGeneral(caliber, rarity));
   }
@@ -312,6 +316,7 @@ public abstract class NpcAmmo {
       return;
     }
     npc.aoLootGiven = true;
+    HackRounds.Drop(npc);
     let ts: ref<TransactionSystem> = GameInstance.GetTransactionSystem(npc.GetGame());
     let i: Int32 = 0;
     while i < ArraySize(npc.aoLootAmmo) {
