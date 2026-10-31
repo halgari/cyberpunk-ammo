@@ -14,7 +14,7 @@ the first three factions. Voodoo Boys wait for a later release; Zombie Powder an
   `AmmoOverhaul.factionOf.*` from the game's `Factions.*` names, which are the same words.
 - **Name tags:** `[Tyger]`, `[Val]`, `[6th]`, `[Mil]`, `[Animal]`.
 - **New hit behaviour:** an effect that fires only on a headshot (Santa Muerte), and rank-aware
-  stagger and knockdown chances (Cease and Desist, Leg Day). Everything else uses levers the mod already
+  stagger and cripple chances (Cease and Desist, Leg Day), and a buff on kills (Protein Loads). Everything else uses levers the mod already
   has.
 - **No new turf shops.** These rounds reach V from NPCs of the faction only. Turf stock can be added
   later with one flat per shop.
@@ -79,16 +79,18 @@ Numbers are starting points for the feel test. Calibers come from what each fact
 **Animals: stopping power**
 
 - **Protein Loads** (Rare; 12mm, light rail, heavy rail)
-  - +30% damage, +60% recoil, -30% effective range.
-  - Text: "Big, hot loads straight from the Animals' gym. Whoever takes one feels it for days.\n\n
-    +30% damage. +60% recoil. -30% range."
+  - A kill gives the shooter `AmmoOverhaul.Pumped`: +6% move speed and 10% faster reloads for 10
+    seconds, stacking 3 times. No damage or recoil change. NPCs get the same buff on their kills: the
+    probe showed these stat groups reach an NPC and its gun.
+  - Text: "Big, hot loads straight from the Animals' gym. Every kill gets you pumped.\n\nKills give
+    +6% move speed and 10% faster reloads for 10 seconds, stacking 3 times."
 - **Leg Day** (Epic; 12mm, heavy rail)
-  - 20% chance per shot to knock the target down, with `MuleKick.NpcEffect`'s rule: Elite, Boss and
-    MaxTac NPCs stagger instead. +80% recoil.
-  - On V: a knockdown, as Mule Kick. Mule Kick stays the Legendary version: every hit lands, and
-    only it shoves the shooter.
-  - Text: "Nobody walks right after leg day. They sit down and think about what they've done.\n\n
-    20% chance per shot to knock the target down. +80% recoil."
+  - 20% chance per shot to cripple the target's legs (`BaseStatusEffect.CrippledLeg`): it can't walk
+    or run for the rest of the fight, but keeps shooting from where it stands (probe: 6 hits on V
+    against 8 healthy). Elite, Boss and MaxTac NPCs stagger instead. +80% recoil.
+  - On V: a knockdown, as Mule Kick. `CrippledLeg` never ends by itself, so V doesn't get it.
+  - Text: "Nobody walks right after leg day. They stay put and think about what they've done.\n\n
+    20% chance per shot to cripple the target's legs. +80% recoil."
 
 ## Headshot effects
 
@@ -122,7 +124,8 @@ New mechanisms only, in `tools/snippets/calibers/faction.sh`:
 - Santa Muerte: a head shot burns, a chest shot doesn't; an NPC's Santa Muerte on V gives the burn
   by the rule above.
 - Fourth of July and Cease and Desist on live hits; Boss and MaxTac don't stagger from Cease and Desist.
-- Leg Day: Normal NPCs go down, Elites stagger.
+- Leg Day: Normal NPCs are crippled, Elites stagger, V goes down.
+- Protein Loads: a kill buffs the shooter, V and NPC, and 3 kills stack.
 - `records.lua`, `icons.lua`, `distribution.lua` and `tiers.lua` at 200 rounds. The atlas holds 300
   cells, so it keeps its size.
 

@@ -39,7 +39,7 @@
 - Generated: caliber yamls, `LocalizationRounds.reds`, `tools/render/rounds_tiers.json`, `tools/rounds/refs.txt`, crafting flats
 
 **Interfaces:**
-- Produces: `hit` keys `head_effect` (str) writing `aoHeadEffect`, `head_fallback` (float) writing `aoHeadFallback`, `floor` (float) writing `aoFloorChance`, `stop` (float) writing `aoStopChance`; kind key `price` (number) overriding `PRICE[tier]`.
+- Produces: `hit` keys `head_effect` (str) writing `aoHeadEffect`, `head_fallback` (float) writing `aoHeadFallback`, `legs` (float) writing `aoLegChance`, `pumped` (bool) writing `aoPumped`, `stop` (float) writing `aoStopChance`; kind key `price` (number) overriding `PRICE[tier]`.
 - Produces: faction keys `TygerClaws`, `Valentinos`, `SixthStreet`, `Militech`, `Animals`.
 
 - [ ] **Step 1: Write the failing tests** in `test_rounds.py`
@@ -66,7 +66,7 @@ def test_second_batch_flats():
     by = {(t, k["load"]): round_yaml(t, k) for t, k in faction_rounds()}
     assert 'Ammo.AO_45_SantaMuerte.aoHeadEffect: "BaseStatusEffect.Burning"' in by["45", "SantaMuerte"]
     assert "Ammo.AO_762_CeaseAndDesist.aoStopChance: 0.3" in by["762", "CeaseAndDesist"]
-    assert "Ammo.AO_12mm_LegDay.aoFloorChance: 0.2" in by["12mm", "LegDay"]
+    assert "Ammo.AO_12mm_LegDay.aoLegChance: 0.2" in by["12mm", "LegDay"]
     assert "Ammo.AO_9mm_ShinobiSeconds.rollDudChance: 0.05" in by["9mm", "ShinobiSeconds"]
     assert "Ammo.AO_9mm_ShinobiSeconds.rollDudMult: 0.25" in by["9mm", "ShinobiSeconds"]
     assert "Ammo.AO_TLight_MilSpec.rollMin: 0.95" in by["5mm", "MilSpec"]
@@ -96,8 +96,8 @@ Add ten kinds after Shinobi, with `desc` copied verbatim from the spec. `NARROW 
 - FourthOfJuly, title "Fourth of July", `stats=[]`, `hit=dict(effects=[("AmmoOverhaul.PingTag", 1.0), (BURN, 0.10)])`
 - MilSpec, title "Mil-Spec", `stats=armor(0.25) + recoil(0.85)`, `hit=dict(roll=NARROW)`
 - CeaseAndDesist, title "Cease and Desist", `stats=armor(0.50) + damage(0.90)`, `hit=dict(stop=0.30)`
-- ProteinLoads, title "Protein Loads", `stats=damage(1.30) + recoil(1.60) + range_(0.70)`
-- LegDay, title "Leg Day", `stats=recoil(1.80)`, `hit=dict(floor=0.20)`
+- ProteinLoads, title "Protein Loads", `stats=[]`, `hit=dict(pumped=True)`
+- LegDay, title "Leg Day", `stats=recoil(1.80)`, `hit=dict(legs=0.20)`
 
 Pick `look` pairs for each from its box's colours. In `core.yaml`, after the Arasaka line:
 
@@ -129,7 +129,7 @@ git commit -m "feat: 25 rounds for Tyger Claws, Valentinos, 6th Street, Militech
 
 **Interfaces:**
 - Consumes: the flats from Task 1.
-- Produces: `AOData.HeadEffect(ammo: TweakDBID) -> TweakDBID`, `AOData.HeadFallback(ammo) -> Float`, `AOData.FloorChance(ammo) -> Float`, `AOData.StopChance(ammo) -> Float`, each following `AOData.SelfJam`; `FactionRounds.OnHit(attackData: ref<AttackData>, target: ref<GameObject>, ammo: TweakDBID, pellets: Int32) -> Void`.
+- Produces: `AOData.HeadEffect(ammo: TweakDBID) -> TweakDBID`, `AOData.HeadFallback(ammo) -> Float`, `AOData.LegChance(ammo) -> Float`, `AOData.Pumped(ammo) -> Bool`, `AOData.StopChance(ammo) -> Float`, each following `AOData.SelfJam`; `FactionRounds.OnHit(attackData: ref<AttackData>, target: ref<GameObject>, ammo: TweakDBID, pellets: Int32) -> Void`.
 
 - [ ] **Step 1: Write the failing live checks**
 
@@ -137,22 +137,25 @@ Add `Character.AO_Test_<Tyger|Val|Six|Mil|Animal>_Unity` to `test.yaml`, as `AO_
 - `affiliation2`: each of the five spawns and `DebugFactionOf` returns its key.
 - `headfx`: with Santa Muerte fed, 12 chest shots apply 0 `BaseStatusEffect.Burning`; head shots apply exactly as many as head-flagged hits (the aim code from the probe, in the rig's `aim` with a pitch at the `Head` slot; add it to `rig.lua` as `RIG.fireHead()`).
 - `stops`: with `aoStopChance` set to 1.0 by `TweakDB:SetFlat` on a Cease and Desist 7.62 gun, a Normal NPC takes `BaseStatusEffect.ForceStagger`, an Elite takes it, a Boss (`Character.ma_wat_kab_08_cyberpsycho`) doesn't. On a Crusher at 1.0, one blast counts one application.
-- `floors`: with `aoFloorChance` at 1.0, a Normal NPC takes `BaseStatusEffect.Knockdown`, an Elite (`Character.sq031_maelstrom_strong_shotgunner_elite`) `ForceStagger`.
+- `legs`: with `aoLegChance` at 1.0, a Normal NPC takes `BaseStatusEffect.CrippledLeg`, an Elite `ForceStagger`, V `Knockdown` and never `CrippledLeg`.
+- `pumped`: killing with Protein Loads puts one stack of `AmmoOverhaul.Pumped` on V with a gun out and raises `MaxSpeed` and lowers reload time; three kills stack to three and a fourth does not; an NPC's kill of another NPC buffs that NPC.
 - `crits`: with Gold Tips and Ball, 100 hits each on an Immortal NPC, the share of `hitFlag.CriticalHit` hits rises by at least 8 points. Ranks come from `NPCPuppet.GetNPCRarity`, not the record's name: that Elite record reported Normal in the probe, so the check first prints the rank and uses `AOData` flats to pick a true Elite if needed.
 
 - [ ] **Step 2: Deploy and watch them fail**
 
-Run: `tools/linux/game-lock.sh bash -c 'tools/linux/restart-game.sh --kill; tools/linux/deploy.sh && tools/linux/restart-game.sh && tools/snippets/calibers/faction.sh affiliation2 headfx stops floors crits'`
-Expected: `affiliation2` PASS (Task 1 did that); `headfx`, `stops`, `floors` FAIL, no effects applied. Record what `crits` shows.
+Run: `tools/linux/game-lock.sh bash -c 'tools/linux/restart-game.sh --kill; tools/linux/deploy.sh && tools/linux/restart-game.sh && tools/snippets/calibers/faction.sh affiliation2 headfx stops legs pumped crits'`
+Expected: `affiliation2` PASS (Task 1 did that); `headfx`, `stops`, `legs`, `pumped` FAIL, no effects applied. Record what `crits` shows.
 
 - [ ] **Step 3: Implement**
 
 `FactionRounds.OnHit`, called in `ApplyAmmoOnHit` beside the Mule Kick call, under `!gated`, before the early return on empty effects, for every ammo:
 - Target must cast to `ScriptedPuppet`, or return.
 - `head := AOData.HeadEffect(ammo)`: if valid and `attackData.HasFlag(hitFlag.Headshot)`, or the target is V and `RandF() < AOData.HeadFallback(ammo)`, add it through `AOData.PlayerEffect` on V.
-- Stop and floor roll `AOData.PelletChance(chance, pellets)`, gated per shot per target by the Mule Kick field `aoMuleKickAt` and `MuleKick.Gate()`, so pellets of a shot give one effect. Floor adds `MuleKick.NpcEffect(rarity)`. Stop adds `BaseStatusEffect.ForceStagger` unless the rarity is `Boss` or `MaxTac`.
+- Stop and legs roll `AOData.PelletChance(chance, pellets)`, gated per shot per target by the Mule Kick field `aoMuleKickAt`, so pellets of a shot give one effect. Legs adds `BaseStatusEffect.CrippledLeg` to Trash through Officer, `ForceStagger` to Elite, Boss and MaxTac, and `Knockdown` to V. Stop adds `BaseStatusEffect.ForceStagger` unless the rarity is `Boss` or `MaxTac`.
 
 Move the `pellets` line in `ApplyAmmoOnHit` above the call.
+
+Pumped: define `AmmoOverhaul.Pumped` in `core.yaml` (MaxDuration 10, 3 stacks, `MaxSpeed` AdditiveMultiplier 0.06, `ReloadTimeBonus` -0.10), copying the shape of `BaseStatusEffect.Sovereign_Speed_Buff`. Mark the target with the shooter and time as `MarkParts` does, for any shooter, and in `OnDeath` apply it to the shooter if the death is within 0.5 s.
 
 - [ ] **Step 4: Decide the three engine questions from live results**
 
@@ -231,7 +234,7 @@ git commit -m "test: record checks at 200 rounds"
 - [ ] **Step 1: Write them**
 
 - Round counts move from 175 to 200; the Unreleased changelog gains the five factions.
-- `TESTING.md`: a manual line per kind, in the style of its Redliners line: Protein Loads kick, Leg Day floors, Cease and Desist on return fire, Fourth of July tags, Santa Muerte burns on headshots only.
+- `TESTING.md`: a manual line per kind, in the style of its Redliners line: Protein Loads pump on kills, Leg Day cripples, Cease and Desist on return fire, Fourth of July tags, Santa Muerte burns on headshots only.
 - `MECHANICS.md`: the probe results from memory `faction-batch2-probes.md`: headshot flag, blind effects and numbers, per-target quickhack cost, no tracer visuals.
 - `IDEAS.md`: Zombie Powder and Backdoor with those results, held for a Voodoo Boys release.
 - Spec status: built, with any Task 2 Step 4 outcome written in.
