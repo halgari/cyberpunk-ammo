@@ -577,16 +577,63 @@ def hack_mark(stem, px):
     return a.point(lambda v: max(0, min(255, (v - 90) * 6)))
 
 
-def hack_lid(path, w, h, stem, colour):
-    """The cartridge's lid: a dark plate with a keyline in the rarity's colour, the hack's mark lit."""
-    im = Image.new("RGBA", (w, h), (12, 13, 16, 255))
-    keyline(ImageDraw.Draw(im), w, h, h // 24, colour, max(4, h // 60))
+def traces(dr, w, h, clear, colour, rng):
+    """Circuit traces running in from the edge of the plate, stopping short of a circle `clear` wide."""
+    step = h // 24
+    width = max(2, h // 280)
+    for _ in range(46):
+        x, y = rng.randrange(1, w // step) * step, rng.randrange(1, h // step) * step
+        pts = [(x, y)]
+        for _ in range(rng.randint(2, 5)):
+            dx, dy = rng.choice([(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (1, -1), (-1, -1)])
+            n = rng.randint(1, 4) * step
+            x, y = x + dx * n, y + dy * n
+            if math.hypot(x - w / 2, y - h / 2) < clear or not (step < x < w - step and step < y < h - step):
+                break
+            pts.append((x, y))
+        if len(pts) > 1:
+            dr.line(pts, fill=colour, width=width, joint="curve")
+            r = width * 2
+            px, py = pts[-1]
+            dr.ellipse([px - r, py - r, px + r, py + r], outline=colour, width=width)
+
+
+def hack_lid(path, w, h, stem, colour, name, seed):
+    """The cartridge's lid: a dark circuit board with a keyline in the rarity's colour, corner
+    brackets and small print, the hack's mark lit in a clear patch."""
+    im = Image.new("RGBA", (w, h), (13, 15, 19, 255))
+    dr = ImageDraw.Draw(im)
+    rng = random.Random(seed)
+    dim = tuple(round(c * 0.62) for c in colour)
+    traces(dr, w, h, h * 0.44, dim, rng)
+    keyline(dr, w, h, h // 24, colour, max(4, h // 60))
+    arm, ink = h // 9, max(5, h // 48)
+    for cx, sx in ((h // 12, 1), (w - h // 12, -1)):
+        for cy, sy in ((h // 12, 1), (h - h // 12, -1)):
+            dr.line([(cx + sx * arm, cy), (cx, cy), (cx, cy + sy * arm)], fill=colour, width=ink)
+    stamp(im, lettered("QUICKHACK", w * 0.13, spacing=8), colour, w * 0.2, h * 0.13)
+    stamp(im, lettered(name, w * 0.2, TYPED), dim, w * 0.8, h * 0.87)
     mark = hack_mark(stem, round(h * 0.76))
     stamp(im, mark, colour, w / 2, h / 2)
     im.convert("RGB").save(path)
     glow = Image.new("RGBA", (w, h), (0, 0, 0, 255))
     stamp(glow, mark, colour, w / 2, h / 2)
     glow.convert("RGB").save(str(path).replace(".png", "-glow.png"))
+
+
+def hack_tag(path, w, h, colour, name, seed):
+    """The cartridge's front sticker: a stripe in the rarity's colour, the hack's name, a barcode."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (214, 212, 202, 255))
+    dr = ImageDraw.Draw(im)
+    dr.rectangle([0, 0, w * 0.1, h], fill=colour)
+    stamp(im, lettered(name, w * 0.8), (22, 22, 26), w * 0.55, h * 0.3)
+    x = round(w * 0.16)
+    while x < w * 0.94:
+        bar = rng.randint(2, 7) * w // 500
+        dr.rectangle([x, h * 0.58, x + bar, h * 0.9], fill=(22, 22, 26))
+        x += bar + rng.randint(2, 6) * w // 500
+    im.convert("RGB").save(path)
 
 
 def hack_core(path, px, stem, colour):

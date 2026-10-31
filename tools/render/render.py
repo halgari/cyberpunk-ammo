@@ -471,7 +471,7 @@ HACK_COLOUR = {10: (58, 196, 96), 11: (54, 134, 240), 12: (170, 76, 232), 13: (2
 HACK_BAND = {10: "green", 11: "blue", 12: "purple", 13: "orange"}
 
 
-def hack_form(tmp, name, shape, look, tier, i):
+def hack_form(tmp, name, shape, look, lines, tier, i):
     """A quickhack round's form, with the hack's mark printed for it; a spec for scene.py."""
     tmp = pathlib.Path(tmp)
     L, R = extent(shape)
@@ -481,8 +481,10 @@ def hack_form(tmp, name, shape, look, tier, i):
     if tier == 13:
         fa.hack_core(art, 1024, stem, colour)
         return dict(form="hack_legend", case=case, R=R, mark=str(art), colour=linear(colour), seed=i + 1)
-    fa.hack_lid(art, 1200, round(1200 * case["D"] / case["W"]), stem, colour)
-    return dict(form="hack_cart", case=case, R=R, lid=str(art), colour=linear(colour), seed=i + 1)
+    tag = tmp / f"{name}-tag.png"
+    fa.hack_lid(art, 1200, round(1200 * case["D"] / case["W"]), stem, colour, lines[1], i + 1)
+    fa.hack_tag(tag, 700, 260, colour, lines[1], i + 1)
+    return dict(form="hack_cart", case=case, R=R, lid=str(art), tag=str(tag), colour=linear(colour), seed=i + 1)
 
 
 def faction_form(tmp, name, shape, faction, take, lines, i):
@@ -631,7 +633,7 @@ def main():
             if name in HACK_TIER:
                 shape = dict(shape, idband=HACK_BAND[HACK_TIER[name]])
                 run({"mode": "box", "out": str(out / f"{name}.png"), "round": shape, "samples": args.samples, "size": args.size,
-                     "box": hack_form(tmp, name, shape, look, HACK_TIER[name], i)}, tmp)
+                     "box": hack_form(tmp, name, shape, look, lines, HACK_TIER[name], i)}, tmp)
                 print(name, flush=True)
                 continue
             faction = FACTION_OF.get(name)

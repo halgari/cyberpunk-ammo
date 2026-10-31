@@ -2235,26 +2235,54 @@ def nusa_box(spec, roundspec):
 
 
 def hack_cart(spec, roundspec):
-    """A quickhack round's data cartridge: a moulded shell in the rarity's colour with gold contacts
-    along the front, rounds in the bay, the lid up with the hack's mark lit."""
+    """A quickhack round's data cartridge: a scuffed moulded shell in the rarity's colour with rubber
+    corner guards and a ribbed grip, a dark front plate with gold contacts, a sticker and a status
+    light, rounds in the bay, the lid up on steel hinges with the hack's mark lit."""
     rnd, L, _ = make_round(roundspec)
     R = spec["R"]
     W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
-    shell = principled("CartShell", tuple(spec["colour"]), 0.0, 0.35, wear=0.04, bump=0.03, grime=0.9)
+    colour = tuple(spec["colour"])
+    shell = principled("CartShell", colour, 0.0, 0.38, wear=0.2, bump=0.14, grime=0.55, edge=(0.16, 0.16, 0.17))
+    guard = principled("CartGuard", (0.016, 0.016, 0.018), 0.0, 0.62, wear=0.08, bump=0.22, grime=0.6)
     foam = principled("CartBed", (0.02, 0.02, 0.024), 0.0, 0.85, wear=0.0, bump=0.2)
     gold = principled("CartGold", (0.85, 0.55, 0.18), 1.0, 0.3, wear=0.02, bump=0.02)
+    steel = principled("CartSteel", (0.5, 0.5, 0.52), 1.0, 0.35, wear=0.1, bump=0.04)
     base, OW, OD, wall = box_shell(spec, shell, 0.045)
     top = H - wall * 0.7
     bed = cube("Bed", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam, bevel=wall * 0.1)
     rounds = bedded(rnd, bed, L, R, D, n, pitch, top + R * 0.15)
     bed.parent = base
-    pins = 13
+    # Rubber corners, top to bottom.
+    corner = wall * 1.7
+    for x in (-1, 1):
+        for y in (-1, 1):
+            cube("Guard", (corner, corner, H * 1.02), (x * (OW / 2 - corner * 0.3), y * (OD / 2 - corner * 0.3), H / 2), guard, bevel=wall * 0.25).parent = base
+    # The ribbed grip down the left side.
+    for i in range(11):
+        y = -OD * 0.3 + OD * 0.6 * i / 10
+        cube("Rib", (wall * 0.3, wall * 0.5, H * 0.62), (-OW / 2 - wall * 0.08, y, H * 0.5), guard, bevel=wall * 0.08).parent = base
+    # The front plate: sticker, contacts, status light, a screw at each end.
+    plate_w, plate_h, front = OW * 0.8, H * 0.68, -OD / 2 - wall * 0.1
+    cube("Plate", (plate_w, wall * 0.3, plate_h), (0, front, H * 0.48), guard, bevel=wall * 0.08).parent = base
+    upright = (math.pi / 2, 0, 0)
+    for x in (-plate_w * 0.47, plate_w * 0.47):
+        disc("Screw", wall * 0.24, wall * 0.2, (x, front - wall * 0.15, H * 0.48), upright, steel).parent = base
+    face = front - wall * 0.16
+    tag_w = plate_w * 0.32
+    panel("Tag", tag_w, tag_w * 260 / 700, printed("Tag", spec["tag"], rough=0.5), (-plate_w * 0.24, face, H * 0.48), upright, wall * 0.03).parent = base
+    pins = 11
+    span = plate_w * 0.38
     for i in range(pins):
-        x = -OW * 0.32 + OW * 0.64 * (i + 0.5) / pins
-        cube("Pin", (OW * 0.64 / pins * 0.62, wall * 0.14, H * 0.46), (x, -OD / 2 - wall * 0.04, H * 0.42), gold).parent = base
+        x = plate_w * 0.02 + span * (i + 0.5) / pins
+        cube("Pin", (span / pins * 0.6, wall * 0.1, plate_h * 0.62), (x, face, H * 0.48), gold).parent = base
+    cube("Status", (wall * 0.4, wall * 0.14, wall * 0.4), (plate_w * 0.42 - wall * 0.2, face, H * 0.48), emissive("CartStatus", colour, 6.0)).parent = base
+    for x in (-OW * 0.3, OW * 0.3):
+        disc("Hinge", wall * 0.42, OW * 0.14, (x, OD / 2 + wall * 0.15, H), (0, math.pi / 2, 0), steel).parent = base
     hinge = hinged((0, OD / 2, H), -100)
     t = wall * 1.1
     cube("Lid", (OW, OD, t), (0, -OD / 2, t / 2), shell, bevel=wall * 0.3).parent = hinge
+    for x in (-1, 1):
+        cube("LidGuard", (corner, corner, t * 1.5), (x * (OW / 2 - corner * 0.3), -OD + corner * 0.3, t / 2), guard, bevel=wall * 0.25).parent = hinge
     panel("LidArt", W * 0.97, OD * 0.94, printed("LidArt", spec["lid"], rough=0.3, glow=1.6), (0, -OD / 2, -wall * 0.03), (math.pi, 0, 0), wall * 0.05).parent = hinge
     return [base, hinge] + rounds
 
