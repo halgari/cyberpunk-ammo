@@ -20,7 +20,7 @@ public abstract class AOData {
     return TweakDBInterface.GetForeignKey(path, TDBID.None());
   }
 
-  private static func GetIDs(path: TweakDBID) -> array<TweakDBID> {
+  public static func GetIDs(path: TweakDBID) -> array<TweakDBID> {
     let ids: array<TweakDBID>;
     for value in TweakDBInterface.GetStringArray(path) {
       ArrayPush(ids, TDBID.Create(value));

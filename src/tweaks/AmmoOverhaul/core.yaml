@@ -201,6 +201,9 @@ AmmoOverhaul.npcLegendaryChance.MaxTac: 0.10
 # Vendors.*.faction is Unaffiliated on all of them). Each stock build adds FactionRounds.TurfStock.
 Vendors.wat_nid_gunsmith_01.aoFaction: "Maelstrom"
 Vendors.cct_dtn_guns_01.aoFaction: "Arasaka"
+# Arasaka's rounds are all Epic and no shop sells Epic, except this one, these, in a small stack.
+Vendors.cct_dtn_guns_01.aoTurfAmmo: ["Ammo.AO_9mm_Shinobi", "Ammo.AO_45_Shinobi"]
+Vendors.cct_dtn_guns_01.aoTurfStack: 10
 Vendors.wat_kab_gunsmith_02.aoFaction: "Scavengers"
 Vendors.std_arr_gunsmith_01.aoFaction: "Scavengers"
 AmmoOverhaul.turfChance: 0.25

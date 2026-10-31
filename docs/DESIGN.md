@@ -291,7 +291,9 @@ range doesn't change the tooltip yet (none ships with one).
 - **Turf shops:** no vendor has a usable faction (all are `Factions.Unaffiliated`), so the mapping is
   by hand: `Vendors.<shop>.aoFaction` in `core.yaml`. `Vendor.AOSplitAmmo` adds
   `FactionRounds.TurfStock` to a gun shop's stock on each build: tier 7 rounds every time, and at
-  `turfChance` one or two `turfStack` stacks of tiers 5 and 8.
+  `turfChance` one or two `turfStack` stacks of tiers 5 and 8. A shop can list its own rounds and
+  stack size (`aoTurfAmmo`, `aoTurfStack`): `cct_dtn_guns_01` lists Shinobi, the one Epic any shop
+  sells.
 - **Self-jam:** `aoSelfJam` on the ammo is each shot's chance to apply `WeaponMalfunction` to the
   shooter, for V (`ShootEvents.OnEnter`) and NPCs (`NpcAmmo.TakeShot`). The game's shooting gate
   reads the jam on the character, not the gun, so swapping guns doesn't clear it on V.

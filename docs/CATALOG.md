@@ -389,7 +389,8 @@ stack breaks down by its quality. Only that faction's NPCs roll them (Legendary 
 then the general tiers); they reach V as those NPCs' loot, and from turf gun shops: Maelstrom
 `wat_nid_gunsmith_01`, Scavengers `wat_kab_gunsmith_02` and `std_arr_gunsmith_01`. Each stock build
 has a 25% chance of one or two 30-round stacks below Epic, and Scav shops always have Reloads.
-Arasaka's `cct_dtn_guns_01` is mapped but adds nothing: all of Arasaka's rounds are Epic.
+Arasaka's `cct_dtn_guns_01` sells Shinobi only, at the same chance, in stacks of 10: the one
+Epic round on sale anywhere, an exception by the user because all of Arasaka's rounds are Epic.
 
 Maelstrom:
 

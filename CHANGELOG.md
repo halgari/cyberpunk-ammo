@@ -24,8 +24,8 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
     fast.
   - Shinobi (9mm, .45): silent kills, +50% headshot damage. -10% range.
 - Gun shops in Northside, Kabuki and the Arroyo sometimes carry a stack or two of their turf's
-  faction rounds, and the two Scav shops always have Reloads. Nobody sells Epic. Containers don't
-  hold faction rounds.
+  faction rounds, and the two Scav shops always have Reloads. One gun shop Downtown sometimes has a
+  small stack of Shinobi, the only Epic round any shop sells. Containers don't hold faction rounds.
 
 ## 0.5.0
 

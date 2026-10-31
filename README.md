@@ -18,7 +18,7 @@ Brass Market (internally AmmoOverhaul) is a Cyberpunk 2077 (2.50) mod that repla
   damage rules as V, and drop what they carry.
 - **Faction rounds.** Maelstrom, Scavengers and Arasaka have 26 rounds of their own, marked
   [Mael], [Scav] or [Ara]. They come from that faction's NPCs, and from a few gun shops on
-  Maelstrom and Scav turf, and can't be crafted.
+  their turf, and can't be crafted.
 - **Getting rounds.** Vendors and loot hand out every caliber and tier; gun shops sell up to
   Rare. Every caliber's Common round can be crafted; better rounds need a recipe ("load sheet")
   from loot or a gun shop. Rounds break down by the box into components of their own grade.

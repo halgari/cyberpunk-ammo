@@ -169,12 +169,13 @@ Epic from general rounds, which excludes tiers 5 to 8.
   at stock time is worse: a stock can be built when V is elsewhere.
 - Shop IDs carry their district. Approved by the user:
   - Maelstrom: `wat_nid_gunsmith_01` (Northside).
-  - Arasaka: `cct_dtn_guns_01` (City Center, Downtown). Mapped, but it adds nothing while all of
-    Arasaka's rounds are Epic.
+  - Arasaka: `cct_dtn_guns_01` (City Center, Downtown). Shinobi only, see the exception below.
   - Scavengers: `wat_kab_gunsmith_02` (Kabuki), `std_arr_gunsmith_01` (Arroyo).
 - Rule: a turf shop has a 25% chance per stock build (`turfChance`) of one or two extra stacks
-  (`turfStack`, 30 rounds) of that faction's rounds below Epic, not counting Common. Never Epic:
-  nobody sells Epic. Reloads count as stock at any Scav turf shop, every caliber, every build.
+  (`turfStack`, 30 rounds) of that faction's rounds below Epic, not counting Common. Nobody sells
+  Epic, with one exception: Arasaka's rounds are all Epic, so `cct_dtn_guns_01` sells Shinobi at the
+  same chance in stacks of 10 (`aoTurfAmmo`, `aoTurfStack`), at its normal Epic price. That shop
+  and that round only (the user's call). Reloads count as stock at any Scav turf shop, every caliber, every build.
 
 **Same rules check.** All of the above only changes which round an NPC holds. Stats, jams, bleeds
 and tags then work through the code every round uses. Parts-pullers is the one exception, noted

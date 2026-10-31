@@ -51,11 +51,12 @@ public abstract class FactionRounds {
   }
 
   // What a turf gun shop adds to a stock it builds: its faction's Common-quality rounds every time,
-  // and now and then one or two stacks of the Uncommon and Rare ones. Nobody sells Epic.
-  public static func TurfStock(faction: String) -> array<AOStack> {
+  // and now and then one or two stacks of the Uncommon and Rare ones, or of the rounds the shop lists
+  // itself (<vendor>.aoTurfAmmo: Arasaka's Shinobi, the one Epic any shop sells), in its own stack size.
+  public static func TurfStock(vendor: TweakDBID, faction: String) -> array<AOStack> {
     let stacks: array<AOStack>;
-    let extras: array<TweakDBID>;
-    let size: Int32 = TweakDBInterface.GetInt(t"AmmoOverhaul.turfStack", 30);
+    let extras: array<TweakDBID> = AOData.GetIDs(AOData.Flat(vendor, "aoTurfAmmo"));
+    let size: Int32 = TweakDBInterface.GetInt(AOData.Flat(vendor, "aoTurfStack"), TweakDBInterface.GetInt(t"AmmoOverhaul.turfStack", 30));
     for caliber in AOData.Calibers() {
       for selector in AOData.SelectorsForFaction(caliber, faction, 7) {
         ArrayPush(stacks, AOStack(AOData.SelectorAmmo(caliber, selector), size));

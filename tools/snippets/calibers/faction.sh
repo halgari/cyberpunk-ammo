@@ -120,7 +120,7 @@ turf() {
   count() { tr '|' '\n' <<<"$1" | tail -n +2 | awk -F';' -v a="$2" -v re="$3" '
     { n = NF - 1; c = 0; for (i = 1; i < NF; i++) if ($i ~ re) c++; if (c != a) bad++; if (n - a > 0) more++; if (n - a > m) m = n - a; b++ }
     END { printf "%d %d %d %d", b, more, m, bad }'; }
-  for shop in "wat_nid_gunsmith_01 Redliners MeatGrinders|ChromeCookers 0 x" \
+  for shop in "wat_nid_gunsmith_01 Redliners MeatGrinders|ChromeCookers 0 x" "cct_dtn_guns_01 Shinobi Kata|Kansatsu 0 x" \
       "wat_kab_gunsmith_02 GutterLead|PartsPullers Nothing 3 Reloads" "std_arr_gunsmith_01 GutterLead|PartsPullers Nothing 3 Reloads"; do
     read -r id own never always re <<<"$shop"
     r=$(lua "return $SYS:DebugTurf('Vendors.$id', 200)")
@@ -131,12 +131,12 @@ turf() {
     within "$id: extra stacks in about 25% of builds" "$(awk "BEGIN { print 100 * $more / $b }")" 16 34
     [[ $m -ge 1 && $m -le 2 ]] && pass "$id: one or two stacks ($m at most)" || fail "$id: $m extra stacks"
     grep -qE "$own" <<<"$r" && pass "$id sells its faction's rounds" || fail "$id: none of $own"
-    grep -qE "$never" <<<"$r" && fail "$id sells $never" || pass "$id sells no Epic"
+    grep -qE "$never" <<<"$r" && fail "$id sells $never" || pass "$id sells none of $never"
     [[ $(tr '|;' '\n' <<<"${r#*|}" | grep -v '^$' | grep -cvE "$own|$re") == 0 ]] && pass "$id: no other faction's round" || fail "$id: $r"
   done
-  # Arasaka has only Epic rounds and nobody sells Epic, so its shop adds nothing.
-  r=$(lua "return $SYS:DebugTurf('Vendors.cct_dtn_guns_01', 40)")
-  [[ ${r%%|*} == Gunsmith && $(tr -d '|' <<<"${r#*|}") == "" ]] && pass "Arasaka's turf shop adds nothing, its rounds being Epic" || fail "Arasaka shop: $r"
+  # Shinobi at Arasaka's shop is the one Epic any shop sells, in stacks of 10.
+  r=$(lua "return $SYS:DebugTurf('Vendors.cct_dtn_guns_01', 200)")
+  [[ $(tr '|;' '\n' <<<"${r#*|}" | grep -v '^$' | grep -cvE '^Ammo\.AO_(9mm|45)_Shinobi=10$') == 0 ]] && pass "cct_dtn_guns_01: Shinobi only, stacks of 10" || fail "cct_dtn_guns_01: $r"
   r=$(lua "return $SYS:DebugTurf('Vendors.wat_lch_gunsmith_01', 40)")
   [[ ${r%%|*} == Gunsmith && $(tr -d '|' <<<"${r#*|}") == "" ]] && pass "a gun shop off turf sells no faction round" || fail "off turf: $r"
 }

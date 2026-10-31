@@ -24,7 +24,7 @@ Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon
 [*]175 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
 [*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
-[*]Maelstrom, Scavengers and Arasaka have rounds of their own. You get them from that faction's NPCs, and a few gun shops on Maelstrom and Scav turf stock some.
+[*]Maelstrom, Scavengers and Arasaka have rounds of their own. You get them from that faction's NPCs, and a few gun shops on their turf stock some.
 [*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
 [*]Each round has its own box icon with the name printed on it, so Mushrooms and Penetrators look different in your backpack.
 [/list]
@@ -57,7 +57,7 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [*][color=#b0b0b0][b]Common[/b][/color]: the caliber's plain round. Works like the game's ammo did, with no bonuses.
 [*][color=#3fbf5f][b]Uncommon[/b][/color]: two per caliber. Small trades: more damage for less armor pen, faster charge for less punch.
 [*][color=#3fa0ff][b]Rare[/b][/color]: specialist loads. Fire, ricochets, non-lethal, quiet, armor piercing.
-[*][color=#b04fff][b]Epic[/b][/color]: Penetrators, toxin cores, thermite, EMP, match grade. Loot only; no shop sells it.
+[*][color=#b04fff][b]Epic[/b][/color]: Penetrators, toxin cores, thermite, EMP, match grade. Loot only; the one exception is a gun shop Downtown that sometimes has a small stack of Shinobi.
 [*][color=#e8a33c][b]Legendary[/b][/color]: at least one per caliber, each doing something no other round does. Carried by elite enemies, bosses and MaxTac, and now and then found in a stash that already holds Epic rounds. Not sold and not craftable; they come in small stacks.
 [/list]
 
@@ -70,7 +70,7 @@ There are 14 Legendary rounds to find. Elite enemies, bosses and MaxTac sometime
 The rest are for you to find.
 
 [size=5][b][color=#2ad4ff]Faction rounds[/color][/b][/size]
-Three factions load rounds nobody else has, 26 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. Gun shops in Northside, Kabuki and the Arroyo sometimes stock a stack or two below Epic, and the Scav shops always have Reloads. No crafting, and the name carries a [Mael], [Scav] or [Ara] tag so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
+Three factions load rounds nobody else has, 26 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. Gun shops in Northside, Kabuki and the Arroyo sometimes stock a stack or two below Epic, and the Scav shops always have Reloads. One gun shop Downtown sometimes has a small stack of Shinobi, the only Epic round on sale anywhere. No crafting, and the name carries a [Mael], [Scav] or [Ara] tag so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
 
 [b]Maelstrom[/b]
 [list]

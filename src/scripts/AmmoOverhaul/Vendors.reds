@@ -31,7 +31,7 @@ private final func FillVendorInventory(allowRegeneration: Bool) -> Void {
 
 @addMethod(Vendor)
 private final func AOSplitAmmo() -> Void {
-  // Gun shops sell up to Rare; other vendors Common only. Nobody sells Epic.
+  // Gun shops sell up to Rare; other vendors Common only. The one Epic on sale is a turf exception.
   let maxTier: Int32 = Equals(this.GetVendorType(), gamedataVendorType.Gunsmith) ? 2 : 0;
   let stock: array<SItemStack>;
   let split: Int32 = 0;
@@ -63,7 +63,7 @@ private final func AOSplitAmmo() -> Void {
     }
     let faction: String = TweakDBInterface.GetString(AOData.Flat(this.GetVendorTweakID(), "aoFaction"), "");
     if StrLen(faction) > 0 {
-      for part in FactionRounds.TurfStock(faction) {
+      for part in FactionRounds.TurfStock(this.GetVendorTweakID(), faction) {
         let copy: SItemStack = template;
         copy.itemID = ItemID.FromTDBID(part.ammo);
         copy.quantity = part.quantity;
