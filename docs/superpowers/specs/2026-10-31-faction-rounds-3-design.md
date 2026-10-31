@@ -154,16 +154,17 @@ Later probes moved the rounds above where they failed. The live tests in `factio
 Each faction needs its own new object, approved as forms first as before. First ideas:
 
 - **Barghest:** dented ammo can with Hansen's stencil, rounds on a scrap-metal tray.
-- **Voodoo Boys:** a woven pouch with charms. **Collect Call:** an old rotary phone with rounds in its
-  dial, a new object as Legendaries need.
+- **Voodoo Boys:** a wooden shrine tray of black wax, rounds stood in it like candles among real ones,
+  the gang's mark chalked on the board behind. **Collect Call:** a netrunner's black cyberdeck, rounds
+  in its memory bay, the screen on a Blackwall breach warning. The user turned down a pouch and a rotary phone.
 - **Wraiths:** a jerrycan cut open and packed with sand.
 - **Aldecaldos:** a tobacco tin, hand-labelled.
 - **The Mox:** a pink sequinned clutch.
 - **NCPD:** a plastic evidence bag with a chain-of-custody label.
-- **Kang Tao:** a slim white device case.
+- **Kang Tao:** a slim graphite device case. White was too white.
 - **NUSA:** a blank grey document box stamped CLASSIFIED.
 
-Built as `bar_can`, `vdb_pouch`, `vdb_phone`, `wraith_can`, `nomad_tin`, `mox_clutch`, `ncpd_bag`,
+Built as `bar_can`, `vdb_shrine`, `vdb_deck`, `wraith_can`, `nomad_tin`, `mox_clutch`, `ncpd_bag`,
 `kang_case` and `nusa_box` in `tools/render/scene.py`, awaiting approval.
 
 ## Testing

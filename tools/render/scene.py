@@ -1920,125 +1920,111 @@ def bar_can(spec, roundspec):
     return [base, hinge] + rounds
 
 
-def sack(name, r, h, mat, seed):
-    """A soft bag standing open: a lathe of rings, bellied and slumped, rumpled with noise."""
-    rng = random.Random(seed)
-    rings, seg = 28, 64
-    verts, faces = [], []
-    for j in range(rings + 1):
-        t = j / rings
-        belly = r * (0.62 + 0.45 * math.sin(math.pi * min(1, t * 1.25)) ** 0.8) * (1 - 0.3 * max(0, t - 0.75) / 0.25)
-        for i in range(seg):
-            a = 2 * math.pi * i / seg
-            wob = 1 + 0.05 * math.sin(a * 3 + j * 0.7 + seed) + 0.04 * math.sin(a * 7 - j * 0.4 + seed * 2) + rng.uniform(-0.008, 0.008)
-            verts.append((belly * wob * math.cos(a), belly * wob * math.sin(a) * 0.82, h * t))
-    for j in range(rings):
-        for i in range(seg):
-            k = (i + 1) % seg
-            faces.append((j * seg + i, j * seg + k, (j + 1) * seg + k, (j + 1) * seg + i))
-    faces.append(tuple(range(seg - 1, -1, -1)))
-    me = bpy.data.meshes.new(name)
-    me.from_pydata(verts, [], faces)
-    me.materials.append(mat)
-    for p in me.polygons:
-        p.use_smooth = True
-    ob = bpy.data.objects.new(name, me)
-    bpy.context.collection.objects.link(ob)
-    sol = ob.modifiers.new("t", "SOLIDIFY")
-    sol.thickness = -r * 0.03
-    return ob
+def wax_candle(name, at, r, h, wax, flame, parent):
+    """A stub of candle with a small lit flame."""
+    disc(name, r, h, (at[0], at[1], at[2] + h / 2), (0, 0, 0), wax).parent = parent
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=r * 0.34, location=(at[0], at[1], at[2] + h + r * 0.5))
+    f = bpy.context.active_object
+    f.scale = (1, 1, 2.1)
+    f.data.materials.append(flame)
+    f.parent = parent
 
 
-def charm(name, at, r, mat, parent):
-    c = disc(name, r, r * 0.35, at, (math.pi / 2, 0, 0), mat)
-    c.parent = parent
-    return c
+def emissive(name, colour, strength):
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    g = m.node_tree.nodes["Principled BSDF"]
+    g.inputs["Base Color"].default_value = (*colour, 1)
+    g.inputs["Emission Color"].default_value = (*colour, 1)
+    g.inputs["Emission Strength"].default_value = strength
+    return m
 
 
-def vdb_pouch(spec, roundspec):
-    """A Voodoo Boy's pouch: dark woven cloth on a cord, rounds standing in its mouth, the gang's mark
-    on a patch, charms hung off it."""
+def vdb_shrine(spec, roundspec):
+    """A Voodoo Boy's shrine: a worn wooden tray flooded with black wax, the rounds stood up in it like
+    candles, real stubs burning at the corners, the gang's mark chalked on a board behind."""
     rnd, L, _ = make_round(roundspec)
-    Rp, rad = spec["Rp"], spec["R"]
-    H = max(L * 0.95, Rp * 1.35)
-    cloth = principled("VdbCloth", (0.012, 0.03, 0.045), 0.0, 0.92, wear=0.05, bump=0.9, grime=0.6, tile=1.2)
-    bag = sack("Pouch", Rp, H, cloth, spec.get("seed", 1))
-    rope = principled("VdbCord", (0.05, 0.3, 0.3), 0.0, 0.8, wear=0.0, bump=0.6)
-    bpy.ops.mesh.primitive_torus_add(major_radius=Rp * 0.74, minor_radius=Rp * 0.035, major_segments=64, minor_segments=12,
-                                     location=(0, 0, H * 0.8))
-    cord = bpy.context.active_object
-    cord.scale = (1, 0.82, 1)
-    cord.data.materials.append(rope)
-    bpy.ops.object.shade_smooth()
-    cord.parent = bag
-    p = Rp * 0.62
-    panel("Patch", p, p, printed("Patch", spec["patch"], rough=0.8), (0, -Rp * 0.98, H * 0.4), (math.radians(84), 0, 0), Rp * 0.012).parent = bag
-    bone = principled("VdbBone", (0.72, 0.66, 0.5), 0.0, 0.5, wear=0.2, bump=0.2)
-    for k, x in enumerate((-0.42, -0.26, 0.5)):
-        charm("Charm", (Rp * x, -Rp * 0.99, H * (0.8 - 0.05 * k)), Rp * 0.07, bone, bag)
+    W, D, rad = spec["W"], spec["D"], spec["R"]
+    Ht = max(L * 0.2, rad * 1.4)
+    wall = W * 0.05
+    wood = wood_mat("ShrineWood", "Wood066", (0.3, 0.2, 0.14), W * 1.1, rough=0.7)
+    wax = principled("ShrineWax", (0.008, 0.009, 0.011), 0.0, 0.5, wear=0.0, bump=0.3, grime=0.95)
+    tallow = principled("ShrineCandle", (0.62, 0.55, 0.4), 0.0, 0.45, wear=0.05, bump=0.1, grime=0.8)
+    flame = emissive("ShrineFlame", (1.0, 0.45, 0.08), 14.0)
+    base = cube("Tray", (W, D, Ht), (0, 0, Ht / 2), wood, bevel=wall * 0.2)
+    cut(base, cube("TrayCut", (W - 2 * wall, D - 2 * wall, Ht), (0, 0, Ht * 0.5 + wall), None))
+    cube("Wax", (W - 2 * wall, D - 2 * wall, Ht * 0.6), (0, 0, wall + Ht * 0.3 - wall * 0.5), wax).parent = base
+    Hb = W * 0.78
+    board = cube("Board", (W, wall * 1.2, Hb), (0, D / 2 - wall * 0.6, Hb / 2), wood, bevel=wall * 0.2)
+    board.rotation_euler = (math.radians(-6), 0, 0)
+    board.parent = base
+    panel("Mark", W * 0.86, Hb * 0.86, printed("Mark", spec["mark"], rough=0.8), (0, D / 2 - wall * 1.3, Hb * 0.52),
+          (math.radians(84), 0, 0), wall * 0.06).parent = base
+    z0 = Ht * 0.75
+    for sx, sy, r, h in ((-1, -1, 0.075, 0.2), (1, -1, 0.06, 0.13), (-1, 0.55, 0.06, 0.26), (1, 0.55, 0.075, 0.17)):
+        wax_candle("Candle", (sx * (W / 2 - wall * 2.2), sy * (D / 2 - wall * 2.2), z0), W * r * 0.8, W * h, tallow, flame, base)
     rng = random.Random(spec.get("seed", 1))
-    rounds, spots, pitch = [], [], rad * 2.15
-    y = -Rp * 0.6
-    while y < Rp * 0.6:
-        x = -Rp * 0.7
-        while x < Rp * 0.7:
-            if (x / (Rp * 0.72)) ** 2 + (y / (Rp * 0.56)) ** 2 < 1:
-                spots.append((x, y))
+    rounds, spots, pitch = [], [], rad * 2.5
+    xs, ys = W * 0.3, D * 0.27
+    y = -ys
+    while y <= ys:
+        x = -xs
+        while x <= xs:
+            spots.append((x, y - D * 0.03))
             x += pitch
-        y += pitch * 0.9
-    stand = H * 0.92 - L * 0.74
-    for k, (x, y) in enumerate(spots[:18]):
+        y += pitch
+    for k, (x, y) in enumerate(spots[:12]):
         c = rnd if k == 0 else copy_tree(rnd)
-        c.location = (x, y, stand + rng.uniform(-0.05, 0.1) * L)
-        c.rotation_euler = (rng.uniform(-0.1, 0.1), rng.uniform(-0.1, 0.1), rng.uniform(0, 6.28))
+        c.location = (x, y, z0 - L * 0.1 + rng.uniform(-0.05, 0.05) * L)
+        c.rotation_euler = (rng.uniform(-0.06, 0.06), rng.uniform(-0.06, 0.06), rng.uniform(0, 6.28))
         rounds.append(c)
-    return [bag] + rounds
+    return [base] + rounds
 
 
-def vdb_phone(spec, roundspec):
-    """Collect Call: an old oxblood rotary phone with no cord to anywhere. Rounds stand in the finger
-    holes of the dial, the handset on its cradle across the top."""
+def vdb_deck(spec, roundspec):
+    """Collect Call: a netrunner's black cyberdeck, patched and scuffed, its screen open on a Blackwall
+    breach. The rounds sit in the bay where the memory goes, the keys in front."""
     rnd, L, _ = make_round(roundspec)
-    S, rad = spec["S"], spec["R"]
-    bake = principled("PhoneBakelite", (0.2, 0.008, 0.012), 0.0, 0.14, wear=0.04, bump=0.02, grime=0.85, **{"Coat Weight": 1.0, "Coat Roughness": 0.05})
-    metal = principled("PhoneDial", (0.78, 0.74, 0.66), 1.0, 0.25, wear=0.08, bump=0.03)
-    W, D, Hb, y1, y2 = S * 1.1, S * 1.2, S * 0.62, S * 0.02, S * 0.38
-    me = bpy.data.meshes.new("Body")
-    me.from_pydata([(-W / 2, -D / 2, 0), (W / 2, -D / 2, 0), (W / 2, D / 2, 0), (-W / 2, D / 2, 0),
-                    (-W * 0.34, y1, Hb), (W * 0.34, y1, Hb), (W * 0.34, y2, Hb), (-W * 0.34, y2, Hb)], [],
-                   [(0, 3, 2, 1), (0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7), (4, 5, 6, 7)])
-    me.materials.append(bake)
-    body = bpy.data.objects.new("Body", me)
-    bpy.context.collection.objects.link(body)
-    bev = body.modifiers.new("b", "BEVEL")
-    bev.width, bev.segments = S * 0.07, 6
-    slope = math.atan2(Hb, y1 + D / 2)
-    n = Vector((0, -math.sin(slope), math.cos(slope)))
-    across = Vector((0, math.cos(slope), math.sin(slope)))
-    mid = Vector((0, (y1 - D / 2) / 2, Hb / 2)) + n * S * 0.02
-    plate = disc("Dial", S * 0.33, S * 0.04, tuple(mid), (slope, 0, 0), metal)
-    plate.parent = body
-    disc("Card", S * 0.13, S * 0.01, tuple(mid + n * S * 0.024), (slope, 0, 0), printed("Card", spec["card"], rough=0.4)).parent = body
-    rounds = []
-    holes = 8
-    for k in range(holes):
-        a = math.radians(50 + k * 300 / holes)
-        at = mid + (Vector((1, 0, 0)) * math.cos(a) + across * math.sin(a)) * S * 0.235
-        cut(plate, disc("Hole", min(rad * 1.25, S * 0.07), S * 0.2, tuple(at), (slope, 0, 0), None))
-        c = rnd if k == 0 else copy_tree(rnd)
-        c.rotation_euler = (slope, 0, 0)
-        c.location = at - n * (L * 0.68)
-        rounds.append(c)
-    top = Hb + S * 0.04
-    for sx in (-1, 1):
-        cube("Cradle", (S * 0.09, S * 0.12, S * 0.2), (sx * S * 0.26, (y1 + y2) / 2, top + S * 0.06), bake, bevel=S * 0.03).parent = body
-    hs = S * 1.3
-    z = top + S * 0.2
-    hand = cube("Handle", (hs * 0.78, S * 0.15, S * 0.1), (0, (y1 + y2) / 2, z), bake, bevel=S * 0.045)
-    for sx in (-1, 1):
-        cup = disc("Cup", S * 0.17, S * 0.13, (sx * hs * 0.42, (y1 + y2) / 2, z - S * 0.07), (0, 0, 0), bake)
-        cup.parent = hand
-    return [body, hand] + rounds
+    R = spec["R"]
+    W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
+    shell = principled("DeckShell", (0.012, 0.012, 0.014), 0.3, 0.4, wear=0.22, bump=0.2, grime=0.5, edge=(0.2, 0.2, 0.21))
+    key = principled("DeckKey", (0.03, 0.03, 0.035), 0.0, 0.5, wear=0.2, bump=0.05)
+    bay = principled("DeckBay", (0.02, 0.003, 0.004), 0.6, 0.35, wear=0.05, bump=0.1)
+    red = emissive("DeckRed", (1.0, 0.03, 0.04), 9.0)
+    base, OW, OD, wall = box_shell(spec, shell, 0.05)
+    top = H - wall * 0.8
+    pad = D * 0.3
+    Db = D - pad
+    y0 = D / 2 - Db / 2
+    tray = cube("Bay", (W * 0.995, Db, top - wall), (0, y0, (top + wall) / 2), bay, bevel=wall * 0.1)
+    tray.parent = base
+    z = top + R * 0.15
+    rounds = [rnd]
+    for i in range(n):
+        y = D / 2 - Db + R * 0.5 + (Db - R) * (i + 0.5) / n
+        cut(tray, disc("Cut", R * 1.08, L * 1.03, (0, y, z), (0, math.pi / 2, 0), bay))
+        ob = rnd if i == 0 else copy_tree(rnd)
+        ob.rotation_euler = (0, math.pi / 2, 0)
+        ob.location = (-L / 2, y, z)
+        if i:
+            rounds.append(ob)
+    deck = cube("KeyDeck", (W * 0.995, pad, top - wall * 0.5), (0, -D / 2 + pad / 2, (top + wall * 0.5) / 2), shell, bevel=wall * 0.1)
+    deck.parent = base
+    cols, rows = 11, 3
+    kw = W * 0.92 / cols
+    kd = pad * 0.86 / rows
+    rng = random.Random(spec.get("seed", 1))
+    for c in range(cols):
+        for r in range(rows):
+            lit = rng.random() < 0.09
+            cube("Key", (kw * 0.8, kd * 0.78, wall * 0.5), (-W * 0.46 + kw * (c + 0.5), -D / 2 + pad * 0.07 + kd * (r + 0.5), top + wall * 0.1),
+                 red if lit else key, bevel=wall * 0.1).parent = base
+    cube("Light", (OW * 0.5, wall * 0.1, wall * 0.3), (0, -OD / 2 - wall * 0.02, H * 0.5), red).parent = base
+    hinge = hinged((0, OD / 2, H), -108)
+    t = wall * 1.1
+    cube("Lid", (OW, OD, t), (0, -OD / 2, t / 2), shell, bevel=wall * 0.3).parent = hinge
+    panel("Screen", W * 0.97, OD * 0.9, printed("Screen", spec["screen"], rough=0.25, glow=3.0), (0, -OD / 2, -wall * 0.03), (math.pi, 0, 0), wall * 0.05).parent = hinge
+    return [base, hinge] + rounds
 
 
 def wraith_can(spec, roundspec):
@@ -2201,13 +2187,13 @@ def ncpd_bag(spec, roundspec):
 
 
 def kang_case(spec, roundspec):
-    """Kang Tao's device case: slim white polymer like something for an expensive pair of earbuds, a
-    teal light in the rim, rounds in pale foam, the lid stood open with the wordmark."""
+    """Kang Tao's device case: slim graphite polymer like something for an expensive pair of earbuds, a
+    teal light in the rim, rounds in dark foam, the lid stood open with the wordmark."""
     rnd, L, _ = make_round(roundspec)
     R = spec["R"]
     W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
-    poly = principled("KangPoly", (0.82, 0.83, 0.84), 0.0, 0.3, wear=0.01, bump=0.01, grime=0.95)
-    foam = principled("KangFoam", (0.32, 0.33, 0.35), 0.0, 0.9, wear=0.0, bump=0.3)
+    poly = principled("KangPoly", (0.075, 0.08, 0.09), 0.0, 0.3, wear=0.01, bump=0.01, grime=0.95)
+    foam = principled("KangFoam", (0.03, 0.032, 0.036), 0.0, 0.9, wear=0.0, bump=0.3)
     base, OW, OD, wall = box_shell(spec, poly, 0.03)
     top = H - wall * 0.7
     bed = cube("Bed", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam, bevel=wall * 0.1)
@@ -2251,8 +2237,8 @@ def nusa_box(spec, roundspec):
 
 FACTION_FORMS = {"ara_case": ara_case, "mael_can": mael_can, "scav_tray": scav_tray, "scav_pile": scav_pile,
                  "scav_flat": scav_flat, "tyger_box": tyger_box, "val_cigar": val_cigar, "six_crate": six_crate,
-                 "mil_case": mil_case, "animal_tub": animal_tub, "bar_can": bar_can, "vdb_pouch": vdb_pouch,
-                 "vdb_phone": vdb_phone, "wraith_can": wraith_can, "nomad_tin": nomad_tin, "mox_clutch": mox_clutch,
+                 "mil_case": mil_case, "animal_tub": animal_tub, "bar_can": bar_can, "vdb_shrine": vdb_shrine,
+                 "vdb_deck": vdb_deck, "wraith_can": wraith_can, "nomad_tin": nomad_tin, "mox_clutch": mox_clutch,
                  "ncpd_bag": ncpd_bag, "kang_case": kang_case, "nusa_box": nusa_box}
 FACTION_VIEWS = {"scav_tray": TOP_VIEW, "scav_pile": TOP_VIEW, "ncpd_bag": TOP_VIEW, "vdb_phone": Vector((-0.45, -1.0, 0.75))}
 

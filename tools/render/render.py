@@ -518,14 +518,15 @@ def faction_form(tmp, name, shape, faction, take, lines, i):
         fa.bar_lid(lid, 1200, round(1200 * case["D"] / case["W"]), i + 1)
         return dict(form="bar_can", case=case, R=R, front=str(front), lid=str(lid), seed=i + 1)
     if faction == "VoodooBoys" and name.endswith("collectcall"):
-        card = tmp / f"{name}-card.png"
-        fa.phone_card(card, 800, 800)
-        return dict(form="vdb_phone", S=max(L * 1.5, R * 12), R=R, card=str(card), seed=i + 1)
+        case = case_dims(L, R)
+        screen = tmp / f"{name}-screen.png"
+        fa.deck_screen(screen, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="vdb_deck", case=case, R=R, screen=str(screen), seed=i + 1)
     if faction == "VoodooBoys":
-        Rp = max(L * 0.72, R * 5)
-        patch = tmp / f"{name}-patch.png"
-        fa.vdb_patch(patch, 800, 800, i + 1)
-        return dict(form="vdb_pouch", Rp=Rp, R=R, patch=str(patch), seed=i + 1)
+        W = max(L * 2.1, R * 11)
+        mark = tmp / f"{name}-mark.png"
+        fa.vdb_mark(mark, 800, 800 * 78 // 100, i + 1)
+        return dict(form="vdb_shrine", W=W, D=W * 0.8, R=R, mark=str(mark), seed=i + 1)
     if faction == "Wraiths":
         W = max(L * 1.7, R * 10)
         D, H = W * 0.62, W * 0.92
