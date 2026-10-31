@@ -468,6 +468,8 @@ FACTION_CREST = dict(cassette=0.42, ashura=0.84)
 
 # Quickhack rounds' cartridge colours, from the game's rarity colours.
 HACK_COLOUR = {10: (58, 196, 96), 11: (54, 134, 240), 12: (170, 76, 232), 13: (255, 158, 40)}
+# The cartridge shell: deep shades of those, so the lit mark stands out against it.
+HACK_SHELL = {10: (20, 84, 54), 11: (20, 50, 116), 12: (66, 28, 104)}
 HACK_BAND = {10: "green", 11: "blue", 12: "purple", 13: "orange"}
 
 
@@ -484,7 +486,7 @@ def hack_form(tmp, name, shape, look, lines, tier, i):
     tag = tmp / f"{name}-tag.png"
     fa.hack_lid(art, 1200, round(1200 * case["D"] / case["W"]), stem, colour, lines[1], i + 1)
     fa.hack_tag(tag, 700, 260, colour, lines[1], i + 1)
-    return dict(form="hack_cart", case=case, R=R, lid=str(art), tag=str(tag), colour=linear(colour), seed=i + 1)
+    return dict(form="hack_cart", case=case, R=R, lid=str(art), tag=str(tag), colour=linear(colour), shell=linear(HACK_SHELL[tier]), seed=i + 1)
 
 
 def faction_form(tmp, name, shape, faction, take, lines, i):

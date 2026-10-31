@@ -2265,7 +2265,7 @@ def camo(mat, colour, cell):
         return _socket(mx.outputs, "Result", "RGBA")
 
     dark, light = step(0.5, 0.505), step(0.415, 0.41)
-    col = tinted(tinted(under, dark, 0.34), light, 1.7)
+    col = tinted(tinted(under, dark, 0.45), light, 1.5)
     scuff = N("ShaderNodeTexWave")
     scuff.bands_direction = "DIAGONAL"
     scuff.inputs["Scale"].default_value = 2 / cell
@@ -2275,7 +2275,7 @@ def camo(mat, colour, cell):
     r.inputs["From Min"].default_value, r.inputs["From Max"].default_value = 0.72, 0.9
     r.inputs["To Max"].default_value = 0.5
     link(scuff.outputs["Fac"], r.inputs["Value"])
-    col = tinted(col, r.outputs["Result"], 2.4)
+    col = tinted(col, r.outputs["Result"], 2.0)
     link(col, b.inputs["Base Color"])
     press = N("ShaderNodeBump")
     press.inputs["Strength"].default_value = 0.6
@@ -2294,13 +2294,13 @@ def hack_cart(spec, roundspec):
     rnd, L, _ = make_round(roundspec)
     R = spec["R"]
     W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
-    colour = tuple(spec["colour"])
-    shell = principled("CartShell", colour, 0.0, 0.38, wear=0.2, bump=0.14, grime=0.55, edge=(0.16, 0.16, 0.17))
+    colour, tone = tuple(spec["colour"]), tuple(spec["shell"])
+    shell = principled("CartShell", tone, 0.0, 0.38, wear=0.2, bump=0.14, grime=0.55, edge=(0.16, 0.16, 0.17))
     guard = principled("CartGuard", (0.016, 0.016, 0.018), 0.0, 0.62, wear=0.08, bump=0.22, grime=0.6)
     foam = principled("CartBed", (0.02, 0.02, 0.024), 0.0, 0.85, wear=0.0, bump=0.2)
     gold = principled("CartGold", (0.85, 0.55, 0.18), 1.0, 0.3, wear=0.02, bump=0.02)
     steel = principled("CartSteel", (0.5, 0.5, 0.52), 1.0, 0.35, wear=0.1, bump=0.04)
-    camo(shell, colour, W * 0.045 * 0.55)
+    camo(shell, tone, W * 0.045 * 0.55)
     base, OW, OD, wall = box_shell(spec, shell, 0.045)
     top = H - wall * 0.7
     bed = cube("Bed", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam, bevel=wall * 0.1)
