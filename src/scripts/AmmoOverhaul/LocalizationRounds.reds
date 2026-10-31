@@ -28,7 +28,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-9mm-Reloads"); ArrayPush(t, "9mm Reloads [Scav]");
     ArrayPush(t, "AO-Ammo-Reloads-Desc"); ArrayPush(t, "Recycled brass from mixed lots, reloaded by hand. Cheap, and you never know what you'll get.\n\nDamage varies -30% to +15%. 8% are duds that hit for a quarter. 5% run hot and hit for +50%.");
     ArrayPush(t, "AO-Ammo-9mm-Dirties"); ArrayPush(t, "9mm Dirties [Scav]");
-    ArrayPush(t, "AO-Ammo-Dirties-Desc"); ArrayPush(t, "Rough hand-cast bullets, poured from whatever lead was lying around. Nobody wants one of these left in them.\n\n25% chance to cause bleeding. 25% chance to poison. -10% damage. Damage swings wide, with duds and hot rounds.");
+    ArrayPush(t, "AO-Ammo-Dirties-Desc"); ArrayPush(t, "Rough hand-cast bullets, poured from whatever lead was lying around. Nobody wants one of these left in them.\n\n25% chance to cause bleeding. 25% chance to poison. -50% damage. Damage swings wide, with duds and hot rounds.");
     ArrayPush(t, "AO-Ammo-9mm-Shinobi"); ArrayPush(t, "9mm Shinobi [Ara]");
     ArrayPush(t, "AO-Ammo-Shinobi-Desc"); ArrayPush(t, "Quiet loads for close work. Put one in the head and nobody hears about it.\n\nSilent kills. +50% headshot damage. -10% range.");
     ArrayPush(t, "AO-Ammo-45-SteelCore"); ArrayPush(t, ".45 Steel-Core");

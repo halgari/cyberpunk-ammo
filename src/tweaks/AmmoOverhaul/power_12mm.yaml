@@ -784,7 +784,7 @@ Items.AO_Feed_12mm_Dirties:
       $type: ConstantStatModifier
       statType: BaseStats.DamagePerHit
       modifierType: Multiplier
-      value: 0.9
+      value: 0.5
 
 # 12mm Parts-pullers [Scav] (Rare)
 Ammo.AO_12mm_PartsPullers:

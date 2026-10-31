@@ -77,7 +77,7 @@ feel test.
     code, proven by Match.
   - Worse than a Common round, so Common quality (see Decisions).
 - **Dirties** (Rare; 12mm, .45, 9mm)
-  - Rough hand-cast bullets: 10% less damage, 25% chance to bleed, 25% chance to poison.
+  - Rough hand-cast bullets: half damage, 25% chance to bleed, 25% chance to poison.
   - Levers: `aoEffects` with both effects. Feasibility: hit code, proven. On V: `PlayerPoisoned`
     through the existing mapping.
 - **Parts-pullers** (Rare; 12mm, .45)

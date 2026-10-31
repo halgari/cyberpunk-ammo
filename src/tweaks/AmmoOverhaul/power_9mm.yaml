@@ -761,7 +761,7 @@ Items.AO_Feed_9mm_Dirties:
       $type: ConstantStatModifier
       statType: BaseStats.DamagePerHit
       modifierType: Multiplier
-      value: 0.9
+      value: 0.5
 
 # 9mm Shinobi [Ara] (Rare)
 Ammo.AO_9mm_Shinobi:

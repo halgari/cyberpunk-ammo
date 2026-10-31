@@ -928,7 +928,7 @@ Items.AO_Feed_45_Dirties:
       $type: ConstantStatModifier
       statType: BaseStats.DamagePerHit
       modifierType: Multiplier
-      value: 0.9
+      value: 0.5
 
 # .45 Parts-pullers [Scav] (Rare)
 Ammo.AO_45_PartsPullers:
