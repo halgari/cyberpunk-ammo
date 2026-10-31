@@ -2,7 +2,7 @@
 
   python3 tools/render/banner.py [--title TITLE.png]
 
-  art/banner/background-8k.png, background-4k.png: every round's box, 17 x 9 on a dark ground,
+  art/banner/background-8k.png, background-4k.png: the rounds' boxes, 16 x 9 on a dark ground,
     in caliber order (Power, Tech, Smart; Common to Legendary within each), the last row centred.
   The 8K files aren't committed (.gitignore); rerun to get them.
   art/banner/main-8k.png, main-4k.png, main-4k.jpg (with --title): the background, darkened behind the title,
@@ -19,7 +19,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "art" / "icons"
 OUT = ROOT / "art" / "banner"
 W, H = 7680, 4320
-COLS, ROWS = 17, 9
+COLS, ROWS = 16, 9
+# Legendary rounds are for players to find: the page shows only the two the public text names.
+UNNAMED = ("gatecrasher", "cookoff", "lockout", "mulekick")
 # Power, Tech, Smart, by the caliber prefix of the icon file names.
 CALIBERS = ["9mm", "45", "12mm", "556", "762", "127", "12ga", "4ga", "5mm", "heavy", "10mm", "20mm", "25mm"]
 
@@ -44,8 +46,11 @@ def ground():
 
 
 def background():
-    names = order([p.stem for p in ART.glob("*.png") if not p.stem.endswith("-ref")])
+    names = order([p.stem for p in ART.glob("*.png")
+                   if not p.stem.endswith("-ref") and not p.stem.endswith(UNNAMED)])
     assert COLS * (ROWS - 1) < len(names) <= COLS * ROWS, f"{len(names)} icons for {COLS * ROWS} cells"
+    i = names.index("12ga-pumpndump")   # one cell on, clear of the title
+    names[i], names[i + 1] = names[i + 1], names[i]
     img = ground().convert("RGBA")
     cw, ch = W / COLS, H / ROWS
     # The boxes fill about 760 x 505 of their 1024 tile: scale the tile so a box fills ~92% of a cell.
