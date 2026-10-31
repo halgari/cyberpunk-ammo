@@ -232,6 +232,77 @@ AmmoOverhaul.ClapCloud:
   hitFlags: []
 AmmoOverhaul.ClapCloud.aoCloudEffect: "BaseStatusEffect.BaseContagionPoison"
 
+# Hack rounds (docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md). Legendary Cyberpsychosis: the
+# game's own at 30 seconds, not 58. Contagion catches on as The Clap does, wider with the rarity; the
+# clouds leave V and quest NPCs alone. Detonate Grenade is a blast at the target: the game's needs a
+# grenade on the belt.
+AmmoOverhaul.MadnessHack:
+  $base: BaseStatusEffect.MandessLevel4
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 30
+
+AmmoOverhaul.HackCloud1:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 2
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.HackCloud1.aoCloudEffect: "BaseStatusEffect.ContagionPoison"
+AmmoOverhaul.HackCloud1.aoCloudHack: true
+
+AmmoOverhaul.HackCloud2:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 3
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.HackCloud2.aoCloudEffect: "BaseStatusEffect.ContagionPoisonLvl2"
+AmmoOverhaul.HackCloud2.aoCloudHack: true
+
+AmmoOverhaul.HackCloud3:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 4
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.HackCloud3.aoCloudEffect: "BaseStatusEffect.ContagionPoisonLvl3"
+AmmoOverhaul.HackCloud3.aoCloudHack: true
+
+AmmoOverhaul.HackCloud4:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 5
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.HackCloud4.aoCloudEffect: "BaseStatusEffect.ContagionPoisonLvl4"
+AmmoOverhaul.HackCloud4.aoCloudHack: true
+
+AmmoOverhaul.HackBlast:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 3
+  statModifiers:
+    - $type: CombinedStatModifier
+      statType: BaseStats.PhysicalDamage
+      modifierType: Additive
+      refStat: BaseStats.Health
+      refObject: Target
+      opSymbol: '*'
+      value: 0.25
+
+AmmoOverhaul.HackBlastBig:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 5
+  statModifiers:
+    - $type: CombinedStatModifier
+      statType: BaseStats.PhysicalDamage
+      modifierType: Additive
+      refStat: BaseStats.Health
+      refObject: Target
+      opSymbol: '*'
+      value: 0.5
+
 # --- NPCs --------------------------------------------------------------------------------------
 # Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
 # loaded in the gun count toward it; the rest is the body's loot.

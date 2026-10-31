@@ -189,8 +189,9 @@ public abstract class FactionRounds {
     if StrLen(rarity) == 0 {
       return AOData.RankRecord(ammo, "aoRankPlayer");
     }
-    let tough: Bool = mechanical || guarded || Equals(rarity, "Boss") || Equals(rarity, "MaxTac");
-    if Equals(AOData.RankToughFrom(ammo), "Elite") && Equals(rarity, "Elite") {
+    let from: String = AOData.RankToughFrom(ammo);
+    let tough: Bool = mechanical || guarded || NotEquals(from, "Never") && (Equals(rarity, "Boss") || Equals(rarity, "MaxTac"));
+    if Equals(from, "Elite") && Equals(rarity, "Elite") {
       tough = true;
     }
     return AOData.RankRecord(ammo, tough ? "aoRankTough" : "aoRankEffect");
@@ -220,6 +221,11 @@ public abstract class FactionRounds {
     let effect: TweakDBID = AOData.RankRecord(attack.GetRecord().GetID(), "aoCloudEffect");
     if !TDBID.IsValid(effect) {
       return false;
+    }
+    // A hack round's cloud leaves V and quest NPCs alone, as its shot does.
+    if TweakDBInterface.GetBool(AOData.Flat(attack.GetRecord().GetID(), "aoCloudHack"), false)
+        && (target.IsPlayer() || FactionRounds.Guarded(target)) {
+      return true;
     }
     attackData.AddStatusEffect(target.IsPlayer() ? AOData.PlayerEffect(effect) : effect, 1.0);
     return true;
@@ -265,6 +271,11 @@ public abstract class FactionRounds {
       let effect: TweakDBID = FactionRounds.RankResult(ammo, rarity, puppet.IsMechanical(), FactionRounds.Guarded(target));
       if TDBID.IsValid(effect) {
         puppet.aoMuleKickAt = now;
+        let blast: TweakDBID = AOData.RankRecord(ammo, "aoRankBlast");
+        if TDBID.IsValid(blast) {
+          AmmoFeedSystem.Log("hack blast " + TDBID.ToStringDEBUG(blast));
+          FactionRounds.Blast(attackData.GetInstigator(), puppet, blast);
+        }
         let delay: Float = AOData.RankDelay(ammo);
         if delay > 0.0 {
           let late: ref<LateEffectCallback> = new LateEffectCallback();
