@@ -21,10 +21,11 @@ OUT = ROOT / "art" / "build"
 CELL = (160, 160)
 # Empty margin kept around the art (fraction of the cell): just enough that soft edges aren't cut.
 PAD = 0.02
-ATLAS = (2048, 4096)   # 12 x 25 cells of 160 x 160 (237 used)
+ATLAS = (2048, 4096)   # 12 x 25 cells of 160 x 160 (276 used)
 COLS = 12
 # Source art (art/icons/<name>.png, rendered by tools/render/render.py), one per round. The part is
 # "ao_" + the name with "-" as "_" (9mm-ball -> ao_9mm_ball), matching UIIcon.AO_* and the feed selector.
+# A quickhack round's art drops its "hack-": every caliber of a kind shares ao_hackoptics1.
 NAMES = [
     "9mm-ball", "9mm-mushrooms", "45-ball", "45-mushrooms", "12mm-ball", "12mm-mushrooms", "556-ball",
     "556-mushrooms", "762-ball", "762-mushrooms", "127-ball", "127-mushrooms", "12ga-buckshot", "12ga-slugs",
@@ -33,7 +34,7 @@ NAMES = [
     "9mm-plusp", "45-plusp", "12mm-plusp", "556-plusp", "762-plusp", "127-plusp", "12ga-birdshot", "4ga-birdshot",
     "5mm-bricks", "heavy-bricks", "10mm-shortfuse", "20mm-shortfuse", "25mm-shortfuse",
 ] + list(json.loads((ROOT / "tools" / "render" / "rounds_tiers.json").read_text())["rounds"])  # Rare and Epic (tools/rounds/rounds.py)
-PARTS = {"ao_" + n.replace("-", "_"): n + ".png" for n in NAMES}
+PARTS = {"ao_" + n.removeprefix("hack-").replace("-", "_"): n + ".png" for n in NAMES}
 # Midtone lift (a gamma on each channel). The renders are darker than the game's own icons (mean
 # luminance 56 against about 89 for the vanilla item atlas), which reads as greyed out in the
 # backpack; 0.65 brings them to about 88 and keeps the highlights.

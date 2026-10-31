@@ -19,7 +19,7 @@ missing = sorted(p for p in parts if p not in uvs)
 for p in sorted(parts):
     print(("FAIL " if p in missing else "PASS ") + p + " has an atlas cell")
 rounds = json.loads((ROOT / "tools/render/rounds_tiers.json").read_text())["rounds"]
-tier_parts = {"ao_" + n.replace("-", "_") for n in rounds}
+tier_parts = {"ao_" + n.removeprefix("hack-").replace("-", "_") for n in rounds}
 unused = sorted(tier_parts - parts)
 absent = sorted(tier_parts - set(uvs))
 for p in unused + absent:
