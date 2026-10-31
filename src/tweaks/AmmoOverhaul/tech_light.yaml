@@ -311,6 +311,26 @@ Items.AO_Feed_5mm_SplitSlug:
       value: 2.0
     - !append
       $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 2.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 2.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 2.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
+      modifierType: Multiplier
+      value: 2.0
+    - !append
+      $type: ConstantStatModifier
       statType: BaseStats.TechPierceEnabled
       modifierType: Multiplier
       value: 0.0
@@ -498,6 +518,26 @@ Items.AO_Feed_5mm_ToxicScatter:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 2.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 2.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 2.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 2.0
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
       modifierType: Multiplier
       value: 2.0
 

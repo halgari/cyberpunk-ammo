@@ -515,6 +515,26 @@ Items.AO_Feed_12mm_Match:
       value: 0.7
     - !append
       $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
       statType: BaseStats.SwaySideMaximumAngleDistance
       modifierType: Multiplier
       value: 0.7

@@ -36,9 +36,6 @@ public class AmmoFeedSystem extends ScriptableSystem {
   private let m_magWeapon: wref<WeaponObject>;
   private let m_lastRestoreRedraw: Float;
 
-  // Weapon records a smart round made Smart (Heartseeker.reds). Saved, so a load puts them back.
-  public persistent let m_smartRecords: array<TweakDBID>;
-
   // The last log lines, for reading live from CET (ModLog output only reaches the file late):
   //   Game.GetScriptableSystemsContainer():Get("AmmoOverhaul.AmmoFeedSystem"):Trail()
   private let m_trail: array<String>;
@@ -63,17 +60,12 @@ public class AmmoFeedSystem extends ScriptableSystem {
       return;
     }
     this.m_player = player;
-    // TweakDB changes outlive a save load, and the save may list records from before it.
-    RangedAttackSwap.Restore(this, TDBID.None());
     AmmoFeedSystem.Log("attached, " + IntToString(ArraySize(this.m_unload)) + " gun(s) waiting to unload");
     SelectorSync.Attach(player);
   }
 
   private final func OnPlayerDetach(request: ref<PlayerDetachRequest>) -> Void {
     let player: ref<GameObject> = request.owner;
-    // TweakDB changes outlive a save load: put back any gun record a smart round changed, whichever
-    // player is detaching.
-    RangedAttackSwap.Restore(this, TDBID.None());
     // Loading a save (e.g. after dying) attaches the new player before the old one detaches;
     // only tear down for the player being tracked.
     if IsDefined(this.m_player) && player != this.m_player {
@@ -82,15 +74,6 @@ public class AmmoFeedSystem extends ScriptableSystem {
     this.m_player = null;
   }
 
-  // A selector was installed in or removed from `weaponID`: a smart round's gun record follows it
-  // when the gun is in V's hand (Heartseeker.reds).
-  public final func AfterFeedChange(owner: ref<GameObject>, weaponID: ItemID) -> Void {
-    let player: ref<PlayerPuppet> = this.m_player;
-    if !IsDefined(player) || owner != player {
-      return;
-    }
-    RangedAttackSyncCallback.Schedule(player, weaponID);
-  }
 
   // A selector is about to be installed in or removed from `weaponID`.
   public final func BeforeFeedChange(owner: ref<GameObject>, weaponID: ItemID) -> Void {
@@ -202,8 +185,6 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if !IsDefined(weapon) || weapon.GetOwner() != this.m_player {
       return;
     }
-    // Any draw, melee and cyberware included, puts back a record a smart round changed.
-    RangedAttackSwap.Sync(this, this.m_player, weapon);
     if StrLen(AOData.CaliberForWeapon(ItemID.GetTDBID(weapon.GetItemID()))) > 0 {
       this.GiveSelectedAmmo(weapon, 0);
     }
@@ -416,35 +397,10 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
-  // The smart gun lock state the HUD gets: "cyber=<bool> targets=<n> lock=<timeToLock>".
-  public final func DebugSmartTargets() -> String {
-    let bb: ref<IBlackboard> = GameInstance.GetBlackboardSystem(GetGameInstance()).Get(GetAllBlackboardDefs().UI_ActiveWeaponData);
-    let params: ref<smartGunUIParameters> = FromVariant<ref<smartGunUIParameters>>(bb.GetVariant(GetAllBlackboardDefs().UI_ActiveWeaponData.SmartGunParams));
-    if !IsDefined(params) {
-      return "none";
-    }
-    return "cyber=" + ToString(params.hasRequiredCyberware) + " targets=" + IntToString(ArraySize(params.targets)) + " lock=" + FloatToString(params.timeToLock);
-  }
-
   // The record of the attack `weapon` would fire now.
   public final func DebugCurrentAttack(weapon: ref<WeaponObject>) -> String {
     let attack: ref<IAttack> = IsDefined(weapon) ? weapon.GetCurrentAttack() : null;
     return IsDefined(attack) ? TDBID.ToStringDEBUG(attack.GetRecord().GetID()) : "none";
-  }
-
-  // What RangedAttackSwap.Sync sees for V's drawn gun, after running it once more.
-  public final func DebugSmartSync() -> String {
-    let weapon: ref<WeaponObject> = GameObject.GetActiveWeapon(this.m_player);
-    if !IsDefined(weapon) {
-      return "no weapon";
-    }
-    let record: TweakDBID = ItemID.GetTDBID(weapon.GetItemID());
-    let out: String = TDBID.ToStringDEBUG(record) + " ammo=" + TDBID.ToStringDEBUG(AOData.LoadedAmmo(this.m_player, weapon))
-      + " package=" + ToString(IsDefined(RangedAttackSwap.Package(this.m_player, weapon)))
-      + " listed=" + ToString(ArrayContains(this.m_smartRecords, record))
-      + " weaponRecord=" + ToString(IsDefined(TweakDBInterface.GetWeaponItemRecord(record)));
-    RangedAttackSwap.Sync(this, this.m_player, weapon);
-    return out + " evolution=" + TDBID.ToStringDEBUG(TweakDBInterface.GetForeignKey(AOData.Flat(record, "evolution"), TDBID.None()));
   }
 
   // Marks `target` as if V's Cook-off round had just hit it.

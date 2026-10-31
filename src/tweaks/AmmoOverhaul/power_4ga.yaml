@@ -169,6 +169,26 @@ Items.AO_Feed_4ga_Slugs:
       value: 0.2
     - !append
       $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
       statType: BaseStats.EffectiveRange
       modifierType: Multiplier
       value: 2
@@ -287,6 +307,26 @@ Items.AO_Feed_4ga_Birdshot:
       value: 2
     - !append
       $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
+      modifierType: Multiplier
+      value: 2
+    - !append
+      $type: ConstantStatModifier
       statType: BaseStats.CanWeaponIgnoreArmor
       modifierType: Additive
       value: -0.5
@@ -370,6 +410,26 @@ Items.AO_Feed_4ga_Flechette:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 0.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 0.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 0.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 0.6
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
       modifierType: Multiplier
       value: 0.6
     - !append
@@ -476,6 +536,26 @@ Items.AO_Feed_4ga_Riot:
       value: 0.2
     - !append
       $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
       statType: BaseStats.DamagePerHit
       modifierType: Multiplier
       value: 0.5
@@ -568,6 +648,26 @@ Items.AO_Feed_4ga_Flare:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
       modifierType: Multiplier
       value: 0.2
 
@@ -699,6 +799,26 @@ Items.AO_Feed_4ga_Thermite:
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 0.2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
       modifierType: Multiplier
       value: 0.2
 

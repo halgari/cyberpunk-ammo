@@ -3,7 +3,7 @@
 #   tools/linux/release.sh <version>            tag and build, nothing leaves this machine
 #   tools/linux/release.sh <version> --publish  push and create the GitHub release
 # The first needs a clean master and a "## <version>" section in CHANGELOG.md. It writes VERSION,
-# commits "release: v<version>", tags v<version> and builds dist/AmmoOverhaul-<version>.zip
+# commits "release: v<version>", tags v<version> and builds dist/BrassMarket-<version>.zip
 # (package.sh) with its .sha256. Undo it with git tag -d v<version>, plus
 # git reset --hard HEAD~1 if it made the release commit.
 # The second (tagging first if the tag doesn't exist yet) pushes master and the tag and creates
@@ -16,7 +16,7 @@ cd "$ROOT"
 version="${1:?usage: release.sh <version> [--publish]}"
 publish="${2:-}"
 tag="v$version"
-zip="dist/AmmoOverhaul-$version.zip"
+zip="dist/BrassMarket-$version.zip"
 
 [[ "$(git branch --show-current)" == master ]] || { echo "not on master" >&2; exit 1; }
 [[ -z "$(git status --porcelain)" ]] || { echo "working tree not clean" >&2; exit 1; }
@@ -34,7 +34,7 @@ else
   git add VERSION
   # VERSION may already say it (set ahead of time): then the tag goes on HEAD as it is.
   git diff --cached --quiet || git commit -q -m "release: $tag"
-  git tag -a "$tag" -m "Ammo Overhaul $version" -m "$notes"
+  git tag -a "$tag" -m "Brass Market $version" -m "$notes"
 fi
 
 if [[ "$publish" != "--publish" ]]; then
@@ -44,4 +44,4 @@ fi
 [[ "$(tr -d '[:space:]' < VERSION)" == "$version" ]] || { echo "VERSION doesn't say $version" >&2; exit 1; }
 pre=(); [[ "$version" == *-* ]] && pre=(--prerelease)
 git push origin master "$tag"
-gh release create "$tag" "$zip" "$zip.sha256" --title "Ammo Overhaul $version" --notes "$notes" "${pre[@]}"
+gh release create "$tag" "$zip" "$zip.sha256" --title "Brass Market $version" --notes "$notes" "${pre[@]}"

@@ -3,24 +3,22 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
-## Unreleased
+## 0.5.0
 
-- A Legendary tier: 14 new rounds, 149 in all. Elite enemies, bosses and MaxTac sometimes carry
-  them, and a stash holding Epic rounds now and then has a small stack. No shop sells them and
-  they can't be crafted.
-  - Gatecrasher (7.62, 12.7): ignores all armor, no damage falloff, through cover at full damage.
-  - Cook-off (9mm, .45, 12mm, 5.56, 7.62): a kill sets off a blast at the body that hurts everyone
-    close by. An enemy's Cook-off hit on you sets off your grenade if it's charged.
+- A Legendary tier: 14 new rounds to find, 149 in all. Elite enemies, bosses and MaxTac sometimes
+  carry them, and a stash holding Epic rounds now and then has a small stack. No shop sells them
+  and they can't be crafted. Two of them:
   - Kebab (light and heavy rail): a charged shot goes through every body and wall in its line
     with no damage lost.
-  - Lockout (10mm, 20mm, 25mm): every hit jams the target's weapon for 4 seconds.
-  - Mule Kick (4-gauge): every hit knocks the target down and tough ones stagger; each shot shoves
-    V hard away from the aim, so a shot at the floor sends V up.
-  - Heartseeker (12-gauge): one guided slug that locks onto heads, no Smart Link needed.
-- Five new rounds, 135 in all:
+  - Pump N Dump (12-gauge): one slug per shot, greased so the gun cycles at 2.5 times the speed.
+    Burns through ammo fast.
+  - The rest are for you to find.
+- Five new rounds:
   - Ping (Rare; 7.62, 12.7): targets hit show through walls for 5 seconds. -10% damage.
   - Penetrator (Epic) in 12mm, 7.62 and 12.7: ignores 60% of armor and goes through thin cover
     at half damage. NPCs firing it get the same.
+- Spread changes now cover the Tactician's minimum spread, which they used to miss. Slugs are x0.2
+  spread on every shotgun.
 
 ## 0.1.0
 

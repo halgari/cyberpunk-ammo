@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds the release zip, dist/AmmoOverhaul-<version>.zip, laid out relative to the game root so
+# Builds the release zip, dist/BrassMarket-<version>.zip, laid out relative to the game root so
 # it extracts into any Cyberpunk 2077 install or a mod manager. The version comes from VERSION.
 #   - compiles the scripts (check.sh) and rebuilds the native plugin from source;
 #   - leaves out the test data (test.yaml: test NPCs, presets and rounds; never shipped);
@@ -13,7 +13,7 @@ version="$(tr -d '[:space:]' < "$ROOT/VERSION")"
 [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]] || { echo "VERSION '$version' isn't x.y.z" >&2; exit 1; }
 dist="$ROOT/dist"
 stage="$dist/stage"
-zip="$dist/AmmoOverhaul-$version.zip"
+zip="$dist/BrassMarket-$version.zip"
 mkdir -p "$dist"
 
 "$(dirname "$0")/check.sh" > "$dist/package-check.log" 2>&1 || {
@@ -30,6 +30,8 @@ done
 printf '# Written by tools/linux/package.sh.\nAmmoOverhaul.version: "%s"\n' "$version" > "$stage/r6/tweaks/AmmoOverhaul/version.yaml"
 cp "$ROOT"/src/archive/*.archive "$stage/archive/pc/mod/"
 cp "$ROOT/build/native/AmmoOverhaul.dll" "$stage/red4ext/plugins/AmmoOverhaul/"
+# Beside the plugin, not at the zip's root: the zip extracts into the game folder.
+cp "$ROOT/LICENSE" "$stage/red4ext/plugins/AmmoOverhaul/"
 
 (cd "$stage" && zip -qr -X "$zip" r6 archive red4ext)
 
@@ -44,6 +46,7 @@ done
 need r6/tweaks/AmmoOverhaul/version.yaml
 need archive/pc/mod/AmmoOverhaul.archive
 need red4ext/plugins/AmmoOverhaul/AmmoOverhaul.dll
+need red4ext/plugins/AmmoOverhaul/LICENSE
 grep -q "test.yaml" <<<"$listing" && { echo "test.yaml is in the zip" >&2; fail=1; }
 if grep -rl "AO_Test" "$stage/r6/tweaks" >/dev/null; then echo "test records in the shipped tweaks" >&2; fail=1; fi
 (( fail == 0 )) || { rm -f "$zip"; exit 1; }

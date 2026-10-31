@@ -272,17 +272,13 @@ for _, a in ipairs({ "Ammo.AO_S10_Lockout", "Ammo.AO_S20_Lockout", "Ammo.AO_S25_
   local fx, ch = flat(a, "aoEffects") or {}, flat(a, "aoEffectChances") or {}
   check(a .. " jams on every hit", #fx == 1 and str(fx[1]) == "AmmoOverhaul.LockoutJam" and near(ch[1] or 0, 1), tostring(fx[1]))
 end
+local pd = "Items.AO_Feed_12ga_PumpNDump"
+check("Pump N Dump spread x0.2, as Slugs", near(modSum(pd, "SpreadDefaultX", "Multiplier"), 0.2), tostring(modSum(pd, "SpreadDefaultX", "Multiplier")))
+check("Pump N Dump cycles at x0.4", near(modSum(pd, "CycleTime", "Multiplier"), 0.4), tostring(modSum(pd, "CycleTime", "Multiplier")))
+check("Pump N Dump ignores no armor", near(statSum(pd, "CanWeaponIgnoreArmor"), 0), tostring(statSum(pd, "CanWeaponIgnoreArmor")))
 local mk = "Items.AO_Feed_4ga_MuleKick"
 check("Mule Kick flagged", flat("Ammo.AO_4ga_MuleKick", "aoMuleKick") == true, tostring(flat("Ammo.AO_4ga_MuleKick", "aoMuleKick")))
 check("Mule Kick knockback", near(statSum(mk, "KnockdownImpulse"), 100) and near(statSum(mk, "BaseKnockdownImpulse"), 100), tostring(statSum(mk, "KnockdownImpulse")))
-local hs = "Items.AO_Feed_12ga_Heartseeker"
-check("Heartseeker fires the smart package", flat("Ammo.AO_12ga_Heartseeker", "aoRangedAttack") == "Attacks.SmartBulletHighPackage",
-  tostring(flat("Ammo.AO_12ga_Heartseeker", "aoRangedAttack")))
-check("Heartseeker hit chance 1", near(statSum(hs, "SmartGunHitProbability"), 1), tostring(statSum(hs, "SmartGunHitProbability")))
-check("Heartseeker locks heads", near(statSum(hs, "SmartGunTrackHeadComponents"), 3), tostring(statSum(hs, "SmartGunTrackHeadComponents")))
-check("Heartseeker 0.3 s lock", near(statSum(hs, "SmartGunHipTimeToLock"), 0.3), tostring(statSum(hs, "SmartGunHipTimeToLock")))
-check("Heartseeker ignores all armor", near(statSum(hs, "CanWeaponIgnoreArmor"), 1), tostring(statSum(hs, "CanWeaponIgnoreArmor")))
-check("Heartseeker one projectile, as Beanbags", near(statSum(hs, "ProjectilesPerShot"), statSum("Items.AO_Feed_12ga_Beanbag", "ProjectilesPerShot")), tostring(statSum(hs, "ProjectilesPerShot")))
 
 -- Every record the generator names exists (stat types, status effects, bases): tools/rounds/refs.txt.
 if AO_REFS then

@@ -264,15 +264,15 @@
     60
    ]
   ],
-  "Heartseeker": [
+  "PumpNDump": [
    [
     200,
     110,
     20
    ],
    [
-    190,
-    30,
+    230,
+    60,
     40
    ]
   ],
@@ -1348,18 +1348,18 @@
    ],
    "tier": 3
   },
-  "12ga-heartseeker": {
+  "12ga-pumpndump": {
    "shape": "G12",
    "over": {
     "color": "red",
     "band": "black",
-    "load": "frag",
     "head_mat": "steel",
-    "crimp": "roll"
+    "crimp": "roll",
+    "grease": true
    },
-   "look": "Heartseeker",
+   "look": "PumpNDump",
    "label": [
-    "HEARTSEEKER"
+    "PUMP N DUMP"
    ],
    "tier": 4
   },

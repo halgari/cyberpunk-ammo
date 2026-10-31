@@ -33,12 +33,12 @@ jobs:
     steps:
       - name: Download the release zip
         run: |
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern 'AmmoOverhaul-*.zip*'
-          sha256sum -c AmmoOverhaul-*.zip.sha256
-          zip=$(ls AmmoOverhaul-*.zip)
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern 'BrassMarket-*.zip*'
+          sha256sum -c BrassMarket-*.zip.sha256
+          zip=$(ls BrassMarket-*.zip)
           echo "ZIP=$zip" >> "$GITHUB_ENV"
           echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
-          [[ "$zip" == "AmmoOverhaul-${TAG#v}.zip" ]] || { echo "zip $zip doesn't match tag $TAG"; exit 1; }
+          [[ "$zip" == "BrassMarket-${TAG#v}.zip" ]] || { echo "zip $zip doesn't match tag $TAG"; exit 1; }
 
       - name: Release notes as the changelog
         run: |
@@ -57,7 +57,7 @@ jobs:
           file_id: ${{ vars.NEXUS_FILE_ID }}
           filename: ${{ env.ZIP }}
           version: ${{ env.VERSION }}
-          display_name: Ammo Overhaul ${{ env.VERSION }}
+          display_name: Brass Market ${{ env.VERSION }}
           category: main
           archive_existing_version: true
           update_mod_version: true
