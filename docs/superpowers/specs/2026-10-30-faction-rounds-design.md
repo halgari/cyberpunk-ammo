@@ -108,7 +108,7 @@ feel test.
     is the short lock only.
 - **Shinobi** (Rare; 9mm, .45)
   - Silent kills and +50% headshot damage, with 10% less range.
-  - Levers: `CanSilentKill`, `WeaponNoise`, `HeadshotDamageMultiplier` (stats). Feasibility: stats,
+  - Levers: `CanSilentKill`, `HeadshotDamageMultiplier` (stats). Feasibility: stats,
     proven by Subsonic and Heartseeker.
 
 ## Distribution

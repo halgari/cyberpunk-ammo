@@ -32,6 +32,24 @@ Built) and its rounds (the `selectorAmmo` list in its `src/tweaks/AmmoOverhaul/*
 
 Use newly spawned guns: one already in an old save may keep its old slot layout.
 
+## Faction rounds field test
+
+Open the overlay, press "Give field kit", fit a round in the weapon screen. Things the rig can't
+check, one line each:
+
+- **Redliners (.45, 5.56, 7.62):** the gun fires visibly faster than on Ball. Hold the trigger until
+  it jams (2% per shot): it stops firing for 3 seconds. Swap guns while jammed: the next gun won't
+  fire either until the 3 seconds are up.
+- **Meat-grinders (.45, 12mm, 12ga, 4ga):** limbs come off far more often, and targets bleed.
+- **Shinobi (9mm, .45):** a headshot kill leaves others unalerted, and the shot sounds suppressed.
+- **Subsonic (9mm, .45, 5.56):** the shot sounds like a silencer's, the muzzle flash is the silenced
+  one, and a kill leaves others unalerted.
+- **Dirties (9mm, .45, 12mm):** bleed and poison show on hit.
+- **Chrome-cookers (5mm, heavy rail):** a target's cyberware malfunctions now and then.
+- **Reloads and Kata:** damage numbers spread as their text says.
+- **Tactician:** Slugs and Birdshot after the minimum spread fix; a slug group is tight at 20 m.
+- **Pump N Dump on the Igla, Pozhar and Testera:** each cycles at 2.5 times the speed.
+
 ## Test kit (CET window)
 
 With the dev helpers installed (`tools/linux/dev-install.sh`), opening the CET overlay also opens
@@ -46,6 +64,8 @@ an "Ammo Overhaul test kit" window:
 - "Kill test enemies" kills them for loot checks; "Remove test enemies" deletes them.
 - "Give slice kit" gives the Lexington, Omaha and Yukimura, all six selectors and 60 of each
   round.
+- "Give field kit" gives a gun for every caliber with faction rounds, the 12-gauge pumps, and every
+  faction round with its selector, plus Subsonic, Slugs and Pump N Dump, 60 of each.
 - Below that: your ammo, each test enemy's status, distance, gun, magazine and ammo carried
   (updated twice a second), and the mod's latest log lines.
 - Hotkeys you can bind in the overlay's Hotkeys tab: spawn handgun / rifle / shotgun enemy,

@@ -43,7 +43,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-45-Shredders"); ArrayPush(t, ".45 Shredders");
     ArrayPush(t, "AO-Ammo-45-CookOff"); ArrayPush(t, ".45 Cook-off");
     ArrayPush(t, "AO-Ammo-45-Redliners"); ArrayPush(t, ".45 Redliners [Mael]");
-    ArrayPush(t, "AO-Ammo-Redliners-Desc"); ArrayPush(t, "Overpressure loads. They run the gun past what it was built for, and sometimes the gun quits.\n\n+25% fire rate. +40% recoil and spread. 2% chance per shot to jam your gun.");
+    ArrayPush(t, "AO-Ammo-Redliners-Desc"); ArrayPush(t, "Overpressure loads. They run the gun past what it was built for, and sometimes the gun quits.\n\n+25% fire rate. +40% recoil and spread. 2% chance per shot to jam your weapons for 3 seconds.");
     ArrayPush(t, "AO-Ammo-45-MeatGrinders"); ArrayPush(t, ".45 Meat-grinders [Mael]");
     ArrayPush(t, "AO-Ammo-MeatGrinders-Desc"); ArrayPush(t, "Serrated loads that chew up whatever they hit. Bodies come apart, and what's left bleeds.\n\n30% chance to cause bleeding. Three times the dismemberment chance.");
     ArrayPush(t, "AO-Ammo-45-Reloads"); ArrayPush(t, ".45 Reloads [Scav]");

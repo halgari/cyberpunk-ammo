@@ -319,11 +319,6 @@ Items.AO_Feed_45_Subsonic:
       value: 1.0
     - !append
       $type: ConstantStatModifier
-      statType: BaseStats.WeaponNoise
-      modifierType: Multiplier
-      value: 0.3
-    - !append
-      $type: ConstantStatModifier
       statType: BaseStats.DamagePerHit
       modifierType: Multiplier
       value: 0.9
