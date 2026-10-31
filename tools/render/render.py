@@ -442,6 +442,11 @@ FACTION_ROUND = {
 }
 
 
+# Where the crest goes on rounds without a plain case, as a fraction of the length: the cassette's lid
+# between its bands, the Ashura's solid nose past its open frame.
+FACTION_CREST = dict(cassette=0.42, ashura=0.84)
+
+
 def faction_form(tmp, name, shape, faction, take, lines, i):
     """The faction's form and its printed parts, each drawn to the face it goes on; a spec for scene.py."""
     tmp = pathlib.Path(tmp)
@@ -451,8 +456,9 @@ def faction_form(tmp, name, shape, faction, take, lines, i):
         case = case_dims(L, R)
         label, printed = tmp / f"{name}-label.png", tmp / f"{name}-print.png"
         fa.ara_label(label, round(1200 * case["W"] / max(case["W"], case["D"])), round(1200 * case["D"] / max(case["W"], case["D"])))
-        fa.ara_print(printed, L, R)
-        return dict(form="ara_case", case=case, R=R, accent=accent, label=str(label), print=str(printed))
+        fa.ara_print(printed, L, R, FACTION_CREST.get(shape["kind"], 0.28))
+        return dict(form="ara_case", case=case, R=R, accent=accent, label=str(label), print=str(printed),
+                    print_up=shape["kind"] == "cassette")
     if faction == "Maelstrom":
         d = R * 2 * 1.03
         cols = max(4, round(1.8 * L / d))
@@ -465,9 +471,10 @@ def faction_form(tmp, name, shape, faction, take, lines, i):
     if take == "flat":
         d = R * 2 * 1.06
         W, D, H = L * 2.1, L * 1.5, L * 0.55
-        front = tmp / f"{name}-marker.png"
-        fa.marker(front, 1024, round(1024 * H / W), lines[:1], i + 1)
-        return dict(form="scav_flat", flat=dict(W=W, D=D, H=H, d=d), R=R, front=str(front), seed=i + 1)
+        front, end = tmp / f"{name}-front.png", tmp / f"{name}-end.png"
+        fa.flat_front(front, 1536, round(1536 * H / W), lines[0], i + 1)
+        fa.flat_side(end, 768, round(768 * H / D), i + 1)
+        return dict(form="scav_flat", flat=dict(W=W, D=D, H=H, d=d), R=R, front=str(front), side=str(end), seed=i + 1)
     return dict(form=f"scav_{take}", R=R, seed=i + 1)
 
 
@@ -488,7 +495,7 @@ def main():
     ap.add_argument("--out", default=str(ART))
     ap.add_argument("--legendary", default="crimson", choices=sorted(LEGENDARY), help="Legendary look")
     ap.add_argument("--form", default="case", choices=("box", "case", "hero"), help="Legendary form")
-    ap.add_argument("--scav", default="tray", choices=("tray", "pile", "flat"), help="Scavenger form")
+    ap.add_argument("--scav", default="flat", choices=("tray", "pile", "flat"), help="Scavenger form")
     ap.add_argument("--size", type=int, default=1024)
     args = ap.parse_args()
     names = args.only.split(",") if args.only else list(ROUNDS)

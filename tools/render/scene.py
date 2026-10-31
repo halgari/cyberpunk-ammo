@@ -1353,8 +1353,8 @@ def ara_case(spec, roundspec):
     rounds lying bedded in matte foam with the crest on them, a red seam round the rim, two red
     latches, and a white label on the lid."""
     rnd, L, _ = make_round(roundspec)
-    # The crest faces the camera on a lying round: lying turns the round's -X up (see lay).
-    engrave(rnd, spec["print"], L, math.atan2(-0.88, -0.48), spec["accent"])
+    # The crest faces the camera on a lying round, whose -X is up; a cassette's goes flat on its lid.
+    engrave(rnd, spec["print"], L, math.pi if spec.get("print_up") else math.atan2(-0.88, -0.48), spec["accent"])
     R = spec["R"]
     W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
     shell_m = principled("AraShell", (0.012, 0.012, 0.014), 0.0, 0.3, wear=0.02, bump=0.03)
@@ -1382,11 +1382,13 @@ def ara_case(spec, roundspec):
     bpy.context.collection.objects.link(hinge)
     hinge.location = (0, OD / 2, H)
     hinge.rotation_euler = (math.radians(-spec.get("lid_angle", 118)), 0, 0)
-    lid = cube("Lid", (OW, OD, lid_h), (0, -OD / 2, lid_h / 2), shell_m, bevel=wall * 0.5)
-    cut(lid, cube("LidCut", (W, D, lid_h), (0, -OD / 2, lid_h / 2 - wall), None))
+    # Built from slabs: a boolean here shuts part of the lid's mouth at some sizes.
+    lid = cube("Lid", (OW, OD, wall), (0, -OD / 2, lid_h - wall / 2), shell_m, bevel=wall * 0.3)
+    walls = [cube("LidWall", (OW, wall, lid_h), (0, -OD / 2 + k * (D + wall) / 2, lid_h / 2), shell_m, bevel=wall * 0.3) for k in (-1, 1)]
+    walls += [cube("LidWall", (wall, OD, lid_h), (k * (W + wall) / 2, -OD / 2, lid_h / 2), shell_m, bevel=wall * 0.3) for k in (-1, 1)]
     label = panel("Label", W * 0.96, D * 0.96, printed("Label", spec["label"], rough=0.5),
                   (0, -OD / 2, lid_h - wall * 1.02), (math.pi, 0, 0), wall * 0.04)
-    lid_parts = [lid, label]
+    lid_parts = [lid, label] + walls
     # Pressed ribs across the lid's face, the case's own shape from the back.
     for k in (-1, 0, 1):
         lid_parts.append(cube("Rib", (W * 0.8, wall * 0.9, wall * 0.5), (0, -OD / 2 + k * D * 0.28, lid_h), shell_m, bevel=wall * 0.2))
@@ -1578,7 +1580,7 @@ def scav_pile(spec, roundspec):
 
 def scav_flat(spec, roundspec):
     """Take three: a cut-down cardboard flat with rounds tipped in anyhow, standing and leaning, and
-    what's in it scrawled on the front in marker."""
+    the caliber scrawled on the front in marker over dried blood."""
     lot = mixed_rounds(roundspec)
     W, D, H, d = (spec["flat"][k] for k in ("W", "D", "H", "d"))
     L, rad = lot[0][1], spec["R"]
@@ -1589,7 +1591,8 @@ def scav_flat(spec, roundspec):
     bpy.context.collection.objects.link(root)
     for ob in (panel("Front", W, H, front, (0, -D / 2, H / 2), (math.pi / 2, 0, 0), t, kraft, (0, -1, 0)),
                panel("Back", W, H * 1.5, kraft, (0, D / 2, H * 0.75), (math.pi / 2, 0, 0), t),
-               panel("Left", D, H, kraft, (-W / 2, 0, H / 2), (math.pi / 2, 0, -math.pi / 2), t),
+               panel("Left", D, H, image_mat("FlatEnd", spec["side"]), (-W / 2, 0, H / 2), (math.pi / 2, 0, -math.pi / 2), t,
+                     kraft, (-1, 0, 0)),
                panel("Right", D, H, kraft, (W / 2, 0, H / 2), (math.pi / 2, 0, math.pi / 2), t),
                panel("Bottom", W, D, kraft, (0, 0, t / 2), (0, 0, 0), t)):
         ob.parent = root
@@ -1605,14 +1608,16 @@ def scav_flat(spec, roundspec):
             ob = lot[k][0] if k not in used else copy_tree(lot[k][0])
             used.add(k)
             n += 1
-            lean = rng.uniform(0.1, 0.32)
-            a = rng.uniform(0, 6.28)
+            x = -W / 2 + (i + 0.5) * W / cols + rng.uniform(-0.12, 0.12) * d
+            y = -D / 2 + (j + 0.5) * D / rows + rng.uniform(-0.12, 0.12) * d
+            # They lean in, loosely: leaning out would put them through the walls.
+            lean = rng.uniform(0.08, 0.26)
+            a = math.atan2(-x, y) + rng.uniform(-0.9, 0.9)
             ob.rotation_euler = (lean * math.cos(a), lean * math.sin(a), rng.uniform(0, 6.28))
-            ob.location = (-W / 2 + (i + 0.5) * W / cols + rng.uniform(-0.12, 0.12) * d,
-                           -D / 2 + (j + 0.5) * D / rows + rng.uniform(-0.12, 0.12) * d, t)
+            ob.location = (x, y, t)
             rounds.append(ob)
     for k in range(1, 3):
-        rounds.append(put_lying(lot, used, k + 4, W * (-0.26 + 0.42 * (k - 1)), -D / 2 - rad * (3 + k), rad, rng.uniform(-0.3, 0.3)))
+        rounds.append(put_lying(lot, used, k + 4, W * (-0.28 + 0.56 * (k - 1)), -D / 2 - rad * (3 + k), rad, rng.uniform(-0.2, 0.2)))
     return [root] + rounds
 
 
