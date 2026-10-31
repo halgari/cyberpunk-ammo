@@ -24,10 +24,10 @@
 
 ## Review Focus
 
-- A Hard Stop shotgun blast: 30% is per shot, not per pellet, and one blast applies one stagger.
+- A Cease and Desist shotgun blast: 30% is per shot, not per pellet, and one blast applies one stagger.
 - A headshot that kills: the burn on a dying target causes no error and no stuck effect.
 - Blocked, deflected or friendly-fire hits: no burn, stagger or knockdown, the same gate as Cook-off.
-- Boss and MaxTac targets: Hard Stop does nothing, Leg Day staggers; Elites still stagger from both.
+- Boss and MaxTac targets: Cease and Desist does nothing, Leg Day staggers; Elites still stagger from both.
 - Hits on non-puppets (a turret, a car, a device): nothing happens and nothing errors.
 
 ---
@@ -54,7 +54,7 @@ Add to `SPEC`, and to `TAGS` the five tags `[Tyger]`, `[Val]`, `[6th]`, `[Mil]`,
 "Surplus": ("SixthStreet", FACTION_UNCOMMON, {"9mm", "45", "12mm"}),
 "FourthOfJuly": ("SixthStreet", FACTION_RARE, {"9mm", "12mm", "10mm"}),
 "MilSpec": ("Militech", FACTION_RARE, {"9mm", "762", "5mm"}),
-"HardStop": ("Militech", FACTION_EPIC, {"762", "12ga"}),
+"CeaseAndDesist": ("Militech", FACTION_EPIC, {"762", "12ga"}),
 "ProteinLoads": ("Animals", FACTION_RARE, {"12mm", "5mm", "Heavy"}),
 "LegDay": ("Animals", FACTION_EPIC, {"12mm", "Heavy"}),
 ```
@@ -65,7 +65,7 @@ Rename `test_twenty_six_rounds_as_specified` to `test_faction_rounds_as_specifie
 def test_second_batch_flats():
     by = {(t, k["load"]): round_yaml(t, k) for t, k in faction_rounds()}
     assert 'Ammo.AO_45_SantaMuerte.aoHeadEffect: "BaseStatusEffect.Burning"' in by["45", "SantaMuerte"]
-    assert "Ammo.AO_762_HardStop.aoStopChance: 0.3" in by["762", "HardStop"]
+    assert "Ammo.AO_762_CeaseAndDesist.aoStopChance: 0.3" in by["762", "CeaseAndDesist"]
     assert "Ammo.AO_12mm_LegDay.aoFloorChance: 0.2" in by["12mm", "LegDay"]
     assert "Ammo.AO_9mm_ShinobiSeconds.rollDudChance: 0.05" in by["9mm", "ShinobiSeconds"]
     assert "Ammo.AO_9mm_ShinobiSeconds.rollDudMult: 0.25" in by["9mm", "ShinobiSeconds"]
@@ -95,7 +95,7 @@ Add ten kinds after Shinobi, with `desc` copied verbatim from the spec. `NARROW 
 - Surplus, `stats=recoil(0.90)`, `hit=dict(roll=NARROW)`
 - FourthOfJuly, title "Fourth of July", `stats=[]`, `hit=dict(effects=[("AmmoOverhaul.PingTag", 1.0), (BURN, 0.10)])`
 - MilSpec, title "Mil-Spec", `stats=armor(0.25) + recoil(0.85)`, `hit=dict(roll=NARROW)`
-- HardStop, title "Hard Stop", `stats=armor(0.50) + damage(0.90)`, `hit=dict(stop=0.30)`
+- CeaseAndDesist, title "Cease and Desist", `stats=armor(0.50) + damage(0.90)`, `hit=dict(stop=0.30)`
 - ProteinLoads, title "Protein Loads", `stats=damage(1.30) + recoil(1.60) + range_(0.70)`
 - LegDay, title "Leg Day", `stats=recoil(1.80)`, `hit=dict(floor=0.20)`
 
@@ -136,7 +136,7 @@ git commit -m "feat: 25 rounds for Tyger Claws, Valentinos, 6th Street, Militech
 Add `Character.AO_Test_<Tyger|Val|Six|Mil|Animal>_Unity` to `test.yaml`, as `AO_Test_Ara_Unity`, with `affiliation: Factions.<key>`. To `faction.sh` add these parts, also in its default list:
 - `affiliation2`: each of the five spawns and `DebugFactionOf` returns its key.
 - `headfx`: with Santa Muerte fed, 12 chest shots apply 0 `BaseStatusEffect.Burning`; head shots apply exactly as many as head-flagged hits (the aim code from the probe, in the rig's `aim` with a pitch at the `Head` slot; add it to `rig.lua` as `RIG.fireHead()`).
-- `stops`: with `aoStopChance` set to 1.0 by `TweakDB:SetFlat` on a Hard Stop 7.62 gun, a Normal NPC takes `BaseStatusEffect.ForceStagger`, an Elite takes it, a Boss (`Character.ma_wat_kab_08_cyberpsycho`) doesn't. On a Crusher at 1.0, one blast counts one application.
+- `stops`: with `aoStopChance` set to 1.0 by `TweakDB:SetFlat` on a Cease and Desist 7.62 gun, a Normal NPC takes `BaseStatusEffect.ForceStagger`, an Elite takes it, a Boss (`Character.ma_wat_kab_08_cyberpsycho`) doesn't. On a Crusher at 1.0, one blast counts one application.
 - `floors`: with `aoFloorChance` at 1.0, a Normal NPC takes `BaseStatusEffect.Knockdown`, an Elite (`Character.sq031_maelstrom_strong_shotgunner_elite`) `ForceStagger`.
 - `crits`: with Gold Tips and Ball, 100 hits each on an Immortal NPC, the share of `hitFlag.CriticalHit` hits rises by at least 8 points. Ranks come from `NPCPuppet.GetNPCRarity`, not the record's name: that Elite record reported Normal in the probe, so the check first prints the rank and uses `AOData` flats to pick a true Elite if needed.
 
@@ -157,7 +157,7 @@ Move the `pellets` line in `ApplyAmmoOnHit` above the call.
 - [ ] **Step 4: Decide the three engine questions from live results**
 
 - **Headshots on V:** log hits on V with `hitFlag.Headshot` over at least 100 NPC hits. If none are flagged, set `head_fallback=0.10` on SantaMuerte and rerun Task 1's generators. If some are, leave it off.
-- **Stagger on V:** apply `ForceStagger` to V and look for a reaction. If none, use a stagger record that moves V if one exists; if none does, change Hard Stop's spec line and text to say hits on you do nothing extra, and tell the user.
+- **Stagger on V:** apply `ForceStagger` to V and look for a reaction. If none, use a stagger record that moves V if one exists; if none does, change Cease and Desist's spec line and text to say hits on you do nothing extra, and tell the user.
 - **Crits:** if `crits` fails, gun stats don't reach the roll. Replace the `CritChance` stat with a flat `aoCritChance` set through `attackData.SetAdditionalCritChance` in a `CalculateDamageVariants`-stage hook, and report `CritDamage` to the user before changing its text.
 
 - [ ] **Step 5: Run to green**
@@ -187,7 +187,7 @@ Expected: 25 new PNGs in `art/icons`; 175 older ones unchanged in `git status`.
 
 - [ ] **Step 2: Check them**
 
-Build a contact sheet in the scratchpad and read it. Check every caliber of each box, especially those not yet rendered: 9mm and 12mm in the lacquer box, .45 in the cigar box's Gold Tips, 12mm and .45 in the crate, and 12ga Hard Stop in the case. Send it to the user with SendUserFile.
+Build a contact sheet in the scratchpad and read it. Check every caliber of each box, especially those not yet rendered: 9mm and 12mm in the lacquer box, .45 in the cigar box's Gold Tips, 12mm and .45 in the crate, and 12ga Cease and Desist in the case. Send it to the user with SendUserFile.
 
 - [ ] **Step 3: Build the atlas**
 
@@ -231,7 +231,7 @@ git commit -m "test: record checks at 200 rounds"
 - [ ] **Step 1: Write them**
 
 - Round counts move from 175 to 200; the Unreleased changelog gains the five factions.
-- `TESTING.md`: a manual line per kind, in the style of its Redliners line: Protein Loads kick, Leg Day floors, Hard Stop on return fire, Fourth of July tags, Santa Muerte burns on headshots only.
+- `TESTING.md`: a manual line per kind, in the style of its Redliners line: Protein Loads kick, Leg Day floors, Cease and Desist on return fire, Fourth of July tags, Santa Muerte burns on headshots only.
 - `MECHANICS.md`: the probe results from memory `faction-batch2-probes.md`: headshot flag, blind effects and numbers, per-target quickhack cost, no tracer visuals.
 - `IDEAS.md`: Zombie Powder and Backdoor with those results, held for a Voodoo Boys release.
 - Spec status: built, with any Task 2 Step 4 outcome written in.

@@ -14,7 +14,7 @@ the first three factions. Voodoo Boys wait for a later release; Zombie Powder an
   `AmmoOverhaul.factionOf.*` from the game's `Factions.*` names, which are the same words.
 - **Name tags:** `[Tyger]`, `[Val]`, `[6th]`, `[Mil]`, `[Animal]`.
 - **New hit behaviour:** an effect that fires only on a headshot (Santa Muerte), and rank-aware
-  stagger and knockdown chances (Hard Stop, Leg Day). Everything else uses levers the mod already
+  stagger and knockdown chances (Cease and Desist, Leg Day). Everything else uses levers the mod already
   has.
 - **No new turf shops.** These rounds reach V from NPCs of the faction only. Turf stock can be added
   later with one flat per shop.
@@ -68,12 +68,12 @@ Numbers are starting points for the feel test. Calibers come from what each fact
   - Narrow damage roll (-5% to +5%), 25% armor pen, -15% recoil.
   - Text: "Lot-tested, sealed, signed for. Every round does what the last one did.\n\nDamage varies
     only 5% either way. 25% armor penetration. -15% recoil."
-- **Hard Stop** (Epic; 7.62, 12ga)
+- **Cease and Desist** (Epic; 7.62, 12ga)
   - 30% chance per shot to stagger the target (`BaseStatusEffect.ForceStagger`), 50% armor pen,
     -10% damage. Boss and MaxTac NPCs don't stagger. Whether it really stops return fire is checked
     in the feel test.
   - On V: a stagger.
-  - Text: "Rated to end the argument. Whoever takes one loses their footing.\n\n30% chance per shot to
+  - Text: "Militech Legal's preferred wording. Whoever takes one loses their footing.\n\n30% chance per shot to
     stagger the target. 50% armor penetration. -10% damage."
 
 **Animals: stopping power**
@@ -121,7 +121,7 @@ New mechanisms only, in `tools/snippets/calibers/faction.sh`:
 - Faction spelling: a spawned NPC of each new faction rolls as its key.
 - Santa Muerte: a head shot burns, a chest shot doesn't; an NPC's Santa Muerte on V gives the burn
   by the rule above.
-- Fourth of July and Hard Stop on live hits; Boss and MaxTac don't stagger from Hard Stop.
+- Fourth of July and Cease and Desist on live hits; Boss and MaxTac don't stagger from Cease and Desist.
 - Leg Day: Normal NPCs go down, Elites stagger.
 - `records.lua`, `icons.lua`, `distribution.lua` and `tiers.lua` at 200 rounds. The atlas holds 300
   cells, so it keeps its size.
