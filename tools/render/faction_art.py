@@ -486,7 +486,7 @@ def vdb_mark(path, w, h, seed):
 
 
 def deck_screen(path, w, h, seed):
-    """The deck's screen: a breach warning through Blackwall static. The text and the static are the
+    """The deck's screen: the one word through Blackwall static. The text and the static are the
     "-glow" image, so they light up."""
     rng = random.Random(seed)
     im = Image.new("L", (w, h))
@@ -500,9 +500,7 @@ def deck_screen(path, w, h, seed):
                     px[x + dx, y + dy] = v
     t = Image.new("RGBA", (w, h), (0, 0, 0, 255))
     t.paste((200, 14, 18, 255), (0, 0), im)
-    stamp(t, lettered("BLACKWALL", w * 0.66, TYPED), (255, 60, 56), w / 2, h * 0.3)
-    stamp(t, lettered("BREACH DETECTED", w * 0.5, TYPED), (235, 40, 40), w / 2, h * 0.5)
-    stamp(t, lettered("UPLOAD READY", w * 0.44, TYPED), (255, 214, 200), w / 2, h * 0.72)
+    stamp(t, lettered("BLACKWALL", w * 0.8, TYPED), (255, 60, 56), w / 2, h / 2)
     t = t.convert("RGB")
     t.save(path)
     t.save(str(path).replace(".png", "-glow.png"))

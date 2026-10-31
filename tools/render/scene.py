@@ -1982,8 +1982,7 @@ def vdb_shrine(spec, roundspec):
 
 
 def vdb_deck(spec, roundspec):
-    """Collect Call: a netrunner's black cyberdeck, patched and scuffed, its screen open on a Blackwall
-    breach. The rounds sit in the bay where the memory goes, the keys in front."""
+    """Collect Call: a netrunner's black cyberdeck, patched and scuffed, its screen open on the Blackwall. The rounds sit in the bay where the memory goes, the keys in front."""
     rnd, L, _ = make_round(roundspec)
     R = spec["R"]
     W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
