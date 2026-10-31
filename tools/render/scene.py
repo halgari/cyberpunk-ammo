@@ -2240,7 +2240,7 @@ FACTION_FORMS = {"ara_case": ara_case, "mael_can": mael_can, "scav_tray": scav_t
                  "mil_case": mil_case, "animal_tub": animal_tub, "bar_can": bar_can, "vdb_shrine": vdb_shrine,
                  "vdb_deck": vdb_deck, "wraith_can": wraith_can, "nomad_tin": nomad_tin, "mox_clutch": mox_clutch,
                  "ncpd_bag": ncpd_bag, "kang_case": kang_case, "nusa_box": nusa_box}
-FACTION_VIEWS = {"scav_tray": TOP_VIEW, "scav_pile": TOP_VIEW, "ncpd_bag": TOP_VIEW, "vdb_phone": Vector((-0.45, -1.0, 0.75))}
+FACTION_VIEWS = {"scav_tray": TOP_VIEW, "scav_pile": TOP_VIEW, "ncpd_bag": TOP_VIEW}
 
 HERO_VIEW = Vector((-0.5, -1.0, 0.3))
 
