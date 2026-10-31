@@ -1,7 +1,7 @@
 # Brass Market
 
 Brass Market (internally AmmoOverhaul) is a Cyberpunk 2077 (2.50) mod that replaces the game's four ammo types with 13 calibers and about
-175 rounds, from plain ball to Legendary, for V and NPCs alike.
+200 rounds, from plain ball to Legendary, for V and NPCs alike.
 
 ## What it does
 
@@ -16,9 +16,9 @@ Brass Market (internally AmmoOverhaul) is a Cyberpunk 2077 (2.50) mod that repla
   that caliber. The gun loads it from then on, until you pick another.
 - **NPCs.** NPCs carry real rounds, better ones the tougher they are, fire them under the same
   damage rules as V, and drop what they carry.
-- **Faction rounds.** Maelstrom, Scavengers and Arasaka have 26 rounds of their own, marked
-  [Mael], [Scav] or [Ara]. They come from that faction's NPCs, and from a few gun shops on
-  their turf, and can't be crafted.
+- **Faction rounds.** Eight factions have 51 rounds of their own, marked with the faction in
+  the name, such as [Mael] or [Tyger]. They come from that faction's NPCs, and from a few gun
+  shops on Maelstrom, Scav and Arasaka turf, and can't be crafted.
 - **Getting rounds.** Vendors and loot hand out every caliber and tier; gun shops sell up to
   Rare. Every caliber's Common round can be crafted; better rounds need a recipe ("load sheet")
   from loot or a gun shop. Rounds break down by the box into components of their own grade.

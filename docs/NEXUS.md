@@ -10,21 +10,21 @@ colors (Common grey, Uncommon green, Rare blue, Epic purple, Legendary orange).
 
 ```
 [center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
-[size=4]An ammo overhaul: 13 calibers, 175 rounds, and the shops, loot and crafting that go with them[/size][/center]
+[size=4]An ammo overhaul: 13 calibers, 200 rounds, and the shops, loot and crafting that go with them[/size][/center]
 
 [line]
 
-The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 175 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
+The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 200 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
 
 Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon, Rare and Epic rounds. You pick which round the gun loads from its mod screen.
 
 [size=5][b][color=#2ad4ff]What the mod adds[/color][/b][/size]
 [list]
 [*]13 calibers: 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
-[*]175 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
+[*]200 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
 [*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
-[*]Maelstrom, Scavengers and Arasaka have rounds of their own. You get them from that faction's NPCs, and a few gun shops on their turf stock some.
+[*]Eight factions have rounds of their own. You get them from that faction's NPCs, and a few gun shops on Maelstrom, Scav and Arasaka turf stock some.
 [*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
 [*]Each round has its own box icon with the name printed on it, so Mushrooms and Penetrators look different in your backpack.
 [/list]
@@ -70,7 +70,7 @@ There are 14 Legendary rounds to find. Elite enemies, bosses and MaxTac sometime
 The rest are for you to find.
 
 [size=5][b][color=#2ad4ff]Faction rounds[/color][/b][/size]
-Three factions load rounds nobody else has, 26 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. Gun shops in Northside, Kabuki and the Arroyo sometimes stock a stack or two below Epic, and the Scav shops always have Reloads. One gun shop Downtown sometimes has a small stack of Shinobi, the only Epic round on sale anywhere. No crafting, and the name carries a [Mael], [Scav] or [Ara] tag so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
+Eight factions load rounds nobody else has, 51 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. Gun shops in Northside, Kabuki and the Arroyo sometimes stock a stack or two below Epic, and the Scav shops always have Reloads. One gun shop Downtown sometimes has a small stack of Shinobi, the only Epic round on sale anywhere. No crafting, and the name carries a [Mael], [Scav] or [Ara] tag so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
 
 [b]Maelstrom[/b]
 [list]
@@ -91,6 +91,36 @@ Three factions load rounds nobody else has, 26 in all. You get them from that fa
 [*][color=#b04fff][b]Shinobi[/b][/color] (Epic; 9mm, .45): silent kills, +50% headshot damage. -10% range.
 [*][color=#b04fff][b]Kata[/b][/color] (Epic; .45, 5.56, 7.62, light rail): damage varies only 1% either way. 30% less recoil, 30% faster aim.
 [*][color=#b04fff][b]Kansatsu[/b][/color] (Epic; 10mm, 20mm, 25mm): targets hit show through walls for 5 seconds. Locks on twice as fast.
+[/list]
+
+[b]Tyger Claws[/b]
+[list]
+[*][color=#3fbf5f][b]Shinobi Seconds[/b][/color] (Uncommon; 9mm, .45): silent kills. -15% damage, and 5% are duds that hit for a quarter.
+[*][color=#3fa0ff][b]Tanto[/b][/color] (Rare; 9mm, .45, 12mm): 25% chance to cause bleeding, +10% crit chance.
+[/list]
+
+[b]Valentinos[/b]
+[list]
+[*][color=#3fa0ff][b]Gold Tips[/b][/color] (Rare; .45, 12mm): +15% crit chance, +30% crit damage, +20% recoil.
+[*][color=#b04fff][b]Santa Muerte[/b][/color] (Epic; .45, 12mm): +50% headshot damage, and headshots set the target on fire.
+[/list]
+
+[b]6th Street[/b]
+[list]
+[*][color=#3fbf5f][b]Surplus[/b][/color] (Uncommon; 9mm, .45, 12mm): damage varies only 5% either way. -10% recoil.
+[*][color=#3fa0ff][b]Fourth of July[/b][/color] (Rare; 9mm, 12mm, 10mm): hits tag targets through walls for 5 seconds, with a 10% chance to set them on fire.
+[/list]
+
+[b]Militech[/b]
+[list]
+[*][color=#3fa0ff][b]Mil-Spec[/b][/color] (Rare; 9mm, 7.62, light rail): damage varies only 5% either way. 25% armor penetration, -15% recoil.
+[*][color=#b04fff][b]Cease and Desist[/b][/color] (Epic; 7.62, 12-gauge): 30% chance per shot to stagger the target. 50% armor penetration, -10% damage.
+[/list]
+
+[b]Animals[/b]
+[list]
+[*][color=#3fa0ff][b]Protein Loads[/b][/color] (Rare; 12mm, light and heavy rail): kills give +6% move speed and 10% faster reloads for 10 seconds, stacking 3 times.
+[*][color=#b04fff][b]Leg Day[/b][/color] (Epic; 12mm, heavy rail): 20% chance per shot to cripple the target's legs, so it stops where it stands. +80% recoil.
 [/list]
 
 [line]

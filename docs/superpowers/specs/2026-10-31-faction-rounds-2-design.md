@@ -1,6 +1,6 @@
 # Faction rounds, second five: design
 
-Date: 2026-10-31. Status: draft for review. Follows `2026-10-30-faction-rounds-design.md`, whose
+Date: 2026-10-31. Status: built on branch `faction-rounds-2`, awaiting the user's feel test. Follows `2026-10-30-faction-rounds-design.md`, whose
 binding rules, tier codes, pricing and NPC rolls all carry over.
 
 Tyger Claws, Valentinos, 6th Street, Militech and the Animals each get two kinds of round. That's

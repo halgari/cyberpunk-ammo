@@ -380,6 +380,36 @@ rounds; a Legendary stack is a quarter of the Epic one it replaces.
 
 The other twelve are for finding; the spec has them.
 
+### Built (faction rounds, second five, 2026-10-31)
+
+25 rounds, spec `docs/superpowers/specs/2026-10-31-faction-rounds-2-design.md`. Same rules as the first
+batch below, with no turf shops.
+
+Tyger Claws:
+
+- **Shinobi Seconds** (Uncommon; 9mm, 45): `CanSilentKill`, x0.85 damage, 5% duds at x0.25.
+- **Tanto** (Rare; 9mm, 45, 12mm): 25% `Bleeding`, +10 `CritChance`.
+
+Valentinos:
+
+- **Gold Tips** (Rare; 45, 12mm): +15 `CritChance`, +30 `CritDamage`, x1.2 recoil, 1.5x the Rare price.
+- **Santa Muerte** (Epic; 45, 12mm): +0.5 `HeadshotDamageMultiplier`, burns on a headshot (`aoHeadEffect`), 10% per hit on V (`aoHeadFallback`).
+
+6th Street:
+
+- **Surplus** (Uncommon; 9mm, 45, 12mm): roll 0.95 to 1.05, x0.9 recoil.
+- **Fourth of July** (Rare; 9mm, 12mm, 10mm): the Ping tag on every hit, 10% `Burning`.
+
+Militech:
+
+- **Mil-Spec** (Rare; 9mm, 762, 5mm): roll 0.95 to 1.05, 25% armor pen, x0.85 recoil.
+- **Cease and Desist** (Epic; 762, 12ga): 30% per shot to stagger (`aoStopChance`), not Boss or MaxTac, 50% armor pen, x0.9 damage. `ForceStagger` on NPCs, `BlockBroken` on V.
+
+Animals:
+
+- **Protein Loads** (Rare; 12mm, 5mm, Heavy): a kill stacks `AmmoOverhaul.Pumped` on the shooter (`aoPumped`): 10 s, 3 stacks, +6% `MaxSpeed`, -0.1 `ReloadTimeBonus` each.
+- **Leg Day** (Epic; 12mm, Heavy): 20% per shot (`aoLegChance`): `CrippledLeg` up to Officer, `ForceStagger` for Elite, Boss and MaxTac, `Knockdown` on V. x1.8 recoil.
+
 ### Built (faction rounds, 2026-10-30)
 
 26 rounds, from `tools/rounds/rounds.py`, spec `docs/superpowers/specs/2026-10-30-faction-rounds-design.md`.

@@ -42,6 +42,13 @@ check, one line each:
   fire either until the 3 seconds are up.
 - **Meat-grinders (.45, 12mm, 12ga, 4ga):** limbs come off far more often, and targets bleed.
 - **Shinobi (9mm, .45):** a headshot kill leaves others unalerted, and the shot sounds suppressed.
+- **Santa Muerte (.45, 12mm):** headshots set targets on fire, body shots never do.
+- **Fourth of July (9mm, 12mm, 10mm):** a target you hit shows through walls for 5 seconds.
+- **Cease and Desist (7.62, 12ga):** a staggered target stops shooting for a moment. Check that it
+  really eases return fire, and that an enemy's round staggers V.
+- **Protein Loads (12mm, light and heavy rail):** three quick kills, and V runs and reloads visibly faster.
+- **Leg Day (12mm, heavy rail):** a crippled target stops where it stands and keeps shooting, an
+  Elite staggers, and an enemy's round knocks V down.
 - **Subsonic (9mm, .45, 5.56):** the shot sounds like a silencer's, the muzzle flash is the silenced
   one, and a kill leaves others unalerted.
 - **Gutter Lead (9mm, .45, 12mm):** bleed and poison show on hit.
@@ -199,7 +206,7 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
 - `faction.sh [part ...]`: faction rounds on live hits, one check per mechanism: who rolls what and
   how often, the general lists stay clear of them, the turf shops' stock, stats on a gun, one gun's round not touching
   another, Reloads' roll, Redliners' jam both ways, a jam across a swap, Chrome-cookers on V,
-  Kata's roll, Parts-pullers' components, Kansatsu's short lock and the tag not shortening it. Draws
+  Kata's roll, Parts-pullers' components, Kansatsu's short lock and the tag not shortening it, the second five factions' spelling, headshot burns on NPCs and V, stagger, cripple and pump by rank and on V, and a gun's crit stats reaching the roll. Draws
   guns and spawns NPCs: not while you play.
 - To look at icons in the game without a mouse: set the backpack's filter with
   `UIScriptableSystemSetBackpackFilter` (`filterMode` 14 is all items), open it with

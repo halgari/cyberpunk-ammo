@@ -186,7 +186,9 @@ for _, cal in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
       if rec(ammo) and rec(sel) then
         need(str(flat(ammo, "quality")) == QUAL[t] and str(flat(sel, "quality")) == QUAL[t], "quality " .. str(flat(ammo, "quality")))
         local p, pc = priceMult(ammo, "buyPrice"), priceMult(common, "buyPrice")
-        need(near(p, pc * PRICE[t]) and near(priceMult(ammo, "sellPrice"), p), string.format("price x%.2f of Common's x%.2f", p, pc))
+        -- Gold Tips sell for half again the Rare price.
+        local want = pc * PRICE[t] * (ammo:find("GoldTips") and 1.5 or 1)
+        need(near(p, want) and near(priceMult(ammo, "sellPrice"), p), string.format("price x%.2f of Common's x%.2f", p, pc))
         need(near(statSum(ammo, "Weight"), statSum(common, "Weight")), "weight " .. statSum(ammo, "Weight"))
         local name, desc = locName(ammo) or "", Game.GetLocalizedTextByKey(rec(ammo):LocalizedDescription())
         need(name ~= "" and not name:find("^AO%-") and locName(sel) == name, "name " .. name)
@@ -215,7 +217,7 @@ check("96 Rare and Epic rounds listed", counted[2] + counted[3] == 96, counted[2
 check("Rare count", counted[2] == 50, tostring(counted[2]))
 check("Epic count", counted[3] == 46, tostring(counted[3]))
 check("14 Legendary rounds listed", counted[4] == 14, tostring(counted[4]))
-check("26 faction rounds listed", counted[5] + counted[6] + counted[7] + counted[8] == 26, counted[5] .. " Rare, " .. counted[6] .. " Epic, " .. counted[7] .. " Common")
+check("51 faction rounds listed", counted[5] + counted[6] + counted[7] + counted[8] == 51, counted[5] .. " Rare, " .. counted[6] .. " Epic, " .. counted[7] .. " Common")
 
 
 -- The 12mm, 7.62 and 12.7 Penetrator go through thin cover (the Tech pierce stats, probed on an
