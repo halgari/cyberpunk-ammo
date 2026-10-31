@@ -88,7 +88,9 @@ def recoil(f):
 
 
 SPREADS = ["SpreadDefaultX", "SpreadDefaultY", "SpreadMaxX", "SpreadMaxY",
-           "SpreadAdsDefaultX", "SpreadAdsDefaultY", "SpreadAdsMaxX", "SpreadAdsMaxY"]
+           "SpreadAdsDefaultX", "SpreadAdsDefaultY", "SpreadAdsMaxX", "SpreadAdsMaxY",
+           # The Tactician's spread has a floor: left alone it sits above a tightened Max.
+           "SpreadMinX", "SpreadMinY", "SpreadAdsMinX", "SpreadAdsMinY"]
 
 
 def spread(f):

@@ -41,10 +41,14 @@ BaseStats.SpreadAdsDefaultX
 BaseStats.SpreadAdsDefaultY
 BaseStats.SpreadAdsMaxX
 BaseStats.SpreadAdsMaxY
+BaseStats.SpreadAdsMinX
+BaseStats.SpreadAdsMinY
 BaseStats.SpreadDefaultX
 BaseStats.SpreadDefaultY
 BaseStats.SpreadMaxX
 BaseStats.SpreadMaxY
+BaseStats.SpreadMinX
+BaseStats.SpreadMinY
 BaseStats.SwaySideMaximumAngleDistance
 BaseStats.SwayTraversalTime
 BaseStats.TechPierceChargeLevel
