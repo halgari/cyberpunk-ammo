@@ -1,6 +1,6 @@
 # Faction rounds, last eight: design
 
-Date: 2026-10-31. Status: built on branch `faction-rounds-3`, awaiting the user's feel test and art approval. Follows `2026-10-31-faction-rounds-2-design.md`; binding
+Date: 2026-10-31. Status: built on branch `faction-rounds-3`, awaiting the user's feel test. Follows `2026-10-31-faction-rounds-2-design.md`; binding
 rules, tier codes, pricing and NPC rolls all carry over.
 
 All the gangs get rounds: Barghest, Voodoo Boys, Wraiths, Aldecaldos and the Mox. So do NCPD, Kang Tao
@@ -165,7 +165,7 @@ Each faction needs its own new object, approved as forms first as before. First 
 - **NUSA:** a blank grey document box stamped CLASSIFIED.
 
 Built as `bar_can`, `vdb_shrine`, `vdb_deck`, `wraith_can`, `nomad_tin`, `mox_clutch`, `ncpd_bag`,
-`kang_case` and `nusa_box` in `tools/render/scene.py`, awaiting approval.
+`kang_case` and `nusa_box` in `tools/render/scene.py`, approved.
 
 ## Testing
 
