@@ -342,3 +342,20 @@ Character.AO_Test_Ganger_9mm_HitData:
   secondaryEquipment:
     $type: NPCEquipmentGroup
     equipmentItems: []
+
+# Faction rounds: the same goons with the affiliation the roll reads (FactionRounds.reds).
+Character.AO_Test_Mael_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Maelstrom
+
+Character.AO_Test_Scav_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Scavengers
+
+Character.AO_Test_Ara_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Arasaka
+
+Character.AO_Test_Mael_Omaha:
+  $base: Character.AO_Test_Plain_Omaha
+  affiliation: Factions.Maelstrom

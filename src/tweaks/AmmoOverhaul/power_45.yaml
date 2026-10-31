@@ -1071,11 +1071,6 @@ Items.AO_Feed_45_Shinobi:
       value: 1.0
     - !append
       $type: ConstantStatModifier
-      statType: BaseStats.WeaponNoise
-      modifierType: Multiplier
-      value: 0.3
-    - !append
-      $type: ConstantStatModifier
       statType: BaseStats.HeadshotDamageMultiplier
       modifierType: Additive
       value: 0.5

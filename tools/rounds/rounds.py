@@ -452,8 +452,8 @@ KINDS = [
     dict(load="Shinobi", title="Shinobi", tier=FACTION_RARE, faction="Arasaka", look=((20, 20, 22), (120, 120, 125)),
          art={'case_mat': 'black', 'tip': 'black'},
          calibers=["9mm", "45"],
-         stats=[add("CanSilentKill", 1.0), mult("WeaponNoise", 0.3), add("HeadshotDamageMultiplier", 0.5)] + range_(0.90),
-         desc="Quiet loads for close work. Put one in the head and nobody hears about it.\n\nMuch quieter shots. Silent kills. +50% headshot damage. -10% range."),
+         stats=[add("CanSilentKill", 1.0), add("HeadshotDamageMultiplier", 0.5)] + range_(0.90),
+         desc="Quiet loads for close work. Put one in the head and nobody hears about it.\n\nSilent kills. +50% headshot damage. -10% range."),
 ]
 
 

@@ -440,6 +440,25 @@ public class AmmoFeedSystem extends ScriptableSystem {
     CookOff.OnHit(this.m_player, target);
   }
 
+  // A shot of `ammo` by V, as ShootEvents.OnEnter makes it; the rig's shots don't pass there.
+  public final func DebugSelfJam(ammo: String) -> Void {
+    FactionRounds.OnShot(this.m_player, TDBID.Create(ammo));
+  }
+
+  // The smart gun's lock, from the HUD's data: what a lock probe polls.
+  public final func DebugSmartTargets() -> String {
+    let bb: ref<IBlackboard> = GameInstance.GetBlackboardSystem(GetGameInstance()).Get(GetAllBlackboardDefs().UI_ActiveWeaponData);
+    let params: ref<smartGunUIParameters> = FromVariant<ref<smartGunUIParameters>>(bb.GetVariant(GetAllBlackboardDefs().UI_ActiveWeaponData.SmartGunParams));
+    if !IsDefined(params) {
+      return "none";
+    }
+    let text: String = "cyber=" + ToString(params.hasRequiredCyberware) + " targets=" + IntToString(ArraySize(params.targets)) + " lock=" + FloatToString(params.timeToLock);
+    for target in params.targets {
+      text += " state=" + IntToString(EnumInt(target.state)) + " locking=" + FloatToString(target.timeLocking);
+    }
+    return text;
+  }
+
   public final func DebugMuleKick() -> Void {
     MuleKick.Shove(this.m_player);
   }

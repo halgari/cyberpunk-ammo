@@ -281,3 +281,15 @@ Chrome-cookers. Scav guns are mostly 12mm Novas, so 12mm leads their list.
 7. **Turf map.** The shop list above is still a proposal; the user hasn't approved it.
 8. **Round count.** 26.
 9. **Release.** Faction rounds come in the version after 0.5.0.
+
+## Probe results (2026-10-30, on the 0.5.0 base)
+
+- **Kansatsu instant lock: fails, so the fallback stands.** Same gun, same target, 3.6 s lock time:
+  4.54 s and 4.53 s to a full lock with no tag, 4.53 s and 4.54 s with the tag on. Lock time is a
+  gun stat and the engine has no per-target lock stat, so a tag can't shorten it short of a script
+  changing the gun, which the rules rule out. The round is lock time x0.5 at all times plus the tag.
+- **Redliners jam on a swap: the jam stays on V.** Jammed on a Unity, V drew a Lexington on another
+  round and was still jammed. The game's shooting gate reads Jam effects on V, not on the gun
+  (`weaponTransitions`), so the second gun can't fire until the jam ends. Decision open with the user.
+- **`WeaponNoise` is 0 on V's Unity as well as on NPC guns,** so x0.3 changes nothing. Shinobi drops
+  the stat and the "much quieter" line. Subsonic (shipped) still claims it.
