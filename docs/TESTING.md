@@ -71,6 +71,19 @@ check, one line each:
 - **Tactician:** Slugs and Birdshot after the minimum spread fix; a slug group is tight at 20 m.
 - **Pump N Dump on the Igla, Pozhar and Testera:** each cycles at 2.5 times the speed.
 
+## Quickhack rounds field test
+
+"Give field kit" adds the Epic hack rounds with their selectors, the three smart guns and 5 copies of
+each Epic quickhack.
+
+- Each hack's feel on a fight: the status shows, and Sonic Shock, Reboot Optics and Weapon Glitch
+  change what the target does.
+- Balance of Short Circuit and Contagion at the higher rolls. Contagion's cloud spares you and
+  anything guarded.
+- Open a gun shop and a netrunner vendor (Kabuki's, say), find a hack round, buy it.
+- Kill a netrunner and loot the body.
+- Craft a box with exactly 1 spare copy of its quickhack, and with several. One copy goes per box.
+
 ## Test kit (CET window)
 
 With the dev helpers installed (`tools/linux/dev-install.sh`), opening the CET overlay also opens
@@ -217,6 +230,9 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
   without touching the screen you're using (`--remove` puts the game back on a real monitor).
 - `tools/icons/check_parts.py`: every `UIIcon` part in the YAML has a cell in the built atlas,
   every Rare and up round has its part, and the cells fit the atlas without overlapping.
+- `quickhack.sh [part ...]`: quickhack rounds on live hits, one check per mechanism: effects, overheat,
+  ranks, guarded targets, the cloud, the grenade blast, NPC rolls, netrunner drops, no load sheet, hits
+  on V, shops, known recipes, crafting and breaking down.
 - `faction.sh [part ...]`: faction rounds on live hits, one check per mechanism: who rolls what and
   how often, the general lists stay clear of them, the turf shops' stock, stats on a gun, one gun's round not touching
   another, Reloads' roll, Redliners' jam both ways, a jam across a swap, Chrome-cookers on V,

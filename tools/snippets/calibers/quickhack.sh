@@ -118,9 +118,11 @@ cloud() {
   frail "RIG.npc()" 100.0
   neighbour AmmoOverhaul.HackCloud2
   lua "Game.GetGodModeSystem():AddGodMode($NB:GetEntityID(), gameGodModeType.Immortal, CName.new('AO_Test')); return 1" >/dev/null
+  clouds() { lua "local n = 0 for _ in string.gmatch($SYS:Trail(), 'hack blast') do n = n + 1 end return n"; }
+  local was blasts; was=$(clouds)
   for _ in 1 2 3 4; do lua "return RIG.fireV()" >/dev/null; sleep 0.4; done
   is "the cloud spares a quest NPC" "$(has "$NB" $poison)" false
-  local blasts; blasts=$(lua "local n = 0 for _ in string.gmatch($SYS:Trail(), 'hack blast') do n = n + 1 end return n")
+  blasts=$(( $(clouds) - was ))
   (( blasts >= 1 && blasts <= 4 )) && pass "4 shots make at most 4 clouds ($blasts)" || fail "clouds: $blasts from 4 shots"
   despawn
   lua "TweakDB:SetFlat('AmmoOverhaul.HackCloud2.range', 3.0); return 1" >/dev/null
@@ -133,11 +135,20 @@ grenade() {
   tanky "RIG.npc()"
   neighbour AmmoOverhaul.HackBlast
   tanky "$NB"
-  local a b c; a=$(health "$NB")
-  shoot "" 1
-  sleep 1.5
-  b=$(health "$NB"); c=$(health "RIG.npc()")
-  echo "  target to $c, neighbour $a to $b; blasts $(lua "local n = 0 for _ in string.gmatch($SYS:Trail(), 'hack blast') do n = n + 1 end return n"), hits $(lua "return #RIG.ratios('V')")"
+  blasts() { lua "local n = 0 for _ in string.gmatch($SYS:Trail(), 'hack blast') do n = n + 1 end return n"; }
+  local a b c was; a=$(health "$NB"); was=$(blasts)
+  # A shot can land without hurting anything and make no blast, so it's fired until one goes off.
+  for _ in 1 2 3 4; do
+    shoot "" 1
+    sleep 1
+    (( $(blasts) > was )) && break
+  done
+  for _ in $(seq 16); do
+    b=$(health "$NB"); c=$(health "RIG.npc()")
+    below "$b" 90 && below "$c" 90 && break
+    sleep 0.5
+  done
+  echo "  target to $c, neighbour $a to $b; blasts $(( $(blasts) - was )), hits $(lua "return #RIG.ratios('V')")"
   below "$c" 90 && pass "Detonate Grenade's blast hurts the target ($c)" || fail "no blast on the target: $c"
   below "$b" "$a" && pass "it reaches the neighbour" || fail "no blast damage on the neighbour: $a to $b"
   despawn
@@ -166,11 +177,19 @@ for _, it in ipairs(items) do if TDBID.ToStringDEBUG(it:GetID().id):find('_Hack'
   hackchance 1.0
   kit "{'$YUK', 1}, {'Ammo.AO_S10_Standard', 200}"
   draw $YUK; draw $YUK
-  spawn 0.0 "" Character.dtn_security_netrunner_netrunner2_lexington_ma_rare
-  setup $YUK
-  frail "RIG.npc()" 1.0
-  kill_npc; sleep 3.5
-  local n; n=$(dropped)
+  # V's shots sometimes do nothing to a fresh spawn, so one that never dies is spawned again.
+  local n dead
+  for _ in 1 2 3; do
+    spawn 0.0 "" Character.dtn_security_netrunner_netrunner2_lexington_ma_rare
+    setup $YUK
+    frail "RIG.npc()" 1.0
+    kill_npc; sleep 3.5
+    dead=$(lua "return tostring(RIG.npc():IsDead())")
+    [[ $dead == true ]] && break
+    despawn
+  done
+  [[ $dead == true ]] || fail "the netrunner never died"
+  n=$(dropped)
   (( n >= 10 )) && pass "a netrunner drops hack rounds ($n)" || fail "netrunner drop: $n"
   despawn
   spawn 0.0 "" $PLAIN

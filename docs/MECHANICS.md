@@ -117,6 +117,24 @@ Other ways vanilla adds blasts: `TriggerAttackEffector` sets off a separate atta
 - Hit flags: `Nonlethal` (target goes Unconscious instead of dying), `ForceKnockdown`,
   `ForceDismember`, `CriticalHit`, `BreachHit` (+0.25 pen).
 
+### Quickhack rounds
+
+A hit applies the status effect of that tier's own quickhack action, with no upload and no RAM.
+
+- **Tier differences** are in the effect records: `QuickHackBlindLvl1` to `QuickHackBlindLevel4`,
+  `OverloadLevel1` to `4`, and so on (spec for the full list). `Madness` runs 18 seconds; the top one,
+  `MandessLevel4`, 58, so the round uses `AmmoOverhaul.MadnessHack`, a 30 second copy.
+- **`SuicideWithGrenade` needs a grenade:** on an NPC with none it sits for 13 seconds and does nothing,
+  and `SuicideWithGrenadeDummy` applies nothing. Detonate Grenade rounds make a blast at the target.
+- **Contagion doesn't spread by itself.** The round's blast adds it to whoever it reaches.
+- **Netrunners:** an NPC is one when its record's `ArchetypeData` type is `NetrunnerT1`, `2` or `3`.
+- **Crafting from a program:** `CraftingSystem.CraftItem` takes a program ingredient a second time, up
+  to what V holds (5 held, 1 craft, 3 left). `Crafting.reds` gives back what went past the recipe's
+  cost, one at a time, since 2 given at once arrived as 1.
+- **Installed hacks** are deck parts and count 0 as inventory, so crafting can't take them.
+- **`GetMaxCraftingAmount` needs more than one batch's cost.** At exactly one batch it returns 0, and
+  the crafting screen refuses ammo at 0. `Crafting.reds` corrects it for hack rounds, not other ammo.
+
 ## Shooting
 
 - **Fire rate:** `CycleTime` is the time between shots (lower is faster), scaled by

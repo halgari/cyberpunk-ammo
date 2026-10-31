@@ -380,6 +380,19 @@ rounds; a Legendary stack is a quarter of the Epic one it replaces.
 
 The other twelve are for finding; the spec has them.
 
+### Built (quickhack rounds, 2026-10-31)
+
+117 rounds of 39 kinds, in 10mm, 20mm and 25mm, tier codes 10 to 13 (Uncommon to Legendary). Each is a
+quickhack on a smart round, named for the caliber and hack with the tag `[Hack]`. Spec:
+`docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md`.
+
+- Per shot: Uncommon 10%, Rare 15%, Epic 20%, Legendary 25%. Contagion, Short Circuit and Synapse
+  Burnout: 4%, 6%, 8%, 10%.
+- All four rarities: Reboot Optics, Sonic Shock, Contagion, Cyberware Malfunction, Short Circuit,
+  Cripple Movement, Overheat, Weapon Glitch.
+- Rare and up: Synapse Burnout. Epic and up: Cyberpsychosis, Detonate Grenade.
+- Each kind's three calibers share one icon: the rarity's cartridge, the Legendary's breach rig.
+
 ### Built (faction rounds, last eight, 2026-10-31)
 
 37 rounds, spec `docs/superpowers/specs/2026-10-31-faction-rounds-3-design.md`, which has the final

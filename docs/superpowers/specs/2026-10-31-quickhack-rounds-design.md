@@ -1,6 +1,6 @@
 # Quickhack rounds: design
 
-Date: 2026-10-31. Status: approved, probes done. Branch `quickhack-rounds`, on top of `faction-rounds-3`.
+Date: 2026-10-31. Status: built on branch `quickhack-rounds`, on top of `faction-rounds-3`, awaiting the user's feel test.
 
 Smart rounds that carry a quickhack. The hack's rarity sets the round's rarity, and crafting a box takes
 one copy of that quickhack. Shops sell them and NPCs carry and drop them. On V, an NPC's hack round is

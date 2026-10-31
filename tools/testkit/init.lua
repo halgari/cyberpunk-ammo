@@ -112,10 +112,11 @@ local function giveKit()
 end
 
 -- The field kit: a gun for every caliber with faction rounds, the 12-gauge pumps, and 60 of every
--- faction round with its selector, plus the Subsonic, Slug and Pump N Dump rounds.
+-- faction round with its selector, plus the Subsonic, Slug and Pump N Dump rounds, the Epic hack
+-- rounds (every hack has one) and 5 copies of each Epic quickhack to craft them.
 local FIELD_GUNS = { "Lexington", "Unity", "Nova", "Copperhead", "Ajax", "Crusher", "Tactician", "Igla", "Pozhar",
   "Testera", "Carnage", "Omaha", "Burya", "Yukimura", "Zhuo", "Ashura", "Grad" }
-local FIELD_EXTRAS = { "_Subsonic$", "AO_12ga_Slug$", "_PumpNDump$" }
+local FIELD_EXTRAS = { "_Subsonic$", "AO_12ga_Slug$", "_PumpNDump$", "_Hack%a+3$" }
 
 local function isFieldRound(ammo)
   local ok, faction = pcall(TweakDB.GetFlat, TweakDB, ammo .. ".aoFaction")
@@ -134,6 +135,10 @@ local function giveFieldKit()
       if isFieldRound(round) then
         Game.AddToInventory(TDBID.ToStringDEBUG(s), 1)
         Game.AddToInventory(round, 60)
+        local ok, program = pcall(TweakDB.GetFlat, TweakDB, round .. ".aoHackProgram")
+        if ok and program ~= nil and program ~= "" then
+          for _ = 1, 5 do Game.AddToInventory(program, 1) end
+        end
         n = n + 1
       end
     end

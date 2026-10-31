@@ -5,7 +5,16 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
 
 ## Unreleased
 
-- Faction rounds: 88 new rounds, 237 in all. Maelstrom, Scavengers, Arasaka, Tyger Claws, Valentinos,
+- Quickhack rounds: 117 new rounds, 354 in all. Smart rounds in 10mm, 20mm and 25mm that carry a
+  quickhack, with a chance per shot to land it with no upload and no RAM: Reboot Optics, Sonic Shock,
+  Contagion, Cyberware Malfunction, Short Circuit, Cripple Movement, Overheat, Weapon Glitch, Synapse
+  Burnout, Cyberpsychosis and Detonate Grenade. The hack's rarity is the round's, marked [Hack] in the
+  name, and the chance goes up with it: 10%, 15%, 20% and 25%, or 4%, 6%, 8% and 10% for Contagion,
+  Short Circuit and Synapse Burnout. Gun shops stock them up to Rare and netrunner vendors up to Epic.
+  NPCs with smart guns carry them, and netrunners drop them. The recipes are known from the start: a
+  box takes one spare copy of the quickhack plus Smart components. Breaking a box down gives
+  components only. An NPC's hack round is a plain smart round when it hits you.
+- Faction rounds: 88 new rounds. Maelstrom, Scavengers, Arasaka, Tyger Claws, Valentinos,
   6th Street, Militech, the Animals, Barghest, Voodoo Boys, Wraiths, Aldecaldos, the Mox, NCPD, Kang
   Tao and NUSA each have their own, in their own packaging, marked in the name: [Mael], [Scav], [Ara],
   [Tyger], [Val], [6th], [Mil], [Animal], [Barghest], [VDB], [Wraith], [Nomad], [Mox], [NCPD], [Kang]
