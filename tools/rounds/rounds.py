@@ -29,13 +29,17 @@ RARE, EPIC, LEGENDARY = 2, 3, 4
 # between them is its tier= in KINDS and a run of this file and tools/crafting/crafting.py; quality,
 # price, disassembly and the NPC roll follow (test_rounds.py's SPEC holds the list to check against).
 FACTION_RARE, FACTION_EPIC, FACTION_COMMON, FACTION_UNCOMMON, FACTION_LEGENDARY = 5, 6, 7, 8, 9
+# Quickhack rounds likewise (docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md): HackRounds.reds
+# rolls them, and tools/crafting/crafting.py makes them from the quickhack.
+HACK_UNCOMMON, HACK_RARE, HACK_EPIC, HACK_LEGENDARY = 10, 11, 12, 13
 QUALITY = {RARE: "Rare", EPIC: "Epic", LEGENDARY: "Legendary",
            FACTION_RARE: "Rare", FACTION_EPIC: "Epic", FACTION_COMMON: "Common", FACTION_UNCOMMON: "Uncommon",
-           FACTION_LEGENDARY: "Legendary"}
+           FACTION_LEGENDARY: "Legendary", HACK_UNCOMMON: "Uncommon", HACK_RARE: "Rare", HACK_EPIC: "Epic",
+           HACK_LEGENDARY: "Legendary"}
 # Price on top of the base ammo (the caliber's plain Uncommon, already x2 of Common): Rare x4, Epic x8,
 # Legendary x16; faction rounds as their quality, except the faction Common, half the Common round.
 PRICE = {RARE: 2, EPIC: 4, LEGENDARY: 8, FACTION_RARE: 2, FACTION_EPIC: 4, FACTION_COMMON: 0.25, FACTION_UNCOMMON: 1,
-         FACTION_LEGENDARY: 8}
+         FACTION_LEGENDARY: 8, HACK_UNCOMMON: 1, HACK_RARE: 2, HACK_EPIC: 4, HACK_LEGENDARY: 8}
 # The short tag at the end of a faction round's name.
 FACTION_TAG = {"Maelstrom": "[Mael]", "Scavengers": "[Scav]", "Arasaka": "[Ara]", "TygerClaws": "[Tyger]",
                "Valentinos": "[Val]", "SixthStreet": "[6th]", "Militech": "[Mil]", "Animals": "[Animal]", "Barghest": "[Barghest]",
@@ -635,6 +639,64 @@ KINDS = [
 ]
 
 
+def hack_tiers(uncommon, stem, effect_stem, levels=("Level2", "Level3", "Level4"), first=None):
+    """(rarity, program, effect) from Uncommon up: the program records and effects run in step."""
+    tiers = [(1, uncommon, "BaseStatusEffect." + (first or effect_stem))]
+    tiers += [(n + 2, f"{stem}Lvl{n + 2}Program", f"BaseStatusEffect.{effect_stem}{lv}") for n, lv in enumerate(levels)]
+    return tiers
+
+
+LVL = ("Lvl2", "Lvl3", "Lvl4")
+# Name, title, verb, the rarer the harder it hits so it rolls less, and the rarities the game has.
+HACKS = [
+    ("Optics", "Reboot Optics", "blind the target", False,
+     hack_tiers("BlindLvl1Program", "Blind", "QuickHackBlind", first="QuickHackBlindLvl1")),
+    ("Sonic", "Sonic Shock", "deafen the target", False, hack_tiers("CommsNoiseProgram", "CommsNoise", "CommsNoise")),
+    ("Contagion", "Contagion", "poison the target and whoever's close", True,
+     hack_tiers("ContagionProgram", "Contagion", "ContagionPoison", LVL)),
+    ("Cyberware", "Cyberware Malfunction", "make the target's cyberware fail", False,
+     hack_tiers("DisableCyberwareProgram", "DisableCyberware", "CyberwareMalfunction", LVL, "CyberwareMalfunctionLvl1")),
+    ("Short", "Short Circuit", "overload the target's systems", True,
+     hack_tiers("EMPOverloadLvl1Program", "EMPOverload", "OverloadLevel", ("2", "3", "4"), "OverloadLevel1")),
+    ("Cripple", "Cripple Movement", "cripple the target's legs", False,
+     hack_tiers("LocomotionMalfunctionProgram", "LocomotionMalfunction", "LocomotionMalfunction")),
+    ("Overheat", "Overheat", "burn the target", False,
+     hack_tiers("OverheatLvl1Program", "Overheat", "OverheatLevel", ("2", "3", "4"), "OverheatLevel1")),
+    ("Glitch", "Weapon Glitch", "jam the target's weapon", False,
+     hack_tiers("WeaponMalfunctionProgram", "WeaponMalfunction", "WeaponMalfunction", LVL)),
+    ("Burnout", "Synapse Burnout", "burn out the target's brain", True,
+     hack_tiers("", "BrainMelt", "BrainMeltLevel", ("2", "3", "4"))[1:]),
+    ("Psycho", "Cyberpsychosis", "drive the target mad", False,
+     [(3, "MadnessLvl3Program", "BaseStatusEffect.Madness"), (4, "MadnessLvl4Program", "AmmoOverhaul.MadnessHack")]),
+    ("Grenade", "Detonate Grenade", "blow up the target", False,
+     [(3, "GrenadeExplodeLvl3Program", "BaseStatusEffect.WasQuickHacked"),
+      (4, "GrenadeExplodeLvl4Program", "BaseStatusEffect.WasQuickHacked")]),
+]
+HACK_CHANCE = {1: 0.10, 2: 0.15, 3: 0.20, 4: 0.25}
+HACK_HARD_CHANCE = {1: 0.04, 2: 0.06, 3: 0.08, 4: 0.10}
+HACK_BLAST = {"HackGrenade3": "AmmoOverhaul.HackBlast", "HackGrenade4": "AmmoOverhaul.HackBlastBig",
+              **{f"HackContagion{n}": f"AmmoOverhaul.HackCloud{n}" for n in (1, 2, 3, 4)}}
+
+
+def hack_kinds():
+    kinds = []
+    for name, label, verb, hard, tiers in HACKS:
+        for n, program, effect in tiers:
+            chance = (HACK_HARD_CHANCE if hard else HACK_CHANCE)[n]
+            load = f"Hack{name}{n}"
+            rank = dict(effect=effect, chance=chance, tough_from="Boss" if name == "Psycho" else "Never")
+            if load in HACK_BLAST:
+                rank["blast"] = HACK_BLAST[load]
+            kinds.append(dict(load=load, title=label, tier=HACK_UNCOMMON + n - 1, hack=True, program=f"Items.{program}",
+                              look=((30, 34, 40), (40, 170, 190)), art={}, calibers=["10mm", "20mm", "25mm"], stats=[],
+                              hit=dict(rank=rank),
+                              desc=f"Carries a {label} payload.\n\n{round(chance * 100)}% chance per shot to {verb}."))
+    return kinds
+
+
+KINDS += hack_kinds()
+
+
 # --- Output -----------------------------------------------------------------------------------
 
 def fmt(v):
@@ -661,14 +723,19 @@ def rounds():
 def ids(tag, k):
     c = CALIBERS[tag]
     load = k["load"]
+    # Hack rounds share one icon across the three calibers.
+    hack = k.get("hack")
     return dict(ammo=f"Ammo.AO_{c['ammo']}_{load}", sel=f"Items.AO_Feed_{c['sel']}_{load}",
-                icon=f"AO_{c['loc']}_{load}", part=f"ao_{c['loc'].lower()}_{load.lower()}",
-                art=f"{c['loc'].lower()}-{load.lower()}", name=f"AO-Ammo-{c['loc']}-{load}",
-                desc=desc_key(tag, k))
+                icon=f"AO_{load}" if hack else f"AO_{c['loc']}_{load}",
+                part=f"ao_{load.lower()}" if hack else f"ao_{c['loc'].lower()}_{load.lower()}",
+                art=f"hack-{load.lower()}" if hack else f"{c['loc'].lower()}-{load.lower()}",
+                name=f"AO-Ammo-{c['loc']}-{load}", desc=desc_key(tag, k))
 
 
 def title(tag, k):
     name = (CALIBERS[tag]["name"] + " " + k["title"]).strip()
+    if k.get("hack"):
+        return f"{name} [Hack]"
     return f"{name} {FACTION_TAG[k['faction']]}" if k.get("faction") else name
 
 
@@ -738,6 +805,8 @@ def round_yaml(tag, k):
         flats.append(("aoLegChance", fmt(float(hit["legs"]))))
     if hit.get("pumped"):
         flats.append(("aoPumped", "true"))
+    if k.get("program"):
+        flats.append(("aoHackProgram", f'"{k["program"]}"'))
     if hit.get("eddies"):
         flats.append(("aoEddies", "true"))
     if hit.get("npc_blast"):
@@ -753,7 +822,10 @@ def round_yaml(tag, k):
         flats.append(("aoRankEffect", f'"{rank["effect"]}"'))
         flats.append(("aoRankChance", fmt(float(rank["chance"]))))
         flats.append(("aoRankToughFrom", f'"{rank["tough_from"]}"'))
-        flats.append(("aoRankPlayer", f'"{rank["player"]}"'))
+        if rank.get("player"):
+            flats.append(("aoRankPlayer", f'"{rank["player"]}"'))
+        if rank.get("blast"):
+            flats.append(("aoRankBlast", f'"{rank["blast"]}"'))
     if rank.get("tough"):
         flats.append(("aoRankTough", f'"{rank["tough"]}"'))
     if rank.get("delay"):
@@ -762,8 +834,9 @@ def round_yaml(tag, k):
         y += f"{i['ammo']}.{name}: {v}\n"
     if flats:
         y += "\n"
-    y += (f"UIIcon.{i['icon']}:\n  $type: UIIcon\n  atlasPartName: {i['part']}\n"
-          f"  atlasResourcePath: ammooverhaul\\icons\\ao_ammo_icons.inkatlas\n\n")
+    if not k.get("hack") or tag == k["calibers"][0]:
+        y += (f"UIIcon.{i['icon']}:\n  $type: UIIcon\n  atlasPartName: {i['part']}\n"
+              f"  atlasResourcePath: ammooverhaul\\icons\\ao_ammo_icons.inkatlas\n\n")
     y += (f"{i['sel']}:\n  $base: {c['base_sel']}\n  displayName: LocKey#{i['name']}\n"
           f"  localizedDescription: LocKey#{i['desc']}\n  iconPath: {i['icon']}\n  quality: Quality.{q}\n")
     if k["stats"]:
@@ -856,7 +929,9 @@ def write_refs(all_rounds):
         refs.update("BaseStats." + m[3] for m in k["stats"] if len(m) > 3)
         refs.update(e for e, _ in k.get("hit", {}).get("effects", []))
         rank = k.get("hit", {}).get("rank", {})
-        refs.update(rank[f] for f in ("effect", "tough", "player") if f in rank)
+        refs.update(rank[f] for f in ("effect", "tough", "player", "blast") if f in rank)
+        if k.get("program"):
+            refs.add(k["program"])
         if k.get("attack_package"):
             refs.add(k["attack_package"])
         refs.update(k.get("hit", {})[f] for f in ("npc_blast", "effect_blast") if f in k.get("hit", {}))

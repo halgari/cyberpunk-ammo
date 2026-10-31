@@ -8,9 +8,9 @@ AmmoOverhaul.Smart_25.feedElement: "Items.AO_AmmoFeed_Smart_25_Element"
 AmmoOverhaul.Smart_25.defaultAmmo: "Ammo.AO_S25_Standard"
 AmmoOverhaul.Smart_25.vanillaAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Smart_25.lootWeight: 0.1
-AmmoOverhaul.Smart_25.selectors: ["Items.AO_Feed_25mm_Seekers", "Items.AO_Feed_25mm_Dumbfires", "Items.AO_Feed_25mm_ShortFuse", "Items.AO_Feed_25mm_EMPPayload", "Items.AO_Feed_25mm_FirePayload", "Items.AO_Feed_25mm_ChemPayload", "Items.AO_Feed_25mm_FlashPayload", "Items.AO_Feed_25mm_Hunter", "Items.AO_Feed_25mm_HackCarrier", "Items.AO_Feed_25mm_ShapedCharge", "Items.AO_Feed_25mm_Lockout", "Items.AO_Feed_25mm_Kansatsu", "Items.AO_Feed_25mm_SecondOpinion"]
-AmmoOverhaul.Smart_25.selectorAmmo: ["Ammo.AO_S25_Standard", "Ammo.AO_S25_Dumbfire", "Ammo.AO_S25_ShortFuse", "Ammo.AO_S25_EMPPayload", "Ammo.AO_S25_FirePayload", "Ammo.AO_S25_ChemPayload", "Ammo.AO_S25_FlashPayload", "Ammo.AO_S25_Hunter", "Ammo.AO_S25_HackCarrier", "Ammo.AO_S25_ShapedCharge", "Ammo.AO_S25_Lockout", "Ammo.AO_S25_Kansatsu", "Ammo.AO_S25_SecondOpinion"]
-AmmoOverhaul.Smart_25.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 6, 6]
+AmmoOverhaul.Smart_25.selectors: ["Items.AO_Feed_25mm_Seekers", "Items.AO_Feed_25mm_Dumbfires", "Items.AO_Feed_25mm_ShortFuse", "Items.AO_Feed_25mm_EMPPayload", "Items.AO_Feed_25mm_FirePayload", "Items.AO_Feed_25mm_ChemPayload", "Items.AO_Feed_25mm_FlashPayload", "Items.AO_Feed_25mm_Hunter", "Items.AO_Feed_25mm_HackCarrier", "Items.AO_Feed_25mm_ShapedCharge", "Items.AO_Feed_25mm_Lockout", "Items.AO_Feed_25mm_Kansatsu", "Items.AO_Feed_25mm_SecondOpinion", "Items.AO_Feed_25mm_HackOptics1", "Items.AO_Feed_25mm_HackOptics2", "Items.AO_Feed_25mm_HackOptics3", "Items.AO_Feed_25mm_HackOptics4", "Items.AO_Feed_25mm_HackSonic1", "Items.AO_Feed_25mm_HackSonic2", "Items.AO_Feed_25mm_HackSonic3", "Items.AO_Feed_25mm_HackSonic4", "Items.AO_Feed_25mm_HackContagion1", "Items.AO_Feed_25mm_HackContagion2", "Items.AO_Feed_25mm_HackContagion3", "Items.AO_Feed_25mm_HackContagion4", "Items.AO_Feed_25mm_HackCyberware1", "Items.AO_Feed_25mm_HackCyberware2", "Items.AO_Feed_25mm_HackCyberware3", "Items.AO_Feed_25mm_HackCyberware4", "Items.AO_Feed_25mm_HackShort1", "Items.AO_Feed_25mm_HackShort2", "Items.AO_Feed_25mm_HackShort3", "Items.AO_Feed_25mm_HackShort4", "Items.AO_Feed_25mm_HackCripple1", "Items.AO_Feed_25mm_HackCripple2", "Items.AO_Feed_25mm_HackCripple3", "Items.AO_Feed_25mm_HackCripple4", "Items.AO_Feed_25mm_HackOverheat1", "Items.AO_Feed_25mm_HackOverheat2", "Items.AO_Feed_25mm_HackOverheat3", "Items.AO_Feed_25mm_HackOverheat4", "Items.AO_Feed_25mm_HackGlitch1", "Items.AO_Feed_25mm_HackGlitch2", "Items.AO_Feed_25mm_HackGlitch3", "Items.AO_Feed_25mm_HackGlitch4", "Items.AO_Feed_25mm_HackBurnout2", "Items.AO_Feed_25mm_HackBurnout3", "Items.AO_Feed_25mm_HackBurnout4", "Items.AO_Feed_25mm_HackPsycho3", "Items.AO_Feed_25mm_HackPsycho4", "Items.AO_Feed_25mm_HackGrenade3", "Items.AO_Feed_25mm_HackGrenade4"]
+AmmoOverhaul.Smart_25.selectorAmmo: ["Ammo.AO_S25_Standard", "Ammo.AO_S25_Dumbfire", "Ammo.AO_S25_ShortFuse", "Ammo.AO_S25_EMPPayload", "Ammo.AO_S25_FirePayload", "Ammo.AO_S25_ChemPayload", "Ammo.AO_S25_FlashPayload", "Ammo.AO_S25_Hunter", "Ammo.AO_S25_HackCarrier", "Ammo.AO_S25_ShapedCharge", "Ammo.AO_S25_Lockout", "Ammo.AO_S25_Kansatsu", "Ammo.AO_S25_SecondOpinion", "Ammo.AO_S25_HackOptics1", "Ammo.AO_S25_HackOptics2", "Ammo.AO_S25_HackOptics3", "Ammo.AO_S25_HackOptics4", "Ammo.AO_S25_HackSonic1", "Ammo.AO_S25_HackSonic2", "Ammo.AO_S25_HackSonic3", "Ammo.AO_S25_HackSonic4", "Ammo.AO_S25_HackContagion1", "Ammo.AO_S25_HackContagion2", "Ammo.AO_S25_HackContagion3", "Ammo.AO_S25_HackContagion4", "Ammo.AO_S25_HackCyberware1", "Ammo.AO_S25_HackCyberware2", "Ammo.AO_S25_HackCyberware3", "Ammo.AO_S25_HackCyberware4", "Ammo.AO_S25_HackShort1", "Ammo.AO_S25_HackShort2", "Ammo.AO_S25_HackShort3", "Ammo.AO_S25_HackShort4", "Ammo.AO_S25_HackCripple1", "Ammo.AO_S25_HackCripple2", "Ammo.AO_S25_HackCripple3", "Ammo.AO_S25_HackCripple4", "Ammo.AO_S25_HackOverheat1", "Ammo.AO_S25_HackOverheat2", "Ammo.AO_S25_HackOverheat3", "Ammo.AO_S25_HackOverheat4", "Ammo.AO_S25_HackGlitch1", "Ammo.AO_S25_HackGlitch2", "Ammo.AO_S25_HackGlitch3", "Ammo.AO_S25_HackGlitch4", "Ammo.AO_S25_HackBurnout2", "Ammo.AO_S25_HackBurnout3", "Ammo.AO_S25_HackBurnout4", "Ammo.AO_S25_HackPsycho3", "Ammo.AO_S25_HackPsycho4", "Ammo.AO_S25_HackGrenade3", "Ammo.AO_S25_HackGrenade4"]
+AmmoOverhaul.Smart_25.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 6, 6, 10, 11, 12, 13, 10, 11, 12, 13, 10, 11, 12, 13, 10, 11, 12, 13, 10, 11, 12, 13, 10, 11, 12, 13, 10, 11, 12, 13, 10, 11, 12, 13, 11, 12, 13, 12, 13, 12, 13]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Smart_25.craftBatch: 10
 
@@ -625,6 +625,1338 @@ Items.AO_Feed_25mm_SecondOpinion:
       statType: BaseStats.SmartGunAdsMaxLockedTargets
       modifierType: Additive
       value: 2
+
+# 25mm Reboot Optics [Hack] (Uncommon)
+Ammo.AO_S25_HackOptics1:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-25mm-HackOptics1
+  localizedDescription: LocKey#AO-Ammo-HackOptics1-Desc
+  iconPath: AO_HackOptics1
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_10, AO_Family_Smart]
+
+Ammo.AO_S25_HackOptics1.aoHackProgram: "Items.BlindLvl1Program"
+Ammo.AO_S25_HackOptics1.aoRankEffect: "BaseStatusEffect.QuickHackBlindLvl1"
+Ammo.AO_S25_HackOptics1.aoRankChance: 0.1
+Ammo.AO_S25_HackOptics1.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackOptics1:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackOptics1
+  localizedDescription: LocKey#AO-Ammo-HackOptics1-Desc
+  iconPath: AO_HackOptics1
+  quality: Quality.Uncommon
+
+# 25mm Reboot Optics [Hack] (Rare)
+Ammo.AO_S25_HackOptics2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackOptics2
+  localizedDescription: LocKey#AO-Ammo-HackOptics2-Desc
+  iconPath: AO_HackOptics2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackOptics2.aoHackProgram: "Items.BlindLvl2Program"
+Ammo.AO_S25_HackOptics2.aoRankEffect: "BaseStatusEffect.QuickHackBlindLevel2"
+Ammo.AO_S25_HackOptics2.aoRankChance: 0.15
+Ammo.AO_S25_HackOptics2.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackOptics2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackOptics2
+  localizedDescription: LocKey#AO-Ammo-HackOptics2-Desc
+  iconPath: AO_HackOptics2
+  quality: Quality.Rare
+
+# 25mm Reboot Optics [Hack] (Epic)
+Ammo.AO_S25_HackOptics3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackOptics3
+  localizedDescription: LocKey#AO-Ammo-HackOptics3-Desc
+  iconPath: AO_HackOptics3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackOptics3.aoHackProgram: "Items.BlindLvl3Program"
+Ammo.AO_S25_HackOptics3.aoRankEffect: "BaseStatusEffect.QuickHackBlindLevel3"
+Ammo.AO_S25_HackOptics3.aoRankChance: 0.2
+Ammo.AO_S25_HackOptics3.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackOptics3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackOptics3
+  localizedDescription: LocKey#AO-Ammo-HackOptics3-Desc
+  iconPath: AO_HackOptics3
+  quality: Quality.Epic
+
+# 25mm Reboot Optics [Hack] (Legendary)
+Ammo.AO_S25_HackOptics4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackOptics4
+  localizedDescription: LocKey#AO-Ammo-HackOptics4-Desc
+  iconPath: AO_HackOptics4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackOptics4.aoHackProgram: "Items.BlindLvl4Program"
+Ammo.AO_S25_HackOptics4.aoRankEffect: "BaseStatusEffect.QuickHackBlindLevel4"
+Ammo.AO_S25_HackOptics4.aoRankChance: 0.25
+Ammo.AO_S25_HackOptics4.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackOptics4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackOptics4
+  localizedDescription: LocKey#AO-Ammo-HackOptics4-Desc
+  iconPath: AO_HackOptics4
+  quality: Quality.Legendary
+
+# 25mm Sonic Shock [Hack] (Uncommon)
+Ammo.AO_S25_HackSonic1:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-25mm-HackSonic1
+  localizedDescription: LocKey#AO-Ammo-HackSonic1-Desc
+  iconPath: AO_HackSonic1
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_10, AO_Family_Smart]
+
+Ammo.AO_S25_HackSonic1.aoHackProgram: "Items.CommsNoiseProgram"
+Ammo.AO_S25_HackSonic1.aoRankEffect: "BaseStatusEffect.CommsNoise"
+Ammo.AO_S25_HackSonic1.aoRankChance: 0.1
+Ammo.AO_S25_HackSonic1.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackSonic1:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackSonic1
+  localizedDescription: LocKey#AO-Ammo-HackSonic1-Desc
+  iconPath: AO_HackSonic1
+  quality: Quality.Uncommon
+
+# 25mm Sonic Shock [Hack] (Rare)
+Ammo.AO_S25_HackSonic2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackSonic2
+  localizedDescription: LocKey#AO-Ammo-HackSonic2-Desc
+  iconPath: AO_HackSonic2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackSonic2.aoHackProgram: "Items.CommsNoiseLvl2Program"
+Ammo.AO_S25_HackSonic2.aoRankEffect: "BaseStatusEffect.CommsNoiseLevel2"
+Ammo.AO_S25_HackSonic2.aoRankChance: 0.15
+Ammo.AO_S25_HackSonic2.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackSonic2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackSonic2
+  localizedDescription: LocKey#AO-Ammo-HackSonic2-Desc
+  iconPath: AO_HackSonic2
+  quality: Quality.Rare
+
+# 25mm Sonic Shock [Hack] (Epic)
+Ammo.AO_S25_HackSonic3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackSonic3
+  localizedDescription: LocKey#AO-Ammo-HackSonic3-Desc
+  iconPath: AO_HackSonic3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackSonic3.aoHackProgram: "Items.CommsNoiseLvl3Program"
+Ammo.AO_S25_HackSonic3.aoRankEffect: "BaseStatusEffect.CommsNoiseLevel3"
+Ammo.AO_S25_HackSonic3.aoRankChance: 0.2
+Ammo.AO_S25_HackSonic3.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackSonic3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackSonic3
+  localizedDescription: LocKey#AO-Ammo-HackSonic3-Desc
+  iconPath: AO_HackSonic3
+  quality: Quality.Epic
+
+# 25mm Sonic Shock [Hack] (Legendary)
+Ammo.AO_S25_HackSonic4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackSonic4
+  localizedDescription: LocKey#AO-Ammo-HackSonic4-Desc
+  iconPath: AO_HackSonic4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackSonic4.aoHackProgram: "Items.CommsNoiseLvl4Program"
+Ammo.AO_S25_HackSonic4.aoRankEffect: "BaseStatusEffect.CommsNoiseLevel4"
+Ammo.AO_S25_HackSonic4.aoRankChance: 0.25
+Ammo.AO_S25_HackSonic4.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackSonic4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackSonic4
+  localizedDescription: LocKey#AO-Ammo-HackSonic4-Desc
+  iconPath: AO_HackSonic4
+  quality: Quality.Legendary
+
+# 25mm Contagion [Hack] (Uncommon)
+Ammo.AO_S25_HackContagion1:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-25mm-HackContagion1
+  localizedDescription: LocKey#AO-Ammo-HackContagion1-Desc
+  iconPath: AO_HackContagion1
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_10, AO_Family_Smart]
+
+Ammo.AO_S25_HackContagion1.aoHackProgram: "Items.ContagionProgram"
+Ammo.AO_S25_HackContagion1.aoRankEffect: "BaseStatusEffect.ContagionPoison"
+Ammo.AO_S25_HackContagion1.aoRankChance: 0.04
+Ammo.AO_S25_HackContagion1.aoRankToughFrom: "Never"
+Ammo.AO_S25_HackContagion1.aoRankBlast: "AmmoOverhaul.HackCloud1"
+
+Items.AO_Feed_25mm_HackContagion1:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackContagion1
+  localizedDescription: LocKey#AO-Ammo-HackContagion1-Desc
+  iconPath: AO_HackContagion1
+  quality: Quality.Uncommon
+
+# 25mm Contagion [Hack] (Rare)
+Ammo.AO_S25_HackContagion2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackContagion2
+  localizedDescription: LocKey#AO-Ammo-HackContagion2-Desc
+  iconPath: AO_HackContagion2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackContagion2.aoHackProgram: "Items.ContagionLvl2Program"
+Ammo.AO_S25_HackContagion2.aoRankEffect: "BaseStatusEffect.ContagionPoisonLvl2"
+Ammo.AO_S25_HackContagion2.aoRankChance: 0.06
+Ammo.AO_S25_HackContagion2.aoRankToughFrom: "Never"
+Ammo.AO_S25_HackContagion2.aoRankBlast: "AmmoOverhaul.HackCloud2"
+
+Items.AO_Feed_25mm_HackContagion2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackContagion2
+  localizedDescription: LocKey#AO-Ammo-HackContagion2-Desc
+  iconPath: AO_HackContagion2
+  quality: Quality.Rare
+
+# 25mm Contagion [Hack] (Epic)
+Ammo.AO_S25_HackContagion3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackContagion3
+  localizedDescription: LocKey#AO-Ammo-HackContagion3-Desc
+  iconPath: AO_HackContagion3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackContagion3.aoHackProgram: "Items.ContagionLvl3Program"
+Ammo.AO_S25_HackContagion3.aoRankEffect: "BaseStatusEffect.ContagionPoisonLvl3"
+Ammo.AO_S25_HackContagion3.aoRankChance: 0.08
+Ammo.AO_S25_HackContagion3.aoRankToughFrom: "Never"
+Ammo.AO_S25_HackContagion3.aoRankBlast: "AmmoOverhaul.HackCloud3"
+
+Items.AO_Feed_25mm_HackContagion3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackContagion3
+  localizedDescription: LocKey#AO-Ammo-HackContagion3-Desc
+  iconPath: AO_HackContagion3
+  quality: Quality.Epic
+
+# 25mm Contagion [Hack] (Legendary)
+Ammo.AO_S25_HackContagion4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackContagion4
+  localizedDescription: LocKey#AO-Ammo-HackContagion4-Desc
+  iconPath: AO_HackContagion4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackContagion4.aoHackProgram: "Items.ContagionLvl4Program"
+Ammo.AO_S25_HackContagion4.aoRankEffect: "BaseStatusEffect.ContagionPoisonLvl4"
+Ammo.AO_S25_HackContagion4.aoRankChance: 0.1
+Ammo.AO_S25_HackContagion4.aoRankToughFrom: "Never"
+Ammo.AO_S25_HackContagion4.aoRankBlast: "AmmoOverhaul.HackCloud4"
+
+Items.AO_Feed_25mm_HackContagion4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackContagion4
+  localizedDescription: LocKey#AO-Ammo-HackContagion4-Desc
+  iconPath: AO_HackContagion4
+  quality: Quality.Legendary
+
+# 25mm Cyberware Malfunction [Hack] (Uncommon)
+Ammo.AO_S25_HackCyberware1:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-25mm-HackCyberware1
+  localizedDescription: LocKey#AO-Ammo-HackCyberware1-Desc
+  iconPath: AO_HackCyberware1
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_10, AO_Family_Smart]
+
+Ammo.AO_S25_HackCyberware1.aoHackProgram: "Items.DisableCyberwareProgram"
+Ammo.AO_S25_HackCyberware1.aoRankEffect: "BaseStatusEffect.CyberwareMalfunctionLvl1"
+Ammo.AO_S25_HackCyberware1.aoRankChance: 0.1
+Ammo.AO_S25_HackCyberware1.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackCyberware1:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackCyberware1
+  localizedDescription: LocKey#AO-Ammo-HackCyberware1-Desc
+  iconPath: AO_HackCyberware1
+  quality: Quality.Uncommon
+
+# 25mm Cyberware Malfunction [Hack] (Rare)
+Ammo.AO_S25_HackCyberware2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackCyberware2
+  localizedDescription: LocKey#AO-Ammo-HackCyberware2-Desc
+  iconPath: AO_HackCyberware2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackCyberware2.aoHackProgram: "Items.DisableCyberwareLvl2Program"
+Ammo.AO_S25_HackCyberware2.aoRankEffect: "BaseStatusEffect.CyberwareMalfunctionLvl2"
+Ammo.AO_S25_HackCyberware2.aoRankChance: 0.15
+Ammo.AO_S25_HackCyberware2.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackCyberware2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackCyberware2
+  localizedDescription: LocKey#AO-Ammo-HackCyberware2-Desc
+  iconPath: AO_HackCyberware2
+  quality: Quality.Rare
+
+# 25mm Cyberware Malfunction [Hack] (Epic)
+Ammo.AO_S25_HackCyberware3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackCyberware3
+  localizedDescription: LocKey#AO-Ammo-HackCyberware3-Desc
+  iconPath: AO_HackCyberware3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackCyberware3.aoHackProgram: "Items.DisableCyberwareLvl3Program"
+Ammo.AO_S25_HackCyberware3.aoRankEffect: "BaseStatusEffect.CyberwareMalfunctionLvl3"
+Ammo.AO_S25_HackCyberware3.aoRankChance: 0.2
+Ammo.AO_S25_HackCyberware3.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackCyberware3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackCyberware3
+  localizedDescription: LocKey#AO-Ammo-HackCyberware3-Desc
+  iconPath: AO_HackCyberware3
+  quality: Quality.Epic
+
+# 25mm Cyberware Malfunction [Hack] (Legendary)
+Ammo.AO_S25_HackCyberware4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackCyberware4
+  localizedDescription: LocKey#AO-Ammo-HackCyberware4-Desc
+  iconPath: AO_HackCyberware4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackCyberware4.aoHackProgram: "Items.DisableCyberwareLvl4Program"
+Ammo.AO_S25_HackCyberware4.aoRankEffect: "BaseStatusEffect.CyberwareMalfunctionLvl4"
+Ammo.AO_S25_HackCyberware4.aoRankChance: 0.25
+Ammo.AO_S25_HackCyberware4.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackCyberware4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackCyberware4
+  localizedDescription: LocKey#AO-Ammo-HackCyberware4-Desc
+  iconPath: AO_HackCyberware4
+  quality: Quality.Legendary
+
+# 25mm Short Circuit [Hack] (Uncommon)
+Ammo.AO_S25_HackShort1:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-25mm-HackShort1
+  localizedDescription: LocKey#AO-Ammo-HackShort1-Desc
+  iconPath: AO_HackShort1
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_10, AO_Family_Smart]
+
+Ammo.AO_S25_HackShort1.aoHackProgram: "Items.EMPOverloadLvl1Program"
+Ammo.AO_S25_HackShort1.aoRankEffect: "BaseStatusEffect.OverloadLevel1"
+Ammo.AO_S25_HackShort1.aoRankChance: 0.04
+Ammo.AO_S25_HackShort1.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackShort1:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackShort1
+  localizedDescription: LocKey#AO-Ammo-HackShort1-Desc
+  iconPath: AO_HackShort1
+  quality: Quality.Uncommon
+
+# 25mm Short Circuit [Hack] (Rare)
+Ammo.AO_S25_HackShort2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackShort2
+  localizedDescription: LocKey#AO-Ammo-HackShort2-Desc
+  iconPath: AO_HackShort2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackShort2.aoHackProgram: "Items.EMPOverloadLvl2Program"
+Ammo.AO_S25_HackShort2.aoRankEffect: "BaseStatusEffect.OverloadLevel2"
+Ammo.AO_S25_HackShort2.aoRankChance: 0.06
+Ammo.AO_S25_HackShort2.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackShort2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackShort2
+  localizedDescription: LocKey#AO-Ammo-HackShort2-Desc
+  iconPath: AO_HackShort2
+  quality: Quality.Rare
+
+# 25mm Short Circuit [Hack] (Epic)
+Ammo.AO_S25_HackShort3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackShort3
+  localizedDescription: LocKey#AO-Ammo-HackShort3-Desc
+  iconPath: AO_HackShort3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackShort3.aoHackProgram: "Items.EMPOverloadLvl3Program"
+Ammo.AO_S25_HackShort3.aoRankEffect: "BaseStatusEffect.OverloadLevel3"
+Ammo.AO_S25_HackShort3.aoRankChance: 0.08
+Ammo.AO_S25_HackShort3.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackShort3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackShort3
+  localizedDescription: LocKey#AO-Ammo-HackShort3-Desc
+  iconPath: AO_HackShort3
+  quality: Quality.Epic
+
+# 25mm Short Circuit [Hack] (Legendary)
+Ammo.AO_S25_HackShort4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackShort4
+  localizedDescription: LocKey#AO-Ammo-HackShort4-Desc
+  iconPath: AO_HackShort4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackShort4.aoHackProgram: "Items.EMPOverloadLvl4Program"
+Ammo.AO_S25_HackShort4.aoRankEffect: "BaseStatusEffect.OverloadLevel4"
+Ammo.AO_S25_HackShort4.aoRankChance: 0.1
+Ammo.AO_S25_HackShort4.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackShort4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackShort4
+  localizedDescription: LocKey#AO-Ammo-HackShort4-Desc
+  iconPath: AO_HackShort4
+  quality: Quality.Legendary
+
+# 25mm Cripple Movement [Hack] (Uncommon)
+Ammo.AO_S25_HackCripple1:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-25mm-HackCripple1
+  localizedDescription: LocKey#AO-Ammo-HackCripple1-Desc
+  iconPath: AO_HackCripple1
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_10, AO_Family_Smart]
+
+Ammo.AO_S25_HackCripple1.aoHackProgram: "Items.LocomotionMalfunctionProgram"
+Ammo.AO_S25_HackCripple1.aoRankEffect: "BaseStatusEffect.LocomotionMalfunction"
+Ammo.AO_S25_HackCripple1.aoRankChance: 0.1
+Ammo.AO_S25_HackCripple1.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackCripple1:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackCripple1
+  localizedDescription: LocKey#AO-Ammo-HackCripple1-Desc
+  iconPath: AO_HackCripple1
+  quality: Quality.Uncommon
+
+# 25mm Cripple Movement [Hack] (Rare)
+Ammo.AO_S25_HackCripple2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackCripple2
+  localizedDescription: LocKey#AO-Ammo-HackCripple2-Desc
+  iconPath: AO_HackCripple2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackCripple2.aoHackProgram: "Items.LocomotionMalfunctionLvl2Program"
+Ammo.AO_S25_HackCripple2.aoRankEffect: "BaseStatusEffect.LocomotionMalfunctionLevel2"
+Ammo.AO_S25_HackCripple2.aoRankChance: 0.15
+Ammo.AO_S25_HackCripple2.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackCripple2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackCripple2
+  localizedDescription: LocKey#AO-Ammo-HackCripple2-Desc
+  iconPath: AO_HackCripple2
+  quality: Quality.Rare
+
+# 25mm Cripple Movement [Hack] (Epic)
+Ammo.AO_S25_HackCripple3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackCripple3
+  localizedDescription: LocKey#AO-Ammo-HackCripple3-Desc
+  iconPath: AO_HackCripple3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackCripple3.aoHackProgram: "Items.LocomotionMalfunctionLvl3Program"
+Ammo.AO_S25_HackCripple3.aoRankEffect: "BaseStatusEffect.LocomotionMalfunctionLevel3"
+Ammo.AO_S25_HackCripple3.aoRankChance: 0.2
+Ammo.AO_S25_HackCripple3.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackCripple3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackCripple3
+  localizedDescription: LocKey#AO-Ammo-HackCripple3-Desc
+  iconPath: AO_HackCripple3
+  quality: Quality.Epic
+
+# 25mm Cripple Movement [Hack] (Legendary)
+Ammo.AO_S25_HackCripple4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackCripple4
+  localizedDescription: LocKey#AO-Ammo-HackCripple4-Desc
+  iconPath: AO_HackCripple4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackCripple4.aoHackProgram: "Items.LocomotionMalfunctionLvl4Program"
+Ammo.AO_S25_HackCripple4.aoRankEffect: "BaseStatusEffect.LocomotionMalfunctionLevel4"
+Ammo.AO_S25_HackCripple4.aoRankChance: 0.25
+Ammo.AO_S25_HackCripple4.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackCripple4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackCripple4
+  localizedDescription: LocKey#AO-Ammo-HackCripple4-Desc
+  iconPath: AO_HackCripple4
+  quality: Quality.Legendary
+
+# 25mm Overheat [Hack] (Uncommon)
+Ammo.AO_S25_HackOverheat1:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-25mm-HackOverheat1
+  localizedDescription: LocKey#AO-Ammo-HackOverheat1-Desc
+  iconPath: AO_HackOverheat1
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_10, AO_Family_Smart]
+
+Ammo.AO_S25_HackOverheat1.aoHackProgram: "Items.OverheatLvl1Program"
+Ammo.AO_S25_HackOverheat1.aoRankEffect: "BaseStatusEffect.OverheatLevel1"
+Ammo.AO_S25_HackOverheat1.aoRankChance: 0.1
+Ammo.AO_S25_HackOverheat1.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackOverheat1:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackOverheat1
+  localizedDescription: LocKey#AO-Ammo-HackOverheat1-Desc
+  iconPath: AO_HackOverheat1
+  quality: Quality.Uncommon
+
+# 25mm Overheat [Hack] (Rare)
+Ammo.AO_S25_HackOverheat2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackOverheat2
+  localizedDescription: LocKey#AO-Ammo-HackOverheat2-Desc
+  iconPath: AO_HackOverheat2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackOverheat2.aoHackProgram: "Items.OverheatLvl2Program"
+Ammo.AO_S25_HackOverheat2.aoRankEffect: "BaseStatusEffect.OverheatLevel2"
+Ammo.AO_S25_HackOverheat2.aoRankChance: 0.15
+Ammo.AO_S25_HackOverheat2.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackOverheat2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackOverheat2
+  localizedDescription: LocKey#AO-Ammo-HackOverheat2-Desc
+  iconPath: AO_HackOverheat2
+  quality: Quality.Rare
+
+# 25mm Overheat [Hack] (Epic)
+Ammo.AO_S25_HackOverheat3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackOverheat3
+  localizedDescription: LocKey#AO-Ammo-HackOverheat3-Desc
+  iconPath: AO_HackOverheat3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackOverheat3.aoHackProgram: "Items.OverheatLvl3Program"
+Ammo.AO_S25_HackOverheat3.aoRankEffect: "BaseStatusEffect.OverheatLevel3"
+Ammo.AO_S25_HackOverheat3.aoRankChance: 0.2
+Ammo.AO_S25_HackOverheat3.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackOverheat3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackOverheat3
+  localizedDescription: LocKey#AO-Ammo-HackOverheat3-Desc
+  iconPath: AO_HackOverheat3
+  quality: Quality.Epic
+
+# 25mm Overheat [Hack] (Legendary)
+Ammo.AO_S25_HackOverheat4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackOverheat4
+  localizedDescription: LocKey#AO-Ammo-HackOverheat4-Desc
+  iconPath: AO_HackOverheat4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackOverheat4.aoHackProgram: "Items.OverheatLvl4Program"
+Ammo.AO_S25_HackOverheat4.aoRankEffect: "BaseStatusEffect.OverheatLevel4"
+Ammo.AO_S25_HackOverheat4.aoRankChance: 0.25
+Ammo.AO_S25_HackOverheat4.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackOverheat4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackOverheat4
+  localizedDescription: LocKey#AO-Ammo-HackOverheat4-Desc
+  iconPath: AO_HackOverheat4
+  quality: Quality.Legendary
+
+# 25mm Weapon Glitch [Hack] (Uncommon)
+Ammo.AO_S25_HackGlitch1:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-25mm-HackGlitch1
+  localizedDescription: LocKey#AO-Ammo-HackGlitch1-Desc
+  iconPath: AO_HackGlitch1
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_10, AO_Family_Smart]
+
+Ammo.AO_S25_HackGlitch1.aoHackProgram: "Items.WeaponMalfunctionProgram"
+Ammo.AO_S25_HackGlitch1.aoRankEffect: "BaseStatusEffect.WeaponMalfunction"
+Ammo.AO_S25_HackGlitch1.aoRankChance: 0.1
+Ammo.AO_S25_HackGlitch1.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackGlitch1:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackGlitch1
+  localizedDescription: LocKey#AO-Ammo-HackGlitch1-Desc
+  iconPath: AO_HackGlitch1
+  quality: Quality.Uncommon
+
+# 25mm Weapon Glitch [Hack] (Rare)
+Ammo.AO_S25_HackGlitch2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackGlitch2
+  localizedDescription: LocKey#AO-Ammo-HackGlitch2-Desc
+  iconPath: AO_HackGlitch2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackGlitch2.aoHackProgram: "Items.WeaponMalfunctionLvl2Program"
+Ammo.AO_S25_HackGlitch2.aoRankEffect: "BaseStatusEffect.WeaponMalfunctionLvl2"
+Ammo.AO_S25_HackGlitch2.aoRankChance: 0.15
+Ammo.AO_S25_HackGlitch2.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackGlitch2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackGlitch2
+  localizedDescription: LocKey#AO-Ammo-HackGlitch2-Desc
+  iconPath: AO_HackGlitch2
+  quality: Quality.Rare
+
+# 25mm Weapon Glitch [Hack] (Epic)
+Ammo.AO_S25_HackGlitch3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackGlitch3
+  localizedDescription: LocKey#AO-Ammo-HackGlitch3-Desc
+  iconPath: AO_HackGlitch3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackGlitch3.aoHackProgram: "Items.WeaponMalfunctionLvl3Program"
+Ammo.AO_S25_HackGlitch3.aoRankEffect: "BaseStatusEffect.WeaponMalfunctionLvl3"
+Ammo.AO_S25_HackGlitch3.aoRankChance: 0.2
+Ammo.AO_S25_HackGlitch3.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackGlitch3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackGlitch3
+  localizedDescription: LocKey#AO-Ammo-HackGlitch3-Desc
+  iconPath: AO_HackGlitch3
+  quality: Quality.Epic
+
+# 25mm Weapon Glitch [Hack] (Legendary)
+Ammo.AO_S25_HackGlitch4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackGlitch4
+  localizedDescription: LocKey#AO-Ammo-HackGlitch4-Desc
+  iconPath: AO_HackGlitch4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackGlitch4.aoHackProgram: "Items.WeaponMalfunctionLvl4Program"
+Ammo.AO_S25_HackGlitch4.aoRankEffect: "BaseStatusEffect.WeaponMalfunctionLvl4"
+Ammo.AO_S25_HackGlitch4.aoRankChance: 0.25
+Ammo.AO_S25_HackGlitch4.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackGlitch4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackGlitch4
+  localizedDescription: LocKey#AO-Ammo-HackGlitch4-Desc
+  iconPath: AO_HackGlitch4
+  quality: Quality.Legendary
+
+# 25mm Synapse Burnout [Hack] (Rare)
+Ammo.AO_S25_HackBurnout2:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-25mm-HackBurnout2
+  localizedDescription: LocKey#AO-Ammo-HackBurnout2-Desc
+  iconPath: AO_HackBurnout2
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_11, AO_Family_Smart]
+
+Ammo.AO_S25_HackBurnout2.aoHackProgram: "Items.BrainMeltLvl2Program"
+Ammo.AO_S25_HackBurnout2.aoRankEffect: "BaseStatusEffect.BrainMeltLevel2"
+Ammo.AO_S25_HackBurnout2.aoRankChance: 0.06
+Ammo.AO_S25_HackBurnout2.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackBurnout2:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackBurnout2
+  localizedDescription: LocKey#AO-Ammo-HackBurnout2-Desc
+  iconPath: AO_HackBurnout2
+  quality: Quality.Rare
+
+# 25mm Synapse Burnout [Hack] (Epic)
+Ammo.AO_S25_HackBurnout3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackBurnout3
+  localizedDescription: LocKey#AO-Ammo-HackBurnout3-Desc
+  iconPath: AO_HackBurnout3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackBurnout3.aoHackProgram: "Items.BrainMeltLvl3Program"
+Ammo.AO_S25_HackBurnout3.aoRankEffect: "BaseStatusEffect.BrainMeltLevel3"
+Ammo.AO_S25_HackBurnout3.aoRankChance: 0.08
+Ammo.AO_S25_HackBurnout3.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackBurnout3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackBurnout3
+  localizedDescription: LocKey#AO-Ammo-HackBurnout3-Desc
+  iconPath: AO_HackBurnout3
+  quality: Quality.Epic
+
+# 25mm Synapse Burnout [Hack] (Legendary)
+Ammo.AO_S25_HackBurnout4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackBurnout4
+  localizedDescription: LocKey#AO-Ammo-HackBurnout4-Desc
+  iconPath: AO_HackBurnout4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackBurnout4.aoHackProgram: "Items.BrainMeltLvl4Program"
+Ammo.AO_S25_HackBurnout4.aoRankEffect: "BaseStatusEffect.BrainMeltLevel4"
+Ammo.AO_S25_HackBurnout4.aoRankChance: 0.1
+Ammo.AO_S25_HackBurnout4.aoRankToughFrom: "Never"
+
+Items.AO_Feed_25mm_HackBurnout4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackBurnout4
+  localizedDescription: LocKey#AO-Ammo-HackBurnout4-Desc
+  iconPath: AO_HackBurnout4
+  quality: Quality.Legendary
+
+# 25mm Cyberpsychosis [Hack] (Epic)
+Ammo.AO_S25_HackPsycho3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackPsycho3
+  localizedDescription: LocKey#AO-Ammo-HackPsycho3-Desc
+  iconPath: AO_HackPsycho3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackPsycho3.aoHackProgram: "Items.MadnessLvl3Program"
+Ammo.AO_S25_HackPsycho3.aoRankEffect: "BaseStatusEffect.Madness"
+Ammo.AO_S25_HackPsycho3.aoRankChance: 0.2
+Ammo.AO_S25_HackPsycho3.aoRankToughFrom: "Boss"
+
+Items.AO_Feed_25mm_HackPsycho3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackPsycho3
+  localizedDescription: LocKey#AO-Ammo-HackPsycho3-Desc
+  iconPath: AO_HackPsycho3
+  quality: Quality.Epic
+
+# 25mm Cyberpsychosis [Hack] (Legendary)
+Ammo.AO_S25_HackPsycho4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackPsycho4
+  localizedDescription: LocKey#AO-Ammo-HackPsycho4-Desc
+  iconPath: AO_HackPsycho4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackPsycho4.aoHackProgram: "Items.MadnessLvl4Program"
+Ammo.AO_S25_HackPsycho4.aoRankEffect: "AmmoOverhaul.MadnessHack"
+Ammo.AO_S25_HackPsycho4.aoRankChance: 0.25
+Ammo.AO_S25_HackPsycho4.aoRankToughFrom: "Boss"
+
+Items.AO_Feed_25mm_HackPsycho4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackPsycho4
+  localizedDescription: LocKey#AO-Ammo-HackPsycho4-Desc
+  iconPath: AO_HackPsycho4
+  quality: Quality.Legendary
+
+# 25mm Detonate Grenade [Hack] (Epic)
+Ammo.AO_S25_HackGrenade3:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-25mm-HackGrenade3
+  localizedDescription: LocKey#AO-Ammo-HackGrenade3-Desc
+  iconPath: AO_HackGrenade3
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_12, AO_Family_Smart]
+
+Ammo.AO_S25_HackGrenade3.aoHackProgram: "Items.GrenadeExplodeLvl3Program"
+Ammo.AO_S25_HackGrenade3.aoRankEffect: "BaseStatusEffect.WasQuickHacked"
+Ammo.AO_S25_HackGrenade3.aoRankChance: 0.2
+Ammo.AO_S25_HackGrenade3.aoRankToughFrom: "Never"
+Ammo.AO_S25_HackGrenade3.aoRankBlast: "AmmoOverhaul.HackBlast"
+
+Items.AO_Feed_25mm_HackGrenade3:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackGrenade3
+  localizedDescription: LocKey#AO-Ammo-HackGrenade3-Desc
+  iconPath: AO_HackGrenade3
+  quality: Quality.Epic
+
+# 25mm Detonate Grenade [Hack] (Legendary)
+Ammo.AO_S25_HackGrenade4:
+  $base: Ammo.AO_S25_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-25mm-HackGrenade4
+  localizedDescription: LocKey#AO-Ammo-HackGrenade4-Desc
+  iconPath: AO_HackGrenade4
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_13, AO_Family_Smart]
+
+Ammo.AO_S25_HackGrenade4.aoHackProgram: "Items.GrenadeExplodeLvl4Program"
+Ammo.AO_S25_HackGrenade4.aoRankEffect: "BaseStatusEffect.WasQuickHacked"
+Ammo.AO_S25_HackGrenade4.aoRankChance: 0.25
+Ammo.AO_S25_HackGrenade4.aoRankToughFrom: "Never"
+Ammo.AO_S25_HackGrenade4.aoRankBlast: "AmmoOverhaul.HackBlastBig"
+
+Items.AO_Feed_25mm_HackGrenade4:
+  $base: Items.AO_Feed_25mm_Seekers
+  displayName: LocKey#AO-Ammo-25mm-HackGrenade4
+  localizedDescription: LocKey#AO-Ammo-HackGrenade4-Desc
+  iconPath: AO_HackGrenade4
+  quality: Quality.Legendary
 
 # === END GENERATED ===
 

@@ -1,3 +1,4 @@
+import rounds as gen
 from rounds import CALIBERS, KINDS, PRICE, QUALITY, FACTION_COMMON, FACTION_RARE, FACTION_EPIC, FACTION_UNCOMMON, FACTION_LEGENDARY, rounds, title, round_yaml
 
 SPEC = {
@@ -59,7 +60,7 @@ def test_names_carry_the_tag_and_general_rounds_dont():
     for tag, k in rounds():
         if k.get("faction"):
             assert title(tag, k).endswith(" " + TAGS[k["faction"]])
-        else:
+        elif not k.get("hack"):
             assert "[" not in title(tag, k)
 
 
@@ -129,3 +130,37 @@ def test_no_runtime_record_switch():
 def test_every_faction_round_has_effect_lines():
     for _, k in faction_rounds():
         assert "\n\n" in k["desc"]
+
+
+def hack_rounds():
+    return [(t, k) for t, k in gen.rounds() if k.get("hack")]
+
+
+def test_hack_round_counts():
+    assert len(hack_rounds()) == 117
+    assert {t for t, _ in hack_rounds()} == {"10mm", "20mm", "25mm"}
+
+
+def test_hack_names_and_qualities():
+    t, k = next((t, k) for t, k in hack_rounds() if k["load"] == "HackOptics1" and t == "10mm")
+    assert gen.title(t, k) == "10mm Reboot Optics [Hack]"
+    assert gen.QUALITY[k["tier"]] == "Uncommon"
+
+
+def test_hack_chances():
+    by = {k["load"]: k["hit"]["rank"]["chance"] for _, k in hack_rounds()}
+    assert [by[f"HackOptics{n}"] for n in (1, 2, 3, 4)] == [0.10, 0.15, 0.20, 0.25]
+    assert [by[f"HackContagion{n}"] for n in (1, 2, 3, 4)] == [0.04, 0.06, 0.08, 0.10]
+    assert by["HackBurnout2"] == 0.06 and by["HackShort4"] == 0.10
+
+
+def test_hack_flats():
+    y = gen.round_yaml(*next((t, k) for t, k in hack_rounds() if k["load"] == "HackPsycho4"))
+    assert 'aoHackProgram: "Items.MadnessLvl4Program"' in y
+    assert 'aoRankEffect: "AmmoOverhaul.MadnessHack"' in y
+    assert 'aoRankToughFrom: "Boss"' in y
+    assert "aoRankPlayer" not in y
+
+
+def test_hack_icons_shared_across_calibers():
+    assert len({gen.ids(t, k)["icon"] for t, k in hack_rounds()}) == 39

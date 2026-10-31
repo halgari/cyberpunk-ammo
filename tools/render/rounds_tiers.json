@@ -935,6 +935,474 @@
     40,
     50
    ]
+  ],
+  "HackOptics1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOptics2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOptics3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOptics4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackSonic1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackSonic2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackSonic3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackSonic4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackContagion1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackContagion2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackContagion3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackContagion4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCyberware1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCyberware2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCyberware3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCyberware4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackShort1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackShort2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackShort3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackShort4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCripple1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCripple2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCripple3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCripple4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOverheat1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOverheat2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOverheat3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOverheat4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGlitch1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGlitch2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGlitch3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGlitch4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackBurnout2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackBurnout3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackBurnout4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackPsycho3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackPsycho4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGrenade3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGrenade4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
   ]
  },
  "rounds": {
@@ -3323,6 +3791,435 @@
    ],
    "tier": 6,
    "faction": "NUSA"
+  },
+  "hack-hackoptics1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOptics1",
+   "label": [
+    "25MM",
+    "REBOOT OPTICS"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackoptics2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOptics2",
+   "label": [
+    "25MM",
+    "REBOOT OPTICS"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackoptics3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOptics3",
+   "label": [
+    "25MM",
+    "REBOOT OPTICS"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackoptics4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOptics4",
+   "label": [
+    "25MM",
+    "REBOOT OPTICS"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hacksonic1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackSonic1",
+   "label": [
+    "25MM",
+    "SONIC SHOCK"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hacksonic2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackSonic2",
+   "label": [
+    "25MM",
+    "SONIC SHOCK"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hacksonic3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackSonic3",
+   "label": [
+    "25MM",
+    "SONIC SHOCK"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hacksonic4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackSonic4",
+   "label": [
+    "25MM",
+    "SONIC SHOCK"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackcontagion1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackContagion1",
+   "label": [
+    "25MM",
+    "CONTAGION"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackcontagion2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackContagion2",
+   "label": [
+    "25MM",
+    "CONTAGION"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackcontagion3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackContagion3",
+   "label": [
+    "25MM",
+    "CONTAGION"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackcontagion4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackContagion4",
+   "label": [
+    "25MM",
+    "CONTAGION"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackcyberware1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCyberware1",
+   "label": [
+    "25MM",
+    "CYBERWARE MALFUNCTION"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackcyberware2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCyberware2",
+   "label": [
+    "25MM",
+    "CYBERWARE MALFUNCTION"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackcyberware3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCyberware3",
+   "label": [
+    "25MM",
+    "CYBERWARE MALFUNCTION"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackcyberware4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCyberware4",
+   "label": [
+    "25MM",
+    "CYBERWARE MALFUNCTION"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackshort1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackShort1",
+   "label": [
+    "25MM",
+    "SHORT CIRCUIT"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackshort2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackShort2",
+   "label": [
+    "25MM",
+    "SHORT CIRCUIT"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackshort3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackShort3",
+   "label": [
+    "25MM",
+    "SHORT CIRCUIT"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackshort4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackShort4",
+   "label": [
+    "25MM",
+    "SHORT CIRCUIT"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackcripple1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCripple1",
+   "label": [
+    "25MM",
+    "CRIPPLE MOVEMENT"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackcripple2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCripple2",
+   "label": [
+    "25MM",
+    "CRIPPLE MOVEMENT"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackcripple3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCripple3",
+   "label": [
+    "25MM",
+    "CRIPPLE MOVEMENT"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackcripple4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCripple4",
+   "label": [
+    "25MM",
+    "CRIPPLE MOVEMENT"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackoverheat1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOverheat1",
+   "label": [
+    "25MM",
+    "OVERHEAT"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackoverheat2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOverheat2",
+   "label": [
+    "25MM",
+    "OVERHEAT"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackoverheat3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOverheat3",
+   "label": [
+    "25MM",
+    "OVERHEAT"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackoverheat4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOverheat4",
+   "label": [
+    "25MM",
+    "OVERHEAT"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackglitch1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGlitch1",
+   "label": [
+    "25MM",
+    "WEAPON GLITCH"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackglitch2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGlitch2",
+   "label": [
+    "25MM",
+    "WEAPON GLITCH"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackglitch3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGlitch3",
+   "label": [
+    "25MM",
+    "WEAPON GLITCH"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackglitch4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGlitch4",
+   "label": [
+    "25MM",
+    "WEAPON GLITCH"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackburnout2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackBurnout2",
+   "label": [
+    "25MM",
+    "SYNAPSE BURNOUT"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackburnout3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackBurnout3",
+   "label": [
+    "25MM",
+    "SYNAPSE BURNOUT"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackburnout4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackBurnout4",
+   "label": [
+    "25MM",
+    "SYNAPSE BURNOUT"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackpsycho3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackPsycho3",
+   "label": [
+    "25MM",
+    "CYBERPSYCHOSIS"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackpsycho4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackPsycho4",
+   "label": [
+    "25MM",
+    "CYBERPSYCHOSIS"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackgrenade3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGrenade3",
+   "label": [
+    "25MM",
+    "DETONATE GRENADE"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackgrenade4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGrenade4",
+   "label": [
+    "25MM",
+    "DETONATE GRENADE"
+   ],
+   "tier": 13,
+   "faction": null
   },
   "20mm-emppayload": {
    "shape": "S20",
