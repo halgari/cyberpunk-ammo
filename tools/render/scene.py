@@ -2234,6 +2234,59 @@ def nusa_box(spec, roundspec):
     return [base, hinge] + rounds
 
 
+def camo(mat, colour, cell):
+    """Breaks up a moulded colour: blocks of `cell` in darker and lighter shades, pressed in, with
+    fine scuffs running across them."""
+    nt = mat.node_tree
+    N, link = nt.nodes.new, nt.links.new
+    b = nt.nodes["Principled BSDF"]
+    under = b.inputs["Base Color"].links[0].from_socket
+    snap = N("ShaderNodeVectorMath")
+    snap.operation = "SNAP"
+    link(N("ShaderNodeTexCoord").outputs["Object"], snap.inputs[0])
+    snap.inputs[1].default_value = (cell, cell, cell)
+    blocks = N("ShaderNodeTexNoise")
+    blocks.inputs["Scale"].default_value = 1 / (cell * 2.6)
+    blocks.inputs["Detail"].default_value = 2
+    link(snap.outputs["Vector"], blocks.inputs["Vector"])
+
+    def step(lo, hi):
+        r = N("ShaderNodeMapRange")
+        r.inputs["From Min"].default_value, r.inputs["From Max"].default_value = lo, hi
+        link(blocks.outputs["Fac"], r.inputs["Value"])
+        return r.outputs["Result"]
+
+    def tinted(under, fac, shade):
+        mx = N("ShaderNodeMix")
+        mx.data_type = "RGBA"
+        link(under, _socket(mx.inputs, "A", "RGBA"))
+        _socket(mx.inputs, "B", "RGBA").default_value = (*(min(1.0, c * shade) for c in colour), 1)
+        link(fac, _socket(mx.inputs, "Factor", "VALUE"))
+        return _socket(mx.outputs, "Result", "RGBA")
+
+    dark, light = step(0.5, 0.505), step(0.415, 0.41)
+    col = tinted(tinted(under, dark, 0.34), light, 1.7)
+    scuff = N("ShaderNodeTexWave")
+    scuff.bands_direction = "DIAGONAL"
+    scuff.inputs["Scale"].default_value = 2 / cell
+    scuff.inputs["Distortion"].default_value = 8.0
+    scuff.inputs["Detail"].default_value = 6.0
+    r = N("ShaderNodeMapRange")
+    r.inputs["From Min"].default_value, r.inputs["From Max"].default_value = 0.72, 0.9
+    r.inputs["To Max"].default_value = 0.5
+    link(scuff.outputs["Fac"], r.inputs["Value"])
+    col = tinted(col, r.outputs["Result"], 2.4)
+    link(col, b.inputs["Base Color"])
+    press = N("ShaderNodeBump")
+    press.inputs["Strength"].default_value = 0.6
+    press.inputs["Distance"].default_value = cell * 0.1
+    link(dark, press.inputs["Height"])
+    if b.inputs["Normal"].links:
+        link(b.inputs["Normal"].links[0].from_socket, press.inputs["Normal"])
+    link(press.outputs["Normal"], b.inputs["Normal"])
+    return mat
+
+
 def hack_cart(spec, roundspec):
     """A quickhack round's data cartridge: a scuffed moulded shell in the rarity's colour with rubber
     corner guards and a ribbed grip, a dark front plate with gold contacts, a sticker and a status
@@ -2247,6 +2300,7 @@ def hack_cart(spec, roundspec):
     foam = principled("CartBed", (0.02, 0.02, 0.024), 0.0, 0.85, wear=0.0, bump=0.2)
     gold = principled("CartGold", (0.85, 0.55, 0.18), 1.0, 0.3, wear=0.02, bump=0.02)
     steel = principled("CartSteel", (0.5, 0.5, 0.52), 1.0, 0.35, wear=0.1, bump=0.04)
+    camo(shell, colour, W * 0.045 * 0.55)
     base, OW, OD, wall = box_shell(spec, shell, 0.045)
     top = H - wall * 0.7
     bed = cube("Bed", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam, bevel=wall * 0.1)
