@@ -1,11 +1,10 @@
 # Faction rounds, first three: design
 
-Date: 2026-10-30. Status: draft for the user's review; no code yet. Decisions the user has not
-made are collected at the end. Round ideas come from `docs/IDEAS.md`
+Date: 2026-10-30. Status: built, except where marked. Round ideas come from `docs/IDEAS.md`
 ("Faction rounds").
 
 Maelstrom, Scavengers and Arasaka each get rounds nobody else sells. A faction's NPCs carry and
-fire them, so V meets a round in that faction's fights before getting any. This draft has 26 rounds
+fire them, so V meets a round in that faction's fights before getting any. There are 26 rounds
 across 9 kinds, which takes the mod from 149 rounds to 175.
 
 ## Binding rules
@@ -28,15 +27,15 @@ across 9 kinds, which takes the mod from 149 rounds to 175.
   as a layer between the round and its family, but no shipped round sets it yet (only
   `Ammo.AO_Test_RollFaction`). `tools/rounds/rounds.py` needs a `faction=` field on a kind to write
   it.
-- **Their own tier codes.** `selectorTiers` gets two new values: 5 (faction, Rare quality) and 6
-  (faction, Epic quality). Every general list looks rounds up by exact tier
-  (`SelectorsForTier(caliber, 2 or 3)`, `AmmosForTier`, `TierWeights`), so tiers 5 and 6 stay out
+- **Their own tier codes.** `selectorTiers` gets 5 (faction, Rare quality), 6 (faction, Epic
+  quality) and 7 (faction, Common quality, for Reloads). Every general list looks rounds up by exact tier
+  (`SelectorsForTier(caliber, 2 or 3)`, `AmmosForTier`, `TierWeights`), so tiers 5 to 7 stay out
   of the general NPC rolls, `AmmoDistribution.Spread`, `Pick` and vendors without special cases.
-  That's the same way tier 4 keeps Legendary rounds out. The generator maps 5 and 6 to Rare and
-  Epic for quality, price and disassembly.
+  That's the same way tier 4 keeps Legendary rounds out. The generator maps them to Rare, Epic and
+  Common for quality, price and disassembly.
 - **No crafting:** no recipe and no load sheet. `tools/crafting/crafting.py`
-  already skips tier 4 for recipes and keeps its disassembly flats; 5 and 6 join that rule. A stack
-  breaks down into Rare or Epic components by the existing rule.
+  already skips tier 4 for recipes and keeps its disassembly flats; 5 to 7 join that rule. A stack
+  breaks down into components of its quality by the existing rule.
 - **Price:** Rare x4 and Epic x8 of the caliber's Common round, as for the general tiers. Reloads
   are the exception below.
 
@@ -54,7 +53,8 @@ feel test.
     already uses on V and NPCs. It needs a per-shot hook on both sides: `ShootEvents.OnEnter` (V,
     as Mule Kick) and `NpcAmmo.TakeShot` (NPCs). Feasibility: stats plus existing hooks.
   - Item text: "Overpressure loads. They run the gun past what it was built for, and sometimes the
-    gun quits.\n\n+25% fire rate. +40% recoil and spread. 2% chance per shot to jam your gun."
+    gun quits.\n\n+25% fire rate. +40% recoil and spread. 2% chance per shot to jam your weapons
+    for 3 seconds." "Weapons", not "gun": the jam stays on V across a swap (see the probe results).
 - **Chrome-cookers** (Rare; light and heavy rail)
   - A hit has a 15% chance of a cyberware malfunction, and 10% less damage.
   - On V: V's cyberware glitches, through the mod's existing player effect mapping
@@ -77,7 +77,8 @@ feel test.
     code, proven by Match.
   - Worse than a Common round, so Common quality (see Decisions).
 - **Gutter Lead** (Rare; 12mm, .45, 9mm)
-  - Rough hand-cast bullets: half damage, 25% chance to bleed, 25% chance to poison.
+  - Rough hand-cast bullets: half damage, 25% chance to bleed, 25% chance to poison. Called
+    Dirties until 2026-10-30.
   - Levers: `aoEffects` with both effects. Feasibility: hit code, proven. On V: `PlayerPoisoned`
     through the existing mapping.
 - **Parts-pullers** (Rare; 12mm, .45)
@@ -98,14 +99,11 @@ feel test.
 - **Kansatsu** (Epic; 10mm, 20mm, 25mm smart)
   - A hit tags the target. The shooter's team sees it, and smart rounds lock onto a tagged target
     at once.
-  - Levers: the tag is Ping's (`AmmoOverhaul.PingTag`, proven). Instant lock is not proven. The
-    lock time stats are per gun (`SmartGunHip/AdsTimeToLock`, `SmartGunTimeToLock*Multiplier`), so
-    the engine has no per-target lock time that scripts can see. **Needs a probe.**
-  - Native fallback: the round halves lock time at all times (a stat) and the tag still shows the
-    target through walls. It loses the link between the tag and the lock.
-  - On V: V is tagged. Whether NPCs act on it is a second probe; the vanilla route to try is the
-    squad's shared threat data. Fallback: the tag on V does nothing for NPCs, so the NPC version
-    is the short lock only.
+  - Built as the fallback: the round halves lock time at all times (`SmartGunAdsTimeToLock`,
+    `SmartGunHipTimeToLock`) and the tag (`AmmoOverhaul.PingTag`, Ping's) shows the target through
+    walls. The tag and the lock aren't linked: the lock time stats are per gun, and the engine has
+    no per-target lock time (see the probe results).
+  - On V: V is tagged. NPCs don't act on it, so the NPC version is the short lock only.
 - **Shinobi** (Rare; 9mm, .45)
   - Silent kills and +50% headshot damage, with 10% less range.
   - Levers: `CanSilentKill`, `HeadshotDamageMultiplier` (stats). Feasibility: stats,
@@ -130,7 +128,8 @@ becomes:
 2. Legendary, with its rank chance, as now.
 3. **New:** if the NPC's faction has rounds for this gun's caliber, roll that faction's chance for
    the NPC's rank. A hit picks one of the faction's rounds for the caliber: Epic first with its own
-   chance, then Rare. It goes through the same path as any rolled round (`aoUncommonGuns`, selector
+   chance, then Rare, whose roll takes in the Common-quality Reloads so Scav rounds come up alike.
+   It goes through the same path as any rolled round (`aoUncommonGuns`, selector
    stat modifiers on the gun), so the stats and hit code work with no new NPC code.
 4. A miss falls through to the existing Epic, Rare and Uncommon rolls.
 
@@ -148,17 +147,16 @@ can set them):
 
 For scale: today Trash, Weak and Normal NPCs never roll a general Rare or Epic, and only Elite and
 Boss roll a general Epic. These chances make faction rounds the most common thing above Uncommon in
-that faction's fights. That is the point, and it also raises difficulty in those fights. **Open:**
-the numbers.
+that faction's fights. That is the point, and it also raises difficulty in those fights.
 
 **Loot.** Nothing new. What's left of an NPC's stack is noted at death and given back as loot
 (`NpcAmmo`, `EvaluateLootQuality`), so a faction round drops as a normal stack: a gun's magazines
 by rank, less what was fired. This is V's main source.
 
 **Containers.** None at first: a container has no known faction. `LootConvert` keeps rolling up to
-Epic from general rounds, which excludes tiers 5 and 6.
+Epic from general rounds, which excludes tiers 5 to 7.
 
-**Turf gun shops** (built second, after the NPC side plays well)
+**Turf gun shops** (not built)
 - The hook exists: `Vendor.AOSplitAmmo` runs on every stock build and already knows
   `GetVendorType()` is Gunsmith.
 - **Shops have no faction.** Dumped in the game 2026-10-30: all 266 vendors have
@@ -178,23 +176,22 @@ above.
 
 ## Art
 
-- Each faction gets its own box family, so a round reads as that faction's at a glance. The box form
-  is decided per faction, the same as Legendary's case.
-- **Arasaka:** the black hard case with a red seam, red latches and the lid label is approved. Black
-  cases with the red emblem printed on the rounds.
-- **Maelstrom:** black worn steel can, red wordmark spray, white skull stencil, black rounds with
-  red tips. The last fix (decals sized to the wall) was never shown to the user.
-- **Scavengers:** loose rounds in a tray or a pile on cardboard. Not picked, and the sim never
-  settled.
-- The prototype scene files are gone from the scratchpad, so all three are rebuilt in `tools/render`
-  from the descriptions above and the case form already there. Game textures (gang logo atlas,
-  Arasaka label sheet, Maelstrom masks) have to be extracted again with `tools/linux/wolvenkit.sh`.
-  Blender and PIL only.
-- A task of its own: render, show the user, then generate all 26 icons.
+Approved by the user and built in `tools/render` (`faction_art.py`, the faction forms in
+`scene.py`), Blender and PIL only. Each is a new object, not a recolour. The decals are the game's
+own, extracted by `tools/render/faction_textures.sh` and kept out of the repo.
+
+- **Arasaka:** a black hard case, lid well open, with a red seam, red latches and a black lid label
+  with the red crest and white wordmark. Black cases with the crest printed on the rounds, on the
+  cassette's lid and the Ashura's nose where a wrap wouldn't read.
+- **Maelstrom:** a black worn steel can, with a white skull stencil and the wordmark sprayed red,
+  sized to the front wall. Black rounds with red bullets; Chrome-cookers' coils are red.
+- **Scavengers:** a cut-down cardboard flat of mixed brass, steel and nickel, leaning loose. The
+  caliber is scrawled on the front in a dying marker (drawn stroke by stroke, no font) over a dried
+  bloody handprint and spatter.
 
 ## Everything else follows the existing pattern
 
-- `tools/rounds/rounds.py` gains `faction=` and tiers 5 and 6; selectors, prices, icons and item
+- `tools/rounds/rounds.py` gains `faction=` and tiers 5 to 7; selectors, prices, icons and item
   text are generated as for other rounds. `rounds_tiers.json` gains the tiers for the renderer.
 - `AOData` gains `FactionOf(npc)`, `FactionChance(rank, tier)` and `SelectorsForFaction(caliber,
   faction)`.
@@ -205,7 +202,7 @@ above.
 ## Testing
 
 - **Records:** 26 rounds, right quality and price, no recipe, in no general list, never in a
-  non-turf vendor's stock, never rolled by another faction.
+  vendor's stock, never rolled by another faction.
 - **NPC rolls:** a Maelstrom, a Scav and an Arasaka NPC each roll only their own rounds; an
   unaffiliated NPC never does; the chances by rank; a miss falls through.
 - **Live, one check per mechanism:**
@@ -214,7 +211,7 @@ above.
   - Meat-grinders dismember;
   - the Reloads roll layer;
   - Parts-pullers add components;
-  - Kansatsu tag and lock;
+  - Kansatsu's short lock, and the tag not changing it;
   - Shinobi silent kill;
   - a faction round drops as loot.
 - **The user's feel test** before each kind is built out, then a playtest of all nine kinds.
@@ -274,8 +271,7 @@ Chrome-cookers. Scav guns are mostly 12mm Novas, so 12mm leads their list.
 2. **Sources.** NPC drops first, turf gun shops second. No crafting, no containers.
 3. **Drop rates.** The chance list above.
 4. **Parts-pullers.** Kept, with no effect when an NPC fires them.
-5. **Kansatsu.** Probe instant lock first; if the engine can't do it, take the fallback. No faking
-   from a script. (Recommended; the user raised no objection.)
+5. **Kansatsu.** Probed; the engine can't do it, so the fallback stands. No faking from a script.
 6. **Faction marking.** A short tag in brackets in the item name: [Mael], [Scav], [Ara]. The item
    text may mention the faction offhand but doesn't have to.
 7. **Turf map.** The shop list above is still a proposal; the user hasn't approved it.
@@ -290,6 +286,7 @@ Chrome-cookers. Scav guns are mostly 12mm Novas, so 12mm leads their list.
   changing the gun, which the rules rule out. The round is lock time x0.5 at all times plus the tag.
 - **Redliners jam on a swap: the jam stays on V.** Jammed on a Unity, V drew a Lexington on another
   round and was still jammed. The game's shooting gate reads Jam effects on V, not on the gun
-  (`weaponTransitions`), so the second gun can't fire until the jam ends. Decision open with the user.
-- **`WeaponNoise` is 0 on V's Unity as well as on NPC guns,** so x0.3 changes nothing. Shinobi drops
-  the stat and the "much quieter" line. Subsonic (shipped) still claims it.
+  (`weaponTransitions`), so the second gun can't fire until the jam ends. Kept, and the text says
+  "jam your weapons".
+- **`WeaponNoise` is 0 on V's Unity as well as on NPC guns,** so x0.3 changes nothing. Shinobi and
+  Subsonic drop the stat. Subsonic's quiet comes from its silenced shot and silent kills.

@@ -194,7 +194,17 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
   before running it (the suite gives Mushrooms rounds first).
 - `tools/linux/game-shot.sh out.png`: a screenshot of the game from a headless Hyprland output,
   without touching the screen you're using (`--remove` puts the game back on a real monitor).
-- `tools/icons/check_parts.py`: every `UIIcon` part in the YAML has a cell in the built atlas.
+- `tools/icons/check_parts.py`: every `UIIcon` part in the YAML has a cell in the built atlas,
+  every Rare and up round has its part, and the cells fit the atlas without overlapping.
+- `faction.sh [part ...]`: faction rounds on live hits, one check per mechanism: who rolls what and
+  how often, the general lists stay clear of them, stats on a gun, one gun's round not touching
+  another, Reloads' roll, Redliners' jam both ways, a jam across a swap, Chrome-cookers on V,
+  Kata's roll, Parts-pullers' components, Kansatsu's short lock and the tag not shortening it. Draws
+  guns and spawns NPCs: not while you play.
+- To look at icons in the game without a mouse: set the backpack's filter with
+  `UIScriptableSystemSetBackpackFilter` (`filterMode` 14 is all items), open it with
+  `StartHubMenuEvent` and `SetStartMenu("backpack")`, then `game-shot.sh`. The atlas is 2048x4096;
+  a cell that sits right in the lower half means the UVs follow the size.
 
 By hand:
 

@@ -10,20 +10,21 @@ colors (Common grey, Uncommon green, Rare blue, Epic purple, Legendary orange).
 
 ```
 [center][size=6][b][color=#d4a04c]BRA€$[/color][color=#9aa3ad]MARKET[/color][/b][/size]
-[size=4]An ammo overhaul: 13 calibers, 149 rounds, and the shops, loot and crafting that go with them[/size][/center]
+[size=4]An ammo overhaul: 13 calibers, 175 rounds, and the shops, loot and crafting that go with them[/size][/center]
 
 [line]
 
-The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 149 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
+The base game has four kinds of ammo. [b]Brass Market[/b] has 13 calibers and 175 different rounds, from plain ball up to Legendary. Gun shops stock the rounds, NPCs carry and fire them, you can craft them from recipes, and you can break boxes down for components.
 
 Each gun is assigned the caliber that fits it. Each caliber has Common, Uncommon, Rare and Epic rounds. You pick which round the gun loads from its mod screen.
 
 [size=5][b][color=#2ad4ff]What the mod adds[/color][/b][/size]
 [list]
 [*]13 calibers: 9mm, .45, 12mm magnum, 5.56, 7.62, 12.7, 12-gauge, 4-gauge, light and heavy rail slugs, and 10mm, 20mm and 25mm smart rounds.
-[*]149 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
+[*]175 rounds: hollow points, steel core, incendiary, subsonic, rubber, flechettes, dragon's breath, thermite slugs, depleted uranium, EMP payloads and more.
 [*]An [b]Ammo[/b] slot on every gun's mod screen. Fit any round you carry for that caliber and the gun loads it until you change it.
 [*]NPCs carry rounds from the mod, and tougher NPCs carry better ones. Their rounds work on you the same way yours work on them, so a gang boss loaded with steel core gets the same armor pen against you that you'd get against him. NPCs can run out of ammo. When they do, they switch to another gun or fight with their fists. Whatever they still have is what you loot.
+[*]Maelstrom, Scavengers and Arasaka have rounds of their own. You get them from that faction's NPCs.
 [*]Gun shops stock every caliber up to Rare. Recipes drop from loot and are also sold in gun shops. You craft rounds by the box and break boxes down for components.
 [*]Each round has its own box icon with the name printed on it, so Mushrooms and Penetrators look different in your backpack.
 [/list]
@@ -67,6 +68,30 @@ There are 14 Legendary rounds to find. Elite enemies, bosses and MaxTac sometime
 [*][color=#e8a33c][b]Pump N Dump[/b][/color] (12-gauge): one slug per shot, greased so the gun cycles at 2.5 times the speed. Burns through ammo fast.
 [/list]
 The rest are for you to find.
+
+[size=5][b][color=#2ad4ff]Faction rounds[/color][/b][/size]
+Three factions load rounds nobody else has, 26 in all. You get them from that faction's NPCs: they carry them, fire them at you, and drop what's left. No crafting, and the name carries a [Mael], [Scav] or [Ara] tag so you know whose they are. Same rules as everything else: a Maelstrom ganger's Redliners can jam their gun too.
+
+[b]Maelstrom[/b]
+[list]
+[*][color=#3fa0ff][b]Redliners[/b][/color] (Rare; .45, 5.56, 7.62): +25% fire rate, +40% recoil and spread, and a 2% chance per shot to jam your weapons for 3 seconds.
+[*][color=#3fa0ff][b]Chrome-cookers[/b][/color] (Rare; light and heavy rail): 15% chance of a cyberware malfunction. -10% damage.
+[*][color=#b04fff][b]Meat-grinders[/b][/color] (Epic; .45, 12mm, 12-gauge, 4-gauge): 30% chance to cause bleeding, three times the dismemberment chance.
+[/list]
+
+[b]Scavengers[/b] (all of them swing wide on damage, with duds and hot rounds)
+[list]
+[*][color=#b0b0b0][b]Reloads[/b][/color] (Common; 9mm, .45, 12mm): half the price of a Common round, and you never know what you'll get.
+[*][color=#3fa0ff][b]Gutter Lead[/b][/color] (Rare; 9mm, .45, 12mm): 25% chance to cause bleeding, 25% chance to poison. -50% damage.
+[*][color=#3fa0ff][b]Parts-pullers[/b][/color] (Rare; .45, 12mm): a kill leaves 2 Rare crafting components on the body.
+[/list]
+
+[b]Arasaka[/b]
+[list]
+[*][color=#3fa0ff][b]Shinobi[/b][/color] (Rare; 9mm, .45): silent kills, +50% headshot damage. -10% range.
+[*][color=#b04fff][b]Kata[/b][/color] (Epic; .45, 5.56, 7.62, light rail): damage varies only 1% either way. 30% less recoil, 30% faster aim.
+[*][color=#b04fff][b]Kansatsu[/b][/color] (Epic; 10mm, 20mm, 25mm): targets hit show through walls for 5 seconds. Locks on twice as fast.
+[/list]
 
 [line]
 
@@ -258,14 +283,6 @@ Other ammo, damage, vendor and loot overhauls are the likely conflicts.
 [*][b]Two reloads after changing rounds is expected.[/b] Fitting a new round empties the gun (the rounds go back in your pack, nothing is lost). Back in the game, V looks the gun over, then draws it and reloads it with the new round. It looks like two reloads in a row, but it's an inspect, then a draw and one reload.
 [*]Loose ammo lying around the world is still the game's own ammo, which counts as the Common round of 9mm, 5.56, 12.7 or 12-gauge.
 [*]Some rounds' range and spread changes do nothing for NPCs, because the game gives NPC guns no range or spread values.
-[/list]
-
-[line]
-
-[size=5][b][color=#2ad4ff]Coming next[/color][/b][/size]
-The next version adds:
-[list]
-[*][b]Faction ammo.[/b] Rounds made by Night City's gangs and corps, each matching its faction's quirks. Most of it probably won't be craftable; you'd get it from the people who use it.
 [/list]
 
 [line]

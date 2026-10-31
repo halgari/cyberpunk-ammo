@@ -380,6 +380,32 @@ rounds; a Legendary stack is a quarter of the Epic one it replaces.
 
 The other twelve are for finding; the spec has them.
 
+### Built (faction rounds, 2026-10-30)
+
+26 rounds, from `tools/rounds/rounds.py`, spec `docs/superpowers/specs/2026-10-30-faction-rounds-design.md`.
+Tier codes 5 (Rare quality), 6 (Epic) and 7 (Common), so they stay out of every general list. Each
+round's `aoFaction` names its faction, and the name carries [Mael], [Scav] or [Ara]. No recipe; a
+stack breaks down by its quality. Only that faction's NPCs roll them (Legendary first, then these,
+then the general tiers); they reach V as those NPCs' loot.
+
+Maelstrom:
+
+- **Redliners** (Rare; 45, 556, 762): x0.8 `CycleTime`, x1.4 recoil and spread. 2% per shot to jam the shooter's weapons for 3 s (`aoSelfJam`).
+- **Chrome-cookers** (Rare; 5mm, Heavy): 15% `CyberwareMalfunction`, x0.9 damage.
+- **Meat-grinders** (Epic; 45, 12mm, 12ga, 4ga): 30% `Bleeding`, x3 `HitDismembermentFactor`.
+
+Scavengers (all roll through `AmmoOverhaul.roll.Scavengers`: 0.70 to 1.15, 8% duds at x0.25, 5% hot at x1.5):
+
+- **Reloads** (Common; 12mm, 45, 9mm): half the Common round's price, nothing else.
+- **Gutter Lead** (Rare; 12mm, 45, 9mm): 25% `Bleeding`, 25% `Poisoned`, x0.5 damage.
+- **Parts-pullers** (Rare; 12mm, 45): V's kill leaves 2 Rare components on the body (`aoPartsPuller`).
+
+Arasaka:
+
+- **Shinobi** (Rare; 9mm, 45): `CanSilentKill`, +0.5 `HeadshotDamageMultiplier`, x0.9 range.
+- **Kata** (Epic; 45, 556, 762, 5mm): roll 0.99 to 1.01, x0.7 recoil, x0.7 `AimInTime`.
+- **Kansatsu** (Epic; 10mm, 20mm, 25mm): the Ping tag on every hit, x0.5 `SmartGunAdsTimeToLock` and `SmartGunHipTimeToLock` at all times. The tag doesn't shorten the lock: the engine has no per-target lock time.
+
 ### Ammo ideas so far
 
 - **Dumbfire (Smart):** much more damage, guidance removed entirely, so the smart gun becomes a

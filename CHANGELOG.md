@@ -3,6 +3,27 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
+## Unreleased
+
+- Faction rounds: 26 new rounds, 175 in all. Maelstrom, Scavengers and Arasaka each have their own,
+  in their own packaging, marked [Mael], [Scav] or [Ara] in the name. They come from that faction's
+  NPCs, who carry and fire them and drop what's left on them. They can't be crafted.
+  - Redliners (.45, 5.56, 7.62): +25% fire rate, +40% recoil and spread, and a 2% chance per shot
+    to jam your weapons for 3 seconds.
+  - Chrome-cookers (light and heavy rail): 15% chance of a cyberware malfunction. -10% damage.
+  - Meat-grinders (.45, 12mm, 12-gauge, 4-gauge): 30% chance to cause bleeding, three times the
+    dismemberment chance.
+  - Reloads (9mm, .45, 12mm): half the price of a Common round. Damage varies -30% to +15%, with
+    duds and hot rounds.
+  - Gutter Lead (9mm, .45, 12mm): 25% chance to cause bleeding, 25% chance to poison. -50% damage.
+  - Parts-pullers (.45, 12mm): a kill leaves 2 Rare crafting components on the body.
+  - Kata (.45, 5.56, 7.62, light rail): damage varies only 1% either way. 30% less recoil, 30%
+    faster aim.
+  - Kansatsu (10mm, 20mm, 25mm): targets hit show through walls for 5 seconds. Locks on twice as
+    fast.
+  - Shinobi (9mm, .45): silent kills, +50% headshot damage. -10% range.
+- Gun shops don't sell faction rounds. Containers don't hold them.
+
 ## 0.5.0
 
 - A Legendary tier: 14 new rounds to find, 149 in all. Elite enemies, bosses and MaxTac sometimes
