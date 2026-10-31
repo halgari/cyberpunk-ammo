@@ -7,7 +7,7 @@ import os
 import pathlib
 import random
 
-from PIL import Image, ImageChops, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 TEX = pathlib.Path(os.environ.get("AO_ASSETS", os.path.expanduser("~/.cache/ammo-overhaul/assets"))) / "faction"
 RED = (196, 18, 22)
@@ -429,4 +429,140 @@ def tub_label(path, w, h):
     name = fit(decal("animals_dec_v01.png"), w * 0.3, h * 0.6)
     centre(im, name, w * 0.67, h * 0.34)
     centre(im, fit(decal("animals_dec_v06.png"), w * 0.12, h * 0.42), w * 0.67, h * 0.74)
+    im.convert("RGB").save(path)
+
+
+BOLD = "/usr/share/fonts/gsfonts/NimbusSansNarrow-Bold.otf"
+TYPED = "/usr/share/fonts/gsfonts/NimbusMonoPS-Bold.otf"
+HAND = "/usr/share/fonts/gsfonts/Z003-MediumItalic.otf"
+
+
+def lettered(text, width, font=BOLD, spacing=0):
+    """`text` as an L mask `width` wide."""
+    f = ImageFont.truetype(font, 200)
+    box = f.getbbox(text)
+    tw = box[2] - box[0] + spacing * (len(text) - 1)
+    im = Image.new("L", (tw + 20, box[3] + 20))
+    dr = ImageDraw.Draw(im)
+    x = 10
+    for c in text:
+        dr.text((x, 0), c, fill=255, font=f)
+        x += f.getlength(c) + spacing
+    im = im.crop(im.getbbox())
+    return im.resize((round(width), max(1, round(im.height * width / im.width))), Image.LANCZOS)
+
+
+def stamp(im, mask, colour, cx, cy):
+    ink = Image.new("RGBA", mask.size, (*colour, 255))
+    ink.putalpha(mask)
+    centre(im, ink, cx, cy)
+
+
+def bar_front(path, w, h, seed):
+    """The Barghest can's front: yellow stencil on sand paint, worn by a lot of Dogtown."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (104, 92, 62, 255))
+    stamp(im, wear(spray(lettered("BARGHEST", w * 0.74, spacing=12), 3), rng, 160), (214, 176, 48), w / 2, h * 0.4)
+    stamp(im, wear(lettered("PROPERTY OF THE COLONEL", w * 0.5, TYPED), rng, 60), (214, 176, 48), w / 2, h * 0.76)
+    im.convert("RGB").save(path)
+
+
+def bar_lid(path, w, h, seed):
+    """The can's lid, inside: the sand paint and a tally of what it cost, in marker."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (92, 82, 56, 255))
+    stamp(im, wear(spray(lettered("HANSEN'S CUT", w * 0.66, spacing=8), 2), rng, 90), (20, 20, 18), w / 2, h * 0.3)
+    stamp(im, lettered("Tax paid", w * 0.6, HAND), (150, 24, 20), w / 2, h * 0.68)
+    im.convert("RGB").save(path)
+
+
+def vdb_patch(path, w, h, seed):
+    """The pouch's patch: the Voodoo Boys' chalk mark on dark cloth."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (16, 26, 32, 255))
+    m = wear(fit(decal("voodoo_boys_dec_v5.png"), w * 0.86, h * 0.86).getchannel("A"), rng, 40)
+    stamp(im, m, (70, 214, 200), w / 2, h / 2)
+    im.convert("RGB").save(path)
+
+
+def phone_card(path, w, h):
+    """The rotary dial's centre card, red on cream."""
+    im = Image.new("RGBA", (w, h), (226, 214, 184, 255))
+    stamp(im, lettered("COLLECT", w * 0.66, TYPED), (158, 16, 22), w / 2, h * 0.36)
+    stamp(im, lettered("IT'S FOR YOU", w * 0.56, TYPED), (20, 20, 22), w / 2, h * 0.6)
+    im.convert("RGB").save(path)
+
+
+def wraith_wall(path, w, h, seed):
+    """The jerrycan's side: rust red paint, the gang's name sprayed by hand."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (112, 42, 26, 255))
+    stamp(im, wear(spray(lettered("WRAITHS", w * 0.8, spacing=10), 3), rng, 220), (222, 214, 196), w / 2, h * 0.5)
+    im.convert("RGB").save(path)
+
+
+def nomad_lid(path, w, h, seed):
+    """The tobacco tin's paper label, gone yellow: the clan's bone horse over its name."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (214, 194, 150, 255))
+    dr = ImageDraw.Draw(im)
+    k = min(w, h)
+    keyline(dr, w, h, k // 22, (92, 40, 24), max(3, k // 120))
+    centre(im, fit(decal("aldecaldos_j.png"), w * 0.56, h * 0.6), w / 2, h * 0.4)
+    centre(im, fit(decal("aldecaldos_b.png"), w * 0.78, h * 0.26), w / 2, h * 0.8)
+    im.convert("RGB").save(path)
+
+
+def mox_plate(path, w, h):
+    """The clutch's clasp plate, engraved."""
+    im = Image.new("RGBA", (w, h), (214, 170, 92, 255))
+    stamp(im, lettered("THE MOX", w * 0.82, spacing=10), (70, 40, 20), w / 2, h / 2)
+    im.convert("RGB").save(path)
+
+
+def ncpd_label(path, w, h, seed):
+    """The evidence bag's label: the department's blue, the form, and a tired officer's pen."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (236, 234, 226, 255))
+    dr = ImageDraw.Draw(im)
+    blue = (24, 44, 104)
+    dr.rectangle([0, 0, w, h * 0.3], fill=blue)
+    stamp(im, lettered("NCPD EVIDENCE", w * 0.8, spacing=6), (236, 234, 226), w / 2, h * 0.15)
+    for k, line in enumerate(("CASE NO", "OFFICER", "CHAIN OF CUSTODY")):
+        y = h * (0.44 + k * 0.2)
+        m = lettered(line, w * (0.14 + 0.012 * len(line)), TYPED)
+        stamp(im, m, blue, w * 0.05 + m.width / 2, y)
+        dr.line([(w * 0.42, y + h * 0.05), (w * 0.95, y + h * 0.05)], fill=blue, width=max(2, h // 90))
+    stamp(im, lettered("oops", w * 0.2, HAND), (30, 30, 34), w * 0.7, h * 0.42)
+    im.convert("RGB").save(path)
+
+
+def kang_lid(path, w, h):
+    """The device case's lid: white, the game's own Kang Tao wordmark and red tag, a thin teal line."""
+    im = Image.new("RGBA", (w, h), (226, 228, 230, 255))
+    sheet = Image.open(TEX / "w_kangtao_decal_d01.png").convert("RGBA")
+    word_ = sheet.crop((0, 112, 660, 218)).getchannel("A")
+    word_ = fit(word_.crop(word_.point(lambda v: 255 if v > 60 else 0).getbbox()), w * 0.66, h * 0.34)
+    stamp(im, word_, (24, 26, 30), w * 0.42, h * 0.42)
+    tag = fit(sheet.crop((0, 830, 110, 1010)), w * 0.13, h * 0.76)
+    centre(im, tag, w * 0.88, h * 0.5)
+    ImageDraw.Draw(im).rectangle([w * 0.06, h * 0.8, w * 0.74, h * 0.82], fill=(40, 170, 190))
+    im.convert("RGB").save(path)
+
+
+def nusa_lid(path, w, h, seed):
+    """The document box's lid: grey card, a typed file number, and CLASSIFIED stamped on crooked."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (168, 168, 164, 255))
+    dr = ImageDraw.Draw(im)
+    m = lettered("CLASSIFIED", w * 0.66, spacing=6)
+    box = Image.new("L", (m.width + w // 12, m.height + h // 8))
+    bd = ImageDraw.Draw(box)
+    bd.rectangle([0, 0, box.width - 1, box.height - 1], outline=255, width=max(6, h // 50))
+    box.paste(m, ((box.width - m.width) // 2, (box.height - m.height) // 2))
+    box = wear(box.rotate(rng.uniform(5, 9), expand=True, resample=Image.BICUBIC), rng, 300)
+    stamp(im, box, (150, 20, 22), w / 2, h * 0.56)
+    t = lettered("NUSA FILE 77-0  LOT: N/A", w * 0.56, TYPED)
+    stamp(im, t, (30, 30, 32), w * 0.04 + t.width / 2, h * 0.12)
+    dr.line([(w * 0.04, h * 0.2), (w * 0.96, h * 0.2)], fill=(30, 30, 32), width=max(2, h // 120))
     im.convert("RGB").save(path)

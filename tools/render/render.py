@@ -447,6 +447,16 @@ FACTION_ROUND = {
     "Militech": dict(pistol=dict(case_mat="steel", tip="yellow", tipfrac=0.98), rifle=dict(case_mat="steel", tip="yellow", tipfrac=0.7),
                      shell=dict(color="black", band="yellow"), rail=dict(coil="yellow", core="gunmetal")),
     "Animals": dict(pistol=dict(tip="red", tipfrac=0.98), rail=dict(coil="red", core="gunmetal")),
+    "Barghest": dict(pistol=dict(case_mat="tarnished"), rifle=dict(case_mat="tarnished", tip="red", tipfrac=0.7),
+                     rail=dict(coil="red", core="gunmetal")),
+    "VoodooBoys": dict(pistol=dict(case_mat="black", tip="cyan", tipfrac=0.98), rail=dict(coil="cyan", core="gunmetal")),
+    "Wraiths": dict(pistol=dict(case_mat="tarnished"), shell=dict(color="red", band="brass"), rail=dict(coil="green", core="gunmetal")),
+    "Aldecaldos": dict(pistol=dict(tip="copper", tipfrac=0.98)),
+    "TheMox": dict(pistol=dict(case_mat="nickel", tip="pink", tipfrac=0.98), shell=dict(color="pink")),
+    "NCPD": dict(pistol=dict(case_mat="steel", tip="blue", tipfrac=0.98), shell=dict(color="blue")),
+    "KangTao": {},
+    "NUSA": dict(pistol=dict(case_mat="black"), rifle=dict(case_mat="black", tip="purple", tipfrac=0.7),
+                 rail=dict(coil="purple", core="gunmetal")),
 }
 
 
@@ -500,6 +510,55 @@ def faction_form(tmp, name, shape, faction, take, lines, i):
         label = tmp / f"{name}-label.png"
         fa.tub_label(label, 1800, round(1800 * H * 0.82 / (Rt * 3.2)))
         return dict(form="animal_tub", tub=dict(R=Rt, H=H), rad=R, label=str(label), seed=i + 1)
+    if faction == "Barghest":
+        case = case_dims(L, R)
+        case = dict(case, H=max(case["H"] * 1.5, case["W"] * 0.42))
+        front, lid = tmp / f"{name}-front.png", tmp / f"{name}-lid.png"
+        fa.bar_front(front, 1536, round(1536 * case["H"] * 0.8 / (case["W"] * 0.9)), i + 1)
+        fa.bar_lid(lid, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="bar_can", case=case, R=R, front=str(front), lid=str(lid), seed=i + 1)
+    if faction == "VoodooBoys" and name.endswith("collectcall"):
+        card = tmp / f"{name}-card.png"
+        fa.phone_card(card, 800, 800)
+        return dict(form="vdb_phone", S=max(L * 1.5, R * 12), R=R, card=str(card), seed=i + 1)
+    if faction == "VoodooBoys":
+        Rp = max(L * 0.72, R * 5)
+        patch = tmp / f"{name}-patch.png"
+        fa.vdb_patch(patch, 800, 800, i + 1)
+        return dict(form="vdb_pouch", Rp=Rp, R=R, patch=str(patch), seed=i + 1)
+    if faction == "Wraiths":
+        W = max(L * 1.7, R * 10)
+        D, H = W * 0.62, W * 0.92
+        wall = tmp / f"{name}-wall.png"
+        fa.wraith_wall(wall, 1400, round(1400 * H * 0.5 / (W * 0.8)), i + 1)
+        return dict(form="wraith_can", can=dict(W=W, D=D, H=H), R=R, wall=str(wall), seed=i + 1)
+    if faction == "Aldecaldos":
+        case = case_dims(L, R)
+        case = dict(case, H=case["H"] * 0.8)
+        label = tmp / f"{name}-label.png"
+        fa.nomad_lid(label, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="nomad_tin", case=case, R=R, label=str(label), seed=i + 1)
+    if faction == "TheMox":
+        case = case_dims(L, R)
+        plate = tmp / f"{name}-plate.png"
+        fa.mox_plate(plate, 640, 200)
+        return dict(form="mox_clutch", case=case, R=R, plate=str(plate), seed=i + 1)
+    if faction == "NCPD":
+        case = case_dims(L, R)
+        label = tmp / f"{name}-label.png"
+        fa.ncpd_label(label, 1200, 620, i + 1)
+        return dict(form="ncpd_bag", case=case, R=R, label=str(label), seed=i + 1)
+    if faction == "KangTao":
+        case = case_dims(L, R)
+        lid = tmp / f"{name}-lid.png"
+        fa.kang_lid(lid, 1200, round(1200 * case["D"] / case["W"]))
+        return dict(form="kang_case", case=case, R=R, lid=str(lid), seed=i + 1)
+    if faction == "NUSA":
+        case = case_dims(L, R)
+        case = dict(case, H=max(case["H"] * 1.3, case["W"] * 0.32))
+        lid = tmp / f"{name}-lid.png"
+        fa.nusa_lid(lid, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="nusa_box", case=case, R=R, lid=str(lid), seed=i + 1)
     if faction == "Maelstrom":
         d = R * 2 * 1.03
         cols = max(4, round(1.8 * L / d))
