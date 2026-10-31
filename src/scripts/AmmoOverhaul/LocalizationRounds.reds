@@ -27,8 +27,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-CookOff-Desc"); ArrayPush(t, "Reactive filler in the core. Drop someone and everything on their belt goes off with them, so step back. Works on your belt too, if you're holding a live one.\n\nA kill sets off a blast at the body that hurts everyone close by. A hit on you sets off your own grenade if it's charged.");
     ArrayPush(t, "AO-Ammo-9mm-Reloads"); ArrayPush(t, "9mm Reloads [Scav]");
     ArrayPush(t, "AO-Ammo-Reloads-Desc"); ArrayPush(t, "Recycled brass from mixed lots, reloaded by hand. Cheap, and you never know what you'll get.\n\nDamage varies -30% to +15%. 8% are duds that hit for a quarter. 5% run hot and hit for +50%.");
-    ArrayPush(t, "AO-Ammo-9mm-Dirties"); ArrayPush(t, "9mm Dirties [Scav]");
-    ArrayPush(t, "AO-Ammo-Dirties-Desc"); ArrayPush(t, "Rough hand-cast bullets, poured from whatever lead was lying around. Nobody wants one of these left in them.\n\n25% chance to cause bleeding. 25% chance to poison. -50% damage. Damage swings wide, with duds and hot rounds.");
+    ArrayPush(t, "AO-Ammo-9mm-GutterLead"); ArrayPush(t, "9mm Gutter Lead [Scav]");
+    ArrayPush(t, "AO-Ammo-GutterLead-Desc"); ArrayPush(t, "Rough hand-cast bullets, poured from whatever lead was lying around. Nobody wants one of these left in them.\n\n25% chance to cause bleeding. 25% chance to poison. -50% damage. Damage swings wide, with duds and hot rounds.");
     ArrayPush(t, "AO-Ammo-9mm-Shinobi"); ArrayPush(t, "9mm Shinobi [Ara]");
     ArrayPush(t, "AO-Ammo-Shinobi-Desc"); ArrayPush(t, "Quiet loads for close work. Put one in the head and nobody hears about it.\n\nSilent kills. +50% headshot damage. -10% range.");
     ArrayPush(t, "AO-Ammo-45-SteelCore"); ArrayPush(t, ".45 Steel-Core");
@@ -47,7 +47,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-45-MeatGrinders"); ArrayPush(t, ".45 Meat-grinders [Mael]");
     ArrayPush(t, "AO-Ammo-MeatGrinders-Desc"); ArrayPush(t, "Serrated loads that chew up whatever they hit. Bodies come apart, and what's left bleeds.\n\n30% chance to cause bleeding. Three times the dismemberment chance.");
     ArrayPush(t, "AO-Ammo-45-Reloads"); ArrayPush(t, ".45 Reloads [Scav]");
-    ArrayPush(t, "AO-Ammo-45-Dirties"); ArrayPush(t, ".45 Dirties [Scav]");
+    ArrayPush(t, "AO-Ammo-45-GutterLead"); ArrayPush(t, ".45 Gutter Lead [Scav]");
     ArrayPush(t, "AO-Ammo-45-PartsPullers"); ArrayPush(t, ".45 Parts-pullers [Scav]");
     ArrayPush(t, "AO-Ammo-PartsPullers-Desc"); ArrayPush(t, "Scav loads that go easy on the hardware. Drop someone with one and more of what they carry is worth stripping.\n\nA kill leaves 2 Rare crafting components on the body. Damage swings wide, with duds and hot rounds.");
     ArrayPush(t, "AO-Ammo-45-Kata"); ArrayPush(t, ".45 Kata [Ara]");
@@ -66,7 +66,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-12mm-CookOff"); ArrayPush(t, "12mm Cook-off");
     ArrayPush(t, "AO-Ammo-12mm-MeatGrinders"); ArrayPush(t, "12mm Meat-grinders [Mael]");
     ArrayPush(t, "AO-Ammo-12mm-Reloads"); ArrayPush(t, "12mm Reloads [Scav]");
-    ArrayPush(t, "AO-Ammo-12mm-Dirties"); ArrayPush(t, "12mm Dirties [Scav]");
+    ArrayPush(t, "AO-Ammo-12mm-GutterLead"); ArrayPush(t, "12mm Gutter Lead [Scav]");
     ArrayPush(t, "AO-Ammo-12mm-PartsPullers"); ArrayPush(t, "12mm Parts-pullers [Scav]");
     ArrayPush(t, "AO-Ammo-556-SteelCore"); ArrayPush(t, "5.56 Steel-Core");
     ArrayPush(t, "AO-Ammo-556-Incendiary"); ArrayPush(t, "5.56 Incendiary");

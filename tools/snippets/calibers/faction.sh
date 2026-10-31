@@ -66,14 +66,14 @@ rolls() {
   r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Normal', 'Maelstrom', 20000)")
   within "a Normal Maelstrom's .45 rolls Redliners about 10%" "$(share "$r" Redliners)" 8.5 11.5
   is "a Normal rolls no faction Epic" "$(share "$r" MeatGrinders)" 0.0
-  is "no other faction's round" "$(share "$r" Dirties)" 0.0
+  is "no other faction's round" "$(share "$r" GutterLead)" 0.0
   r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', 'Scavengers', 20000)")
-  within "an Elite Scav's .45 rolls a Rare or Common faction round, 25% of what's past Legendary" "$(awk "BEGIN { print $(share "$r" Reloads) + $(share "$r" Dirties) + $(share "$r" PartsPullers) }")" 21 27
-  within "Reloads, Dirties and Parts-pullers come up alike" "$(share "$r" Reloads)" 6.5 9.5
+  within "an Elite Scav's .45 rolls a Rare or Common faction round, 25% of what's past Legendary" "$(awk "BEGIN { print $(share "$r" Reloads) + $(share "$r" GutterLead) + $(share "$r" PartsPullers) }")" 21 27
+  within "Reloads, Gutter Lead and Parts-pullers come up alike" "$(share "$r" Reloads)" 6.5 9.5
   r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Boss', 'Arasaka', 20000)")
   within "a Boss Arasaka's .45 rolls Kata about 15% (after Legendary)" "$(share "$r" Kata)" 12 15.5
   r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', '', 20000)")
-  is "no faction, no faction round" "$(awk "BEGIN { print $(share "$r" Redliners) + $(share "$r" Dirties) + $(share "$r" Kata) }")" 0
+  is "no faction, no faction round" "$(awk "BEGIN { print $(share "$r" Redliners) + $(share "$r" GutterLead) + $(share "$r" Kata) }")" 0
   within "no faction: an Elite still rolls Legendary about 3%" "$(share "$r" CookOff)" 2 4
   r=$(lua "return $SYS:DebugFactionPick('Power_45', 'MaxTac', 'Arasaka', 20000)")
   is "MaxTac gets no faction round" "$(share "$r" Kata)" 0.0
@@ -83,12 +83,12 @@ rolls() {
   chances 1.0 0.0
   spawn 0.0 Ammo.AO_45_Redliners Character.AO_Test_Mael_Unity && pass "a Maelstrom NPC carries Redliners"
   despawn
-  AO_TRIES=20 spawn 0.0 Ammo.AO_45_Dirties Character.AO_Test_Scav_Unity && pass "a Scav NPC carries Dirties"
+  AO_TRIES=20 spawn 0.0 Ammo.AO_45_GutterLead Character.AO_Test_Scav_Unity && pass "a Scav NPC carries Gutter Lead"
   despawn
   spawn 0.0 Ammo.AO_45_Shinobi Character.AO_Test_Ara_Unity && pass "an Arasaka NPC carries Shinobi"
   despawn
   spawn 0.0 "" Character.AO_Test_Plain_Unity
-  is "an unaffiliated NPC gets none with the chance at 1" "$(qty Ammo.AO_45_Redliners)$(qty Ammo.AO_45_Shinobi)$(qty Ammo.AO_45_Dirties)" 000
+  is "an unaffiliated NPC gets none with the chance at 1" "$(qty Ammo.AO_45_Redliners)$(qty Ammo.AO_45_Shinobi)$(qty Ammo.AO_45_GutterLead)" 000
   despawn; chances
 }
 
@@ -97,7 +97,7 @@ lists() {
   local v r
   for v in Ammo.HandgunAmmo Ammo.RifleAmmo Ammo.ShotgunAmmo Ammo.SniperRifleAmmo; do
     r=$(lua "return tostring($SYS:DebugSpread('$v', 100000, 4))")
-    [[ -n $r && $r != *Redliners* && $r != *Reloads* && $r != *Kata* && $r != *Kansatsu* && $r != *Dirties* ]] && pass "$v spread holds no faction round" || fail "$v spread: $r"
+    [[ -n $r && $r != *Redliners* && $r != *Reloads* && $r != *Kata* && $r != *Kansatsu* && $r != *GutterLead* ]] && pass "$v spread holds no faction round" || fail "$v spread: $r"
   done
 }
 
@@ -144,7 +144,7 @@ oneGun() {
 reloads() {
   local r; r=$(lua "return $SYS:DebugRollFor('Ammo.AO_45_Reloads', '', false)")
   echo "  Reloads roll: $r"
-  is "Dirties take the same Scav roll" "$(lua "return $SYS:DebugRollFor('Ammo.AO_45_Dirties', '', false)")" "$r"
+  is "Gutter Lead take the same Scav roll" "$(lua "return $SYS:DebugRollFor('Ammo.AO_45_GutterLead', '', false)")" "$r"
   [[ $r == 0.7* ]] && pass "Scav roll starts at 0.70" || fail "Scav roll: $r"
   r=$(lua "return $SYS:DebugRollFor('Ammo.AO_45_Kata', '', false)")
   [[ $r == 0.99* ]] && pass "Kata's own narrow roll ($r)" || fail "Kata roll: $r"

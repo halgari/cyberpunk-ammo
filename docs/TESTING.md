@@ -44,7 +44,7 @@ check, one line each:
 - **Shinobi (9mm, .45):** a headshot kill leaves others unalerted, and the shot sounds suppressed.
 - **Subsonic (9mm, .45, 5.56):** the shot sounds like a silencer's, the muzzle flash is the silenced
   one, and a kill leaves others unalerted.
-- **Dirties (9mm, .45, 12mm):** bleed and poison show on hit.
+- **Gutter Lead (9mm, .45, 12mm):** bleed and poison show on hit.
 - **Chrome-cookers (5mm, heavy rail):** a target's cyberware malfunctions now and then.
 - **Reloads and Kata:** damage numbers spread as their text says.
 - **Tactician:** Slugs and Birdshot after the minimum spread fix; a slug group is tight at 20 m.

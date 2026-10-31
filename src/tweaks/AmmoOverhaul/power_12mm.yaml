@@ -9,8 +9,8 @@ AmmoOverhaul.Power_12mm.feedElement: "Items.AO_AmmoFeed_Power_12mm_Element"
 AmmoOverhaul.Power_12mm.defaultAmmo: "Ammo.AO_12mm_Ball"
 AmmoOverhaul.Power_12mm.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_12mm.lootWeight: 0.1
-AmmoOverhaul.Power_12mm.selectors: ["Items.AO_Feed_12mm_Ball", "Items.AO_Feed_12mm_Mushrooms", "Items.AO_Feed_12mm_PlusP", "Items.AO_Feed_12mm_SteelCore", "Items.AO_Feed_12mm_Incendiary", "Items.AO_Feed_12mm_Rubber", "Items.AO_Feed_12mm_Hardcast", "Items.AO_Feed_12mm_Penetrator", "Items.AO_Feed_12mm_Match", "Items.AO_Feed_12mm_Toxin", "Items.AO_Feed_12mm_Shredders", "Items.AO_Feed_12mm_CookOff", "Items.AO_Feed_12mm_MeatGrinders", "Items.AO_Feed_12mm_Reloads", "Items.AO_Feed_12mm_Dirties", "Items.AO_Feed_12mm_PartsPullers"]
-AmmoOverhaul.Power_12mm.selectorAmmo: ["Ammo.AO_12mm_Ball", "Ammo.AO_12mm_HollowPoint", "Ammo.AO_12mm_PlusP", "Ammo.AO_12mm_SteelCore", "Ammo.AO_12mm_Incendiary", "Ammo.AO_12mm_Rubber", "Ammo.AO_12mm_Hardcast", "Ammo.AO_12mm_Penetrator", "Ammo.AO_12mm_Match", "Ammo.AO_12mm_Toxin", "Ammo.AO_12mm_Shredders", "Ammo.AO_12mm_CookOff", "Ammo.AO_12mm_MeatGrinders", "Ammo.AO_12mm_Reloads", "Ammo.AO_12mm_Dirties", "Ammo.AO_12mm_PartsPullers"]
+AmmoOverhaul.Power_12mm.selectors: ["Items.AO_Feed_12mm_Ball", "Items.AO_Feed_12mm_Mushrooms", "Items.AO_Feed_12mm_PlusP", "Items.AO_Feed_12mm_SteelCore", "Items.AO_Feed_12mm_Incendiary", "Items.AO_Feed_12mm_Rubber", "Items.AO_Feed_12mm_Hardcast", "Items.AO_Feed_12mm_Penetrator", "Items.AO_Feed_12mm_Match", "Items.AO_Feed_12mm_Toxin", "Items.AO_Feed_12mm_Shredders", "Items.AO_Feed_12mm_CookOff", "Items.AO_Feed_12mm_MeatGrinders", "Items.AO_Feed_12mm_Reloads", "Items.AO_Feed_12mm_GutterLead", "Items.AO_Feed_12mm_PartsPullers"]
+AmmoOverhaul.Power_12mm.selectorAmmo: ["Ammo.AO_12mm_Ball", "Ammo.AO_12mm_HollowPoint", "Ammo.AO_12mm_PlusP", "Ammo.AO_12mm_SteelCore", "Ammo.AO_12mm_Incendiary", "Ammo.AO_12mm_Rubber", "Ammo.AO_12mm_Hardcast", "Ammo.AO_12mm_Penetrator", "Ammo.AO_12mm_Match", "Ammo.AO_12mm_Toxin", "Ammo.AO_12mm_Shredders", "Ammo.AO_12mm_CookOff", "Ammo.AO_12mm_MeatGrinders", "Ammo.AO_12mm_Reloads", "Ammo.AO_12mm_GutterLead", "Ammo.AO_12mm_PartsPullers"]
 AmmoOverhaul.Power_12mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 6, 7, 5, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_12mm.craftBatch: 60
@@ -742,8 +742,8 @@ Items.AO_Feed_12mm_Reloads:
   iconPath: AO_12mm_Reloads
   quality: Quality.Common
 
-# 12mm Dirties [Scav] (Rare)
-Ammo.AO_12mm_Dirties:
+# 12mm Gutter Lead [Scav] (Rare)
+Ammo.AO_12mm_GutterLead:
   $base: Ammo.AO_12mm_HollowPoint
   quality: Quality.Rare
   # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
@@ -759,25 +759,25 @@ Ammo.AO_12mm_Dirties:
       statType: BaseStats.Price
       modifierType: Multiplier
       value: 2
-  displayName: LocKey#AO-Ammo-12mm-Dirties
-  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
-  iconPath: AO_12mm_Dirties
+  displayName: LocKey#AO-Ammo-12mm-GutterLead
+  localizedDescription: LocKey#AO-Ammo-GutterLead-Desc
+  iconPath: AO_12mm_GutterLead
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
 
-Ammo.AO_12mm_Dirties.aoFaction: "Scavengers"
-Ammo.AO_12mm_Dirties.aoEffects: ["BaseStatusEffect.Bleeding", "BaseStatusEffect.Poisoned"]
-Ammo.AO_12mm_Dirties.aoEffectChances: [0.25, 0.25]
+Ammo.AO_12mm_GutterLead.aoFaction: "Scavengers"
+Ammo.AO_12mm_GutterLead.aoEffects: ["BaseStatusEffect.Bleeding", "BaseStatusEffect.Poisoned"]
+Ammo.AO_12mm_GutterLead.aoEffectChances: [0.25, 0.25]
 
-UIIcon.AO_12mm_Dirties:
+UIIcon.AO_12mm_GutterLead:
   $type: UIIcon
-  atlasPartName: ao_12mm_dirties
+  atlasPartName: ao_12mm_gutterlead
   atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
 
-Items.AO_Feed_12mm_Dirties:
+Items.AO_Feed_12mm_GutterLead:
   $base: Items.AO_Feed_12mm_Ball
-  displayName: LocKey#AO-Ammo-12mm-Dirties
-  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
-  iconPath: AO_12mm_Dirties
+  displayName: LocKey#AO-Ammo-12mm-GutterLead
+  localizedDescription: LocKey#AO-Ammo-GutterLead-Desc
+  iconPath: AO_12mm_GutterLead
   quality: Quality.Rare
   statModifiers:
     - !append
@@ -1176,9 +1176,9 @@ Ammo.AO_12mm_Reloads.aoScrapRounds: 60
 Ammo.AO_12mm_Reloads.aoScrapGive: 1
 Ammo.AO_12mm_Reloads.aoRecipe: ""
 
-Ammo.AO_12mm_Dirties.aoScrapRounds: 60
-Ammo.AO_12mm_Dirties.aoScrapGive: 1
-Ammo.AO_12mm_Dirties.aoRecipe: ""
+Ammo.AO_12mm_GutterLead.aoScrapRounds: 60
+Ammo.AO_12mm_GutterLead.aoScrapGive: 1
+Ammo.AO_12mm_GutterLead.aoRecipe: ""
 
 Ammo.AO_12mm_PartsPullers.aoScrapRounds: 60
 Ammo.AO_12mm_PartsPullers.aoScrapGive: 1

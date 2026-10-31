@@ -132,7 +132,7 @@
     70
    ]
   ],
-  "Dirties": [
+  "GutterLead": [
    [
     110,
     100,
@@ -779,16 +779,16 @@
    "tier": 7,
    "faction": "Scavengers"
   },
-  "9mm-dirties": {
+  "9mm-gutterlead": {
    "shape": "P9",
    "over": {
     "jacket": "lead",
     "nose": "flat"
    },
-   "look": "Dirties",
+   "look": "GutterLead",
    "label": [
     "9MM",
-    "DIRTIES"
+    "GUTTER LEAD"
    ],
    "tier": 5,
    "faction": "Scavengers"
@@ -989,16 +989,16 @@
    "tier": 7,
    "faction": "Scavengers"
   },
-  "45-dirties": {
+  "45-gutterlead": {
    "shape": "P45",
    "over": {
     "jacket": "lead",
     "nose": "flat"
    },
-   "look": "Dirties",
+   "look": "GutterLead",
    "label": [
     ".45",
-    "DIRTIES"
+    "GUTTER LEAD"
    ],
    "tier": 5,
    "faction": "Scavengers"
@@ -1204,16 +1204,16 @@
    "tier": 7,
    "faction": "Scavengers"
   },
-  "12mm-dirties": {
+  "12mm-gutterlead": {
    "shape": "P12",
    "over": {
     "jacket": "lead",
     "nose": "flat"
    },
-   "look": "Dirties",
+   "look": "GutterLead",
    "label": [
     "12MM",
-    "DIRTIES"
+    "GUTTER LEAD"
    ],
    "tier": 5,
    "faction": "Scavengers"

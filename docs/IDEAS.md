@@ -796,8 +796,9 @@ For the next release. Two or three ideas each; pick one or two per faction.
   damage-roll band with dud and hot chances. `hit-code`.
 - **Parts-pullers** (Power). A kill with this round leaves extra crafting components on the
   body. Levers: on kill, add components to the body's loot. `probe` (loot on kill).
-- **Dirties** (Power). Rough, hand-cast bullets that leave a dirty wound: bleeding plus poison,
-  a little less damage up front. Levers: Bleeding and Poisoned chances, damage down. `hit-code`.
+- **Gutter Lead** (Power). Rough, hand-cast bullets that leave a dirty wound: bleeding plus poison,
+  half damage up front. Levers: Bleeding and Poisoned chances, damage down. `hit-code`.
+- **Septics** (name saved by the user, 2026-10-30). For a future toxin round.
 
 **Arasaka**
 - **House loads** (Power and Tech). Arasaka's own spec: a very narrow damage roll, less recoil

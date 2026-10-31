@@ -422,7 +422,7 @@ KINDS = [
          calibers=["12mm", "45", "9mm"],
          stats=[],
          desc="Recycled brass from mixed lots, reloaded by hand. Cheap, and you never know what you'll get.\n\nDamage varies -30% to +15%. 8% are duds that hit for a quarter. 5% run hot and hit for +50%."),
-    dict(load="Dirties", title="Dirties", tier=FACTION_RARE, faction="Scavengers", look=((110, 100, 90), (60, 90, 40)),
+    dict(load="GutterLead", title="Gutter Lead", tier=FACTION_RARE, faction="Scavengers", look=((110, 100, 90), (60, 90, 40)),
          art={'jacket': 'lead', 'nose': 'flat'},
          calibers=["12mm", "45", "9mm"],
          stats=damage(0.50),

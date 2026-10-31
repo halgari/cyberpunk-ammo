@@ -8,8 +8,8 @@ AmmoOverhaul.Power_45.feedElement: "Items.AO_AmmoFeed_Power_45_Element"
 AmmoOverhaul.Power_45.defaultAmmo: "Ammo.AO_45_Ball"
 AmmoOverhaul.Power_45.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_45.lootWeight: 0.2
-AmmoOverhaul.Power_45.selectors: ["Items.AO_Feed_45_Ball", "Items.AO_Feed_45_Mushrooms", "Items.AO_Feed_45_PlusP", "Items.AO_Feed_45_SteelCore", "Items.AO_Feed_45_Incendiary", "Items.AO_Feed_45_Subsonic", "Items.AO_Feed_45_Bouncers", "Items.AO_Feed_45_Rubber", "Items.AO_Feed_45_Penetrator", "Items.AO_Feed_45_Match", "Items.AO_Feed_45_Toxin", "Items.AO_Feed_45_Shredders", "Items.AO_Feed_45_CookOff", "Items.AO_Feed_45_Redliners", "Items.AO_Feed_45_MeatGrinders", "Items.AO_Feed_45_Reloads", "Items.AO_Feed_45_Dirties", "Items.AO_Feed_45_PartsPullers", "Items.AO_Feed_45_Kata", "Items.AO_Feed_45_Shinobi"]
-AmmoOverhaul.Power_45.selectorAmmo: ["Ammo.AO_45_Ball", "Ammo.AO_45_HollowPoint", "Ammo.AO_45_PlusP", "Ammo.AO_45_SteelCore", "Ammo.AO_45_Incendiary", "Ammo.AO_45_Subsonic", "Ammo.AO_45_Bouncers", "Ammo.AO_45_Rubber", "Ammo.AO_45_Penetrator", "Ammo.AO_45_Match", "Ammo.AO_45_Toxin", "Ammo.AO_45_Shredders", "Ammo.AO_45_CookOff", "Ammo.AO_45_Redliners", "Ammo.AO_45_MeatGrinders", "Ammo.AO_45_Reloads", "Ammo.AO_45_Dirties", "Ammo.AO_45_PartsPullers", "Ammo.AO_45_Kata", "Ammo.AO_45_Shinobi"]
+AmmoOverhaul.Power_45.selectors: ["Items.AO_Feed_45_Ball", "Items.AO_Feed_45_Mushrooms", "Items.AO_Feed_45_PlusP", "Items.AO_Feed_45_SteelCore", "Items.AO_Feed_45_Incendiary", "Items.AO_Feed_45_Subsonic", "Items.AO_Feed_45_Bouncers", "Items.AO_Feed_45_Rubber", "Items.AO_Feed_45_Penetrator", "Items.AO_Feed_45_Match", "Items.AO_Feed_45_Toxin", "Items.AO_Feed_45_Shredders", "Items.AO_Feed_45_CookOff", "Items.AO_Feed_45_Redliners", "Items.AO_Feed_45_MeatGrinders", "Items.AO_Feed_45_Reloads", "Items.AO_Feed_45_GutterLead", "Items.AO_Feed_45_PartsPullers", "Items.AO_Feed_45_Kata", "Items.AO_Feed_45_Shinobi"]
+AmmoOverhaul.Power_45.selectorAmmo: ["Ammo.AO_45_Ball", "Ammo.AO_45_HollowPoint", "Ammo.AO_45_PlusP", "Ammo.AO_45_SteelCore", "Ammo.AO_45_Incendiary", "Ammo.AO_45_Subsonic", "Ammo.AO_45_Bouncers", "Ammo.AO_45_Rubber", "Ammo.AO_45_Penetrator", "Ammo.AO_45_Match", "Ammo.AO_45_Toxin", "Ammo.AO_45_Shredders", "Ammo.AO_45_CookOff", "Ammo.AO_45_Redliners", "Ammo.AO_45_MeatGrinders", "Ammo.AO_45_Reloads", "Ammo.AO_45_GutterLead", "Ammo.AO_45_PartsPullers", "Ammo.AO_45_Kata", "Ammo.AO_45_Shinobi"]
 AmmoOverhaul.Power_45.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5, 6, 7, 5, 5, 6, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_45.craftBatch: 90
@@ -886,8 +886,8 @@ Items.AO_Feed_45_Reloads:
   iconPath: AO_45_Reloads
   quality: Quality.Common
 
-# .45 Dirties [Scav] (Rare)
-Ammo.AO_45_Dirties:
+# .45 Gutter Lead [Scav] (Rare)
+Ammo.AO_45_GutterLead:
   $base: Ammo.AO_45_HollowPoint
   quality: Quality.Rare
   # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
@@ -903,25 +903,25 @@ Ammo.AO_45_Dirties:
       statType: BaseStats.Price
       modifierType: Multiplier
       value: 2
-  displayName: LocKey#AO-Ammo-45-Dirties
-  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
-  iconPath: AO_45_Dirties
+  displayName: LocKey#AO-Ammo-45-GutterLead
+  localizedDescription: LocKey#AO-Ammo-GutterLead-Desc
+  iconPath: AO_45_GutterLead
   tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
 
-Ammo.AO_45_Dirties.aoFaction: "Scavengers"
-Ammo.AO_45_Dirties.aoEffects: ["BaseStatusEffect.Bleeding", "BaseStatusEffect.Poisoned"]
-Ammo.AO_45_Dirties.aoEffectChances: [0.25, 0.25]
+Ammo.AO_45_GutterLead.aoFaction: "Scavengers"
+Ammo.AO_45_GutterLead.aoEffects: ["BaseStatusEffect.Bleeding", "BaseStatusEffect.Poisoned"]
+Ammo.AO_45_GutterLead.aoEffectChances: [0.25, 0.25]
 
-UIIcon.AO_45_Dirties:
+UIIcon.AO_45_GutterLead:
   $type: UIIcon
-  atlasPartName: ao_45_dirties
+  atlasPartName: ao_45_gutterlead
   atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
 
-Items.AO_Feed_45_Dirties:
+Items.AO_Feed_45_GutterLead:
   $base: Items.AO_Feed_45_Ball
-  displayName: LocKey#AO-Ammo-45-Dirties
-  localizedDescription: LocKey#AO-Ammo-Dirties-Desc
-  iconPath: AO_45_Dirties
+  displayName: LocKey#AO-Ammo-45-GutterLead
+  localizedDescription: LocKey#AO-Ammo-GutterLead-Desc
+  iconPath: AO_45_GutterLead
   quality: Quality.Rare
   statModifiers:
     - !append
@@ -1460,9 +1460,9 @@ Ammo.AO_45_Reloads.aoScrapRounds: 90
 Ammo.AO_45_Reloads.aoScrapGive: 1
 Ammo.AO_45_Reloads.aoRecipe: ""
 
-Ammo.AO_45_Dirties.aoScrapRounds: 90
-Ammo.AO_45_Dirties.aoScrapGive: 1
-Ammo.AO_45_Dirties.aoRecipe: ""
+Ammo.AO_45_GutterLead.aoScrapRounds: 90
+Ammo.AO_45_GutterLead.aoScrapGive: 1
+Ammo.AO_45_GutterLead.aoRecipe: ""
 
 Ammo.AO_45_PartsPullers.aoScrapRounds: 90
 Ammo.AO_45_PartsPullers.aoScrapGive: 1

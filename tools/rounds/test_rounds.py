@@ -5,7 +5,7 @@ SPEC = {
     "ChromeCookers": ("Maelstrom", FACTION_RARE, {"5mm", "Heavy"}),
     "MeatGrinders": ("Maelstrom", FACTION_EPIC, {"45", "12mm", "12ga", "4ga"}),
     "Reloads": ("Scavengers", FACTION_COMMON, {"12mm", "45", "9mm"}),
-    "Dirties": ("Scavengers", FACTION_RARE, {"12mm", "45", "9mm"}),
+    "GutterLead": ("Scavengers", FACTION_RARE, {"12mm", "45", "9mm"}),
     "PartsPullers": ("Scavengers", FACTION_RARE, {"12mm", "45"}),
     "Kata": ("Arasaka", FACTION_EPIC, {"45", "556", "762", "5mm"}),
     "Kansatsu": ("Arasaka", FACTION_EPIC, {"10mm", "20mm", "25mm"}),
