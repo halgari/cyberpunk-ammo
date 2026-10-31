@@ -338,6 +338,7 @@ LEAD = lambda: principled("Lead", (0.36, 0.36, 0.38), 0.4, 0.55, bump=0.1)
 STEEL = lambda: principled("Steel", (0.58, 0.58, 0.60), 1.0, 0.24, wear=0.08, grime=0.8, scan="Metal009")
 GUNMETAL = lambda: principled("Gunmetal", (0.26, 0.26, 0.28), 1.0, 0.4, wear=0.12, grime=0.8, scan="Metal009")
 NICKEL = lambda: principled("Nickel", (0.66, 0.64, 0.60), 1.0, 0.4, bump=0.02, grime=0.7)
+TARNISHED = lambda: principled("Tarnished", (0.46, 0.33, 0.15), 1.0, 0.46, wear=0.3, grime=0.45, scan="Metal011", tile=1.5)
 # Legendary cases: polished, nearly unworn.
 POLISHED_GOLD = lambda: principled("PolishedGold", (1.0, 0.7, 0.26), 1.0, 0.12, wear=0.0, bump=0.01, grime=0.95)
 CHROME = lambda: principled("Chrome", (0.86, 0.86, 0.9), 1.0, 0.07, wear=0.0, bump=0.005, grime=0.97)
@@ -488,7 +489,7 @@ BLACK_CASE = lambda: principled("BlackCase", (0.03, 0.03, 0.035), 0.7, 0.35, wea
 def case_mat(s, default):
     c = s.get("case_mat")
     return {"green": GREEN_LACQUER, "nickel": NICKEL, "black": BLACK_CASE, "gold": POLISHED_GOLD,
-            "chrome": CHROME}.get(c, lambda: default)()
+            "chrome": CHROME, "steel": STEEL, "tarnished": TARNISHED}.get(c, lambda: default)()
 
 
 def bullet(s, rb, z0, length, shape):
@@ -1338,6 +1339,287 @@ def engrave(root, path, L, u0, accent):
             nt.links.new(op("MULTIPLY", rgb.outputs["Green"], 2.2), b.inputs["Emission Strength"])
 
 
+# ---------------------------------------------------------------- faction forms
+# Each is its own object, built by the round's shape (render.py faction_spec sizes the printed parts).
+TOP_VIEW = Vector((-0.42, -0.8, 1.0))
+
+
+def centred(c, yaw, L):
+    return Vector(c) - Vector((math.cos(yaw), math.sin(yaw), 0)) * L / 2
+
+
+def ara_case(spec, roundspec):
+    """Arasaka's hard case, tipped well open: a shallow black shell with no corner caps or glow, the
+    rounds lying bedded in matte foam with the crest on them, a red seam round the rim, two red
+    latches, and a white label on the lid."""
+    rnd, L, _ = make_round(roundspec)
+    # The crest faces the camera on a lying round: lying turns the round's -X up (see lay).
+    engrave(rnd, spec["print"], L, math.atan2(-0.88, -0.48), spec["accent"])
+    R = spec["R"]
+    W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
+    shell_m = principled("AraShell", (0.012, 0.012, 0.014), 0.0, 0.3, wear=0.02, bump=0.03)
+    foam_m = principled("AraFoam", (0.05, 0.05, 0.055), 0.0, 0.95, wear=0.0, bump=0.5)
+    red = principled("AraRed", (0.55, 0.012, 0.016), 0.0, 0.28, wear=0.02, bump=0.01)
+    wall = W * 0.035
+    lid_h = H * 0.45
+    OW, OD = W + 2 * wall, D + 2 * wall
+    root = bpy.data.objects.new("AraCase", None)
+    bpy.context.collection.objects.link(root)
+    base = cube("Base", (OW, OD, H), (0, 0, H / 2), shell_m, bevel=wall * 0.5)
+    cut(base, cube("BaseCut", (W, D, H), (0, 0, H / 2 + wall), None))
+    top = H - wall * 0.5
+    foam = cube("Foam", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam_m, bevel=wall * 0.1)
+    z = top + R * 0.15
+    rounds = [rnd]
+    for i in range(n):
+        y = -D / 2 + R * 0.35 + pitch * (i + 0.5)
+        cut(foam, disc("Cut", R * 1.08, L * 1.03, (0, y, z), (0, math.pi / 2, 0), foam_m))
+        ob = rnd if i == 0 else copy_tree(rnd)
+        ob.rotation_euler = (0, math.pi / 2, 0)
+        ob.location = (-L / 2, y, z)
+        rounds.append(ob)
+    hinge = bpy.data.objects.new("Hinge", None)
+    bpy.context.collection.objects.link(hinge)
+    hinge.location = (0, OD / 2, H)
+    hinge.rotation_euler = (math.radians(-spec.get("lid_angle", 118)), 0, 0)
+    lid = cube("Lid", (OW, OD, lid_h), (0, -OD / 2, lid_h / 2), shell_m, bevel=wall * 0.5)
+    cut(lid, cube("LidCut", (W, D, lid_h), (0, -OD / 2, lid_h / 2 - wall), None))
+    label = panel("Label", W * 0.96, D * 0.96, printed("Label", spec["label"], rough=0.5),
+                  (0, -OD / 2, lid_h - wall * 1.02), (math.pi, 0, 0), wall * 0.04)
+    lid_parts = [lid, label]
+    # Pressed ribs across the lid's face, the case's own shape from the back.
+    for k in (-1, 0, 1):
+        lid_parts.append(cube("Rib", (W * 0.8, wall * 0.9, wall * 0.5), (0, -OD / 2 + k * D * 0.28, lid_h), shell_m, bevel=wall * 0.2))
+    for ob in lid_parts:
+        ob.parent = hinge
+    hinge.parent = root
+    # The seam runs round the front and sides of the rim, and round the lid's mouth.
+    seam = emission("AraSeam", spec["accent"], 4.0)
+    sw = wall * 0.34
+    cube("Seam", (OW * 1.003, wall * 0.14, sw), (0, -OD / 2 - wall * 0.03, H - wall * 0.75), seam).parent = root
+    for sx in (-1, 1):
+        cube("Seam", (wall * 0.14, OD, sw), (sx * (OW / 2 + wall * 0.03), 0, H - wall * 0.75), seam).parent = root
+        cube("Seam", (wall * 0.14, OD, sw), (sx * (OW / 2 + wall * 0.03), -OD / 2, wall * 0.75), seam).parent = hinge
+        cube("Latch", (W * 0.13, wall * 0.9, H * 0.56), (sx * W * 0.27, -OD / 2 - wall * 0.3, H * 0.66), red,
+             bevel=wall * 0.2).parent = root
+    cube("Seam", (OW * 1.003, wall * 0.14, sw), (0, -OD - wall * 0.03, wall * 0.75), seam).parent = hinge
+    base.parent = foam.parent = root
+    return [root] + rounds
+
+
+def mael_can(spec, roundspec):
+    """Maelstrom's steel ammo can: worn black paint chipped to bare steel on its edges, a rolled rim,
+    pressed ribs down its sides, a wire handle on the lid hanging open behind. The front wall carries
+    the stencil and spray, drawn to the wall's shape; rounds stand in it, tips over the rim."""
+    rnd, L, rad = make_round(roundspec)
+    W, D, H, d, cols, rows = (spec["can"][k] for k in ("W", "D", "H", "d", "cols", "rows"))
+    steel = principled("CanPaint", (0.018, 0.018, 0.02), 0.2, 0.55, wear=0.25, bump=0.14, grime=0.55, scratch=0.6,
+                       edge=(0.42, 0.42, 0.44))
+    bare = STEEL()
+    wall = W * 0.018
+    OW, OD = W + 2 * wall, D + 2 * wall
+    root = bpy.data.objects.new("Can", None)
+    bpy.context.collection.objects.link(root)
+    base = cube("Base", (OW, OD, H), (0, 0, H / 2), steel, bevel=wall * 0.6)
+    cut(base, cube("BaseCut", (W, D, H), (0, 0, H / 2 + wall * 2), None))
+    base.parent = root
+    fl = wall * 1.4
+    rim = cube("Rim", (OW + 2 * fl, OD + 2 * fl, wall * 2.4), (0, 0, H - wall * 1.2), steel, bevel=wall * 0.7)
+    cut(rim, cube("RimCut", (W, D, H), (0, 0, H / 2), None))
+    rim.parent = root
+    foot = cube("Foot", (OW + fl, OD + fl, wall * 1.6), (0, 0, wall * 0.8), steel, bevel=wall * 0.5)
+    foot.parent = root
+    fy = -OD / 2 - wall * 0.08
+    fh = H - wall * 4.6
+    panel("Wall", OW * 0.985, fh, printed("Wall", spec["front"], metal=0.25, rough=0.55), (0, fy, wall * 1.7 + fh / 2),
+          (math.pi / 2, 0, 0), wall * 0.08).parent = root
+    for sx in (-1, 1):
+        for k in (-1, 0, 1):
+            cube("Rib", (wall * 0.8, D * 0.1, H * 0.74), (sx * (OW / 2 + wall * 0.2), k * D * 0.3, H * 0.49), steel,
+                 bevel=wall * 0.3).parent = root
+    # The lid hangs open behind, its handle up.
+    hinge = bpy.data.objects.new("Hinge", None)
+    bpy.context.collection.objects.link(hinge)
+    hinge.location = (0, OD / 2 + fl, H)
+    hinge.rotation_euler = (math.radians(-112), 0, 0)
+    lid_h = wall * 5
+    lid = cube("Lid", (OW + 2 * fl, OD + 2 * fl, lid_h), (0, -OD / 2 - fl, lid_h / 2), steel, bevel=wall * 0.8)
+    cut(lid, cube("LidCut", (W, D, lid_h), (0, -OD / 2 - fl, lid_h / 2 - wall), None))
+    lid.parent = hinge
+    for sx in (-1, 1):
+        cube("Lug", (wall * 2, wall * 3, wall * 3), (sx * W * 0.2, -OD / 2 - fl, lid_h + wall), bare, bevel=wall * 0.4).parent = hinge
+        disc("Knuckle", wall * 1.3, W * 0.12, (sx * W * 0.28, 0, 0), (0, math.pi / 2, 0), bare).parent = hinge
+    disc("Handle", wall * 0.75, W * 0.42, (0, -OD / 2 - fl, lid_h + wall * 2.5), (0, math.pi / 2, 0), bare).parent = hinge
+    hinge.parent = root
+    rng = random.Random(spec.get("seed", 1))
+    rounds = [rnd]
+    stand = H - L * 0.6
+    for i in range(cols):
+        for j in range(rows):
+            c = rnd if (i, j) == (0, 0) else copy_tree(rnd)
+            c.location = (-W / 2 + d * (i + 0.5), -D / 2 + d * (j + 0.5), stand + rng.uniform(-0.02, 0.05) * L)
+            c.rotation_euler = (rng.uniform(-0.05, 0.05), rng.uniform(-0.05, 0.05), rng.uniform(0, 6.28))
+            rounds.append(c)
+    return [root] + rounds
+
+
+def mixed_rounds(roundspec):
+    """A scav lot: the same round in brass, tarnished brass, steel and nickel cases. A list of
+    (root, L, rad); copies are taken from these."""
+    out = []
+    for c in (None, "tarnished", "steel", "nickel"):
+        s = dict(roundspec)
+        if c:
+            s["case_mat"] = c
+        out.append(make_round(s))
+    return out
+
+
+def scatter(rng, n, x, y, L, rad, gap=1.12, tries=4000):
+    """Places n lying rounds in x by y without touching: (cx, cy, yaw). By hand, in effect: a fixed
+    seed and capsule-distance rejection, so it lands the same each time and needs no physics."""
+    placed = []
+
+    def clear(a, b):
+        for s in (-0.42, -0.14, 0.14, 0.42):
+            for t in (-0.42, -0.14, 0.14, 0.42):
+                dx = a[0] + s * L * math.cos(a[2]) - b[0] - t * L * math.cos(b[2])
+                dy = a[1] + s * L * math.sin(a[2]) - b[1] - t * L * math.sin(b[2])
+                if dx * dx + dy * dy < (2 * rad * gap) ** 2:
+                    return False
+        return True
+    for _ in range(tries):
+        if len(placed) == n:
+            break
+        yaw = rng.uniform(0, math.pi * 2)
+        ex, ey = abs(math.cos(yaw)) * L / 2 + rad, abs(math.sin(yaw)) * L / 2 + rad
+        if ex * 2 >= x or ey * 2 >= y:
+            continue
+        p = (rng.uniform(-x / 2 + ex, x / 2 - ex), rng.uniform(-y / 2 + ey, y / 2 - ey), yaw)
+        if all(clear(p, q) for q in placed):
+            placed.append(p)
+    return placed
+
+
+def put_lying(lot, used, i, cx, cy, z, yaw, tilt=0.0):
+    """The i-th round from the lot, lying with its centre at (cx, cy, z)."""
+    root, L, _ = lot[i % len(lot)]
+    ob = root if i % len(lot) not in used else copy_tree(root)
+    used.add(i % len(lot))
+    ob.rotation_euler = (0, math.pi / 2 + tilt, yaw)
+    ob.location = centred((cx, cy, z), yaw, L)
+    return ob
+
+
+def scav_tray(spec, roundspec):
+    """Take one: a dented tin baking tray with mixed rounds rolling about loose in it."""
+    lot = mixed_rounds(roundspec)
+    L, rad = lot[0][1], spec["R"]
+    W, D = L * 2.25, L * 1.75
+    H = rad * 2.0
+    tin = principled("TrayTin", (0.34, 0.31, 0.27), 0.85, 0.5, wear=0.45, grime=0.4, bump=0.14, scan="Metal009", tile=2.0)
+    t = W * 0.012
+    root = cube("Tray", (W, D, H), (0, 0, H / 2), tin, bevel=t * 2.2)
+    cut(root, cube("TrayCut", (W - 2 * t, D - 2 * t, H), (0, 0, H / 2 + t), None))
+    lip = cube("Lip", (W + t * 5, D + t * 5, t), (0, 0, H - t / 2), tin, bevel=t * 0.4)
+    cut(lip, cube("LipCut", (W - t, D - t, H), (0, 0, H / 2), None))
+    lip.parent = root
+    rng = random.Random(spec.get("seed", 3))
+    rounds, used = [root], set()
+    i = 0
+    for layer, (n, x, y, gap) in enumerate(((14, W - 2 * t, D - 2 * t, 1.02), (4, W * 0.55, D * 0.55, 1.04))):
+        for cx, cy, yaw in scatter(rng, n, x, y, L, rad, gap, 20000):
+            rounds.append(put_lying(lot, used, i, cx, cy, t + rad + layer * rad * 1.7, yaw, layer * rng.uniform(-0.1, 0.1)))
+            i += 1
+    return rounds
+
+
+def card_sheet(name, radius, rng, t, mat):
+    """A torn-off piece of cardboard: an uneven outline, one corner folded up a little."""
+    bm = bmesh.new()
+    n = 28
+    verts = []
+    for i in range(n):
+        a = 2 * math.pi * i / n
+        # A rough rectangle with a torn edge.
+        sx, sy = math.cos(a), math.sin(a)
+        k = 1 / max(abs(sx) / 1.25, abs(sy) / 1.0)
+        r = radius * k * (1 + rng.uniform(-0.05, 0.05))
+        verts.append(bm.verts.new((r * sx, r * sy, 0)))
+    bm.faces.new(verts)
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    ob = bpy.data.objects.new(name, me)
+    bpy.context.collection.objects.link(ob)
+    me.materials.append(mat)
+    sol = ob.modifiers.new("t", "SOLIDIFY")
+    sol.thickness = t
+    return ob
+
+
+def scav_pile(spec, roundspec):
+    """Take two: a heap of mixed rounds on a torn piece of cardboard, three layers high."""
+    lot = mixed_rounds(roundspec)
+    L, rad = lot[0][1], spec["R"]
+    rng = random.Random(spec.get("seed", 5))
+    t = L * 0.04
+    card = card_sheet("Card", L * 1.2, rng, t, image_mat("Card", spec.get("card")))
+    card.location = (0, 0, t)
+    rounds, used = [card], set()
+    i = 0
+    for layer, (n, size, gap) in enumerate(((13, 2.1, 1.02), (7, 1.5, 1.02), (2, 1.1, 1.02))):
+        for x, y, yaw in scatter(rng, n, L * size * 1.1, L * size * 0.9, L, rad, gap, 20000):
+            z = t + rad + layer * rad * 1.72
+            rounds.append(put_lying(lot, used, i, x, y, z, yaw, rng.uniform(-0.06, 0.06)))
+            i += 1
+    return rounds
+
+
+def scav_flat(spec, roundspec):
+    """Take three: a cut-down cardboard flat with rounds tipped in anyhow, standing and leaning, and
+    what's in it scrawled on the front in marker."""
+    lot = mixed_rounds(roundspec)
+    W, D, H, d = (spec["flat"][k] for k in ("W", "D", "H", "d"))
+    L, rad = lot[0][1], spec["R"]
+    t = max(W, D) * 0.012
+    kraft = image_mat("Kraft", None)
+    front = image_mat("FlatFront", spec["front"])
+    root = bpy.data.objects.new("Flat", None)
+    bpy.context.collection.objects.link(root)
+    for ob in (panel("Front", W, H, front, (0, -D / 2, H / 2), (math.pi / 2, 0, 0), t, kraft, (0, -1, 0)),
+               panel("Back", W, H * 1.5, kraft, (0, D / 2, H * 0.75), (math.pi / 2, 0, 0), t),
+               panel("Left", D, H, kraft, (-W / 2, 0, H / 2), (math.pi / 2, 0, -math.pi / 2), t),
+               panel("Right", D, H, kraft, (W / 2, 0, H / 2), (math.pi / 2, 0, math.pi / 2), t),
+               panel("Bottom", W, D, kraft, (0, 0, t / 2), (0, 0, 0), t)):
+        ob.parent = root
+    rng = random.Random(spec.get("seed", 7))
+    rounds, used = [root], set()
+    cols, rows = int(W / (d * 1.32)), int(D / (d * 1.32))
+    n = 0
+    for i in range(cols):
+        for j in range(rows):
+            if rng.random() < 0.12:
+                continue
+            k = n % len(lot)
+            ob = lot[k][0] if k not in used else copy_tree(lot[k][0])
+            used.add(k)
+            n += 1
+            lean = rng.uniform(0.1, 0.32)
+            a = rng.uniform(0, 6.28)
+            ob.rotation_euler = (lean * math.cos(a), lean * math.sin(a), rng.uniform(0, 6.28))
+            ob.location = (-W / 2 + (i + 0.5) * W / cols + rng.uniform(-0.12, 0.12) * d,
+                           -D / 2 + (j + 0.5) * D / rows + rng.uniform(-0.12, 0.12) * d, t)
+            rounds.append(ob)
+    for k in range(1, 3):
+        rounds.append(put_lying(lot, used, k + 4, W * (-0.26 + 0.42 * (k - 1)), -D / 2 - rad * (3 + k), rad, rng.uniform(-0.3, 0.3)))
+    return [root] + rounds
+
+
+FACTION_FORMS = {"ara_case": ara_case, "mael_can": mael_can, "scav_tray": scav_tray, "scav_pile": scav_pile,
+                 "scav_flat": scav_flat}
+FACTION_VIEWS = {"scav_tray": TOP_VIEW, "scav_pile": TOP_VIEW}
+
 HERO_VIEW = Vector((-0.5, -1.0, 0.3))
 
 
@@ -1442,7 +1724,10 @@ def main():
         form = SPEC["box"].get("form")
         view = Vector((-0.5, -1.0, 0.55))
         axis = (0, 0, 1)
-        if form == "case":
+        if form in FACTION_FORMS:
+            objs = FACTION_FORMS[form](SPEC["box"], SPEC["round"])
+            view = FACTION_VIEWS.get(form, view)
+        elif form == "case":
             objs = case_form(SPEC["box"], SPEC["round"])
         elif form == "hero":
             objs, axis = hero_form(SPEC["box"], SPEC["round"])

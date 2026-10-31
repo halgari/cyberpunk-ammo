@@ -19,6 +19,8 @@ import tempfile
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
+import faction_art as fa
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "art" / "icons"
 FONT = "/usr/share/fonts/gsfonts/NimbusSansNarrow-Bold.otf"
@@ -112,6 +114,7 @@ _TIERS = json.loads((pathlib.Path(__file__).parent / "rounds_tiers.json").read_t
 for _load, (_panel, _stripe) in _TIERS["looks"].items():
     LOOK.setdefault(_load, (tuple(_panel), tuple(_stripe) if _stripe else None))
 LEGENDARY_NAMES = {_n for _n, _r in _TIERS["rounds"].items() if _r.get("tier") == 4}
+FACTION_OF = {_n: _r["faction"] for _n, _r in _TIERS["rounds"].items() if _r.get("faction")}
 for _name, _r in _TIERS["rounds"].items():
     ROUNDS[_name] = (dict(globals()[_r["shape"]], **_r["over"]), _r["look"], _r["label"])
 
@@ -429,6 +432,45 @@ def form_art(tmp, name, shape, st, lines, i):
                 case=case, plate_aspect=640 / 260, tamper_aspect=160 / 800)
 
 
+# Each faction's rounds, over the load's art, by round shape (docs/superpowers/specs/2026-10-30-faction-rounds-design.md, Art).
+FACTION_ROUND = {
+    "Maelstrom": dict(pistol=dict(case_mat="black", tip="red", tipfrac=0.98), rifle=dict(case_mat="black", tip="red", tipfrac=0.7),
+                      shell=dict(color="black", band="red"), rail=dict(coil="red", core="gunmetal")),
+    "Arasaka": dict(pistol=dict(case_mat="black"), rifle=dict(case_mat="black"), shell=dict(color="black"),
+                    rail=dict(core="gunmetal")),
+    "Scavengers": {},
+}
+
+
+def faction_form(tmp, name, shape, faction, take, lines, i):
+    """The faction's form and its printed parts, each drawn to the face it goes on; a spec for scene.py."""
+    tmp = pathlib.Path(tmp)
+    L, R = extent(shape)
+    accent = linear((196, 18, 22))
+    if faction == "Arasaka":
+        case = case_dims(L, R)
+        label, printed = tmp / f"{name}-label.png", tmp / f"{name}-print.png"
+        fa.ara_label(label, round(1200 * case["W"] / max(case["W"], case["D"])), round(1200 * case["D"] / max(case["W"], case["D"])))
+        fa.ara_print(printed, L, R)
+        return dict(form="ara_case", case=case, R=R, accent=accent, label=str(label), print=str(printed))
+    if faction == "Maelstrom":
+        d = R * 2 * 1.03
+        cols = max(4, round(1.8 * L / d))
+        rows = max(2, round(cols * 0.4))
+        W, D, H = cols * d, rows * d, cols * d * 0.62
+        wall = pathlib.Path(tmp) / f"{name}-wall.png"
+        k = 1024 / W
+        fa.mael_wall(wall, 1024, round((H * 0.84) * k), i + 1)
+        return dict(form="mael_can", can=dict(W=W, D=D, H=H, d=d, cols=cols, rows=rows), front=str(wall), seed=i + 1)
+    if take == "flat":
+        d = R * 2 * 1.06
+        W, D, H = L * 2.1, L * 1.5, L * 0.55
+        front = tmp / f"{name}-marker.png"
+        fa.marker(front, 1024, round(1024 * H / W), lines[:1], i + 1)
+        return dict(form="scav_flat", flat=dict(W=W, D=D, H=H, d=d), R=R, front=str(front), seed=i + 1)
+    return dict(form=f"scav_{take}", R=R, seed=i + 1)
+
+
 def run(spec, tmp):
     sp = pathlib.Path(tmp) / "spec.json"
     sp.write_text(json.dumps(spec))
@@ -446,6 +488,8 @@ def main():
     ap.add_argument("--out", default=str(ART))
     ap.add_argument("--legendary", default="crimson", choices=sorted(LEGENDARY), help="Legendary look")
     ap.add_argument("--form", default="case", choices=("box", "case", "hero"), help="Legendary form")
+    ap.add_argument("--scav", default="tray", choices=("tray", "pile", "flat"), help="Scavenger form")
+    ap.add_argument("--size", type=int, default=1024)
     args = ap.parse_args()
     names = args.only.split(",") if args.only else list(ROUNDS)
     out = pathlib.Path(args.out)
@@ -456,6 +500,13 @@ def main():
             legendary = LEGENDARY[args.legendary] if name in LEGENDARY_NAMES else None
             if legendary:
                 shape = dict(shape, **legendary["round"].get(shape["kind"], {}))
+            faction = FACTION_OF.get(name)
+            if faction:
+                shape = dict(shape, **FACTION_ROUND[faction].get(shape["kind"], {}))
+                run({"mode": "box", "out": str(out / f"{name}.png"), "round": shape, "samples": args.samples, "size": args.size,
+                     "box": faction_form(tmp, name, shape, faction, args.scav, lines, i)}, tmp)
+                print(name, flush=True)
+                continue
             if args.rounds:
                 run({"mode": "round", "out": str(out / f"{name}-ref.png"), "round": shape,
                      "samples": args.samples}, tmp)
