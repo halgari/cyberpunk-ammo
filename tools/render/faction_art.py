@@ -563,6 +563,43 @@ def kang_lid(path, w, h):
     im.convert("RGB").save(path)
 
 
+# Each hack's mark on the game's quickhack sheet: its cell's left and top, 64 px square.
+HACK_MARK = {"Optics": (192, 64), "Sonic": (0, 192), "Contagion": (128, 256), "Cyberware": (128, 64),
+             "Short": (384, 0), "Cripple": (0, 64), "Overheat": (64, 64), "Glitch": (64, 128),
+             "Burnout": (256, 192), "Psycho": (64, 0), "Grenade": (128, 0)}
+
+
+def hack_mark(stem, px):
+    """The hack's mark as a mask of px by px, sharpened back up out of its small cell."""
+    x, y = HACK_MARK[stem]
+    a = Image.open(TEX / "quickhacks_icons.png").convert("RGBA").getchannel("A").crop((x, y, x + 64, y + 64))
+    a = a.resize((px, px), Image.BICUBIC).filter(ImageFilter.GaussianBlur(px / 300))
+    return a.point(lambda v: max(0, min(255, (v - 90) * 6)))
+
+
+def hack_lid(path, w, h, stem, colour):
+    """The cartridge's lid: a dark plate with a keyline in the rarity's colour, the hack's mark lit."""
+    im = Image.new("RGBA", (w, h), (12, 13, 16, 255))
+    keyline(ImageDraw.Draw(im), w, h, h // 24, colour, max(4, h // 60))
+    mark = hack_mark(stem, round(h * 0.76))
+    stamp(im, mark, colour, w / 2, h / 2)
+    im.convert("RGB").save(path)
+    glow = Image.new("RGBA", (w, h), (0, 0, 0, 255))
+    stamp(glow, mark, colour, w / 2, h / 2)
+    glow.convert("RGB").save(str(path).replace(".png", "-glow.png"))
+
+
+def hack_core(path, px, stem, colour):
+    """The Legendary reader's window: the hack's mark, lit, on black."""
+    im = Image.new("RGBA", (px, px), (20, 20, 22, 255))
+    mark = hack_mark(stem, round(px * 0.9))
+    stamp(im, mark, colour, px / 2, px / 2)
+    im.convert("RGB").save(path)
+    glow = Image.new("RGBA", (px, px), (0, 0, 0, 255))
+    stamp(glow, mark, colour, px / 2, px / 2)
+    glow.convert("RGB").save(str(path).replace(".png", "-glow.png"))
+
+
 def nusa_lid(path, w, h, seed):
     """The document box's lid: grey card, a typed file number, and CLASSIFIED stamped on crooked."""
     rng = random.Random(seed)

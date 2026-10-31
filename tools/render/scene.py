@@ -2234,7 +2234,64 @@ def nusa_box(spec, roundspec):
     return [base, hinge] + rounds
 
 
-FACTION_FORMS = {"ara_case": ara_case, "mael_can": mael_can, "scav_tray": scav_tray, "scav_pile": scav_pile,
+def hack_cart(spec, roundspec):
+    """A quickhack round's data cartridge: a moulded shell in the rarity's colour with gold contacts
+    along the front, rounds in the bay, the lid up with the hack's mark lit."""
+    rnd, L, _ = make_round(roundspec)
+    R = spec["R"]
+    W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
+    shell = principled("CartShell", tuple(spec["colour"]), 0.0, 0.35, wear=0.04, bump=0.03, grime=0.9)
+    foam = principled("CartBed", (0.02, 0.02, 0.024), 0.0, 0.85, wear=0.0, bump=0.2)
+    gold = principled("CartGold", (0.85, 0.55, 0.18), 1.0, 0.3, wear=0.02, bump=0.02)
+    base, OW, OD, wall = box_shell(spec, shell, 0.045)
+    top = H - wall * 0.7
+    bed = cube("Bed", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam, bevel=wall * 0.1)
+    rounds = bedded(rnd, bed, L, R, D, n, pitch, top + R * 0.15)
+    bed.parent = base
+    pins = 13
+    for i in range(pins):
+        x = -OW * 0.32 + OW * 0.64 * (i + 0.5) / pins
+        cube("Pin", (OW * 0.64 / pins * 0.62, wall * 0.14, H * 0.46), (x, -OD / 2 - wall * 0.04, H * 0.42), gold).parent = base
+    hinge = hinged((0, OD / 2, H), -100)
+    t = wall * 1.1
+    cube("Lid", (OW, OD, t), (0, -OD / 2, t / 2), shell, bevel=wall * 0.3).parent = hinge
+    panel("LidArt", W * 0.97, OD * 0.94, printed("LidArt", spec["lid"], rough=0.3, glow=1.6), (0, -OD / 2, -wall * 0.03), (math.pi, 0, 0), wall * 0.05).parent = hinge
+    return [base, hinge] + rounds
+
+
+def hack_legend(spec, roundspec):
+    """A Legendary quickhack round's breach rig: black and gold, the rounds in a tray at the foot of
+    a tower, the hack's mark burning in a ring of light."""
+    rnd, L, _ = make_round(roundspec)
+    R = spec["R"]
+    W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
+    black = principled("RigBlack", (0.012, 0.012, 0.014), 0.5, 0.3, wear=0.08, bump=0.06, grime=0.7)
+    foam = principled("RigBed", (0.05, 0.02, 0.006), 0.2, 0.6, wear=0.0, bump=0.2)
+    gold = principled("RigGold", (0.9, 0.58, 0.16), 1.0, 0.28, wear=0.03, bump=0.02)
+    light = emissive("RigLight", tuple(spec["colour"]), 4.0)
+    base, OW, OD, wall = box_shell(spec, black, 0.05)
+    top = H - wall * 0.7
+    bed = cube("Bed", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam, bevel=wall * 0.1)
+    rounds = bedded(rnd, bed, L, R, D, n, pitch, top + R * 0.15)
+    bed.parent = base
+    cube("Trim", (OW * 1.01, wall * 0.5, wall * 0.5), (0, -OD / 2, H * 0.62), gold, bevel=wall * 0.1).parent = base
+    tall, deep = OW * 0.86, wall * 3.5
+    face = OD / 2 + wall
+    cz = H + tall / 2 - wall
+    cube("Tower", (OW, deep, tall + H), (0, face + deep / 2, (tall + H) / 2 - wall / 2), black, bevel=wall * 0.4).parent = base
+    for x in (-OW / 2 + wall, OW / 2 - wall):
+        cube("Rail", (wall * 0.5, wall * 0.5, tall * 0.92), (x, face - wall * 0.1, cz), gold, bevel=wall * 0.1).parent = base
+    ring = tall * 0.46
+    upright = (math.pi / 2, 0, 0)
+    disc("RingGold", ring, wall * 0.6, (0, face - wall * 0.3, cz), upright, gold).parent = base
+    disc("RingLight", ring * 0.93, wall * 0.6, (0, face - wall * 0.45, cz), upright, light).parent = base
+    disc("RingBlack", ring * 0.87, wall * 0.6, (0, face - wall * 0.6, cz), upright, emissive("RigDark", (0.007, 0.007, 0.008), 0.0)).parent = base
+    side = ring * 1.3
+    panel("Mark", side, side, printed("Mark", spec["mark"], rough=0.7, glow=2.2), (0, face - wall * 0.95, cz), (math.pi / 2, 0, 0), wall * 0.05).parent = base
+    return [base] + rounds
+
+
+FACTION_FORMS = {"hack_cart": hack_cart, "hack_legend": hack_legend, "ara_case": ara_case, "mael_can": mael_can, "scav_tray": scav_tray, "scav_pile": scav_pile,
                  "scav_flat": scav_flat, "tyger_box": tyger_box, "val_cigar": val_cigar, "six_crate": six_crate,
                  "mil_case": mil_case, "animal_tub": animal_tub, "bar_can": bar_can, "vdb_shrine": vdb_shrine,
                  "vdb_deck": vdb_deck, "wraith_can": wraith_can, "nomad_tin": nomad_tin, "mox_clutch": mox_clutch,

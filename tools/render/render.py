@@ -115,6 +115,7 @@ for _load, (_panel, _stripe) in _TIERS["looks"].items():
     LOOK.setdefault(_load, (tuple(_panel), tuple(_stripe) if _stripe else None))
 LEGENDARY_NAMES = {_n for _n, _r in _TIERS["rounds"].items() if _r.get("tier") == 4}
 FACTION_OF = {_n: _r["faction"] for _n, _r in _TIERS["rounds"].items() if _r.get("faction")}
+HACK_TIER = {_n: _r["tier"] for _n, _r in _TIERS["rounds"].items() if _r.get("tier", 0) >= 10}
 for _name, _r in _TIERS["rounds"].items():
     ROUNDS[_name] = (dict(globals()[_r["shape"]], **_r["over"]), _r["look"], _r["label"])
 
@@ -465,6 +466,25 @@ FACTION_ROUND = {
 FACTION_CREST = dict(cassette=0.42, ashura=0.84)
 
 
+# Quickhack rounds' cartridge colours, from the game's rarity colours.
+HACK_COLOUR = {10: (58, 196, 96), 11: (54, 134, 240), 12: (170, 76, 232), 13: (255, 158, 40)}
+HACK_BAND = {10: "green", 11: "blue", 12: "purple", 13: "orange"}
+
+
+def hack_form(tmp, name, shape, look, tier, i):
+    """A quickhack round's form, with the hack's mark printed for it; a spec for scene.py."""
+    tmp = pathlib.Path(tmp)
+    L, R = extent(shape)
+    case = case_dims(L, R)
+    stem, colour = look[4:-1], HACK_COLOUR[tier]
+    art = tmp / f"{name}-mark.png"
+    if tier == 13:
+        fa.hack_core(art, 1024, stem, colour)
+        return dict(form="hack_legend", case=case, R=R, mark=str(art), colour=linear(colour), seed=i + 1)
+    fa.hack_lid(art, 1200, round(1200 * case["D"] / case["W"]), stem, colour)
+    return dict(form="hack_cart", case=case, R=R, lid=str(art), colour=linear(colour), seed=i + 1)
+
+
 def faction_form(tmp, name, shape, faction, take, lines, i):
     """The faction's form and its printed parts, each drawn to the face it goes on; a spec for scene.py."""
     tmp = pathlib.Path(tmp)
@@ -608,6 +628,12 @@ def main():
             legendary = LEGENDARY[args.legendary] if name in LEGENDARY_NAMES else None
             if legendary:
                 shape = dict(shape, **legendary["round"].get(shape["kind"], {}))
+            if name in HACK_TIER:
+                shape = dict(shape, idband=HACK_BAND[HACK_TIER[name]])
+                run({"mode": "box", "out": str(out / f"{name}.png"), "round": shape, "samples": args.samples, "size": args.size,
+                     "box": hack_form(tmp, name, shape, look, HACK_TIER[name], i)}, tmp)
+                print(name, flush=True)
+                continue
             faction = FACTION_OF.get(name)
             if faction:
                 shape = dict(shape, **FACTION_ROUND[faction].get(shape["kind"], {}))
