@@ -4,7 +4,7 @@
 set -euo pipefail
 A="${AO_ASSETS:-$HOME/.cache/ammo-overhaul/assets}"
 mkdir -p "$A"
-for id in Metal009 Metal011 PaintedMetal004 Plastic006 Cardboard004; do
+for id in Metal009 Metal011 PaintedMetal004 Plastic006 Cardboard004 Wood051 Wood066; do
   [ -d "$A/$id" ] && continue
   curl -sfL -o "$A/$id.zip" "https://ambientcg.com/get?file=${id}_2K-JPG.zip"
   mkdir -p "$A/$id" && (cd "$A/$id" && unzip -q ../$id.zip) && rm "$A/$id.zip"

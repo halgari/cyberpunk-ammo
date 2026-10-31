@@ -1621,8 +1621,271 @@ def scav_flat(spec, roundspec):
     return [root] + rounds
 
 
+def wood_mat(name, asset, tint, size, rough=0.55, coat=0.0):
+    """A scanned wood (an ambientCG set) tinted by multiply, in object space, `size` to a repeat."""
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    mp = nt.nodes.new("ShaderNodeMapping")
+    mp.inputs["Scale"].default_value = (1 / size,) * 3
+    nt.links.new(nt.nodes.new("ShaderNodeTexCoord").outputs["Object"], mp.inputs["Vector"])
+    mul = nt.nodes.new("ShaderNodeMix")
+    mul.data_type, mul.blend_type = "RGBA", "MULTIPLY"
+    _socket(mul.inputs, "Factor", "VALUE").default_value = 1.0
+    nt.links.new(scan_tex(nt, asset, "Color", mp.outputs["Vector"], "sRGB").outputs["Color"], _socket(mul.inputs, "A", "RGBA"))
+    _socket(mul.inputs, "B", "RGBA").default_value = (*tint, 1)
+    nt.links.new(_socket(mul.outputs, "Result", "RGBA"), b.inputs["Base Color"])
+    b.inputs["Roughness"].default_value = rough
+    b.inputs["Coat Weight"].default_value = coat
+    b.inputs["Coat Roughness"].default_value = 0.12
+    nm = nt.nodes.new("ShaderNodeNormalMap")
+    nt.links.new(scan_tex(nt, asset, "NormalGL", mp.outputs["Vector"]).outputs["Color"], nm.inputs["Color"])
+    nt.links.new(nm.outputs["Normal"], b.inputs["Normal"])
+    return m
+
+
+def bedded(rnd, bed, L, R, D, n, pitch, z):
+    """n rounds lying side by side in `bed`, each in a trough cut to it."""
+    rounds = [rnd]
+    for i in range(n):
+        y = -D / 2 + R * 0.35 + pitch * (i + 0.5)
+        cut(bed, disc("Cut", R * 1.08, L * 1.03, (0, y, z), (0, math.pi / 2, 0), bed.data.materials[0]))
+        ob = rnd if i == 0 else copy_tree(rnd)
+        ob.rotation_euler = (0, math.pi / 2, 0)
+        ob.location = (-L / 2, y, z)
+        if i:
+            rounds.append(ob)
+    return rounds
+
+
+def hinged(x_location, angle):
+    h = bpy.data.objects.new("Hinge", None)
+    bpy.context.collection.objects.link(h)
+    h.location = x_location
+    h.rotation_euler = (math.radians(angle), 0, 0)
+    return h
+
+
+def tyger_box(spec, roundspec):
+    """The Claws' lacquer box: vermilion urushi with a gold band, rounds on dark silk, and its loose
+    lid stood against the back, the gang's crest on the black inside."""
+    rnd, L, _ = make_round(roundspec)
+    R = spec["R"]
+    W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
+    coat = {"Coat Weight": 1.0, "Coat Roughness": 0.05}
+    lac = principled("TygerLacquer", (0.5, 0.018, 0.012), 0.0, 0.2, wear=0.03, bump=0.008, grime=0.85, edge=(0.08, 0.02, 0.02), **coat)
+    silk = principled("TygerSilk", (0.13, 0.004, 0.01), 0.0, 0.5, wear=0.0, bump=0.3, grime=0.95)
+    wall = W * 0.04
+    OW, OD = W + 2 * wall, D + 2 * wall
+    base = cube("Base", (OW, OD, H), (0, 0, H / 2), lac, bevel=wall * 0.3)
+    cut(base, cube("BaseCut", (W, D, H), (0, 0, H / 2 + wall), None))
+    top = H - wall * 0.7
+    bed = cube("Bed", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), silk, bevel=wall * 0.1)
+    rounds = bedded(rnd, bed, L, R, D, n, pitch, top + R * 0.15)
+    gold = GOLD()
+    band = H * 0.08
+    cube("Band", (OW * 1.004, wall * 0.1, band), (0, -OD / 2 - wall * 0.03, H * 0.72), gold).parent = base
+    for sx in (-1, 1):
+        cube("Band", (wall * 0.1, OD, band), (sx * (OW / 2 + wall * 0.03), 0, H * 0.72), gold).parent = base
+    bed.parent = base
+    hinge = hinged((0, OD / 2 + wall * 0.7, H * 0.55), -103)
+    t = wall * 0.9
+    lid = cube("Lid", (OW, OD * 1.12, t), (0, -OD * 0.56, t / 2), lac, bevel=wall * 0.25)
+    lid.parent = hinge
+    panel("Label", W * 0.98, OD * 1.12 - 2 * wall, printed("Label", spec["label"], rough=0.25), (0, -OD * 0.56, -wall * 0.03),
+          (math.pi, 0, 0), wall * 0.05).parent = hinge
+    return [base, hinge] + rounds
+
+
+def val_cigar(spec, roundspec):
+    """A Valentino's cigar box: oiled dark wood with gilt corners and clasp, rounds on red velvet, the
+    lid thrown open on a gold-keyed label."""
+    rnd, L, _ = make_round(roundspec)
+    R = spec["R"]
+    W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
+    wood = wood_mat("CigarWood", "Wood066", (0.85, 0.42, 0.22), W * 1.1, rough=0.42, coat=0.5)
+    velvet = principled("ValVelvet", (0.3, 0.004, 0.01), 0.0, 0.8, wear=0.0, bump=0.35, grime=0.95, **{"Sheen Weight": 0.15})
+    gold = POLISHED_GOLD()
+    wall = W * 0.035
+    OW, OD = W + 2 * wall, D + 2 * wall
+    base = cube("Base", (OW, OD, H), (0, 0, H / 2), wood, bevel=wall * 0.12)
+    cut(base, cube("BaseCut", (W, D, H), (0, 0, H / 2 + wall), None))
+    top = H - wall * 0.6
+    bed = cube("Bed", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), velvet, bevel=wall * 0.15)
+    rounds = bedded(rnd, bed, L, R, D, n, pitch, top + R * 0.15)
+    bed.parent = base
+    c = wall * 1.6
+    for sx in (-1, 1):
+        for z in (c / 2 - wall * 0.02, H - c / 2):
+            cube("Corner", (c, c, c), (sx * (OW - c) / 2 + sx * wall * 0.05, -(OD - c) / 2 - wall * 0.05, z), gold, bevel=wall * 0.1).parent = base
+    cube("Clasp", (W * 0.1, wall * 0.5, H * 0.42), (0, -OD / 2 - wall * 0.2, H * 0.74), gold, bevel=wall * 0.1).parent = base
+    hinge = hinged((0, OD / 2, H), -106)
+    t = wall * 0.9
+    lid = cube("Lid", (OW, OD, t), (0, -OD / 2, t / 2), wood, bevel=wall * 0.12)
+    lid.parent = hinge
+    panel("Label", W * 0.97, D * 0.97, printed("Label", spec["label"], rough=0.38, metal=0.1), (0, -OD / 2, -wall * 0.03),
+          (math.pi, 0, 0), wall * 0.05).parent = hinge
+    return [base, hinge] + rounds
+
+
+def six_crate(spec, roundspec):
+    """6th Street's surplus crate: olive paint worn to the wood, corner battens, rope handles, rounds
+    in a plain wooden rack, the skull badge stencilled on the front, a flag painted in the lid."""
+    rnd, L, _ = make_round(roundspec)
+    R = spec["R"]
+    W, D, H, n, pitch = (spec["case"][k] for k in ("W", "D", "H", "n", "pitch"))
+    paint_ = principled("CratePaint", (0.05, 0.06, 0.022), 0.0, 0.72, wear=0.3, bump=0.25, grime=0.5, edge=(0.3, 0.2, 0.1))
+    wood = wood_mat("CrateRack", "Wood051", (0.62, 0.5, 0.34), W * 0.9, rough=0.7)
+    rope = principled("Rope", (0.34, 0.27, 0.16), 0.0, 0.9, wear=0.0, bump=0.6)
+    wall = W * 0.04
+    OW, OD = W + 2 * wall, D + 2 * wall
+    base = cube("Base", (OW, OD, H), (0, 0, H / 2), paint_, bevel=wall * 0.1)
+    cut(base, cube("BaseCut", (W, D, H), (0, 0, H / 2 + wall), None))
+    top = H - wall * 1.1
+    rack = cube("Rack", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), wood, bevel=wall * 0.1)
+    rounds = bedded(rnd, rack, L, R, D, n, pitch, top + R * 0.15)
+    rack.parent = base
+    fw = OW * 0.9
+    panel("Front", fw, H * 0.9, printed("Front", spec["front"], rough=0.72), (0, -OD / 2 - wall * 0.04, H / 2), (math.pi / 2, 0, 0),
+          wall * 0.04).parent = base
+    b = OW * 0.06
+    for sx in (-1, 1):
+        cube("Batten", (b, wall * 0.9, H * 1.02), (sx * (OW - b) / 2, -OD / 2 - wall * 0.3, H / 2), paint_, bevel=wall * 0.12).parent = base
+        cube("Batten", (wall * 0.9, b, H * 1.02), (sx * (OW / 2 + wall * 0.3), -(OD - b) / 2, H / 2), paint_, bevel=wall * 0.12).parent = base
+        # A loop of rope through the wall, half of it standing out as the handle.
+        bpy.ops.mesh.primitive_torus_add(major_radius=H * 0.24, minor_radius=wall * 0.32, major_segments=48, minor_segments=12,
+                                         location=(sx * OW / 2, 0, H * 0.7))
+        ring = bpy.context.active_object
+        ring.data.materials.append(rope)
+        bpy.ops.object.shade_smooth()
+        ring.parent = base
+    hinge = hinged((0, OD / 2 + wall * 0.7, H * 0.6), -104)
+    t = wall * 0.9
+    lid = cube("Lid", (OW, OD * 1.1, t), (0, -OD * 0.55, t / 2), paint_, bevel=wall * 0.12)
+    lid.parent = hinge
+    panel("Flag", OW * 0.95, OD * 1.1 * 0.95, printed("Flag", spec["flag"], rough=0.75), (0, -OD * 0.55, -wall * 0.03),
+          (math.pi, 0, 0), wall * 0.05).parent = hinge
+    return [base, hinge] + rounds
+
+
+def mil_case(spec, roundspec):
+    """Militech's transit case: ribbed gunmetal polymer, rounds standing in foam with their tips under the rim, the front a
+    plate with the wordmark and a warning label, the lid off and stood behind."""
+    rnd, L, _ = make_round(roundspec)
+    W, D, H, d, cols, rows = (spec["case"][k] for k in ("W", "D", "H", "d", "cols", "rows"))
+    poly = principled("MilPoly", (0.03, 0.033, 0.038), 0.1, 0.48, wear=0.12, bump=0.05, grime=0.7, edge=(0.2, 0.2, 0.22), scan="Plastic006", tile=2.0)
+    foam = principled("MilFoam", (0.02, 0.02, 0.022), 0.0, 0.95, wear=0.0, bump=0.5)
+    wall = W * 0.035
+    OW, OD = W + 2 * wall, D + 2 * wall
+    base = cube("Base", (OW, OD, H), (0, 0, H / 2), poly, bevel=wall * 0.35)
+    cut(base, cube("BaseCut", (W, D, H), (0, 0, H / 2 + wall), None))
+    # The tips stop just under the rim, so the lid would shut over them.
+    stand = H - L - wall * 0.5
+    top = stand + L * 0.42
+    cube("Foam", (W * 0.995, D * 0.995, top - wall), (0, 0, (top + wall) / 2), foam).parent = base
+    fh = H * 0.62
+    panel("Front", OW * 0.94, fh, printed("Front", spec["front"], rough=0.5), (0, -OD / 2 - wall * 0.05, H * 0.46), (math.pi / 2, 0, 0),
+          wall * 0.05).parent = base
+    for k in (-1, 0, 1):
+        cube("Rib", (wall * 0.8, D * 0.14, H * 0.8), (-OW / 2 - wall * 0.2, k * D * 0.3, H * 0.46), poly, bevel=wall * 0.3).parent = base
+        cube("Rib", (wall * 0.8, D * 0.14, H * 0.8), (OW / 2 + wall * 0.2, k * D * 0.3, H * 0.46), poly, bevel=wall * 0.3).parent = base
+    for k in (-1, 1):
+        cube("Latch", (W * 0.1, wall * 0.9, H * 0.2), (k * W * 0.38, -OD / 2 - wall * 0.35, H * 0.9), principled("MilLatch", (0.55, 0.38, 0.02), 0.1, 0.4, bump=0.02),
+             bevel=wall * 0.2).parent = base
+    hinge = hinged((0, OD / 2 + wall, H * 0.9), -102)
+    t = wall * 1.1
+    cube("Lid", (OW, OD * 1.1, t), (0, -OD * 0.55, t / 2), poly, bevel=wall * 0.3).parent = hinge
+    panel("Lid", W * 0.97, OD * 1.1 * 0.96, printed("Lid", spec["lid"], rough=0.45), (0, -OD * 0.55, -wall * 0.03), (math.pi, 0, 0),
+          wall * 0.05).parent = hinge
+    rng = random.Random(spec.get("seed", 1))
+    rounds = []
+    for i in range(cols):
+        for j in range(rows):
+            c = rnd if (i, j) == (0, 0) else copy_tree(rnd)
+            c.location = (-W / 2 + d * (i + 0.5), -D / 2 + d * (j + 0.5), stand)
+            c.rotation_euler = (0, 0, rng.uniform(0, 6.28))
+            rounds.append(c)
+    return [base, hinge] + rounds
+
+
+def wrapped_label(name, r, h, arc, z, mid, mat):
+    """A printed sheet wrapped round a cylinder of radius r: `arc` radians of it, centred on angle `mid`."""
+    n = 64
+    me = bpy.data.meshes.new(name)
+    verts, faces = [], []
+    for i in range(n + 1):
+        a = mid - arc / 2 + arc * i / n
+        verts += [(r * math.cos(a), r * math.sin(a), z), (r * math.cos(a), r * math.sin(a), z + h)]
+    for i in range(n):
+        faces.append((2 * i, 2 * i + 2, 2 * i + 3, 2 * i + 1))
+    me.from_pydata(verts, [], faces)
+    uv = me.uv_layers.new()
+    for p in me.polygons:
+        p.use_smooth = True
+        for li in p.loop_indices:
+            v = me.loops[li].vertex_index
+            uv.data[li].uv = ((v // 2) / n, v % 2)
+    me.materials.append(mat)
+    ob = bpy.data.objects.new(name, me)
+    bpy.context.collection.objects.link(ob)
+    return ob
+
+
+def animal_tub(spec, roundspec):
+    """An Animal's ammo comes in a gym supplement tub: black plastic with a screw thread, a loud
+    wrapped label, the cap off beside it, rounds filling it to the brim and a couple spilled."""
+    rnd, L, _ = make_round(roundspec)
+    Rt, H = spec["tub"]["R"], spec["tub"]["H"]
+    rad = spec["rad"]
+    plastic = principled("TubPlastic", (0.02, 0.02, 0.022), 0.0, 0.58, wear=0.05, bump=0.06, grime=0.7)
+    wall = Rt * 0.05
+    tub = disc("Tub", Rt, H, (0, 0, H / 2), (0, 0, 0), plastic)
+    cut(tub, disc("TubCut", Rt - wall, H, (0, 0, H / 2 + wall * 1.5), (0, 0, 0), None))
+    neck = disc("Neck", Rt * 0.97, H * 0.06, (0, 0, H * 1.02), (0, 0, 0), plastic)
+    cut(neck, disc("NeckCut", Rt - wall * 1.3, H, (0, 0, H), (0, 0, 0), None))
+    neck.parent = tub
+    fill = disc("Fill", Rt - wall * 1.1, H * 0.7, (0, 0, H * 0.35), (0, 0, 0), plastic)
+    fill.parent = tub
+    wrapped_label("Label", Rt * 1.003, H * 0.82, 3.2, H * 0.08, -math.pi / 2 - 0.42, printed("Label", spec["label"], rough=0.3)).parent = tub
+    cap_h = H * 0.16
+    cap = disc("Cap", Rt * 0.84, cap_h, (Rt * 1.65, -Rt * 0.55, cap_h / 2), (0, 0, 0), plastic)
+    for k in range(40):
+        a = 2 * math.pi * k / 40
+        cube("Grip", (Rt * 0.03, Rt * 0.05, cap_h * 0.9), (Rt * 0.86 * math.cos(a), Rt * 0.86 * math.sin(a), 0), plastic,
+             rot=(0, 0, a)).parent = cap
+    rng = random.Random(spec.get("seed", 9))
+    pitch = rad * 2.25
+    spots = []
+    y = -Rt
+    row = 0
+    while y < Rt:
+        x = -Rt + (pitch / 2 if row % 2 else 0)
+        while x < Rt:
+            if math.hypot(x, y) < Rt - wall * 1.2 - rad - L * 0.07:
+                spots.append((x, y))
+            x += pitch
+        y += pitch * 0.87
+        row += 1
+    rounds = []
+    stand = H * 1.0 - L * 0.62
+    for k, (x, y) in enumerate(spots):
+        c = rnd if k == 0 else copy_tree(rnd)
+        c.location = (x, y, stand + rng.uniform(-0.04, 0.08) * L)
+        c.rotation_euler = (rng.uniform(-0.06, 0.06), rng.uniform(-0.06, 0.06), rng.uniform(0, 6.28))
+        rounds.append(c)
+    for k in (0, 1):
+        c = copy_tree(rnd)
+        yaw = rng.uniform(-0.3, 0.3) + k * 0.5
+        c.rotation_euler = (0, math.pi / 2, yaw)
+        c.location = centred((-Rt * 0.75 + k * Rt * 1.0, -Rt * 1.45 - k * Rt * 0.25, rad), yaw, L)
+        rounds.append(c)
+    return [tub, cap] + rounds
+
+
 FACTION_FORMS = {"ara_case": ara_case, "mael_can": mael_can, "scav_tray": scav_tray, "scav_pile": scav_pile,
-                 "scav_flat": scav_flat}
+                 "scav_flat": scav_flat, "tyger_box": tyger_box, "val_cigar": val_cigar, "six_crate": six_crate,
+                 "mil_case": mil_case, "animal_tub": animal_tub}
 FACTION_VIEWS = {"scav_tray": TOP_VIEW, "scav_pile": TOP_VIEW}
 
 HERO_VIEW = Vector((-0.5, -1.0, 0.3))

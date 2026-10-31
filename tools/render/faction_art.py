@@ -264,3 +264,169 @@ def flat_side(path, w, h, seed):
     spatter(m, (w * 0.8, h * 0.3), h * 0.7, 46, rng)
     stain(im, m, rng)
     im.save(path)
+
+
+def decal(name):
+    """A decal cut to its ink, RGBA as the game has it (a one-channel mask comes back white on its own alpha)."""
+    im = Image.open(TEX / name)
+    if im.mode != "RGBA":
+        m = im.convert("L")
+        im = Image.merge("RGBA", (m, m, m, m))
+    return im.crop(im.getchannel("A").point(lambda v: 255 if v > 60 else 0).getbbox())
+
+
+def fit(im, w, h):
+    k = min(w / im.width, h / im.height)
+    return im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+
+
+def centre(ground, im, cx, cy):
+    ground.alpha_composite(im, (round(cx - im.width / 2), round(cy - im.height / 2)))
+
+
+def keyline(dr, w, h, inset, colour, width):
+    dr.rectangle([inset, inset, w - inset, h - inset], outline=colour, width=width)
+
+
+GILT = (214, 166, 74)
+
+
+def tyger_label(path, w, h):
+    """The lacquer box's lid: black, a gold keyline, the gang's red tiger crest over its kanji."""
+    im = Image.new("RGBA", (w, h), (9, 8, 9, 255))
+    keyline(ImageDraw.Draw(im), w, h, min(w, h) // 26, GILT, max(3, min(w, h) // 120))
+    centre(im, fit(decal("tyger_claws.png"), w * 0.86, h * 0.84), w / 2, h / 2)
+    im.convert("RGB").save(path)
+
+
+def val_label(path, w, h, muerte=False):
+    """The cigar box's lid label. Burgundy and gold: the gang's gilt V in roses and its script name;
+    Santa Muerte's is black, with the Santisima Muerte stencil in gold."""
+    im = Image.new("RGBA", (w, h), (10, 8, 9, 255) if muerte else (112, 12, 28, 255))
+    dr = ImageDraw.Draw(im)
+    k = min(w, h)
+    keyline(dr, w, h, k // 26, GILT, max(3, k // 110))
+    keyline(dr, w, h, k // 17, GILT, max(1, k // 320))
+    if muerte:
+        m = fit(decal("valentinos_dec_v29_m.png"), w * 0.8, h * 0.84).getchannel("A")
+        gold = Image.new("RGBA", m.size, (*GILT, 255))
+        gold.putalpha(m)
+        centre(im, gold, w / 2, h / 2)
+    else:
+        centre(im, fit(decal("valentinos_dec_v05.png"), w * 0.5, h * 0.72), w / 2, h * 0.44)
+        sc = Image.open(TEX / "w_gangs_valentinos_d01.png").crop((440, 860, 1024, 1024)).getchannel("A")
+        sc = sc.crop(sc.point(lambda v: 255 if v > 60 else 0).getbbox())
+        sc = fit(sc, w * 0.5, h * 0.15)
+        gold = Image.new("RGBA", sc.size, (*GILT, 255))
+        gold.putalpha(sc)
+        centre(im, gold, w / 2, h * 0.86)
+    im.convert("RGB").save(path)
+
+
+OLIVE = (64, 70, 40)
+
+
+def boards(im, n, rng):
+    """Plank seams and a little grain drawn over a painted face, running across it."""
+    w, h = im.size
+    dr = ImageDraw.Draw(im)
+    for i in range(1, n):
+        y = h * i / n + rng.uniform(-1.5, 1.5)
+        dr.line([(0, y), (w, y)], fill=(20, 19, 14), width=max(2, h // 130))
+
+
+def six_wall(path, w, h, seed):
+    """The crate's front: olive paint over boards, the gang's skull badge stencilled in white, its
+    name beside it."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (*OLIVE, 255))
+    ink = Image.new("L", (w, h))
+    badge = fit(decal("6th_street_a_graffiti_i_m.png"), h * 0.92, h * 0.92).getchannel("A")
+    ink.paste(badge, (round(w * 0.2 - badge.width / 2), round((h - badge.height) / 2)))
+    name = Image.open(TEX / "6th_street_a_graffiti_m_m.png").convert("L").crop((0, 150, 1024, 256))
+    name = name.crop(name.point(lambda v: 255 if v > 90 else 0).getbbox())
+    name = fit(name, w * 0.56, h * 0.42)
+    ink.paste(name, (round(w * 0.67 - name.width / 2), round(h / 2 - name.height / 2)))
+    white = Image.new("RGBA", (w, h), (216, 212, 192, 255))
+    white.putalpha(wear(ink, rng, 120))
+    im.alpha_composite(white)
+    boards(im, 3, rng)
+    im.convert("RGB").save(path)
+
+
+def six_flag(path, w, h, seed):
+    """The crate's lid, inside: a flag painted by hand on the boards, faded and chipped to olive."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (*OLIVE, 255))
+    flag = Image.new("RGB", (w, h), (196, 188, 164))
+    dr = ImageDraw.Draw(flag)
+    s = h / 13
+    for i in range(0, 13, 2):
+        dr.rectangle([0, i * s, w, (i + 1) * s], fill=(128, 30, 28))
+    cw, ch = w * 0.42, s * 7
+    dr.rectangle([0, 0, cw, ch], fill=(28, 36, 70))
+    for r in range(5):
+        for c in range(6 + (r % 2 == 0)):
+            x = cw * (c + (0.5 if r % 2 == 0 else 1.0)) / 7
+            y = ch * (r + 0.6) / 5.2
+            q = s * 0.3
+            dr.polygon([(x + q * (1 if k % 2 == 0 else 0.42) * math.sin(k * math.pi / 5),
+                         y - q * (1 if k % 2 == 0 else 0.42) * math.cos(k * math.pi / 5)) for k in range(10)], fill=(196, 188, 164))
+    im.paste(flag, (0, 0), wear(Image.new("L", (w, h), 255), rng, 320))
+    boards(im, 4, rng)
+    im.convert("RGB").save(path)
+
+
+HAZARD = (232, 182, 24)
+
+
+def mil_stripes(im, box):
+    """Black and yellow hazard stripes across `box`."""
+    x0, y0, x1, y1 = box
+    strip = Image.new("RGBA", (x1 - x0, y1 - y0), (*HAZARD, 255))
+    dr = ImageDraw.Draw(strip)
+    t = y1 - y0
+    for x in range(-t, strip.width + t, t * 2):
+        dr.polygon([(x, t), (x + t, t), (x + t * 2, 0), (x + t, 0)], fill=(14, 14, 15, 255))
+    im.alpha_composite(strip, (x0, y0))
+
+
+def mil_lid(path, w, h, seed):
+    """The transit case's lid: gunmetal, the white Militech mark, hazard stripes along the foot."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (38, 40, 44, 255))
+    m = wear(fit(decal("militech_logo_a_m.png"), w * 0.7, h * 0.72).getchannel("A"), rng, 30)
+    white = Image.new("RGBA", m.size, (226, 226, 222, 255))
+    white.putalpha(m)
+    centre(im, white, w / 2, h * 0.44)
+    mil_stripes(im, (0, round(h * 0.88), w, h))
+    im.convert("RGB").save(path)
+
+
+def mil_front(path, w, h, seed):
+    """The case's front: the wordmark over a lot plate, a warning label cut from the game's own sheet."""
+    rng = random.Random(seed)
+    im = Image.new("RGBA", (w, h), (38, 40, 44, 255))
+    m = wear(fit(decal("militech_logo_b_m.png"), w * 0.74, h * 0.5).getchannel("A"), rng, 24)
+    white = Image.new("RGBA", m.size, (226, 226, 222, 255))
+    white.putalpha(m)
+    centre(im, white, w * 0.42, h * 0.38)
+    sheet = Image.open(TEX / "w_militech_decal_d01.png").convert("RGBA")
+    tag = fit(sheet.crop((10, 850, 400, 965)), w * 0.17, h * 0.5)
+    centre(im, tag, w * 0.895, h * 0.4)
+    mil_stripes(im, (0, round(h * 0.76), round(w * 0.8), h))
+    im.convert("RGB").save(path)
+
+
+def tub_label(path, w, h):
+    """The tub's label, a gym supplement's: loud yellow, the gang's flexing jaguar, its red name, and
+    PAIN PAIN PAIN GAIN up the side."""
+    im = Image.new("RGBA", (w, h), (236, 190, 22, 255))
+    dr = ImageDraw.Draw(im)
+    dr.rectangle([0, 0, w, h * 0.05], fill=(14, 14, 15))
+    dr.rectangle([0, h * 0.95, w, h], fill=(14, 14, 15))
+    centre(im, fit(decal("animals_dec_v11.png"), w * 0.3, h * 0.84), w * 0.4, h * 0.5)
+    name = fit(decal("animals_dec_v01.png"), w * 0.3, h * 0.6)
+    centre(im, name, w * 0.67, h * 0.34)
+    centre(im, fit(decal("animals_dec_v06.png"), w * 0.12, h * 0.42), w * 0.67, h * 0.74)
+    im.convert("RGB").save(path)

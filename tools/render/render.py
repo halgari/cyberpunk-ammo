@@ -439,6 +439,14 @@ FACTION_ROUND = {
     "Arasaka": dict(pistol=dict(case_mat="black"), rifle=dict(case_mat="black"), shell=dict(color="black"),
                     rail=dict(core="gunmetal")),
     "Scavengers": {},
+    "TygerClaws": dict(pistol=dict(case_mat="nickel", tip="red", tipfrac=0.98), rifle=dict(case_mat="nickel", tip="red", tipfrac=0.7),
+                       shell=dict(color="red")),
+    "Valentinos": dict(pistol=dict(case_mat="gold"), rifle=dict(case_mat="gold"), shell=dict(color="black", band="gold")),
+    "SixthStreet": dict(pistol=dict(case_mat="tarnished", tip="green", tipfrac=0.98), rifle=dict(case_mat="tarnished", tip="green", tipfrac=0.7),
+                        shell=dict(color="green")),
+    "Militech": dict(pistol=dict(case_mat="steel", tip="yellow", tipfrac=0.98), rifle=dict(case_mat="steel", tip="yellow", tipfrac=0.7),
+                     shell=dict(color="black", band="yellow"), rail=dict(coil="yellow", core="gunmetal")),
+    "Animals": dict(pistol=dict(tip="red", tipfrac=0.98), rail=dict(coil="red", core="gunmetal")),
 }
 
 
@@ -459,6 +467,39 @@ def faction_form(tmp, name, shape, faction, take, lines, i):
         fa.ara_print(printed, L, R, FACTION_CREST.get(shape["kind"], 0.28))
         return dict(form="ara_case", case=case, R=R, accent=accent, label=str(label), print=str(printed),
                     print_up=shape["kind"] == "cassette")
+    if faction == "TygerClaws":
+        case = case_dims(L, R)
+        label = tmp / f"{name}-label.png"
+        fa.tyger_label(label, 1200, round(1200 * case["D"] / case["W"]))
+        return dict(form="tyger_box", case=case, R=R, label=str(label))
+    if faction == "Valentinos":
+        case = case_dims(L, R)
+        label = tmp / f"{name}-label.png"
+        fa.val_label(label, 1200, round(1200 * case["D"] / case["W"]), name.endswith("santamuerte"))
+        return dict(form="val_cigar", case=case, R=R, label=str(label))
+    if faction == "SixthStreet":
+        case = case_dims(L, R)
+        case = dict(case, W=case["W"] * 1.12, D=case["D"] * 1.1, H=max(case["H"] * 1.5, case["W"] * 0.4))
+        front, flag = tmp / f"{name}-front.png", tmp / f"{name}-flag.png"
+        fa.six_wall(front, 1536, round(1536 * case["H"] * 0.9 / (case["W"] * 0.9)), i + 1)
+        fa.six_flag(flag, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="six_crate", case=case, R=R, front=str(front), flag=str(flag), seed=i + 1)
+    if faction == "Militech":
+        d = max(R * 2 * 1.5, L * 0.3)
+        cols = max(4, round(1.9 * L / d))
+        rows = max(3, round(cols * 0.6))
+        W, D = cols * d, rows * d
+        H = max(L * 1.1, W * 0.3)
+        lid, front = tmp / f"{name}-lid.png", tmp / f"{name}-front.png"
+        fa.mil_lid(lid, 1200, round(1200 * D / W), i + 1)
+        fa.mil_front(front, 1536, round(1536 * H * 0.62 / (W * 0.94)), i + 1)
+        return dict(form="mil_case", case=dict(W=W, D=D, H=H, d=d, cols=cols, rows=rows), lid=str(lid), front=str(front), seed=i + 1)
+    if faction == "Animals":
+        Rt = max(L * 0.72, R * 5)
+        H = Rt * 1.3
+        label = tmp / f"{name}-label.png"
+        fa.tub_label(label, 1800, round(1800 * H * 0.82 / (Rt * 3.2)))
+        return dict(form="animal_tub", tub=dict(R=Rt, H=H), rad=R, label=str(label), seed=i + 1)
     if faction == "Maelstrom":
         d = R * 2 * 1.03
         cols = max(4, round(1.8 * L / d))
