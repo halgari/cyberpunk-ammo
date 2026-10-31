@@ -147,6 +147,8 @@ Game.GetScriptableSystemsContainer():Get('EquipmentSystem'):QueueRequest(r); ret
 Game.GetStatPoolsSystem():RequestSettingStatPoolValue(id, gamedataStatPoolType.GrenadesCharges, s:GetStatValue(id, gamedataStatType.GrenadesCharges), nil, false)
 return string.format('%.0f', $POOL)")
   local cooked0; cooked0=$(trail_count "went off")
+  # A hit on an Invulnerable V is flagged DealNoDamage, and no effect comes of one of those.
+  vulnerable
   npcshoot 1 4
   local after; after=$(lua "return string.format('%.0f', $POOL)")
   local cooked; cooked=$(( $(trail_count "went off") - cooked0 ))
@@ -157,6 +159,7 @@ return string.format('%.0f', $POOL)")
   cooked0=$(trail_count "went off")
   npcshoot 1 4
   is "with no charge left, a hit sets off nothing (pool $(lua "return string.format('%.0f', $POOL)"))" "$(( $(trail_count "went off") - cooked0 ))" 0
+  kitgod
 }
 
 # --- lockout: V's hit jams the NPC's gun, an NPC's hit jams V's -------------------------------
