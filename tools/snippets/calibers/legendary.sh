@@ -274,6 +274,7 @@ return string.format('%.0f %.0f', s:GetStatValue(id, gamedataStatType.KnockdownI
   legendary_roll off
   npcshoot 2 6
   n=$(lua "return RIG.effects('V', 'BaseStatusEffect.Knockdown')")
+  echo "NOTE NPC hits on V: $(lua "return #RIG.ratios('NPC')")"
   [[ $n -ge 1 ]] && pass "an NPC's Mule Kick knocked V down ($n)" || fail "an NPC's Mule Kick knocked V down: $n"
   kitgod
   lua "RIG.npcMode = nil; return 1" >/dev/null
