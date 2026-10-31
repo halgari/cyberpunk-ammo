@@ -21,7 +21,7 @@ OUT = ROOT / "art" / "build"
 CELL = (160, 160)
 # Empty margin kept around the art (fraction of the cell): just enough that soft edges aren't cut.
 PAD = 0.02
-ATLAS = (2048, 4096)   # 12 x 25 cells of 160 x 160 (175 used)
+ATLAS = (2048, 4096)   # 12 x 25 cells of 160 x 160 (200 used)
 COLS = 12
 # Source art (art/icons/<name>.png, rendered by tools/render/render.py), one per round. The part is
 # "ao_" + the name with "-" as "_" (9mm-ball -> ao_9mm_ball), matching UIIcon.AO_* and the feed selector.
