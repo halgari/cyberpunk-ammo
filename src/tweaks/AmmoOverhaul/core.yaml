@@ -242,6 +242,16 @@ AmmoOverhaul.npcHackChance.Boss: 0.12
 AmmoOverhaul.npcHackChance.MaxTac: 0.12
 AmmoOverhaul.hackLegendaryShare: 0.1
 AmmoOverhaul.hackDropStack: 10
+# Gun shops stock them to Rare, and the netrunner vendors to Epic.
+AmmoOverhaul.hackShopChance: 0.5
+AmmoOverhaul.hackShopStack: 15
+Vendors.wbr_jpn_netrunner_01.aoHackShop: true
+Vendors.wbr_jpn_netrunner_02.aoHackShop: true
+Vendors.cz_stadium_netrunner_01.aoHackShop: true
+Vendors.wat_lch_netrunner_01.aoHackShop: true
+Vendors.cz_con_netrunner_01.aoHackShop: true
+Vendors.wat_kab_netrunner_01.aoHackShop: true
+Vendors.hey_rey_netrunner_01.aoHackShop: true
 
 # Legendary Cyberpsychosis: the
 # game's own at 30 seconds, not 58. Contagion catches on as The Clap does, wider with the rarity; the

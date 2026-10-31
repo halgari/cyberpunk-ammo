@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Quickhack rounds on live hits (spec docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md,
-# "Testing"), one check per mechanism. Parts: effects overheat ranks guarded cloud grenade rolls drop nosheet onv (default all):
+# "Testing"), one check per mechanism. Parts: effects overheat ranks guarded cloud grenade rolls drop nosheet onv shops (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/quickhack.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(effects overheat ranks guarded cloud grenade rolls drop nosheet onv)
+parts=("$@"); (( ${#parts[@]} )) || parts=(effects overheat ranks guarded cloud grenade rolls drop nosheet onv shops)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 YUK=Items.Preset_Yukimura_Default; PLAIN=Character.AO_Test_Plain_Unity
 pass() { echo "PASS $*"; }
@@ -204,6 +204,20 @@ onv() {
   [[ "$($SYS_TRAIL)" -ge 1 ]] && pass "it carried a hack round" || fail "no hack round rolled"
   is "no status from it" "$(lua "local n = 0 for _ in pairs(RIG.applied.V) do n = n + 1 end return n")" 0
   despawn
+}
+# --- shops: gun shops to Rare, netrunner vendors to Epic, nobody Legendary ------------------------------
+shops() {
+  lua "TweakDB:SetFlat('AmmoOverhaul.hackShopChance', 1.0); return 1" >/dev/null
+  stock() { lua "return $SYS:DebugHackStock('$1', 200)"; }
+  local g n r
+  g=$(stock Vendors.wat_nid_gunsmith_01); n=$(stock Vendors.wat_kab_netrunner_01); r=$(stock Vendors.wat_kab_ripperdoc_01)
+  [[ $g == *_Hack*1=* || $g == *_Hack*2=* ]] && pass "a gun shop lists hack rounds" || fail "gun shop: ${g:0:80}"
+  [[ ! $g =~ _Hack[A-Za-z]*[34]= ]] && pass "up to Rare" || fail "gun shop over Rare"
+  [[ $n =~ _Hack[A-Za-z]*3= ]] && pass "a netrunner vendor lists Epic" || fail "netrunner vendor: ${n:0:80}"
+  [[ ! $n =~ _Hack[A-Za-z]*4= ]] && pass "no Legendary" || fail "netrunner vendor sells Legendary"
+  is "a ripperdoc lists none" "$r" ""
+  [[ $g$n != *'!'* ]] && pass "every stack can be bought" || fail "unavailable stacks: ${n:0:80}"
+  lua "TweakDB:SetFlat('AmmoOverhaul.hackShopChance', 0.5); return 1" >/dev/null
 }
 SYS_TRAIL="eval lua \"local n = 0 for _ in string.gmatch(\$SYS:Trail(), 'got Items.AO_Feed_10mm_Hack') do n = n + 1 end return n\""
 

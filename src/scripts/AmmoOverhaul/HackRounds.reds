@@ -35,6 +35,35 @@ public abstract class HackRounds {
     return ArraySize(selectors) > 0 ? selectors[RandRange(0, ArraySize(selectors))] : TDBID.None();
   }
 
+  // A gun shop's or netrunner vendor's stacks this stock build: gun shops to Rare, netrunner vendors
+  // to Epic, past hackShopChance.
+  public static func ShopStock(vendor: TweakDBID, gunshop: Bool) -> array<AOStack> {
+    let stacks: array<AOStack>;
+    let netrunner: Bool = TweakDBInterface.GetBool(AOData.Flat(vendor, "aoHackShop"), false);
+    if !gunshop && !netrunner || RandF() >= TweakDBInterface.GetFloat(t"AmmoOverhaul.hackShopChance", 0.5) {
+      return stacks;
+    }
+    let tiers: array<Int32> = [10, 11];
+    if netrunner {
+      ArrayPush(tiers, 12);
+    }
+    let rounds: array<TweakDBID>;
+    for caliber in AOData.Calibers() {
+      for tier in tiers {
+        for ammo in AOData.AmmosForTier(caliber, tier) {
+          ArrayPush(rounds, ammo);
+        }
+      }
+    }
+    let size: Int32 = TweakDBInterface.GetInt(t"AmmoOverhaul.hackShopStack", 15);
+    let count: Int32 = RandRange(1, 3);
+    while count > 0 && ArraySize(rounds) > 0 {
+      ArrayPush(stacks, AOStack(rounds[RandRange(0, ArraySize(rounds))], size));
+      count -= 1;
+    }
+    return stacks;
+  }
+
   public static func IsNetrunner(npc: ref<NPCPuppet>) -> Bool {
     let archetype: wref<ArchetypeData_Record> = TweakDBInterface.GetCharacterRecord(npc.GetRecordID()).ArchetypeData();
     if !IsDefined(archetype) {

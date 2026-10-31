@@ -52,6 +52,14 @@ private final func AOSplitAmmo() -> Void {
       split += 1;
     }
   }
+  // A netrunner vendor may hold no ammo to split, so these count as a change of their own.
+  let hacks: array<AOStack> = HackRounds.ShopStock(this.GetVendorTweakID(), maxTier > 0);
+  for part in hacks {
+    let copy: SItemStack = template;
+    copy.itemID = ItemID.FromTDBID(part.ammo);
+    copy.quantity = part.quantity;
+    ArrayPush(stock, copy);
+  }
   AmmoFeedSystem.Get(this.m_gameInstance).MarkVendorSplit(this.GetVendorTweakID());
   // Gun shops also list some Uncommon and Rare recipes, as stacks like the ammo they sell.
   if split > 0 && maxTier > 0 {
@@ -71,7 +79,7 @@ private final func AOSplitAmmo() -> Void {
       }
     }
   }
-  if split > 0 {
+  if split > 0 || ArraySize(hacks) > 0 {
     this.m_stock = stock;
     AmmoFeedSystem.Log("vendor " + TDBID.ToStringDEBUG(this.GetVendorTweakID()) + ": split " + IntToString(split) + " ammo stacks (max tier " + IntToString(maxTier) + ")");
   }
@@ -87,6 +95,19 @@ public final func AODebugFactionAmmo() -> String {
     let id: TweakDBID = ItemID.GetTDBID(stack.itemID);
     if StrLen(TweakDBInterface.GetString(AOData.Flat(id, "aoFaction"), "")) > 0 {
       text += TDBID.ToStringDEBUG(id) + "=" + IntToString(stack.quantity) + ";";
+    }
+  }
+  return text;
+}
+
+// The hack rounds in the stock, "item=quantity;...", with a "!" on any the buy screen would skip.
+@addMethod(Vendor)
+public final func AODebugHackAmmo() -> String {
+  let text: String = "";
+  for stack in this.GetStock() {
+    let id: TweakDBID = ItemID.GetTDBID(stack.itemID);
+    if StrLen(TweakDBInterface.GetString(AOData.Flat(id, "aoHackProgram"), "")) > 0 {
+      text += TDBID.ToStringDEBUG(id) + "=" + IntToString(stack.quantity) + (stack.isAvailable ? ";" : "!;");
     }
   }
   return text;

@@ -694,6 +694,20 @@ public class AmmoFeedSystem extends ScriptableSystem {
 
   // The faction rounds of `n` stock builds of `vendorID`, on a vendor object of its own so the shop
   // needn't be nearby: its type, then "|item=quantity;..." per build.
+  // As DebugTurf, for hack rounds.
+  public final func DebugHackStock(vendorID: String, n: Int32) -> String {
+    let vendor: ref<Vendor> = new Vendor();
+    vendor.Initialize(this.GetGameInstance(), TDBID.Create(vendorID), null);
+    let text: String = "";
+    let i: Int32 = 0;
+    while i < n {
+      vendor.AODebugRestock();
+      text += vendor.AODebugHackAmmo();
+      i += 1;
+    }
+    return text;
+  }
+
   public final func DebugTurf(vendorID: String, n: Int32) -> String {
     let vendor: ref<Vendor> = new Vendor();
     vendor.Initialize(this.GetGameInstance(), TDBID.Create(vendorID), null);
