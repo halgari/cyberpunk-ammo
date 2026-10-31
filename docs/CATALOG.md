@@ -408,7 +408,7 @@ Militech:
 Animals:
 
 - **Protein Loads** (Rare; 12mm, 5mm, Heavy): a kill stacks `AmmoOverhaul.Pumped` on the shooter (`aoPumped`): 10 s, 3 stacks, +6% `MaxSpeed`, -0.1 `ReloadTimeBonus` each.
-- **Leg Day** (Epic; 12mm, Heavy): 20% per shot (`aoLegChance`): `CrippledLeg` up to Officer, `ForceStagger` for Elite, Boss and MaxTac, `Knockdown` on V. x1.8 recoil.
+- **Leg Day** (Epic; 12mm, Heavy): 20% per shot (`aoLegChance`): `AmmoOverhaul.CrippledLegs` (60 s) up to Officer, `ForceStagger` for Elite, Boss, MaxTac and machines, `Knockdown` on V. x1.8 recoil.
 
 ### Built (faction rounds, 2026-10-30)
 

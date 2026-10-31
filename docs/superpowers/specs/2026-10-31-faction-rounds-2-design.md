@@ -43,8 +43,9 @@ Numbers are starting points for the feel test. Calibers come from what each fact
     damage. +20% recoil."
 - **Santa Muerte** (Epic; .45, 12mm)
   - +50% headshot damage, and a headshot sets the target on fire.
-  - On V: the game flagged no headshots on V (0 of 46 hits), so each hit on V has a 10% chance
-    instead, so the round still does the same thing to V.
+  - On V: vanilla sets the headshot flag only on V's own shots (`ProcessLocalizedDamage`), so each hit
+    on V has a 10% chance instead, so the round still does the same thing to V. For the same reason
+    an NPC's Santa Muerte never burns another NPC, and its headshot stat does nothing on NPC guns.
   - Text: "Blessed before they're loaded. La Santisima takes who she takes.\n\n+50% headshot damage.
     Headshots set the target on fire."
 
@@ -86,10 +87,11 @@ Numbers are starting points for the feel test. Calibers come from what each fact
   - Text: "Big, hot loads straight from the Animals' gym. Every kill gets you pumped.\n\nKills give
     +6% move speed and 10% faster reloads for 10 seconds, stacking 3 times."
 - **Leg Day** (Epic; 12mm, heavy rail)
-  - 20% chance per shot to cripple the target's legs (`BaseStatusEffect.CrippledLeg`): it can't walk
-    or run for the rest of the fight, but keeps shooting from where it stands (probe: 6 hits on V
-    against 8 healthy). Elite, Boss and MaxTac NPCs stagger instead. +80% recoil.
-  - On V: a knockdown, as Mule Kick. `CrippledLeg` never ends by itself, so V doesn't get it.
+  - 20% chance per shot to cripple the target's legs (`AmmoOverhaul.CrippledLegs`, the game's
+    `CrippledLeg` limited to 60 seconds, so no quest NPC stays rooted): it can't walk or run, but
+    keeps shooting from where it stands (probe: 6 hits on V against 8 healthy). Elite, Boss and
+    MaxTac NPCs and machines stagger instead; drones get nothing. +80% recoil.
+  - On V: a knockdown, as Mule Kick.
   - Text: "Nobody walks right after leg day. They stay put and think about what they've done.\n\n
     20% chance per shot to cripple the target's legs. +80% recoil."
 

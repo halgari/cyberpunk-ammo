@@ -442,10 +442,11 @@ stopv() {
 # --- legs: Leg Day cripples a Normal, staggers an Elite, floors V ------------------------------------
 legs() {
   local NOV=Items.Preset_Nova_Default
-  is "a Normal is crippled" "$(lua "return $SYS:DebugLegEffect('Normal')")" BaseStatusEffect.CrippledLeg
-  is "an Elite staggers" "$(lua "return $SYS:DebugLegEffect('Elite')")" BaseStatusEffect.ForceStagger
-  is "a Boss staggers" "$(lua "return $SYS:DebugLegEffect('Boss')")" BaseStatusEffect.ForceStagger
-  is "V goes down" "$(lua "return $SYS:DebugLegEffect('')")" BaseStatusEffect.Knockdown
+  is "a Normal is crippled" "$(lua "return $SYS:DebugLegEffect('Normal', false)")" AmmoOverhaul.CrippledLegs
+  is "a Normal android staggers" "$(lua "return $SYS:DebugLegEffect('Normal', true)")" BaseStatusEffect.ForceStagger
+  is "an Elite staggers" "$(lua "return $SYS:DebugLegEffect('Elite', false)")" BaseStatusEffect.ForceStagger
+  is "a Boss staggers" "$(lua "return $SYS:DebugLegEffect('Boss', false)")" BaseStatusEffect.ForceStagger
+  is "V goes down" "$(lua "return $SYS:DebugLegEffect('', false)")" BaseStatusEffect.Knockdown
   lua "TweakDB:SetFlat('Ammo.AO_12mm_LegDay.aoLegChance', 1.0); return 1" >/dev/null
   kit "{'$NOV', 1}, {'Items.AO_Feed_12mm_LegDay', 1}, {'Ammo.AO_12mm_LegDay', 100}"
   draw $NOV; draw $NOV; feed Items.AO_Feed_12mm_LegDay
@@ -453,16 +454,17 @@ legs() {
   spawn 0.0 "" Character.AO_Test_Plain_Unity
   setup $NOV
   shoot "" 2
-  local n; n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.CrippledLeg')")
+  local n; n=$(lua "return RIG.effects('NPC', 'AmmoOverhaul.CrippledLegs')")
   [[ $n -ge 1 ]] && pass "a live hit cripples a Normal ($n)" || fail "cripple: $n"
   is "its legs are out" "$(lua "return Game.GetStatsSystem():GetStatValue(RIG.npc():GetEntityID(), gamedataStatType.CanUseLegs)")" 0
+  within "the cripple wears off" "$(lua "local r = -1; for _, e in ipairs(Game.GetStatusEffectSystem():GetAppliedEffects(RIG.npc():GetEntityID())) do if e:GetRecord():GetID().hash == TweakDBID.new('AmmoOverhaul.CrippledLegs').hash then r = e:GetRemainingDuration() end end return string.format('%.0f', r)")" 30 60
   despawn
   carrier Ammo.AO_12mm_LegDay Character.AO_Test_Animal_Nova $NOV
   npcshoot 2 6
   n=$(lua "return RIG.effects('V', 'BaseStatusEffect.Knockdown')")
   echo "  hits on V $(lua "return #RIG.ratios('NPC')")"
   [[ $n -ge 1 ]] && pass "an NPC's Leg Day floors V ($n)" || fail "V knockdown: $n"
-  is "V is never crippled" "$(lua "return RIG.effects('V', 'BaseStatusEffect.CrippledLeg')")" 0
+  is "V is never crippled" "$(lua "return RIG.effects('V', 'AmmoOverhaul.CrippledLegs')")" 0
   kitgod; despawn
   lua "TweakDB:SetFlat('Ammo.AO_12mm_LegDay.aoLegChance', 0.2); return 1" >/dev/null
 }

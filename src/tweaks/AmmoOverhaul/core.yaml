@@ -107,6 +107,18 @@ AmmoOverhaul.PingTag:
         modifierType: Additive
         value: 5
 
+# Leg Day: the game's crippled legs, which never end by themselves, for a minute.
+AmmoOverhaul.CrippledLegs:
+  $base: BaseStatusEffect.CrippledLeg
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 60
+
 # Protein Loads: what a kill gives the shooter.
 AmmoOverhaul.Pumped:
   $base: BaseStatusEffect.Sovereign_Speed_Buff

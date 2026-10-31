@@ -467,8 +467,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return TDBID.ToStringDEBUG(MuleKick.NpcEffect(rarity));
   }
 
-  public final func DebugLegEffect(rarity: String) -> String {
-    return TDBID.ToStringDEBUG(FactionRounds.LegEffect(rarity));
+  public final func DebugLegEffect(rarity: String, mechanical: Bool) -> String {
+    return TDBID.ToStringDEBUG(FactionRounds.LegEffect(rarity, mechanical));
   }
 
   public final func DebugStops(rarity: String) -> Bool {

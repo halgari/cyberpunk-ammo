@@ -136,13 +136,13 @@ public abstract class FactionRounds {
     return StrLen(rarity) == 0 ? t"BaseStatusEffect.BlockBroken" : t"BaseStatusEffect.ForceStagger";
   }
 
-  // What Leg Day does to `rarity`, empty for V. CrippledLeg never ends, so V goes down instead.
-  public static func LegEffect(rarity: String) -> TweakDBID {
+  // What Leg Day does to `rarity`, empty for V, who goes down. Machines have no legs to cripple.
+  public static func LegEffect(rarity: String, mechanical: Bool) -> TweakDBID {
     if StrLen(rarity) == 0 {
       return t"BaseStatusEffect.Knockdown";
     }
     let tough: Bool = Equals(rarity, "Elite") || Equals(rarity, "Boss") || Equals(rarity, "MaxTac");
-    return tough ? t"BaseStatusEffect.ForceStagger" : t"BaseStatusEffect.CrippledLeg";
+    return tough || mechanical ? t"BaseStatusEffect.ForceStagger" : t"AmmoOverhaul.CrippledLegs";
   }
 
   // A hit by any gun that passed the effect gate (from AmmoFeedSystem.ApplyAmmoOnHit). Each pellet
@@ -164,7 +164,7 @@ public abstract class FactionRounds {
     }
     let stop: Float = AOData.StopChance(ammo);
     let legs: Float = AOData.LegChance(ammo);
-    if stop <= 0.0 && legs <= 0.0 || target.IsDrone() || target.IsTurret() {
+    if stop <= 0.0 && legs <= 0.0 || target.IsDrone() {
       return;
     }
     let now: Float = CookOff.Now(puppet.GetGame());
@@ -178,7 +178,7 @@ public abstract class FactionRounds {
     }
     if legs > 0.0 && RandF() < AOData.PelletChance(legs, pellets) {
       puppet.aoMuleKickAt = now;
-      attackData.AddStatusEffect(FactionRounds.LegEffect(rarity), 1.0);
+      attackData.AddStatusEffect(FactionRounds.LegEffect(rarity, puppet.IsMechanical()), 1.0);
     }
   }
 

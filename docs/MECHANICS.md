@@ -94,7 +94,8 @@ Other ways vanilla adds blasts: `TriggerAttackEffector` sets off a separate atta
   same burn), because `removeAllStacksWhenDurationEnds` is false. So per-pellet burns don't add up;
   pellets just keep one burn going.
 - **Headshots:** `hitFlag.Headshot` is set before `ProcessStatusEffects`, and helmet hits lose it
-  (chest 0/12, head 11/15). The game flagged none of 46 NPC hits on V.
+  (chest 0/12, head 11/15). `ProcessLocalizedDamage` returns early for any non-player instigator, so
+  NPCs' hits never carry the flag: an NPC's headshot stats and head effects do nothing.
 - **Crits:** a gun's `CritChance` and `CritDamage` reach the roll and are in percent (DamageSystem
   divides by 100), so +15% is `15.0`. Gold Tips went from 3 crits in 80 hits to 16.
 - **Blind on NPCs:** `ShortBlind` 2 s, `ModerateBlind` 4 s, `Blind` 5 s. An NPC left alone landed 0
@@ -103,7 +104,7 @@ Other ways vanilla adds blasts: `TriggerAttackEffector` sets off a separate atta
   and an icon, not a black screen.
 - **Stagger:** `ForceStagger` has no end on V and V plays nothing for it. V's stagger is any
   `Stunned`-type effect, which plays `StaggerHit`: `BlockBroken` is 1 s.
-- **Legs:** `CrippledLeg` on an NPC roots it for good, and it keeps shooting (6 hits on V against 8
+- **Legs:** `CrippledLeg` on an NPC roots it for good (Leg Day's copy lasts 60 s), and it keeps shooting (6 hits on V against 8
   healthy). `MetelKurtMod_*` and `Kurtz_Metel_Dismembered*` force a kill. `ShotgunMod2_*Leg` alone
   does nothing visible: it counts pellets for Kneel!.
 - **Per-target quickhack cost:** a wrap of `ScriptableDeviceAction.GetCost` reading an effect on
