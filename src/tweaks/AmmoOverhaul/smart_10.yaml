@@ -11,9 +11,9 @@ AmmoOverhaul.Smart_10.feedElement: "Items.AO_AmmoFeed_Smart_10_Element"
 AmmoOverhaul.Smart_10.defaultAmmo: "Ammo.AO_S10_Standard"
 AmmoOverhaul.Smart_10.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Smart_10.lootWeight: 0.15
-AmmoOverhaul.Smart_10.selectors: ["Items.AO_Feed_10mm_Seekers", "Items.AO_Feed_10mm_Dumbfires", "Items.AO_Feed_10mm_ShortFuse", "Items.AO_Feed_10mm_EMPPayload", "Items.AO_Feed_10mm_FirePayload", "Items.AO_Feed_10mm_ChemPayload", "Items.AO_Feed_10mm_FlashPayload", "Items.AO_Feed_10mm_Hunter", "Items.AO_Feed_10mm_HackCarrier", "Items.AO_Feed_10mm_ShapedCharge", "Items.AO_Feed_10mm_Lockout", "Items.AO_Feed_10mm_Kansatsu", "Items.AO_Feed_10mm_FourthOfJuly"]
-AmmoOverhaul.Smart_10.selectorAmmo: ["Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire", "Ammo.AO_S10_ShortFuse", "Ammo.AO_S10_EMPPayload", "Ammo.AO_S10_FirePayload", "Ammo.AO_S10_ChemPayload", "Ammo.AO_S10_FlashPayload", "Ammo.AO_S10_Hunter", "Ammo.AO_S10_HackCarrier", "Ammo.AO_S10_ShapedCharge", "Ammo.AO_S10_Lockout", "Ammo.AO_S10_Kansatsu", "Ammo.AO_S10_FourthOfJuly"]
-AmmoOverhaul.Smart_10.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 6, 5]
+AmmoOverhaul.Smart_10.selectors: ["Items.AO_Feed_10mm_Seekers", "Items.AO_Feed_10mm_Dumbfires", "Items.AO_Feed_10mm_ShortFuse", "Items.AO_Feed_10mm_EMPPayload", "Items.AO_Feed_10mm_FirePayload", "Items.AO_Feed_10mm_ChemPayload", "Items.AO_Feed_10mm_FlashPayload", "Items.AO_Feed_10mm_Hunter", "Items.AO_Feed_10mm_HackCarrier", "Items.AO_Feed_10mm_ShapedCharge", "Items.AO_Feed_10mm_Lockout", "Items.AO_Feed_10mm_Kansatsu", "Items.AO_Feed_10mm_FourthOfJuly", "Items.AO_Feed_10mm_BadJuju", "Items.AO_Feed_10mm_CollectCall", "Items.AO_Feed_10mm_WideAngle", "Items.AO_Feed_10mm_SecondOpinion", "Items.AO_Feed_10mm_Deniable"]
+AmmoOverhaul.Smart_10.selectorAmmo: ["Ammo.AO_S10_Standard", "Ammo.AO_S10_Dumbfire", "Ammo.AO_S10_ShortFuse", "Ammo.AO_S10_EMPPayload", "Ammo.AO_S10_FirePayload", "Ammo.AO_S10_ChemPayload", "Ammo.AO_S10_FlashPayload", "Ammo.AO_S10_Hunter", "Ammo.AO_S10_HackCarrier", "Ammo.AO_S10_ShapedCharge", "Ammo.AO_S10_Lockout", "Ammo.AO_S10_Kansatsu", "Ammo.AO_S10_FourthOfJuly", "Ammo.AO_S10_BadJuju", "Ammo.AO_S10_CollectCall", "Ammo.AO_S10_WideAngle", "Ammo.AO_S10_SecondOpinion", "Ammo.AO_S10_Deniable"]
+AmmoOverhaul.Smart_10.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 6, 5, 6, 9, 5, 6, 6]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Smart_10.craftBatch: 90
 
@@ -621,6 +621,254 @@ Items.AO_Feed_10mm_FourthOfJuly:
   iconPath: AO_10mm_FourthOfJuly
   quality: Quality.Rare
 
+# 10mm Bad Juju [VDB] (Epic)
+Ammo.AO_S10_BadJuju:
+  $base: Ammo.AO_S10_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-10mm-BadJuju
+  localizedDescription: LocKey#AO-Ammo-BadJuju-Desc
+  iconPath: AO_10mm_BadJuju
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Smart]
+
+Ammo.AO_S10_BadJuju.aoFaction: "VoodooBoys"
+Ammo.AO_S10_BadJuju.aoRankEffect: "AmmoOverhaul.JujuMadness"
+Ammo.AO_S10_BadJuju.aoRankChance: 0.15
+Ammo.AO_S10_BadJuju.aoRankToughFrom: "Boss"
+Ammo.AO_S10_BadJuju.aoRankPlayer: "AIQuickHackStatusEffect.HackBlind"
+
+UIIcon.AO_10mm_BadJuju:
+  $type: UIIcon
+  atlasPartName: ao_10mm_badjuju
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_10mm_BadJuju:
+  $base: Items.AO_Feed_10mm_Seekers
+  displayName: LocKey#AO-Ammo-10mm-BadJuju
+  localizedDescription: LocKey#AO-Ammo-BadJuju-Desc
+  iconPath: AO_10mm_BadJuju
+  quality: Quality.Epic
+
+# 10mm Collect Call [VDB] (Legendary)
+Ammo.AO_S10_CollectCall:
+  $base: Ammo.AO_S10_Dumbfire
+  quality: Quality.Legendary
+  # Legendary: x8 on the Uncommon's price, so x16 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 8
+  displayName: LocKey#AO-Ammo-10mm-CollectCall
+  localizedDescription: LocKey#AO-Ammo-CollectCall-Desc
+  iconPath: AO_10mm_CollectCall
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_9, AO_Family_Smart]
+
+Ammo.AO_S10_CollectCall.aoFaction: "VoodooBoys"
+Ammo.AO_S10_CollectCall.aoRankEffect: "BaseStatusEffect.HauntedGunBlackwallUpload"
+Ammo.AO_S10_CollectCall.aoRankChance: 0.1
+Ammo.AO_S10_CollectCall.aoRankToughFrom: "Boss"
+Ammo.AO_S10_CollectCall.aoRankPlayer: "BaseStatusEffect.CyberwareMalfunction"
+Ammo.AO_S10_CollectCall.aoRankTough: "BaseStatusEffect.CyberwareMalfunction"
+
+UIIcon.AO_10mm_CollectCall:
+  $type: UIIcon
+  atlasPartName: ao_10mm_collectcall
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_10mm_CollectCall:
+  $base: Items.AO_Feed_10mm_Seekers
+  displayName: LocKey#AO-Ammo-10mm-CollectCall
+  localizedDescription: LocKey#AO-Ammo-CollectCall-Desc
+  iconPath: AO_10mm_CollectCall
+  quality: Quality.Legendary
+
+# 10mm Wide Angle [Kang] (Rare)
+Ammo.AO_S10_WideAngle:
+  $base: Ammo.AO_S10_Dumbfire
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-10mm-WideAngle
+  localizedDescription: LocKey#AO-Ammo-WideAngle-Desc
+  iconPath: AO_10mm_WideAngle
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Smart]
+
+Ammo.AO_S10_WideAngle.aoFaction: "KangTao"
+
+UIIcon.AO_10mm_WideAngle:
+  $type: UIIcon
+  atlasPartName: ao_10mm_wideangle
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_10mm_WideAngle:
+  $base: Items.AO_Feed_10mm_Seekers
+  displayName: LocKey#AO-Ammo-10mm-WideAngle
+  localizedDescription: LocKey#AO-Ammo-WideAngle-Desc
+  iconPath: AO_10mm_WideAngle
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipTargetableAngleYaw
+      modifierType: Additive
+      value: 25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipTargetableAnglePitch
+      modifierType: Additive
+      value: 25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsTargetableAngleYaw
+      modifierType: Additive
+      value: 25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsTargetableAnglePitch
+      modifierType: Additive
+      value: 25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipLockingAngleYaw
+      modifierType: Additive
+      value: 25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipLockingAnglePitch
+      modifierType: Additive
+      value: 25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsLockingAngleYaw
+      modifierType: Additive
+      value: 25
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsLockingAnglePitch
+      modifierType: Additive
+      value: 25
+
+# 10mm Second Opinion [Kang] (Epic)
+Ammo.AO_S10_SecondOpinion:
+  $base: Ammo.AO_S10_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-10mm-SecondOpinion
+  localizedDescription: LocKey#AO-Ammo-SecondOpinion-Desc
+  iconPath: AO_10mm_SecondOpinion
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Smart]
+
+Ammo.AO_S10_SecondOpinion.aoFaction: "KangTao"
+
+UIIcon.AO_10mm_SecondOpinion:
+  $type: UIIcon
+  atlasPartName: ao_10mm_secondopinion
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_10mm_SecondOpinion:
+  $base: Items.AO_Feed_10mm_Seekers
+  displayName: LocKey#AO-Ammo-10mm-SecondOpinion
+  localizedDescription: LocKey#AO-Ammo-SecondOpinion-Desc
+  iconPath: AO_10mm_SecondOpinion
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunHipMaxLockedTargets
+      modifierType: Additive
+      value: 2
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SmartGunAdsMaxLockedTargets
+      modifierType: Additive
+      value: 2
+
+# 10mm Deniable [NUSA] (Epic)
+Ammo.AO_S10_Deniable:
+  $base: Ammo.AO_S10_Dumbfire
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-10mm-Deniable
+  localizedDescription: LocKey#AO-Ammo-Deniable-Desc
+  iconPath: AO_10mm_Deniable
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Smart]
+
+Ammo.AO_S10_Deniable.aoFaction: "NUSA"
+Ammo.AO_S10_Deniable.aoUnawareBonus: 2.0
+
+UIIcon.AO_10mm_Deniable:
+  $type: UIIcon
+  atlasPartName: ao_10mm_deniable
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_10mm_Deniable:
+  $base: Items.AO_Feed_10mm_Seekers
+  displayName: LocKey#AO-Ammo-10mm-Deniable
+  localizedDescription: LocKey#AO-Ammo-Deniable-Desc
+  iconPath: AO_10mm_Deniable
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanSilentKill
+      modifierType: Additive
+      value: 1
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -945,5 +1193,25 @@ Ammo.AO_S10_Kansatsu.aoRecipe: ""
 Ammo.AO_S10_FourthOfJuly.aoScrapRounds: 90
 Ammo.AO_S10_FourthOfJuly.aoScrapGive: 2
 Ammo.AO_S10_FourthOfJuly.aoRecipe: ""
+
+Ammo.AO_S10_BadJuju.aoScrapRounds: 90
+Ammo.AO_S10_BadJuju.aoScrapGive: 2
+Ammo.AO_S10_BadJuju.aoRecipe: ""
+
+Ammo.AO_S10_CollectCall.aoScrapRounds: 90
+Ammo.AO_S10_CollectCall.aoScrapGive: 2
+Ammo.AO_S10_CollectCall.aoRecipe: ""
+
+Ammo.AO_S10_WideAngle.aoScrapRounds: 90
+Ammo.AO_S10_WideAngle.aoScrapGive: 2
+Ammo.AO_S10_WideAngle.aoRecipe: ""
+
+Ammo.AO_S10_SecondOpinion.aoScrapRounds: 90
+Ammo.AO_S10_SecondOpinion.aoScrapGive: 2
+Ammo.AO_S10_SecondOpinion.aoRecipe: ""
+
+Ammo.AO_S10_Deniable.aoScrapRounds: 90
+Ammo.AO_S10_Deniable.aoScrapGive: 2
+Ammo.AO_S10_Deniable.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

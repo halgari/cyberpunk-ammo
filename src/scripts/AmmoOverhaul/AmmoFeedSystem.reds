@@ -445,6 +445,16 @@ public class AmmoFeedSystem extends ScriptableSystem {
     FactionRounds.OnShot(this.m_player, TDBID.Create(ammo));
   }
 
+  // What Waste Not hands back for a free shot of `ammo`, in V's active gun.
+  public final func DebugRefund(ammo: String) -> Void {
+    FactionRounds.Refund(this.m_player, GameObject.GetActiveWeapon(this.m_player), TDBID.Create(ammo));
+  }
+
+  // What a rank effect of `ammo` does to `rarity` (empty: V).
+  public final func DebugRankResult(ammo: String, rarity: String, mechanical: Bool, guarded: Bool) -> String {
+    return TDBID.ToStringDEBUG(FactionRounds.RankResult(TDBID.Create(ammo), rarity, mechanical, guarded));
+  }
+
   // The smart gun's lock, from the HUD's data: what a lock probe polls.
   public final func DebugSmartTargets() -> String {
     let bb: ref<IBlackboard> = GameInstance.GetBlackboardSystem(GetGameInstance()).Get(GetAllBlackboardDefs().UI_ActiveWeaponData);
@@ -897,7 +907,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return true;
   }
 
-  // The round's damage share and machine bonus (AOData hit data) on a rolled hit, whoever fired.
+  // The round's damage share and its machine and unaware bonuses (AOData hit data) on a rolled hit,
+  // whoever fired.
   public static func ApplyHitDamage(hitEvent: ref<gameHitEvent>, ammo: TweakDBID) -> Void {
     let shareType: gamedataDamageType;
     let share: Float = AOData.DamageShare(ammo, shareType);
@@ -906,8 +917,12 @@ public class AmmoFeedSystem extends ScriptableSystem {
       hitEvent.attackComputed.SetAttackValue(physical * (1.0 - share), gamedataDamageType.Physical);
       hitEvent.attackComputed.AddAttackValue(physical * share, shareType);
     }
-    let bonus: Float = AOData.MachineBonus(ammo);
-    if bonus != 1.0 && AOData.IsMachine(hitEvent.target) {
+    let bonus: Float = AOData.IsMachine(hitEvent.target) ? AOData.MachineBonus(ammo) : 1.0;
+    let puppet: ref<NPCPuppet> = hitEvent.target as NPCPuppet;
+    if IsDefined(puppet) && !NPCPuppet.IsInCombat(puppet) {
+      bonus *= AOData.UnawareBonus(ammo);
+    }
+    if bonus != 1.0 {
       // Each type by name, read and set as the share is.
       let types: array<String> = AmmoFeedSystem.DamageTypes();
       let i: Int32 = 1;
@@ -932,6 +947,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
     // melee finisher, another round) clears it, so a Cook-off blast kill sets off nothing.
     CookOff.Clear(hitEvent.target);
     FactionRounds.ClearParts(hitEvent.target);
+    if FactionRounds.Cloud(attackData, hitEvent.target) {
+      return;
+    }
     let instigator: ref<GameObject> = attackData.GetInstigator();
     if !IsDefined(instigator) {
       return;
@@ -959,7 +977,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if AOData.MuleKick(ammo) && !gated {
       MuleKick.OnHit(attackData, hitEvent.target);
     }
-    if AOData.PartsPuller(ammo) && instigator.IsPlayer() && !gated {
+    if (AOData.PartsPuller(ammo) || AOData.Eddies(ammo)) && instigator.IsPlayer() && !gated {
       FactionRounds.MarkParts(hitEvent.target, ammo);
     }
     if AOData.Pumped(ammo) && !gated {
@@ -969,6 +987,9 @@ public class AmmoFeedSystem extends ScriptableSystem {
     let pellets: Int32 = Cast<Int32>(GameInstance.GetStatsSystem(weapon.GetGame()).GetStatValue(Cast<StatsObjectID>(weapon.GetEntityID()), gamedataStatType.ProjectilesPerShot));
     if !gated {
       FactionRounds.OnHit(attackData, hitEvent.target, ammo, pellets);
+      if !instigator.IsPlayer() {
+        FactionRounds.Blast(instigator, hitEvent.target, AOData.BlastRecord(ammo, "aoNpcBlast"));
+      }
     }
     let chances: array<Float>;
     let effects: array<TweakDBID> = AOData.HitEffects(ammo, chances);
@@ -980,6 +1001,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     while i < ArraySize(effects) {
       if TDBID.IsValid(effects[i]) && RandF() < AOData.PelletChance(chances[i], pellets) {
         attackData.AddStatusEffect(onPlayer ? AOData.PlayerEffect(effects[i]) : effects[i], 1.0);
+        FactionRounds.Blast(instigator, hitEvent.target, AOData.BlastRecord(ammo, "aoEffectBlast"));
       }
       i += 1;
     }

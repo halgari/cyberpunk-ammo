@@ -30,7 +30,7 @@ COST = {"Tech": 1, "Power": 2, "Smart": 4}
 MATERIAL = ["Items.CommonMaterial1", "Items.UncommonMaterial1", "Items.RareMaterial1", "Items.EpicMaterial1"]
 QUALITY = ["Common", "Uncommon", "Rare", "Epic"]
 # Legendary and the faction tiers are never crafted (tools/rounds/rounds.py).
-NO_RECIPE = {4, 5, 6, 7, 8}
+NO_RECIPE = {4, 5, 6, 7, 8, 9}
 DIVISOR = [1, 2, 3, 4]
 # A round's price over its caliber's Common round: x2 per tier (CATALOG, tiers.lua).
 TIER_PRICE = [1, 2, 4, 8]

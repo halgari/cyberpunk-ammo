@@ -28,15 +28,19 @@ RARE, EPIC, LEGENDARY = 2, 3, 4
 # hold them: rolled by NPCs of their faction only (FactionRounds.Roll), never crafted. Moving a round
 # between them is its tier= in KINDS and a run of this file and tools/crafting/crafting.py; quality,
 # price, disassembly and the NPC roll follow (test_rounds.py's SPEC holds the list to check against).
-FACTION_RARE, FACTION_EPIC, FACTION_COMMON, FACTION_UNCOMMON = 5, 6, 7, 8
+FACTION_RARE, FACTION_EPIC, FACTION_COMMON, FACTION_UNCOMMON, FACTION_LEGENDARY = 5, 6, 7, 8, 9
 QUALITY = {RARE: "Rare", EPIC: "Epic", LEGENDARY: "Legendary",
-           FACTION_RARE: "Rare", FACTION_EPIC: "Epic", FACTION_COMMON: "Common", FACTION_UNCOMMON: "Uncommon"}
+           FACTION_RARE: "Rare", FACTION_EPIC: "Epic", FACTION_COMMON: "Common", FACTION_UNCOMMON: "Uncommon",
+           FACTION_LEGENDARY: "Legendary"}
 # Price on top of the base ammo (the caliber's plain Uncommon, already x2 of Common): Rare x4, Epic x8,
 # Legendary x16; faction rounds as their quality, except the faction Common, half the Common round.
-PRICE = {RARE: 2, EPIC: 4, LEGENDARY: 8, FACTION_RARE: 2, FACTION_EPIC: 4, FACTION_COMMON: 0.25, FACTION_UNCOMMON: 1}
+PRICE = {RARE: 2, EPIC: 4, LEGENDARY: 8, FACTION_RARE: 2, FACTION_EPIC: 4, FACTION_COMMON: 0.25, FACTION_UNCOMMON: 1,
+         FACTION_LEGENDARY: 8}
 # The short tag at the end of a faction round's name.
 FACTION_TAG = {"Maelstrom": "[Mael]", "Scavengers": "[Scav]", "Arasaka": "[Ara]", "TygerClaws": "[Tyger]",
-               "Valentinos": "[Val]", "SixthStreet": "[6th]", "Militech": "[Mil]", "Animals": "[Animal]"}
+               "Valentinos": "[Val]", "SixthStreet": "[6th]", "Militech": "[Mil]", "Animals": "[Animal]", "Barghest": "[Barghest]",
+               "VoodooBoys": "[VDB]", "Wraiths": "[Wraith]", "Aldecaldos": "[Nomad]", "TheMox": "[Mox]", "NCPD": "[NCPD]",
+               "KangTao": "[Kang]", "NUSA": "[NUSA]"}
 
 # --- Calibers ---------------------------------------------------------------------------------
 # tag: the caliber's ID tag (Ammo.AO_<ammo>_..., Items.AO_Feed_<sel>_..., text and icon key <loc>).
@@ -523,6 +527,111 @@ KINDS = [
          stats=recoil(1.80),
          hit=dict(legs=0.20),
          desc="Nobody walks right after leg day. They stay put and think about what they've done.\n\n20% chance per shot to cripple the target's legs. +80% recoil."),
+    # Barghest (docs/superpowers/specs/2026-10-31-faction-rounds-3-design.md)
+    dict(load="DogtownTax", title="Dogtown Tax", tier=FACTION_RARE, faction="Barghest", look=((70, 66, 52), (200, 170, 60)),
+         art={},
+         calibers=["9mm", "556"],
+         stats=[],
+         hit=dict(eddies=True),
+         desc="Hansen takes his cut of everything. Now you do too.\n\nKills leave eddies on the body."),
+    dict(load="ChimeraScrap", title="Chimera Scrap", tier=FACTION_EPIC, faction="Barghest", look=((70, 66, 52), (220, 90, 30)),
+         art={},
+         calibers=["762", "5mm"],
+         stats=[mult("RicochetCount", 0)],
+         attack_package="Attacks.ChimeraPowerModExplosiveBulletPackage",
+         hit=dict(npc_blast="AmmoOverhaul.ScrapBlast"),
+         desc="Cut from what's left of the mech. Still angry about it.\n\nBullets explode on impact."),
+    # Voodoo Boys
+    dict(load="BadJuju", title="Bad Juju", tier=FACTION_EPIC, faction="VoodooBoys", look=((30, 50, 60), (60, 200, 190)),
+         art={},
+         calibers=["45", "5mm", "10mm"],
+         stats=[],
+         hit=dict(rank=dict(effect="AmmoOverhaul.JujuMadness", chance=0.15, tough_from="Boss", player="AIQuickHackStatusEffect.HackBlind")),
+         desc="Something rides in on the round and it isn't friendly.\n\n15% chance per shot to turn the target on its friends for 20 seconds."),
+    dict(load="CollectCall", title="Collect Call", tier=FACTION_LEGENDARY, faction="VoodooBoys", look=((15, 25, 30), (230, 40, 50)),
+         art={},
+         calibers=["5mm", "10mm"],
+         stats=[],
+         hit=dict(rank=dict(effect="BaseStatusEffect.HauntedGunBlackwallUpload", chance=0.10, tough="BaseStatusEffect.CyberwareMalfunction",
+                            tough_from="Boss", player="BaseStatusEffect.CyberwareMalfunction")),
+         desc="It's for you. It's from the other side of the Blackwall.\n\n10% chance per shot to kill the target outright. Please hold."),
+    # Wraiths
+    dict(load="PocketSand", title="Pocket Sand", tier=FACTION_RARE, faction="Wraiths", look=((150, 120, 80), (90, 70, 45)),
+         art={},
+         calibers=["45", "12ga"],
+         stats=[],
+         hit=dict(rank=dict(effect="BaseStatusEffect.ShortBlind", chance=0.20, tough_from="Boss", player="AIQuickHackStatusEffect.HackBlind")),
+         desc="Badlands grit packed behind the slug. Rude, and it works.\n\n20% chance per shot to blind the target for 2 seconds."),
+    dict(load="TheClap", title="The Clap", tier=FACTION_EPIC, faction="Wraiths", look=((150, 120, 80), (120, 170, 50)),
+         art={},
+         calibers=["5mm", "Heavy"],
+         stats=[],
+         hit=dict(effects=[("BaseStatusEffect.BaseContagionPoison", 0.20)], effect_blast="AmmoOverhaul.ClapCloud"),
+         desc="Picked up in the desert and passed around freely. You'll want to get that looked at.\n\n20% chance per shot to poison the target. It spreads to whoever's close."),
+    # Aldecaldos
+    dict(load="WasteNot", title="Waste Not", tier=FACTION_RARE, faction="Aldecaldos", look=((120, 85, 50), (190, 180, 150)),
+         art={},
+         calibers=["9mm", "45", "12mm"],
+         stats=[],
+         hit=dict(free_shot=0.15),
+         desc="Handloaded at the back of a truck, and nobody spills a grain.\n\n15% of shots don't use a round."),
+    dict(load="Speedloaders", title="Speedloaders", tier=FACTION_EPIC, faction="Aldecaldos", look=((120, 85, 50), (60, 120, 170)),
+         art={},
+         calibers=["45", "12mm"],
+         stats=[add("MagazineAutoRefill", 1.0)],
+         desc="Clan trick for when the raiders come twice.\n\nDraw the gun and the magazine's full, however you left it."),
+    # The Mox
+    dict(load="CutOff", title="Cut Off", tier=FACTION_EPIC, faction="TheMox", look=((230, 70, 150), (30, 25, 30)),
+         art={},
+         calibers=["9mm", "45", "12ga"],
+         stats=[],
+         hit=dict(nonlethal=True, rank=dict(effect="BaseStatusEffect.Unconscious", chance=0.15, tough="BaseStatusEffect.ForceStagger",
+                                            tough_from="Elite", player="BaseStatusEffect.Knockdown")),
+         desc="Bar rules. You've had enough.\n\nNon-lethal. 15% chance per shot to knock the target out."),
+    dict(load="LastCall", title="Last Call", tier=FACTION_EPIC, faction="TheMox", look=((230, 70, 150), (90, 40, 130)),
+         art={},
+         calibers=["9mm", "12mm"],
+         stats=[],
+         hit=dict(rank=dict(effect="BaseStatusEffect.Unconscious", chance=0.15, tough="BaseStatusEffect.ForceStagger",
+                            tough_from="Elite", player="BaseStatusEffect.Knockdown", delay=4.0)),
+         desc="Something in the drink. They've got about four seconds left.\n\n15% chance per shot to drop the target unconscious 4 seconds later."),
+    # NCPD
+    dict(load="StandardIssue", title="Standard Issue", tier=FACTION_UNCOMMON, faction="NCPD", look=((35, 50, 90), (200, 200, 205)),
+         art={},
+         calibers=["9mm", "45"],
+         stats=[mult(m, 0.3) for m in ("SpreadMaxX", "SpreadMaxY", "SpreadAdsMaxX", "SpreadAdsMaxY")],
+         desc="Lowest bidder, but they did get the barrels right.\n\nHold the trigger and shots stay tight instead of spreading."),
+    dict(load="ResistingArrest", title="Resisting Arrest", tier=FACTION_RARE, faction="NCPD", look=((35, 50, 90), (240, 220, 60)),
+         art={},
+         calibers=["9mm", "12ga"],
+         stats=[],
+         hit=dict(effects=[("BaseStatusEffect.Electrocuted", 0.20)]),
+         desc="Taser payload in a duty round. Stop moving.\n\n20% chance per shot to shock the target."),
+    # Kang Tao
+    dict(load="WideAngle", title="Wide Angle", tier=FACTION_RARE, faction="KangTao", look=((225, 225, 228), (40, 170, 190)),
+         art={},
+         calibers=["10mm", "20mm"],
+         # These read 0 on every gun, which is the engine's 8 to 12 degrees; a value replaces it, in degrees.
+         stats=[add("SmartGun" + m + "Angle" + a, 25) for m in ("HipTargetable", "AdsTargetable", "HipLocking", "AdsLocking") for a in ("Yaw", "Pitch")],
+         desc="Seeker with a wider eye.\n\nLocks on to targets much further from the crosshair."),
+    dict(load="SecondOpinion", title="Second Opinion", tier=FACTION_EPIC, faction="KangTao", look=((225, 225, 228), (190, 40, 50)),
+         art={},
+         calibers=["10mm", "20mm", "25mm"],
+         stats=[add("SmartGunHipMaxLockedTargets", 2), add("SmartGunAdsMaxLockedTargets", 2)],
+         desc="The round checks with its neighbours before it commits.\n\nLocks on to 2 more targets at once."),
+    # NUSA
+    dict(load="Deniable", title="Deniable", tier=FACTION_EPIC, faction="NUSA", look=((90, 92, 95), (30, 30, 32)),
+         art={},
+         calibers=["45", "5mm", "10mm"],
+         stats=[add("CanSilentKill", 1)],
+         hit=dict(unaware=2.0),
+         desc="Lot numbers filed off at the factory.\n\nSilent kills. Double damage on targets who haven't seen you."),
+    dict(load="BlackBudget", title="Black Budget", tier=FACTION_EPIC, faction="NUSA", look=((90, 92, 95), (120, 30, 140)),
+         art={},
+         calibers=["127", "Heavy"],
+         stats=[],
+         hit=dict(effects=[("BaseStatusEffect.HeavyPoision", 0.30)]),
+         desc="Doesn't appear on any invoice.\n\n30% chance per shot to badly poison the target."),
 ]
 
 
@@ -629,8 +738,26 @@ def round_yaml(tag, k):
         flats.append(("aoLegChance", fmt(float(hit["legs"]))))
     if hit.get("pumped"):
         flats.append(("aoPumped", "true"))
-    if hit.get("ranged_attack"):
-        flats.append(("aoRangedAttack", f'"{hit["ranged_attack"]}"'))
+    if hit.get("eddies"):
+        flats.append(("aoEddies", "true"))
+    if hit.get("npc_blast"):
+        flats.append(("aoNpcBlast", f'"{hit["npc_blast"]}"'))
+    if hit.get("effect_blast"):
+        flats.append(("aoEffectBlast", f'"{hit["effect_blast"]}"'))
+    if hit.get("free_shot"):
+        flats.append(("aoFreeShot", fmt(float(hit["free_shot"]))))
+    if hit.get("unaware"):
+        flats.append(("aoUnawareBonus", fmt(float(hit["unaware"]))))
+    rank = hit.get("rank", {})
+    if rank:
+        flats.append(("aoRankEffect", f'"{rank["effect"]}"'))
+        flats.append(("aoRankChance", fmt(float(rank["chance"]))))
+        flats.append(("aoRankToughFrom", f'"{rank["tough_from"]}"'))
+        flats.append(("aoRankPlayer", f'"{rank["player"]}"'))
+    if rank.get("tough"):
+        flats.append(("aoRankTough", f'"{rank["tough"]}"'))
+    if rank.get("delay"):
+        flats.append(("aoRankDelay", fmt(float(rank["delay"]))))
     for name, v in flats:
         y += f"{i['ammo']}.{name}: {v}\n"
     if flats:
@@ -641,6 +768,13 @@ def round_yaml(tag, k):
           f"  localizedDescription: LocKey#{i['desc']}\n  iconPath: {i['icon']}\n  quality: Quality.{q}\n")
     if k["stats"]:
         y += "  statModifiers:\n" + "".join(modifier_yaml(*m) for m in k["stats"])
+    if k.get("attack_package"):
+        # The effector only acts on a gun with its weaponAttachmentSource part fitted (docs/MECHANICS.md).
+        y += ("  OnAttach:\n    - !append\n      $type: gamedataGameplayLogicPackage_Record\n      effectors:\n"
+              "        - $type: gamedataOverrideRangedAttackPackageEffector_Record\n"
+              "          effectorClassName: OverrideRangedAttackPackageEffector\n"
+              "          prereqRecord: Prereqs.AlwaysTruePrereq\n"
+              f"          attackPackage: {k['attack_package']}\n          weaponAttachmentSource: {i['sel']}\n")
     return y + "\n"
 
 
@@ -721,8 +855,11 @@ def write_refs(all_rounds):
         refs.update(m[0] for m in k["stats"])
         refs.update("BaseStats." + m[3] for m in k["stats"] if len(m) > 3)
         refs.update(e for e, _ in k.get("hit", {}).get("effects", []))
-        if k.get("hit", {}).get("ranged_attack"):
-            refs.add(k["hit"]["ranged_attack"])
+        rank = k.get("hit", {}).get("rank", {})
+        refs.update(rank[f] for f in ("effect", "tough", "player") if f in rank)
+        if k.get("attack_package"):
+            refs.add(k["attack_package"])
+        refs.update(k.get("hit", {})[f] for f in ("npc_blast", "effect_blast") if f in k.get("hit", {}))
         if k.get("hit", {}).get("head_effect"):
             refs.add(k["hit"]["head_effect"])
     (ROOT / "tools" / "rounds" / "refs.txt").write_text("\n".join(sorted(refs)) + "\n")

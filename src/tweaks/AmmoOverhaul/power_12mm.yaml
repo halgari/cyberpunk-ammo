@@ -9,9 +9,9 @@ AmmoOverhaul.Power_12mm.feedElement: "Items.AO_AmmoFeed_Power_12mm_Element"
 AmmoOverhaul.Power_12mm.defaultAmmo: "Ammo.AO_12mm_Ball"
 AmmoOverhaul.Power_12mm.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_12mm.lootWeight: 0.1
-AmmoOverhaul.Power_12mm.selectors: ["Items.AO_Feed_12mm_Ball", "Items.AO_Feed_12mm_Mushrooms", "Items.AO_Feed_12mm_PlusP", "Items.AO_Feed_12mm_SteelCore", "Items.AO_Feed_12mm_Incendiary", "Items.AO_Feed_12mm_Rubber", "Items.AO_Feed_12mm_Hardcast", "Items.AO_Feed_12mm_Penetrator", "Items.AO_Feed_12mm_Match", "Items.AO_Feed_12mm_Toxin", "Items.AO_Feed_12mm_Shredders", "Items.AO_Feed_12mm_CookOff", "Items.AO_Feed_12mm_MeatGrinders", "Items.AO_Feed_12mm_Reloads", "Items.AO_Feed_12mm_GutterLead", "Items.AO_Feed_12mm_PartsPullers", "Items.AO_Feed_12mm_Tanto", "Items.AO_Feed_12mm_GoldTips", "Items.AO_Feed_12mm_SantaMuerte", "Items.AO_Feed_12mm_Surplus", "Items.AO_Feed_12mm_FourthOfJuly", "Items.AO_Feed_12mm_ProteinLoads", "Items.AO_Feed_12mm_LegDay"]
-AmmoOverhaul.Power_12mm.selectorAmmo: ["Ammo.AO_12mm_Ball", "Ammo.AO_12mm_HollowPoint", "Ammo.AO_12mm_PlusP", "Ammo.AO_12mm_SteelCore", "Ammo.AO_12mm_Incendiary", "Ammo.AO_12mm_Rubber", "Ammo.AO_12mm_Hardcast", "Ammo.AO_12mm_Penetrator", "Ammo.AO_12mm_Match", "Ammo.AO_12mm_Toxin", "Ammo.AO_12mm_Shredders", "Ammo.AO_12mm_CookOff", "Ammo.AO_12mm_MeatGrinders", "Ammo.AO_12mm_Reloads", "Ammo.AO_12mm_GutterLead", "Ammo.AO_12mm_PartsPullers", "Ammo.AO_12mm_Tanto", "Ammo.AO_12mm_GoldTips", "Ammo.AO_12mm_SantaMuerte", "Ammo.AO_12mm_Surplus", "Ammo.AO_12mm_FourthOfJuly", "Ammo.AO_12mm_ProteinLoads", "Ammo.AO_12mm_LegDay"]
-AmmoOverhaul.Power_12mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 6, 7, 8, 5, 5, 5, 6, 8, 5, 5, 6]
+AmmoOverhaul.Power_12mm.selectors: ["Items.AO_Feed_12mm_Ball", "Items.AO_Feed_12mm_Mushrooms", "Items.AO_Feed_12mm_PlusP", "Items.AO_Feed_12mm_SteelCore", "Items.AO_Feed_12mm_Incendiary", "Items.AO_Feed_12mm_Rubber", "Items.AO_Feed_12mm_Hardcast", "Items.AO_Feed_12mm_Penetrator", "Items.AO_Feed_12mm_Match", "Items.AO_Feed_12mm_Toxin", "Items.AO_Feed_12mm_Shredders", "Items.AO_Feed_12mm_CookOff", "Items.AO_Feed_12mm_MeatGrinders", "Items.AO_Feed_12mm_Reloads", "Items.AO_Feed_12mm_GutterLead", "Items.AO_Feed_12mm_PartsPullers", "Items.AO_Feed_12mm_Tanto", "Items.AO_Feed_12mm_GoldTips", "Items.AO_Feed_12mm_SantaMuerte", "Items.AO_Feed_12mm_Surplus", "Items.AO_Feed_12mm_FourthOfJuly", "Items.AO_Feed_12mm_ProteinLoads", "Items.AO_Feed_12mm_LegDay", "Items.AO_Feed_12mm_WasteNot", "Items.AO_Feed_12mm_Speedloaders", "Items.AO_Feed_12mm_LastCall"]
+AmmoOverhaul.Power_12mm.selectorAmmo: ["Ammo.AO_12mm_Ball", "Ammo.AO_12mm_HollowPoint", "Ammo.AO_12mm_PlusP", "Ammo.AO_12mm_SteelCore", "Ammo.AO_12mm_Incendiary", "Ammo.AO_12mm_Rubber", "Ammo.AO_12mm_Hardcast", "Ammo.AO_12mm_Penetrator", "Ammo.AO_12mm_Match", "Ammo.AO_12mm_Toxin", "Ammo.AO_12mm_Shredders", "Ammo.AO_12mm_CookOff", "Ammo.AO_12mm_MeatGrinders", "Ammo.AO_12mm_Reloads", "Ammo.AO_12mm_GutterLead", "Ammo.AO_12mm_PartsPullers", "Ammo.AO_12mm_Tanto", "Ammo.AO_12mm_GoldTips", "Ammo.AO_12mm_SantaMuerte", "Ammo.AO_12mm_Surplus", "Ammo.AO_12mm_FourthOfJuly", "Ammo.AO_12mm_ProteinLoads", "Ammo.AO_12mm_LegDay", "Ammo.AO_12mm_WasteNot", "Ammo.AO_12mm_Speedloaders", "Ammo.AO_12mm_LastCall"]
+AmmoOverhaul.Power_12mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 6, 7, 8, 5, 5, 5, 6, 8, 5, 5, 6, 5, 6, 6]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_12mm.craftBatch: 60
 
@@ -1142,6 +1142,127 @@ Items.AO_Feed_12mm_LegDay:
       modifierType: Multiplier
       value: 1.8
 
+# 12mm Waste Not [Nomad] (Rare)
+Ammo.AO_12mm_WasteNot:
+  $base: Ammo.AO_12mm_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-12mm-WasteNot
+  localizedDescription: LocKey#AO-Ammo-WasteNot-Desc
+  iconPath: AO_12mm_WasteNot
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_12mm_WasteNot.aoFaction: "Aldecaldos"
+Ammo.AO_12mm_WasteNot.aoFreeShot: 0.15
+
+UIIcon.AO_12mm_WasteNot:
+  $type: UIIcon
+  atlasPartName: ao_12mm_wastenot
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12mm_WasteNot:
+  $base: Items.AO_Feed_12mm_Ball
+  displayName: LocKey#AO-Ammo-12mm-WasteNot
+  localizedDescription: LocKey#AO-Ammo-WasteNot-Desc
+  iconPath: AO_12mm_WasteNot
+  quality: Quality.Rare
+
+# 12mm Speedloaders [Nomad] (Epic)
+Ammo.AO_12mm_Speedloaders:
+  $base: Ammo.AO_12mm_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-12mm-Speedloaders
+  localizedDescription: LocKey#AO-Ammo-Speedloaders-Desc
+  iconPath: AO_12mm_Speedloaders
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_12mm_Speedloaders.aoFaction: "Aldecaldos"
+
+UIIcon.AO_12mm_Speedloaders:
+  $type: UIIcon
+  atlasPartName: ao_12mm_speedloaders
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12mm_Speedloaders:
+  $base: Items.AO_Feed_12mm_Ball
+  displayName: LocKey#AO-Ammo-12mm-Speedloaders
+  localizedDescription: LocKey#AO-Ammo-Speedloaders-Desc
+  iconPath: AO_12mm_Speedloaders
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.MagazineAutoRefill
+      modifierType: Additive
+      value: 1.0
+
+# 12mm Last Call [Mox] (Epic)
+Ammo.AO_12mm_LastCall:
+  $base: Ammo.AO_12mm_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-12mm-LastCall
+  localizedDescription: LocKey#AO-Ammo-LastCall-Desc
+  iconPath: AO_12mm_LastCall
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_12mm_LastCall.aoFaction: "TheMox"
+Ammo.AO_12mm_LastCall.aoRankEffect: "BaseStatusEffect.Unconscious"
+Ammo.AO_12mm_LastCall.aoRankChance: 0.15
+Ammo.AO_12mm_LastCall.aoRankToughFrom: "Elite"
+Ammo.AO_12mm_LastCall.aoRankPlayer: "BaseStatusEffect.Knockdown"
+Ammo.AO_12mm_LastCall.aoRankTough: "BaseStatusEffect.ForceStagger"
+Ammo.AO_12mm_LastCall.aoRankDelay: 4.0
+
+UIIcon.AO_12mm_LastCall:
+  $type: UIIcon
+  atlasPartName: ao_12mm_lastcall
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12mm_LastCall:
+  $base: Items.AO_Feed_12mm_Ball
+  displayName: LocKey#AO-Ammo-12mm-LastCall
+  localizedDescription: LocKey#AO-Ammo-LastCall-Desc
+  iconPath: AO_12mm_LastCall
+  quality: Quality.Epic
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1530,5 +1651,17 @@ Ammo.AO_12mm_ProteinLoads.aoRecipe: ""
 Ammo.AO_12mm_LegDay.aoScrapRounds: 60
 Ammo.AO_12mm_LegDay.aoScrapGive: 1
 Ammo.AO_12mm_LegDay.aoRecipe: ""
+
+Ammo.AO_12mm_WasteNot.aoScrapRounds: 60
+Ammo.AO_12mm_WasteNot.aoScrapGive: 1
+Ammo.AO_12mm_WasteNot.aoRecipe: ""
+
+Ammo.AO_12mm_Speedloaders.aoScrapRounds: 60
+Ammo.AO_12mm_Speedloaders.aoScrapGive: 1
+Ammo.AO_12mm_Speedloaders.aoRecipe: ""
+
+Ammo.AO_12mm_LastCall.aoScrapRounds: 60
+Ammo.AO_12mm_LastCall.aoScrapGive: 1
+Ammo.AO_12mm_LastCall.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

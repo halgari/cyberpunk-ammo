@@ -246,7 +246,9 @@ public abstract class NpcAmmo {
       return false;
     }
     let cost: Int32 = Cast<Int32>(GameInstance.GetStatsSystem(npc.GetGame()).GetStatValue(Cast<StatsObjectID>(weapon.GetEntityID()), gamedataStatType.NumShotsToFire));
-    GameInstance.GetTransactionSystem(npc.GetGame()).RemoveItem(npc, ItemID.CreateQuery(ammo), Min(Max(cost, 1), have));
+    if RandF() >= AOData.FreeShot(ammo) {
+      GameInstance.GetTransactionSystem(npc.GetGame()).RemoveItem(npc, ItemID.CreateQuery(ammo), Min(Max(cost, 1), have));
+    }
     FactionRounds.OnShot(npc, ammo);
     return true;
   }
@@ -349,7 +351,7 @@ public abstract class NpcAmmo {
         rounds = Min(rounds, FloorF(carry / weight + 0.001));
       }
       // A Legendary round leaves a small stack.
-      if rounds > 0 && AOData.AmmoTier(ammo) == 4 {
+      if rounds > 0 && (AOData.AmmoTier(ammo) == 4 || AOData.AmmoTier(ammo) == 9) {
         rounds = Min(rounds, AOData.LegendaryStack(rounds));
       }
       if rounds > 0 {

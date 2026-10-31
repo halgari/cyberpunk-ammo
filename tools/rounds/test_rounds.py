@@ -1,4 +1,4 @@
-from rounds import CALIBERS, KINDS, PRICE, QUALITY, FACTION_COMMON, FACTION_RARE, FACTION_EPIC, FACTION_UNCOMMON, rounds, title, round_yaml
+from rounds import CALIBERS, KINDS, PRICE, QUALITY, FACTION_COMMON, FACTION_RARE, FACTION_EPIC, FACTION_UNCOMMON, FACTION_LEGENDARY, rounds, title, round_yaml
 
 SPEC = {
     "Redliners": ("Maelstrom", FACTION_RARE, {"556", "762", "45"}),
@@ -20,9 +20,27 @@ SPEC = {
     "CeaseAndDesist": ("Militech", FACTION_EPIC, {"762", "12ga"}),
     "ProteinLoads": ("Animals", FACTION_RARE, {"12mm", "5mm", "Heavy"}),
     "LegDay": ("Animals", FACTION_EPIC, {"12mm", "Heavy"}),
+    "DogtownTax": ("Barghest", FACTION_RARE, {"9mm", "556"}),
+    "ChimeraScrap": ("Barghest", FACTION_EPIC, {"762", "5mm"}),
+    "BadJuju": ("VoodooBoys", FACTION_EPIC, {"45", "5mm", "10mm"}),
+    "CollectCall": ("VoodooBoys", FACTION_LEGENDARY, {"5mm", "10mm"}),
+    "PocketSand": ("Wraiths", FACTION_RARE, {"45", "12ga"}),
+    "TheClap": ("Wraiths", FACTION_EPIC, {"5mm", "Heavy"}),
+    "WasteNot": ("Aldecaldos", FACTION_RARE, {"9mm", "45", "12mm"}),
+    "Speedloaders": ("Aldecaldos", FACTION_EPIC, {"45", "12mm"}),
+    "CutOff": ("TheMox", FACTION_EPIC, {"9mm", "45", "12ga"}),
+    "LastCall": ("TheMox", FACTION_EPIC, {"9mm", "12mm"}),
+    "StandardIssue": ("NCPD", FACTION_UNCOMMON, {"9mm", "45"}),
+    "ResistingArrest": ("NCPD", FACTION_RARE, {"9mm", "12ga"}),
+    "WideAngle": ("KangTao", FACTION_RARE, {"10mm", "20mm"}),
+    "SecondOpinion": ("KangTao", FACTION_EPIC, {"10mm", "20mm", "25mm"}),
+    "Deniable": ("NUSA", FACTION_EPIC, {"45", "5mm", "10mm"}),
+    "BlackBudget": ("NUSA", FACTION_EPIC, {"127", "Heavy"}),
 }
 TAGS = {"Maelstrom": "[Mael]", "Scavengers": "[Scav]", "Arasaka": "[Ara]", "TygerClaws": "[Tyger]",
-        "Valentinos": "[Val]", "SixthStreet": "[6th]", "Militech": "[Mil]", "Animals": "[Animal]"}
+        "Valentinos": "[Val]", "SixthStreet": "[6th]", "Militech": "[Mil]", "Animals": "[Animal]", "Barghest": "[Barghest]",
+        "VoodooBoys": "[VDB]", "Wraiths": "[Wraith]", "Aldecaldos": "[Nomad]", "TheMox": "[Mox]", "NCPD": "[NCPD]",
+        "KangTao": "[Kang]", "NUSA": "[NUSA]"}
 
 
 def faction_rounds():
@@ -34,7 +52,7 @@ def test_faction_rounds_as_specified():
     for tag, k in faction_rounds():
         got.setdefault(k["load"], (k["faction"], k["tier"], set()))[2].add(tag)
     assert got == SPEC
-    assert len(faction_rounds()) == 51
+    assert len(faction_rounds()) == 88
 
 
 def test_names_carry_the_tag_and_general_rounds_dont():
@@ -72,6 +90,22 @@ def test_second_batch_flats():
     assert "Ammo.AO_TLight_MilSpec.rollMin: 0.95" in by["5mm", "MilSpec"]
 
 
+def test_third_batch_flats():
+    by = {(t, k["load"]): round_yaml(t, k) for t, k in faction_rounds()}
+    assert "Ammo.AO_9mm_DogtownTax.aoEddies: true" in by["9mm", "DogtownTax"]
+    assert "Ammo.AO_9mm_WasteNot.aoFreeShot: 0.15" in by["9mm", "WasteNot"]
+    assert "Ammo.AO_45_Deniable.aoUnawareBonus: 2.0" in by["45", "Deniable"]
+    y = by["9mm", "CutOff"]
+    assert 'aoRankEffect: "BaseStatusEffect.Unconscious"' in y and 'aoRankToughFrom: "Elite"' in y
+    assert 'aoRankTough: "BaseStatusEffect.ForceStagger"' in y and "aoNonlethal: true" in y
+    y = by["9mm", "LastCall"]
+    assert "aoRankDelay: 4.0" in y and 'aoRankPlayer: "BaseStatusEffect.Knockdown"' in y
+    assert "aoRankTough" not in by["45", "PocketSand"].replace("aoRankToughFrom", "")
+    y = by["762", "ChimeraScrap"]
+    assert "attackPackage: Attacks.ChimeraPowerModExplosiveBulletPackage" in y
+    assert "weaponAttachmentSource: Items.AO_Feed_762_ChimeraScrap" in y
+
+
 def test_crit_stats_are_in_percent():
     # DamageSystem divides a gun's CritChance and CritDamage by 100.
     for k in KINDS:
@@ -89,7 +123,6 @@ def test_no_runtime_record_switch():
     # Lesson from Heartseeker: a shared-record switch changes every gun of that record.
     for k in KINDS:
         if k.get("faction"):
-            assert "ranged_attack" not in k.get("hit", {})
             assert not any("Evolution" in m[0] or "SmartGunTrack" in m[0] for m in k["stats"])
 
 

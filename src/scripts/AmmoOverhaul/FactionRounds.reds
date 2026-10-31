@@ -1,7 +1,7 @@
 module AmmoOverhaul
 
 // Faction rounds (docs/superpowers/specs/2026-10-30-faction-rounds-design.md): rounds of tiers 5 to
-// 8 (Rare, Epic, Common and Uncommon quality) that only NPCs of their faction roll (AOData.FactionOf) and that reach V as their loot. Most
+// 9 (Rare, Epic, Common, Uncommon and Legendary quality) that only NPCs of their faction roll (AOData.FactionOf) and that reach V as their loot. Most
 // are stats and hit data like any round. What's here:
 //   - the faction roll, and what a gun shop on the faction's turf adds to its stock;
 //   - Redliners (<ammo>.aoSelfJam): a shot can jam the shooter's own gun, V's or an NPC's;
@@ -10,7 +10,11 @@ module AmmoOverhaul
 //   - Santa Muerte (<ammo>.aoHeadEffect): a status effect on a headshot;
 //   - Cease and Desist (<ammo>.aoStopChance) and Leg Day (<ammo>.aoLegChance): a stagger or crippled
 //     legs, per shot and by the target's rank;
-//   - Protein Loads (<ammo>.aoPumped): a kill stacks AmmoOverhaul.Pumped on the shooter, V or NPC.
+//   - Protein Loads (<ammo>.aoPumped): a kill stacks AmmoOverhaul.Pumped on the shooter, V or NPC;
+//   - Dogtown Tax (<ammo>.aoEddies): V's kill leaves eddies on the body, as Parts-pullers;
+//   - Waste Not (<ammo>.aoFreeShot): a shot that uses no round, V's or an NPC's;
+//   - the rank effects (<ammo>.aoRankEffect and its flats): Bad Juju, Collect Call, Pocket Sand, Cut
+//     Off and Last Call, whose effect goes by the target's rank, V having their own.
 
 // The Parts-pullers round that last hit this NPC and when; a death right after it is that hit's kill.
 @addField(NPCPuppet)
@@ -44,19 +48,30 @@ public abstract class FactionRounds {
     return selectors;
   }
 
-  // A faction round for a gun of `caliber`, invalid if the rolls miss: Epic with its own chance, then
-  // the rest. Each of a roll's rounds is as likely.
+  // A faction round for a gun of `caliber`, invalid if the rolls miss: Legendary and Epic with their
+  // own chances, then the rest. Each of a roll's rounds is as likely.
   public static func Roll(caliber: String, rarity: String, faction: String) -> TweakDBID {
     if StrLen(faction) == 0 {
       return TDBID.None();
     }
-    let epic: array<TweakDBID> = AOData.SelectorsForFaction(caliber, faction, 6);
-    if ArraySize(epic) > 0 && RandF() < AOData.FactionChance(rarity, faction, true) {
-      return epic[RandRange(0, ArraySize(epic))];
+    // The chance first: most rolls miss, and the lists cost a walk over the caliber's rounds.
+    if RandF() < AOData.FactionLegendaryChance(rarity) {
+      let legendary: array<TweakDBID> = AOData.SelectorsForFaction(caliber, faction, 9);
+      if ArraySize(legendary) > 0 {
+        return legendary[RandRange(0, ArraySize(legendary))];
+      }
     }
-    let rest: array<TweakDBID> = FactionRounds.BelowEpic(caliber, faction);
-    if ArraySize(rest) > 0 && RandF() < AOData.FactionChance(rarity, faction, false) {
-      return rest[RandRange(0, ArraySize(rest))];
+    if RandF() < AOData.FactionChance(rarity, faction, true) {
+      let epic: array<TweakDBID> = AOData.SelectorsForFaction(caliber, faction, 6);
+      if ArraySize(epic) > 0 {
+        return epic[RandRange(0, ArraySize(epic))];
+      }
+    }
+    if RandF() < AOData.FactionChance(rarity, faction, false) {
+      let rest: array<TweakDBID> = FactionRounds.BelowEpic(caliber, faction);
+      if ArraySize(rest) > 0 {
+        return rest[RandRange(0, ArraySize(rest))];
+      }
     }
     return TDBID.None();
   }
@@ -97,6 +112,29 @@ public abstract class FactionRounds {
       StatusEffectHelper.ApplyStatusEffect(shooter, t"AmmoOverhaul.RedlinerJam");
       AmmoFeedSystem.Log("redliner: " + TDBID.ToStringDEBUG(ammo) + " jammed its gun");
     }
+  }
+
+  // V fired a round of `ammo` from `weapon` (from ShootEvents.OnEnter): a free shot goes back in the
+  // magazine and the pocket a moment later, once the engine has taken it from both.
+  public static func OnPlayerShot(player: ref<PlayerPuppet>, weapon: ref<WeaponObject>, ammo: TweakDBID) -> Void {
+    FactionRounds.OnShot(player, ammo);
+    let chance: Float = AOData.FreeShot(ammo);
+    if chance > 0.0 && RandF() < chance {
+      let refund: ref<WasteNotCallback> = new WasteNotCallback();
+      refund.player = player;
+      refund.weapon = weapon;
+      refund.ammo = ammo;
+      GameInstance.GetDelaySystem(player.GetGame()).DelayCallback(refund, 0.05, true);
+    }
+  }
+
+  public static func Refund(player: ref<PlayerPuppet>, weapon: ref<WeaponObject>, ammo: TweakDBID) -> Void {
+    let event: ref<SetAmmoCountEvent> = new SetAmmoCountEvent();
+    event.ammoTypeID = ItemID.CreateQuery(ammo);
+    event.count = Cast<Uint32>(Min(Cast<Int32>(WeaponObject.GetMagazineAmmoCount(weapon)) + 1, Cast<Int32>(WeaponObject.GetMagazineCapacity(weapon))));
+    weapon.QueueEvent(event);
+    GameInstance.GetTransactionSystem(player.GetGame()).GiveItem(player, ItemID.CreateQuery(ammo), 1);
+    AmmoFeedSystem.Log("waste not: a round back in the magazine");
   }
 
   public static func ClearParts(target: ref<GameObject>) -> Void {
@@ -145,6 +183,48 @@ public abstract class FactionRounds {
     return tough || mechanical ? t"BaseStatusEffect.ForceStagger" : t"AmmoOverhaul.CrippledLegs";
   }
 
+  // What a rank effect does to `rarity`, empty for V, invalid for nothing. Quest NPCs the game keeps
+  // alive count as tough, so no round knocks out or kills one.
+  public static func RankResult(ammo: TweakDBID, rarity: String, mechanical: Bool, guarded: Bool) -> TweakDBID {
+    if StrLen(rarity) == 0 {
+      return AOData.RankRecord(ammo, "aoRankPlayer");
+    }
+    let tough: Bool = mechanical || guarded || Equals(rarity, "Boss") || Equals(rarity, "MaxTac");
+    if Equals(AOData.RankToughFrom(ammo), "Elite") && Equals(rarity, "Elite") {
+      tough = true;
+    }
+    return AOData.RankRecord(ammo, tough ? "aoRankTough" : "aoRankEffect");
+  }
+
+  private static func Guarded(target: ref<GameObject>) -> Bool {
+    let gods: ref<GodModeSystem> = GameInstance.GetGodModeSystem(target.GetGame());
+    let id: EntityID = target.GetEntityID();
+    return gods.HasGodMode(id, gameGodModeType.Immortal) || gods.HasGodMode(id, gameGodModeType.Invulnerable);
+  }
+
+  // Sets off a round's blast record at `target`, as the shooter's.
+  public static func Blast(instigator: ref<GameObject>, target: ref<GameObject>, attack: TweakDBID) -> Void {
+    if TDBID.IsValid(attack) && IsDefined(target) {
+      let at: Vector4 = target.GetWorldPosition();
+      at.Z += 1.0;
+      CookOff.Blast(instigator, target, attack, at);
+    }
+  }
+
+  // Whether this hit is a cloud blast (<attack>.aoCloudEffect), which gives whoever it reaches the effect.
+  public static func Cloud(attackData: ref<AttackData>, target: ref<GameObject>) -> Bool {
+    let attack: ref<IAttack> = attackData.GetAttackDefinition();
+    if !IsDefined(attack) || !IsDefined(target) {
+      return false;
+    }
+    let effect: TweakDBID = AOData.RankRecord(attack.GetRecord().GetID(), "aoCloudEffect");
+    if !TDBID.IsValid(effect) {
+      return false;
+    }
+    attackData.AddStatusEffect(target.IsPlayer() ? AOData.PlayerEffect(effect) : effect, 1.0);
+    return true;
+  }
+
   // A hit by any gun that passed the effect gate (from AmmoFeedSystem.ApplyAmmoOnHit). Each pellet
   // that lands comes through here; the Mule Kick gate keeps it to one stagger or cripple per shot.
   public static func OnHit(attackData: ref<AttackData>, target: ref<GameObject>, ammo: TweakDBID, pellets: Int32) -> Void {
@@ -164,7 +244,8 @@ public abstract class FactionRounds {
     }
     let stop: Float = AOData.StopChance(ammo);
     let legs: Float = AOData.LegChance(ammo);
-    if stop <= 0.0 && legs <= 0.0 || target.IsDrone() {
+    let ranked: Float = AOData.RankChance(ammo);
+    if stop <= 0.0 && legs <= 0.0 && ranked <= 0.0 || target.IsDrone() {
       return;
     }
     let now: Float = CookOff.Now(puppet.GetGame());
@@ -179,6 +260,21 @@ public abstract class FactionRounds {
     if legs > 0.0 && RandF() < AOData.PelletChance(legs, pellets) {
       puppet.aoMuleKickAt = now;
       attackData.AddStatusEffect(FactionRounds.LegEffect(rarity, puppet.IsMechanical()), 1.0);
+    }
+    if ranked > 0.0 && RandF() < AOData.PelletChance(ranked, pellets) {
+      let effect: TweakDBID = FactionRounds.RankResult(ammo, rarity, puppet.IsMechanical(), FactionRounds.Guarded(target));
+      if TDBID.IsValid(effect) {
+        puppet.aoMuleKickAt = now;
+        let delay: Float = AOData.RankDelay(ammo);
+        if delay > 0.0 {
+          let late: ref<LateEffectCallback> = new LateEffectCallback();
+          late.target = puppet;
+          late.effect = effect;
+          GameInstance.GetDelaySystem(puppet.GetGame()).DelayCallback(late, delay, true);
+        } else {
+          attackData.AddStatusEffect(effect, 1.0);
+        }
+      }
     }
   }
 
@@ -195,9 +291,16 @@ public abstract class FactionRounds {
     npc.aoPartsKill = npc.aoPartsAmmo;
   }
 
-  // Puts a kill's components on the body, after death has wiped its inventory (NpcAmmo.TopUpLoot).
+  // Puts a kill's components or eddies on the body, after death has wiped its inventory
+  // (NpcAmmo.TopUpLoot).
   public static func GiveParts(npc: ref<NPCPuppet>) -> Void {
     if !TDBID.IsValid(npc.aoPartsKill) {
+      return;
+    }
+    if AOData.Eddies(npc.aoPartsKill) {
+      npc.aoPartsKill = TDBID.None();
+      GameInstance.GetTransactionSystem(npc.GetGame()).GiveItem(npc, ItemID.CreateQuery(t"Items.money"), TweakDBInterface.GetInt(t"AmmoOverhaul.dogtownTaxGive", 100));
+      AmmoFeedSystem.Log("dogtown tax: eddies left on " + TDBID.ToStringDEBUG(npc.GetRecordID()));
       return;
     }
     let quality: gamedataQuality = TweakDBInterface.GetItemRecord(npc.aoPartsKill).Quality().Type();
@@ -205,5 +308,30 @@ public abstract class FactionRounds {
     npc.aoPartsKill = TDBID.None();
     GameInstance.GetTransactionSystem(npc.GetGame()).GiveItem(npc, ItemID.CreateQuery(parts), TweakDBInterface.GetInt(t"AmmoOverhaul.partsPullerGive", 2));
     AmmoFeedSystem.Log("parts-pullers: components left on " + TDBID.ToStringDEBUG(npc.GetRecordID()));
+  }
+}
+
+// Waste Not's refund, after the engine has taken the shot.
+public class WasteNotCallback extends DelayCallback {
+  public let player: wref<PlayerPuppet>;
+  public let weapon: wref<WeaponObject>;
+  public let ammo: TweakDBID;
+
+  public func Call() -> Void {
+    if IsDefined(this.player) && IsDefined(this.weapon) {
+      FactionRounds.Refund(this.player, this.weapon, this.ammo);
+    }
+  }
+}
+
+// Last Call's effect, once the drink has worked. Nothing for a target dead by then.
+public class LateEffectCallback extends DelayCallback {
+  public let target: wref<ScriptedPuppet>;
+  public let effect: TweakDBID;
+
+  public func Call() -> Void {
+    if IsDefined(this.target) && !this.target.IsDead() {
+      StatusEffectHelper.ApplyStatusEffect(this.target, this.effect);
+    }
   }
 }

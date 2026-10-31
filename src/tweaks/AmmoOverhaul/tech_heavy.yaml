@@ -10,9 +10,9 @@ AmmoOverhaul.Tech_Heavy.feedElement: "Items.AO_AmmoFeed_Tech_Heavy_Element"
 AmmoOverhaul.Tech_Heavy.defaultAmmo: "Ammo.AO_THeavy_Slug"
 AmmoOverhaul.Tech_Heavy.vanillaAmmo: "Ammo.SniperRifleAmmo"
 AmmoOverhaul.Tech_Heavy.lootWeight: 0.3
-AmmoOverhaul.Tech_Heavy.selectors: ["Items.AO_Feed_Heavy_RailSlugs", "Items.AO_Feed_Heavy_Sleevers", "Items.AO_Feed_Heavy_Bricks", "Items.AO_Feed_Heavy_Ferro", "Items.AO_Feed_Heavy_SplitSlug", "Items.AO_Feed_Heavy_Feedback", "Items.AO_Feed_Heavy_DUPen", "Items.AO_Feed_Heavy_ToxicScatter", "Items.AO_Feed_Heavy_Superconductor", "Items.AO_Feed_Heavy_EMPCap", "Items.AO_Feed_Heavy_Kebab", "Items.AO_Feed_Heavy_ChromeCookers", "Items.AO_Feed_Heavy_ProteinLoads", "Items.AO_Feed_Heavy_LegDay"]
-AmmoOverhaul.Tech_Heavy.selectorAmmo: ["Ammo.AO_THeavy_Slug", "Ammo.AO_THeavy_Sabot", "Ammo.AO_THeavy_Bricks", "Ammo.AO_THeavy_Ferro", "Ammo.AO_THeavy_SplitSlug", "Ammo.AO_THeavy_Feedback", "Ammo.AO_THeavy_DUPen", "Ammo.AO_THeavy_ToxicScatter", "Ammo.AO_THeavy_Superconductor", "Ammo.AO_THeavy_EMPCap", "Ammo.AO_THeavy_Kebab", "Ammo.AO_THeavy_ChromeCookers", "Ammo.AO_THeavy_ProteinLoads", "Ammo.AO_THeavy_LegDay"]
-AmmoOverhaul.Tech_Heavy.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 6, 5, 6]
+AmmoOverhaul.Tech_Heavy.selectors: ["Items.AO_Feed_Heavy_RailSlugs", "Items.AO_Feed_Heavy_Sleevers", "Items.AO_Feed_Heavy_Bricks", "Items.AO_Feed_Heavy_Ferro", "Items.AO_Feed_Heavy_SplitSlug", "Items.AO_Feed_Heavy_Feedback", "Items.AO_Feed_Heavy_DUPen", "Items.AO_Feed_Heavy_ToxicScatter", "Items.AO_Feed_Heavy_Superconductor", "Items.AO_Feed_Heavy_EMPCap", "Items.AO_Feed_Heavy_Kebab", "Items.AO_Feed_Heavy_ChromeCookers", "Items.AO_Feed_Heavy_ProteinLoads", "Items.AO_Feed_Heavy_LegDay", "Items.AO_Feed_Heavy_TheClap", "Items.AO_Feed_Heavy_BlackBudget"]
+AmmoOverhaul.Tech_Heavy.selectorAmmo: ["Ammo.AO_THeavy_Slug", "Ammo.AO_THeavy_Sabot", "Ammo.AO_THeavy_Bricks", "Ammo.AO_THeavy_Ferro", "Ammo.AO_THeavy_SplitSlug", "Ammo.AO_THeavy_Feedback", "Ammo.AO_THeavy_DUPen", "Ammo.AO_THeavy_ToxicScatter", "Ammo.AO_THeavy_Superconductor", "Ammo.AO_THeavy_EMPCap", "Ammo.AO_THeavy_Kebab", "Ammo.AO_THeavy_ChromeCookers", "Ammo.AO_THeavy_ProteinLoads", "Ammo.AO_THeavy_LegDay", "Ammo.AO_THeavy_TheClap", "Ammo.AO_THeavy_BlackBudget"]
+AmmoOverhaul.Tech_Heavy.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 6, 5, 6, 6, 6]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Tech_Heavy.craftBatch: 40
 
@@ -790,6 +790,83 @@ Items.AO_Feed_Heavy_LegDay:
       modifierType: Multiplier
       value: 1.8
 
+# Heavy The Clap [Wraith] (Epic)
+Ammo.AO_THeavy_TheClap:
+  $base: Ammo.AO_THeavy_Sabot
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-Heavy-TheClap
+  localizedDescription: LocKey#AO-Ammo-TheClap-Desc
+  iconPath: AO_Heavy_TheClap
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Tech]
+
+Ammo.AO_THeavy_TheClap.aoFaction: "Wraiths"
+Ammo.AO_THeavy_TheClap.aoEffects: ["BaseStatusEffect.BaseContagionPoison"]
+Ammo.AO_THeavy_TheClap.aoEffectChances: [0.2]
+Ammo.AO_THeavy_TheClap.aoEffectBlast: "AmmoOverhaul.ClapCloud"
+
+UIIcon.AO_Heavy_TheClap:
+  $type: UIIcon
+  atlasPartName: ao_heavy_theclap
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_Heavy_TheClap:
+  $base: Items.AO_Feed_Heavy_RailSlugs
+  displayName: LocKey#AO-Ammo-Heavy-TheClap
+  localizedDescription: LocKey#AO-Ammo-TheClap-Desc
+  iconPath: AO_Heavy_TheClap
+  quality: Quality.Epic
+
+# Heavy Black Budget [NUSA] (Epic)
+Ammo.AO_THeavy_BlackBudget:
+  $base: Ammo.AO_THeavy_Sabot
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-Heavy-BlackBudget
+  localizedDescription: LocKey#AO-Ammo-BlackBudget-Desc
+  iconPath: AO_Heavy_BlackBudget
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Tech]
+
+Ammo.AO_THeavy_BlackBudget.aoFaction: "NUSA"
+Ammo.AO_THeavy_BlackBudget.aoEffects: ["BaseStatusEffect.HeavyPoision"]
+Ammo.AO_THeavy_BlackBudget.aoEffectChances: [0.3]
+
+UIIcon.AO_Heavy_BlackBudget:
+  $type: UIIcon
+  atlasPartName: ao_heavy_blackbudget
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_Heavy_BlackBudget:
+  $base: Items.AO_Feed_Heavy_RailSlugs
+  displayName: LocKey#AO-Ammo-Heavy-BlackBudget
+  localizedDescription: LocKey#AO-Ammo-BlackBudget-Desc
+  iconPath: AO_Heavy_BlackBudget
+  quality: Quality.Epic
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1118,5 +1195,13 @@ Ammo.AO_THeavy_ProteinLoads.aoRecipe: ""
 Ammo.AO_THeavy_LegDay.aoScrapRounds: 80
 Ammo.AO_THeavy_LegDay.aoScrapGive: 1
 Ammo.AO_THeavy_LegDay.aoRecipe: ""
+
+Ammo.AO_THeavy_TheClap.aoScrapRounds: 80
+Ammo.AO_THeavy_TheClap.aoScrapGive: 1
+Ammo.AO_THeavy_TheClap.aoRecipe: ""
+
+Ammo.AO_THeavy_BlackBudget.aoScrapRounds: 80
+Ammo.AO_THeavy_BlackBudget.aoScrapGive: 1
+Ammo.AO_THeavy_BlackBudget.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

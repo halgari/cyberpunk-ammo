@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # Faction rounds on live hits (spec docs/superpowers/specs/2026-10-30-faction-rounds-design.md,
 # "Testing"), one check per mechanism. Parts: affiliation rolls lists turf stats oneGun reloads redliners
-# swap chrome roll parts kansatsu affiliation2 headfx headonv stops legs pumped crits (default all):
+# swap chrome roll parts kansatsu affiliation2 headfx headonv stops legs pumped crits affiliation3 rolls3
+# turf3 ranks3 sand juju cutoff lastcall collect shock clap wastenot speedloaders tax chimera deniable stats3 (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/faction.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL. The rig's shots don't
 # go through V's shooting state, so V's self-jam is driven by DebugSelfJam, not a trigger pull.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(affiliation rolls lists turf stats oneGun reloads redliners swap chrome roll parts kansatsu affiliation2 headfx headonv stops legs pumped crits)
+parts=("$@"); (( ${#parts[@]} )) || parts=(affiliation rolls lists turf stats oneGun reloads redliners swap chrome roll parts kansatsu affiliation2 headfx headonv stops legs pumped crits affiliation3 rolls3 turf3 ranks3 sand juju cutoff lastcall collect shock clap wastenot speedloaders tax chimera deniable stats3)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 UNI=Items.Preset_Unity_Default; LEX=Items.Preset_Lexington_Default; OMA=Items.Preset_Omaha_Default; YUK=Items.Preset_Yukimura_Default
 pass() { echo "PASS $*"; }
@@ -65,28 +66,28 @@ affiliation() {
 # --- rolls: own faction only, the rank chances, Legendary first, a miss falls through ------------
 rolls() {
   local r
-  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Normal', 'Maelstrom', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Normal', 'Maelstrom', 8000)")
   within "a Normal Maelstrom's .45 rolls Redliners about 10%" "$(share "$r" Redliners)" 8.5 11.5
   is "a Normal rolls no faction Epic" "$(share "$r" MeatGrinders)" 0.0
   is "no other faction's round" "$(share "$r" GutterLead)" 0.0
-  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', 'Scavengers', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', 'Scavengers', 8000)")
   within "an Elite Scav's .45 rolls a Rare or Common faction round, 25% of what's past Legendary" "$(awk "BEGIN { print $(share "$r" Reloads) + $(share "$r" GutterLead) + $(share "$r" PartsPullers) }")" 21 27
   within "Reloads, Gutter Lead and Parts-pullers come up alike" "$(share "$r" Reloads)" 6.5 9.5
-  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Boss', 'Arasaka', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Boss', 'Arasaka', 8000)")
   within "a Boss Arasaka's .45 rolls an Epic of theirs about 25% (after Legendary)" "$(awk "BEGIN { print $(share "$r" Kata) + $(share "$r" Shinobi) }")" 20 25
   within "Kata and Shinobi come up alike" "$(share "$r" Shinobi)" 9.5 13
-  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Normal', 'Arasaka', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Normal', 'Arasaka', 8000)")
   within "a Normal Arasaka's .45 rolls one about 5%, from Arasaka's own table" "$(awk "BEGIN { print $(share "$r" Kata) + $(share "$r" Shinobi) }")" 4 6
-  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Weak', 'Arasaka', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Weak', 'Arasaka', 8000)")
   is "a Weak Arasaka rolls none" "$(awk "BEGIN { print $(share "$r" Kata) + $(share "$r" Shinobi) }")" 0
-  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Boss', 'Maelstrom', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Boss', 'Maelstrom', 8000)")
   within "a Boss Maelstrom's .45 keeps the shared 15% Epic (after Legendary)" "$(share "$r" MeatGrinders)" 12 15.5
-  r=$(lua "return $SYS:DebugFactionPick('Tech_Light', 'Boss', 'Maelstrom', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Tech_Light', 'Boss', 'Maelstrom', 8000)")
   within "a Boss Maelstrom's light rail rolls Chrome-cookers, the shared Epic" "$(share "$r" ChromeCookers)" 11.5 16
-  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', '', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', '', 8000)")
   is "no faction, no faction round" "$(awk "BEGIN { print $(share "$r" Redliners) + $(share "$r" GutterLead) + $(share "$r" Kata) }")" 0
   within "no faction: an Elite still rolls Legendary about 3%" "$(share "$r" CookOff)" 2 4
-  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'MaxTac', 'Arasaka', 20000)")
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'MaxTac', 'Arasaka', 8000)")
   is "MaxTac gets no faction round" "$(share "$r" Kata)" 0.0
   r=$(lua "return $SYS:DebugFactionPick('Power_127', 'Boss', 'Maelstrom', 5000)")
   is "a caliber with no round for the faction: nothing of theirs" "$(share "$r" Redliners)" 0.0
@@ -343,7 +344,7 @@ Game.GetStatsSystem():AddModifier(Game.GetPlayer():GetEntityID(), AO_LINK); retu
 carrier() {
   local try
   for try in 1 2 3 4; do
-    chances 0.0 1.0
+    chances ${AO_CH:-0.0 1.0}
     spawn 0.0 "$1" "$2"
     chances
     vulnerable
@@ -467,6 +468,354 @@ legs() {
   is "V is never crippled" "$(lua "return RIG.effects('V', 'AmmoOverhaul.CrippledLegs')")" 0
   kitgod; despawn
   lua "TweakDB:SetFlat('Ammo.AO_12mm_LegDay.aoLegChance', 0.2); return 1" >/dev/null
+}
+
+# --- third batch ---------------------------------------------------------------------------------
+affiliation3() {
+  local rec
+  for rec in "Barghest Barghest" "VDB VoodooBoys" "Wraith Wraiths" "Nomad Aldecaldos" "Mox TheMox" "NCPD NCPD" "Kang KangTao" "NUSA NUSA"; do
+    set -- $rec
+    spawn 0.0 "" "Character.AO_Test_$1_Unity"
+    is "a spawned $1 rolls as $2" "$(lua "return $SYS:DebugFactionOf(RIG.npc())")" "$2"
+  done
+  despawn
+  is "Wraith androids are Wraiths" "$(lua "return TweakDB:GetFlat('AmmoOverhaul.factionOf.WraithsAndroid')")" Wraiths
+  is "Myers' NUSA is NUSA" "$(lua "return TweakDB:GetFlat('AmmoOverhaul.factionOf.NUSA_Myers')")" NUSA
+}
+
+rolls3() {
+  local r
+  r=$(lua "return $SYS:DebugFactionPick('Smart_10', 'Elite', 'VoodooBoys', 8000)")
+  within "an Elite VDB's 10mm rolls Collect Call about 3%" "$(share "$r" CollectCall)" 2 4
+  r=$(lua "return $SYS:DebugFactionPick('Smart_10', 'Boss', 'VoodooBoys', 8000)")
+  within "a Boss VDB's 10mm rolls Collect Call about 10%" "$(share "$r" CollectCall)" 8 12
+  within "and Bad Juju after it" "$(share "$r" BadJuju)" 10 15.5
+  r=$(lua "return $SYS:DebugFactionPick('Smart_10', 'Normal', 'VoodooBoys', 8000)")
+  is "a Normal VDB never rolls it" "$(share "$r" CollectCall)" 0.0
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', 'NUSA', 8000)")
+  within "an Elite NUSA's .45 rolls Deniable at half the Epic chance" "$(share "$r" Deniable)" 3.5 6
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Normal', 'NUSA', 8000)")
+  is "a Normal NUSA rolls none" "$(share "$r" Deniable)" 0.0
+  r=$(lua "return $SYS:DebugFactionPick('Power_45', 'Elite', 'Militech', 8000)")
+  is "nobody else rolls NUSA rounds" "$(share "$r" Deniable)" 0.0
+}
+
+turf3() {
+  local r
+  r=$(lua "return $SYS:DebugTurf('Vendors.bls_ina_se5_gunsmith_01', 200)")
+  is "the Aldecaldos' shop is a gun shop" "${r%%|*}" Gunsmith
+  grep -q WasteNot <<<"$r" && pass "it sells Waste Not" || fail "no Waste Not: $r"
+  [[ $(tr '|;' '\n' <<<"${r#*|}" | grep -v '^$' | grep -cv WasteNot) == 0 ]] && pass "and nothing else of a faction" || fail "Nomad shop: $r"
+  r=$(lua "return $SYS:DebugTurf('Vendors.wat_kab_gunsmith_01', 200)")
+  is "the Mox's shop is a gun shop" "${r%%|*}" Gunsmith
+  [[ $(tr '|;' '\n' <<<"${r#*|}" | grep -v '^$' | grep -cvE '^Ammo\.AO_(9mm|45|12mm)_(CutOff|LastCall)=10$') == 0 ]] && pass "it sells the Mox's rounds in tens" || fail "Mox shop: $r"
+  grep -q . <<<"${r#*|}" && pass "and does sell them" || fail "Mox shop is empty"
+}
+
+# What each rank gets from a rank effect, by record.
+ranks3() {
+  rank() { lua "return $SYS:DebugRankResult('$1', '$2', ${3:-false}, ${4:-false})"; }
+  local CC=Ammo.AO_S10_CollectCall CUT=Ammo.AO_45_CutOff SAND=Ammo.AO_45_PocketSand BLACK=BaseStatusEffect.HauntedGunBlackwallUpload MAL=BaseStatusEffect.CyberwareMalfunction STAG=BaseStatusEffect.ForceStagger
+  is "Collect Call kills an Elite" "$(rank $CC Elite)" $BLACK
+  is "a Boss survives it" "$(rank $CC Boss)" $MAL
+  is "MaxTac survives it" "$(rank $CC MaxTac)" $MAL
+  is "V survives it" "$(rank $CC '')" $MAL
+  is "a quest NPC survives it" "$(rank $CC Normal false true)" $MAL
+  is "a machine survives it" "$(rank $CC Normal true)" $MAL
+  is "Cut Off drops a Normal" "$(rank $CUT Normal)" BaseStatusEffect.Unconscious
+  is "an Elite staggers" "$(rank $CUT Elite)" $STAG
+  is "a quest NPC staggers" "$(rank $CUT Normal false true)" $STAG
+  is "V goes down" "$(rank $CUT '')" BaseStatusEffect.Knockdown
+  is "Pocket Sand blinds an Elite" "$(rank $SAND Elite)" BaseStatusEffect.ShortBlind
+  is "a Boss doesn't feel it" "$(rank $SAND Boss)" "<TDBID:00000000:00>"
+  is "V gets the glitch" "$(rank $SAND '')" AIQuickHackStatusEffect.HackBlind
+  is "Bad Juju turns a Normal" "$(rank Ammo.AO_45_BadJuju Normal)" AmmoOverhaul.JujuMadness
+  is "poison reaches V as V's poison" "$(lua "return $SYS:DebugPlayerEffect('BaseStatusEffect.HeavyPoision')")" BaseStatusEffect.PlayerPoisoned
+  is "contagion too" "$(lua "return $SYS:DebugPlayerEffect('BaseStatusEffect.BaseContagionPoison')")" BaseStatusEffect.PlayerPoisoned
+  is "the shock is V's shock" "$(lua "return $SYS:DebugPlayerEffect('BaseStatusEffect.Electrocuted')")" BaseStatusEffect.PlayerElectrocuted
+}
+
+# Chance flat of `ammo` set to 1 or back.
+rankchance() { lua "TweakDB:SetFlat('$1.aoRankChance', $2); return 1" >/dev/null; }
+# V with `gun` and the round's selector, facing `record`.
+vs() { # gun selector ammo record
+  kit "{'$1', 1}, {'$2', 1}, {'$3', 200}"
+  draw $1; draw $1; feed $2
+  spawn 0.0 "" "$4"
+  setup $1
+}
+
+sand() {
+  rankchance Ammo.AO_45_PocketSand 1.0
+  vs $UNI Items.AO_Feed_45_PocketSand Ammo.AO_45_PocketSand Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 100.0
+  shoot "" 1
+  sleep 1
+  local n; n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.ShortBlind')")
+  [[ $n -ge 1 ]] && pass "a live hit blinds ($n)" || fail "no blind: $n"
+  despawn
+  AO_CH="1.0 0.0" carrier Ammo.AO_45_PocketSand Character.AO_Test_Wraith_Unity $UNI
+  npcshoot 2 6
+  n=$(lua "return RIG.effects('V', 'AIQuickHackStatusEffect.HackBlind')")
+  echo "  hits on V $(lua "return #RIG.ratios('NPC')")"
+  [[ $n -ge 1 ]] && pass "an NPC's Pocket Sand glitches V's sight ($n)" || fail "on V: $n"
+  kitgod; despawn
+  rankchance Ammo.AO_45_PocketSand 0.2
+}
+
+juju() {
+  rankchance Ammo.AO_45_BadJuju 1.0
+  vs $UNI Items.AO_Feed_45_BadJuju Ammo.AO_45_BadJuju Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 100.0
+  shoot "" 1
+  sleep 1
+  local n; n=$(lua "return RIG.effects('NPC', 'AmmoOverhaul.JujuMadness')")
+  [[ $n -ge 1 ]] && pass "a live hit turns the target ($n)" || fail "no madness: $n"
+  within "it wears off inside 20 s" "$(lua "local r = -1; for _, e in ipairs(Game.GetStatusEffectSystem():GetAppliedEffects(RIG.npc():GetEntityID())) do if e:GetRecord():GetID().hash == TweakDBID.new('AmmoOverhaul.JujuMadness').hash then r = e:GetRemainingDuration() end end return r")" 1 20
+  despawn
+  rankchance Ammo.AO_45_BadJuju 0.15
+}
+
+cutoff() {
+  rankchance Ammo.AO_45_CutOff 1.0
+  vs $UNI Items.AO_Feed_45_CutOff Ammo.AO_45_CutOff Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 100.0
+  shoot "" 1
+  sleep 2
+  is "a hit knocks a mortal Normal out" "$(lua "return RIG.effects('NPC', 'BaseStatusEffect.Unconscious') >= 1")" true
+  is "it's defeated" "$(lua "return RIG.npc():IsDefeated()")" true
+  despawn
+  # Non-lethal without the knockout: a weak target drops, not dies.
+  rankchance Ammo.AO_45_CutOff 0.0
+  vs $UNI Items.AO_Feed_45_CutOff Ammo.AO_45_CutOff Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 3.0
+  shoot "" 1
+  sleep 2
+  is "the round is non-lethal" "$(lua "return RIG.npc():IsDead()")" false
+  despawn
+  rankchance Ammo.AO_45_CutOff 1.0
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  vs $UNI Items.AO_Feed_45_CutOff Ammo.AO_45_CutOff Character.AO_Test_Plain_Unity
+  shoot "" 2
+  is "an Immortal NPC is never knocked out" "$(lua "return RIG.effects('NPC', 'BaseStatusEffect.Unconscious')")" 0
+  [[ $(lua "return RIG.effects('NPC', 'BaseStatusEffect.ForceStagger')") -ge 1 ]] && pass "it staggers instead" || fail "no stagger on the Immortal NPC"
+  despawn
+  rankchance Ammo.AO_45_CutOff 0.15
+}
+
+lastcall() {
+  local NOV=Items.Preset_Nova_Default
+  rankchance Ammo.AO_12mm_LastCall 1.0
+  vs $NOV Items.AO_Feed_12mm_LastCall Ammo.AO_12mm_LastCall Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 300.0
+  shoot "" 1
+  is "nothing at once" "$(lua "return RIG.npc():IsDefeated()")" false
+  sleep 6
+  is "out 4 seconds later" "$(lua "return RIG.npc():IsDefeated()")" true
+  despawn
+  carrier Ammo.AO_12mm_LastCall Character.AO_Test_Mox_Nova $NOV
+  npcshoot 1 6
+  sleep 5
+  local n; n=$(lua "return RIG.effects('V', 'BaseStatusEffect.Knockdown')")
+  echo "  hits on V $(lua "return #RIG.ratios('NPC')")"
+  [[ $n -ge 1 ]] && pass "an NPC's Last Call floors V, late ($n)" || fail "V: $n"
+  kitgod; despawn
+  rankchance Ammo.AO_12mm_LastCall 0.15
+}
+
+collect() {
+  rankchance Ammo.AO_TLight_CollectCall 1.0
+  vs $OMA Items.AO_Feed_5mm_CollectCall Ammo.AO_TLight_CollectCall Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 100.0
+  shoot "" 1
+  sleep 3
+  is "a mortal Normal dies of the call" "$(lua "return RIG.npc():IsDead()")" true
+  despawn
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  vs $OMA Items.AO_Feed_5mm_CollectCall Ammo.AO_TLight_CollectCall Character.AO_Test_Plain_Unity
+  shoot "" 2
+  sleep 2
+  is "an Immortal NPC doesn't" "$(lua "return RIG.npc():IsDead()")" false
+  is "no upload on it" "$(lua "return RIG.effects('NPC', 'BaseStatusEffect.HauntedGunBlackwallUpload')")" 0
+  [[ $(lua "return RIG.effects('NPC', 'BaseStatusEffect.CyberwareMalfunction')") -ge 1 ]] && pass "its cyberware fails instead" || fail "no malfunction"
+  despawn
+  rankchance Ammo.AO_TLight_CollectCall 0.1
+}
+
+# The plain on-hit effects, on live hits.
+shock() {
+  local LEX=Items.Preset_Lexington_Default
+  lua "TweakDB:SetFlat('Ammo.AO_9mm_ResistingArrest.aoEffectChances', {1.0}); return 1" >/dev/null
+  vs $LEX Items.AO_Feed_9mm_ResistingArrest Ammo.AO_9mm_ResistingArrest Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 100.0
+  shoot "" 1
+  sleep 1
+  local n; n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.Electrocuted')")
+  [[ $n -ge 1 ]] && pass "Resisting Arrest shocks ($n)" || fail "no shock: $n"
+  despawn
+  lua "TweakDB:SetFlat('Ammo.AO_9mm_ResistingArrest.aoEffectChances', {0.2}); return 1" >/dev/null
+}
+
+clap() {
+  lua "TweakDB:SetFlat('Ammo.AO_TLight_TheClap.aoEffectChances', {1.0}); return 1" >/dev/null
+  vs $OMA Items.AO_Feed_5mm_TheClap Ammo.AO_TLight_TheClap Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 100.0
+  # A neighbour. The rig can't stand it within the cloud's 4 m, so here the cloud reaches it instead.
+  lua "TweakDB:SetFlat('AmmoOverhaul.ClapCloud.range', 12.0); return 1" >/dev/null
+  lua "GetMod('AOTestKit').spawn('Character.AO_Test_Plain_Unity', 1); return 1" >/dev/null
+  sleep 4
+  lua "local t = Game.GetDynamicEntitySystem():GetTagged('AO_Test'); Game.GetGodModeSystem():ClearGodMode(t[2]:GetEntityID(), CName.new('aorig')); return #t" | sed 's/^/  NPCs /'
+  lua "Game.GetDynamicEntitySystem():GetTagged('AO_Test')[2]:SetIndividualTimeDilation(CName.new('aorig'), 0.0001, 9999.0, CName.new(''), CName.new('')); return 1" >/dev/null
+  sleep 0.5
+  local r=""
+  for _ in 1 2 3 4 5 6 7 8; do
+    lua "return RIG.fireV()" >/dev/null; sleep 0.4
+    r=$(lua "local r, t = {}, Game.GetDynamicEntitySystem():GetTagged('AO_Test'); local a = t[1]:GetWorldPosition(); for _, o in ipairs(t) do r[#r + 1] = tostring(StatusEffectSystem.ObjectHasStatusEffect(o, TweakDBID.new('BaseStatusEffect.BaseContagionPoison'))) .. '@' .. string.format('%.1f', Vector4.Distance(a, o:GetWorldPosition())) end return table.concat(r, ' ')")
+    echo "  $r"
+    [[ $r == true*\ true* ]] && break
+  done
+  [[ $r == true*\ true* ]] && pass "The Clap poisons and spreads" || fail "The Clap: $r"
+  despawn
+  lua "TweakDB:SetFlat('Ammo.AO_TLight_TheClap.aoEffectChances', {0.2}); TweakDB:SetFlat('AmmoOverhaul.ClapCloud.range', 4.0); return 1" >/dev/null
+}
+
+wastenot() {
+  kit "{'$UNI', 1}, {'Items.AO_Feed_45_WasteNot', 1}, {'Ammo.AO_45_WasteNot', 100}"
+  draw $UNI; draw $UNI; feed Items.AO_Feed_45_WasteNot
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $UNI
+  shoot "" 3
+  gun() { lua "return tostring(Game.GetPlayer():GetActiveWeapon():GetAmmoCount())"; }
+  mag() { lua "return tostring(WeaponObject.GetMagazineAmmoCount(Game.GetPlayer():GetActiveWeapon()))"; }
+  pocket() { lua "return Game.GetTransactionSystem():GetItemQuantity(Game.GetPlayer(), ItemID.CreateQuery(TweakDBID.new('Ammo.AO_45_WasteNot')))"; }
+  local m p; m=$(mag); p=$(pocket)
+  lua "$SYS:DebugRefund('Ammo.AO_45_WasteNot'); return 1" >/dev/null; sleep 1
+  is "a free shot goes back in the magazine" "$(mag)" $((m + 1))
+  is "and in the pocket" "$(pocket)" $((p + 1))
+  despawn
+  lua "TweakDB:SetFlat('Ammo.AO_45_WasteNot.aoFreeShot', 1.0); return 1" >/dev/null
+  AO_CH="1.0 0.0" carrier Ammo.AO_45_WasteNot Character.AO_Test_Nomad_Unity $UNI
+  local before; before=$(qty Ammo.AO_45_WasteNot)
+  npcshoot 3 4
+  echo "  hits on V $(lua "return #RIG.ratios('NPC')")"
+  is "an NPC's free shots use no rounds" "$(qty Ammo.AO_45_WasteNot)" "$before"
+  kitgod; despawn
+  lua "TweakDB:SetFlat('Ammo.AO_45_WasteNot.aoFreeShot', 0.15); return 1" >/dev/null
+}
+
+speedloaders() {
+  kit "{'$UNI', 1}, {'Items.AO_Feed_45_Speedloaders', 1}, {'Ammo.AO_45_Speedloaders', 100}"
+  draw $UNI; draw $UNI; feed Items.AO_Feed_45_Speedloaders
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $UNI
+  is "the refill stat is on" "$(gunstat MagazineAutoRefill)" 1.0000
+  shoot "" 3
+  mag() { lua "return tostring(WeaponObject.GetMagazineAmmoCount(Game.GetPlayer():GetActiveWeapon()))"; }
+  cap() { lua "return tostring(WeaponObject.GetMagazineCapacity(Game.GetPlayer():GetActiveWeapon()))"; }
+  pocket() { lua "return Game.GetTransactionSystem():GetItemQuantity(Game.GetPlayer(), ItemID.CreateQuery(TweakDBID.new('Ammo.AO_45_Speedloaders')))"; }
+  local m c p; m=$(mag); c=$(cap); p=$(pocket)
+  (( m < c )) && pass "the magazine is down ($m of $c)" || fail "magazine full before the swap: $m of $c"
+  draw Items.Preset_Lexington_Default; sleep 2; draw $UNI; sleep 3
+  is "a redraw fills it" "$(mag)" "$c"
+  is "the pocket pays nothing beyond the shots" "$(pocket)" "$p"
+  # Down to a few rounds: the refill can't make any.
+  lua "local ts = Game.GetTransactionSystem(); local p, a = Game.GetPlayer(), ItemID.CreateQuery(TweakDBID.new('Ammo.AO_45_Speedloaders')); ts:RemoveItem(p, a, ts:GetItemQuantity(p, a) - 4); return 1" >/dev/null
+  sleep 1; shoot "" 1; m=$(mag); p=$(pocket); echo "  before the swap: mag $m, pocket $p"
+  draw Items.Preset_Lexington_Default; sleep 2; draw $UNI; sleep 3
+  echo "  after: mag $(mag), pocket $(pocket)"
+  (( $(mag) <= $p )) && pass "the magazine holds no more than V carries" || fail "free rounds: mag $(mag), pocket $p"
+  despawn
+}
+
+tax() {
+  local LEX=Items.Preset_Lexington_Default
+  vs $LEX Items.AO_Feed_9mm_DogtownTax Ammo.AO_9mm_DogtownTax Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 5.0
+  for _ in $(seq 60); do [[ $(lua "return RIG.npc():IsDead()") == true ]] && break; [[ $(lua "return RIG.fireV()") == holstered ]] && draw $LEX; sleep 0.4; done
+  sleep 3.5
+  is "the NPC died" "$(lua "return RIG.npc():IsDead()")" true
+  within "the kill left the tax" "$(qty Items.money)" 100 100000
+  despawn
+}
+
+chimera() {
+  local AJA=Items.Preset_Ajax_Default
+  kit "{'$AJA', 1}, {'Items.AO_Feed_762_ChimeraScrap', 1}, {'Ammo.AO_762_ChimeraScrap', 100}, {'Items.AO_Feed_762_Ball', 1}, {'Ammo.AO_762_Ball', 100}"
+  draw $AJA; draw $AJA
+  atk() { lua "return $SYS:DebugCurrentAttack(Game.GetPlayer():GetActiveWeapon())"; }
+  feed Items.AO_Feed_762_Ball
+  local plain now; plain=$(atk)
+  feed Items.AO_Feed_762_ChimeraScrap
+  now=$(atk)
+  echo "  attack $plain then $now"
+  [[ $now == *Chimera* ]] && pass "the round changes V's attack" || fail "attack: $now"
+  lua "RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Unity
+  setup $AJA
+  shoot "" 1
+  sleep 1
+  volleys() { lua "local t = {}; for _, v in ipairs(RIG.volleys('$1')) do t[#t + 1] = v.n .. ':' .. string.format('%.0f', v.total) end return table.concat(t, ' ')"; }
+  echo "  V's shots (hits:damage): $(volleys V)"
+  lua "local t = {}; for _, h in ipairs(RIG.hits) do if h.byV then t[#t + 1] = string.format('%.1f/%s', h.post, tostring(h.onNpc)) end end return table.concat(t, ' ')" | sed 's/^/  raw hits: /'
+  draw $UNI; sleep 1; draw $AJA; sleep 1
+  is "a holster keeps it" "$(atk)" "$now"
+  despawn
+  feed Items.AO_Feed_762_Ball
+  is "another round puts the attack back" "$(atk)" "$plain"
+  feed Items.AO_Feed_762_ChimeraScrap
+  carrier Ammo.AO_762_ChimeraScrap Character.AO_Test_Barghest_Ajax $AJA
+  echo "  NPC attack $(lua "return $SYS:DebugCurrentAttack(ScriptedPuppet.GetActiveWeapon(RIG.npc()))")"
+  npcshoot 2 6
+  local g; g=$(lua "local n, m = 0, 0; for _, h in ipairs(RIG.hits) do if h.onV and not h.byV and not h.dot then n = n + 1; if h.post < 5 then m = m + 1 end end end return n .. ' ' .. m")
+  echo "  NPC's shots (hits:damage): $(volleys NPC); hits and small hits: $g"
+  [[ ${g#* } -ge 1 ]] && pass "an NPC's shot blasts V too" || fail "no blast from the NPC: $g"
+  kitgod; despawn
+}
+
+deniable() {
+  vs $UNI Items.AO_Feed_45_Deniable Ammo.AO_45_Deniable Character.AO_Test_Plain_Unity
+  avg() { lua "local s, n = 0, 0; for _, h in ipairs(RIG.hits) do if h.byV and h.onNpc and not h.dot then s = s + h.post; n = n + 1 end end return string.format('%.1f', s / math.max(n, 1))"; }
+  is "the rig's NPC is in combat" "$(lua "return NPCPuppet.IsInCombat(RIG.npc())")" true
+  shoot "" 4
+  local fight calm; fight=$(avg)
+  lua "RIG.clear(); return 1" >/dev/null
+  for _ in 1 2 3 4; do
+    lua "NPCPuppet.ChangeHighLevelState(RIG.npc(), gamedataNPCHighLevelState.Relaxed); return 1" >/dev/null; sleep 0.5
+    echo "  in combat: $(lua "return NPCPuppet.IsInCombat(RIG.npc())")"
+    lua "return RIG.fireV()" >/dev/null; sleep 0.6
+  done
+  calm=$(avg); echo "  fight $fight, calm $calm"
+  within "an unaware target takes double" "$(ratio "$fight" "$calm")" 1.7 2.3
+  is "kills are silent" "$(gunstat CanSilentKill)" 1.0000
+  despawn
+}
+
+stats3() {
+  local LEX=Items.Preset_Lexington_Default a b
+  kit "{'$LEX', 1}, {'Items.AO_Feed_9mm_Ball', 1}, {'Items.AO_Feed_9mm_StandardIssue', 1}, {'Ammo.AO_9mm_StandardIssue', 50}, {'$YUK', 1}, {'Items.AO_Feed_10mm_Seekers', 1}, {'Items.AO_Feed_10mm_WideAngle', 1}, {'Ammo.AO_S10_WideAngle', 50}, {'Items.AO_Feed_10mm_SecondOpinion', 1}, {'Ammo.AO_S10_SecondOpinion', 50}"
+  draw $LEX; draw $LEX; feed Items.AO_Feed_9mm_Ball
+  a=$(gunstat SpreadMaxX); b=$(gunstat SpreadAdsMaxX)
+  feed Items.AO_Feed_9mm_StandardIssue
+  is "Standard Issue caps hip spread" "$(ratio "$a" "$(gunstat SpreadMaxX)")" 0.300
+  is "and aimed" "$(ratio "$b" "$(gunstat SpreadAdsMaxX)")" 0.300
+  draw $YUK; draw $YUK; feed Items.AO_Feed_10mm_Seekers
+  b=$(gunstat SmartGunAdsMaxLockedTargets)
+  feed Items.AO_Feed_10mm_SecondOpinion
+  is "Second Opinion locks 2 more aimed" "$(gunstat SmartGunAdsMaxLockedTargets)" "$(awk "BEGIN { printf \"%.4f\", $b + 2 }")"
+  is "and from the hip" "$(gunstat SmartGunHipMaxLockedTargets)" 5.0000
+  feed Items.AO_Feed_10mm_Seekers
+  # Whether a target 20 degrees off the crosshair locks.
+  lua "AO_LINK = RPGManager.CreateStatModifier(gamedataStatType.HasSmartLink, gameStatModifierType.Additive, 1.0)
+Game.GetStatsSystem():AddModifier(Game.GetPlayer():GetEntityID(), AO_LINK); RIG.npcMode = gameGodModeType.Immortal; return 1" >/dev/null
+  spawn 0.0 "" Character.AO_Test_Plain_Yukimura
+  setup $YUK
+  off() { lua "local p, n = Game.GetPlayer(), RIG.npc(); local a, b = p:GetWorldPosition(), n:GetWorldPosition()
+Game.GetTeleportationFacility():Teleport(p, a, EulerAngles.new(0, 0, math.deg(math.atan2(-(b.x - a.x), b.y - a.y)) + 20)); return 1" >/dev/null; sleep 1.6; lua "return $SYS:DebugSmartTargets()"; }
+  [[ $(off) == *targets=0* ]] && pass "stock: no lock 20 degrees off" || fail "stock locks 20 degrees off"
+  feed Items.AO_Feed_10mm_WideAngle
+  [[ $(off) == *targets=1* ]] && pass "Wide Angle locks 20 degrees off" || fail "Wide Angle: no lock 20 degrees off"
+  lua "Game.GetStatsSystem():RemoveModifier(Game.GetPlayer():GetEntityID(), AO_LINK); return 1" >/dev/null
+  despawn
 }
 
 # --- pumped: Protein Loads' kill buff, its stacks, on V and an NPC -----------------------------------

@@ -216,6 +216,78 @@
     30
    ]
   ],
+  "DogtownTax": [
+   [
+    70,
+    66,
+    52
+   ],
+   [
+    200,
+    170,
+    60
+   ]
+  ],
+  "WasteNot": [
+   [
+    120,
+    85,
+    50
+   ],
+   [
+    190,
+    180,
+    150
+   ]
+  ],
+  "CutOff": [
+   [
+    230,
+    70,
+    150
+   ],
+   [
+    30,
+    25,
+    30
+   ]
+  ],
+  "LastCall": [
+   [
+    230,
+    70,
+    150
+   ],
+   [
+    90,
+    40,
+    130
+   ]
+  ],
+  "StandardIssue": [
+   [
+    35,
+    50,
+    90
+   ],
+   [
+    200,
+    200,
+    205
+   ]
+  ],
+  "ResistingArrest": [
+   [
+    35,
+    50,
+    90
+   ],
+   [
+    240,
+    220,
+    60
+   ]
+  ],
   "Redliners": [
    [
     25,
@@ -286,6 +358,54 @@
     225,
     180,
     60
+   ]
+  ],
+  "BadJuju": [
+   [
+    30,
+    50,
+    60
+   ],
+   [
+    60,
+    200,
+    190
+   ]
+  ],
+  "PocketSand": [
+   [
+    150,
+    120,
+    80
+   ],
+   [
+    90,
+    70,
+    45
+   ]
+  ],
+  "Speedloaders": [
+   [
+    120,
+    85,
+    50
+   ],
+   [
+    60,
+    120,
+    170
+   ]
+  ],
+  "Deniable": [
+   [
+    90,
+    92,
+    95
+   ],
+   [
+    30,
+    30,
+    32
    ]
   ],
   "Hardcast": [
@@ -384,6 +504,18 @@
     30
    ]
   ],
+  "ChimeraScrap": [
+   [
+    70,
+    66,
+    52
+   ],
+   [
+    220,
+    90,
+    30
+   ]
+  ],
   "HEI": [
    [
     200,
@@ -394,6 +526,18 @@
     180,
     30,
     30
+   ]
+  ],
+  "BlackBudget": [
+   [
+    90,
+    92,
+    95
+   ],
+   [
+    120,
+    30,
+    140
    ]
   ],
   "Flechette": [
@@ -636,6 +780,30 @@
     30
    ]
   ],
+  "CollectCall": [
+   [
+    15,
+    25,
+    30
+   ],
+   [
+    230,
+    40,
+    50
+   ]
+  ],
+  "TheClap": [
+   [
+    150,
+    120,
+    80
+   ],
+   [
+    120,
+    170,
+    50
+   ]
+  ],
   "EMPPayload": [
    [
     70,
@@ -742,6 +910,30 @@
     20,
     140,
     150
+   ]
+  ],
+  "WideAngle": [
+   [
+    225,
+    225,
+    228
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "SecondOpinion": [
+   [
+    225,
+    225,
+    228
+   ],
+   [
+    190,
+    40,
+    50
    ]
   ]
  },
@@ -981,6 +1173,72 @@
    ],
    "tier": 5,
    "faction": "Militech"
+  },
+  "9mm-dogtowntax": {
+   "shape": "P9",
+   "over": {},
+   "look": "DogtownTax",
+   "label": [
+    "9MM",
+    "DOGTOWN TAX"
+   ],
+   "tier": 5,
+   "faction": "Barghest"
+  },
+  "9mm-wastenot": {
+   "shape": "P9",
+   "over": {},
+   "look": "WasteNot",
+   "label": [
+    "9MM",
+    "WASTE NOT"
+   ],
+   "tier": 5,
+   "faction": "Aldecaldos"
+  },
+  "9mm-cutoff": {
+   "shape": "P9",
+   "over": {},
+   "look": "CutOff",
+   "label": [
+    "9MM",
+    "CUT OFF"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
+  "9mm-lastcall": {
+   "shape": "P9",
+   "over": {},
+   "look": "LastCall",
+   "label": [
+    "9MM",
+    "LAST CALL"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
+  "9mm-standardissue": {
+   "shape": "P9",
+   "over": {},
+   "look": "StandardIssue",
+   "label": [
+    "9MM",
+    "STANDARD ISSUE"
+   ],
+   "tier": 8,
+   "faction": "NCPD"
+  },
+  "9mm-resistingarrest": {
+   "shape": "P9",
+   "over": {},
+   "look": "ResistingArrest",
+   "label": [
+    "9MM",
+    "RESISTING ARREST"
+   ],
+   "tier": 5,
+   "faction": "NCPD"
   },
   "45-steelcore": {
    "shape": "P45",
@@ -1279,6 +1537,83 @@
    "tier": 8,
    "faction": "SixthStreet"
   },
+  "45-badjuju": {
+   "shape": "P45",
+   "over": {},
+   "look": "BadJuju",
+   "label": [
+    ".45",
+    "BAD JUJU"
+   ],
+   "tier": 6,
+   "faction": "VoodooBoys"
+  },
+  "45-pocketsand": {
+   "shape": "P45",
+   "over": {},
+   "look": "PocketSand",
+   "label": [
+    ".45",
+    "POCKET SAND"
+   ],
+   "tier": 5,
+   "faction": "Wraiths"
+  },
+  "45-wastenot": {
+   "shape": "P45",
+   "over": {},
+   "look": "WasteNot",
+   "label": [
+    ".45",
+    "WASTE NOT"
+   ],
+   "tier": 5,
+   "faction": "Aldecaldos"
+  },
+  "45-speedloaders": {
+   "shape": "P45",
+   "over": {},
+   "look": "Speedloaders",
+   "label": [
+    ".45",
+    "SPEEDLOADERS"
+   ],
+   "tier": 6,
+   "faction": "Aldecaldos"
+  },
+  "45-cutoff": {
+   "shape": "P45",
+   "over": {},
+   "look": "CutOff",
+   "label": [
+    ".45",
+    "CUT OFF"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
+  "45-standardissue": {
+   "shape": "P45",
+   "over": {},
+   "look": "StandardIssue",
+   "label": [
+    ".45",
+    "STANDARD ISSUE"
+   ],
+   "tier": 8,
+   "faction": "NCPD"
+  },
+  "45-deniable": {
+   "shape": "P45",
+   "over": {},
+   "look": "Deniable",
+   "label": [
+    ".45",
+    "DENIABLE"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
+  },
   "12mm-steelcore": {
    "shape": "P12",
    "over": {
@@ -1538,6 +1873,39 @@
    "tier": 6,
    "faction": "Animals"
   },
+  "12mm-wastenot": {
+   "shape": "P12",
+   "over": {},
+   "look": "WasteNot",
+   "label": [
+    "12MM",
+    "WASTE NOT"
+   ],
+   "tier": 5,
+   "faction": "Aldecaldos"
+  },
+  "12mm-speedloaders": {
+   "shape": "P12",
+   "over": {},
+   "look": "Speedloaders",
+   "label": [
+    "12MM",
+    "SPEEDLOADERS"
+   ],
+   "tier": 6,
+   "faction": "Aldecaldos"
+  },
+  "12mm-lastcall": {
+   "shape": "P12",
+   "over": {},
+   "look": "LastCall",
+   "label": [
+    "12MM",
+    "LAST CALL"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
   "556-steelcore": {
    "shape": "R556",
    "over": {
@@ -1696,6 +2064,17 @@
    ],
    "tier": 6,
    "faction": "Arasaka"
+  },
+  "556-dogtowntax": {
+   "shape": "R556",
+   "over": {},
+   "look": "DogtownTax",
+   "label": [
+    "5.56",
+    "DOGTOWN TAX"
+   ],
+   "tier": 5,
+   "faction": "Barghest"
   },
   "762-steelcore": {
    "shape": "R762",
@@ -1896,6 +2275,17 @@
    "tier": 6,
    "faction": "Militech"
   },
+  "762-chimerascrap": {
+   "shape": "R762",
+   "over": {},
+   "look": "ChimeraScrap",
+   "label": [
+    "7.62",
+    "CHIMERA SCRAP"
+   ],
+   "tier": 6,
+   "faction": "Barghest"
+  },
   "127-steelcore": {
    "shape": "R127",
    "over": {
@@ -2027,6 +2417,17 @@
    "tier": 4,
    "faction": null
   },
+  "127-blackbudget": {
+   "shape": "R127",
+   "over": {},
+   "look": "BlackBudget",
+   "label": [
+    "12.7",
+    "BLACK BUDGET"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
+  },
   "12ga-flechette": {
    "shape": "G12",
    "over": {
@@ -2154,6 +2555,42 @@
    ],
    "tier": 6,
    "faction": "Militech"
+  },
+  "12ga-pocketsand": {
+   "shape": "G12",
+   "over": {
+    "crimp": "star"
+   },
+   "look": "PocketSand",
+   "label": [
+    "POCKET SAND"
+   ],
+   "tier": 5,
+   "faction": "Wraiths"
+  },
+  "12ga-cutoff": {
+   "shape": "G12",
+   "over": {
+    "crimp": "star"
+   },
+   "look": "CutOff",
+   "label": [
+    "CUT OFF"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
+  "12ga-resistingarrest": {
+   "shape": "G12",
+   "over": {
+    "crimp": "star"
+   },
+   "look": "ResistingArrest",
+   "label": [
+    "RESISTING ARREST"
+   ],
+   "tier": 5,
+   "faction": "NCPD"
   },
   "4ga-flechette": {
    "shape": "G4",
@@ -2446,6 +2883,61 @@
    "tier": 5,
    "faction": "Animals"
   },
+  "5mm-chimerascrap": {
+   "shape": "T5",
+   "over": {},
+   "look": "ChimeraScrap",
+   "label": [
+    "5MM",
+    "CHIMERA SCRAP"
+   ],
+   "tier": 6,
+   "faction": "Barghest"
+  },
+  "5mm-badjuju": {
+   "shape": "T5",
+   "over": {},
+   "look": "BadJuju",
+   "label": [
+    "5MM",
+    "BAD JUJU"
+   ],
+   "tier": 6,
+   "faction": "VoodooBoys"
+  },
+  "5mm-collectcall": {
+   "shape": "T5",
+   "over": {},
+   "look": "CollectCall",
+   "label": [
+    "5MM",
+    "COLLECT CALL"
+   ],
+   "tier": 9,
+   "faction": "VoodooBoys"
+  },
+  "5mm-theclap": {
+   "shape": "T5",
+   "over": {},
+   "look": "TheClap",
+   "label": [
+    "5MM",
+    "THE CLAP"
+   ],
+   "tier": 6,
+   "faction": "Wraiths"
+  },
+  "5mm-deniable": {
+   "shape": "T5",
+   "over": {},
+   "look": "Deniable",
+   "label": [
+    "5MM",
+    "DENIABLE"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
+  },
   "heavy-ferro": {
    "shape": "TH",
    "over": {
@@ -2605,6 +3097,28 @@
    "tier": 6,
    "faction": "Animals"
   },
+  "heavy-theclap": {
+   "shape": "TH",
+   "over": {},
+   "look": "TheClap",
+   "label": [
+    "HEAVY",
+    "THE CLAP"
+   ],
+   "tier": 6,
+   "faction": "Wraiths"
+  },
+  "heavy-blackbudget": {
+   "shape": "TH",
+   "over": {},
+   "look": "BlackBudget",
+   "label": [
+    "HEAVY",
+    "BLACK BUDGET"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
+  },
   "10mm-emppayload": {
    "shape": "S10",
    "over": {
@@ -2755,6 +3269,61 @@
    "tier": 5,
    "faction": "SixthStreet"
   },
+  "10mm-badjuju": {
+   "shape": "S10",
+   "over": {},
+   "look": "BadJuju",
+   "label": [
+    "10MM",
+    "BAD JUJU"
+   ],
+   "tier": 6,
+   "faction": "VoodooBoys"
+  },
+  "10mm-collectcall": {
+   "shape": "S10",
+   "over": {},
+   "look": "CollectCall",
+   "label": [
+    "10MM",
+    "COLLECT CALL"
+   ],
+   "tier": 9,
+   "faction": "VoodooBoys"
+  },
+  "10mm-wideangle": {
+   "shape": "S10",
+   "over": {},
+   "look": "WideAngle",
+   "label": [
+    "10MM",
+    "WIDE ANGLE"
+   ],
+   "tier": 5,
+   "faction": "KangTao"
+  },
+  "10mm-secondopinion": {
+   "shape": "S10",
+   "over": {},
+   "look": "SecondOpinion",
+   "label": [
+    "10MM",
+    "SECOND OPINION"
+   ],
+   "tier": 6,
+   "faction": "KangTao"
+  },
+  "10mm-deniable": {
+   "shape": "S10",
+   "over": {},
+   "look": "Deniable",
+   "label": [
+    "10MM",
+    "DENIABLE"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
+  },
   "20mm-emppayload": {
    "shape": "S20",
    "over": {
@@ -2894,6 +3463,28 @@
    "tier": 6,
    "faction": "Arasaka"
   },
+  "20mm-wideangle": {
+   "shape": "S20",
+   "over": {},
+   "look": "WideAngle",
+   "label": [
+    "20MM",
+    "WIDE ANGLE"
+   ],
+   "tier": 5,
+   "faction": "KangTao"
+  },
+  "20mm-secondopinion": {
+   "shape": "S20",
+   "over": {},
+   "look": "SecondOpinion",
+   "label": [
+    "20MM",
+    "SECOND OPINION"
+   ],
+   "tier": 6,
+   "faction": "KangTao"
+  },
   "25mm-emppayload": {
    "shape": "S25",
    "over": {
@@ -3032,6 +3623,17 @@
    ],
    "tier": 6,
    "faction": "Arasaka"
+  },
+  "25mm-secondopinion": {
+   "shape": "S25",
+   "over": {},
+   "look": "SecondOpinion",
+   "label": [
+    "25MM",
+    "SECOND OPINION"
+   ],
+   "tier": 6,
+   "faction": "KangTao"
   }
  }
 }

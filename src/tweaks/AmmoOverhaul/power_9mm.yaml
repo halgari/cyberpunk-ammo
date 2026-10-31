@@ -9,9 +9,9 @@ AmmoOverhaul.Power_9mm.defaultAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_9mm.vanillaAmmo: "Ammo.HandgunAmmo"
 AmmoOverhaul.Power_9mm.lootWeight: 0.40
 # Parallel lists: selector part -> ammo stack it feeds -> tier (0 Common, 1 Uncommon).
-AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "Items.AO_Feed_9mm_PlusP", "Items.AO_Feed_9mm_SteelCore", "Items.AO_Feed_9mm_Incendiary", "Items.AO_Feed_9mm_Subsonic", "Items.AO_Feed_9mm_Bouncers", "Items.AO_Feed_9mm_Rubber", "Items.AO_Feed_9mm_Penetrator", "Items.AO_Feed_9mm_Match", "Items.AO_Feed_9mm_Toxin", "Items.AO_Feed_9mm_Shredders", "Items.AO_Feed_9mm_CookOff", "Items.AO_Feed_9mm_Reloads", "Items.AO_Feed_9mm_GutterLead", "Items.AO_Feed_9mm_Shinobi", "Items.AO_Feed_9mm_ShinobiSeconds", "Items.AO_Feed_9mm_Tanto", "Items.AO_Feed_9mm_Surplus", "Items.AO_Feed_9mm_FourthOfJuly", "Items.AO_Feed_9mm_MilSpec"]
-AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_9mm_PlusP", "Ammo.AO_9mm_SteelCore", "Ammo.AO_9mm_Incendiary", "Ammo.AO_9mm_Subsonic", "Ammo.AO_9mm_Bouncers", "Ammo.AO_9mm_Rubber", "Ammo.AO_9mm_Penetrator", "Ammo.AO_9mm_Match", "Ammo.AO_9mm_Toxin", "Ammo.AO_9mm_Shredders", "Ammo.AO_9mm_CookOff", "Ammo.AO_9mm_Reloads", "Ammo.AO_9mm_GutterLead", "Ammo.AO_9mm_Shinobi", "Ammo.AO_9mm_ShinobiSeconds", "Ammo.AO_9mm_Tanto", "Ammo.AO_9mm_Surplus", "Ammo.AO_9mm_FourthOfJuly", "Ammo.AO_9mm_MilSpec"]
-AmmoOverhaul.Power_9mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 7, 8, 6, 8, 5, 8, 5, 5]
+AmmoOverhaul.Power_9mm.selectors: ["Items.AO_Feed_9mm_Ball", "Items.AO_Feed_9mm_Mushrooms", "Items.AO_Feed_9mm_PlusP", "Items.AO_Feed_9mm_SteelCore", "Items.AO_Feed_9mm_Incendiary", "Items.AO_Feed_9mm_Subsonic", "Items.AO_Feed_9mm_Bouncers", "Items.AO_Feed_9mm_Rubber", "Items.AO_Feed_9mm_Penetrator", "Items.AO_Feed_9mm_Match", "Items.AO_Feed_9mm_Toxin", "Items.AO_Feed_9mm_Shredders", "Items.AO_Feed_9mm_CookOff", "Items.AO_Feed_9mm_Reloads", "Items.AO_Feed_9mm_GutterLead", "Items.AO_Feed_9mm_Shinobi", "Items.AO_Feed_9mm_ShinobiSeconds", "Items.AO_Feed_9mm_Tanto", "Items.AO_Feed_9mm_Surplus", "Items.AO_Feed_9mm_FourthOfJuly", "Items.AO_Feed_9mm_MilSpec", "Items.AO_Feed_9mm_DogtownTax", "Items.AO_Feed_9mm_WasteNot", "Items.AO_Feed_9mm_CutOff", "Items.AO_Feed_9mm_LastCall", "Items.AO_Feed_9mm_StandardIssue", "Items.AO_Feed_9mm_ResistingArrest"]
+AmmoOverhaul.Power_9mm.selectorAmmo: ["Ammo.HandgunAmmo", "Ammo.AO_9mm_HollowPoint", "Ammo.AO_9mm_PlusP", "Ammo.AO_9mm_SteelCore", "Ammo.AO_9mm_Incendiary", "Ammo.AO_9mm_Subsonic", "Ammo.AO_9mm_Bouncers", "Ammo.AO_9mm_Rubber", "Ammo.AO_9mm_Penetrator", "Ammo.AO_9mm_Match", "Ammo.AO_9mm_Toxin", "Ammo.AO_9mm_Shredders", "Ammo.AO_9mm_CookOff", "Ammo.AO_9mm_Reloads", "Ammo.AO_9mm_GutterLead", "Ammo.AO_9mm_Shinobi", "Ammo.AO_9mm_ShinobiSeconds", "Ammo.AO_9mm_Tanto", "Ammo.AO_9mm_Surplus", "Ammo.AO_9mm_FourthOfJuly", "Ammo.AO_9mm_MilSpec", "Ammo.AO_9mm_DogtownTax", "Ammo.AO_9mm_WasteNot", "Ammo.AO_9mm_CutOff", "Ammo.AO_9mm_LastCall", "Ammo.AO_9mm_StandardIssue", "Ammo.AO_9mm_ResistingArrest"]
+AmmoOverhaul.Power_9mm.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 7, 8, 6, 8, 5, 8, 5, 5, 5, 5, 6, 6, 8, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_9mm.craftBatch: 90
 
@@ -1053,6 +1053,259 @@ Items.AO_Feed_9mm_MilSpec:
       modifierType: Multiplier
       value: 0.85
 
+# 9mm Dogtown Tax [Barghest] (Rare)
+Ammo.AO_9mm_DogtownTax:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-9mm-DogtownTax
+  localizedDescription: LocKey#AO-Ammo-DogtownTax-Desc
+  iconPath: AO_9mm_DogtownTax
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_9mm_DogtownTax.aoFaction: "Barghest"
+Ammo.AO_9mm_DogtownTax.aoEddies: true
+
+UIIcon.AO_9mm_DogtownTax:
+  $type: UIIcon
+  atlasPartName: ao_9mm_dogtowntax
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_DogtownTax:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-DogtownTax
+  localizedDescription: LocKey#AO-Ammo-DogtownTax-Desc
+  iconPath: AO_9mm_DogtownTax
+  quality: Quality.Rare
+
+# 9mm Waste Not [Nomad] (Rare)
+Ammo.AO_9mm_WasteNot:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-9mm-WasteNot
+  localizedDescription: LocKey#AO-Ammo-WasteNot-Desc
+  iconPath: AO_9mm_WasteNot
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_9mm_WasteNot.aoFaction: "Aldecaldos"
+Ammo.AO_9mm_WasteNot.aoFreeShot: 0.15
+
+UIIcon.AO_9mm_WasteNot:
+  $type: UIIcon
+  atlasPartName: ao_9mm_wastenot
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_WasteNot:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-WasteNot
+  localizedDescription: LocKey#AO-Ammo-WasteNot-Desc
+  iconPath: AO_9mm_WasteNot
+  quality: Quality.Rare
+
+# 9mm Cut Off [Mox] (Epic)
+Ammo.AO_9mm_CutOff:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-9mm-CutOff
+  localizedDescription: LocKey#AO-Ammo-CutOff-Desc
+  iconPath: AO_9mm_CutOff
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_9mm_CutOff.aoFaction: "TheMox"
+Ammo.AO_9mm_CutOff.aoNonlethal: true
+Ammo.AO_9mm_CutOff.aoRankEffect: "BaseStatusEffect.Unconscious"
+Ammo.AO_9mm_CutOff.aoRankChance: 0.15
+Ammo.AO_9mm_CutOff.aoRankToughFrom: "Elite"
+Ammo.AO_9mm_CutOff.aoRankPlayer: "BaseStatusEffect.Knockdown"
+Ammo.AO_9mm_CutOff.aoRankTough: "BaseStatusEffect.ForceStagger"
+
+UIIcon.AO_9mm_CutOff:
+  $type: UIIcon
+  atlasPartName: ao_9mm_cutoff
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_CutOff:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-CutOff
+  localizedDescription: LocKey#AO-Ammo-CutOff-Desc
+  iconPath: AO_9mm_CutOff
+  quality: Quality.Epic
+
+# 9mm Last Call [Mox] (Epic)
+Ammo.AO_9mm_LastCall:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-9mm-LastCall
+  localizedDescription: LocKey#AO-Ammo-LastCall-Desc
+  iconPath: AO_9mm_LastCall
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_9mm_LastCall.aoFaction: "TheMox"
+Ammo.AO_9mm_LastCall.aoRankEffect: "BaseStatusEffect.Unconscious"
+Ammo.AO_9mm_LastCall.aoRankChance: 0.15
+Ammo.AO_9mm_LastCall.aoRankToughFrom: "Elite"
+Ammo.AO_9mm_LastCall.aoRankPlayer: "BaseStatusEffect.Knockdown"
+Ammo.AO_9mm_LastCall.aoRankTough: "BaseStatusEffect.ForceStagger"
+Ammo.AO_9mm_LastCall.aoRankDelay: 4.0
+
+UIIcon.AO_9mm_LastCall:
+  $type: UIIcon
+  atlasPartName: ao_9mm_lastcall
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_LastCall:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-LastCall
+  localizedDescription: LocKey#AO-Ammo-LastCall-Desc
+  iconPath: AO_9mm_LastCall
+  quality: Quality.Epic
+
+# 9mm Standard Issue [NCPD] (Uncommon)
+Ammo.AO_9mm_StandardIssue:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Uncommon
+  # Uncommon: x1 on the Uncommon's price, so x2 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 1
+  displayName: LocKey#AO-Ammo-9mm-StandardIssue
+  localizedDescription: LocKey#AO-Ammo-StandardIssue-Desc
+  iconPath: AO_9mm_StandardIssue
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_8, AO_Family_Power]
+
+Ammo.AO_9mm_StandardIssue.aoFaction: "NCPD"
+
+UIIcon.AO_9mm_StandardIssue:
+  $type: UIIcon
+  atlasPartName: ao_9mm_standardissue
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_StandardIssue:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-StandardIssue
+  localizedDescription: LocKey#AO-Ammo-StandardIssue-Desc
+  iconPath: AO_9mm_StandardIssue
+  quality: Quality.Uncommon
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxX
+      modifierType: Multiplier
+      value: 0.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxY
+      modifierType: Multiplier
+      value: 0.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxX
+      modifierType: Multiplier
+      value: 0.3
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 0.3
+
+# 9mm Resisting Arrest [NCPD] (Rare)
+Ammo.AO_9mm_ResistingArrest:
+  $base: Ammo.AO_9mm_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-9mm-ResistingArrest
+  localizedDescription: LocKey#AO-Ammo-ResistingArrest-Desc
+  iconPath: AO_9mm_ResistingArrest
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_9mm_ResistingArrest.aoFaction: "NCPD"
+Ammo.AO_9mm_ResistingArrest.aoEffects: ["BaseStatusEffect.Electrocuted"]
+Ammo.AO_9mm_ResistingArrest.aoEffectChances: [0.2]
+
+UIIcon.AO_9mm_ResistingArrest:
+  $type: UIIcon
+  atlasPartName: ao_9mm_resistingarrest
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_9mm_ResistingArrest:
+  $base: Items.AO_Feed_9mm_Ball
+  displayName: LocKey#AO-Ammo-9mm-ResistingArrest
+  localizedDescription: LocKey#AO-Ammo-ResistingArrest-Desc
+  iconPath: AO_9mm_ResistingArrest
+  quality: Quality.Rare
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1433,5 +1686,29 @@ Ammo.AO_9mm_FourthOfJuly.aoRecipe: ""
 Ammo.AO_9mm_MilSpec.aoScrapRounds: 90
 Ammo.AO_9mm_MilSpec.aoScrapGive: 1
 Ammo.AO_9mm_MilSpec.aoRecipe: ""
+
+Ammo.AO_9mm_DogtownTax.aoScrapRounds: 90
+Ammo.AO_9mm_DogtownTax.aoScrapGive: 1
+Ammo.AO_9mm_DogtownTax.aoRecipe: ""
+
+Ammo.AO_9mm_WasteNot.aoScrapRounds: 90
+Ammo.AO_9mm_WasteNot.aoScrapGive: 1
+Ammo.AO_9mm_WasteNot.aoRecipe: ""
+
+Ammo.AO_9mm_CutOff.aoScrapRounds: 90
+Ammo.AO_9mm_CutOff.aoScrapGive: 1
+Ammo.AO_9mm_CutOff.aoRecipe: ""
+
+Ammo.AO_9mm_LastCall.aoScrapRounds: 90
+Ammo.AO_9mm_LastCall.aoScrapGive: 1
+Ammo.AO_9mm_LastCall.aoRecipe: ""
+
+Ammo.AO_9mm_StandardIssue.aoScrapRounds: 90
+Ammo.AO_9mm_StandardIssue.aoScrapGive: 1
+Ammo.AO_9mm_StandardIssue.aoRecipe: ""
+
+Ammo.AO_9mm_ResistingArrest.aoScrapRounds: 90
+Ammo.AO_9mm_ResistingArrest.aoScrapGive: 1
+Ammo.AO_9mm_ResistingArrest.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

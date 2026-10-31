@@ -70,6 +70,6 @@ protected final func OnEnter(stateContext: ref<StateContext>, scriptInterface: r
   let weapon: ref<WeaponObject> = this.GetWeaponObject(scriptInterface);
   MuleKick.OnShot(player, weapon);
   if IsDefined(player) && IsDefined(weapon) {
-    FactionRounds.OnShot(player, AOData.LoadedAmmo(player, weapon));
+    FactionRounds.OnPlayerShot(player, weapon, AOData.LoadedAmmo(player, weapon));
   }
 }

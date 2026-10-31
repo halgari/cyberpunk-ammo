@@ -7,7 +7,7 @@ All the gangs get rounds: Barghest, Voodoo Boys, Wraiths, Aldecaldos and the Mox
 and NUSA, the factions V really meets. NUSA is the rare one. NetWatch, Afterlife mercs, Biotechnica,
 Zetatech and Trauma Team get none. They ship in the same release as the first two batches.
 
-That's 16 kinds and about 40 rounds, taking the mod from 200 to about 240. The atlas holds 300.
+That's 16 kinds and 37 rounds, taking the mod from 200 to 237. The atlas holds 300.
 
 ## Design rule
 
@@ -54,12 +54,12 @@ Numbers are starting points for the feel test.
 
 **Wraiths: dirty, and proud of it**
 
-- **Pocket Sand** (Uncommon; .45, 12ga)
+- **Pocket Sand** (Rare; .45, 12ga)
   - 20% chance per shot of `ShortBlind`, 2 seconds. Boss and MaxTac immune. On V:
     `AIQuickHackStatusEffect.HackBlind`.
   - Text: "Badlands grit packed behind the slug. Rude, and it works.\n\n20% chance per shot to blind
     the target for 2 seconds."
-- **The Clap** (Rare; light rail, heavy rail)
+- **The Clap** (Epic; light rail, heavy rail)
   - 20% chance per shot of `BaseContagionPoison`, which spreads between NPCs standing close (to
     confirm). On V: `PlayerPoisoned`.
   - Text: "Picked up in the desert and passed around freely. You'll want to get that looked at.\n\n20%
@@ -71,18 +71,18 @@ Numbers are starting points for the feel test.
   - 15% of shots don't use a round. An NPC's magazine runs the same way.
   - Text: "Handloaded at the back of a truck, and nobody spills a grain.\n\n15% of shots don't use a
     round."
-- **Speedloaders** (Rare; .45, 12mm)
+- **Speedloaders** (Epic; .45, 12mm)
   - Holstering the gun refills its magazine from what V carries (Shuffler's `MagazineAutoRefill`).
     NPCs don't holster mid-fight, so it does nothing for them.
   - Text: "Clan trick for when the raiders come twice.\n\nHolster the gun and the magazine refills
     itself."
 
-**The Mox: nobody touches the girls**
+**The Mox: Lizzie's house rules**
 
-- **Safe Word** (Rare; 9mm, .45, 12ga)
+- **Cut Off** (Epic; 9mm, .45, 12ga)
   - Non-lethal, and 15% chance per shot to knock the target out (`Unconscious`). Elite, Boss and
     MaxTac stagger instead. On V: a knockdown.
-  - Text: "You had your chance to use it.\n\nNon-lethal. 15% chance per shot to knock the target out."
+  - Text: "Bar rules. You've had enough.\n\nNon-lethal. 15% chance per shot to knock the target out."
 - **Last Call** (Epic; 9mm, 12mm)
   - 15% chance per shot to start a 4 second timer, then `Unconscious`. Vanilla's Neurotoxin stun lasts
     only a second, so this is a new record of the same shape. Elite, Boss and MaxTac stagger when it

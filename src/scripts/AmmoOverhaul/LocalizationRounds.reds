@@ -41,6 +41,18 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-FourthOfJuly-Desc"); ArrayPush(t, "Spotting rounds for squad fire. Your friends see what you hit.\n\nHits tag targets through walls for 5 seconds. 10% chance to set the target on fire.");
     ArrayPush(t, "AO-Ammo-9mm-MilSpec"); ArrayPush(t, "9mm Mil-Spec [Mil]");
     ArrayPush(t, "AO-Ammo-MilSpec-Desc"); ArrayPush(t, "Lot-tested, sealed, signed for. Every round does what the last one did.\n\nDamage varies only 5% either way. 25% armor penetration. -15% recoil.");
+    ArrayPush(t, "AO-Ammo-9mm-DogtownTax"); ArrayPush(t, "9mm Dogtown Tax [Barghest]");
+    ArrayPush(t, "AO-Ammo-DogtownTax-Desc"); ArrayPush(t, "Hansen takes his cut of everything. Now you do too.\n\nKills leave eddies on the body.");
+    ArrayPush(t, "AO-Ammo-9mm-WasteNot"); ArrayPush(t, "9mm Waste Not [Nomad]");
+    ArrayPush(t, "AO-Ammo-WasteNot-Desc"); ArrayPush(t, "Handloaded at the back of a truck, and nobody spills a grain.\n\n15% of shots don't use a round.");
+    ArrayPush(t, "AO-Ammo-9mm-CutOff"); ArrayPush(t, "9mm Cut Off [Mox]");
+    ArrayPush(t, "AO-Ammo-CutOff-Desc"); ArrayPush(t, "Bar rules. You've had enough.\n\nNon-lethal. 15% chance per shot to knock the target out.");
+    ArrayPush(t, "AO-Ammo-9mm-LastCall"); ArrayPush(t, "9mm Last Call [Mox]");
+    ArrayPush(t, "AO-Ammo-LastCall-Desc"); ArrayPush(t, "Something in the drink. They've got about four seconds left.\n\n15% chance per shot to drop the target unconscious 4 seconds later.");
+    ArrayPush(t, "AO-Ammo-9mm-StandardIssue"); ArrayPush(t, "9mm Standard Issue [NCPD]");
+    ArrayPush(t, "AO-Ammo-StandardIssue-Desc"); ArrayPush(t, "Lowest bidder, but they did get the barrels right.\n\nHold the trigger and shots stay tight instead of spreading.");
+    ArrayPush(t, "AO-Ammo-9mm-ResistingArrest"); ArrayPush(t, "9mm Resisting Arrest [NCPD]");
+    ArrayPush(t, "AO-Ammo-ResistingArrest-Desc"); ArrayPush(t, "Taser payload in a duty round. Stop moving.\n\n20% chance per shot to shock the target.");
     ArrayPush(t, "AO-Ammo-45-SteelCore"); ArrayPush(t, ".45 Steel-Core");
     ArrayPush(t, "AO-Ammo-45-Incendiary"); ArrayPush(t, ".45 Incendiary");
     ArrayPush(t, "AO-Ammo-Incendiary-Desc"); ArrayPush(t, "A pinch of incendiary mix in the tip. It flashes when it hits and can set the target alight.\n\n15% chance to set the target on fire. A quarter of the damage is fire damage. -5% damage.");
@@ -70,6 +82,17 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-45-SantaMuerte"); ArrayPush(t, ".45 Santa Muerte [Val]");
     ArrayPush(t, "AO-Ammo-SantaMuerte-Desc"); ArrayPush(t, "Blessed before they're loaded. La Santisima takes who she takes.\n\n+50% headshot damage. Headshots set the target on fire.");
     ArrayPush(t, "AO-Ammo-45-Surplus"); ArrayPush(t, ".45 Surplus [6th]");
+    ArrayPush(t, "AO-Ammo-45-BadJuju"); ArrayPush(t, ".45 Bad Juju [VDB]");
+    ArrayPush(t, "AO-Ammo-BadJuju-Desc"); ArrayPush(t, "Something rides in on the round and it isn't friendly.\n\n15% chance per shot to turn the target on its friends for 20 seconds.");
+    ArrayPush(t, "AO-Ammo-45-PocketSand"); ArrayPush(t, ".45 Pocket Sand [Wraith]");
+    ArrayPush(t, "AO-Ammo-PocketSand-Desc"); ArrayPush(t, "Badlands grit packed behind the slug. Rude, and it works.\n\n20% chance per shot to blind the target for 2 seconds.");
+    ArrayPush(t, "AO-Ammo-45-WasteNot"); ArrayPush(t, ".45 Waste Not [Nomad]");
+    ArrayPush(t, "AO-Ammo-45-Speedloaders"); ArrayPush(t, ".45 Speedloaders [Nomad]");
+    ArrayPush(t, "AO-Ammo-Speedloaders-Desc"); ArrayPush(t, "Clan trick for when the raiders come twice.\n\nDraw the gun and the magazine's full, however you left it.");
+    ArrayPush(t, "AO-Ammo-45-CutOff"); ArrayPush(t, ".45 Cut Off [Mox]");
+    ArrayPush(t, "AO-Ammo-45-StandardIssue"); ArrayPush(t, ".45 Standard Issue [NCPD]");
+    ArrayPush(t, "AO-Ammo-45-Deniable"); ArrayPush(t, ".45 Deniable [NUSA]");
+    ArrayPush(t, "AO-Ammo-Deniable-Desc"); ArrayPush(t, "Lot numbers filed off at the factory.\n\nSilent kills. Double damage on targets who haven't seen you.");
     ArrayPush(t, "AO-Ammo-12mm-SteelCore"); ArrayPush(t, "12mm Steel-Core");
     ArrayPush(t, "AO-Ammo-12mm-Incendiary"); ArrayPush(t, "12mm Incendiary");
     ArrayPush(t, "AO-Ammo-12mm-Rubber"); ArrayPush(t, "12mm Rubber");
@@ -94,6 +117,9 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-ProteinLoads-Desc"); ArrayPush(t, "Big, hot loads straight from the Animals' gym. Every kill gets you pumped.\n\nKills give +6% move speed and 10% faster reloads for 10 seconds, stacking 3 times.");
     ArrayPush(t, "AO-Ammo-12mm-LegDay"); ArrayPush(t, "12mm Leg Day [Animal]");
     ArrayPush(t, "AO-Ammo-LegDay-Desc"); ArrayPush(t, "Nobody walks right after leg day. They stay put and think about what they've done.\n\n20% chance per shot to cripple the target's legs. +80% recoil.");
+    ArrayPush(t, "AO-Ammo-12mm-WasteNot"); ArrayPush(t, "12mm Waste Not [Nomad]");
+    ArrayPush(t, "AO-Ammo-12mm-Speedloaders"); ArrayPush(t, "12mm Speedloaders [Nomad]");
+    ArrayPush(t, "AO-Ammo-12mm-LastCall"); ArrayPush(t, "12mm Last Call [Mox]");
     ArrayPush(t, "AO-Ammo-556-SteelCore"); ArrayPush(t, "5.56 Steel-Core");
     ArrayPush(t, "AO-Ammo-556-Incendiary"); ArrayPush(t, "5.56 Incendiary");
     ArrayPush(t, "AO-Ammo-556-Subsonic"); ArrayPush(t, "5.56 Subsonic");
@@ -105,6 +131,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-556-CookOff"); ArrayPush(t, "5.56 Cook-off");
     ArrayPush(t, "AO-Ammo-556-Redliners"); ArrayPush(t, "5.56 Redliners [Mael]");
     ArrayPush(t, "AO-Ammo-556-Kata"); ArrayPush(t, "5.56 Kata [Ara]");
+    ArrayPush(t, "AO-Ammo-556-DogtownTax"); ArrayPush(t, "5.56 Dogtown Tax [Barghest]");
     ArrayPush(t, "AO-Ammo-762-SteelCore"); ArrayPush(t, "7.62 Steel-Core");
     ArrayPush(t, "AO-Ammo-762-Incendiary"); ArrayPush(t, "7.62 Incendiary");
     ArrayPush(t, "AO-Ammo-762-BallisticTip"); ArrayPush(t, "7.62 Ballistic Tip");
@@ -124,6 +151,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-762-MilSpec"); ArrayPush(t, "7.62 Mil-Spec [Mil]");
     ArrayPush(t, "AO-Ammo-762-CeaseAndDesist"); ArrayPush(t, "7.62 Cease and Desist [Mil]");
     ArrayPush(t, "AO-Ammo-CeaseAndDesist-Desc"); ArrayPush(t, "Militech Legal's preferred wording. Whoever takes one loses their footing.\n\n30% chance per shot to stagger the target. 50% armor penetration. -10% damage.");
+    ArrayPush(t, "AO-Ammo-762-ChimeraScrap"); ArrayPush(t, "7.62 Chimera Scrap [Barghest]");
+    ArrayPush(t, "AO-Ammo-ChimeraScrap-Desc"); ArrayPush(t, "Cut from what's left of the mech. Still angry about it.\n\nBullets explode on impact.");
     ArrayPush(t, "AO-Ammo-127-SteelCore"); ArrayPush(t, "12.7 Steel-Core");
     ArrayPush(t, "AO-Ammo-127-Incendiary"); ArrayPush(t, "12.7 Incendiary");
     ArrayPush(t, "AO-Ammo-127-BallisticTip"); ArrayPush(t, "12.7 Ballistic Tip");
@@ -135,6 +164,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-127-HEI"); ArrayPush(t, "12.7 HEI");
     ArrayPush(t, "AO-Ammo-HEI-Desc"); ArrayPush(t, "High-explosive incendiary. A small charge in the nose goes off on impact. It tears up drones, mechs and cars, and can set people alight. No splash.\n\n+50% damage against drones, mechs and vehicles. 20% chance to set the target on fire.");
     ArrayPush(t, "AO-Ammo-127-Gatecrasher"); ArrayPush(t, "12.7 Gatecrasher");
+    ArrayPush(t, "AO-Ammo-127-BlackBudget"); ArrayPush(t, "12.7 Black Budget [NUSA]");
+    ArrayPush(t, "AO-Ammo-BlackBudget-Desc"); ArrayPush(t, "Doesn't appear on any invoice.\n\n30% chance per shot to badly poison the target.");
     ArrayPush(t, "AO-Ammo-12ga-Flechette"); ArrayPush(t, "Flechettes");
     ArrayPush(t, "AO-Ammo-Flechette-Desc"); ArrayPush(t, "Steel darts instead of shot. They keep together and keep going, but each one hits lighter.\n\nTighter spread. Double range. -15% damage.");
     ArrayPush(t, "AO-Ammo-12ga-Beanbag"); ArrayPush(t, "Beanbags");
@@ -151,6 +182,9 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-PumpNDump-Desc"); ArrayPush(t, "Greased hulls that slide in as fast as you can pump. Finishes quick, leaves a mess, and your wallet feels used afterward.\n\nOne slug per shot with the whole shot's damage. Tight spread. 2.5 times the fire rate. Burns through ammo fast.");
     ArrayPush(t, "AO-Ammo-12ga-MeatGrinders"); ArrayPush(t, "Meat-grinders [Mael]");
     ArrayPush(t, "AO-Ammo-12ga-CeaseAndDesist"); ArrayPush(t, "Cease and Desist [Mil]");
+    ArrayPush(t, "AO-Ammo-12ga-PocketSand"); ArrayPush(t, "Pocket Sand [Wraith]");
+    ArrayPush(t, "AO-Ammo-12ga-CutOff"); ArrayPush(t, "Cut Off [Mox]");
+    ArrayPush(t, "AO-Ammo-12ga-ResistingArrest"); ArrayPush(t, "Resisting Arrest [NCPD]");
     ArrayPush(t, "AO-Ammo-4ga-Flechette"); ArrayPush(t, "4ga Flechettes");
     ArrayPush(t, "AO-Ammo-4ga-Riot"); ArrayPush(t, "4ga Riot");
     ArrayPush(t, "AO-Ammo-Riot-Desc"); ArrayPush(t, "A big rubber baton round for the Carnage. Flattens whoever it hits, and they usually get back up later.\n\nFires one projectile with the whole shot's damage. Knocks targets down. Non-lethal: targets go down unconscious instead of dying. -50% damage.");
@@ -183,6 +217,13 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-5mm-Kata"); ArrayPush(t, "5mm Kata [Ara]");
     ArrayPush(t, "AO-Ammo-5mm-MilSpec"); ArrayPush(t, "5mm Mil-Spec [Mil]");
     ArrayPush(t, "AO-Ammo-5mm-ProteinLoads"); ArrayPush(t, "5mm Protein Loads [Animal]");
+    ArrayPush(t, "AO-Ammo-5mm-ChimeraScrap"); ArrayPush(t, "5mm Chimera Scrap [Barghest]");
+    ArrayPush(t, "AO-Ammo-5mm-BadJuju"); ArrayPush(t, "5mm Bad Juju [VDB]");
+    ArrayPush(t, "AO-Ammo-5mm-CollectCall"); ArrayPush(t, "5mm Collect Call [VDB]");
+    ArrayPush(t, "AO-Ammo-CollectCall-Desc"); ArrayPush(t, "It's for you. It's from the other side of the Blackwall.\n\n10% chance per shot to kill the target outright. Please hold.");
+    ArrayPush(t, "AO-Ammo-5mm-TheClap"); ArrayPush(t, "5mm The Clap [Wraith]");
+    ArrayPush(t, "AO-Ammo-TheClap-Desc"); ArrayPush(t, "Picked up in the desert and passed around freely. You'll want to get that looked at.\n\n20% chance per shot to poison the target. It spreads to whoever's close.");
+    ArrayPush(t, "AO-Ammo-5mm-Deniable"); ArrayPush(t, "5mm Deniable [NUSA]");
     ArrayPush(t, "AO-Ammo-Heavy-Ferro"); ArrayPush(t, "Heavy Ferro");
     ArrayPush(t, "AO-Ammo-Heavy-SplitSlug"); ArrayPush(t, "Heavy Split Slugs");
     ArrayPush(t, "AO-Ammo-Heavy-Feedback"); ArrayPush(t, "Heavy Feedback");
@@ -194,6 +235,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-Heavy-ChromeCookers"); ArrayPush(t, "Heavy Chrome-cookers [Mael]");
     ArrayPush(t, "AO-Ammo-Heavy-ProteinLoads"); ArrayPush(t, "Heavy Protein Loads [Animal]");
     ArrayPush(t, "AO-Ammo-Heavy-LegDay"); ArrayPush(t, "Heavy Leg Day [Animal]");
+    ArrayPush(t, "AO-Ammo-Heavy-TheClap"); ArrayPush(t, "Heavy The Clap [Wraith]");
+    ArrayPush(t, "AO-Ammo-Heavy-BlackBudget"); ArrayPush(t, "Heavy Black Budget [NUSA]");
     ArrayPush(t, "AO-Ammo-10mm-EMPPayload"); ArrayPush(t, "10mm EMP Payload");
     ArrayPush(t, "AO-Ammo-EMPPayload-Desc"); ArrayPush(t, "Smart rounds with an EMP charge in place of some of the explosive.\n\n25% chance of an EMP. 30% of the damage is electrical damage. -10% damage.");
     ArrayPush(t, "AO-Ammo-10mm-FirePayload"); ArrayPush(t, "10mm Incendiary Payload");
@@ -213,6 +256,13 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-10mm-Kansatsu"); ArrayPush(t, "10mm Kansatsu [Ara]");
     ArrayPush(t, "AO-Ammo-Kansatsu-Desc"); ArrayPush(t, "Smart rounds with a tag chip behind the seeker. Whatever they hit stays on your optics, and the gun finds its lock quicker.\n\nTargets hit show through walls for 5 seconds. Locks on twice as fast.");
     ArrayPush(t, "AO-Ammo-10mm-FourthOfJuly"); ArrayPush(t, "10mm Fourth of July [6th]");
+    ArrayPush(t, "AO-Ammo-10mm-BadJuju"); ArrayPush(t, "10mm Bad Juju [VDB]");
+    ArrayPush(t, "AO-Ammo-10mm-CollectCall"); ArrayPush(t, "10mm Collect Call [VDB]");
+    ArrayPush(t, "AO-Ammo-10mm-WideAngle"); ArrayPush(t, "10mm Wide Angle [Kang]");
+    ArrayPush(t, "AO-Ammo-WideAngle-Desc"); ArrayPush(t, "Seeker with a wider eye.\n\nLocks on to targets much further from the crosshair.");
+    ArrayPush(t, "AO-Ammo-10mm-SecondOpinion"); ArrayPush(t, "10mm Second Opinion [Kang]");
+    ArrayPush(t, "AO-Ammo-SecondOpinion-Desc"); ArrayPush(t, "The round checks with its neighbours before it commits.\n\nLocks on to 2 more targets at once.");
+    ArrayPush(t, "AO-Ammo-10mm-Deniable"); ArrayPush(t, "10mm Deniable [NUSA]");
     ArrayPush(t, "AO-Ammo-20mm-EMPPayload"); ArrayPush(t, "20mm EMP Payload");
     ArrayPush(t, "AO-Ammo-20mm-FirePayload"); ArrayPush(t, "20mm Incendiary Payload");
     ArrayPush(t, "AO-Ammo-20mm-ChemPayload"); ArrayPush(t, "20mm Chem Payload");
@@ -222,6 +272,8 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-20mm-ShapedCharge"); ArrayPush(t, "20mm Shaped Charge");
     ArrayPush(t, "AO-Ammo-20mm-Lockout"); ArrayPush(t, "20mm Lockout");
     ArrayPush(t, "AO-Ammo-20mm-Kansatsu"); ArrayPush(t, "20mm Kansatsu [Ara]");
+    ArrayPush(t, "AO-Ammo-20mm-WideAngle"); ArrayPush(t, "20mm Wide Angle [Kang]");
+    ArrayPush(t, "AO-Ammo-20mm-SecondOpinion"); ArrayPush(t, "20mm Second Opinion [Kang]");
     ArrayPush(t, "AO-Ammo-25mm-EMPPayload"); ArrayPush(t, "25mm EMP Payload");
     ArrayPush(t, "AO-Ammo-25mm-FirePayload"); ArrayPush(t, "25mm Incendiary Payload");
     ArrayPush(t, "AO-Ammo-25mm-ChemPayload"); ArrayPush(t, "25mm Chem Payload");
@@ -231,6 +283,7 @@ public abstract class AORoundTexts {
     ArrayPush(t, "AO-Ammo-25mm-ShapedCharge"); ArrayPush(t, "25mm Shaped Charge");
     ArrayPush(t, "AO-Ammo-25mm-Lockout"); ArrayPush(t, "25mm Lockout");
     ArrayPush(t, "AO-Ammo-25mm-Kansatsu"); ArrayPush(t, "25mm Kansatsu [Ara]");
+    ArrayPush(t, "AO-Ammo-25mm-SecondOpinion"); ArrayPush(t, "25mm Second Opinion [Kang]");
     return t;
   }
 }
