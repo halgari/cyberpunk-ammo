@@ -196,7 +196,7 @@ public abstract class FactionRounds {
     return AOData.RankRecord(ammo, tough ? "aoRankTough" : "aoRankEffect");
   }
 
-  private static func Guarded(target: ref<GameObject>) -> Bool {
+  public static func Guarded(target: ref<GameObject>) -> Bool {
     let gods: ref<GodModeSystem> = GameInstance.GetGodModeSystem(target.GetGame());
     let id: EntityID = target.GetEntityID();
     return gods.HasGodMode(id, gameGodModeType.Immortal) || gods.HasGodMode(id, gameGodModeType.Invulnerable);
@@ -269,7 +269,7 @@ public abstract class FactionRounds {
         if delay > 0.0 {
           let late: ref<LateEffectCallback> = new LateEffectCallback();
           late.target = puppet;
-          late.effect = effect;
+          late.ammo = ammo;
           GameInstance.GetDelaySystem(puppet.GetGame()).DelayCallback(late, delay, true);
         } else {
           attackData.AddStatusEffect(effect, 1.0);
@@ -324,14 +324,20 @@ public class WasteNotCallback extends DelayCallback {
   }
 }
 
-// Last Call's effect, once the drink has worked. Nothing for a target dead by then.
+// Last Call's effect, once the drink has worked. Nothing for a target dead by then. Worked out
+// now, not at the hit: a quest can take the target in between.
 public class LateEffectCallback extends DelayCallback {
   public let target: wref<ScriptedPuppet>;
-  public let effect: TweakDBID;
+  public let ammo: TweakDBID;
 
   public func Call() -> Void {
-    if IsDefined(this.target) && !this.target.IsDead() {
-      StatusEffectHelper.ApplyStatusEffect(this.target, this.effect);
+    let puppet: ref<ScriptedPuppet> = this.target;
+    if !IsDefined(puppet) || puppet.IsDead() {
+      return;
+    }
+    let effect: TweakDBID = FactionRounds.RankResult(this.ammo, MuleKick.Rarity(puppet), puppet.IsMechanical(), FactionRounds.Guarded(puppet));
+    if TDBID.IsValid(effect) {
+      StatusEffectHelper.ApplyStatusEffect(puppet, effect);
     }
   }
 }

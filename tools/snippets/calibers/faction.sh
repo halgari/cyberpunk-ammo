@@ -613,6 +613,14 @@ lastcall() {
   sleep 6
   is "out 4 seconds later" "$(lua "return RIG.npc():IsDefeated()")" true
   despawn
+  vs $NOV Items.AO_Feed_12mm_LastCall Ammo.AO_12mm_LastCall Character.AO_Test_Plain_Unity
+  frail "RIG.npc()" 300.0
+  shoot "" 1
+  lua "Game.GetGodModeSystem():AddGodMode(RIG.npc():GetEntityID(), gameGodModeType.Immortal, CName.new('AO_Test')); return 1" >/dev/null
+  sleep 6
+  is "a quest takes the target before it lands: not out" "$(lua "return RIG.npc():IsDefeated()")" false
+  [[ $(lua "return RIG.effects('NPC', 'BaseStatusEffect.ForceStagger')") -ge 1 ]] && pass "it staggers instead" || fail "no stagger on the guarded NPC"
+  despawn
   carrier Ammo.AO_12mm_LastCall Character.AO_Test_Mox_Nova $NOV
   npcshoot 1 6
   sleep 5

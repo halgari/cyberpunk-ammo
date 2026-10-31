@@ -57,12 +57,12 @@ Which gun is worth using depends partly on what ammo you have for it. A 9mm you'
 [*][color=#b0b0b0][b]Common[/b][/color]: the caliber's plain round. Works like the game's ammo did, with no bonuses.
 [*][color=#3fbf5f][b]Uncommon[/b][/color]: two per caliber. Small trades: more damage for less armor pen, faster charge for less punch.
 [*][color=#3fa0ff][b]Rare[/b][/color]: specialist loads. Fire, ricochets, non-lethal, quiet, armor piercing.
-[*][color=#b04fff][b]Epic[/b][/color]: Penetrators, toxin cores, thermite, EMP, match grade. Loot only; the one exception is a gun shop Downtown that sometimes has a small stack of Shinobi.
-[*][color=#e8a33c][b]Legendary[/b][/color]: at least one per caliber, each doing something no other round does. Carried by elite enemies, bosses and MaxTac, and now and then found in a stash that already holds Epic rounds. Not sold and not craftable; they come in small stacks.
+[*][color=#b04fff][b]Epic[/b][/color]: Penetrators, toxin cores, thermite, EMP, match grade. Loot only, except that a gun shop Downtown sometimes has a small stack of Shinobi and the Mox's gun shop in Kabuki sometimes has their rounds.
+[*][color=#e8a33c][b]Legendary[/b][/color]: at least one per caliber, each doing something no other round does. Carried by elite enemies, bosses and MaxTac, and on rare occasions gang officers, and now and then found in a stash that already holds Epic rounds. Not sold and not craftable; they come in small stacks.
 [/list]
 
 [size=5][b][color=#2ad4ff]Legendary rounds[/color][/b][/size]
-There are 14 Legendary rounds to find. Elite enemies, bosses and MaxTac sometimes carry them, and a stash holding Epic rounds now and then has a small stack. No shop sells them and they can't be crafted. Two of them:
+There are 16 Legendary rounds to find. Elite enemies, bosses and MaxTac sometimes carry them, gang officers once in a while, and a stash holding Epic rounds now and then has a small stack. No shop sells them and they can't be crafted. Two of them:
 [list]
 [*][color=#e8a33c][b]Kebab[/b][/color] (light and heavy rail): a charged shot goes through every body and wall in its line with no damage lost.
 [*][color=#e8a33c][b]Pump N Dump[/b][/color] (12-gauge): one slug per shot, greased so the gun cycles at 2.5 times the speed. Burns through ammo fast.
