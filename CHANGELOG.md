@@ -3,7 +3,7 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
-## 0.6.0
+## 0.9.0
 
 - Quickhack rounds: 117 new rounds, 354 in all. Smart rounds in 10mm, 20mm and 25mm that carry a
   quickhack, with a chance per shot to land it with no upload and no RAM: Reboot Optics, Sonic Shock,
