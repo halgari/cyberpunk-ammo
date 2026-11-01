@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Quickhack rounds on live hits (spec docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md,
-# "Testing"), one check per mechanism. Parts: effects linked overheat ranks guarded cloud grenade blastv rolls drop quietdrop nosheet onv shops known craft scrap (default all):
+# "Testing"), one check per mechanism. Parts: effects linked overheat ranks guarded cloud grenade blastv npcblast rolls cap drop quietdrop nosheet onv shops known craft scrap (default all):
 #   tools/linux/game-lock.sh tools/snippets/calibers/quickhack.sh [part ...]
 # Draws guns and spawns NPCs: not while the user plays. Exits 1 on any FAIL.
 source "$(dirname "$0")/npc-lib.sh"
 source tools/linux/common.sh
-parts=("$@"); (( ${#parts[@]} )) || parts=(effects linked overheat ranks guarded cloud grenade blastv rolls drop quietdrop nosheet onv shops known craft scrap)
+parts=("$@"); (( ${#parts[@]} )) || parts=(effects linked overheat ranks guarded cloud grenade blastv npcblast rolls cap drop quietdrop nosheet onv shops known craft scrap)
 SYS="Game.GetScriptableSystemsContainer():Get('AmmoOverhaul.AmmoFeedSystem')"
 YUK=Items.Preset_Yukimura_Default; PLAIN=Character.AO_Test_Plain_Unity
 pass() { echo "PASS $*"; }
@@ -99,8 +99,15 @@ Game.GetStatsSystem():AddModifier(Game.GetPlayer():GetEntityID(), AO_LINK); retu
     [[ $r == *state=16* ]] && break; sleep 0.1
   done
   [[ $r == *state=16* ]] && pass "the Yukimura locks" || fail "no lock: $r"
-  shoot "" 1
-  local n; n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.QuickHackBlindLvl1')")
+  local n
+  # The rig puts its god mode back whenever it sets up again, and a guarded NPC gets no hack.
+  for _ in 1 2 3 4; do
+    lua "Game.GetGodModeSystem():ClearGodMode(RIG.npc():GetEntityID(), CName.new('aorig')); return 1" >/dev/null
+    shoot "" 1
+    sleep 1
+    n=$(lua "return RIG.effects('NPC', 'BaseStatusEffect.QuickHackBlindLvl1')")
+    [[ $n -ge 1 ]] && break
+  done
   [[ $n -ge 1 ]] && pass "a locked shot lands the hack" || fail "a locked shot landed no hack"
   lua "Game.GetStatsSystem():RemoveModifier(Game.GetPlayer():GetEntityID(), AO_LINK); return 1" >/dev/null
   despawn
@@ -144,15 +151,20 @@ guarded() {
 
 # --- cloud: Contagion reaches a neighbour, not V, not a quest NPC, and doesn't chain ---------------
 cloud() {
-  local poison=ContagionPoisonLvl2
-  vs HackContagion2
-  frail "RIG.npc()" 100.0
-  neighbour AmmoOverhaul.HackCloud2
-  local got=false
-  noblasts
-  for _ in 1 2 3 4 5 6 7 8; do
-    lua "RIG.clear(); return 1" >/dev/null; fired; sleep 0.4
-    [[ $(has "$NB" $poison) == true ]] && { got=true; break; }
+  local poison=ContagionPoisonLvl2 got=false
+  # The rig can stand the pair with no clear shot, and the first neighbour of a run can sit out a blast
+  # for no reason found (no god mode, 7 m off), so a miss is set up again: 3 misses in a row fail.
+  for _ in 1 2 3; do
+    vs HackContagion2
+    frail "RIG.npc()" 100.0
+    neighbour AmmoOverhaul.HackCloud2
+    noblasts
+    for _ in 1 2 3 4 5 6 7 8; do
+      lua "RIG.clear(); return 1" >/dev/null; fired; sleep 0.4
+      [[ $(has "$NB" $poison) == true ]] && { got=true; break; }
+    done
+    [[ $got == true ]] && break
+    despawn
   done
   is "Contagion reaches the neighbour" $got true
   is "the cloud spares V" "$(has "Game.GetPlayer()" $poison)" false
@@ -178,27 +190,68 @@ cloud() {
 
 # --- grenade: the blast hurts the target and whoever's by it ---------------------------------------
 grenade() {
+  local a b c
+  # A neighbour can sit out every blast (see cloud), so a miss is set up again.
+  for _ in 1 2 3; do
+    vs HackGrenade3
+    tanky "RIG.npc()"
+    neighbour AmmoOverhaul.HackBlast
+    tanky "$NB"
+    a=$(health "$NB"); noblasts
+    # A shot can land without hurting anything and make no blast, so it's fired until one goes off.
+    # The rig puts its god mode back whenever it sets up again, and a guarded NPC gets no hack.
+    for _ in 1 2 3 4; do
+      lua "Game.GetGodModeSystem():ClearGodMode(RIG.npc():GetEntityID(), CName.new('aorig')); return 1" >/dev/null
+      shoot "" 1
+      sleep 1
+      (( $(blasts) > 0 )) && break
+    done
+    for _ in $(seq 16); do
+      b=$(health "$NB"); c=$(health "RIG.npc()")
+      [[ -n $b && -n $c ]] && below "$b" 90 && below "$c" 90 && break
+      sleep 0.5
+    done
+    [[ -n $b ]] && below "$b" 90 && break
+    despawn
+  done
+  echo "  target to $c, neighbour $a to $b; blasts $(blasts), hits $(lua "return #RIG.ratios('V')")"
+  below "$c" 90 && pass "Detonate Grenade's blast hurts the target ($c)" || fail "no blast on the target: $c"
+  [[ -n $b ]] && below "$b" "$a" && pass "it reaches the neighbour" || fail "no blast damage on the neighbour: $a to $b"
+  despawn
+  lua "TweakDB:SetFlat('AmmoOverhaul.HackBlast.range', 3.0); return 1" >/dev/null
+  rankchance Ammo.AO_S10_HackGrenade3 0.2
+}
+
+# --- npcblast: an NPC's blast never reaches V, and still goes off with V clear of it -----------------
+npcblast() {
   vs HackGrenade3
   tanky "RIG.npc()"
   neighbour AmmoOverhaul.HackBlast
   tanky "$NB"
-  local a b c; a=$(health "$NB"); noblasts
-  # A shot can land without hurting anything and make no blast, so it's fired until one goes off.
-  for _ in 1 2 3 4; do
-    shoot "" 1
-    sleep 1
-    (( $(blasts) > 0 )) && break
-  done
-  for _ in $(seq 16); do
-    b=$(health "$NB"); c=$(health "RIG.npc()")
-    below "$b" 90 && below "$c" 90 && break
-    sleep 0.5
-  done
-  echo "  target to $c, neighbour $a to $b; blasts $(blasts), hits $(lua "return #RIG.ratios('V')")"
-  below "$c" 90 && pass "Detonate Grenade's blast hurts the target ($c)" || fail "no blast on the target: $c"
-  below "$b" "$a" && pass "it reaches the neighbour" || fail "no blast damage on the neighbour: $a to $b"
-  despawn
+  lua "local o = RIG.npc(); o:SetIndividualTimeDilation(CName.new('aorig'), 0.0001, 9999.0, CName.new(''), CName.new('')); return 1" >/dev/null
+  sleep 0.5
+  lua "local g, p, k = Game.GetGodModeSystem(), Game.GetPlayer():GetEntityID(), GetMod('AOTestKit')
+if AO_KITGOD == nil then AO_KITGOD = k.state.godMode end
+k.state.godMode = false
+for _, t in ipairs({'AO_TestKit', 'AO_Test'}) do g:RemoveGodMode(p, gameGodModeType.Invulnerable, CName.new(t)) end return 1" >/dev/null
+  frail "Game.GetPlayer()" 100.0
+  sleep 0.5
+  # An NPC's blast never hurts the NPC that made it, so it's set off on the neighbour.
+  local blast="$SYS:DebugHackBlast(RIG.npc(), $NB, 'AmmoOverhaul.HackBlast'); return 1"
+  # V inside the blast: nothing goes off.
+  lua "TweakDB:SetFlat('AmmoOverhaul.HackBlast.range', 30.0); return 1" >/dev/null
+  lua "$blast" >/dev/null; sleep 3
+  is "an NPC's blast leaves V alone" "$(health "Game.GetPlayer()")" 100.0
+  # V well clear of it: it goes off. It's counted, as two plain NPCs don't hurt each other.
   lua "TweakDB:SetFlat('AmmoOverhaul.HackBlast.range', 3.0); return 1" >/dev/null
+  local a b; a=$(health "$NB"); noblasts
+  lua "$blast" >/dev/null; sleep 3
+  b=$(health "$NB")
+  echo "  neighbour $a to $b, V $(lua "return string.format('%.1f', Vector4.Distance(Game.GetPlayer():GetWorldPosition(), $NB:GetWorldPosition()))") m away, blasts $(blasts)"
+  (( $(blasts) == 1 )) && pass "with V clear it goes off" || fail "no blast with V clear"
+  despawn
+  lua "local k = GetMod('AOTestKit'); if AO_KITGOD ~= nil then k.state.godMode = AO_KITGOD; AO_KITGOD = nil end
+if k.state.godMode then Game.GetGodModeSystem():AddGodMode(Game.GetPlayer():GetEntityID(), gameGodModeType.Invulnerable, CName.new('AO_TestKit')) end return 1" >/dev/null
   rankchance Ammo.AO_S10_HackGrenade3 0.2
 }
 
@@ -220,32 +273,37 @@ rolls() {
 # V is at 12 m, inside the 20 m the neighbour's helper gives the blast. No god mode on V, or the hit
 # would show nothing either way.
 blastv() {
-  vs HackGrenade3
-  tanky "RIG.npc()"
-  neighbour AmmoOverhaul.HackBlast
-  # Immortal stays, so V can't die to a failure; a hit still takes health. Invulnerable would hide it.
-  lua "local g, p, k = Game.GetGodModeSystem(), Game.GetPlayer():GetEntityID(), GetMod('AOTestKit')
+  local v near own
+  for _ in 1 2 3; do
+    vs HackGrenade3
+    tanky "RIG.npc()"
+    neighbour AmmoOverhaul.HackBlast
+    # Immortal stays, so V can't die to a failure; a hit still takes health. Invulnerable would hide it.
+    lua "local g, p, k = Game.GetGodModeSystem(), Game.GetPlayer():GetEntityID(), GetMod('AOTestKit')
 if AO_KITGOD == nil then AO_KITGOD = k.state.godMode end
 k.state.godMode = false
 for _, t in ipairs({'AO_TestKit', 'AO_Test'}) do g:RemoveGodMode(p, gameGodModeType.Invulnerable, CName.new(t)) end return 1" >/dev/null
-  frail "Game.GetPlayer()" 100.0
-  # Frozen, or the NPC shoots V and can kill it: frozen NPCs still take hits.
-  lua "RIG.npc():SetIndividualTimeDilation(CName.new('aorig'), 0.0001, 9999.0, CName.new(''), CName.new('')); return 1" >/dev/null
-  sleep 0.5
-  local v near own; noblasts
-  for _ in 1 2 3 4; do
-    shoot "" 1
-    sleep 1.5
-    (( $(blasts) > 0 )) && break
-  done
-  # The blast lands a moment after the trail notes it.
-  for _ in $(seq 16); do
-    near=$(health "$NB")
-    below "$near" 90 && break
+    frail "Game.GetPlayer()" 100.0
+    # Frozen, or the NPC shoots V and can kill it: frozen NPCs still take hits.
+    lua "RIG.npc():SetIndividualTimeDilation(CName.new('aorig'), 0.0001, 9999.0, CName.new(''), CName.new('')); return 1" >/dev/null
     sleep 0.5
+    noblasts
+    for _ in 1 2 3 4; do
+      shoot "" 1
+      sleep 1.5
+      (( $(blasts) > 0 )) && break
+    done
+    # The blast lands a moment after the trail notes it.
+    for _ in $(seq 16); do
+      near=$(health "$NB")
+      below "$near" 90 && break
+      sleep 0.5
+    done
+    sleep 1
+    v=$(health "Game.GetPlayer()")
+    [[ -n $near ]] && below "$near" 90 && break
+    despawn
   done
-  sleep 1
-  v=$(health "Game.GetPlayer()")
   own=$(lua "local n = 0 for _, h in ipairs(RIG.hits) do if h.onV and h.byV then n = n + 1 end end return n")
   echo "  neighbour '$near', target $(health "RIG.npc()"), gap $(lua "return string.format('%.1f', Vector4.Distance(RIG.npc():GetWorldPosition(), $NB:GetWorldPosition()))"), V $v"
   [[ -n $near ]] && below "$near" 90 && pass "the blast went off ($near)" || fail "no blast"
@@ -345,9 +403,16 @@ shops() {
   [[ $n =~ _Hack[A-Za-z]*3= ]] && pass "a netrunner vendor lists Epic" || fail "netrunner vendor: ${n:0:80}"
   [[ ! $n =~ _Hack[A-Za-z]*4= ]] && pass "no Legendary" || fail "netrunner vendor sells Legendary"
   is "a ripperdoc lists none" "$r" ""
+  is "a shop doesn't list one round twice" "$(lua "return $SYS:DebugHackDupes('Vendors.wat_nid_gunsmith_01', 2000)")" 0
   [[ $g$n != *'!'* ]] && pass "every stack can be bought" || fail "unavailable stacks: ${n:0:80}"
   lua "TweakDB:SetFlat('AmmoOverhaul.hackShopChance', 0.5); return 1" >/dev/null
 }
+# --- cap: a Legendary hack round leaves a small stack, like any Legendary ----------------------------
+cap() {
+  is "a Legendary hack stack of 90 leaves 23" "$(lua "return $SYS:DebugLootCap('Ammo.AO_S10_HackOptics4', 90)")" 23
+  is "an Epic one leaves all 90" "$(lua "return $SYS:DebugLootCap('Ammo.AO_S10_HackOptics3', 90)")" 90
+}
+
 # --- crafting: the quickhack is an ingredient, and only one goes per batch --------------------------------
 CH='local p, ts = Game.GetPlayer(), Game.GetTransactionSystem()
 local cs = Game.GetScriptableSystemsContainer():Get("CraftingSystem")

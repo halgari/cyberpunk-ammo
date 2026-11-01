@@ -37,6 +37,20 @@ public abstract class HackRounds {
 
   // A gun shop's or netrunner vendor's stacks this stock build: gun shops to Rare, netrunner vendors
   // to Epic, past hackShopChance.
+  // Sets off a Detonate Grenade round's blast at `target`. An NPC's hack round does nothing extra to
+  // V, so its blast doesn't go off with V inside it (a metre over the range, for V's own width).
+  public static func Blast(instigator: ref<GameObject>, target: ref<GameObject>, blast: TweakDBID) -> Void {
+    let player: ref<GameObject> = GetPlayer(target.GetGame());
+    if !instigator.IsPlayer() && IsDefined(player) {
+      let range: Float = TweakDBInterface.GetFloat(AOData.Flat(blast, "range"), 5.0);
+      if Vector4.Distance(player.GetWorldPosition(), target.GetWorldPosition()) <= range + 1.0 {
+        return;
+      }
+    }
+    AmmoFeedSystem.Log("hack blast " + TDBID.ToStringDEBUG(blast));
+    FactionRounds.Blast(instigator, target, blast);
+  }
+
   public static func ShopStock(vendor: TweakDBID, gunshop: Bool) -> array<AOStack> {
     let stacks: array<AOStack>;
     let netrunner: Bool = TweakDBInterface.GetBool(AOData.Flat(vendor, "aoHackShop"), false);
@@ -58,7 +72,9 @@ public abstract class HackRounds {
     let size: Int32 = TweakDBInterface.GetInt(t"AmmoOverhaul.hackShopStack", 15);
     let count: Int32 = RandRange(1, 3);
     while count > 0 && ArraySize(rounds) > 0 {
-      ArrayPush(stacks, AOStack(rounds[RandRange(0, ArraySize(rounds))], size));
+      let pick: Int32 = RandRange(0, ArraySize(rounds));
+      ArrayPush(stacks, AOStack(rounds[pick], size));
+      ArrayErase(rounds, pick);
       count -= 1;
     }
     return stacks;

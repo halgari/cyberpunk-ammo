@@ -14,6 +14,7 @@ Each release's section is its GitHub release notes and its Nexus Mods changelog
   NPCs with smart guns carry them, and netrunners drop them. The recipes are known from the start: a
   box takes one spare copy of the quickhack plus Smart components. Breaking a box down gives
   components only. An NPC's hack round is a plain smart round when it hits you.
+  On an existing save the 117 new recipes all show as new in the crafting menu.
 - Faction rounds: 88 new rounds. Maelstrom, Scavengers, Arasaka, Tyger Claws, Valentinos,
   6th Street, Militech, the Animals, Barghest, Voodoo Boys, Wraiths, Aldecaldos, the Mox, NCPD, Kang
   Tao and NUSA each have their own, in their own packaging, marked in the name: [Mael], [Scav], [Ara],

@@ -110,6 +110,8 @@ Quality comes from the code as usual.
 - A data cartridge marked with the hack's own icon from the game, its colour by rarity.
 - Legendaries get their own object, approved as a form first, shared by the 11 hacks with the hack's mark.
 
+An NPC's Detonate Grenade blast doesn't go off with V inside it: a probe showed it took 25% of V's health, and an NPC's hack round does nothing extra to V.
+
 ## Testing
 
 New mechanisms only, in `tools/snippets/calibers/quickhack.sh`:

@@ -842,6 +842,30 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // What a stack of `rounds` of `ammo` on an NPC leaves on the body.
+  public final func DebugLootCap(ammo: String, rounds: Int32) -> Int32 {
+    return NpcAmmo.LootCap(TDBID.Create(ammo), rounds);
+  }
+
+  // Of `rolls` rolls of a shop's hack stock, how many list one round twice.
+  public final func DebugHackDupes(vendor: String, rolls: Int32) -> Int32 {
+    let dupes: Int32 = 0;
+    let i: Int32 = 0;
+    while i < rolls {
+      let stacks: array<AOStack> = HackRounds.ShopStock(TDBID.Create(vendor), true);
+      if ArraySize(stacks) == 2 && stacks[0].ammo == stacks[1].ammo {
+        dupes += 1;
+      }
+      i += 1;
+    }
+    return dupes;
+  }
+
+  // A hack blast from `instigator` at `target`, as a Detonate Grenade hit makes it.
+  public final func DebugHackBlast(instigator: ref<GameObject>, target: ref<GameObject>, blast: String) -> Void {
+    HackRounds.Blast(instigator, target, TDBID.Create(blast));
+  }
+
   // The trail keeps 40 lines, so a count across a test needs it empty first.
   public final func DebugClearTrail() -> Void {
     ArrayClear(this.m_trail);

@@ -273,8 +273,7 @@ public abstract class FactionRounds {
         puppet.aoMuleKickAt = now;
         let blast: TweakDBID = AOData.RankRecord(ammo, "aoRankBlast");
         if TDBID.IsValid(blast) {
-          AmmoFeedSystem.Log("hack blast " + TDBID.ToStringDEBUG(blast));
-          FactionRounds.Blast(attackData.GetInstigator(), puppet, blast);
+          HackRounds.Blast(attackData.GetInstigator(), puppet, blast);
         }
         let delay: Float = AOData.RankDelay(ammo);
         if delay > 0.0 {

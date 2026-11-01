@@ -359,15 +359,21 @@ public abstract class NpcAmmo {
       if weight > 0.0 {
         rounds = Min(rounds, FloorF(carry / weight + 0.001));
       }
-      // A Legendary round leaves a small stack.
-      if rounds > 0 && (AOData.AmmoTier(ammo) == 4 || AOData.AmmoTier(ammo) == 9) {
-        rounds = Min(rounds, AOData.LegendaryStack(rounds));
-      }
+      rounds = NpcAmmo.LootCap(ammo, rounds);
       if rounds > 0 {
         ArrayPush(npc.aoLootAmmo, ammo);
         ArrayPush(npc.aoLootQuantity, rounds);
       }
     }
+  }
+
+  // A Legendary round leaves a small stack.
+  public static func LootCap(ammo: TweakDBID, rounds: Int32) -> Int32 {
+    let tier: Int32 = AOData.AmmoTier(ammo);
+    if rounds > 0 && (tier == 4 || tier == 9 || tier == 13) {
+      return Min(rounds, AOData.LegendaryStack(rounds));
+    }
+    return rounds;
   }
 
   // Loot has been generated: put the noted ammo back for the player to take.
