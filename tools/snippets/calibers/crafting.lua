@@ -32,7 +32,7 @@ for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
         and ing2 == flat(a, "aoHackProgram") and els[2]:Amount() == 1, #els .. ": " .. tostring(ing1) .. ", " .. tostring(ing2))
       local r = flat(a, "aoRecipe")
       local res = r and r ~= "" and flat(r, "craftingResult")
-      check(name .. " recipe makes " .. tierBatch(b, base), res and str(flat(res, "item")) == name and flat(res, "amount") == tierBatch(b, base), tostring(r))
+      check(name .. " recipe makes " .. tierBatch(b, 1), res and str(flat(res, "item")) == name and flat(res, "amount") == tierBatch(b, 1), tostring(r))
       check(name .. " recipe is never handed out", r and r ~= "" and not has(flat(r, "tags") or {}, "AO_Recipe"), tostring(r))
       goto continue
     end

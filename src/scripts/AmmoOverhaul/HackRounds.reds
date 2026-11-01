@@ -75,10 +75,14 @@ public abstract class HackRounds {
   }
 
   // A netrunner's body holds a small stack of a smart caliber's hack round, whatever gun it held.
+  // A netrunner's roll for its body, whatever gun it held, or none. Stocked like its own rounds, so
+  // the loot note carries them past the game's wipe of the body. Called as the note is taken, which a
+  // knockout and a death both do, so it rolls once.
   public static func Drop(npc: ref<NPCPuppet>) -> Void {
-    if !HackRounds.IsNetrunner(npc) {
+    if npc.aoHackDropped || !HackRounds.IsNetrunner(npc) {
       return;
     }
+    npc.aoHackDropped = true;
     let calibers: array<String>;
     for caliber in AOData.Calibers() {
       if Equals(AOData.Family(caliber), "Smart") {
@@ -88,8 +92,12 @@ public abstract class HackRounds {
     let caliber: String = calibers[RandRange(0, ArraySize(calibers))];
     let selector: TweakDBID = HackRounds.Roll(caliber, MuleKick.Rarity(npc));
     if TDBID.IsValid(selector) {
-      GameInstance.GetTransactionSystem(npc.GetGame()).GiveItem(npc, ItemID.CreateQuery(AOData.SelectorAmmo(caliber, selector)),
+      let ammo: TweakDBID = AOData.SelectorAmmo(caliber, selector);
+      GameInstance.GetTransactionSystem(npc.GetGame()).GiveItem(npc, ItemID.CreateQuery(ammo),
         TweakDBInterface.GetInt(t"AmmoOverhaul.hackDropStack", 10));
+      if !ArrayContains(npc.aoStocked, ammo) {
+        ArrayPush(npc.aoStocked, ammo);
+      }
     }
   }
 }

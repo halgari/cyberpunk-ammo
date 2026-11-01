@@ -85,6 +85,8 @@ Quality comes from the code as usual.
 - One box takes one copy of the matching quickhack, plus the usual components by family (Smart).
 - Hack rounds' recipes are known from the start, as Common rounds' are, because the quickhack is what
   limits them. This replaces a load sheet per round: 117 more sheets would crowd the loot pool.
+- A box holds the caliber's Uncommon batch at every rarity (10mm 45, 20mm 10, 25mm 5). By the usual
+  divisors a Legendary quickhack would buy two 25mm rounds.
 - Legendary hack rounds can be crafted, unlike other Legendaries. A Legendary quickhack is the price.
 - Breaking a box down returns components only, never the quickhack.
 - **Double removal:** `CraftingSystem.CraftItem` removes a program ingredient twice when V holds more

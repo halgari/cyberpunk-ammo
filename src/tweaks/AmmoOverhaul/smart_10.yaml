@@ -2782,7 +2782,7 @@ Items.AO_Recipe_AO_S10_HackOptics2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackOptics2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackOptics3.aoScrapRounds: 90
@@ -2804,7 +2804,7 @@ Items.AO_Recipe_AO_S10_HackOptics3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackOptics3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackOptics4.aoScrapRounds: 90
@@ -2826,7 +2826,7 @@ Items.AO_Recipe_AO_S10_HackOptics4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackOptics4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackSonic1.aoScrapRounds: 90
@@ -2870,7 +2870,7 @@ Items.AO_Recipe_AO_S10_HackSonic2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackSonic2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackSonic3.aoScrapRounds: 90
@@ -2892,7 +2892,7 @@ Items.AO_Recipe_AO_S10_HackSonic3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackSonic3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackSonic4.aoScrapRounds: 90
@@ -2914,7 +2914,7 @@ Items.AO_Recipe_AO_S10_HackSonic4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackSonic4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackContagion1.aoScrapRounds: 90
@@ -2958,7 +2958,7 @@ Items.AO_Recipe_AO_S10_HackContagion2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackContagion2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackContagion3.aoScrapRounds: 90
@@ -2980,7 +2980,7 @@ Items.AO_Recipe_AO_S10_HackContagion3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackContagion3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackContagion4.aoScrapRounds: 90
@@ -3002,7 +3002,7 @@ Items.AO_Recipe_AO_S10_HackContagion4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackContagion4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackCyberware1.aoScrapRounds: 90
@@ -3046,7 +3046,7 @@ Items.AO_Recipe_AO_S10_HackCyberware2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackCyberware2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackCyberware3.aoScrapRounds: 90
@@ -3068,7 +3068,7 @@ Items.AO_Recipe_AO_S10_HackCyberware3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackCyberware3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackCyberware4.aoScrapRounds: 90
@@ -3090,7 +3090,7 @@ Items.AO_Recipe_AO_S10_HackCyberware4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackCyberware4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackShort1.aoScrapRounds: 90
@@ -3134,7 +3134,7 @@ Items.AO_Recipe_AO_S10_HackShort2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackShort2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackShort3.aoScrapRounds: 90
@@ -3156,7 +3156,7 @@ Items.AO_Recipe_AO_S10_HackShort3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackShort3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackShort4.aoScrapRounds: 90
@@ -3178,7 +3178,7 @@ Items.AO_Recipe_AO_S10_HackShort4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackShort4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackCripple1.aoScrapRounds: 90
@@ -3222,7 +3222,7 @@ Items.AO_Recipe_AO_S10_HackCripple2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackCripple2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackCripple3.aoScrapRounds: 90
@@ -3244,7 +3244,7 @@ Items.AO_Recipe_AO_S10_HackCripple3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackCripple3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackCripple4.aoScrapRounds: 90
@@ -3266,7 +3266,7 @@ Items.AO_Recipe_AO_S10_HackCripple4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackCripple4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackOverheat1.aoScrapRounds: 90
@@ -3310,7 +3310,7 @@ Items.AO_Recipe_AO_S10_HackOverheat2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackOverheat2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackOverheat3.aoScrapRounds: 90
@@ -3332,7 +3332,7 @@ Items.AO_Recipe_AO_S10_HackOverheat3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackOverheat3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackOverheat4.aoScrapRounds: 90
@@ -3354,7 +3354,7 @@ Items.AO_Recipe_AO_S10_HackOverheat4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackOverheat4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackGlitch1.aoScrapRounds: 90
@@ -3398,7 +3398,7 @@ Items.AO_Recipe_AO_S10_HackGlitch2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackGlitch2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackGlitch3.aoScrapRounds: 90
@@ -3420,7 +3420,7 @@ Items.AO_Recipe_AO_S10_HackGlitch3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackGlitch3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackGlitch4.aoScrapRounds: 90
@@ -3442,7 +3442,7 @@ Items.AO_Recipe_AO_S10_HackGlitch4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackGlitch4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackBurnout2.aoScrapRounds: 90
@@ -3464,7 +3464,7 @@ Items.AO_Recipe_AO_S10_HackBurnout2:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackBurnout2
-    amount: 30
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Rare]
 
 Ammo.AO_S10_HackBurnout3.aoScrapRounds: 90
@@ -3486,7 +3486,7 @@ Items.AO_Recipe_AO_S10_HackBurnout3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackBurnout3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackBurnout4.aoScrapRounds: 90
@@ -3508,7 +3508,7 @@ Items.AO_Recipe_AO_S10_HackBurnout4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackBurnout4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackPsycho3.aoScrapRounds: 90
@@ -3530,7 +3530,7 @@ Items.AO_Recipe_AO_S10_HackPsycho3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackPsycho3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackPsycho4.aoScrapRounds: 90
@@ -3552,7 +3552,7 @@ Items.AO_Recipe_AO_S10_HackPsycho4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackPsycho4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 Ammo.AO_S10_HackGrenade3.aoScrapRounds: 90
@@ -3574,7 +3574,7 @@ Items.AO_Recipe_AO_S10_HackGrenade3:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackGrenade3
-    amount: 23
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Epic]
 
 Ammo.AO_S10_HackGrenade4.aoScrapRounds: 90
@@ -3596,7 +3596,7 @@ Items.AO_Recipe_AO_S10_HackGrenade4:
   craftingResult:
     $type: CraftingResult
     item: Ammo.AO_S10_HackGrenade4
-    amount: 18
+    amount: 45
   tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, Legendary]
 
 # === END GENERATED CRAFTING ===

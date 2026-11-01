@@ -53,6 +53,10 @@ public let aoLootQuantity: array<Int32>;
 @addField(NPCPuppet)
 public let aoLootGiven: Bool;
 
+// This body has had its netrunner's roll for hack rounds: a knockout and a death each note its loot.
+@addField(NPCPuppet)
+public let aoHackDropped: Bool;
+
 public abstract class NpcAmmo {
 
   // Hostile NPCs in the world; not the inventory screen's preview puppet, which is an NPCPuppet.
@@ -316,7 +320,6 @@ public abstract class NpcAmmo {
       return;
     }
     npc.aoLootGiven = true;
-    HackRounds.Drop(npc);
     let ts: ref<TransactionSystem> = GameInstance.GetTransactionSystem(npc.GetGame());
     let i: Int32 = 0;
     while i < ArraySize(npc.aoLootAmmo) {
@@ -343,6 +346,7 @@ public abstract class NpcAmmo {
       ArrayClear(npc.aoLootQuantity);
       npc.aoLootGiven = false;
     }
+    HackRounds.Drop(npc);
     if (ArraySize(npc.aoStocked) == 0 && ArraySize(npc.aoStashedGuns) == 0) || ArraySize(npc.aoLootAmmo) > 0 {
       return;
     }

@@ -34,7 +34,8 @@ MATERIAL = ["Items.CommonMaterial1", "Items.UncommonMaterial1", "Items.RareMater
 QUALITY = ["Common", "Uncommon", "Rare", "Epic", "Legendary"]
 # Legendary and the faction tiers are never crafted (tools/rounds/rounds.py).
 NO_RECIPE = {4, 5, 6, 7, 8, 9}
-# Quickhack rounds craft as tiers 1 to 4, known from the start, with the program on top.
+# Quickhack rounds craft as tiers 1 to 4, known from the start, with the program on top. Every rarity
+# makes the Uncommon batch: the quickhack is the price, and a Legendary one for 2 25mm rounds is no trade.
 HACK_TIERS = {10, 11, 12, 13}
 DIVISOR = [1, 2, 3, 4, 5]
 # A round's price over its caliber's Common round: x2 per tier (CATALOG, tiers.lua).
@@ -149,7 +150,7 @@ def caliber_block(key, text, loc, name_of, batches):
                      f"    - $type: RecipeElement\n      ingredient: {program}\n      amount: 1\n")
             y.append(f'{ammo}.aoRecipe: "{recipe}"')
             y.append(f"{recipe}:\n  $base: Items.AO_RecipeBase\n  quality: Quality.{QUALITY[base]}\n"
-                     f"  craftingResult:\n    $type: CraftingResult\n    item: {ammo}\n    amount: {tier_batch(common, base)}\n"
+                     f"  craftingResult:\n    $type: CraftingResult\n    item: {ammo}\n    amount: {tier_batch(common, 1)}\n"
                      f"  tags: [Recipe, SkipActivityLogOnRemove, HideInBackpackUI, {QUALITY[base]}]\n")
             continue
         batch = tier_batch(common, t)

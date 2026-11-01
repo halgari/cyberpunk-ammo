@@ -842,6 +842,11 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // The trail keeps 40 lines, so a count across a test needs it empty first.
+  public final func DebugClearTrail() -> Void {
+    ArrayClear(this.m_trail);
+  }
+
   // The weapon's ProjectilesPerShot over its count without the round's pellet change; 1.0 for a
   // round that doesn't change the count.
   public static func PelletRatio(weapon: ref<WeaponObject>, ammo: TweakDBID) -> Float {
