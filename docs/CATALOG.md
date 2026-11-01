@@ -380,6 +380,102 @@ rounds; a Legendary stack is a quarter of the Epic one it replaces.
 
 The other twelve are for finding; the spec has them.
 
+### Built (quickhack rounds, 2026-10-31)
+
+117 rounds of 39 kinds, in 10mm, 20mm and 25mm, tier codes 10 to 13 (Uncommon to Legendary). Each is a
+quickhack on a smart round, named for the caliber and hack with the tag `[Hack]`. Spec:
+`docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md`.
+
+- Per shot: Uncommon 10%, Rare 15%, Epic 20%, Legendary 25%. Contagion, Short Circuit and Synapse
+  Burnout: 4%, 6%, 8%, 10%.
+- All four rarities: Reboot Optics, Sonic Shock, Contagion, Cyberware Malfunction, Short Circuit,
+  Cripple Movement, Overheat, Weapon Glitch.
+- Rare and up: Synapse Burnout. Epic and up: Cyberpsychosis, Detonate Grenade.
+- Each kind's three calibers share one icon: the rarity's cartridge, the Legendary's breach rig.
+
+### Built (faction rounds, last eight, 2026-10-31)
+
+37 rounds, spec `docs/superpowers/specs/2026-10-31-faction-rounds-3-design.md`, which has the final
+numbers and what changed against the first design. Same rules as the batches below, plus tier code 9
+for a faction Legendary (Boss 10%, Elite 3%, Officer 1%) and NUSA rolling Epic at half the chance.
+
+- **Dogtown Tax** (Barghest, Rare; 9mm, 5.56): V's kills leave eddies, `dogtownTaxGive` 100.
+- **Chimera Scrap** (Barghest, Epic; 7.62, 5mm): Firecracker attack package; NPCs use `ScrapBlast`.
+- **Bad Juju** (VDB, Epic; 45, 5mm, 10mm): 15% `JujuMadness`, 20 s; Boss immune; V `HackBlind`.
+- **Collect Call** (VDB, Legendary; 5mm, 10mm): 10% Blackwall upload; Boss and V `CyberwareMalfunction`.
+- **Pocket Sand** (Wraith, Rare; 45, 12ga): 20% `ShortBlind`; Boss immune; V `HackBlind`.
+- **The Clap** (Wraith, Epic; 5mm, Heavy): 20% `BaseContagionPoison` and a 4 m `ClapCloud`.
+- **Waste Not** (Nomad, Rare; 9mm, 45, 12mm): 15% of shots hand the round back.
+- **Speedloaders** (Nomad, Epic; 45, 12mm): `MagazineAutoRefill`, on draw.
+- **Cut Off** (Mox, Epic; 9mm, 45, 12ga): non-lethal, 15% `Unconscious`; Elite up `ForceStagger`; V `Knockdown`.
+- **Last Call** (Mox, Epic; 9mm, 12mm): the same, 4 seconds after the hit, not non-lethal.
+- **Standard Issue** (NCPD, Uncommon; 9mm, 45): `SpreadMax*` and `SpreadAdsMax*` x0.3.
+- **Resisting Arrest** (NCPD, Rare; 9mm, 12ga): 20% `Electrocuted`.
+- **Wide Angle** (Kang, Rare; 10mm, 20mm): +25 on the eight smart angle stats.
+- **Second Opinion** (Kang, Epic; 10mm, 20mm, 25mm): +2 hip and ADS locks.
+- **Deniable** (NUSA, Epic; 45, 5mm, 10mm): `CanSilentKill`, x2 on NPCs not in combat.
+- **Black Budget** (NUSA, Epic; 127, Heavy): 30% `HeavyPoision`.
+
+### Built (faction rounds, second five, 2026-10-31)
+
+25 rounds, spec `docs/superpowers/specs/2026-10-31-faction-rounds-2-design.md`. Same rules as the first
+batch below, with no turf shops.
+
+Tyger Claws:
+
+- **Shinobi Seconds** (Uncommon; 9mm, 45): `CanSilentKill`, x0.85 damage, 5% duds at x0.25.
+- **Tanto** (Rare; 9mm, 45, 12mm): 25% `Bleeding`, +10 `CritChance`.
+
+Valentinos:
+
+- **Gold Tips** (Rare; 45, 12mm): +15 `CritChance`, +30 `CritDamage`, x1.2 recoil, 1.5x the Rare price.
+- **Santa Muerte** (Epic; 45, 12mm): +0.5 `HeadshotDamageMultiplier`, burns on a headshot (`aoHeadEffect`), 10% per hit on V (`aoHeadFallback`).
+
+6th Street:
+
+- **Surplus** (Uncommon; 9mm, 45, 12mm): roll 0.95 to 1.05, x0.9 recoil.
+- **Fourth of July** (Rare; 9mm, 12mm, 10mm): the Ping tag on every hit, 10% `Burning`.
+
+Militech:
+
+- **Mil-Spec** (Rare; 9mm, 762, 5mm): roll 0.95 to 1.05, 25% armor pen, x0.85 recoil.
+- **Cease and Desist** (Epic; 762, 12ga): 30% per shot to stagger (`aoStopChance`), not Boss or MaxTac, 50% armor pen, x0.9 damage. `ForceStagger` on NPCs, `BlockBroken` on V.
+
+Animals:
+
+- **Protein Loads** (Rare; 12mm, 5mm, Heavy): a kill stacks `AmmoOverhaul.Pumped` on the shooter (`aoPumped`): 10 s, 3 stacks, +6% `MaxSpeed`, -0.1 `ReloadTimeBonus` each.
+- **Leg Day** (Epic; 12mm, Heavy): 20% per shot (`aoLegChance`): `AmmoOverhaul.CrippledLegs` (60 s) up to Officer, `ForceStagger` for Elite, Boss, MaxTac and machines, `Knockdown` on V. x1.8 recoil.
+
+### Built (faction rounds, 2026-10-30)
+
+26 rounds, from `tools/rounds/rounds.py`, spec `docs/superpowers/specs/2026-10-30-faction-rounds-design.md`.
+Tier codes 5 (Rare quality), 6 (Epic), 7 (Common) and 8 (Uncommon), so they stay out of every general list. Each
+round's `aoFaction` names its faction, and the name carries [Mael], [Scav] or [Ara]. No recipe; a
+stack breaks down by its quality. Only that faction's NPCs roll them (Legendary first, then these,
+then the general tiers); they reach V as those NPCs' loot, and from turf gun shops: Maelstrom
+`wat_nid_gunsmith_01`, Scavengers `wat_kab_gunsmith_02` and `std_arr_gunsmith_01`. Each stock build
+has a 25% chance of one or two 30-round stacks below Epic, and Scav shops always have Reloads.
+Arasaka's `cct_dtn_guns_01` sells Shinobi only, at the same chance, in stacks of 10: the one
+Epic round on sale anywhere, an exception by the user because all of Arasaka's rounds are Epic.
+
+Maelstrom:
+
+- **Redliners** (Rare; 45, 556, 762): x0.8 `CycleTime`, x1.4 recoil and spread. 2% per shot to jam the shooter's weapons for 3 s (`aoSelfJam`).
+- **Chrome-cookers** (Epic; 5mm, Heavy): 15% `CyberwareMalfunction`, x0.9 damage.
+- **Meat-grinders** (Epic; 45, 12mm, 12ga, 4ga): 30% `Bleeding`, x3 `HitDismembermentFactor`.
+
+Scavengers (all roll through `AmmoOverhaul.roll.Scavengers`: 0.70 to 1.15, 8% duds at x0.25, 5% hot at x1.5):
+
+- **Reloads** (Common; 12mm, 45, 9mm): half the Common round's price, nothing else.
+- **Gutter Lead** (Uncommon; 12mm, 45, 9mm): 25% `Bleeding`, 25% `Poisoned`, x0.5 damage.
+- **Parts-pullers** (Rare; 12mm, 45): V's kill leaves 2 Rare components on the body (`aoPartsPuller`).
+
+Arasaka:
+
+- **Shinobi** (Epic; 9mm, 45): `CanSilentKill`, +0.5 `HeadshotDamageMultiplier`, x0.9 range.
+- **Kata** (Epic; 45, 556, 762, 5mm): roll 0.99 to 1.01, x0.7 recoil, x0.7 `AimInTime`.
+- **Kansatsu** (Epic; 10mm, 20mm, 25mm): the Ping tag on every hit, x0.5 `SmartGunAdsTimeToLock` and `SmartGunHipTimeToLock` at all times. The tag doesn't shorten the lock: the engine has no per-target lock time.
+
 ### Ammo ideas so far
 
 - **Dumbfire (Smart):** much more damage, guidance removed entirely, so the smart gun becomes a

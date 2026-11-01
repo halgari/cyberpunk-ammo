@@ -8,9 +8,9 @@ AmmoOverhaul.Power_12ga.feedElement: "Items.AO_AmmoFeed_Power_12ga_Element"
 AmmoOverhaul.Power_12ga.defaultAmmo: "Ammo.ShotgunAmmo"
 AmmoOverhaul.Power_12ga.vanillaAmmo: "Ammo.ShotgunAmmo"
 AmmoOverhaul.Power_12ga.lootWeight: 0.7
-AmmoOverhaul.Power_12ga.selectors: ["Items.AO_Feed_12ga_Buckshot", "Items.AO_Feed_12ga_Slugs", "Items.AO_Feed_12ga_Birdshot", "Items.AO_Feed_12ga_Flechette", "Items.AO_Feed_12ga_Beanbag", "Items.AO_Feed_12ga_DragonLight", "Items.AO_Feed_12ga_Dragon", "Items.AO_Feed_12ga_Frag12", "Items.AO_Feed_12ga_FlechetteLong", "Items.AO_Feed_12ga_PumpNDump"]
-AmmoOverhaul.Power_12ga.selectorAmmo: ["Ammo.ShotgunAmmo", "Ammo.AO_12ga_Slug", "Ammo.AO_12ga_Birdshot", "Ammo.AO_12ga_Flechette", "Ammo.AO_12ga_Beanbag", "Ammo.AO_12ga_DragonLight", "Ammo.AO_12ga_Dragon", "Ammo.AO_12ga_Frag12", "Ammo.AO_12ga_FlechetteLong", "Ammo.AO_12ga_PumpNDump"]
-AmmoOverhaul.Power_12ga.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 4]
+AmmoOverhaul.Power_12ga.selectors: ["Items.AO_Feed_12ga_Buckshot", "Items.AO_Feed_12ga_Slugs", "Items.AO_Feed_12ga_Birdshot", "Items.AO_Feed_12ga_Flechette", "Items.AO_Feed_12ga_Beanbag", "Items.AO_Feed_12ga_DragonLight", "Items.AO_Feed_12ga_Dragon", "Items.AO_Feed_12ga_Frag12", "Items.AO_Feed_12ga_FlechetteLong", "Items.AO_Feed_12ga_PumpNDump", "Items.AO_Feed_12ga_MeatGrinders", "Items.AO_Feed_12ga_CeaseAndDesist", "Items.AO_Feed_12ga_PocketSand", "Items.AO_Feed_12ga_CutOff", "Items.AO_Feed_12ga_ResistingArrest"]
+AmmoOverhaul.Power_12ga.selectorAmmo: ["Ammo.ShotgunAmmo", "Ammo.AO_12ga_Slug", "Ammo.AO_12ga_Birdshot", "Ammo.AO_12ga_Flechette", "Ammo.AO_12ga_Beanbag", "Ammo.AO_12ga_DragonLight", "Ammo.AO_12ga_Dragon", "Ammo.AO_12ga_Frag12", "Ammo.AO_12ga_FlechetteLong", "Ammo.AO_12ga_PumpNDump", "Ammo.AO_12ga_MeatGrinders", "Ammo.AO_12ga_CeaseAndDesist", "Ammo.AO_12ga_PocketSand", "Ammo.AO_12ga_CutOff", "Ammo.AO_12ga_ResistingArrest"]
+AmmoOverhaul.Power_12ga.selectorTiers: [0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 6, 6, 5, 6, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_12ga.craftBatch: 40
 
@@ -933,6 +933,218 @@ Items.AO_Feed_12ga_PumpNDump:
       modifierType: Multiplier
       value: 0.4
 
+# Meat-grinders [Mael] (Epic)
+Ammo.AO_12ga_MeatGrinders:
+  $base: Ammo.AO_12ga_Birdshot
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-12ga-MeatGrinders
+  localizedDescription: LocKey#AO-Ammo-MeatGrinders-Desc
+  iconPath: AO_12ga_MeatGrinders
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_12ga_MeatGrinders.aoFaction: "Maelstrom"
+Ammo.AO_12ga_MeatGrinders.aoEffects: ["BaseStatusEffect.Bleeding"]
+Ammo.AO_12ga_MeatGrinders.aoEffectChances: [0.3]
+
+UIIcon.AO_12ga_MeatGrinders:
+  $type: UIIcon
+  atlasPartName: ao_12ga_meatgrinders
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12ga_MeatGrinders:
+  $base: Items.AO_Feed_12ga_Buckshot
+  displayName: LocKey#AO-Ammo-12ga-MeatGrinders
+  localizedDescription: LocKey#AO-Ammo-MeatGrinders-Desc
+  iconPath: AO_12ga_MeatGrinders
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.HitDismembermentFactor
+      modifierType: Multiplier
+      value: 3.0
+
+# Cease and Desist [Mil] (Epic)
+Ammo.AO_12ga_CeaseAndDesist:
+  $base: Ammo.AO_12ga_Birdshot
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-12ga-CeaseAndDesist
+  localizedDescription: LocKey#AO-Ammo-CeaseAndDesist-Desc
+  iconPath: AO_12ga_CeaseAndDesist
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_12ga_CeaseAndDesist.aoFaction: "Militech"
+Ammo.AO_12ga_CeaseAndDesist.aoStopChance: 0.3
+
+UIIcon.AO_12ga_CeaseAndDesist:
+  $type: UIIcon
+  atlasPartName: ao_12ga_ceaseanddesist
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12ga_CeaseAndDesist:
+  $base: Items.AO_Feed_12ga_Buckshot
+  displayName: LocKey#AO-Ammo-12ga-CeaseAndDesist
+  localizedDescription: LocKey#AO-Ammo-CeaseAndDesist-Desc
+  iconPath: AO_12ga_CeaseAndDesist
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CanWeaponIgnoreArmor
+      modifierType: Additive
+      value: 0.5
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.DamagePerHit
+      modifierType: Multiplier
+      value: 0.9
+
+# Pocket Sand [Wraith] (Rare)
+Ammo.AO_12ga_PocketSand:
+  $base: Ammo.AO_12ga_Birdshot
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-12ga-PocketSand
+  localizedDescription: LocKey#AO-Ammo-PocketSand-Desc
+  iconPath: AO_12ga_PocketSand
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_12ga_PocketSand.aoFaction: "Wraiths"
+Ammo.AO_12ga_PocketSand.aoRankEffect: "BaseStatusEffect.ShortBlind"
+Ammo.AO_12ga_PocketSand.aoRankChance: 0.2
+Ammo.AO_12ga_PocketSand.aoRankToughFrom: "Boss"
+Ammo.AO_12ga_PocketSand.aoRankPlayer: "AIQuickHackStatusEffect.HackBlind"
+
+UIIcon.AO_12ga_PocketSand:
+  $type: UIIcon
+  atlasPartName: ao_12ga_pocketsand
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12ga_PocketSand:
+  $base: Items.AO_Feed_12ga_Buckshot
+  displayName: LocKey#AO-Ammo-12ga-PocketSand
+  localizedDescription: LocKey#AO-Ammo-PocketSand-Desc
+  iconPath: AO_12ga_PocketSand
+  quality: Quality.Rare
+
+# Cut Off [Mox] (Epic)
+Ammo.AO_12ga_CutOff:
+  $base: Ammo.AO_12ga_Birdshot
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-12ga-CutOff
+  localizedDescription: LocKey#AO-Ammo-CutOff-Desc
+  iconPath: AO_12ga_CutOff
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_12ga_CutOff.aoFaction: "TheMox"
+Ammo.AO_12ga_CutOff.aoNonlethal: true
+Ammo.AO_12ga_CutOff.aoRankEffect: "BaseStatusEffect.Unconscious"
+Ammo.AO_12ga_CutOff.aoRankChance: 0.15
+Ammo.AO_12ga_CutOff.aoRankToughFrom: "Elite"
+Ammo.AO_12ga_CutOff.aoRankPlayer: "BaseStatusEffect.Knockdown"
+Ammo.AO_12ga_CutOff.aoRankTough: "BaseStatusEffect.ForceStagger"
+
+UIIcon.AO_12ga_CutOff:
+  $type: UIIcon
+  atlasPartName: ao_12ga_cutoff
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12ga_CutOff:
+  $base: Items.AO_Feed_12ga_Buckshot
+  displayName: LocKey#AO-Ammo-12ga-CutOff
+  localizedDescription: LocKey#AO-Ammo-CutOff-Desc
+  iconPath: AO_12ga_CutOff
+  quality: Quality.Epic
+
+# Resisting Arrest [NCPD] (Rare)
+Ammo.AO_12ga_ResistingArrest:
+  $base: Ammo.AO_12ga_Birdshot
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-12ga-ResistingArrest
+  localizedDescription: LocKey#AO-Ammo-ResistingArrest-Desc
+  iconPath: AO_12ga_ResistingArrest
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_12ga_ResistingArrest.aoFaction: "NCPD"
+Ammo.AO_12ga_ResistingArrest.aoEffects: ["BaseStatusEffect.Electrocuted"]
+Ammo.AO_12ga_ResistingArrest.aoEffectChances: [0.2]
+
+UIIcon.AO_12ga_ResistingArrest:
+  $type: UIIcon
+  atlasPartName: ao_12ga_resistingarrest
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_12ga_ResistingArrest:
+  $base: Items.AO_Feed_12ga_Buckshot
+  displayName: LocKey#AO-Ammo-12ga-ResistingArrest
+  localizedDescription: LocKey#AO-Ammo-ResistingArrest-Desc
+  iconPath: AO_12ga_ResistingArrest
+  quality: Quality.Rare
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -1197,5 +1409,25 @@ Items.AO_Recipe_AO_12ga_FlechetteLong:
 Ammo.AO_12ga_PumpNDump.aoScrapRounds: 40
 Ammo.AO_12ga_PumpNDump.aoScrapGive: 1
 Ammo.AO_12ga_PumpNDump.aoRecipe: ""
+
+Ammo.AO_12ga_MeatGrinders.aoScrapRounds: 40
+Ammo.AO_12ga_MeatGrinders.aoScrapGive: 1
+Ammo.AO_12ga_MeatGrinders.aoRecipe: ""
+
+Ammo.AO_12ga_CeaseAndDesist.aoScrapRounds: 40
+Ammo.AO_12ga_CeaseAndDesist.aoScrapGive: 1
+Ammo.AO_12ga_CeaseAndDesist.aoRecipe: ""
+
+Ammo.AO_12ga_PocketSand.aoScrapRounds: 40
+Ammo.AO_12ga_PocketSand.aoScrapGive: 1
+Ammo.AO_12ga_PocketSand.aoRecipe: ""
+
+Ammo.AO_12ga_CutOff.aoScrapRounds: 40
+Ammo.AO_12ga_CutOff.aoScrapGive: 1
+Ammo.AO_12ga_CutOff.aoRecipe: ""
+
+Ammo.AO_12ga_ResistingArrest.aoScrapRounds: 40
+Ammo.AO_12ga_ResistingArrest.aoScrapGive: 1
+Ammo.AO_12ga_ResistingArrest.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

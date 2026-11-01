@@ -22,6 +22,20 @@ local ROUNDS = {
   { "Ammo.AO_TLight_Bricks", "5mm_Bricks" }, { "Ammo.AO_THeavy_Bricks", "Heavy_Bricks" },
   { "Ammo.AO_S10_ShortFuse", "10mm_ShortFuse" }, { "Ammo.AO_S20_ShortFuse", "20mm_ShortFuse" },
   { "Ammo.AO_S25_ShortFuse", "25mm_ShortFuse" },
+  -- The faction rounds.
+  { "Ammo.AO_9mm_Reloads", "9mm_Reloads" }, { "Ammo.AO_9mm_GutterLead", "9mm_GutterLead" },
+  { "Ammo.AO_9mm_Shinobi", "9mm_Shinobi" }, { "Ammo.AO_45_Redliners", "45_Redliners" },
+  { "Ammo.AO_45_MeatGrinders", "45_MeatGrinders" }, { "Ammo.AO_45_Reloads", "45_Reloads" },
+  { "Ammo.AO_45_GutterLead", "45_GutterLead" }, { "Ammo.AO_45_PartsPullers", "45_PartsPullers" },
+  { "Ammo.AO_45_Kata", "45_Kata" }, { "Ammo.AO_45_Shinobi", "45_Shinobi" },
+  { "Ammo.AO_12mm_MeatGrinders", "12mm_MeatGrinders" }, { "Ammo.AO_12mm_Reloads", "12mm_Reloads" },
+  { "Ammo.AO_12mm_GutterLead", "12mm_GutterLead" }, { "Ammo.AO_12mm_PartsPullers", "12mm_PartsPullers" },
+  { "Ammo.AO_556_Redliners", "556_Redliners" }, { "Ammo.AO_556_Kata", "556_Kata" },
+  { "Ammo.AO_762_Redliners", "762_Redliners" }, { "Ammo.AO_762_Kata", "762_Kata" },
+  { "Ammo.AO_12ga_MeatGrinders", "12ga_MeatGrinders" }, { "Ammo.AO_4ga_MeatGrinders", "4ga_MeatGrinders" },
+  { "Ammo.AO_TLight_ChromeCookers", "5mm_ChromeCookers" }, { "Ammo.AO_TLight_Kata", "5mm_Kata" },
+  { "Ammo.AO_THeavy_ChromeCookers", "Heavy_ChromeCookers" }, { "Ammo.AO_S10_Kansatsu", "10mm_Kansatsu" },
+  { "Ammo.AO_S20_Kansatsu", "20mm_Kansatsu" }, { "Ammo.AO_S25_Kansatsu", "25mm_Kansatsu" },
 }
 local seen = {}
 for _, r in ipairs(ROUNDS) do

@@ -347,6 +347,123 @@ Ammo.AO_S10_HackCarrier:
 Ammo.AO_S10_ShapedCharge:
   CraftingData: Crafting.AO_Cost_Smart_3
 
+Ammo.AO_S10_HackOptics1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackOptics1
+
+Ammo.AO_S10_HackOptics2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackOptics2
+
+Ammo.AO_S10_HackOptics3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackOptics3
+
+Ammo.AO_S10_HackOptics4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackOptics4
+
+Ammo.AO_S10_HackSonic1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackSonic1
+
+Ammo.AO_S10_HackSonic2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackSonic2
+
+Ammo.AO_S10_HackSonic3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackSonic3
+
+Ammo.AO_S10_HackSonic4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackSonic4
+
+Ammo.AO_S10_HackContagion1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackContagion1
+
+Ammo.AO_S10_HackContagion2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackContagion2
+
+Ammo.AO_S10_HackContagion3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackContagion3
+
+Ammo.AO_S10_HackContagion4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackContagion4
+
+Ammo.AO_S10_HackCyberware1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackCyberware1
+
+Ammo.AO_S10_HackCyberware2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackCyberware2
+
+Ammo.AO_S10_HackCyberware3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackCyberware3
+
+Ammo.AO_S10_HackCyberware4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackCyberware4
+
+Ammo.AO_S10_HackShort1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackShort1
+
+Ammo.AO_S10_HackShort2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackShort2
+
+Ammo.AO_S10_HackShort3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackShort3
+
+Ammo.AO_S10_HackShort4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackShort4
+
+Ammo.AO_S10_HackCripple1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackCripple1
+
+Ammo.AO_S10_HackCripple2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackCripple2
+
+Ammo.AO_S10_HackCripple3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackCripple3
+
+Ammo.AO_S10_HackCripple4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackCripple4
+
+Ammo.AO_S10_HackOverheat1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackOverheat1
+
+Ammo.AO_S10_HackOverheat2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackOverheat2
+
+Ammo.AO_S10_HackOverheat3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackOverheat3
+
+Ammo.AO_S10_HackOverheat4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackOverheat4
+
+Ammo.AO_S10_HackGlitch1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackGlitch1
+
+Ammo.AO_S10_HackGlitch2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackGlitch2
+
+Ammo.AO_S10_HackGlitch3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackGlitch3
+
+Ammo.AO_S10_HackGlitch4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackGlitch4
+
+Ammo.AO_S10_HackBurnout2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackBurnout2
+
+Ammo.AO_S10_HackBurnout3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackBurnout3
+
+Ammo.AO_S10_HackBurnout4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackBurnout4
+
+Ammo.AO_S10_HackPsycho3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackPsycho3
+
+Ammo.AO_S10_HackPsycho4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackPsycho4
+
+Ammo.AO_S10_HackGrenade3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackGrenade3
+
+Ammo.AO_S10_HackGrenade4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S10_HackGrenade4
+
 # Smart_20
 Ammo.AO_S20_Standard:
   CraftingData: Crafting.AO_Cost_Smart_0
@@ -378,6 +495,123 @@ Ammo.AO_S20_HackCarrier:
 Ammo.AO_S20_ShapedCharge:
   CraftingData: Crafting.AO_Cost_Smart_3
 
+Ammo.AO_S20_HackOptics1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackOptics1
+
+Ammo.AO_S20_HackOptics2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackOptics2
+
+Ammo.AO_S20_HackOptics3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackOptics3
+
+Ammo.AO_S20_HackOptics4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackOptics4
+
+Ammo.AO_S20_HackSonic1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackSonic1
+
+Ammo.AO_S20_HackSonic2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackSonic2
+
+Ammo.AO_S20_HackSonic3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackSonic3
+
+Ammo.AO_S20_HackSonic4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackSonic4
+
+Ammo.AO_S20_HackContagion1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackContagion1
+
+Ammo.AO_S20_HackContagion2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackContagion2
+
+Ammo.AO_S20_HackContagion3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackContagion3
+
+Ammo.AO_S20_HackContagion4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackContagion4
+
+Ammo.AO_S20_HackCyberware1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackCyberware1
+
+Ammo.AO_S20_HackCyberware2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackCyberware2
+
+Ammo.AO_S20_HackCyberware3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackCyberware3
+
+Ammo.AO_S20_HackCyberware4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackCyberware4
+
+Ammo.AO_S20_HackShort1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackShort1
+
+Ammo.AO_S20_HackShort2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackShort2
+
+Ammo.AO_S20_HackShort3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackShort3
+
+Ammo.AO_S20_HackShort4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackShort4
+
+Ammo.AO_S20_HackCripple1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackCripple1
+
+Ammo.AO_S20_HackCripple2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackCripple2
+
+Ammo.AO_S20_HackCripple3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackCripple3
+
+Ammo.AO_S20_HackCripple4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackCripple4
+
+Ammo.AO_S20_HackOverheat1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackOverheat1
+
+Ammo.AO_S20_HackOverheat2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackOverheat2
+
+Ammo.AO_S20_HackOverheat3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackOverheat3
+
+Ammo.AO_S20_HackOverheat4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackOverheat4
+
+Ammo.AO_S20_HackGlitch1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackGlitch1
+
+Ammo.AO_S20_HackGlitch2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackGlitch2
+
+Ammo.AO_S20_HackGlitch3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackGlitch3
+
+Ammo.AO_S20_HackGlitch4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackGlitch4
+
+Ammo.AO_S20_HackBurnout2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackBurnout2
+
+Ammo.AO_S20_HackBurnout3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackBurnout3
+
+Ammo.AO_S20_HackBurnout4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackBurnout4
+
+Ammo.AO_S20_HackPsycho3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackPsycho3
+
+Ammo.AO_S20_HackPsycho4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackPsycho4
+
+Ammo.AO_S20_HackGrenade3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackGrenade3
+
+Ammo.AO_S20_HackGrenade4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S20_HackGrenade4
+
 # Smart_25
 Ammo.AO_S25_Standard:
   CraftingData: Crafting.AO_Cost_Smart_0
@@ -408,4 +642,121 @@ Ammo.AO_S25_HackCarrier:
 
 Ammo.AO_S25_ShapedCharge:
   CraftingData: Crafting.AO_Cost_Smart_3
+
+Ammo.AO_S25_HackOptics1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackOptics1
+
+Ammo.AO_S25_HackOptics2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackOptics2
+
+Ammo.AO_S25_HackOptics3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackOptics3
+
+Ammo.AO_S25_HackOptics4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackOptics4
+
+Ammo.AO_S25_HackSonic1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackSonic1
+
+Ammo.AO_S25_HackSonic2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackSonic2
+
+Ammo.AO_S25_HackSonic3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackSonic3
+
+Ammo.AO_S25_HackSonic4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackSonic4
+
+Ammo.AO_S25_HackContagion1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackContagion1
+
+Ammo.AO_S25_HackContagion2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackContagion2
+
+Ammo.AO_S25_HackContagion3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackContagion3
+
+Ammo.AO_S25_HackContagion4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackContagion4
+
+Ammo.AO_S25_HackCyberware1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackCyberware1
+
+Ammo.AO_S25_HackCyberware2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackCyberware2
+
+Ammo.AO_S25_HackCyberware3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackCyberware3
+
+Ammo.AO_S25_HackCyberware4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackCyberware4
+
+Ammo.AO_S25_HackShort1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackShort1
+
+Ammo.AO_S25_HackShort2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackShort2
+
+Ammo.AO_S25_HackShort3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackShort3
+
+Ammo.AO_S25_HackShort4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackShort4
+
+Ammo.AO_S25_HackCripple1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackCripple1
+
+Ammo.AO_S25_HackCripple2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackCripple2
+
+Ammo.AO_S25_HackCripple3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackCripple3
+
+Ammo.AO_S25_HackCripple4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackCripple4
+
+Ammo.AO_S25_HackOverheat1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackOverheat1
+
+Ammo.AO_S25_HackOverheat2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackOverheat2
+
+Ammo.AO_S25_HackOverheat3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackOverheat3
+
+Ammo.AO_S25_HackOverheat4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackOverheat4
+
+Ammo.AO_S25_HackGlitch1:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackGlitch1
+
+Ammo.AO_S25_HackGlitch2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackGlitch2
+
+Ammo.AO_S25_HackGlitch3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackGlitch3
+
+Ammo.AO_S25_HackGlitch4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackGlitch4
+
+Ammo.AO_S25_HackBurnout2:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackBurnout2
+
+Ammo.AO_S25_HackBurnout3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackBurnout3
+
+Ammo.AO_S25_HackBurnout4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackBurnout4
+
+Ammo.AO_S25_HackPsycho3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackPsycho3
+
+Ammo.AO_S25_HackPsycho4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackPsycho4
+
+Ammo.AO_S25_HackGrenade3:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackGrenade3
+
+Ammo.AO_S25_HackGrenade4:
+  CraftingData: Crafting.AO_Cost_Hack_AO_S25_HackGrenade4
 

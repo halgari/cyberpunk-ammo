@@ -38,6 +38,8 @@ spawn() {
 # The rig's setup (spawns Unity if none) against the already spawned ganger: waits for ready.
 setup() {
   for _ in $(seq 30); do
+    # A dead V can't draw, and every retry above this would wait out its full count.
+    [[ $(lua "return Game.GetPlayer():IsDead()") == true ]] && { echo "FAIL V is dead"; exit 1; }
     r=$(lua "return RIG.setup(${1:+'$1'})"); [[ $r == ready ]] && break
     echo "  $r" >&2
     [[ $r == draw* ]] && draw "$1"

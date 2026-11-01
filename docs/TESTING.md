@@ -32,6 +32,58 @@ Built) and its rounds (the `selectorAmmo` list in its `src/tweaks/AmmoOverhaul/*
 
 Use newly spawned guns: one already in an old save may keep its old slot layout.
 
+## Faction rounds field test
+
+Open the overlay, press "Give field kit", fit a round in the weapon screen. Things the rig can't
+check, one line each:
+
+- **Redliners (.45, 5.56, 7.62):** the gun fires visibly faster than on Ball. Hold the trigger until
+  it jams (2% per shot): it stops firing for 3 seconds. Swap guns while jammed: the next gun won't
+  fire either until the 3 seconds are up.
+- **Meat-grinders (.45, 12mm, 12ga, 4ga):** limbs come off far more often, and targets bleed.
+- **Shinobi (9mm, .45):** a headshot kill leaves others unalerted, and the shot sounds suppressed.
+- **Santa Muerte (.45, 12mm):** headshots set targets on fire, body shots never do.
+- **Fourth of July (9mm, 12mm, 10mm):** a target you hit shows through walls for 5 seconds.
+- **Cease and Desist (7.62, 12ga):** a staggered target stops shooting for a moment. Check that it
+  really eases return fire, and that an enemy's round staggers V.
+- **Protein Loads (12mm, light and heavy rail):** three quick kills, and V runs and reloads visibly faster.
+- **Leg Day (12mm, heavy rail):** a crippled target stops where it stands and keeps shooting, an
+  Elite staggers, and an enemy's round knocks V down.
+- **Waste Not (9mm, .45, 12mm):** the rig fires past the shot events, so only a real trigger pull
+  shows it: hold the trigger and a magazine lasts longer than its count, with reserve not going down
+  on the free ones.
+- **Second Opinion (10mm, 20mm, 25mm):** with four or five enemies in view, the Yukimura holds more
+  locks than on Ball.
+- **Standard Issue (9mm, .45):** a long burst stays tighter than Ball.
+- **Bad Juju (.45, light rail, 10mm):** a target that gets it turns on the NPCs next to it.
+- **The Clap (light and heavy rail):** a poisoned target in a tight group passes it on within about
+  4 meters.
+- **Chimera Scrap on an iconic:** an iconic with its own attack still fires the round's explosions.
+- **Dogtown Tax:** loot the body and the eddies land.
+- **Turf shops:** `wat_kab_gunsmith_01` shows Cut Off or Last Call and `bls_ina_se5_gunsmith_01` shows
+  Waste Not after a few restocks.
+- **Save and load:** a gun on Chimera Scrap still explodes after loading a save.
+- **Subsonic (9mm, .45, 5.56):** the shot sounds like a silencer's, the muzzle flash is the silenced
+  one, and a kill leaves others unalerted.
+- **Gutter Lead (9mm, .45, 12mm):** bleed and poison show on hit.
+- **Chrome-cookers (5mm, heavy rail):** a target's cyberware malfunctions now and then.
+- **Reloads and Kata:** damage numbers spread as their text says.
+- **Tactician:** Slugs and Birdshot after the minimum spread fix; a slug group is tight at 20 m.
+- **Pump N Dump on the Igla, Pozhar and Testera:** each cycles at 2.5 times the speed.
+
+## Quickhack rounds field test
+
+"Give field kit" adds the Epic hack rounds with their selectors, the three smart guns and 5 copies of
+each Epic quickhack.
+
+- Each hack's feel on a fight: the status shows, and Sonic Shock, Reboot Optics and Weapon Glitch
+  change what the target does.
+- Balance of Short Circuit and Contagion at the higher rolls. Contagion's cloud spares you and
+  anything guarded.
+- Open a gun shop and a netrunner vendor (Kabuki's, say), find a hack round, buy it.
+- Kill a netrunner and loot the body.
+- Craft a box with exactly 1 spare copy of its quickhack, and with several. One copy goes per box.
+
 ## Test kit (CET window)
 
 With the dev helpers installed (`tools/linux/dev-install.sh`), opening the CET overlay also opens
@@ -46,6 +98,8 @@ an "Ammo Overhaul test kit" window:
 - "Kill test enemies" kills them for loot checks; "Remove test enemies" deletes them.
 - "Give slice kit" gives the Lexington, Omaha and Yukimura, all six selectors and 60 of each
   round.
+- "Give field kit" gives a gun for every caliber with faction rounds, the 12-gauge pumps, and every
+  faction round with its selector, plus Subsonic, Slugs and Pump N Dump, 60 of each.
 - Below that: your ammo, each test enemy's status, distance, gun, magazine and ammo carried
   (updated twice a second), and the mod's latest log lines.
 - Hotkeys you can bind in the overlay's Hotkeys tab: spawn handgun / rifle / shotgun enemy,
@@ -174,7 +228,20 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
   before running it (the suite gives Mushrooms rounds first).
 - `tools/linux/game-shot.sh out.png`: a screenshot of the game from a headless Hyprland output,
   without touching the screen you're using (`--remove` puts the game back on a real monitor).
-- `tools/icons/check_parts.py`: every `UIIcon` part in the YAML has a cell in the built atlas.
+- `tools/icons/check_parts.py`: every `UIIcon` part in the YAML has a cell in the built atlas,
+  every Rare and up round has its part, and the cells fit the atlas without overlapping.
+- `quickhack.sh [part ...]`: quickhack rounds on live hits, one check per mechanism: effects, overheat,
+  ranks, guarded targets, the cloud, the grenade blast, NPC rolls, netrunner drops, no load sheet, hits
+  on V, shops, known recipes, crafting and breaking down.
+- `faction.sh [part ...]`: faction rounds on live hits, one check per mechanism: who rolls what and
+  how often, the general lists stay clear of them, the turf shops' stock, stats on a gun, one gun's round not touching
+  another, Reloads' roll, Redliners' jam both ways, a jam across a swap, Chrome-cookers on V,
+  Kata's roll, Parts-pullers' components, Kansatsu's short lock and the tag not shortening it, the second five factions' spelling, headshot burns on NPCs and V, stagger, cripple and pump by rank and on V, a gun's crit stats reaching the roll, the last eight factions' spelling and rolls, the Mox and Aldecaldo shops, every rank-aware effect by rank and on V (Pocket Sand, Bad Juju, Cut Off, Last Call, Collect Call), shock and poison spread, Waste Not's refund on NPC and V, Speedloaders' clamp to the pocket, Dogtown Tax on the body, Chimera Scrap on V and NPC, Deniable's unaware bonus, and the Kang Tao and NCPD stats. Draws
+  guns and spawns NPCs: not while you play.
+- To look at icons in the game without a mouse: set the backpack's filter with
+  `UIScriptableSystemSetBackpackFilter` (`filterMode` 14 is all items), open it with
+  `StartHubMenuEvent` and `SetStartMenu("backpack")`, then `game-shot.sh`. The atlas is 2048x4096;
+  a cell that sits right in the lower half means the UVs follow the size.
 
 By hand:
 

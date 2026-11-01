@@ -19,6 +19,8 @@ import tempfile
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
+import faction_art as fa
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ART = ROOT / "art" / "icons"
 FONT = "/usr/share/fonts/gsfonts/NimbusSansNarrow-Bold.otf"
@@ -112,6 +114,8 @@ _TIERS = json.loads((pathlib.Path(__file__).parent / "rounds_tiers.json").read_t
 for _load, (_panel, _stripe) in _TIERS["looks"].items():
     LOOK.setdefault(_load, (tuple(_panel), tuple(_stripe) if _stripe else None))
 LEGENDARY_NAMES = {_n for _n, _r in _TIERS["rounds"].items() if _r.get("tier") == 4}
+FACTION_OF = {_n: _r["faction"] for _n, _r in _TIERS["rounds"].items() if _r.get("faction")}
+HACK_TIER = {_n: _r["tier"] for _n, _r in _TIERS["rounds"].items() if _r.get("tier", 0) >= 10}
 for _name, _r in _TIERS["rounds"].items():
     ROUNDS[_name] = (dict(globals()[_r["shape"]], **_r["over"]), _r["look"], _r["label"])
 
@@ -429,6 +433,176 @@ def form_art(tmp, name, shape, st, lines, i):
                 case=case, plate_aspect=640 / 260, tamper_aspect=160 / 800)
 
 
+# Each faction's rounds, over the load's art, by round shape (docs/superpowers/specs/2026-10-30-faction-rounds-design.md, Art).
+FACTION_ROUND = {
+    "Maelstrom": dict(pistol=dict(case_mat="black", tip="red", tipfrac=0.98), rifle=dict(case_mat="black", tip="red", tipfrac=0.7),
+                      shell=dict(color="black", band="red"), rail=dict(coil="red", core="gunmetal")),
+    "Arasaka": dict(pistol=dict(case_mat="black"), rifle=dict(case_mat="black"), shell=dict(color="black"),
+                    rail=dict(core="gunmetal")),
+    "Scavengers": {},
+    "TygerClaws": dict(pistol=dict(case_mat="nickel", tip="red", tipfrac=0.98), rifle=dict(case_mat="nickel", tip="red", tipfrac=0.7),
+                       shell=dict(color="red")),
+    "Valentinos": dict(pistol=dict(case_mat="gold"), rifle=dict(case_mat="gold"), shell=dict(color="black", band="gold")),
+    "SixthStreet": dict(pistol=dict(case_mat="tarnished", tip="green", tipfrac=0.98), rifle=dict(case_mat="tarnished", tip="green", tipfrac=0.7),
+                        shell=dict(color="green")),
+    "Militech": dict(pistol=dict(case_mat="steel", tip="yellow", tipfrac=0.98), rifle=dict(case_mat="steel", tip="yellow", tipfrac=0.7),
+                     shell=dict(color="black", band="yellow"), rail=dict(coil="yellow", core="gunmetal")),
+    "Animals": dict(pistol=dict(tip="red", tipfrac=0.98), rail=dict(coil="red", core="gunmetal")),
+    "Barghest": dict(pistol=dict(case_mat="tarnished"), rifle=dict(case_mat="tarnished", tip="red", tipfrac=0.7),
+                     rail=dict(coil="red", core="gunmetal")),
+    "VoodooBoys": dict(pistol=dict(case_mat="black", tip="cyan", tipfrac=0.98), rail=dict(coil="cyan", core="gunmetal")),
+    "Wraiths": dict(pistol=dict(case_mat="tarnished"), shell=dict(color="red", band="gold"), rail=dict(coil="green", core="gunmetal")),
+    "Aldecaldos": dict(pistol=dict(tip="copper", tipfrac=0.98)),
+    "TheMox": dict(pistol=dict(case_mat="nickel", tip="pink", tipfrac=0.98), shell=dict(color="pink")),
+    "NCPD": dict(pistol=dict(case_mat="steel", tip="blue", tipfrac=0.98), shell=dict(color="blue")),
+    "KangTao": {},
+    "NUSA": dict(pistol=dict(case_mat="black"), rifle=dict(case_mat="black", tip="purple", tipfrac=0.7),
+                 rail=dict(coil="purple", core="gunmetal")),
+}
+
+
+# Where the crest goes on rounds without a plain case, as a fraction of the length: the cassette's lid
+# between its bands, the Ashura's solid nose past its open frame.
+FACTION_CREST = dict(cassette=0.42, ashura=0.84)
+
+
+# Quickhack rounds' cartridge colours, from the game's rarity colours.
+HACK_COLOUR = {10: (58, 196, 96), 11: (54, 134, 240), 12: (170, 76, 232), 13: (255, 158, 40)}
+# The cartridge shell: deep shades of those, so the lit mark stands out against it.
+HACK_SHELL = {10: (20, 84, 54), 11: (20, 50, 116), 12: (66, 28, 104)}
+HACK_BAND = {10: "green", 11: "blue", 12: "purple", 13: "orange"}
+
+
+def hack_form(tmp, name, shape, look, lines, tier, i):
+    """A quickhack round's form, with the hack's mark printed for it; a spec for scene.py."""
+    tmp = pathlib.Path(tmp)
+    L, R = extent(shape)
+    case = case_dims(L, R)
+    stem, colour = look[4:-1], HACK_COLOUR[tier]
+    art = tmp / f"{name}-mark.png"
+    if tier == 13:
+        fa.hack_core(art, 1024, stem, colour)
+        return dict(form="hack_legend", case=case, R=R, mark=str(art), colour=linear(colour), seed=i + 1)
+    tag = tmp / f"{name}-tag.png"
+    fa.hack_lid(art, 1200, round(1200 * case["D"] / case["W"]), stem, colour, lines[1], i + 1)
+    fa.hack_tag(tag, 700, 260, colour, lines[1], i + 1)
+    return dict(form="hack_cart", case=case, R=R, lid=str(art), tag=str(tag), colour=linear(colour), shell=linear(HACK_SHELL[tier]), seed=i + 1)
+
+
+def faction_form(tmp, name, shape, faction, take, lines, i):
+    """The faction's form and its printed parts, each drawn to the face it goes on; a spec for scene.py."""
+    tmp = pathlib.Path(tmp)
+    L, R = extent(shape)
+    accent = linear((196, 18, 22))
+    if faction == "Arasaka":
+        case = case_dims(L, R)
+        label, printed = tmp / f"{name}-label.png", tmp / f"{name}-print.png"
+        fa.ara_label(label, round(1200 * case["W"] / max(case["W"], case["D"])), round(1200 * case["D"] / max(case["W"], case["D"])))
+        fa.ara_print(printed, L, R, FACTION_CREST.get(shape["kind"], 0.28))
+        return dict(form="ara_case", case=case, R=R, accent=accent, label=str(label), print=str(printed),
+                    print_up=shape["kind"] == "cassette")
+    if faction == "TygerClaws":
+        case = case_dims(L, R)
+        label = tmp / f"{name}-label.png"
+        fa.tyger_label(label, 1200, round(1200 * case["D"] / case["W"]))
+        return dict(form="tyger_box", case=case, R=R, label=str(label))
+    if faction == "Valentinos":
+        case = case_dims(L, R)
+        label = tmp / f"{name}-label.png"
+        fa.val_label(label, 1200, round(1200 * case["D"] / case["W"]), name.endswith("santamuerte"))
+        return dict(form="val_cigar", case=case, R=R, label=str(label))
+    if faction == "SixthStreet":
+        case = case_dims(L, R)
+        case = dict(case, W=case["W"] * 1.12, D=case["D"] * 1.1, H=max(case["H"] * 1.5, case["W"] * 0.4))
+        front, flag = tmp / f"{name}-front.png", tmp / f"{name}-flag.png"
+        fa.six_wall(front, 1536, round(1536 * case["H"] * 0.9 / (case["W"] * 0.9)), i + 1)
+        fa.six_flag(flag, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="six_crate", case=case, R=R, front=str(front), flag=str(flag), seed=i + 1)
+    if faction == "Militech":
+        d = max(R * 2 * 1.5, L * 0.3)
+        cols = max(4, round(1.9 * L / d))
+        rows = max(3, round(cols * 0.6))
+        W, D = cols * d, rows * d
+        H = max(L * 1.1, W * 0.3)
+        lid, front = tmp / f"{name}-lid.png", tmp / f"{name}-front.png"
+        fa.mil_lid(lid, 1200, round(1200 * D / W), i + 1)
+        fa.mil_front(front, 1536, round(1536 * H * 0.62 / (W * 0.94)), i + 1)
+        return dict(form="mil_case", case=dict(W=W, D=D, H=H, d=d, cols=cols, rows=rows), lid=str(lid), front=str(front), seed=i + 1)
+    if faction == "Animals":
+        Rt = max(L * 0.72, R * 5)
+        H = Rt * 1.3
+        label = tmp / f"{name}-label.png"
+        fa.tub_label(label, 1800, round(1800 * H * 0.82 / (Rt * 3.2)))
+        return dict(form="animal_tub", tub=dict(R=Rt, H=H), rad=R, label=str(label), seed=i + 1)
+    if faction == "Barghest":
+        case = case_dims(L, R)
+        case = dict(case, H=max(case["H"] * 1.5, case["W"] * 0.42))
+        front, lid = tmp / f"{name}-front.png", tmp / f"{name}-lid.png"
+        fa.bar_front(front, 1536, round(1536 * case["H"] * 0.8 / (case["W"] * 0.9)), i + 1)
+        fa.bar_lid(lid, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="bar_can", case=case, R=R, front=str(front), lid=str(lid), seed=i + 1)
+    if faction == "VoodooBoys" and name.endswith("collectcall"):
+        case = case_dims(L, R)
+        screen = tmp / f"{name}-screen.png"
+        fa.deck_screen(screen, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="vdb_deck", case=case, R=R, screen=str(screen), seed=i + 1)
+    if faction == "VoodooBoys":
+        W = max(L * 2.1, R * 11)
+        mark = tmp / f"{name}-mark.png"
+        fa.vdb_mark(mark, 800, 800 * 78 // 100, i + 1)
+        return dict(form="vdb_shrine", W=W, D=W * 0.8, R=R, mark=str(mark), seed=i + 1)
+    if faction == "Wraiths":
+        W = max(L * 1.7, R * 10)
+        D, H = W * 0.62, W * 0.92
+        wall = tmp / f"{name}-wall.png"
+        fa.wraith_wall(wall, 1400, round(1400 * H * 0.5 / (W * 0.8)), i + 1)
+        return dict(form="wraith_can", can=dict(W=W, D=D, H=H), R=R, wall=str(wall), seed=i + 1)
+    if faction == "Aldecaldos":
+        case = case_dims(L, R)
+        case = dict(case, H=case["H"] * 0.8)
+        label = tmp / f"{name}-label.png"
+        fa.nomad_lid(label, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="nomad_tin", case=case, R=R, label=str(label), seed=i + 1)
+    if faction == "TheMox":
+        case = case_dims(L, R)
+        plate = tmp / f"{name}-plate.png"
+        fa.mox_plate(plate, 640, 200)
+        return dict(form="mox_clutch", case=case, R=R, plate=str(plate), seed=i + 1)
+    if faction == "NCPD":
+        case = case_dims(L, R)
+        label = tmp / f"{name}-label.png"
+        fa.ncpd_label(label, 1200, 620, i + 1)
+        return dict(form="ncpd_bag", case=case, R=R, label=str(label), seed=i + 1)
+    if faction == "KangTao":
+        case = case_dims(L, R)
+        lid = tmp / f"{name}-lid.png"
+        fa.kang_lid(lid, 1200, round(1200 * case["D"] / case["W"]))
+        return dict(form="kang_case", case=case, R=R, lid=str(lid), seed=i + 1)
+    if faction == "NUSA":
+        case = case_dims(L, R)
+        case = dict(case, H=max(case["H"] * 1.3, case["W"] * 0.32))
+        lid = tmp / f"{name}-lid.png"
+        fa.nusa_lid(lid, 1200, round(1200 * case["D"] / case["W"]), i + 1)
+        return dict(form="nusa_box", case=case, R=R, lid=str(lid), seed=i + 1)
+    if faction == "Maelstrom":
+        d = R * 2 * 1.03
+        cols = max(4, round(1.8 * L / d))
+        rows = max(2, round(cols * 0.4))
+        W, D, H = cols * d, rows * d, cols * d * 0.62
+        wall = pathlib.Path(tmp) / f"{name}-wall.png"
+        k = 1024 / W
+        fa.mael_wall(wall, 1024, round((H * 0.84) * k), i + 1)
+        return dict(form="mael_can", can=dict(W=W, D=D, H=H, d=d, cols=cols, rows=rows), front=str(wall), seed=i + 1)
+    if take == "flat":
+        d = R * 2 * 1.06
+        W, D, H = L * 2.1, L * 1.5, L * 0.55
+        front, end = tmp / f"{name}-front.png", tmp / f"{name}-end.png"
+        fa.flat_front(front, 1536, round(1536 * H / W), lines[0], i + 1)
+        fa.flat_side(end, 768, round(768 * H / D), i + 1)
+        return dict(form="scav_flat", flat=dict(W=W, D=D, H=H, d=d), R=R, front=str(front), side=str(end), seed=i + 1)
+    return dict(form=f"scav_{take}", R=R, seed=i + 1)
+
+
 def run(spec, tmp):
     sp = pathlib.Path(tmp) / "spec.json"
     sp.write_text(json.dumps(spec))
@@ -446,6 +620,8 @@ def main():
     ap.add_argument("--out", default=str(ART))
     ap.add_argument("--legendary", default="crimson", choices=sorted(LEGENDARY), help="Legendary look")
     ap.add_argument("--form", default="case", choices=("box", "case", "hero"), help="Legendary form")
+    ap.add_argument("--scav", default="flat", choices=("tray", "pile", "flat"), help="Scavenger form")
+    ap.add_argument("--size", type=int, default=1024)
     args = ap.parse_args()
     names = args.only.split(",") if args.only else list(ROUNDS)
     out = pathlib.Path(args.out)
@@ -456,6 +632,19 @@ def main():
             legendary = LEGENDARY[args.legendary] if name in LEGENDARY_NAMES else None
             if legendary:
                 shape = dict(shape, **legendary["round"].get(shape["kind"], {}))
+            if name in HACK_TIER:
+                shape = dict(shape, idband=HACK_BAND[HACK_TIER[name]])
+                run({"mode": "box", "out": str(out / f"{name}.png"), "round": shape, "samples": args.samples, "size": args.size,
+                     "box": hack_form(tmp, name, shape, look, lines, HACK_TIER[name], i)}, tmp)
+                print(name, flush=True)
+                continue
+            faction = FACTION_OF.get(name)
+            if faction:
+                shape = dict(shape, **FACTION_ROUND[faction].get(shape["kind"], {}))
+                run({"mode": "box", "out": str(out / f"{name}.png"), "round": shape, "samples": args.samples, "size": args.size,
+                     "box": faction_form(tmp, name, shape, faction, args.scav, lines, i)}, tmp)
+                print(name, flush=True)
+                continue
             if args.rounds:
                 run({"mode": "round", "out": str(out / f"{name}-ref.png"), "round": shape,
                      "samples": args.samples}, tmp)

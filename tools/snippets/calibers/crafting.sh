@@ -54,6 +54,7 @@ return pf(m[$4] == $5 and others == 0 and q('$1') == $left) .. '$6: $3 rounds gi
 LIGHT=$(lua 'return tostring(TweakDB:GetFlat("AmmoOverhaul.Tech_Light.defaultAmmo"))')
 SMART=$(lua 'return tostring(TweakDB:GetFlat("AmmoOverhaul.Smart_10.defaultAmmo"))')
 scrapcase Ammo.AO_9mm_SteelCore 200 200 3 2 "Power Rare 9mm" 20
+scrapcase Ammo.AO_9mm_GutterLead 200 200 2 2 "Scav Uncommon 9mm" 20
 scrapcase "$SMART" 100 100 1 2 "Smart 10mm Common" 10
 scrapcase "$LIGHT" 360 360 1 2 "light rail Common"
 # Only full batches are broken down: leftover rounds stay in the stack.

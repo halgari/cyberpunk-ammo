@@ -51,6 +51,12 @@ AmmoOverhaul.roll.Power.dudChance: -1.0
 AmmoOverhaul.roll.Power.dudMult: -1.0
 AmmoOverhaul.roll.Power.hotChance: -1.0
 AmmoOverhaul.roll.Power.hotMult: -1.0
+AmmoOverhaul.roll.Scavengers.min: 0.70
+AmmoOverhaul.roll.Scavengers.max: 1.15
+AmmoOverhaul.roll.Scavengers.dudChance: 0.08
+AmmoOverhaul.roll.Scavengers.dudMult: 0.25
+AmmoOverhaul.roll.Scavengers.hotChance: 0.05
+AmmoOverhaul.roll.Scavengers.hotMult: 1.5
 AmmoOverhaul.roll.Tech.min: -1.0
 AmmoOverhaul.roll.Tech.max: -1.0
 AmmoOverhaul.roll.Tech.dudChance: -1.0
@@ -101,6 +107,69 @@ AmmoOverhaul.PingTag:
         modifierType: Additive
         value: 5
 
+# Leg Day: the game's crippled legs, which never end by themselves, for a minute.
+AmmoOverhaul.CrippledLegs:
+  $base: BaseStatusEffect.CrippledLeg
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 60
+
+# Bad Juju: the game's cyberpsychosis effect, for 20 seconds rather than 60.
+AmmoOverhaul.JujuMadness:
+  $base: BaseStatusEffect.MandessLevel4PlusPlus
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 20
+
+# Protein Loads: what a kill gives the shooter.
+AmmoOverhaul.Pumped:
+  $base: BaseStatusEffect.Sovereign_Speed_Buff
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 10
+  maxStacks:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxStacks
+        modifierType: Additive
+        value: 3
+  packages:
+    - $type: gamedataGameplayLogicPackage_Record
+      stackable: true
+      effectors:
+        - $type: gamedataApplyStatGroupEffector_Record
+          effectorClassName: ApplyStatGroupEffector
+          prereqRecord: Prereqs.AlwaysTruePrereq
+          statGroup:
+            $type: gamedataStatModifierGroup_Record
+            statModsLimit: -1
+            statModifiers:
+              - $type: ConstantStatModifier
+                statType: BaseStats.MaxSpeed
+                modifierType: AdditiveMultiplier
+                value: 0.06
+              - $type: ConstantStatModifier
+                statType: BaseStats.ReloadTimeBonus
+                modifierType: Additive
+                value: -0.1
+
 # Lockout's jam (Legendary smart rounds): the weapon malfunction Hack Carrier uses, 4 s instead of
 # its 14 s, on NPCs and V alike.
 AmmoOverhaul.LockoutJam:
@@ -113,6 +182,18 @@ AmmoOverhaul.LockoutJam:
         statType: BaseStats.MaxDuration
         modifierType: Additive
         value: 4
+
+# Redliners' jam of the shooter's own gun: the same malfunction, 3 s.
+AmmoOverhaul.RedlinerJam:
+  $base: BaseStatusEffect.WeaponMalfunction
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 3
 
 # Cook-off's blast (CookOff.reds), at a killed NPC and on V with V's grenade: physical damage of
 # 35% of each target's max health, V and NPCs alike. Attacks.Explosion alone does 1 damage when set
@@ -127,6 +208,121 @@ AmmoOverhaul.CookOffBlast:
       refObject: Target
       opSymbol: '*'
       value: 0.35
+
+# Chimera Scrap's blast for an NPC's shots: an NPC's attack can't carry the Firecracker package V's
+# does (FactionRounds.Blast). A small share of each target's health, as V's blast is small.
+AmmoOverhaul.ScrapBlast:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  statModifiers:
+    - $type: CombinedStatModifier
+      statType: BaseStats.PhysicalDamage
+      modifierType: Additive
+      refStat: BaseStats.Health
+      refObject: Target
+      opSymbol: '*'
+      value: 0.01
+
+# The Clap: what catches on from a poisoned target, BaseContagionPoison not spreading by itself. The
+# engine drops an attack record's status effects when script sets one off, so the hit hook adds it
+# (aoCloudEffect, AmmoFeedSystem.ApplyAmmoOnHit).
+AmmoOverhaul.ClapCloud:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 4
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.ClapCloud.aoCloudEffect: "BaseStatusEffect.BaseContagionPoison"
+
+# Hack rounds (docs/superpowers/specs/2026-10-31-quickhack-rounds-design.md): a smart gun's chance of one by
+# rank (HackRounds.Roll), and a netrunner's stack on its body.
+AmmoOverhaul.npcHackChance.Normal: 0.03
+AmmoOverhaul.npcHackChance.Rare: 0.03
+AmmoOverhaul.npcHackChance.Officer: 0.05
+AmmoOverhaul.npcHackChance.Elite: 0.08
+AmmoOverhaul.npcHackChance.Boss: 0.12
+AmmoOverhaul.npcHackChance.MaxTac: 0.12
+AmmoOverhaul.hackLegendaryShare: 0.1
+AmmoOverhaul.hackDropStack: 10
+# Gun shops stock them to Rare, and the netrunner vendors to Epic.
+AmmoOverhaul.hackShopChance: 0.5
+AmmoOverhaul.hackShopStack: 15
+Vendors.wbr_jpn_netrunner_01.aoHackShop: true
+Vendors.wbr_jpn_netrunner_02.aoHackShop: true
+Vendors.cz_stadium_netrunner_01.aoHackShop: true
+Vendors.wat_lch_netrunner_01.aoHackShop: true
+Vendors.cz_con_netrunner_01.aoHackShop: true
+Vendors.wat_kab_netrunner_01.aoHackShop: true
+Vendors.hey_rey_netrunner_01.aoHackShop: true
+
+# Legendary Cyberpsychosis: the
+# game's own at 30 seconds, not 58. Contagion catches on as The Clap does, wider with the rarity; the
+# clouds leave V and quest NPCs alone. Detonate Grenade is a blast at the target: the game's needs a
+# grenade on the belt.
+AmmoOverhaul.MadnessHack:
+  $base: BaseStatusEffect.MandessLevel4
+  duration:
+    $type: gamedataStatModifierGroup_Record
+    statModsLimit: -1
+    statModifiers:
+      - $type: ConstantStatModifier
+        statType: BaseStats.MaxDuration
+        modifierType: Additive
+        value: 30
+
+AmmoOverhaul.HackCloud1:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 2
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.HackCloud1.aoCloudEffect: "BaseStatusEffect.ContagionPoison"
+AmmoOverhaul.HackCloud1.aoCloudHack: true
+
+AmmoOverhaul.HackCloud2:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 3
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.HackCloud2.aoCloudEffect: "BaseStatusEffect.ContagionPoisonLvl2"
+AmmoOverhaul.HackCloud2.aoCloudHack: true
+
+AmmoOverhaul.HackCloud3:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 4
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.HackCloud3.aoCloudEffect: "BaseStatusEffect.ContagionPoisonLvl3"
+AmmoOverhaul.HackCloud3.aoCloudHack: true
+
+AmmoOverhaul.HackCloud4:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 5
+  statModifiers: []
+  hitFlags: []
+AmmoOverhaul.HackCloud4.aoCloudEffect: "BaseStatusEffect.ContagionPoisonLvl4"
+AmmoOverhaul.HackCloud4.aoCloudHack: true
+
+AmmoOverhaul.HackBlast:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 3
+  statModifiers:
+    - $type: CombinedStatModifier
+      statType: BaseStats.PhysicalDamage
+      modifierType: Additive
+      refStat: BaseStats.Health
+      refObject: Target
+      opSymbol: '*'
+      value: 0.25
+
+AmmoOverhaul.HackBlastBig:
+  $base: Attacks.ChimeraPowerMod_BulletExplosion
+  range: 5
+  statModifiers:
+    - $type: CombinedStatModifier
+      statType: BaseStats.PhysicalDamage
+      modifierType: Additive
+      refStat: BaseStats.Health
+      refObject: Target
+      opSymbol: '*'
+      value: 0.5
 
 # --- NPCs --------------------------------------------------------------------------------------
 # Magazines of ammo an NPC carries for each gun it draws, by NPC rarity (NpcAmmo.reds). Rounds
@@ -177,6 +373,85 @@ AmmoOverhaul.npcLegendaryChance.Officer: 0.0
 AmmoOverhaul.npcLegendaryChance.Elite: 0.03
 AmmoOverhaul.npcLegendaryChance.Boss: 0.10
 AmmoOverhaul.npcLegendaryChance.MaxTac: 0.10
+# Faction rounds (FactionRounds.reds): the faction an NPC's affiliation record belongs to, by the
+# record's EnumName; anything else gets none.
+# Turf gun shops: shops hand-picked to a faction by their district (no shop has a faction of its own,
+# Vendors.*.faction is Unaffiliated on all of them). Each stock build adds FactionRounds.TurfStock.
+Vendors.wat_nid_gunsmith_01.aoFaction: "Maelstrom"
+Vendors.cct_dtn_guns_01.aoFaction: "Arasaka"
+# Arasaka's rounds are all Epic and no shop sells Epic, except this one, these, in a small stack.
+Vendors.cct_dtn_guns_01.aoTurfAmmo: ["Ammo.AO_9mm_Shinobi", "Ammo.AO_45_Shinobi"]
+Vendors.cct_dtn_guns_01.aoTurfStack: 10
+Vendors.wat_kab_gunsmith_02.aoFaction: "Scavengers"
+Vendors.std_arr_gunsmith_01.aoFaction: "Scavengers"
+Vendors.wat_kab_gunsmith_01.aoFaction: "TheMox"
+# The Mox's rounds are both Epic, so this shop lists them too, in a small stack.
+Vendors.wat_kab_gunsmith_01.aoTurfAmmo: ["Ammo.AO_9mm_CutOff", "Ammo.AO_45_CutOff", "Ammo.AO_9mm_LastCall", "Ammo.AO_12mm_LastCall"]
+Vendors.wat_kab_gunsmith_01.aoTurfStack: 10
+Vendors.bls_ina_se5_gunsmith_01.aoFaction: "Aldecaldos"
+AmmoOverhaul.turfChance: 0.25
+AmmoOverhaul.turfStack: 30
+AmmoOverhaul.factionOf.Maelstrom: "Maelstrom"
+AmmoOverhaul.factionOf.MaelstromAndroid: "Maelstrom"
+AmmoOverhaul.factionOf.Scavengers: "Scavengers"
+AmmoOverhaul.factionOf.ScavengersAndroid: "Scavengers"
+AmmoOverhaul.factionOf.Arasaka: "Arasaka"
+AmmoOverhaul.factionOf.TygerClaws: "TygerClaws"
+AmmoOverhaul.factionOf.Valentinos: "Valentinos"
+AmmoOverhaul.factionOf.SixthStreet: "SixthStreet"
+AmmoOverhaul.factionOf.SixthStreetAndroid: "SixthStreet"
+AmmoOverhaul.factionOf.Militech: "Militech"
+AmmoOverhaul.factionOf.Animals: "Animals"
+AmmoOverhaul.factionOf.Barghest: "Barghest"
+AmmoOverhaul.factionOf.VoodooBoys: "VoodooBoys"
+AmmoOverhaul.factionOf.Wraiths: "Wraiths"
+AmmoOverhaul.factionOf.WraithsAndroid: "Wraiths"
+AmmoOverhaul.factionOf.Aldecaldos: "Aldecaldos"
+AmmoOverhaul.factionOf.TheMox: "TheMox"
+AmmoOverhaul.factionOf.NCPD: "NCPD"
+AmmoOverhaul.factionOf.KangTao: "KangTao"
+AmmoOverhaul.factionOf.NUSA: "NUSA"
+AmmoOverhaul.factionOf.NUSA_Myers: "NUSA"
+# Chance per gun of a faction round, after the Legendary roll and before the general tiers (a miss
+# falls through): Epic, then Rare.
+AmmoOverhaul.npcFactionEpicChance.Trash: 0.0
+AmmoOverhaul.npcFactionEpicChance.Weak: 0.0
+AmmoOverhaul.npcFactionEpicChance.Normal: 0.0
+AmmoOverhaul.npcFactionEpicChance.Rare: 0.03
+AmmoOverhaul.npcFactionEpicChance.Officer: 0.05
+AmmoOverhaul.npcFactionEpicChance.Elite: 0.10
+AmmoOverhaul.npcFactionEpicChance.Boss: 0.15
+AmmoOverhaul.npcFactionEpicChance.MaxTac: 0.0
+# Arasaka has only Epic rounds, so it has its own Epic table.
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Trash: 0.0
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Weak: 0.0
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Normal: 0.05
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Rare: 0.10
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Officer: 0.15
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Elite: 0.20
+AmmoOverhaul.npcFactionEpicChance.Arasaka.Boss: 0.25
+AmmoOverhaul.npcFactionEpicChance.Arasaka.MaxTac: 0.0
+AmmoOverhaul.npcFactionChance.Trash: 0.0
+AmmoOverhaul.npcFactionChance.Weak: 0.05
+AmmoOverhaul.npcFactionChance.Normal: 0.10
+AmmoOverhaul.npcFactionChance.Rare: 0.15
+AmmoOverhaul.npcFactionChance.Officer: 0.20
+AmmoOverhaul.npcFactionChance.Elite: 0.25
+AmmoOverhaul.npcFactionChance.Boss: 0.30
+AmmoOverhaul.npcFactionChance.MaxTac: 0.0
+# A faction's Legendary (Collect Call), rolled before its Epic: a miss falls through to it.
+AmmoOverhaul.npcFactionLegendaryChance.Officer: 0.01
+AmmoOverhaul.npcFactionLegendaryChance.Elite: 0.03
+AmmoOverhaul.npcFactionLegendaryChance.Boss: 0.10
+# NUSA is the rare one: half the Epic chance, and it has nothing below Epic.
+AmmoOverhaul.npcFactionEpicChance.NUSA.Rare: 0.015
+AmmoOverhaul.npcFactionEpicChance.NUSA.Officer: 0.025
+AmmoOverhaul.npcFactionEpicChance.NUSA.Elite: 0.05
+AmmoOverhaul.npcFactionEpicChance.NUSA.Boss: 0.075
+# Crafting components a Parts-pullers kill leaves on the body.
+AmmoOverhaul.partsPullerGive: 2
+# Eddies a Dogtown Tax kill leaves on the body.
+AmmoOverhaul.dogtownTaxGive: 100
 # Loot containers holding an Epic round: each ammo stack's chance to be its caliber's Legendary.
 AmmoOverhaul.lootLegendaryChance: 0.002
 # How hard a Mule Kick shot shoves V, in m/s (MuleKick.reds; the user's pick in play, 2026-10-30).

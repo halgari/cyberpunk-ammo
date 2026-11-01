@@ -20,7 +20,7 @@ public abstract class AOData {
     return TweakDBInterface.GetForeignKey(path, TDBID.None());
   }
 
-  private static func GetIDs(path: TweakDBID) -> array<TweakDBID> {
+  public static func GetIDs(path: TweakDBID) -> array<TweakDBID> {
     let ids: array<TweakDBID>;
     for value in TweakDBInterface.GetStringArray(path) {
       ArrayPush(ids, TDBID.Create(value));
@@ -166,10 +166,14 @@ public abstract class AOData {
   // The selectors of a tier, in the order the caliber lists them (empty if it has none).
   public static func SelectorsForTier(caliber: String, tier: Int32) -> array<TweakDBID> {
     let out: array<TweakDBID>;
-    for selector in AOData.Selectors(caliber) {
-      if AOData.SelectorTier(caliber, selector) == tier {
-        ArrayPush(out, selector);
+    let selectors: array<TweakDBID> = AOData.Selectors(caliber);
+    let tiers: array<Int32> = TweakDBInterface.GetIntArray(AOData.Key(caliber, "selectorTiers"));
+    let i: Int32 = 0;
+    while i < ArraySize(selectors) && i < ArraySize(tiers) {
+      if tiers[i] == tier {
+        ArrayPush(out, selectors[i]);
       }
+      i += 1;
     }
     return out;
   }
@@ -288,6 +292,39 @@ public abstract class AOData {
       }
     }
     return "";
+  }
+
+  // The faction whose rounds `npc` carries, from its character record's affiliation
+  // (AmmoOverhaul.factionOf.<EnumName>); "" for everyone else.
+  public static func FactionOf(npc: ref<NPCPuppet>) -> String {
+    let record: ref<Character_Record> = TweakDBInterface.GetCharacterRecord(npc.GetRecordID());
+    if !IsDefined(record) || !IsDefined(record.Affiliation()) {
+      return "";
+    }
+    return TweakDBInterface.GetString(TDBID.Create("AmmoOverhaul.factionOf." + NameToString(record.Affiliation().EnumName())), "");
+  }
+
+  // The chance an NPC of `rarity` carries a faction round in a gun, Epic or not (0: never): the
+  // shared table, or `faction`'s own if it has one for that rank (Arasaka's Epic).
+  public static func FactionChance(rarity: String, faction: String, epic: Bool) -> Float {
+    let table: String = epic ? "AmmoOverhaul.npcFactionEpicChance." : "AmmoOverhaul.npcFactionChance.";
+    return TweakDBInterface.GetFloat(TDBID.Create(table + faction + "." + rarity),
+      TweakDBInterface.GetFloat(TDBID.Create(table + rarity), 0.0));
+  }
+
+  public static func FactionLegendaryChance(rarity: String) -> Float {
+    return TweakDBInterface.GetFloat(TDBID.Create("AmmoOverhaul.npcFactionLegendaryChance." + rarity), 0.0);
+  }
+
+  // The selectors of a tier whose rounds belong to `faction`.
+  public static func SelectorsForFaction(caliber: String, faction: String, tier: Int32) -> array<TweakDBID> {
+    let out: array<TweakDBID>;
+    for selector in AOData.SelectorsForTier(caliber, tier) {
+      if Equals(TweakDBInterface.GetString(AOData.Flat(AOData.SelectorAmmo(caliber, selector), "aoFaction"), ""), faction) {
+        ArrayPush(out, selector);
+      }
+    }
+    return out;
   }
 
   // A round's tier, or -1 if it isn't one of the mod's.
@@ -422,6 +459,21 @@ public abstract class AOData {
   //   <ammo>.aoNonlethal: a kill knocks the target out instead
   //   <ammo>.aoCookOff: a kill sets off a blast at the body, a hit on V V's grenade (CookOff.reds)
   //   <ammo>.aoMuleKick: knocks the target down and shoves V on each shot (MuleKick.reds)
+  //   <ammo>.aoSelfJam: each shot's chance to jam the shooter's own gun (FactionRounds.reds)
+  //   <ammo>.aoPartsPuller: V's kill leaves crafting components on the body (FactionRounds.reds)
+  //   <ammo>.aoHeadEffect: a status effect added on a headshot; <ammo>.aoHeadFallback: its chance
+  //     per hit on V, if the game doesn't flag headshots on V (FactionRounds.reds)
+  //   <ammo>.aoStopChance: each shot's chance to stagger the target (FactionRounds.reds)
+  //   <ammo>.aoLegChance: each shot's chance to cripple the target's legs (FactionRounds.reds)
+  //   <ammo>.aoPumped: a kill buffs the shooter (FactionRounds.reds)
+  //   <ammo>.aoEddies: V's kill leaves eddies on the body (FactionRounds.reds)
+  //   <ammo>.aoNpcBlast: an attack set off at the target of an NPC's hit (FactionRounds.reds)
+  //   <ammo>.aoEffectBlast: an attack set off at the target when an on-hit effect lands
+  //   <ammo>.aoFreeShot: each shot's chance not to use a round (FactionRounds.reds)
+  //   <ammo>.aoUnawareBonus: damage factor against NPCs not in combat
+  //   <ammo>.aoRankEffect, aoRankChance: an effect per shot, by the target's rank; aoRankPlayer is
+  //     what V gets, aoRankTough what ranks from aoRankToughFrom up and machines get (none without
+  //     it), aoRankDelay the seconds before it lands (FactionRounds.reds)
 
   public static func HitEffects(ammo: TweakDBID, out chances: array<Float>) -> array<TweakDBID> {
     let effects: array<TweakDBID> = AOData.GetIDs(AOData.Flat(ammo, "aoEffects"));
@@ -444,10 +496,13 @@ public abstract class AOData {
       case "BaseStatusEffect.MediumBurning":
         return t"BaseStatusEffect.PlayerBurning";
       case "BaseStatusEffect.Poisoned":
+      case "BaseStatusEffect.BaseContagionPoison":
+      case "BaseStatusEffect.HeavyPoision":
         return t"BaseStatusEffect.PlayerPoisoned";
       case "BaseStatusEffect.Bleeding":
         return t"BaseStatusEffect.PlayerBleeding";
       case "BaseStatusEffect.EMP":
+      case "BaseStatusEffect.Electrocuted":
         return t"BaseStatusEffect.PlayerElectrocuted";
       default:
         return effect;
@@ -484,6 +539,72 @@ public abstract class AOData {
 
   public static func MuleKick(ammo: TweakDBID) -> Bool {
     return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoMuleKick"), false);
+  }
+
+  public static func SelfJam(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoSelfJam"), 0.0);
+  }
+
+  public static func PartsPuller(ammo: TweakDBID) -> Bool {
+    return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoPartsPuller"), false);
+  }
+
+  public static func HeadEffect(ammo: TweakDBID) -> TweakDBID {
+    let name: String = TweakDBInterface.GetString(AOData.Flat(ammo, "aoHeadEffect"), "");
+    return StrLen(name) > 0 ? TDBID.Create(name) : TDBID.None();
+  }
+
+  public static func HeadFallback(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoHeadFallback"), 0.0);
+  }
+
+  public static func StopChance(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoStopChance"), 0.0);
+  }
+
+  public static func LegChance(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoLegChance"), 0.0);
+  }
+
+  public static func Eddies(ammo: TweakDBID) -> Bool {
+    return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoEddies"), false);
+  }
+
+  // A blast record by flat name (aoNpcBlast, aoEffectBlast), invalid if unset.
+  public static func BlastRecord(ammo: TweakDBID, flat: String) -> TweakDBID {
+    let name: String = TweakDBInterface.GetString(AOData.Flat(ammo, flat), "");
+    return StrLen(name) > 0 ? TDBID.Create(name) : TDBID.None();
+  }
+
+  public static func FreeShot(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoFreeShot"), 0.0);
+  }
+
+  public static func UnawareBonus(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoUnawareBonus"), 1.0);
+  }
+
+  public static func RankChance(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoRankChance"), 0.0);
+  }
+
+  public static func RankDelay(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoRankDelay"), 0.0);
+  }
+
+  // A rank effect's or cloud's record by flat name (aoRankEffect, aoRankTough, aoRankPlayer,
+  // aoCloudEffect on an attack), invalid if unset.
+  public static func RankRecord(ammo: TweakDBID, flat: String) -> TweakDBID {
+    let name: String = TweakDBInterface.GetString(AOData.Flat(ammo, flat), "");
+    return StrLen(name) > 0 ? TDBID.Create(name) : TDBID.None();
+  }
+
+  public static func RankToughFrom(ammo: TweakDBID) -> String {
+    return TweakDBInterface.GetString(AOData.Flat(ammo, "aoRankToughFrom"), "Boss");
+  }
+
+  public static func Pumped(ammo: TweakDBID) -> Bool {
+    return TweakDBInterface.GetBool(AOData.Flat(ammo, "aoPumped"), false);
   }
 
   public static func IsNonlethal(ammo: TweakDBID) -> Bool {

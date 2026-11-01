@@ -24,9 +24,13 @@ version). The attack is a hitscan ray (Power and Tech guns) or a projectile (Sma
 carry its own status effects, hit flags, stamina cost and an `explosionAttack`. So the package
 override is the general hook for "what this ammo does on hit", with no script.
 
-Untested: NPC shots with an overridden package (the NPC attack is separate, and the Metel's NPC
-attack has no explosion); a second override on the same gun (iconics with their own package,
-the Chimera mod); whether the engine re-applies the override after loading a save.
+NPC shots ignore an overridden package: the selector's `OnAttach` reaches V's attack only, and an
+NPC's gun fires its own (Chimera Scrap's NPC side is a script blast, `AmmoOverhaul.ScrapBlast`, for
+that reason). Attacks made from script drop the record's `statusEffects`, so the status has to be
+added in the hit hook (The Clap's cloud).
+
+Untested: a second override on the same gun (iconics with their own package, the Chimera mod);
+whether the engine re-applies the override after loading a save.
 
 ## Damage on hit
 
@@ -93,8 +97,43 @@ Other ways vanilla adds blasts: `TriggerAttackEffector` sets off a separate atta
   burning). Extra stacks don't add damage: with 8 allowed, they ran one after another (16 s of the
   same burn), because `removeAllStacksWhenDurationEnds` is false. So per-pellet burns don't add up;
   pellets just keep one burn going.
+- **Headshots:** `hitFlag.Headshot` is set before `ProcessStatusEffects`, and helmet hits lose it
+  (chest 0/12, head 11/15). `ProcessLocalizedDamage` returns early for any non-player instigator, so
+  NPCs' hits never carry the flag: an NPC's headshot stats and head effects do nothing.
+- **Crits:** a gun's `CritChance` and `CritDamage` reach the roll and are in percent (DamageSystem
+  divides by 100), so +15% is `15.0`. Gold Tips went from 3 crits in 80 hits to 16.
+- **Blind on NPCs:** `ShortBlind` 2 s, `ModerateBlind` 4 s, `Blind` 5 s. An NPC left alone landed 0
+  hits in 15 s (12 sighted), about half as few under fire (11 against 25). Elites and Bosses aren't
+  immune, so a round needs a rank rule. `AIQuickHackStatusEffect.HackBlind` on V is edge glitches
+  and an icon, not a black screen.
+- **Stagger:** `ForceStagger` has no end on V and V plays nothing for it. V's stagger is any
+  `Stunned`-type effect, which plays `StaggerHit`: `BlockBroken` is 1 s.
+- **Legs:** `CrippledLeg` on an NPC roots it for good (Leg Day's copy lasts 60 s), and it keeps shooting (6 hits on V against 8
+  healthy). `MetelKurtMod_*` and `Kurtz_Metel_Dismembered*` force a kill. `ShotgunMod2_*Leg` alone
+  does nothing visible: it counts pellets for Kneel!.
+- **Per-target quickhack cost:** a wrap of `ScriptableDeviceAction.GetCost` reading an effect on
+  `GetRequesterID()` halved the cost on one NPC (2 against 4). The hack menu's number wasn't checked.
+- **Not available:** no tracer visuals through stats, and `WeaponNoise` is dead.
 - Hit flags: `Nonlethal` (target goes Unconscious instead of dying), `ForceKnockdown`,
   `ForceDismember`, `CriticalHit`, `BreachHit` (+0.25 pen).
+
+### Quickhack rounds
+
+A hit applies the status effect of that tier's own quickhack action, with no upload and no RAM.
+
+- **Tier differences** are in the effect records: `QuickHackBlindLvl1` to `QuickHackBlindLevel4`,
+  `OverloadLevel1` to `4`, and so on (spec for the full list). `Madness` runs 18 seconds; the top one,
+  `MandessLevel4`, 58, so the round uses `AmmoOverhaul.MadnessHack`, a 30 second copy.
+- **`SuicideWithGrenade` needs a grenade:** on an NPC with none it sits for 13 seconds and does nothing,
+  and `SuicideWithGrenadeDummy` applies nothing. Detonate Grenade rounds make a blast at the target.
+- **Contagion doesn't spread by itself.** The round's blast adds it to whoever it reaches.
+- **Netrunners:** an NPC is one when its record's `ArchetypeData` type is `NetrunnerT1`, `2` or `3`.
+- **Crafting from a program:** `CraftingSystem.CraftItem` takes a program ingredient a second time, up
+  to what V holds (5 held, 1 craft, 3 left). `Crafting.reds` gives back what went past the recipe's
+  cost, one at a time, since 2 given at once arrived as 1.
+- **Installed hacks** are deck parts and count 0 as inventory, so crafting can't take them.
+- **`GetMaxCraftingAmount` needs more than one batch's cost.** At exactly one batch it returns 0, and
+  the crafting screen refuses ammo at 0. `Crafting.reds` corrects it for hack rounds, not other ammo.
 
 ## Shooting
 
@@ -134,6 +173,13 @@ Other ways vanilla adds blasts: `TriggerAttackEffector` sets off a separate atta
   selector with ×0 (10mm Dumbfires) brings it to 0, checked in game (the stat; whether the
   rounds then fly straight not yet checked).
 
+Lock stats, read on the Yukimura in game:
+
+- `SmartGun{Hip,Ads}{Targetable,Locking}Angle{Yaw,Pitch}` read 0 on every gun, which means the
+  engine's own 8 to 12 degrees. A value replaces it, in degrees, so a multiplier does nothing and
+  these have to be additive. +25 locked a real target 20 degrees off the crosshair.
+- `SmartGun{Hip,Ads}MaxLockedTargets` read 3 hip and 1 ADS. There's no separate track stat.
+
 ## Tech charge
 
 - Tech guns have a Charge trigger mode: hold to charge, release to fire. Kenshin, Omaha, Burya,
@@ -171,3 +217,8 @@ dud (a shot that does little or nothing), an overpressure burst (damage to the s
 per-reload re-rolls. Ammo is a stack item, so every round in a stack is identical; randomness has
 to come per shot or per reload, from script. Per shot needs a hook on the player's shots (NPC shots
 already go through our `AIWeapon.Fire` wrap). Untested.
+
+## Magazines
+
+- `MagazineAutoRefill` on a weapon acts when the gun is drawn, not when it's holstered, and takes
+  rounds from the pocket, so per-gun ammo clamps it to what V carries.

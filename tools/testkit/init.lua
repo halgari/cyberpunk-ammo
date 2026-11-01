@@ -111,6 +111,41 @@ local function giveKit()
   state.message = "gave Lexington, Omaha, Yukimura, 6 selectors, 60 of each round"
 end
 
+-- The field kit: a gun for every caliber with faction rounds, the 12-gauge pumps, and 60 of every
+-- faction round with its selector, plus the Subsonic, Slug and Pump N Dump rounds, the Epic hack
+-- rounds (every hack has one) and 5 copies of each Epic quickhack to craft them.
+local FIELD_GUNS = { "Lexington", "Unity", "Nova", "Copperhead", "Ajax", "Crusher", "Tactician", "Igla", "Pozhar",
+  "Testera", "Carnage", "Omaha", "Burya", "Yukimura", "Zhuo", "Ashura", "Grad" }
+local FIELD_EXTRAS = { "_Subsonic$", "AO_12ga_Slug$", "_PumpNDump$", "_Hack%a+3$" }
+
+local function isFieldRound(ammo)
+  local ok, faction = pcall(TweakDB.GetFlat, TweakDB, ammo .. ".aoFaction")
+  if ok and faction ~= nil and faction ~= "" then return true end
+  for _, p in ipairs(FIELD_EXTRAS) do if ammo:find(p) then return true end end
+  return false
+end
+
+local function giveFieldKit()
+  for _, g in ipairs(FIELD_GUNS) do Game.AddToInventory("Items.Preset_" .. g .. "_Default", 1) end
+  local n = 0
+  for _, cal in ipairs(TweakDB:GetFlat("AmmoOverhaul.calibers")) do
+    local ammo = TweakDB:GetFlat("AmmoOverhaul." .. cal .. ".selectorAmmo")
+    for i, s in ipairs(TweakDB:GetFlat("AmmoOverhaul." .. cal .. ".selectors")) do
+      local round = TDBID.ToStringDEBUG(ammo[i])
+      if isFieldRound(round) then
+        Game.AddToInventory(TDBID.ToStringDEBUG(s), 1)
+        Game.AddToInventory(round, 60)
+        local ok, program = pcall(TweakDB.GetFlat, TweakDB, round .. ".aoHackProgram")
+        if ok and program ~= nil and program ~= "" then
+          for _ = 1, 5 do Game.AddToInventory(program, 1) end
+        end
+        n = n + 1
+      end
+    end
+  end
+  state.message = "gave " .. #FIELD_GUNS .. " guns and " .. n .. " rounds with selectors, 60 of each"
+end
+
 local function ammoOf(owner)
   local ts = Game.GetTransactionSystem()
   local ok, items = ts:GetItemList(owner)
@@ -185,6 +220,8 @@ registerForEvent("onDraw", function()
     if ImGui.Button("Remove test enemies") then despawnAll() end
     ImGui.SameLine()
     if ImGui.Button("Give slice kit") then giveKit() end
+    ImGui.SameLine()
+    if ImGui.Button("Give field kit") then giveFieldKit() end
     if state.message ~= "" then ImGui.Text(state.message) end
     ImGui.Separator()
     ImGui.Text("You: " .. (player() and ammoOf(player()) or "-"))
@@ -208,4 +245,4 @@ registerHotkey("ao_kill", "Kill test enemies", killAll)
 registerHotkey("ao_remove", "Remove test enemies", despawnAll)
 
 -- For scripted checks: GetMod("AOTestKit").spawn(...) from another CET mod.
-return { spawn = spawn, killAll = killAll, despawnAll = despawnAll, giveKit = giveKit, refresh = refresh, state = state, enemies = ENEMIES }
+return { spawn = spawn, killAll = killAll, despawnAll = despawnAll, giveKit = giveKit, giveFieldKit = giveFieldKit, refresh = refresh, state = state, enemies = ENEMIES }

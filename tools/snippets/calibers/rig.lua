@@ -35,6 +35,19 @@ if not RIG.hooked then
   end)
   RIG.hooked = true
 end
+-- Headshot and crit flags are set after CalculateDamageVariants, so they're read here.
+RIG.flags = RIG.flags or {}
+if not RIG.flagHooked then
+  ObserveBefore("DamageSystem", "ProcessStatusEffects", function(_, e)
+    local d = e.attackData
+    if not d or AttackData.IsDoT(d) then return end
+    local i = d:GetInstigator()
+    table.insert(RIG.flags, { byV = i ~= nil and i:IsPlayer(), onV = e.target ~= nil and e.target:IsPlayer(),
+      onNpc = e.target ~= nil and RIG.npc() ~= nil and e.target:GetEntityID().hash == RIG.npc():GetEntityID().hash,
+      head = d:HasFlag(hitFlag.Headshot), crit = d:HasFlag(hitFlag.CriticalHit) })
+  end)
+  RIG.flagHooked = true
+end
 -- Status effects applied to V and to NPCs, by record name (hitdata.sh). Effects reach V a moment
 -- after the hit, so they're counted as they arrive rather than read off the hit.
 RIG.applied = RIG.applied or { V = {}, NPC = {} }
@@ -66,9 +79,9 @@ end
 local function chest(o)
   local sc = o:GetSlotComponent()
   local ok, t = false, nil
-  if sc then ok, t = sc:GetSlotTransform(CName.new("Chest")) end
+  if sc then ok, t = sc:GetSlotTransform(CName.new(RIG.slot or "Chest")) end
   if ok and t then return WorldPosition.ToVector4(WorldTransform.GetWorldPosition(t)) end
-  local v = o:GetWorldPosition(); v.z = v.z + 1.0; return v
+  local v = o:GetWorldPosition(); v.z = v.z + (RIG.slot == "Head" and 1.62 or 1.0); return v
 end
 
 -- V's shots follow V's camera, not AIWeapon.Fire's target position: a level camera fires at eye
@@ -233,7 +246,19 @@ end
 -- How many times `effect` was applied to V ("V") or an NPC ("NPC") since RIG.clear().
 function RIG.effects(who, effect) return RIG.applied[who][effect] or 0 end
 
-function RIG.clear() RIG.hits = {}; RIG.applied = { V = {}, NPC = {} } end
+-- Landed hits on the NPC, or on V, carrying flag `key` ("head" or "crit") and in all.
+function RIG.flagged(who, key)
+  local n, all = 0, 0
+  for _, h in ipairs(RIG.flags) do
+    if (who == "V" and h.byV and h.onNpc) or (who == "NPC" and h.onV and not h.byV) then
+      all = all + 1
+      if h[key] then n = n + 1 end
+    end
+  end
+  return n .. "/" .. all
+end
+
+function RIG.clear() RIG.flags = {}; RIG.hits = {}; RIG.applied = { V = {}, NPC = {} } end
 
 function RIG.teardown()
   local n = RIG.npc()

@@ -796,8 +796,9 @@ For the next release. Two or three ideas each; pick one or two per faction.
   damage-roll band with dud and hot chances. `hit-code`.
 - **Parts-pullers** (Power). A kill with this round leaves extra crafting components on the
   body. Levers: on kill, add components to the body's loot. `probe` (loot on kill).
-- **Dirties** (Power). Rough, hand-cast bullets that leave a dirty wound: bleeding plus poison,
-  a little less damage up front. Levers: Bleeding and Poisoned chances, damage down. `hit-code`.
+- **Gutter Lead** (Power). Rough, hand-cast bullets that leave a dirty wound: bleeding plus poison,
+  half damage up front. Levers: Bleeding and Poisoned chances, damage down. `hit-code`.
+- **Septics** (name saved by the user, 2026-10-30). For a future toxin round.
 
 **Arasaka**
 - **House loads** (Power and Tech). Arasaka's own spec: a very narrow damage roll, less recoil
@@ -817,3 +818,12 @@ The user's replacement idea: a fast-cycling slug. One slug per shot and a far hi
 a pump or semi-auto 12-gauge such as the Crusher runs like a heavy autocannon. Stats only
 (`CycleTime`, `ProjectilesPerShot`), with nothing touching other guns. Name still open; candidates:
 Riveter, Jackhammer, Nail Gun.
+
+## Third faction batch
+
+Added 2026-10-31, after the 200-round release. Rounds should use different mechanics, not more
+damage and recoil: a round can carry almost any effect a vanilla mod, attachment or named gun has
+(`reference/catalog/effectors.tsv`, `parts.tsv`). Probe results are in `docs/MECHANICS.md`.
+
+- **Voodoo Boys:** Zombie Powder (blind) and Backdoor (cheaper quickhacks on a marked target) stay
+  options. The rest of this batch is built: see `docs/CATALOG.md`.

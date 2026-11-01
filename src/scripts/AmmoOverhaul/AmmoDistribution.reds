@@ -139,6 +139,10 @@ public abstract class AmmoDistribution {
   // The recipe item to hand out with a dropped `ammo`: with chance recipeDropFactor for an Uncommon+
   // round, else an invalid ID.
   public static func RecipeRoll(ammo: TweakDBID) -> TweakDBID {
+    // Hack rounds are known from the start; their recipe item only sizes the batch.
+    if StrLen(TweakDBInterface.GetString(AOData.Flat(ammo, "aoHackProgram"), "")) > 0 {
+      return TDBID.None();
+    }
     let recipe: TweakDBID = AOData.RecipeItem(ammo);
     if TDBID.IsValid(recipe) && RandF() < AOData.RecipeDropFactor() {
       return recipe;

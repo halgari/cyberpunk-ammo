@@ -378,6 +378,38 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // The faction `npc` rolls for ("" for none).
+  public final func DebugFactionOf(npc: ref<NPCPuppet>) -> String {
+    return AOData.FactionOf(npc);
+  }
+
+  // "ammo=count;..." over `n` NpcAmmo.RollSelector calls for an NPC of `rarity` and `faction` (no
+  // puppet needed); "none" counts the Common results.
+  public final func DebugFactionPick(caliber: String, rarity: String, faction: String, n: Int32) -> String {
+    let names: array<String>;
+    let counts: array<Int32>;
+    let i: Int32 = 0;
+    while i < n {
+      let selector: TweakDBID = NpcAmmo.RollSelector(caliber, rarity, faction);
+      let name: String = TDBID.IsValid(selector) ? TDBID.ToStringDEBUG(AOData.SelectorAmmo(caliber, selector)) : "none";
+      let at: Int32 = ArrayFindFirst(names, name);
+      if at < 0 {
+        ArrayPush(names, name);
+        ArrayPush(counts, 1);
+      } else {
+        counts[at] += 1;
+      }
+      i += 1;
+    }
+    let text: String = "";
+    i = 0;
+    while i < ArraySize(names) {
+      text += names[i] + "=" + IntToString(counts[i]) + ";";
+      i += 1;
+    }
+    return text;
+  }
+
   // "tier=count;..." over `n` NpcAmmo.RollTier calls for an NPC of `rarity` (no puppet needed).
   public final func DebugTierPick(caliber: String, rarity: String, n: Int32) -> String {
     let counts: array<Int32> = [0, 0, 0, 0, 0];
@@ -408,12 +440,49 @@ public class AmmoFeedSystem extends ScriptableSystem {
     CookOff.OnHit(this.m_player, target);
   }
 
+  // A shot of `ammo` by V, as ShootEvents.OnEnter makes it; the rig's shots don't pass there.
+  public final func DebugSelfJam(ammo: String) -> Void {
+    FactionRounds.OnShot(this.m_player, TDBID.Create(ammo));
+  }
+
+  // What Waste Not hands back for a free shot of `ammo`, in V's active gun.
+  public final func DebugRefund(ammo: String) -> Void {
+    FactionRounds.Refund(this.m_player, GameObject.GetActiveWeapon(this.m_player), TDBID.Create(ammo));
+  }
+
+  // What a rank effect of `ammo` does to `rarity` (empty: V).
+  public final func DebugRankResult(ammo: String, rarity: String, mechanical: Bool, guarded: Bool) -> String {
+    return TDBID.ToStringDEBUG(FactionRounds.RankResult(TDBID.Create(ammo), rarity, mechanical, guarded));
+  }
+
+  // The smart gun's lock, from the HUD's data: what a lock probe polls.
+  public final func DebugSmartTargets() -> String {
+    let bb: ref<IBlackboard> = GameInstance.GetBlackboardSystem(GetGameInstance()).Get(GetAllBlackboardDefs().UI_ActiveWeaponData);
+    let params: ref<smartGunUIParameters> = FromVariant<ref<smartGunUIParameters>>(bb.GetVariant(GetAllBlackboardDefs().UI_ActiveWeaponData.SmartGunParams));
+    if !IsDefined(params) {
+      return "none";
+    }
+    let text: String = "cyber=" + ToString(params.hasRequiredCyberware) + " targets=" + IntToString(ArraySize(params.targets)) + " lock=" + FloatToString(params.timeToLock);
+    for target in params.targets {
+      text += " state=" + IntToString(EnumInt(target.state)) + " locking=" + FloatToString(target.timeLocking);
+    }
+    return text;
+  }
+
   public final func DebugMuleKick() -> Void {
     MuleKick.Shove(this.m_player);
   }
 
   public final func DebugMuleEffect(rarity: String) -> String {
     return TDBID.ToStringDEBUG(MuleKick.NpcEffect(rarity));
+  }
+
+  public final func DebugLegEffect(rarity: String, mechanical: Bool) -> String {
+    return TDBID.ToStringDEBUG(FactionRounds.LegEffect(rarity, mechanical));
+  }
+
+  public final func DebugStops(rarity: String) -> Bool {
+    return FactionRounds.Stops(rarity);
   }
 
   public final func DebugLegendaryStack(quantity: Int32) -> Int32 {
@@ -623,6 +692,35 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // The faction rounds of `n` stock builds of `vendorID`, on a vendor object of its own so the shop
+  // needn't be nearby: its type, then "|item=quantity;..." per build.
+  // As DebugTurf, for hack rounds.
+  public final func DebugHackStock(vendorID: String, n: Int32) -> String {
+    let vendor: ref<Vendor> = new Vendor();
+    vendor.Initialize(this.GetGameInstance(), TDBID.Create(vendorID), null);
+    let text: String = "";
+    let i: Int32 = 0;
+    while i < n {
+      vendor.AODebugRestock();
+      text += vendor.AODebugHackAmmo();
+      i += 1;
+    }
+    return text;
+  }
+
+  public final func DebugTurf(vendorID: String, n: Int32) -> String {
+    let vendor: ref<Vendor> = new Vendor();
+    vendor.Initialize(this.GetGameInstance(), TDBID.Create(vendorID), null);
+    let text: String = EnumValueToString("gamedataVendorType", Cast<Int64>(EnumInt(vendor.GetVendorType()))) ;
+    let i: Int32 = 0;
+    while i < n {
+      vendor.AODebugRestock();
+      text += "|" + vendor.AODebugFactionAmmo();
+      i += 1;
+    }
+    return text;
+  }
+
   // What a known vendor's ammo is once its screen opens (an unsplit stock gets split then).
   public final func DebugOpenVendor(vendorID: String) -> String {
     for vendor in MarketSystem.GetInstance(this.GetGameInstance()).AODebugVendors() {
@@ -744,6 +842,35 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // What a stack of `rounds` of `ammo` on an NPC leaves on the body.
+  public final func DebugLootCap(ammo: String, rounds: Int32) -> Int32 {
+    return NpcAmmo.LootCap(TDBID.Create(ammo), rounds);
+  }
+
+  // Of `rolls` rolls of a shop's hack stock, how many list one round twice.
+  public final func DebugHackDupes(vendor: String, rolls: Int32) -> Int32 {
+    let dupes: Int32 = 0;
+    let i: Int32 = 0;
+    while i < rolls {
+      let stacks: array<AOStack> = HackRounds.ShopStock(TDBID.Create(vendor), true);
+      if ArraySize(stacks) == 2 && stacks[0].ammo == stacks[1].ammo {
+        dupes += 1;
+      }
+      i += 1;
+    }
+    return dupes;
+  }
+
+  // A hack blast from `instigator` at `target`, as a Detonate Grenade hit makes it.
+  public final func DebugHackBlast(instigator: ref<GameObject>, target: ref<GameObject>, blast: String) -> Void {
+    HackRounds.Blast(instigator, target, TDBID.Create(blast));
+  }
+
+  // The trail keeps 40 lines, so a count across a test needs it empty first.
+  public final func DebugClearTrail() -> Void {
+    ArrayClear(this.m_trail);
+  }
+
   // The weapon's ProjectilesPerShot over its count without the round's pellet change; 1.0 for a
   // round that doesn't change the count.
   public static func PelletRatio(weapon: ref<WeaponObject>, ammo: TweakDBID) -> Float {
@@ -823,7 +950,8 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return true;
   }
 
-  // The round's damage share and machine bonus (AOData hit data) on a rolled hit, whoever fired.
+  // The round's damage share and its machine and unaware bonuses (AOData hit data) on a rolled hit,
+  // whoever fired.
   public static func ApplyHitDamage(hitEvent: ref<gameHitEvent>, ammo: TweakDBID) -> Void {
     let shareType: gamedataDamageType;
     let share: Float = AOData.DamageShare(ammo, shareType);
@@ -832,8 +960,12 @@ public class AmmoFeedSystem extends ScriptableSystem {
       hitEvent.attackComputed.SetAttackValue(physical * (1.0 - share), gamedataDamageType.Physical);
       hitEvent.attackComputed.AddAttackValue(physical * share, shareType);
     }
-    let bonus: Float = AOData.MachineBonus(ammo);
-    if bonus != 1.0 && AOData.IsMachine(hitEvent.target) {
+    let bonus: Float = AOData.IsMachine(hitEvent.target) ? AOData.MachineBonus(ammo) : 1.0;
+    let puppet: ref<NPCPuppet> = hitEvent.target as NPCPuppet;
+    if IsDefined(puppet) && !NPCPuppet.IsInCombat(puppet) {
+      bonus *= AOData.UnawareBonus(ammo);
+    }
+    if bonus != 1.0 {
       // Each type by name, read and set as the share is.
       let types: array<String> = AmmoFeedSystem.DamageTypes();
       let i: Int32 = 1;
@@ -857,6 +989,10 @@ public class AmmoFeedSystem extends ScriptableSystem {
     // A Cook-off mark only counts for a death straight after that hit: any other hit (a blast, a
     // melee finisher, another round) clears it, so a Cook-off blast kill sets off nothing.
     CookOff.Clear(hitEvent.target);
+    FactionRounds.ClearParts(hitEvent.target);
+    if FactionRounds.Cloud(attackData, hitEvent.target) {
+      return;
+    }
     let instigator: ref<GameObject> = attackData.GetInstigator();
     if !IsDefined(instigator) {
       return;
@@ -884,18 +1020,31 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if AOData.MuleKick(ammo) && !gated {
       MuleKick.OnHit(attackData, hitEvent.target);
     }
+    if (AOData.PartsPuller(ammo) || AOData.Eddies(ammo)) && instigator.IsPlayer() && !gated {
+      FactionRounds.MarkParts(hitEvent.target, ammo);
+    }
+    if AOData.Pumped(ammo) && !gated {
+      FactionRounds.MarkPump(hitEvent.target, instigator);
+    }
+    // Chances are per shot, and each pellet that lands comes through here.
+    let pellets: Int32 = Cast<Int32>(GameInstance.GetStatsSystem(weapon.GetGame()).GetStatValue(Cast<StatsObjectID>(weapon.GetEntityID()), gamedataStatType.ProjectilesPerShot));
+    if !gated {
+      FactionRounds.OnHit(attackData, hitEvent.target, ammo, pellets);
+      if !instigator.IsPlayer() {
+        FactionRounds.Blast(instigator, hitEvent.target, AOData.BlastRecord(ammo, "aoNpcBlast"));
+      }
+    }
     let chances: array<Float>;
     let effects: array<TweakDBID> = AOData.HitEffects(ammo, chances);
     if ArraySize(effects) == 0 && !AOData.IsNonlethal(ammo) {
       return;
     }
-    // Chances are per shot, and each pellet that lands comes through here.
-    let pellets: Int32 = Cast<Int32>(GameInstance.GetStatsSystem(weapon.GetGame()).GetStatValue(Cast<StatsObjectID>(weapon.GetEntityID()), gamedataStatType.ProjectilesPerShot));
     let onPlayer: Bool = IsDefined(hitEvent.target) && hitEvent.target.IsPlayer();
     let i: Int32 = 0;
     while i < ArraySize(effects) {
       if TDBID.IsValid(effects[i]) && RandF() < AOData.PelletChance(chances[i], pellets) {
         attackData.AddStatusEffect(onPlayer ? AOData.PlayerEffect(effects[i]) : effects[i], 1.0);
+        FactionRounds.Blast(instigator, hitEvent.target, AOData.BlastRecord(ammo, "aoEffectBlast"));
       }
       i += 1;
     }

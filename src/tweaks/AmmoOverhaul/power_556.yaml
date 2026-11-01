@@ -8,9 +8,9 @@ AmmoOverhaul.Power_556.feedElement: "Items.AO_AmmoFeed_Power_556_Element"
 AmmoOverhaul.Power_556.defaultAmmo: "Ammo.RifleAmmo"
 AmmoOverhaul.Power_556.vanillaAmmo: "Ammo.RifleAmmo"
 AmmoOverhaul.Power_556.lootWeight: 0.65
-AmmoOverhaul.Power_556.selectors: ["Items.AO_Feed_556_Ball", "Items.AO_Feed_556_Mushrooms", "Items.AO_Feed_556_PlusP", "Items.AO_Feed_556_SteelCore", "Items.AO_Feed_556_Incendiary", "Items.AO_Feed_556_Subsonic", "Items.AO_Feed_556_Bouncers", "Items.AO_Feed_556_Penetrator", "Items.AO_Feed_556_Match", "Items.AO_Feed_556_Toxin", "Items.AO_Feed_556_Shredders", "Items.AO_Feed_556_CookOff"]
-AmmoOverhaul.Power_556.selectorAmmo: ["Ammo.RifleAmmo", "Ammo.AO_556_HollowPoint", "Ammo.AO_556_PlusP", "Ammo.AO_556_SteelCore", "Ammo.AO_556_Incendiary", "Ammo.AO_556_Subsonic", "Ammo.AO_556_Bouncers", "Ammo.AO_556_Penetrator", "Ammo.AO_556_Match", "Ammo.AO_556_Toxin", "Ammo.AO_556_Shredders", "Ammo.AO_556_CookOff"]
-AmmoOverhaul.Power_556.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4]
+AmmoOverhaul.Power_556.selectors: ["Items.AO_Feed_556_Ball", "Items.AO_Feed_556_Mushrooms", "Items.AO_Feed_556_PlusP", "Items.AO_Feed_556_SteelCore", "Items.AO_Feed_556_Incendiary", "Items.AO_Feed_556_Subsonic", "Items.AO_Feed_556_Bouncers", "Items.AO_Feed_556_Penetrator", "Items.AO_Feed_556_Match", "Items.AO_Feed_556_Toxin", "Items.AO_Feed_556_Shredders", "Items.AO_Feed_556_CookOff", "Items.AO_Feed_556_Redliners", "Items.AO_Feed_556_Kata", "Items.AO_Feed_556_DogtownTax"]
+AmmoOverhaul.Power_556.selectorAmmo: ["Ammo.RifleAmmo", "Ammo.AO_556_HollowPoint", "Ammo.AO_556_PlusP", "Ammo.AO_556_SteelCore", "Ammo.AO_556_Incendiary", "Ammo.AO_556_Subsonic", "Ammo.AO_556_Bouncers", "Ammo.AO_556_Penetrator", "Ammo.AO_556_Match", "Ammo.AO_556_Toxin", "Ammo.AO_556_Shredders", "Ammo.AO_556_CookOff", "Ammo.AO_556_Redliners", "Ammo.AO_556_Kata", "Ammo.AO_556_DogtownTax"]
+AmmoOverhaul.Power_556.selectorTiers: [0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5, 6, 5]
 # Rounds a crafted batch of the Common round makes (tools/crafting/crafting.py).
 AmmoOverhaul.Power_556.craftBatch: 90
 
@@ -304,11 +304,6 @@ Items.AO_Feed_556_Subsonic:
       statType: BaseStats.CanSilentKill
       modifierType: Additive
       value: 1.0
-    - !append
-      $type: ConstantStatModifier
-      statType: BaseStats.WeaponNoise
-      modifierType: Multiplier
-      value: 0.3
     - !append
       $type: ConstantStatModifier
       statType: BaseStats.DamagePerHit
@@ -638,6 +633,212 @@ Items.AO_Feed_556_CookOff:
   iconPath: AO_556_CookOff
   quality: Quality.Legendary
 
+# 5.56 Redliners [Mael] (Rare)
+Ammo.AO_556_Redliners:
+  $base: Ammo.AO_556_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-556-Redliners
+  localizedDescription: LocKey#AO-Ammo-Redliners-Desc
+  iconPath: AO_556_Redliners
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_556_Redliners.aoFaction: "Maelstrom"
+Ammo.AO_556_Redliners.aoSelfJam: 0.02
+
+UIIcon.AO_556_Redliners:
+  $type: UIIcon
+  atlasPartName: ao_556_redliners
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_556_Redliners:
+  $base: Items.AO_Feed_556_Ball
+  displayName: LocKey#AO-Ammo-556-Redliners
+  localizedDescription: LocKey#AO-Ammo-Redliners-Desc
+  iconPath: AO_556_Redliners
+  quality: Quality.Rare
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.CycleTime
+      modifierType: Multiplier
+      value: 0.8
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadDefaultY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMaxY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsDefaultY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMaxY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadMinY
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinX
+      modifierType: Multiplier
+      value: 1.4
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.SpreadAdsMinY
+      modifierType: Multiplier
+      value: 1.4
+
+# 5.56 Kata [Ara] (Epic)
+Ammo.AO_556_Kata:
+  $base: Ammo.AO_556_HollowPoint
+  quality: Quality.Epic
+  # Epic: x4 on the Uncommon's price, so x8 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 4
+  displayName: LocKey#AO-Ammo-556-Kata
+  localizedDescription: LocKey#AO-Ammo-Kata-Desc
+  iconPath: AO_556_Kata
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_6, AO_Family_Power]
+
+Ammo.AO_556_Kata.aoFaction: "Arasaka"
+Ammo.AO_556_Kata.rollMin: 0.99
+Ammo.AO_556_Kata.rollMax: 1.01
+Ammo.AO_556_Kata.rollDudChance: 0.0
+Ammo.AO_556_Kata.rollHotChance: 0.0
+
+UIIcon.AO_556_Kata:
+  $type: UIIcon
+  atlasPartName: ao_556_kata
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_556_Kata:
+  $base: Items.AO_Feed_556_Ball
+  displayName: LocKey#AO-Ammo-556-Kata
+  localizedDescription: LocKey#AO-Ammo-Kata-Desc
+  iconPath: AO_556_Kata
+  quality: Quality.Epic
+  statModifiers:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMin
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.RecoilKickMax
+      modifierType: Multiplier
+      value: 0.7
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.AimInTime
+      modifierType: Multiplier
+      value: 0.7
+
+# 5.56 Dogtown Tax [Barghest] (Rare)
+Ammo.AO_556_DogtownTax:
+  $base: Ammo.AO_556_HollowPoint
+  quality: Quality.Rare
+  # Rare: x2 on the Uncommon's price, so x4 of the Common round's.
+  buyPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  sellPrice:
+    - !append
+      $type: ConstantStatModifier
+      statType: BaseStats.Price
+      modifierType: Multiplier
+      value: 2
+  displayName: LocKey#AO-Ammo-556-DogtownTax
+  localizedDescription: LocKey#AO-Ammo-DogtownTax-Desc
+  iconPath: AO_556_DogtownTax
+  tags: [Ammo, ShowStackPrice, AO_Ammo, AO_Tier_5, AO_Family_Power]
+
+Ammo.AO_556_DogtownTax.aoFaction: "Barghest"
+Ammo.AO_556_DogtownTax.aoEddies: true
+
+UIIcon.AO_556_DogtownTax:
+  $type: UIIcon
+  atlasPartName: ao_556_dogtowntax
+  atlasResourcePath: ammooverhaul\icons\ao_ammo_icons.inkatlas
+
+Items.AO_Feed_556_DogtownTax:
+  $base: Items.AO_Feed_556_Ball
+  displayName: LocKey#AO-Ammo-556-DogtownTax
+  localizedDescription: LocKey#AO-Ammo-DogtownTax-Desc
+  iconPath: AO_556_DogtownTax
+  quality: Quality.Rare
+
 # === END GENERATED ===
 
 # === GENERATED by tools/crafting/crafting.py: crafting. Edit there. ===
@@ -958,5 +1159,17 @@ Items.AO_Recipe_AO_556_Shredders:
 Ammo.AO_556_CookOff.aoScrapRounds: 90
 Ammo.AO_556_CookOff.aoScrapGive: 1
 Ammo.AO_556_CookOff.aoRecipe: ""
+
+Ammo.AO_556_Redliners.aoScrapRounds: 90
+Ammo.AO_556_Redliners.aoScrapGive: 1
+Ammo.AO_556_Redliners.aoRecipe: ""
+
+Ammo.AO_556_Kata.aoScrapRounds: 90
+Ammo.AO_556_Kata.aoScrapGive: 1
+Ammo.AO_556_Kata.aoRecipe: ""
+
+Ammo.AO_556_DogtownTax.aoScrapRounds: 90
+Ammo.AO_556_DogtownTax.aoScrapGive: 1
+Ammo.AO_556_DogtownTax.aoRecipe: ""
 
 # === END GENERATED CRAFTING ===

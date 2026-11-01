@@ -17,6 +17,12 @@ public abstract class MuleKick {
     return 0.3;
   }
 
+  // The rank of an NPC, empty for V.
+  public static func Rarity(puppet: ref<ScriptedPuppet>) -> String {
+    let npc: ref<NPCPuppet> = puppet as NPCPuppet;
+    return IsDefined(npc) ? EnumValueToString("gamedataNPCRarity", Cast<Int64>(EnumInt(npc.GetNPCRarity()))) : "";
+  }
+
   // What a hit does to an NPC of `rarity`.
   public static func NpcEffect(rarity: String) -> TweakDBID {
     let tough: Bool = Equals(rarity, "Elite") || Equals(rarity, "Boss") || Equals(rarity, "MaxTac");
@@ -53,14 +59,17 @@ public abstract class MuleKick {
       return;
     }
     puppet.aoMuleKickAt = now;
-    let npc: ref<NPCPuppet> = puppet as NPCPuppet;
-    let rarity: String = IsDefined(npc) ? EnumValueToString("gamedataNPCRarity", Cast<Int64>(EnumInt(npc.GetNPCRarity()))) : "";
-    attackData.AddStatusEffect(MuleKick.NpcEffect(rarity), 1.0);
+    attackData.AddStatusEffect(MuleKick.NpcEffect(MuleKick.Rarity(puppet)), 1.0);
   }
 }
 
 @wrapMethod(ShootEvents)
 protected final func OnEnter(stateContext: ref<StateContext>, scriptInterface: ref<StateGameScriptInterface>) -> Void {
   wrappedMethod(stateContext, scriptInterface);
-  MuleKick.OnShot(scriptInterface.executionOwner as PlayerPuppet, this.GetWeaponObject(scriptInterface));
+  let player: ref<PlayerPuppet> = scriptInterface.executionOwner as PlayerPuppet;
+  let weapon: ref<WeaponObject> = this.GetWeaponObject(scriptInterface);
+  MuleKick.OnShot(player, weapon);
+  if IsDefined(player) && IsDefined(weapon) {
+    FactionRounds.OnPlayerShot(player, weapon, AOData.LoadedAmmo(player, weapon));
+  }
 }

@@ -342,3 +342,126 @@ Character.AO_Test_Ganger_9mm_HitData:
   secondaryEquipment:
     $type: NPCEquipmentGroup
     equipmentItems: []
+
+# Faction rounds: the same goons with the affiliation the roll reads (FactionRounds.reds).
+Character.AO_Test_Mael_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Maelstrom
+
+Character.AO_Test_Scav_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Scavengers
+
+Character.AO_Test_Ara_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Arasaka
+
+Character.AO_Test_Tyger_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.TygerClaws
+
+Character.AO_Test_Val_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Valentinos
+
+Character.AO_Test_Six_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.SixthStreet
+
+Character.AO_Test_Mil_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Militech
+
+Character.AO_Test_Animal_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Animals
+
+Character.AO_Test_Animal_Nova:
+  $base: Character.street_goon_medium_range_m_medium
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Nova_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+  affiliation: Factions.Animals
+
+Character.AO_Test_Mil_Ajax:
+  $base: Character.street_goon_medium_range_m_medium
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Ajax_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+  secondaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems: []
+  affiliation: Factions.Militech
+
+Character.AO_Test_Mael_Omaha:
+  $base: Character.AO_Test_Plain_Omaha
+  affiliation: Factions.Maelstrom
+
+Character.AO_Test_Barghest_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Barghest
+
+Character.AO_Test_VDB_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.VoodooBoys
+
+Character.AO_Test_Wraith_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Wraiths
+
+Character.AO_Test_Nomad_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.Aldecaldos
+
+Character.AO_Test_Mox_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.TheMox
+
+Character.AO_Test_NCPD_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.NCPD
+
+Character.AO_Test_Kang_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.KangTao
+
+Character.AO_Test_NUSA_Unity:
+  $base: Character.AO_Test_Plain_Unity
+  affiliation: Factions.NUSA
+
+Character.AO_Test_Mox_Nova:
+  $base: Character.AO_Test_Mael_Omaha
+  affiliation: Factions.TheMox
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Nova_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]
+
+Character.AO_Test_Barghest_Ajax:
+  $base: Character.AO_Test_Mael_Omaha
+  affiliation: Factions.Barghest
+  primaryEquipment:
+    $type: NPCEquipmentGroup
+    equipmentItems:
+      - $type: NPCEquipmentItem
+        item: Items.Preset_Ajax_Default
+        equipSlot: AttachmentSlots.WeaponRight
+        equipCondition: [WeaponConditions.BaseRangedPrimaryWeaponEquipCondition]
+        unequipCondition: [WeaponConditions.BaseRangedPrimaryWeaponUnequipCondition]

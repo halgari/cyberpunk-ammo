@@ -6,8 +6,8 @@ local BATCH = { Power_9mm = 90, Power_45 = 90, Power_12mm = 60, Power_556 = 90, 
   Power_127 = 20, Power_12ga = 40, Power_4ga = 20, Tech_Light = 90, Tech_Heavy = 40,
   Smart_10 = 90, Smart_20 = 20, Smart_25 = 10 }
 local COST = { Tech = 1, Power = 2, Smart = 4 }
-local MATERIAL = { [0] = "Items.CommonMaterial1", "Items.UncommonMaterial1", "Items.RareMaterial1", "Items.EpicMaterial1" }
-local DIV = { [0] = 1, 2, 3, 4 }
+local MATERIAL = { [0] = "Items.CommonMaterial1", "Items.UncommonMaterial1", "Items.RareMaterial1", "Items.EpicMaterial1", "Items.LegendaryMaterial1" }
+local DIV = { [0] = 1, 2, 3, 4, 5 }
 local function tierBatch(b, t) return math.max(1, math.floor(b / DIV[t] + 0.5)) end
 local function has(list, want) for _, v in ipairs(list or {}) do if (v.value or str(v)) == want then return true end end return false end
 
@@ -22,11 +22,25 @@ for _, c in ipairs(flat("AmmoOverhaul", "calibers") or {}) do
   local ammo, tiers = flat(K, "selectorAmmo") or {}, flat(K, "selectorTiers") or {}
   for i, a in ipairs(ammo) do
     local name, t = str(a), tiers[i]
-    if t == 4 then
-      -- Legendary: never crafted (no recipe at all), broken down as the other tiers.
+    if t >= 10 then
+      -- Quickhack rounds: known from the start, one program a batch on top of the tier's components.
+      local base = t - 9
+      local els = rec(a) and rec(a):CraftingData() and rec(a):CraftingData():CraftingRecipe() or {}
+      local ing1 = els[1] and str(els[1]:Ingredient():GetID())
+      local ing2 = els[2] and str(els[2]:Ingredient():GetID())
+      check(name .. " costs components and its program", #els == 2 and ing1 == MATERIAL[base] and els[1]:Amount() == COST[family]
+        and ing2 == flat(a, "aoHackProgram") and els[2]:Amount() == 1, #els .. ": " .. tostring(ing1) .. ", " .. tostring(ing2))
       local r = flat(a, "aoRecipe")
-      check(name .. " (Legendary) has no recipe", r == nil or r == "", tostring(r))
-      check(name .. " (Legendary) has no recipe record", rec("Items.AO_Recipe_" .. name:gsub("^Ammo%.", "")) == nil)
+      local res = r and r ~= "" and flat(r, "craftingResult")
+      check(name .. " recipe makes " .. tierBatch(b, 1), res and str(flat(res, "item")) == name and flat(res, "amount") == tierBatch(b, 1), tostring(r))
+      check(name .. " recipe is never handed out", r and r ~= "" and not has(flat(r, "tags") or {}, "AO_Recipe"), tostring(r))
+      goto continue
+    end
+    if t >= 4 then
+      -- Legendary and faction rounds: never crafted (no recipe at all), broken down as the other tiers.
+      local r = flat(a, "aoRecipe")
+      check(name .. " (tier " .. t .. ") has no recipe", r == nil or r == "", tostring(r))
+      check(name .. " (tier " .. t .. ") has no recipe record", rec("Items.AO_Recipe_" .. name:gsub("^Ammo%.", "")) == nil)
       local want = ({ Power = { b, 1 }, Smart = { b, 2 }, Tech = { 2 * b, 1 } })[family]
       check(name .. " (Legendary) breaks down " .. want[2] .. " per " .. want[1],
         flat(a, "aoScrapRounds") == want[1] and flat(a, "aoScrapGive") == want[2])

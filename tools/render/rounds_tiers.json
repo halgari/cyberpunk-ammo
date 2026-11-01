@@ -120,6 +120,294 @@
     30
    ]
   ],
+  "Reloads": [
+   [
+    110,
+    100,
+    90
+   ],
+   [
+    150,
+    112,
+    70
+   ]
+  ],
+  "GutterLead": [
+   [
+    110,
+    100,
+    90
+   ],
+   [
+    60,
+    90,
+    40
+   ]
+  ],
+  "Shinobi": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    120,
+    120,
+    125
+   ]
+  ],
+  "ShinobiSeconds": [
+   [
+    170,
+    30,
+    25
+   ],
+   [
+    200,
+    200,
+    205
+   ]
+  ],
+  "Tanto": [
+   [
+    170,
+    30,
+    25
+   ],
+   [
+    220,
+    180,
+    70
+   ]
+  ],
+  "Surplus": [
+   [
+    80,
+    90,
+    50
+   ],
+   [
+    150,
+    130,
+    90
+   ]
+  ],
+  "FourthOfJuly": [
+   [
+    80,
+    90,
+    50
+   ],
+   [
+    200,
+    40,
+    40
+   ]
+  ],
+  "MilSpec": [
+   [
+    55,
+    58,
+    62
+   ],
+   [
+    230,
+    190,
+    30
+   ]
+  ],
+  "DogtownTax": [
+   [
+    70,
+    66,
+    52
+   ],
+   [
+    200,
+    170,
+    60
+   ]
+  ],
+  "WasteNot": [
+   [
+    120,
+    85,
+    50
+   ],
+   [
+    190,
+    180,
+    150
+   ]
+  ],
+  "CutOff": [
+   [
+    230,
+    70,
+    150
+   ],
+   [
+    30,
+    25,
+    30
+   ]
+  ],
+  "LastCall": [
+   [
+    230,
+    70,
+    150
+   ],
+   [
+    90,
+    40,
+    130
+   ]
+  ],
+  "StandardIssue": [
+   [
+    35,
+    50,
+    90
+   ],
+   [
+    200,
+    200,
+    205
+   ]
+  ],
+  "ResistingArrest": [
+   [
+    35,
+    50,
+    90
+   ],
+   [
+    240,
+    220,
+    60
+   ]
+  ],
+  "Redliners": [
+   [
+    25,
+    25,
+    28
+   ],
+   [
+    190,
+    30,
+    30
+   ]
+  ],
+  "MeatGrinders": [
+   [
+    96,
+    22,
+    18
+   ],
+   [
+    25,
+    25,
+    28
+   ]
+  ],
+  "PartsPullers": [
+   [
+    110,
+    100,
+    90
+   ],
+   [
+    230,
+    200,
+    40
+   ]
+  ],
+  "Kata": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    200,
+    30,
+    30
+   ]
+  ],
+  "GoldTips": [
+   [
+    90,
+    20,
+    35
+   ],
+   [
+    225,
+    180,
+    60
+   ]
+  ],
+  "SantaMuerte": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    225,
+    180,
+    60
+   ]
+  ],
+  "BadJuju": [
+   [
+    30,
+    50,
+    60
+   ],
+   [
+    60,
+    200,
+    190
+   ]
+  ],
+  "PocketSand": [
+   [
+    150,
+    120,
+    80
+   ],
+   [
+    90,
+    70,
+    45
+   ]
+  ],
+  "Speedloaders": [
+   [
+    120,
+    85,
+    50
+   ],
+   [
+    60,
+    120,
+    170
+   ]
+  ],
+  "Deniable": [
+   [
+    90,
+    92,
+    95
+   ],
+   [
+    30,
+    30,
+    32
+   ]
+  ],
   "Hardcast": [
    [
     110,
@@ -140,6 +428,30 @@
    ],
    [
     180,
+    40,
+    30
+   ]
+  ],
+  "ProteinLoads": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    235,
+    200,
+    30
+   ]
+  ],
+  "LegDay": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    210,
     40,
     30
    ]
@@ -180,6 +492,30 @@
     28
    ]
   ],
+  "CeaseAndDesist": [
+   [
+    55,
+    58,
+    62
+   ],
+   [
+    220,
+    60,
+    30
+   ]
+  ],
+  "ChimeraScrap": [
+   [
+    70,
+    66,
+    52
+   ],
+   [
+    220,
+    90,
+    30
+   ]
+  ],
   "HEI": [
    [
     200,
@@ -190,6 +526,18 @@
     180,
     30,
     30
+   ]
+  ],
+  "BlackBudget": [
+   [
+    90,
+    92,
+    95
+   ],
+   [
+    120,
+    30,
+    140
    ]
   ],
   "Flechette": [
@@ -420,6 +768,42 @@
     60
    ]
   ],
+  "ChromeCookers": [
+   [
+    30,
+    30,
+    32
+   ],
+   [
+    200,
+    40,
+    30
+   ]
+  ],
+  "CollectCall": [
+   [
+    15,
+    25,
+    30
+   ],
+   [
+    230,
+    40,
+    50
+   ]
+  ],
+  "TheClap": [
+   [
+    150,
+    120,
+    80
+   ],
+   [
+    120,
+    170,
+    50
+   ]
+  ],
   "EMPPayload": [
    [
     70,
@@ -515,6 +899,510 @@
     200,
     120
    ]
+  ],
+  "Kansatsu": [
+   [
+    20,
+    20,
+    22
+   ],
+   [
+    20,
+    140,
+    150
+   ]
+  ],
+  "WideAngle": [
+   [
+    225,
+    225,
+    228
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "SecondOpinion": [
+   [
+    225,
+    225,
+    228
+   ],
+   [
+    190,
+    40,
+    50
+   ]
+  ],
+  "HackOptics1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOptics2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOptics3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOptics4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackSonic1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackSonic2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackSonic3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackSonic4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackContagion1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackContagion2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackContagion3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackContagion4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCyberware1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCyberware2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCyberware3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCyberware4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackShort1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackShort2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackShort3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackShort4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCripple1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCripple2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCripple3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackCripple4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOverheat1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOverheat2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOverheat3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackOverheat4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGlitch1": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGlitch2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGlitch3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGlitch4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackBurnout2": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackBurnout3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackBurnout4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackPsycho3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackPsycho4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGrenade3": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
+  ],
+  "HackGrenade4": [
+   [
+    30,
+    34,
+    40
+   ],
+   [
+    40,
+    170,
+    190
+   ]
   ]
  },
  "rounds": {
@@ -528,7 +1416,8 @@
     "9MM",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-incendiary": {
    "shape": "P9",
@@ -540,7 +1429,8 @@
     "9MM",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-subsonic": {
    "shape": "P9",
@@ -553,7 +1443,8 @@
     "9MM",
     "SUBSONIC"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-bouncers": {
    "shape": "P9",
@@ -565,7 +1456,8 @@
     "9MM",
     "BOUNCERS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-rubber": {
    "shape": "P9",
@@ -578,7 +1470,8 @@
     "9MM",
     "RUBBER"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "9mm-penetrator": {
    "shape": "P9",
@@ -593,7 +1486,8 @@
     "9MM",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "9mm-match": {
    "shape": "P9",
@@ -608,7 +1502,8 @@
     "9MM",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "9mm-toxin": {
    "shape": "P9",
@@ -620,7 +1515,8 @@
     "9MM",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "9mm-shredders": {
    "shape": "P9",
@@ -632,7 +1528,8 @@
     "9MM",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "9mm-cookoff": {
    "shape": "P9",
@@ -646,7 +1543,170 @@
     "9MM",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "9mm-reloads": {
+   "shape": "P9",
+   "over": {
+    "jacket": "lead"
+   },
+   "look": "Reloads",
+   "label": [
+    "9MM",
+    "RELOADS"
+   ],
+   "tier": 7,
+   "faction": "Scavengers"
+  },
+  "9mm-gutterlead": {
+   "shape": "P9",
+   "over": {
+    "jacket": "lead",
+    "nose": "flat"
+   },
+   "look": "GutterLead",
+   "label": [
+    "9MM",
+    "GUTTER LEAD"
+   ],
+   "tier": 8,
+   "faction": "Scavengers"
+  },
+  "9mm-shinobi": {
+   "shape": "P9",
+   "over": {
+    "case_mat": "black",
+    "tip": "black"
+   },
+   "look": "Shinobi",
+   "label": [
+    "9MM",
+    "SHINOBI"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "9mm-shinobiseconds": {
+   "shape": "P9",
+   "over": {},
+   "look": "ShinobiSeconds",
+   "label": [
+    "9MM",
+    "SHINOBI SECONDS"
+   ],
+   "tier": 8,
+   "faction": "TygerClaws"
+  },
+  "9mm-tanto": {
+   "shape": "P9",
+   "over": {},
+   "look": "Tanto",
+   "label": [
+    "9MM",
+    "TANTO"
+   ],
+   "tier": 5,
+   "faction": "TygerClaws"
+  },
+  "9mm-surplus": {
+   "shape": "P9",
+   "over": {},
+   "look": "Surplus",
+   "label": [
+    "9MM",
+    "SURPLUS"
+   ],
+   "tier": 8,
+   "faction": "SixthStreet"
+  },
+  "9mm-fourthofjuly": {
+   "shape": "P9",
+   "over": {},
+   "look": "FourthOfJuly",
+   "label": [
+    "9MM",
+    "FOURTH OF JULY"
+   ],
+   "tier": 5,
+   "faction": "SixthStreet"
+  },
+  "9mm-milspec": {
+   "shape": "P9",
+   "over": {},
+   "look": "MilSpec",
+   "label": [
+    "9MM",
+    "MIL-SPEC"
+   ],
+   "tier": 5,
+   "faction": "Militech"
+  },
+  "9mm-dogtowntax": {
+   "shape": "P9",
+   "over": {},
+   "look": "DogtownTax",
+   "label": [
+    "9MM",
+    "DOGTOWN TAX"
+   ],
+   "tier": 5,
+   "faction": "Barghest"
+  },
+  "9mm-wastenot": {
+   "shape": "P9",
+   "over": {},
+   "look": "WasteNot",
+   "label": [
+    "9MM",
+    "WASTE NOT"
+   ],
+   "tier": 5,
+   "faction": "Aldecaldos"
+  },
+  "9mm-cutoff": {
+   "shape": "P9",
+   "over": {},
+   "look": "CutOff",
+   "label": [
+    "9MM",
+    "CUT OFF"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
+  "9mm-lastcall": {
+   "shape": "P9",
+   "over": {},
+   "look": "LastCall",
+   "label": [
+    "9MM",
+    "LAST CALL"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
+  "9mm-standardissue": {
+   "shape": "P9",
+   "over": {},
+   "look": "StandardIssue",
+   "label": [
+    "9MM",
+    "STANDARD ISSUE"
+   ],
+   "tier": 8,
+   "faction": "NCPD"
+  },
+  "9mm-resistingarrest": {
+   "shape": "P9",
+   "over": {},
+   "look": "ResistingArrest",
+   "label": [
+    "9MM",
+    "RESISTING ARREST"
+   ],
+   "tier": 5,
+   "faction": "NCPD"
   },
   "45-steelcore": {
    "shape": "P45",
@@ -658,7 +1718,8 @@
     ".45",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-incendiary": {
    "shape": "P45",
@@ -670,7 +1731,8 @@
     ".45",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-subsonic": {
    "shape": "P45",
@@ -683,7 +1745,8 @@
     ".45",
     "SUBSONIC"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-bouncers": {
    "shape": "P45",
@@ -695,7 +1758,8 @@
     ".45",
     "BOUNCERS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-rubber": {
    "shape": "P45",
@@ -708,7 +1772,8 @@
     ".45",
     "RUBBER"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "45-penetrator": {
    "shape": "P45",
@@ -723,7 +1788,8 @@
     ".45",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "45-match": {
    "shape": "P45",
@@ -738,7 +1804,8 @@
     ".45",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "45-toxin": {
    "shape": "P45",
@@ -750,7 +1817,8 @@
     ".45",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "45-shredders": {
    "shape": "P45",
@@ -762,7 +1830,8 @@
     ".45",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "45-cookoff": {
    "shape": "P45",
@@ -776,7 +1845,242 @@
     ".45",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "45-redliners": {
+   "shape": "P45",
+   "over": {
+    "case_mat": "black",
+    "tip": "red"
+   },
+   "look": "Redliners",
+   "label": [
+    ".45",
+    "REDLINERS"
+   ],
+   "tier": 5,
+   "faction": "Maelstrom"
+  },
+  "45-meatgrinders": {
+   "shape": "P45",
+   "over": {
+    "scored": true,
+    "color": "darkred",
+    "band": "black"
+   },
+   "look": "MeatGrinders",
+   "label": [
+    ".45",
+    "MEAT-GRINDERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
+  },
+  "45-reloads": {
+   "shape": "P45",
+   "over": {
+    "jacket": "lead"
+   },
+   "look": "Reloads",
+   "label": [
+    ".45",
+    "RELOADS"
+   ],
+   "tier": 7,
+   "faction": "Scavengers"
+  },
+  "45-gutterlead": {
+   "shape": "P45",
+   "over": {
+    "jacket": "lead",
+    "nose": "flat"
+   },
+   "look": "GutterLead",
+   "label": [
+    ".45",
+    "GUTTER LEAD"
+   ],
+   "tier": 8,
+   "faction": "Scavengers"
+  },
+  "45-partspullers": {
+   "shape": "P45",
+   "over": {
+    "tip": "yellow"
+   },
+   "look": "PartsPullers",
+   "label": [
+    ".45",
+    "PARTS-PULLERS"
+   ],
+   "tier": 5,
+   "faction": "Scavengers"
+  },
+  "45-kata": {
+   "shape": "P45",
+   "over": {
+    "case_mat": "nickel",
+    "nose": "spitzer",
+    "tip": "red",
+    "tipfrac": 0.2,
+    "rings": [
+     0.5
+    ]
+   },
+   "look": "Kata",
+   "label": [
+    ".45",
+    "KATA"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "45-shinobi": {
+   "shape": "P45",
+   "over": {
+    "case_mat": "black",
+    "tip": "black"
+   },
+   "look": "Shinobi",
+   "label": [
+    ".45",
+    "SHINOBI"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "45-shinobiseconds": {
+   "shape": "P45",
+   "over": {},
+   "look": "ShinobiSeconds",
+   "label": [
+    ".45",
+    "SHINOBI SECONDS"
+   ],
+   "tier": 8,
+   "faction": "TygerClaws"
+  },
+  "45-tanto": {
+   "shape": "P45",
+   "over": {},
+   "look": "Tanto",
+   "label": [
+    ".45",
+    "TANTO"
+   ],
+   "tier": 5,
+   "faction": "TygerClaws"
+  },
+  "45-goldtips": {
+   "shape": "P45",
+   "over": {},
+   "look": "GoldTips",
+   "label": [
+    ".45",
+    "GOLD TIPS"
+   ],
+   "tier": 5,
+   "faction": "Valentinos"
+  },
+  "45-santamuerte": {
+   "shape": "P45",
+   "over": {},
+   "look": "SantaMuerte",
+   "label": [
+    ".45",
+    "SANTA MUERTE"
+   ],
+   "tier": 6,
+   "faction": "Valentinos"
+  },
+  "45-surplus": {
+   "shape": "P45",
+   "over": {},
+   "look": "Surplus",
+   "label": [
+    ".45",
+    "SURPLUS"
+   ],
+   "tier": 8,
+   "faction": "SixthStreet"
+  },
+  "45-badjuju": {
+   "shape": "P45",
+   "over": {},
+   "look": "BadJuju",
+   "label": [
+    ".45",
+    "BAD JUJU"
+   ],
+   "tier": 6,
+   "faction": "VoodooBoys"
+  },
+  "45-pocketsand": {
+   "shape": "P45",
+   "over": {},
+   "look": "PocketSand",
+   "label": [
+    ".45",
+    "POCKET SAND"
+   ],
+   "tier": 5,
+   "faction": "Wraiths"
+  },
+  "45-wastenot": {
+   "shape": "P45",
+   "over": {},
+   "look": "WasteNot",
+   "label": [
+    ".45",
+    "WASTE NOT"
+   ],
+   "tier": 5,
+   "faction": "Aldecaldos"
+  },
+  "45-speedloaders": {
+   "shape": "P45",
+   "over": {},
+   "look": "Speedloaders",
+   "label": [
+    ".45",
+    "SPEEDLOADERS"
+   ],
+   "tier": 6,
+   "faction": "Aldecaldos"
+  },
+  "45-cutoff": {
+   "shape": "P45",
+   "over": {},
+   "look": "CutOff",
+   "label": [
+    ".45",
+    "CUT OFF"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
+  "45-standardissue": {
+   "shape": "P45",
+   "over": {},
+   "look": "StandardIssue",
+   "label": [
+    ".45",
+    "STANDARD ISSUE"
+   ],
+   "tier": 8,
+   "faction": "NCPD"
+  },
+  "45-deniable": {
+   "shape": "P45",
+   "over": {},
+   "look": "Deniable",
+   "label": [
+    ".45",
+    "DENIABLE"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
   },
   "12mm-steelcore": {
    "shape": "P12",
@@ -788,7 +2092,8 @@
     "12MM",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12mm-incendiary": {
    "shape": "P12",
@@ -800,7 +2105,8 @@
     "12MM",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12mm-rubber": {
    "shape": "P12",
@@ -813,7 +2119,8 @@
     "12MM",
     "RUBBER"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12mm-hardcast": {
    "shape": "P12",
@@ -826,7 +2133,8 @@
     "12MM",
     "HARDCAST"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12mm-penetrator": {
    "shape": "P12",
@@ -841,7 +2149,8 @@
     "12MM",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12mm-match": {
    "shape": "P12",
@@ -856,7 +2165,8 @@
     "12MM",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12mm-toxin": {
    "shape": "P12",
@@ -868,7 +2178,8 @@
     "12MM",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12mm-shredders": {
    "shape": "P12",
@@ -880,7 +2191,8 @@
     "12MM",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12mm-cookoff": {
    "shape": "P12",
@@ -894,7 +2206,173 @@
     "12MM",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "12mm-meatgrinders": {
+   "shape": "P12",
+   "over": {
+    "scored": true,
+    "color": "darkred",
+    "band": "black"
+   },
+   "look": "MeatGrinders",
+   "label": [
+    "12MM",
+    "MEAT-GRINDERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
+  },
+  "12mm-reloads": {
+   "shape": "P12",
+   "over": {
+    "jacket": "lead"
+   },
+   "look": "Reloads",
+   "label": [
+    "12MM",
+    "RELOADS"
+   ],
+   "tier": 7,
+   "faction": "Scavengers"
+  },
+  "12mm-gutterlead": {
+   "shape": "P12",
+   "over": {
+    "jacket": "lead",
+    "nose": "flat"
+   },
+   "look": "GutterLead",
+   "label": [
+    "12MM",
+    "GUTTER LEAD"
+   ],
+   "tier": 8,
+   "faction": "Scavengers"
+  },
+  "12mm-partspullers": {
+   "shape": "P12",
+   "over": {
+    "tip": "yellow"
+   },
+   "look": "PartsPullers",
+   "label": [
+    "12MM",
+    "PARTS-PULLERS"
+   ],
+   "tier": 5,
+   "faction": "Scavengers"
+  },
+  "12mm-tanto": {
+   "shape": "P12",
+   "over": {},
+   "look": "Tanto",
+   "label": [
+    "12MM",
+    "TANTO"
+   ],
+   "tier": 5,
+   "faction": "TygerClaws"
+  },
+  "12mm-goldtips": {
+   "shape": "P12",
+   "over": {},
+   "look": "GoldTips",
+   "label": [
+    "12MM",
+    "GOLD TIPS"
+   ],
+   "tier": 5,
+   "faction": "Valentinos"
+  },
+  "12mm-santamuerte": {
+   "shape": "P12",
+   "over": {},
+   "look": "SantaMuerte",
+   "label": [
+    "12MM",
+    "SANTA MUERTE"
+   ],
+   "tier": 6,
+   "faction": "Valentinos"
+  },
+  "12mm-surplus": {
+   "shape": "P12",
+   "over": {},
+   "look": "Surplus",
+   "label": [
+    "12MM",
+    "SURPLUS"
+   ],
+   "tier": 8,
+   "faction": "SixthStreet"
+  },
+  "12mm-fourthofjuly": {
+   "shape": "P12",
+   "over": {},
+   "look": "FourthOfJuly",
+   "label": [
+    "12MM",
+    "FOURTH OF JULY"
+   ],
+   "tier": 5,
+   "faction": "SixthStreet"
+  },
+  "12mm-proteinloads": {
+   "shape": "P12",
+   "over": {},
+   "look": "ProteinLoads",
+   "label": [
+    "12MM",
+    "PROTEIN LOADS"
+   ],
+   "tier": 5,
+   "faction": "Animals"
+  },
+  "12mm-legday": {
+   "shape": "P12",
+   "over": {},
+   "look": "LegDay",
+   "label": [
+    "12MM",
+    "LEG DAY"
+   ],
+   "tier": 6,
+   "faction": "Animals"
+  },
+  "12mm-wastenot": {
+   "shape": "P12",
+   "over": {},
+   "look": "WasteNot",
+   "label": [
+    "12MM",
+    "WASTE NOT"
+   ],
+   "tier": 5,
+   "faction": "Aldecaldos"
+  },
+  "12mm-speedloaders": {
+   "shape": "P12",
+   "over": {},
+   "look": "Speedloaders",
+   "label": [
+    "12MM",
+    "SPEEDLOADERS"
+   ],
+   "tier": 6,
+   "faction": "Aldecaldos"
+  },
+  "12mm-lastcall": {
+   "shape": "P12",
+   "over": {},
+   "look": "LastCall",
+   "label": [
+    "12MM",
+    "LAST CALL"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
   },
   "556-steelcore": {
    "shape": "R556",
@@ -906,7 +2384,8 @@
     "5.56",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "556-incendiary": {
    "shape": "R556",
@@ -918,7 +2397,8 @@
     "5.56",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "556-subsonic": {
    "shape": "R556",
@@ -931,7 +2411,8 @@
     "5.56",
     "SUBSONIC"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "556-bouncers": {
    "shape": "R556",
@@ -943,7 +2424,8 @@
     "5.56",
     "BOUNCERS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "556-penetrator": {
    "shape": "R556",
@@ -958,7 +2440,8 @@
     "5.56",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "556-match": {
    "shape": "R556",
@@ -973,7 +2456,8 @@
     "5.56",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "556-toxin": {
    "shape": "R556",
@@ -985,7 +2469,8 @@
     "5.56",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "556-shredders": {
    "shape": "R556",
@@ -997,7 +2482,8 @@
     "5.56",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "556-cookoff": {
    "shape": "R556",
@@ -1011,7 +2497,52 @@
     "5.56",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "556-redliners": {
+   "shape": "R556",
+   "over": {
+    "case_mat": "black",
+    "tip": "red"
+   },
+   "look": "Redliners",
+   "label": [
+    "5.56",
+    "REDLINERS"
+   ],
+   "tier": 5,
+   "faction": "Maelstrom"
+  },
+  "556-kata": {
+   "shape": "R556",
+   "over": {
+    "case_mat": "nickel",
+    "nose": "spitzer",
+    "tip": "red",
+    "tipfrac": 0.2,
+    "rings": [
+     0.5
+    ]
+   },
+   "look": "Kata",
+   "label": [
+    "5.56",
+    "KATA"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "556-dogtowntax": {
+   "shape": "R556",
+   "over": {},
+   "look": "DogtownTax",
+   "label": [
+    "5.56",
+    "DOGTOWN TAX"
+   ],
+   "tier": 5,
+   "faction": "Barghest"
   },
   "762-steelcore": {
    "shape": "R762",
@@ -1023,7 +2554,8 @@
     "7.62",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "762-incendiary": {
    "shape": "R762",
@@ -1035,7 +2567,8 @@
     "7.62",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "762-ballistictip": {
    "shape": "R762",
@@ -1048,7 +2581,8 @@
     "7.62",
     "BALLISTIC TIP"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "762-ping": {
    "shape": "R762",
@@ -1061,7 +2595,8 @@
     "7.62",
     "PING"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "762-penetrator": {
    "shape": "R762",
@@ -1076,7 +2611,8 @@
     "7.62",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "762-match": {
    "shape": "R762",
@@ -1091,7 +2627,8 @@
     "7.62",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "762-toxin": {
    "shape": "R762",
@@ -1103,7 +2640,8 @@
     "7.62",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "762-shredders": {
    "shape": "R762",
@@ -1115,7 +2653,8 @@
     "7.62",
     "SHREDDERS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "762-gatecrasher": {
    "shape": "R762",
@@ -1131,7 +2670,8 @@
     "7.62",
     "GATECRASHER"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
   },
   "762-cookoff": {
    "shape": "R762",
@@ -1145,7 +2685,74 @@
     "7.62",
     "COOK-OFF"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "762-redliners": {
+   "shape": "R762",
+   "over": {
+    "case_mat": "black",
+    "tip": "red"
+   },
+   "look": "Redliners",
+   "label": [
+    "7.62",
+    "REDLINERS"
+   ],
+   "tier": 5,
+   "faction": "Maelstrom"
+  },
+  "762-kata": {
+   "shape": "R762",
+   "over": {
+    "case_mat": "nickel",
+    "nose": "spitzer",
+    "tip": "red",
+    "tipfrac": 0.2,
+    "rings": [
+     0.5
+    ]
+   },
+   "look": "Kata",
+   "label": [
+    "7.62",
+    "KATA"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "762-milspec": {
+   "shape": "R762",
+   "over": {},
+   "look": "MilSpec",
+   "label": [
+    "7.62",
+    "MIL-SPEC"
+   ],
+   "tier": 5,
+   "faction": "Militech"
+  },
+  "762-ceaseanddesist": {
+   "shape": "R762",
+   "over": {},
+   "look": "CeaseAndDesist",
+   "label": [
+    "7.62",
+    "CEASE AND DESIST"
+   ],
+   "tier": 6,
+   "faction": "Militech"
+  },
+  "762-chimerascrap": {
+   "shape": "R762",
+   "over": {},
+   "look": "ChimeraScrap",
+   "label": [
+    "7.62",
+    "CHIMERA SCRAP"
+   ],
+   "tier": 6,
+   "faction": "Barghest"
   },
   "127-steelcore": {
    "shape": "R127",
@@ -1157,7 +2764,8 @@
     "12.7",
     "STEEL-CORE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "127-incendiary": {
    "shape": "R127",
@@ -1169,7 +2777,8 @@
     "12.7",
     "INCENDIARY"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "127-ballistictip": {
    "shape": "R127",
@@ -1182,7 +2791,8 @@
     "12.7",
     "BALLISTIC TIP"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "127-ping": {
    "shape": "R127",
@@ -1195,7 +2805,8 @@
     "12.7",
     "PING"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "127-penetrator": {
    "shape": "R127",
@@ -1210,7 +2821,8 @@
     "12.7",
     "PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "127-match": {
    "shape": "R127",
@@ -1225,7 +2837,8 @@
     "12.7",
     "MATCH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "127-toxin": {
    "shape": "R127",
@@ -1237,7 +2850,8 @@
     "12.7",
     "TOXIN CORE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "127-hei": {
    "shape": "R127",
@@ -1251,7 +2865,8 @@
     "12.7",
     "HEI"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "127-gatecrasher": {
    "shape": "R127",
@@ -1267,7 +2882,19 @@
     "12.7",
     "GATECRASHER"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "127-blackbudget": {
+   "shape": "R127",
+   "over": {},
+   "look": "BlackBudget",
+   "label": [
+    "12.7",
+    "BLACK BUDGET"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
   },
   "12ga-flechette": {
    "shape": "G12",
@@ -1280,7 +2907,8 @@
    "label": [
     "FLECHETTES"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12ga-beanbag": {
    "shape": "G12",
@@ -1293,7 +2921,8 @@
    "label": [
     "BEANBAGS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12ga-dragonlight": {
    "shape": "G12",
@@ -1306,7 +2935,8 @@
    "label": [
     "DRAGON'S BREATH LITE"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "12ga-dragon": {
    "shape": "G12",
@@ -1320,7 +2950,8 @@
    "label": [
     "DRAGON'S BREATH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12ga-frag12": {
    "shape": "G12",
@@ -1333,7 +2964,8 @@
    "label": [
     "FRAG-12"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12ga-flechettelong": {
    "shape": "G12",
@@ -1346,7 +2978,8 @@
    "label": [
     "LONG FLECHETTES"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "12ga-pumpndump": {
    "shape": "G12",
@@ -1361,7 +2994,71 @@
    "label": [
     "PUMP N DUMP"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "12ga-meatgrinders": {
+   "shape": "G12",
+   "over": {
+    "scored": true,
+    "color": "darkred",
+    "band": "black",
+    "crimp": "star"
+   },
+   "look": "MeatGrinders",
+   "label": [
+    "MEAT-GRINDERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
+  },
+  "12ga-ceaseanddesist": {
+   "shape": "G12",
+   "over": {
+    "crimp": "star"
+   },
+   "look": "CeaseAndDesist",
+   "label": [
+    "CEASE AND DESIST"
+   ],
+   "tier": 6,
+   "faction": "Militech"
+  },
+  "12ga-pocketsand": {
+   "shape": "G12",
+   "over": {
+    "crimp": "star"
+   },
+   "look": "PocketSand",
+   "label": [
+    "POCKET SAND"
+   ],
+   "tier": 5,
+   "faction": "Wraiths"
+  },
+  "12ga-cutoff": {
+   "shape": "G12",
+   "over": {
+    "crimp": "star"
+   },
+   "look": "CutOff",
+   "label": [
+    "CUT OFF"
+   ],
+   "tier": 6,
+   "faction": "TheMox"
+  },
+  "12ga-resistingarrest": {
+   "shape": "G12",
+   "over": {
+    "crimp": "star"
+   },
+   "look": "ResistingArrest",
+   "label": [
+    "RESISTING ARREST"
+   ],
+   "tier": 5,
+   "faction": "NCPD"
   },
   "4ga-flechette": {
    "shape": "G4",
@@ -1375,7 +3072,8 @@
     "4GA",
     "FLECHETTES"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "4ga-riot": {
    "shape": "G4",
@@ -1390,7 +3088,8 @@
     "4GA",
     "RIOT"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "4ga-flare": {
    "shape": "G4",
@@ -1406,7 +3105,8 @@
     "4GA",
     "FLARES"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "4ga-dragon": {
    "shape": "G4",
@@ -1421,7 +3121,8 @@
     "4GA",
     "DRAGON'S BREATH"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "4ga-thermite": {
    "shape": "G4",
@@ -1437,7 +3138,8 @@
     "4GA",
     "THERMITE SLUGS"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "4ga-mulekick": {
    "shape": "G4",
@@ -1452,7 +3154,24 @@
     "4GA",
     "MULE KICK"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "4ga-meatgrinders": {
+   "shape": "G4",
+   "over": {
+    "scored": true,
+    "color": "darkred",
+    "band": "black",
+    "crimp": "star"
+   },
+   "look": "MeatGrinders",
+   "label": [
+    "4GA",
+    "MEAT-GRINDERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
   },
   "5mm-ferro": {
    "shape": "T5",
@@ -1469,7 +3188,8 @@
     "5MM",
     "FERRO"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "5mm-splitslug": {
    "shape": "T5",
@@ -1485,7 +3205,8 @@
     "5MM",
     "SPLIT SLUGS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "5mm-feedback": {
    "shape": "T5",
@@ -1497,7 +3218,8 @@
     "5MM",
     "FEEDBACK"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "5mm-dupen": {
    "shape": "T5",
@@ -1513,7 +3235,8 @@
     "5MM",
     "DU PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "5mm-toxicscatter": {
    "shape": "T5",
@@ -1526,7 +3249,8 @@
     "5MM",
     "TOXIC SCATTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "5mm-superconductor": {
    "shape": "T5",
@@ -1538,7 +3262,8 @@
     "5MM",
     "SUPERCONDUCTOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "5mm-empcap": {
    "shape": "T5",
@@ -1550,7 +3275,8 @@
     "5MM",
     "EMP CAPACITOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "5mm-kebab": {
    "shape": "T5",
@@ -1568,7 +3294,117 @@
     "5MM",
     "KEBAB"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "5mm-chromecookers": {
+   "shape": "T5",
+   "over": {
+    "coil": "blue"
+   },
+   "look": "ChromeCookers",
+   "label": [
+    "5MM",
+    "CHROME-COOKERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
+  },
+  "5mm-kata": {
+   "shape": "T5",
+   "over": {
+    "case_mat": "nickel",
+    "nose": "spitzer",
+    "tip": "red",
+    "tipfrac": 0.2,
+    "rings": [
+     0.5
+    ]
+   },
+   "look": "Kata",
+   "label": [
+    "5MM",
+    "KATA"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "5mm-milspec": {
+   "shape": "T5",
+   "over": {},
+   "look": "MilSpec",
+   "label": [
+    "5MM",
+    "MIL-SPEC"
+   ],
+   "tier": 5,
+   "faction": "Militech"
+  },
+  "5mm-proteinloads": {
+   "shape": "T5",
+   "over": {},
+   "look": "ProteinLoads",
+   "label": [
+    "5MM",
+    "PROTEIN LOADS"
+   ],
+   "tier": 5,
+   "faction": "Animals"
+  },
+  "5mm-chimerascrap": {
+   "shape": "T5",
+   "over": {},
+   "look": "ChimeraScrap",
+   "label": [
+    "5MM",
+    "CHIMERA SCRAP"
+   ],
+   "tier": 6,
+   "faction": "Barghest"
+  },
+  "5mm-badjuju": {
+   "shape": "T5",
+   "over": {},
+   "look": "BadJuju",
+   "label": [
+    "5MM",
+    "BAD JUJU"
+   ],
+   "tier": 6,
+   "faction": "VoodooBoys"
+  },
+  "5mm-collectcall": {
+   "shape": "T5",
+   "over": {},
+   "look": "CollectCall",
+   "label": [
+    "5MM",
+    "COLLECT CALL"
+   ],
+   "tier": 9,
+   "faction": "VoodooBoys"
+  },
+  "5mm-theclap": {
+   "shape": "T5",
+   "over": {},
+   "look": "TheClap",
+   "label": [
+    "5MM",
+    "THE CLAP"
+   ],
+   "tier": 6,
+   "faction": "Wraiths"
+  },
+  "5mm-deniable": {
+   "shape": "T5",
+   "over": {},
+   "look": "Deniable",
+   "label": [
+    "5MM",
+    "DENIABLE"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
   },
   "heavy-ferro": {
    "shape": "TH",
@@ -1585,7 +3421,8 @@
     "HEAVY",
     "FERRO"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "heavy-splitslug": {
    "shape": "TH",
@@ -1601,7 +3438,8 @@
     "HEAVY",
     "SPLIT SLUGS"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "heavy-feedback": {
    "shape": "TH",
@@ -1613,7 +3451,8 @@
     "HEAVY",
     "FEEDBACK"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "heavy-dupen": {
    "shape": "TH",
@@ -1629,7 +3468,8 @@
     "HEAVY",
     "DU PENETRATOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "heavy-toxicscatter": {
    "shape": "TH",
@@ -1642,7 +3482,8 @@
     "HEAVY",
     "TOXIC SCATTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "heavy-superconductor": {
    "shape": "TH",
@@ -1654,7 +3495,8 @@
     "HEAVY",
     "SUPERCONDUCTOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "heavy-empcap": {
    "shape": "TH",
@@ -1666,7 +3508,8 @@
     "HEAVY",
     "EMP CAPACITOR"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "heavy-kebab": {
    "shape": "TH",
@@ -1684,7 +3527,65 @@
     "HEAVY",
     "KEBAB"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "heavy-chromecookers": {
+   "shape": "TH",
+   "over": {
+    "coil": "blue"
+   },
+   "look": "ChromeCookers",
+   "label": [
+    "HEAVY",
+    "CHROME-COOKERS"
+   ],
+   "tier": 6,
+   "faction": "Maelstrom"
+  },
+  "heavy-proteinloads": {
+   "shape": "TH",
+   "over": {},
+   "look": "ProteinLoads",
+   "label": [
+    "HEAVY",
+    "PROTEIN LOADS"
+   ],
+   "tier": 5,
+   "faction": "Animals"
+  },
+  "heavy-legday": {
+   "shape": "TH",
+   "over": {},
+   "look": "LegDay",
+   "label": [
+    "HEAVY",
+    "LEG DAY"
+   ],
+   "tier": 6,
+   "faction": "Animals"
+  },
+  "heavy-theclap": {
+   "shape": "TH",
+   "over": {},
+   "look": "TheClap",
+   "label": [
+    "HEAVY",
+    "THE CLAP"
+   ],
+   "tier": 6,
+   "faction": "Wraiths"
+  },
+  "heavy-blackbudget": {
+   "shape": "TH",
+   "over": {},
+   "look": "BlackBudget",
+   "label": [
+    "HEAVY",
+    "BLACK BUDGET"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
   },
   "10mm-emppayload": {
    "shape": "S10",
@@ -1698,7 +3599,8 @@
     "10MM",
     "EMP PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "10mm-firepayload": {
    "shape": "S10",
@@ -1712,7 +3614,8 @@
     "10MM",
     "INCENDIARY PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "10mm-chempayload": {
    "shape": "S10",
@@ -1726,7 +3629,8 @@
     "10MM",
     "CHEM PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "10mm-flashpayload": {
    "shape": "S10",
@@ -1740,7 +3644,8 @@
     "10MM",
     "FLASH PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "10mm-hunter": {
    "shape": "S10",
@@ -1754,7 +3659,8 @@
     "10MM",
     "HUNTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "10mm-hackcarrier": {
    "shape": "S10",
@@ -1769,7 +3675,8 @@
     "10MM",
     "HACK CARRIER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "10mm-shapedcharge": {
    "shape": "S10",
@@ -1784,7 +3691,8 @@
     "10MM",
     "SHAPED CHARGE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "10mm-lockout": {
    "shape": "S10",
@@ -1799,7 +3707,519 @@
     "10MM",
     "LOCKOUT"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "10mm-kansatsu": {
+   "shape": "S10",
+   "over": {
+    "sensor": "green",
+    "idband": "red",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Kansatsu",
+   "label": [
+    "10MM",
+    "KANSATSU"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "10mm-fourthofjuly": {
+   "shape": "S10",
+   "over": {},
+   "look": "FourthOfJuly",
+   "label": [
+    "10MM",
+    "FOURTH OF JULY"
+   ],
+   "tier": 5,
+   "faction": "SixthStreet"
+  },
+  "10mm-badjuju": {
+   "shape": "S10",
+   "over": {},
+   "look": "BadJuju",
+   "label": [
+    "10MM",
+    "BAD JUJU"
+   ],
+   "tier": 6,
+   "faction": "VoodooBoys"
+  },
+  "10mm-collectcall": {
+   "shape": "S10",
+   "over": {},
+   "look": "CollectCall",
+   "label": [
+    "10MM",
+    "COLLECT CALL"
+   ],
+   "tier": 9,
+   "faction": "VoodooBoys"
+  },
+  "10mm-wideangle": {
+   "shape": "S10",
+   "over": {},
+   "look": "WideAngle",
+   "label": [
+    "10MM",
+    "WIDE ANGLE"
+   ],
+   "tier": 5,
+   "faction": "KangTao"
+  },
+  "10mm-secondopinion": {
+   "shape": "S10",
+   "over": {},
+   "look": "SecondOpinion",
+   "label": [
+    "10MM",
+    "SECOND OPINION"
+   ],
+   "tier": 6,
+   "faction": "KangTao"
+  },
+  "10mm-deniable": {
+   "shape": "S10",
+   "over": {},
+   "look": "Deniable",
+   "label": [
+    "10MM",
+    "DENIABLE"
+   ],
+   "tier": 6,
+   "faction": "NUSA"
+  },
+  "hack-hackoptics1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOptics1",
+   "label": [
+    "25MM",
+    "REBOOT OPTICS"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackoptics2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOptics2",
+   "label": [
+    "25MM",
+    "REBOOT OPTICS"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackoptics3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOptics3",
+   "label": [
+    "25MM",
+    "REBOOT OPTICS"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackoptics4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOptics4",
+   "label": [
+    "25MM",
+    "REBOOT OPTICS"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hacksonic1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackSonic1",
+   "label": [
+    "25MM",
+    "SONIC SHOCK"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hacksonic2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackSonic2",
+   "label": [
+    "25MM",
+    "SONIC SHOCK"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hacksonic3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackSonic3",
+   "label": [
+    "25MM",
+    "SONIC SHOCK"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hacksonic4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackSonic4",
+   "label": [
+    "25MM",
+    "SONIC SHOCK"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackcontagion1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackContagion1",
+   "label": [
+    "25MM",
+    "CONTAGION"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackcontagion2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackContagion2",
+   "label": [
+    "25MM",
+    "CONTAGION"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackcontagion3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackContagion3",
+   "label": [
+    "25MM",
+    "CONTAGION"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackcontagion4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackContagion4",
+   "label": [
+    "25MM",
+    "CONTAGION"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackcyberware1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCyberware1",
+   "label": [
+    "25MM",
+    "CYBERWARE MALFUNCTION"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackcyberware2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCyberware2",
+   "label": [
+    "25MM",
+    "CYBERWARE MALFUNCTION"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackcyberware3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCyberware3",
+   "label": [
+    "25MM",
+    "CYBERWARE MALFUNCTION"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackcyberware4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCyberware4",
+   "label": [
+    "25MM",
+    "CYBERWARE MALFUNCTION"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackshort1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackShort1",
+   "label": [
+    "25MM",
+    "SHORT CIRCUIT"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackshort2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackShort2",
+   "label": [
+    "25MM",
+    "SHORT CIRCUIT"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackshort3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackShort3",
+   "label": [
+    "25MM",
+    "SHORT CIRCUIT"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackshort4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackShort4",
+   "label": [
+    "25MM",
+    "SHORT CIRCUIT"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackcripple1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCripple1",
+   "label": [
+    "25MM",
+    "CRIPPLE MOVEMENT"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackcripple2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCripple2",
+   "label": [
+    "25MM",
+    "CRIPPLE MOVEMENT"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackcripple3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCripple3",
+   "label": [
+    "25MM",
+    "CRIPPLE MOVEMENT"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackcripple4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackCripple4",
+   "label": [
+    "25MM",
+    "CRIPPLE MOVEMENT"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackoverheat1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOverheat1",
+   "label": [
+    "25MM",
+    "OVERHEAT"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackoverheat2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOverheat2",
+   "label": [
+    "25MM",
+    "OVERHEAT"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackoverheat3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOverheat3",
+   "label": [
+    "25MM",
+    "OVERHEAT"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackoverheat4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackOverheat4",
+   "label": [
+    "25MM",
+    "OVERHEAT"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackglitch1": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGlitch1",
+   "label": [
+    "25MM",
+    "WEAPON GLITCH"
+   ],
+   "tier": 10,
+   "faction": null
+  },
+  "hack-hackglitch2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGlitch2",
+   "label": [
+    "25MM",
+    "WEAPON GLITCH"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackglitch3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGlitch3",
+   "label": [
+    "25MM",
+    "WEAPON GLITCH"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackglitch4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGlitch4",
+   "label": [
+    "25MM",
+    "WEAPON GLITCH"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackburnout2": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackBurnout2",
+   "label": [
+    "25MM",
+    "SYNAPSE BURNOUT"
+   ],
+   "tier": 11,
+   "faction": null
+  },
+  "hack-hackburnout3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackBurnout3",
+   "label": [
+    "25MM",
+    "SYNAPSE BURNOUT"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackburnout4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackBurnout4",
+   "label": [
+    "25MM",
+    "SYNAPSE BURNOUT"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackpsycho3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackPsycho3",
+   "label": [
+    "25MM",
+    "CYBERPSYCHOSIS"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackpsycho4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackPsycho4",
+   "label": [
+    "25MM",
+    "CYBERPSYCHOSIS"
+   ],
+   "tier": 13,
+   "faction": null
+  },
+  "hack-hackgrenade3": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGrenade3",
+   "label": [
+    "25MM",
+    "DETONATE GRENADE"
+   ],
+   "tier": 12,
+   "faction": null
+  },
+  "hack-hackgrenade4": {
+   "shape": "S25",
+   "over": {},
+   "look": "HackGrenade4",
+   "label": [
+    "25MM",
+    "DETONATE GRENADE"
+   ],
+   "tier": 13,
+   "faction": null
   },
   "20mm-emppayload": {
    "shape": "S20",
@@ -1813,7 +4233,8 @@
     "20MM",
     "EMP PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "20mm-firepayload": {
    "shape": "S20",
@@ -1827,7 +4248,8 @@
     "20MM",
     "INCENDIARY PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "20mm-chempayload": {
    "shape": "S20",
@@ -1841,7 +4263,8 @@
     "20MM",
     "CHEM PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "20mm-flashpayload": {
    "shape": "S20",
@@ -1855,7 +4278,8 @@
     "20MM",
     "FLASH PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "20mm-hunter": {
    "shape": "S20",
@@ -1869,7 +4293,8 @@
     "20MM",
     "HUNTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "20mm-hackcarrier": {
    "shape": "S20",
@@ -1884,7 +4309,8 @@
     "20MM",
     "HACK CARRIER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "20mm-shapedcharge": {
    "shape": "S20",
@@ -1899,7 +4325,8 @@
     "20MM",
     "SHAPED CHARGE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "20mm-lockout": {
    "shape": "S20",
@@ -1914,7 +4341,46 @@
     "20MM",
     "LOCKOUT"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "20mm-kansatsu": {
+   "shape": "S20",
+   "over": {
+    "sensor": "green",
+    "idband": "red",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Kansatsu",
+   "label": [
+    "20MM",
+    "KANSATSU"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "20mm-wideangle": {
+   "shape": "S20",
+   "over": {},
+   "look": "WideAngle",
+   "label": [
+    "20MM",
+    "WIDE ANGLE"
+   ],
+   "tier": 5,
+   "faction": "KangTao"
+  },
+  "20mm-secondopinion": {
+   "shape": "S20",
+   "over": {},
+   "look": "SecondOpinion",
+   "label": [
+    "20MM",
+    "SECOND OPINION"
+   ],
+   "tier": 6,
+   "faction": "KangTao"
   },
   "25mm-emppayload": {
    "shape": "S25",
@@ -1928,7 +4394,8 @@
     "25MM",
     "EMP PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "25mm-firepayload": {
    "shape": "S25",
@@ -1942,7 +4409,8 @@
     "25MM",
     "INCENDIARY PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "25mm-chempayload": {
    "shape": "S25",
@@ -1956,7 +4424,8 @@
     "25MM",
     "CHEM PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "25mm-flashpayload": {
    "shape": "S25",
@@ -1970,7 +4439,8 @@
     "25MM",
     "FLASH PAYLOAD"
    ],
-   "tier": 2
+   "tier": 2,
+   "faction": null
   },
   "25mm-hunter": {
    "shape": "S25",
@@ -1984,7 +4454,8 @@
     "25MM",
     "HUNTER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "25mm-hackcarrier": {
    "shape": "S25",
@@ -1999,7 +4470,8 @@
     "25MM",
     "HACK CARRIER"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "25mm-shapedcharge": {
    "shape": "S25",
@@ -2014,7 +4486,8 @@
     "25MM",
     "SHAPED CHARGE"
    ],
-   "tier": 3
+   "tier": 3,
+   "faction": null
   },
   "25mm-lockout": {
    "shape": "S25",
@@ -2029,7 +4502,35 @@
     "25MM",
     "LOCKOUT"
    ],
-   "tier": 4
+   "tier": 4,
+   "faction": null
+  },
+  "25mm-kansatsu": {
+   "shape": "S25",
+   "over": {
+    "sensor": "green",
+    "idband": "red",
+    "tip": "red",
+    "front": "red"
+   },
+   "look": "Kansatsu",
+   "label": [
+    "25MM",
+    "KANSATSU"
+   ],
+   "tier": 6,
+   "faction": "Arasaka"
+  },
+  "25mm-secondopinion": {
+   "shape": "S25",
+   "over": {},
+   "look": "SecondOpinion",
+   "label": [
+    "25MM",
+    "SECOND OPINION"
+   ],
+   "tier": 6,
+   "faction": "KangTao"
   }
  }
 }
