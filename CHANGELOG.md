@@ -3,6 +3,18 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
+## 1.0.0
+
+- A gun's tooltip now shows its caliber on the type line, as in "Power Pistol - .45", and the weapon
+  screen's ammo section reads "Ammo: .45".
+- Fixed the Ammo heading on the weapon screen, which never showed up.
+- Dual wielding no longer duplicates rounds. Two guns on the same round now hold no more between them
+  than you have, on the draw as well as on a reload: two 10-round guns with 15 rounds load 10 and 5.
+- Fixed fitting a new round to a gun: its old rounds are now really emptied, part-used magazine or not.
+- Your own settings: in your own .yaml file under r6/tweaks you can give a gun a caliber (guns from
+  other mods too), move a gun to a different caliber or leave it out, and scale ammo weight down to
+  0. `r6/tweaks/AmmoOverhaul/user-overrides-example.yaml` shows how. With no file, nothing changes.
+
 ## 0.9.0
 
 - Quickhack rounds: 117 new rounds, 354 in all. Smart rounds in 10mm, 20mm and 25mm that carry a

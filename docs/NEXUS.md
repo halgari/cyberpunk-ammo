@@ -319,6 +319,49 @@ What each load does. Percentages are changes from the plain round.
 [*]Disassemble rounds by the full box for components of their own grade. Odd rounds stay in the stack.
 [/list]
 
+[size=5][b][color=#2ad4ff]Your own settings[/color][/b][/size]
+Gun from another mod with no caliber? Don't want ammo to weigh anything? You can change both with a small text file. Without one, nothing changes.
+
+[size=4][b]How to set it up[/b][/size]
+[list=1]
+[*]Make a new file ending in [b].yaml[/b] anywhere under [b]r6/tweaks[/b], for example [b]r6/tweaks/my-brass-market.yaml[/b]. Any name works, and it doesn't matter whether it loads before or after the mod.
+[*]Put in the lines you want (below). The mod ships [b]r6/tweaks/AmmoOverhaul/user-overrides-example.yaml[/b] with every setting written out. Copy from it, but don't edit it there, because an update replaces it.
+[*]Restart the game. Settings are read at startup.
+[/list]
+Put quotes around caliber names: [b]"Power_9mm"[/b], not Power_9mm. TweakXL drops a line without them.
+
+[size=4][b]Calibers[/b][/size]
+[code]
+# One gun record. Its other versions don't follow; use a tag for a whole family of guns.
+Items.Preset_MyGun_Default.brassMarketCaliber: "Power_45"
+
+# Every gun with this tag.
+BrassMarket.tag.MyGunTag: "Power_9mm"
+
+# Leave a gun out. It fires plain vanilla ammo again.
+Items.Preset_Unity_Default.brassMarketCaliber: "none"
+[/code]
+[list]
+[*]Caliber names: Power_9mm, Power_45, Power_12mm, Power_556, Power_762, Power_127, Power_12ga, Power_4ga, Tech_Light, Tech_Heavy, Smart_10, Smart_20, Smart_25.
+[*]A gun's own line beats its tags, and both beat the mod's built-in list, so you can move vanilla guns too.
+[*]The gun gets that caliber's ammo slot, rounds and selectors like any other gun of the caliber.
+[*]Only guns can be mapped. Melee weapons, grenades and cyberware are ignored. A caliber name the mod doesn't know is skipped and written to the log.
+[*]Gun mod authors can ship these lines in their own mod, so their guns take Brass Market ammo out of the box.
+[/list]
+
+[size=4][b]Ammo weight[/b][/size]
+[code]
+BrassMarket.weight.all: 0.5                    # every round
+BrassMarket.weight.Smart: 0.5                  # a family: Power, Tech or Smart
+BrassMarket.weight.Power_127: 0                # a caliber
+Ammo.AO_9mm_Toxin.brassMarketWeight: 2.0       # one round
+[/code]
+[list]
+[*]Each number multiplies the weight the mod gives ammo. 1 is normal, 0 is weightless like vanilla, 2 is double.
+[*]Lines that cover the same round multiply together: all at 0.5 and Smart at 0.5 make Smart rounds a quarter of their weight.
+[*]What bodies drop stays the same. NPC loot is capped by the normal weight.
+[/list]
+
 [line]
 
 [size=5][b][color=#2ad4ff]Requirements[/color][/b][/size]

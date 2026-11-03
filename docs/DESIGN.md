@@ -75,7 +75,7 @@ apply to the gun while it's fitted). Calibers differ in ammo weight, price and a
 
 The engine copies a gun's ammo type from its record into the spawned weapon object
 (`gameweaponObject`), twice: the ammo it's **loaded** with (+0x2e4 on 2.50: name hash, then length
-byte; the magazine count and capacity follow at +0x2f4/+0x2f8) and the ammo it **wants**
+byte; the capacity and magazine count follow at +0x2f4/+0x2f8) and the ammo it **wants**
 (+0x4a8). The loaded ammo drives the HUD total, per-shot consumption and native reload. When the
 two differ the engine has an ammo change pending (`HasAmmoChangeRequest`) and carries it out by
 reloading into the wanted ammo, about every 1.5 s while the gun is empty. Writing only the loaded
@@ -102,6 +102,14 @@ fighting it gave endless reloads. So both are written, and the records stay unch
 - **Safety net:** the gun in hand's shared blackboard `Weapon.MagazineAmmoCount` is watched; if
   the loaded field ever holds other ammo than the selection, the selection is applied again and
   the gun unloaded.
+- **Two guns, one stack:** the engine doesn't count the other gun: a reload fills from the whole
+  stack, and a loaded gun fires with the stack at 0 (also on guns the mod doesn't manage). So 10
+  rounds would load two guns with 10 each and fire 20, and guns leave the inventory loaded
+  whatever the stack. `DualWield.reds` keeps the two magazines within the stack:
+  `HasAvailableAmmoInInventory` counts the other gun's magazine, each gun's
+  `Weapon.MagazineAmmoCount` blackboard entry is watched so a magazine that goes over gives the
+  extra back through the plugin, and a pair is checked a second after a draw or spawn. `GetMagazineAmmoCount` only reads that blackboard entry; the
+  rounds the gun will really fire are the field at +0x2f8.
 - **Menus and HUD count the record's ammo** (`RPGManager.GetAmmoCountValue` for the HUD reserve
   and iron sights, `UIInventoryItem.GetAmmo` / `InventoryItemData.SetAmmo` for weapon cards and
   tooltips, `InventoryDataManagerV2.GetAmmoForWeaponType` for the D-pad wheel); they're wrapped to
@@ -408,6 +416,27 @@ Records come from `tools/crafting/crafting.py` (run after `tools/rounds/rounds.p
   rounds stay in the stack, and the backpack's hover preview shows one batch's yield. Feed
   selectors can't be broken down. Disassembly perks don't apply to rounds.
 
+## User overrides
+
+Players and gun mods set these in their own YAML (`r6/tweaks/AmmoOverhaul/user-overrides-example.yaml`
+shows each key). TweakXL reads files in alphabetical path order, and a file sorting before
+`AmmoOverhaul\` loses: its values are replaced and its `!append` to a mod list fails ("Ambiguous
+definition"). So these are flats the mod never sets, read at startup with today's behaviour as
+the default. Each key names one gun, tag or round, so two mods never edit one list.
+
+- Caliber: `<weapon record>.brassMarketCaliber` or `BrassMarket.tag.<tag>`, a caliber id or
+  `"none"` (quoted: a bare word is "Ambiguous" to TweakXL and dropped). `AOData.FindCaliber`
+  checks the gun's own line, then its tags in order, then `weaponTags` / `weaponRecords`.
+  Overrides apply only to `RangedWeapon`s firing an `Ammo` item (a Katana's record has
+  `Ammo.Standard`). The startup tweak makes one pass over the guns with `FindCaliber`, so the
+  records, the runtime cache and the tooltip all agree. It logs unknown calibers and overrides
+  on non-guns.
+- Weight: `BrassMarket.weight.all`, `.<family>`, `.<caliber>` and `<ammo>.brassMarketWeight`,
+  multiplied (`AOData.UserNumber` reads `0` and `2` as integers too: an integer flat read as a
+  float comes back 0). Most rounds share their weight modifier with the round they're based on,
+  so `AmmoFeedTweak.ScaleWeight` gives a rescaled round its own copies (`<ammo>.aoWeight<n>`).
+  Every round gets `<ammo>.aoBaseWeight`, its unscaled weight, which the NPC loot cap uses.
+
 ## Weight and inventory
 
 - Ammo items have a Weight stat (about one carry point per typical magazine). Stack items update
@@ -417,7 +446,7 @@ Records come from `tools/crafting/crafting.py` (run after `tools/rounds/rounds.p
 
 ## Known gaps
 
-- Dual wield: only the right-hand gun is watched by the safety net.
+- Dual wield: only the last gun spawned is watched by the safety net.
 - Ammo of the same type shares one NPC stack; a gun first given to an NPC after its first draw
   adds no stock if the NPC already carries that ammo.
 - NPC rail guns have `ChargeTime` 0, so Sleevers change nothing for them.

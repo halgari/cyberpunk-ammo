@@ -84,6 +84,20 @@ each Epic quickhack.
 - Kill a netrunner and loot the body.
 - Craft a box with exactly 1 spare copy of its quickhack, and with several. One copy goes per box.
 
+## Dual wield field test
+
+`tools/snippets/calibers/dualwield.sh` covers magazines and shots, with reloads started by script.
+Not with the real reload key, so check that by hand: dual wield two Unitys with 10 rounds of one
+round in the backpack and press R. The two magazines together show 10, and 10 shots empty them.
+
+## User overrides
+
+`tools/snippets/calibers/overrides/` has two override files (`aaa_aotest.yaml` sorts before the
+mod, `zz_aotest.yaml` after) and `check.lua` (usage in its header). With the files in `r6/tweaks`,
+it checks a gun line, a tag line, `none` beating a tag, an unknown caliber, a Katana left alone
+and stacked weight multipliers, including an integer `0`. Remove the files and restart before
+other tests: they change real guns and rounds.
+
 ## Test kit (CET window)
 
 With the dev helpers installed (`tools/linux/dev-install.sh`), opening the CET overlay also opens
@@ -142,7 +156,7 @@ each step); the rest needs a person at the game. Give yourself the kit first (te
 "Give slice kit").
 
 1. **Weapon screen.** Inventory → a Lexington, Omaha or Yukimura: the sections read Attachments,
-   Ammo, Mods. The feed slot is only under Ammo and shows the fitted round's icon (an ammo icon
+   Ammo with the caliber ("Ammo: 9mm"), Mods. The feed slot is only under Ammo and shows the fitted round's icon (an ammo icon
    when empty). It works with mouse and controller. Then run `section.lua`. Any 9mm, 5mm or 10mm
    handgun or SMG (Kenshin, Grit, Pulsar, Chao...) has the slot, and an Uncommon round fits a
    Common gun (`rarity.lua`, `rarity2.lua`).
