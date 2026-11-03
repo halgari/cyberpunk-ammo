@@ -8,7 +8,7 @@ if ok then
     print(d)
     local a, m, mo = d:match("attachments (%-?%d+) ammo (%-?%d+) mods (%-?%d+)")
     a, m, mo = tonumber(a), tonumber(m), tonumber(mo)
-    check("label reads Ammo", d:match("| label (.*)$") == "Ammo", d:match("| label (.*)$"))
+    check("label reads Ammo and the caliber", (d:match("| label (.*)$") or ""):find("^Ammo: ") ~= nil, d:match("| label (.*)$"))
     check("one feed slot", select(2, d:gsub("AO_AmmoFeed_", "")) == 1, d)
     check("Ammo before Mods", m and mo and m < mo, d)
     check("Attachments before Ammo (or in another parent)", a and (a == -1 or a < m), d)

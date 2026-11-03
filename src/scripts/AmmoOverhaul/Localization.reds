@@ -21,6 +21,19 @@ public class AmmoOverhaulEnglish extends ModLocalizationPackage {
   protected func DefineTexts() -> Void {
     this.Text("AO-Slot-AmmoFeed", "Ammo Feed");
     this.Text("AO-Section-Ammo", "Ammo");
+    this.Text("AO-Caliber-Power_9mm", "9mm");
+    this.Text("AO-Caliber-Power_45", ".45");
+    this.Text("AO-Caliber-Power_12mm", "12mm magnum");
+    this.Text("AO-Caliber-Power_556", "5.56");
+    this.Text("AO-Caliber-Power_762", "7.62");
+    this.Text("AO-Caliber-Power_127", "12.7");
+    this.Text("AO-Caliber-Power_12ga", "12-gauge");
+    this.Text("AO-Caliber-Power_4ga", "4-gauge");
+    this.Text("AO-Caliber-Tech_Light", "Light rail");
+    this.Text("AO-Caliber-Tech_Heavy", "Heavy rail");
+    this.Text("AO-Caliber-Smart_10", "10mm");
+    this.Text("AO-Caliber-Smart_20", "20mm cluster");
+    this.Text("AO-Caliber-Smart_25", "25mm dart");
     // Rounds and their selectors share a name and description. The last sentences are the
     // effect line, which must match the selector's stats.
     this.Text("AO-Ammo-9mm-Ball", "9mm Ball");

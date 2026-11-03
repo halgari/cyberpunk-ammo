@@ -96,6 +96,8 @@ private func AOEnsureAmmoSection() -> Bool {
   label.SetAnchor(modsLabel.GetAnchor());
   label.SetSizeRule(modsLabel.GetSizeRule());
   label.SetFitToContent(true);
+  // Copying fontFamily from the Mods label doesn't take, and with no font the text has no size.
+  label.SetFontFamily("base\\gameplay\\gui\\fonts\\raj\\raj.inkfontfamily");
   label.SetText(GetLocalizedTextByKey(n"AO-Section-Ammo"));
   label.Reparent(section);
 
@@ -127,6 +129,9 @@ private func AORebuildAmmoSection() -> Void {
   }
   let visible: Bool = ArraySize(feeds) > 0;
   this.aoAmmoSection.SetVisible(visible);
+  let caliber: String = AOData.FindCaliber(ItemID.GetTDBID(InventoryItemData.GetID(itemData)));
+  let label: String = GetLocalizedTextByKey(n"AO-Section-Ammo");
+  this.aoAmmoLabel.SetText(StrLen(caliber) > 0 ? label + ": " + AOData.CaliberName(caliber) : label);
   while this.aoAmmoSlots.GetNumChildren() > ArraySize(feeds) {
     this.aoAmmoSlots.RemoveChildByIndex(this.aoAmmoSlots.GetNumChildren() - 1);
   }
