@@ -1,0 +1,9 @@
+Items.Preset_Lexington_Default.brassMarketCaliber: "Power_45"
+Items.Preset_Unity_Default.brassMarketCaliber: "none"
+Items.Preset_Nova_Default.brassMarketCaliber: "Power_99"
+Items.Preset_Katana_Default.brassMarketCaliber: "Power_9mm"
+BrassMarket.weight.all: 2
+BrassMarket.weight.Smart: 0.5
+BrassMarket.weight.Power_127: 0
+BrassMarket.weight.Tech: -1
+Ammo.AO_9mm_Toxin.brassMarketWeight: 3.0

@@ -1,0 +1,44 @@
+# Brass Market: your own settings
+#
+# Everything in this file is commented out, so it changes nothing. Don't edit it here: a mod
+# update replaces this file. Copy the lines you want into your own .yaml file anywhere under
+# r6/tweaks (for example r6/tweaks/my-brass-market.yaml), remove the "# " in front, and restart
+# the game. Any file name works; it doesn't matter whether it loads before or after the mod.
+#
+# Put quotes around caliber names ("Power_9mm"). Without them TweakXL can't tell what the value
+# is and drops the line.
+#
+# Calibers: Power_9mm, Power_45, Power_12mm, Power_556, Power_762, Power_127, Power_12ga,
+# Power_4ga, Tech_Light, Tech_Heavy, Smart_10, Smart_20, Smart_25.
+#
+# --- Which caliber a gun takes ---
+# One gun record (its variants don't follow; use a tag for a whole family of guns):
+# Items.Preset_MyGun_Default.brassMarketCaliber: "Power_45"
+#
+# Every gun carrying a tag:
+# BrassMarket.tag.MyGunTag: "Power_9mm"
+#
+# Leave a gun out of the ammo system (it fires plain vanilla ammo again):
+# Items.Preset_Unity_Default.brassMarketCaliber: "none"
+#
+# A gun's own line beats its tags, and both beat the mod's built-in list. Only guns can be
+# mapped; melee weapons, grenades and cyberware are ignored. A caliber name the mod doesn't know
+# is ignored and written to the log.
+#
+# --- Ammo weight ---
+# Multipliers on the weight the mod gives ammo. 1 is the normal weight, 0 is weightless (like
+# vanilla), 2 is double. Lines that apply to the same round multiply together.
+#
+# Every round:
+# BrassMarket.weight.all: 0.5
+#
+# A family (Power, Tech or Smart):
+# BrassMarket.weight.Smart: 0.5
+#
+# A caliber:
+# BrassMarket.weight.Power_127: 0
+#
+# One round:
+# Ammo.AO_9mm_Toxin.brassMarketWeight: 2.0
+#
+# Weight changes don't change what bodies drop: loot is capped by the normal weight.

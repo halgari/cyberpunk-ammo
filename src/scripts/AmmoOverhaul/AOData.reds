@@ -59,10 +59,91 @@ public abstract class AOData {
     return path;
   }
 
+  // --- User overrides ------------------------------------------------------------------------
+  // Settings in the player's own YAML (user-overrides-example.yaml). The mod never sets these
+  // flats itself, so the user's file wins wherever TweakXL loads it; unset means today's behaviour.
+
+  // A string flat, written quoted or not (TweakXL may type a bare word as a CName).
+  private static func UserString(path: TweakDBID) -> String {
+    let value: String = TweakDBInterface.GetString(path, "");
+    return StrLen(value) > 0 ? value : NameToString(TweakDBInterface.GetCName(path, n""));
+  }
+
+  // A number flat, written 1.0 or 1 (YAML makes 1 an integer). `fallback` if unset or below 0.
+  // Reading an integer flat as a float gives 0 (or its bits as a tiny float), so a float that
+  // close to 0 defers to the integer read.
+  public static func UserNumber(path: TweakDBID, key: String, fallback: Float) -> Float {
+    let value: Float = TweakDBInterface.GetFloat(path, -12345.0);
+    let whole: Int32 = TweakDBInterface.GetInt(path, -12345);
+    if value == -12345.0 || (AbsF(value) < 0.000001 && whole != -12345) {
+      if whole == -12345 {
+        return fallback;
+      }
+      value = Cast<Float>(whole);
+    }
+    if value < 0.0 {
+      ModLog(n"AmmoOverhaul", "override " + key + " below 0, ignored");
+      return fallback;
+    }
+    return value;
+  }
+
+  // What the user's file says about this gun's caliber, unchecked: its own record's
+  // brassMarketCaliber, else the first of its tags with a BrassMarket.tag.<tag>, else "".
+  public static func UserCaliberRaw(weapon: ref<WeaponItem_Record>) -> String {
+    let value: String = AOData.UserString(AOData.Flat(weapon.GetID(), "brassMarketCaliber"));
+    if StrLen(value) > 0 && NotEquals(value, "None") {
+      return value;
+    }
+    for tag in weapon.Tags() {
+      value = AOData.UserString(TDBID.Create("BrassMarket.tag." + NameToString(tag)));
+      if StrLen(value) > 0 && NotEquals(value, "None") {
+        return value;
+      }
+    }
+    return "";
+  }
+
+  // The user's caliber for this gun if it names one the mod has, "none" to leave the gun alone,
+  // or "" (no override, an unknown name, which the startup tweak logs, or not a gun: melee weapons,
+// grenades and cyberware never take an override).
+  public static func UserCaliber(weapon: ref<WeaponItem_Record>) -> String {
+    if !weapon.TagsContains(n"RangedWeapon") {
+      return "";
+    }
+    let value: String = AOData.UserCaliberRaw(weapon);
+    let calibers: array<String> = AOData.Calibers();
+    return Equals(value, "none") || ArrayContains(calibers, value) ? value : "";
+  }
+
+  // The user's weight multiplier for a caliber's rounds: all, family and caliber, multiplied.
+  public static func CaliberWeightScale(caliber: String) -> Float {
+    let family: String = "BrassMarket.weight." + AOData.Family(caliber);
+    let own: String = "BrassMarket.weight." + caliber;
+    return AOData.UserNumber(t"BrassMarket.weight.all", "BrassMarket.weight.all", 1.0)
+      * AOData.UserNumber(TDBID.Create(family), family, 1.0)
+      * AOData.UserNumber(TDBID.Create(own), own, 1.0);
+  }
+
+  // A round's own multiplier: <ammo>.brassMarketWeight.
+  public static func RoundWeightScale(ammo: TweakDBID) -> Float {
+    return AOData.UserNumber(AOData.Flat(ammo, "brassMarketWeight"), "a round's brassMarketWeight", 1.0);
+  }
+
+  // A round's weight before the user's multipliers (set by AmmoFeedTweak), or -1 if not recorded.
+  public static func BaseWeight(ammo: TweakDBID) -> Float {
+    return TweakDBInterface.GetFloat(AOData.Flat(ammo, "aoBaseWeight"), -1.0);
+  }
+
   // --- Calibers ------------------------------------------------------------------------------
 
   public static func Calibers() -> array<String> {
     return AOData.GetStrings(t"AmmoOverhaul.calibers");
+  }
+
+  // The name players see, as on the Nexus page: "9mm", "Light rail".
+  public static func CaliberName(caliber: String) -> String {
+    return GetLocalizedTextByKey(StringToName("AO-Caliber-" + caliber));
   }
 
   public static func WeaponTags(caliber: String) -> array<CName> {
@@ -193,6 +274,20 @@ public abstract class AOData {
   // The vanilla ammo item this caliber's share of world loot and vendor stock is taken from.
   public static func VanillaAmmo(caliber: String) -> TweakDBID {
     return AOData.GetID(AOData.Key(caliber, "vanillaAmmo"));
+  }
+
+  // Every round of the caliber, once each: its default, its vanilla ammo and its selectors' ammo.
+  public static func CaliberAmmo(caliber: String) -> array<TweakDBID> {
+    let rounds: array<TweakDBID>;
+    let all: array<TweakDBID> = AOData.GetIDs(AOData.Key(caliber, "selectorAmmo"));
+    ArrayPush(all, AOData.DefaultAmmo(caliber));
+    ArrayPush(all, AOData.VanillaAmmo(caliber));
+    for ammo in all {
+      if TDBID.IsValid(ammo) && !ArrayContains(rounds, ammo) {
+        ArrayPush(rounds, ammo);
+      }
+    }
+    return rounds;
   }
 
   public static func LootWeight(caliber: String) -> Float {
@@ -362,9 +457,18 @@ public abstract class AOData {
     return IsDefined(system) ? system.CachedCaliber(weapon) : AOData.FindCaliber(weapon);
   }
 
+  // The user's override first (UserCaliber), then the calibers' own tags and records in order.
   public static func FindCaliber(weapon: TweakDBID) -> String {
     let record: ref<WeaponItem_Record> = TweakDBInterface.GetWeaponItemRecord(weapon);
     if IsDefined(record) {
+      let ammo: ref<Item_Record> = record.Ammo();
+      if !IsDefined(ammo) || !ammo.TagsContains(n"Ammo") {
+        return "";
+      }
+      let user: String = AOData.UserCaliber(record);
+      if StrLen(user) > 0 {
+        return Equals(user, "none") ? "" : user;
+      }
       for caliber in AOData.Calibers() {
         if AOData.Matches(record, caliber) {
           return caliber;

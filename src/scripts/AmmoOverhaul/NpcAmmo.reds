@@ -355,7 +355,11 @@ public abstract class NpcAmmo {
     for ammo in npc.aoStocked {
       let rounds: Int32 = NpcAmmo.Rounds(npc, ammo);
       let data: wref<gameItemData> = ts.GetItemData(npc, ItemID.CreateQuery(ammo));
-      let weight: Float = IsDefined(data) ? data.GetStatValueByType(gamedataStatType.Weight) : 0.0;
+      // The unscaled weight, so a user's lighter ammo doesn't mean bigger drops.
+      let weight: Float = AOData.BaseWeight(ammo);
+      if weight < 0.0 {
+        weight = IsDefined(data) ? data.GetStatValueByType(gamedataStatType.Weight) : 0.0;
+      }
       if weight > 0.0 {
         rounds = Min(rounds, FloorF(carry / weight + 0.001));
       }
