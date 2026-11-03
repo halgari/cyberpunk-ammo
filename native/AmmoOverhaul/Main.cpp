@@ -16,7 +16,7 @@
 //   AO_WriteAmmoField(weapon, offset, expected, ammo) -> Bool
 //   AO_ReadInt32(weapon, offset) -> Int32              (-1 if unreadable)
 //   AO_WriteInt32(weapon, offset, expected, value) -> Bool
-// The Int32 pair is for the magazine count, which follows the ammo field (+0x10 on 2.50).
+// The Int32 pair is for the magazine count, which follows the ammo field (+0x14 on 2.50).
 
 #include <RED4ext/RED4ext.hpp>
 

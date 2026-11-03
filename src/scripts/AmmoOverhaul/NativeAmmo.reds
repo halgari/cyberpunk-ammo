@@ -105,27 +105,45 @@ public abstract class NativeAmmo {
     }
   }
 
-  // Empties the magazine of `weapon` without touching the inventory, by writing the magazine
-  // count that follows the ammo field (+0x10 on 2.50). Only if that field holds the count the
-  // engine reports and the next one the capacity, so a different layout fails instead of
-  // writing somewhere else.
+  // Empties the magazine of `weapon` without touching the inventory.
   public static func Unload(owner: ref<GameObject>, weapon: ref<WeaponObject>, ammoOffset: Int32) -> Bool {
+    return NativeAmmo.SetMagazine(owner, weapon, ammoOffset, 0);
+  }
+
+  // The loaded ammo field of `weapon`, known by the capacity and magazine count after it, for
+  // guns that never needed their ammo changed. 0 if there's no such field.
+  public static func FindLoadedField(weapon: ref<WeaponObject>, ammo: TweakDBID) -> Int32 {
+    let mag: Int32 = Cast<Int32>(WeaponObject.GetMagazineAmmoCount(weapon));
+    let capacity: Int32 = Cast<Int32>(WeaponObject.GetMagazineCapacity(weapon));
+    for candidate in AO_FindAmmoFields(weapon, ammo) {
+      if AO_ReadInt32(weapon, candidate + 16) == capacity && AO_ReadInt32(weapon, candidate + 20) == mag {
+        return candidate;
+      }
+    }
+    return 0;
+  }
+
+  // Sets the magazine of `weapon` without touching the inventory, by writing the rounds loaded,
+  // which follow the ammo field and the capacity (+0x10 and +0x14 on 2.50). Only if those hold the
+  // capacity and count the engine reports, so a different layout fails instead of writing
+  // somewhere else.
+  public static func SetMagazine(owner: ref<GameObject>, weapon: ref<WeaponObject>, ammoOffset: Int32, rounds: Int32) -> Bool {
     if ammoOffset <= 0 {
       return false;
     }
-    let magOffset: Int32 = ammoOffset + 16;
+    let magOffset: Int32 = ammoOffset + 20;
     let mag: Int32 = Cast<Int32>(WeaponObject.GetMagazineAmmoCount(weapon));
     let capacity: Int32 = Cast<Int32>(WeaponObject.GetMagazineCapacity(weapon));
-    if capacity <= 0 || AO_ReadInt32(weapon, magOffset) != mag || AO_ReadInt32(weapon, magOffset + 4) != capacity {
+    if capacity <= 0 || AO_ReadInt32(weapon, ammoOffset + 16) != capacity || AO_ReadInt32(weapon, magOffset) != mag {
       return false;
     }
-    if mag == 0 {
+    if mag == rounds {
       return true;
     }
-    if !AO_WriteInt32(weapon, magOffset, mag, 0) {
+    if !AO_WriteInt32(weapon, magOffset, mag, rounds) {
       return false;
     }
-    weapon.GetSharedData().SetUint(GetAllBlackboardDefs().Weapon.MagazineAmmoCount, 0u);
+    weapon.GetSharedData().SetUint(GetAllBlackboardDefs().Weapon.MagazineAmmoCount, Cast<Uint32>(rounds));
     WeaponObject.SendAmmoUpdateEvent(owner, weapon);
     return true;
   }

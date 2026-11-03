@@ -34,6 +34,10 @@ public class AmmoFeedSystem extends ScriptableSystem {
 
   private let m_magListener: ref<CallbackHandle>;
   private let m_magWeapon: wref<WeaponObject>;
+  // Every spawned player gun's magazine watch (DualWield.reds), and the loaded ammo field for guns
+  // the mod never had to change (m_ammoOffset is only located by changing one).
+  private let m_dualWatches: array<ref<AODualMagazineWatch>>;
+  private let m_loadedField: Int32;
   private let m_lastRestoreRedraw: Float;
 
   // The last log lines, for reading live from CET (ModLog output only reaches the file late):
@@ -115,7 +119,66 @@ public class AmmoFeedSystem extends ScriptableSystem {
     if StrLen(AOData.CaliberForWeapon(ItemID.GetTDBID(id))) > 0 {
       this.GiveSelectedAmmo(weapon, 0);
       this.WatchMagazine(weapon);
+      this.WatchDualWield(weapon);
+      this.BalanceHandsSoon();
     }
+  }
+
+  private final func WatchDualWield(weapon: ref<WeaponObject>) -> Void {
+    let kept: array<ref<AODualMagazineWatch>>;
+    for watch in this.m_dualWatches {
+      if IsDefined(watch.weapon) {
+        ArrayPush(kept, watch);
+      }
+    }
+    let added: ref<AODualMagazineWatch> = new AODualMagazineWatch();
+    added.weapon = weapon;
+    added.handle = weapon.GetSharedData().RegisterListenerUint(GetAllBlackboardDefs().Weapon.MagazineAmmoCount, added, n"OnMagazine");
+    ArrayPush(kept, added);
+    this.m_dualWatches = kept;
+  }
+
+  // Guns come out of the inventory already loaded, with no magazine change to catch, so a pair is
+  // checked once both are in hand: the left gun gives back first. The second hand and the magazine
+  // counts come through a moment after the draw.
+  private final func BalanceHandsSoon() -> Void {
+    let check: ref<AODualBalanceCallback> = new AODualBalanceCallback();
+    GameInstance.GetDelaySystem(this.m_player.GetGame()).DelayCallback(check, 1.0, false);
+  }
+
+  public final func BalanceHands() -> Void {
+    let left: ref<WeaponObject> = ScriptedPuppet.GetWeaponLeft(this.m_player);
+    if IsDefined(left) {
+      this.BalanceDualWield(left);
+    }
+  }
+
+  // `weapon`'s magazine changed. If the two guns in hand now hold more than their stack, it gives
+  // the extra back, then the other gun gives the rest (see DualWield.reds).
+  public final func BalanceDualWield(weapon: ref<WeaponObject>) -> Void {
+    let partner: ref<WeaponObject> = DualWield.Partner(weapon);
+    if !IsDefined(partner) {
+      return;
+    }
+    let mag: Int32 = Cast<Int32>(WeaponObject.GetMagazineAmmoCount(weapon));
+    let other: Int32 = Cast<Int32>(WeaponObject.GetMagazineAmmoCount(partner));
+    let extra: Int32 = mag + other - weapon.GetTotalAmmoCount();
+    if extra <= 0 {
+      return;
+    }
+    let id: ItemID = weapon.GetItemID();
+    let ammo: TweakDBID = AOData.SelectedAmmo(this.m_player, id, AOData.CaliberForWeapon(ItemID.GetTDBID(id)));
+    let field: Int32 = this.m_ammoOffset > 0 ? this.m_ammoOffset : this.m_loadedField;
+    if field <= 0 {
+      field = NativeAmmo.FindLoadedField(weapon, ammo);
+      this.m_loadedField = field;
+    }
+    let fromThis: Int32 = Min(extra, mag);
+    let done: Bool = NativeAmmo.SetMagazine(this.m_player, weapon, field, mag - fromThis);
+    if extra > fromThis {
+      done = NativeAmmo.SetMagazine(this.m_player, partner, field, other - (extra - fromThis)) && done;
+    }
+    AmmoFeedSystem.Log("dual wield: " + IntToString(mag) + " + " + IntToString(other) + " over " + IntToString(weapon.GetTotalAmmoCount()) + ", gave back " + IntToString(extra) + (done ? "" : " FAILED"));
   }
 
   // Safety net: if the engine ever loads the gun in hand with other ammo than its selection (it
@@ -187,6 +250,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     }
     if StrLen(AOData.CaliberForWeapon(ItemID.GetTDBID(weapon.GetItemID()))) > 0 {
       this.GiveSelectedAmmo(weapon, 0);
+      this.BalanceHandsSoon();
     }
   }
 
