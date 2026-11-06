@@ -3,6 +3,12 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
+## 1.0.1
+
+- Fixed Shinobi's level 50 refill on a dash or slide forcing a reload when the gun had anything but
+  its default round in. It now tops up 20% of the magazine with the round you have in, dual wielded
+  guns too. The round refund on La Chingona Dorada had the same bug and is fixed too.
+
 ## 1.0.0
 
 - A gun's tooltip now shows its caliber on the type line, as in "Power Pistol - .45", and the weapon

@@ -252,6 +252,11 @@ The automated checks are in `tools/snippets/calibers/` (`check.sh <file>` runs a
   another, Reloads' roll, Redliners' jam both ways, a jam across a swap, Chrome-cookers on V,
   Kata's roll, Parts-pullers' components, Kansatsu's short lock and the tag not shortening it, the second five factions' spelling, headshot burns on NPCs and V, stagger, cripple and pump by rank and on V, a gun's crit stats reaching the roll, the last eight factions' spelling and rolls, the Mox and Aldecaldo shops, every rank-aware effect by rank and on V (Pocket Sand, Bad Juju, Cut Off, Last Call, Collect Call), shock and poison spread, Waste Not's refund on NPC and V, Speedloaders' clamp to the pocket, Dogtown Tax on the body, Chimera Scrap on V and NPC, Deniable's unaware bonus, and the Kang Tao and NCPD stats. Draws
   guns and spawns NPCs: not while you play.
+- `refill.sh`: vanilla magazine refunds (Shinobi 50, `ValentinosFrenzyEffector`) top up with the
+  gun's own round and don't unload it, on one gun and a dual wielded pair, with Ball as the
+  control. It runs the real effectors through dev subclasses (`tools/dev-scripts/AODevRefill.reds`,
+  put in by `dev-install.sh`), since CET can't call their protected methods. Draws guns: not while
+  you play.
 - To look at icons in the game without a mouse: set the backpack's filter with
   `UIScriptableSystemSetBackpackFilter` (`filterMode` 14 is all items), open it with
   `StartHubMenuEvent` and `SetStartMenu("backpack")`, then `game-shot.sh`. The atlas is 2048x4096;

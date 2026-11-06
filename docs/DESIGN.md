@@ -101,7 +101,15 @@ fighting it gave endless reloads. So both are written, and the records stay unch
   `ForceResetAmmoEvent` plus a holster and redraw.
 - **Safety net:** the gun in hand's shared blackboard `Weapon.MagazineAmmoCount` is watched; if
   the loaded field ever holds other ammo than the selection, the selection is applied again and
-  the gun unloaded.
+  the gun unloaded. Only one gun is watched, so in dual wield the other could keep a wrong round
+  unnoticed.
+- **Vanilla refunds:** Shinobi 50's 20% on a dash or slide (`CeaselessLeadAmmoEffector`) and
+  `ValentinosFrenzyEffector` send a `SetAmmoCountEvent` of `WeaponObject.GetAmmoType`, the
+  record's ammo, so the engine loaded the default round and the safety net emptied the gun.
+  `MagRefill.reds` marks V's guns while one runs, and `GetAmmoType` gives a marked gun its loaded
+  round. Nowhere else: the vehicle top-up (`vehicleTransition.script`) gives the round it names
+  for free. The draw refill of `MagazineAutoRefill` (`Items.RangedMod2_*`) uses the same call but
+  lands before the mod applies the selection on the draw, so it keeps the right round (tested).
 - **Two guns, one stack:** the engine doesn't count the other gun: a reload fills from the whole
   stack, and a loaded gun fires with the stack at 0 (also on guns the mod doesn't manage). So 10
   rounds would load two guns with 10 each and fire 20, and guns leave the inventory loaded
