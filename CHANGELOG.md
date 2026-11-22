@@ -3,6 +3,10 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
+## 1.0.2
+
+- Fixed a gun hanging for a few seconds and then holstering and drawing itself when you pulled it out after changing its round with none of that round (or its default round) on you.
+
 ## 1.0.1
 
 - Fixed Shinobi's level 50 refill on a dash or slide forcing a reload when the gun had anything but

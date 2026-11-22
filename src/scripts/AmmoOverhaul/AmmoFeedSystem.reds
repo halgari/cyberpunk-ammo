@@ -168,11 +168,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     }
     let id: ItemID = weapon.GetItemID();
     let ammo: TweakDBID = AOData.SelectedAmmo(this.m_player, id, AOData.CaliberForWeapon(ItemID.GetTDBID(id)));
-    let field: Int32 = this.m_ammoOffset > 0 ? this.m_ammoOffset : this.m_loadedField;
-    if field <= 0 {
-      field = NativeAmmo.FindLoadedField(weapon, ammo);
-      this.m_loadedField = field;
-    }
+    let field: Int32 = this.LoadedField(weapon, ammo);
     let fromThis: Int32 = Min(extra, mag);
     let done: Bool = NativeAmmo.SetMagazine(this.m_player, weapon, field, mag - fromThis);
     if extra > fromThis {
@@ -213,13 +209,27 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return false;
   }
 
+  // The loaded ammo field of `weapon`, which holds `ammo`: the located offset, else the one found
+  // by the magazine count and capacity after it. The offset is only located by changing a gun's
+  // ammo while V holds a different count of the old and new rounds, so with none of either
+  // (e.g. a gun whose round ran out, in a new session) it stays unknown. 0 if neither is known.
+  private final func LoadedField(weapon: ref<WeaponObject>, ammo: TweakDBID) -> Int32 {
+    if this.m_ammoOffset > 0 {
+      return this.m_ammoOffset;
+    }
+    if this.m_loadedField <= 0 || NativeAmmo.Current(weapon, this.m_loadedField) != ammo {
+      this.m_loadedField = NativeAmmo.FindLoadedField(weapon, ammo);
+    }
+    return this.m_loadedField;
+  }
+
   // Unloads `weapon` if it's waiting to; false if that has to be tried again later.
-  private final func UnloadIfMarked(weapon: ref<WeaponObject>) -> Bool {
+  private final func UnloadIfMarked(weapon: ref<WeaponObject>, ammo: TweakDBID) -> Bool {
     let id: ItemID = weapon.GetItemID();
     if !ArrayContains(this.m_unload, id) {
       return true;
     }
-    if !NativeAmmo.Unload(this.m_player, weapon, this.m_ammoOffset) {
+    if !NativeAmmo.Unload(this.m_player, weapon, this.LoadedField(weapon, ammo)) {
       return false;
     }
     ArrayRemove(this.m_unload, id);
@@ -262,7 +272,7 @@ public class AmmoFeedSystem extends ScriptableSystem {
     let id: ItemID = weapon.GetItemID();
     let ammo: TweakDBID = AOData.SelectedAmmo(player, id, AOData.CaliberForWeapon(ItemID.GetTDBID(id)));
     let applied: Bool = NativeAmmo.Apply(player, weapon, ammo, this.m_ammoOffset, this.m_wantedAmmoOffset);
-    if applied && this.UnloadIfMarked(weapon) {
+    if applied && this.UnloadIfMarked(weapon, ammo) {
       if attempt > 0 || ammo != AOData.DefaultAmmo(AOData.CaliberForWeapon(ItemID.GetTDBID(id))) {
         AmmoFeedSystem.Log(TDBID.ToStringDEBUG(ItemID.GetTDBID(id)) + " takes " + TDBID.ToStringDEBUG(ammo));
       }
