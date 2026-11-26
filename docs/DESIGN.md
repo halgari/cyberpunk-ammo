@@ -258,10 +258,14 @@ Heavy rail comes from sniper ammo although its guns used all four vanilla items.
 - **Several rounds per tier:** a tier's share is split evenly among its rounds (Spread rounds by
   largest remainder), so a caliber's two Uncommons each get half its Uncommon share. NPCs that
   roll a tier pick one of its rounds at random (`NpcAmmo.PickTier`).
-- **Vendors:** each stack of a replaced vanilla ammo is split whenever the vendor builds its stock
-  (`Vendor.InitializeStock`, `RegenerateStock`). Gun shops (`Gunsmith`) sell up to Rare, other
-  vendors Common only. Epics come only from loot and NPCs. A restock rebuilds the stock from the vendor's pool and drops our split
-  stacks first (they're regenerating items), so nothing is split twice. Vendors whose stock has
+- **Vendors:** the stacks of replaced vanilla ammo are swapped for shipments whenever the vendor
+  builds its stock (`Vendor.InitializeStock`, `RegenerateStock`; `AmmoDistribution.Shipments`).
+  Every caliber those stacks cover gets its Common round in a `vendorShipment[0]` stack (1000).
+  Gun shops (`Gunsmith`) add `vendorSpecials` (3 to 5) Uncommon and Rare lines, drawn without
+  repeats by lootWeight × tier share, at 100 and 50; other vendors sell Common only. The vanilla
+  quantities are ignored: splitting them across every round gave stacks of one or two. Epics come
+  only from loot and NPCs. A restock rebuilds the stock from the vendor's pool and drops our
+  shipments first (they're regenerating items), so nothing is swapped twice. Vendors whose stock has
   been split are kept on `AmmoFeedSystem` (saved); stock saved before the mod was installed is
   split the first time the vendor fills its inventory (`FillVendorInventory`). Contents can't
   tell: 9mm Ball is vanilla handgun ammo, and a stock bought down to Ball would otherwise be split
@@ -306,9 +310,10 @@ range doesn't change the tooltip yet (none ships with one).
 
 - **Turf shops:** no vendor has a usable faction (all are `Factions.Unaffiliated`), so the mapping is
   by hand: `Vendors.<shop>.aoFaction` in `core.yaml`. `Vendor.AOSplitAmmo` adds
-  `FactionRounds.TurfStock` to a gun shop's stock on each build: tier 7 rounds every time, and at
-  `turfChance` one or two `turfStack` stacks of tiers 5 and 8. A shop can list its own rounds and
-  stack size (`aoTurfAmmo`, `aoTurfStack`): `cct_dtn_guns_01` lists Shinobi, the one Epic any shop
+  `FactionRounds.TurfStock` to a gun shop's stock on each build: tier 7 rounds (faction Commons)
+  every time, and at `turfChance` one or two stacks of tiers 5 and 8, all in their quality's
+  `vendorShipment` size. Faction Commons sell nowhere else. A shop can list its own rounds, in a small
+  stack (`aoTurfAmmo`, `aoTurfStack`): `cct_dtn_guns_01` lists Shinobi, the one Epic any shop
   sells.
 - **Self-jam:** `aoSelfJam` on the ammo is each shot's chance to apply `WeaponMalfunction` to the
   shooter, for V (`ShootEvents.OnEnter`) and NPCs (`NpcAmmo.TakeShot`). The game's shooting gate

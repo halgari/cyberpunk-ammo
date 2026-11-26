@@ -150,6 +150,49 @@ public abstract class AmmoDistribution {
     return TDBID.None();
   }
 
+  // A vendor's ammo as shipments (Vendors.reds): every Common round of `calibers`, then, up to
+  // `maxTier`, a few Uncommon+ rounds (vendorSpecials, low..high) drawn without repeats by
+  // lootWeight × tier share, each in its tier's vendorShipment size.
+  public static func Shipments(calibers: array<String>, maxTier: Int32) -> array<AOStack> {
+    let stacks: array<AOStack>;
+    let items: array<TweakDBID>;
+    let tiers: array<Int32>;
+    let weights: array<Float>;
+    for caliber in calibers {
+      for ammo in AOData.AmmosForTier(caliber, 0) {
+        ArrayPush(stacks, AOStack(ammo, AOData.VendorShipment(0)));
+      }
+      let shares: array<Float> = AmmoDistribution.TierWeights(caliber, maxTier);
+      let t: Int32 = 1;
+      while t < ArraySize(shares) {
+        let tierAmmo: array<TweakDBID> = AOData.AmmosForTier(caliber, t);
+        let weight: Float = AOData.LootWeight(caliber) * shares[t];
+        if weight > 0.0 {
+          for ammo in tierAmmo {
+            ArrayPush(items, ammo);
+            ArrayPush(tiers, t);
+            ArrayPush(weights, weight / Cast<Float>(ArraySize(tierAmmo)));
+          }
+        }
+        t += 1;
+      }
+    }
+    let range: array<Int32> = TweakDBInterface.GetIntArray(t"AmmoOverhaul.vendorSpecials");
+    let count: Int32 = ArraySize(range) >= 2 ? RandRange(range[0], range[1] + 1) : 0;
+    while count > 0 && ArraySize(items) > 0 {
+      let at: Int32 = AmmoDistribution.Weighted(weights);
+      if weights[at] <= 0.0 {
+        break;
+      }
+      ArrayPush(stacks, AOStack(items[at], AOData.VendorShipment(tiers[at])));
+      ArrayErase(items, at);
+      ArrayErase(tiers, at);
+      ArrayErase(weights, at);
+      count -= 1;
+    }
+    return stacks;
+  }
+
   // Recipe items a vendor selling up to `maxTier` lists this restock: each Uncommon..maxTier round's
   // recipe with chance recipeVendorChance.
   public static func VendorRecipes(maxTier: Int32) -> array<TweakDBID> {

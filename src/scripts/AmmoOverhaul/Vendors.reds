@@ -1,11 +1,11 @@
 module AmmoOverhaul
 
-// Vendor ammo: each stack of vanilla ammo a caliber replaces is split into that ammo's calibers
-// and tiers (AmmoDistribution.Spread) whenever the vendor builds its stock. Gun shops sell up to
-// Rare, everyone else Common only; shops on a faction's turf add that faction's rounds
-// (FactionRounds.TurfStock). A restock rebuilds the stock from the vendor's pool (our
-// rounds are regenerating items, so the old split stacks are dropped first), so each stack is
-// split once.
+// Vendor ammo: the vanilla ammo stacks a caliber replaces are swapped, whenever the vendor builds
+// its stock, for shipments (AmmoDistribution.Shipments): every covered caliber's Common round in a
+// big stack, and at gun shops a few Uncommon and Rare rounds in smaller ones. Other vendors sell
+// Common only. Shops on a faction's turf add that faction's rounds (FactionRounds.TurfStock). A
+// restock rebuilds the stock from the vendor's pool (our rounds are regenerating items, so the old
+// shipments are dropped first), so each pool is swapped once.
 
 @wrapMethod(Vendor)
 private final func InitializeStock() -> Void {
@@ -34,23 +34,28 @@ private final func AOSplitAmmo() -> Void {
   // Gun shops sell up to Rare; other vendors Common only. The one Epic on sale is a turf exception.
   let maxTier: Int32 = Equals(this.GetVendorType(), gamedataVendorType.Gunsmith) ? 2 : 0;
   let stock: array<SItemStack>;
+  let calibers: array<String>;
   let split: Int32 = 0;
   let template: SItemStack;
   for stack in this.m_stock {
-    let vanilla: TweakDBID = ItemID.GetTDBID(stack.itemID);
-    let calibers: array<String> = AmmoDistribution.Calibers(vanilla);
-    if ArraySize(calibers) == 0 {
+    let found: array<String> = AmmoDistribution.Calibers(ItemID.GetTDBID(stack.itemID));
+    if ArraySize(found) == 0 {
       ArrayPush(stock, stack);
     } else {
       template = stack;
-      for part in AmmoDistribution.Spread(vanilla, stack.quantity, maxTier) {
-        let copy: SItemStack = stack;
-        copy.itemID = ItemID.FromTDBID(part.ammo);
-        copy.quantity = part.quantity;
-        ArrayPush(stock, copy);
+      for caliber in found {
+        if !ArrayContains(calibers, caliber) {
+          ArrayPush(calibers, caliber);
+        }
       }
       split += 1;
     }
+  }
+  for part in AmmoDistribution.Shipments(calibers, maxTier) {
+    let copy: SItemStack = template;
+    copy.itemID = ItemID.FromTDBID(part.ammo);
+    copy.quantity = part.quantity;
+    ArrayPush(stock, copy);
   }
   // A netrunner vendor may hold no ammo to split, so these count as a change of their own.
   let hacks: array<AOStack> = HackRounds.ShopStock(this.GetVendorTweakID(), maxTier > 0);

@@ -22,8 +22,8 @@ Brass Market (internally AmmoOverhaul) is a Cyberpunk 2077 (2.50) mod that repla
 - **Faction rounds.** Sixteen factions have 88 rounds of their own, marked with the faction in
   the name, such as [Mael] or [Tyger]. They come from that faction's NPCs, and from a few gun
   shops on their turf, and can't be crafted.
-- **Getting rounds.** Vendors and loot hand out every caliber and tier; gun shops sell up to
-  Rare. Every caliber's Common round can be crafted; better rounds need a recipe ("load sheet")
+- **Getting rounds.** Vendors stock every caliber's Common round by the thousand; gun shops add a
+  few Uncommon and Rare lines each restock. Loot hands out every caliber and tier. Every caliber's Common round can be crafted; better rounds need a recipe ("load sheet")
   from loot or a gun shop. Rounds break down by the box into components of their own grade.
 
 ## Requirements

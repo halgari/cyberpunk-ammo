@@ -77,19 +77,25 @@ public abstract class FactionRounds {
   }
 
   // What a turf gun shop adds to a stock it builds: its faction's Common-quality rounds every time,
-  // and now and then one or two stacks of the Uncommon and Rare ones, or of the rounds the shop lists
-  // itself (<vendor>.aoTurfAmmo: Arasaka's Shinobi, the one Epic any shop sells), in its own stack size.
+  // and now and then one or two stacks of the Uncommon and Rare ones, all in vendorShipment sizes,
+  // or of the rounds the shop lists itself (<vendor>.aoTurfAmmo: Arasaka's Shinobi, the one Epic
+  // any shop sells), in its own small stack (aoTurfStack, else turfStack).
   public static func TurfStock(vendor: TweakDBID, faction: String) -> array<AOStack> {
     let stacks: array<AOStack>;
     let extras: array<TweakDBID> = AOData.GetIDs(AOData.Flat(vendor, "aoTurfAmmo"));
     let size: Int32 = TweakDBInterface.GetInt(AOData.Flat(vendor, "aoTurfStack"), TweakDBInterface.GetInt(t"AmmoOverhaul.turfStack", 30));
+    let sizes: array<Int32>;
+    for extra in extras {
+      ArrayPush(sizes, size);
+    }
     for caliber in AOData.Calibers() {
       for selector in AOData.SelectorsForFaction(caliber, faction, 7) {
-        ArrayPush(stacks, AOStack(AOData.SelectorAmmo(caliber, selector), size));
+        ArrayPush(stacks, AOStack(AOData.SelectorAmmo(caliber, selector), AOData.VendorShipment(7)));
       }
       for tier in [5, 8] {
         for selector in AOData.SelectorsForFaction(caliber, faction, tier) {
           ArrayPush(extras, AOData.SelectorAmmo(caliber, selector));
+          ArrayPush(sizes, AOData.VendorShipment(tier));
         }
       }
     }
@@ -97,8 +103,9 @@ public abstract class FactionRounds {
       let count: Int32 = Min(RandRange(1, 3), ArraySize(extras));
       while count > 0 {
         let at: Int32 = RandRange(0, ArraySize(extras));
-        ArrayPush(stacks, AOStack(extras[at], size));
+        ArrayPush(stacks, AOStack(extras[at], sizes[at]));
         ArrayErase(extras, at);
+        ArrayErase(sizes, at);
         count -= 1;
       }
     }

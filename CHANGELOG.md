@@ -3,6 +3,12 @@
 Each release's section is its GitHub release notes and its Nexus Mods changelog
 (`tools/linux/release.sh` reads the section under the version's heading).
 
+## 1.1.0
+
+- Shops sell ammo by the shipment instead of dozens of stacks of one or two rounds. Every caliber's Common round comes in a stack of 1000.
+- Gun shops add three to five Uncommon or Rare lines each restock, 100 rounds of an Uncommon or 50 of a Rare.
+- Faction Commons sell only at their turf's gun shops, also by the 1000. Their Uncommon and Rare rounds there come in 100 and 50.
+
 ## 1.0.2
 
 - Fixed a gun hanging for a few seconds and then holstering and drawing itself when you pulled it out after changing its round with none of that round (or its default round) on you.

@@ -173,8 +173,8 @@ each step); the rest needs a person at the game. Give yourself the kit first (te
 6. **NPCs.** `npc.sh`: each test ganger carries and drops only its gun's round; with the roll
    forced on, plain gangers carry the Uncommon. In a normal fight, gangers with an Omaha or
    Yukimura drop 5mm or 10mm rounds.
-7. **Vendors.** A gun shop lists all six rounds, about half of the handgun ammo as 9mm Ball. Other
-   vendors sell no Uncommon. (`vendors.lua` with `VENDOR=1`.)
+7. **Vendors.** A gun shop lists every caliber's Common round in a stack of 1000, plus three to
+   five Uncommon or Rare lines of 100 or 50. Other vendors sell only the Commons. (`vendors.lua` with `VENDOR=1`.)
 8. **Loot.** Open a few unlooted containers: handgun ammo in them shows the new names. With only a
    Lexington carried, most of it is 9mm. (`loot.lua`, `lootfill.lua` then `lootfill2.lua`.)
 9. **Saves.** Save and reload: fitted selectors, stacks and opened containers stay as they were.
@@ -302,8 +302,8 @@ names are in `docs/CATALOG.md`):
 23. **Hunter.** A Yukimura or another smart gun with Hunter locks two more targets, and faster.
 24. **Through cover.** With an Omaha, DU Penetrator goes through cover at about half charge and
     hits harder through it than Rail Slugs; Split Slugs never go through.
-25. **Gun shop.** A gunsmith's stock has some Rare rounds and no Epic ones. Rare stacks are small
-    (a few rounds of each), so a shop can show none of some Rares.
+25. **Gun shop.** A gunsmith's stock has no Epic rounds, and now and then a Rare line of 50. Each
+    restock draws different Uncommon and Rare lines.
 26. **Craft a Common round.** At the crafting screen's ammo list, .45 Ball (and every other
     caliber's Common round) is there. One batch makes 90 .45 rounds for 2 Common components.
 27. **Learn a recipe.** Give yourself `Items.AO_Recipe_AO_9mm_Match` (CET:

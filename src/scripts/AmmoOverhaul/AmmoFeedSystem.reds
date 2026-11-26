@@ -703,6 +703,15 @@ public class AmmoFeedSystem extends ScriptableSystem {
     return text;
   }
 
+  // "item=quantity;..." of AmmoDistribution.Shipments for the calibers `vanilla` covers.
+  public final func DebugShipments(vanilla: String, maxTier: Int32) -> String {
+    let text: String = "";
+    for stack in AmmoDistribution.Shipments(AmmoDistribution.Calibers(TDBID.Create(vanilla)), maxTier) {
+      text += TDBID.ToStringDEBUG(stack.ammo) + "=" + IntToString(stack.quantity) + ";";
+    }
+    return text;
+  }
+
   // How many of `n` AmmoDistribution.RecipeRoll calls on `ammo` hand out its recipe.
   public final func DebugRecipeRolls(ammo: String, n: Int32) -> Int32 {
     let hits: Int32 = 0;

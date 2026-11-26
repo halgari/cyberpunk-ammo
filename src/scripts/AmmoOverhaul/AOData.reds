@@ -338,6 +338,19 @@ public abstract class AOData {
     return TweakDBInterface.GetFloat(t"AmmoOverhaul.recipeDropFactor", 0.0);
   }
 
+  // Rounds in a vendor's shipment of a `tier` round (AmmoOverhaul.vendorShipment, by tier; faction
+  // tiers 5, 7 and 8 use their quality's: Rare, Common and Uncommon). 0 if not set.
+  public static func VendorShipment(tier: Int32) -> Int32 {
+    let sizes: array<Int32> = TweakDBInterface.GetIntArray(t"AmmoOverhaul.vendorShipment");
+    let quality: Int32 = tier;
+    switch tier {
+      case 5: quality = 2; break;
+      case 7: quality = 0; break;
+      case 8: quality = 1; break;
+    }
+    return quality >= 0 && quality < ArraySize(sizes) ? sizes[quality] : 0;
+  }
+
   public static func RecipeVendorChance() -> Float {
     return TweakDBInterface.GetFloat(t"AmmoOverhaul.recipeVendorChance", 0.0);
   }
